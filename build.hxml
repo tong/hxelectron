@@ -1,0 +1,4 @@
+-js bin/_.js
+-dce no
+-cp src
+as.App
