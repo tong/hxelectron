@@ -1,4 +1,4 @@
-package as.node;
+package as.browser;
 
 @:jsRequire("app")
 extern class App {

@@ -1,4 +1,4 @@
-package as.node;
+package as.browser;
 
 typedef BrowserWindowOptions = {
 	width : Int,

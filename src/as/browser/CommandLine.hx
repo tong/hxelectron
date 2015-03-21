@@ -1,4 +1,4 @@
-package as.node;
+package as.browser;
 
 extern class CommandLine {
 	static function appendSwitch(name : String, ?value : String) : Void;

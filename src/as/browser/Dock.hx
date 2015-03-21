@@ -1,4 +1,4 @@
-package as.node;
+package as.browser;
 
 @:jsRequire("browser-window")
 extern class Dock {

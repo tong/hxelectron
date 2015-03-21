@@ -1,4 +1,4 @@
-import as.node.*;
+import as.browser.*;
 import js.Node;
 
 class Main {
