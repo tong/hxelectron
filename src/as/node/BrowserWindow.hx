@@ -1,4 +1,4 @@
-package as;
+package as.node;
 
 @:jsRequire("browser-window")
 extern class BrowserWindow {

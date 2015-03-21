@@ -1,4 +1,4 @@
-package as;
+package as.node;
 
 @:jsRequire("crash-reporter")
 extern class CrashReporter {

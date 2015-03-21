@@ -1,4 +1,4 @@
-import as.*;
+import as.node.*;
 import js.Node;
 
 class Main {
