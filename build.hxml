@@ -1,4 +1,6 @@
--js bin/_.js
--dce no
+-js bin/main.js
 -cp src
-as.App
+-cp demo
+-main Main
+-D analyzer
+-lib hxnodejs
