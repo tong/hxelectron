@@ -1,11 +1,11 @@
-import as.browser.*;
+import electron.browser.*;
 import js.Node;
 
 class Main {
 	static function main() {
 		CrashReporter.start();
 		App.on("window-all-closed", function() {
-			if (Node.process.platform != 'darwin')
+			//if (Node.process.platform != 'darwin')
     		App.quit();
 		});
 

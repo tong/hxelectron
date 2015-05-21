@@ -1,4 +1,4 @@
-package as.browser;
+package electron.browser;
 
 @:jsRequire("browser-window")
 extern class BrowserWindow {
