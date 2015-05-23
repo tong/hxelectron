@@ -1,4 +1,4 @@
-import electron.browser.*;
+import electron.main.*;
 import js.Node;
 
 class Main {

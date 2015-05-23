@@ -11,13 +11,13 @@
 -cp demo
 -js x
 --no-output
-electron.browser.App
-electron.browser.AutoUpdater
-electron.browser.BrowserWindow
-electron.browser.BrowserWindowOptions
-electron.browser.CommandLine
-electron.browser.ContentTracing
-electron.browser.CrashReporter
-electron.browser.Dialog
-electron.browser.Dock
-electron.browser.GlobalShortCut
+electron.main.App
+electron.main.AutoUpdater
+electron.main.BrowserWindow
+electron.main.BrowserWindowOptions
+electron.main.CommandLine
+electron.main.ContentTracing
+electron.main.CrashReporter
+electron.main.Dialog
+electron.main.Dock
+electron.main.GlobalShortCut
