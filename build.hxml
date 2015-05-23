@@ -4,3 +4,20 @@
 -main Main
 -D analyzer
 -lib hxnodejs
+
+--next
+
+-cp src
+-cp demo
+-js x
+--no-output
+electron.browser.App
+electron.browser.AutoUpdater
+electron.browser.BrowserWindow
+electron.browser.BrowserWindowOptions
+electron.browser.CommandLine
+electron.browser.ContentTracing
+electron.browser.CrashReporter
+electron.browser.Dialog
+electron.browser.Dock
+electron.browser.GlobalShortCut
