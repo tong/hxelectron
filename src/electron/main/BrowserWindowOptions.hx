@@ -1,4 +1,4 @@
-package electron.browser;
+package electron.main;
 
 typedef BrowserWindowOptions = {
 	width : Int,

@@ -1,4 +1,4 @@
-package electron.browser;
+package electron.main;
 
 @:jsRequire("global-shortcut")
 extern class GlobalShortcut {

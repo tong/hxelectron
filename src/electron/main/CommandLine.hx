@@ -1,4 +1,4 @@
-package electron.browser;
+package electron.main;
 
 extern class CommandLine {
 	static function appendSwitch(name : String, ?value : String) : Void;
