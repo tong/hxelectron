@@ -1,0 +1,12 @@
+{
+  "name": "electron",
+  "url": "https://github.com/fponticelli/hxelectron",
+  "license": "MIT",
+  "classPath": "src",
+  "tags": ["electron", "atom-shell"],
+  "description": "Electron extern definitions.",
+  "releasenote": "First release.",
+  "version": "0.0.1",
+  "contributors": ["fponticelli"],
+  "dependencies": {}
+}
