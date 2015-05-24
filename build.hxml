@@ -10,7 +10,15 @@
 -cp src
 -cp demo
 -js x
+-lib hxnodejs
 --no-output
+
+electron.common.Clipboard
+electron.common.CrashReporter
+electron.common.NativeImage
+electron.common.Screen
+electron.common.Shell
+
 electron.main.App
 electron.main.AutoUpdater
 electron.main.BrowserWindow
@@ -21,3 +29,12 @@ electron.main.CrashReporter
 electron.main.Dialog
 electron.main.Dock
 electron.main.GlobalShortCut
+electron.main.Ipc
+electron.main.Menu
+electron.main.MenuItem
+electron.main.PowerMonitor
+electron.main.Tray
+
+electron.renderer.Ipc
+electron.renderer.Remote
+electron.renderer.WebFrame

@@ -1,8 +1,10 @@
 package electron.main;
 
+import electron.common.NativeImage;
+
 @:jsRequire("tray")
 extern class Tray {
-  function new Tray(image : NativeImage) : Void;
+  function new(image : NativeImage) : Void;
   // Tray.destroy()
   // Tray.setImage(image)
   // Tray.setPressedImage(image)
