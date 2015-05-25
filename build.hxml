@@ -15,6 +15,7 @@
 
 electron.common.Clipboard
 electron.common.CrashReporter
+electron.common.Display
 electron.common.NativeImage
 electron.common.Screen
 electron.common.Shell
