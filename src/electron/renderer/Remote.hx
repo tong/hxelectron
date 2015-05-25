@@ -1,10 +1,12 @@
 package electron.renderer;
 
+import electron.main.BrowserWindow;
+
 @:jsRequire("remote")
 extern class Remote {
-  // remote.require(module)
-  // remote.getCurrentWindow()
-  // remote.getCurrentWebContent()
-  // remote.getGlobal(name)
-  // remote.process
+  static function require(module : String) : Dynamic;
+  static function getCurrentWindow() : BrowserWindow;
+  static function getCurrentWebContent() : Dynamic; // TODO WebContents
+  static function getGlobal(name : String) : String;
+  static var process(default, null) : js.node.Process;
 }
