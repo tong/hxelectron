@@ -3,14 +3,20 @@ package electron.main;
 import electron.common.NativeImage;
 
 @:jsRequire("tray")
-extern class Tray {
+extern class Tray extends js.node.events.EventEmitter<Tray> {
   function new(image : NativeImage) : Void;
-  // Tray.destroy()
-  // Tray.setImage(image)
-  // Tray.setPressedImage(image)
-  // Tray.setToolTip(toolTip)
-  // Tray.setTitle(title)
-  // Tray.setHighlightMode(highlight)
-  // Tray.displayBalloon(options)
-  // Tray.setContextMenu(menu)
+  function destroy() : Void;
+  function setImage(image : NativeImage) : Void;
+  function setPressedImage(image : NativeImage) : Void;
+  function setToolTip(toolTip : String) : Void;
+  function setTitle(title : String) : Void;
+  function setHighlightMode(highlight : Bool) : Void;
+  function displayBalloon(options : TrayOptions) : Void;
+  function setContextMenu(menu : Menu) : Void;
+}
+
+typedef TrayOptions = {
+  icon : NativeImage,
+  title : String,
+  content : String
 }
