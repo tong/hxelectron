@@ -1,6 +1,6 @@
 package electron.main;
 
 typedef BrowserWindowOptions = {
-	width : Int,
-	height : Int,
+  width : Int,
+  height : Int,
 }
