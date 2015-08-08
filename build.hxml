@@ -4,6 +4,7 @@
 -main Main
 -D analyzer
 -lib hxnodejs
+-lib npm
 
 --next
 
@@ -11,6 +12,7 @@
 -cp demo
 -js x
 -lib hxnodejs
+-lib npm
 --no-output
 
 electron.common.Clipboard
@@ -33,7 +35,7 @@ electron.main.GlobalShortCut
 electron.main.Ipc
 electron.main.Menu
 electron.main.MenuItem
-electron.main.PowerMonitor
+electron.main.Protocol
 electron.main.Tray
 
 electron.renderer.Ipc
