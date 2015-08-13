@@ -6,17 +6,18 @@ extern class MenuItem {
 }
 
 typedef MenuItemOptions = {
-  // click Function - Callback when the menu item is clicked
-  // selector String - Call the selector of first responder when clicked // (OS X only)
+  ?click : Void -> Void,
+  ?selector : String,
+  ?label : String,
+  ?sublabel : String,
+  ?icon : electron.common.NativeImage,
+  ?enabled : Bool,
+  ?visible : Bool,
+  ?checked : Bool,
+  ?id : String,
+  ?position : String
+
   // type String - Can be normal, separator, submenu, checkbox or radio
-  // label String
-  // sublabel String
   // accelerator Accelerator
-  // icon NativeImage
-  // enabled Boolean
-  // visible Boolean
-  // checked Boolean
   // submenu Menu - Should be specified for submenu type menu item, when // it's specified the type: 'submenu' can be omitted for the menu item
-  // id String - Unique within a single menu. If defined then it can be // used as a reference to this item by the position attribute.
-  // position String - This field allows fine-grained definition of the // specific location within a given menu.
 }
