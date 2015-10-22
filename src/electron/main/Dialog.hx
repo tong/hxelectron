@@ -6,15 +6,22 @@ import electron.common.NativeImage;
 extern class Dialog {
   function showOpenDialog(?browserWindow : BrowserWindow, ?options : OpenDialogOptions, ?callback : Array<String> -> Void) : Void;
   function showSaveDialog(?browserWindow : BrowserWindow, ?options : SaveDialogOptions, ?callback : String -> Void) : Void;
-  function showMessageBox(?browserWindow : BrowserWindow, options : MessageBoxOptions, ?callback : Int -> Void) : Void;
+  function showMessageBox(?browserWindow : BrowserWindow, ?options : MessageBoxOptions, ?callback : Int -> Void) : Void;
   function showErrorBox(title : String, content : String) : Void;
+}
+
+@:enum abstract OpenDialogOptionsProperties(String) from String to String {
+    var openFile = "openFile";
+    var openDirectory = "openDirectory";
+    var multiSelections = "multiSelections";
+    var createDirectory = "createDirectory";
 }
 
 typedef OpenDialogOptions = {
   title : String,
   defaultPath : String,
   filters : Array<{ name : String, extensions : Array<String>}>,
-  properties : Array<String>, // openFile, openDirectory, multiSelections and createDirectory
+  properties : Array<OpenDialogOptionsProperties>
 }
 
 typedef SaveDialogOptions = {
@@ -23,11 +30,21 @@ typedef SaveDialogOptions = {
   filters : Array<{ name : String, extensions : Array<String>}>
 }
 
+@:enum abstract MessageBoxOptionsType(String) from String to String {
+    var none = "none";
+    var info = "info";
+    var error = "error";
+    var question = "question";
+    var warning = "warning";
+}
+
 typedef MessageBoxOptions = {
-  type : String, // "none", "info" or "warning"
+  type : MessageBoxOptionsType,
   buttons : Array<String>,
   title : String,
   message : String,
   detail : String,
-  icon : NativeImage
+  icon : NativeImage,
+  cancelId : Int,
+  noLink : Bool
 }

@@ -35,6 +35,8 @@ electron.main.GlobalShortcut
 electron.main.Ipc
 electron.main.Menu
 electron.main.MenuItem
+electron.main.PowerMonitor
+electron.main.PowerSaveBlocker
 electron.main.Protocol
 electron.main.Session
 electron.main.Tray

@@ -11,11 +11,17 @@ extern class Protocol {
   // Class: protocol.RequestErrorJob(code)
 
   // TODO remove Dynamic
-  static function registerProtocol(scheme : String, handler : Dynamic -> Dynamic, callback : Callback<String>) : Void;
-  static function unregisterProtocol(scheme : String, callback : Callback<String>) : Void;
-  static function isHandledProtocol(scheme : String, callback : Callback<Bool>) : Void;
   // TODO check types
-  static function interceptProtocol(scheme : String, handler : Void -> Void, callback : Void -> Void) : Void;
-  // TODO check types
-  static function uninterceptProtocol(scheme : String, callback : Void -> Void) : Void;
+    static function registerStandardSchemes( schemes : Array<String> ) : Void;
+    static function registerFileProtocol( scheme : Array<String>, handler : Dynamic->Void, ?completion : Void->Void ) : Void;
+    static function registerBufferProtocol( scheme : Array<String>, handler : Dynamic->Void, ?completion : Void->Void ) : Void;
+    static function registerStringProtocol( scheme : Array<String>, handler : Dynamic->Void, ?completion : Void->Void ) : Void;
+    static function registerHttpProtocol( scheme : Array<String>, handler : Dynamic->Void, ?completion : Void->Void ) : Void;
+    static function unregisterProtocol(scheme : String, callback : Callback<String>) : Void;
+    static function isProtocolHandled(scheme : String, callback : Callback<Bool>) : Void;
+    static function interceptFileProtocol(scheme : String, handler : Void -> Void, callback : Void -> Void) : Void;
+    static function interceptStringProtocol(scheme : String, handler : Void -> Void, callback : Void -> Void) : Void;
+    static function interceptBufferProtocol(scheme : String, handler : Void -> Void, callback : Void -> Void) : Void;
+    static function interceptHttpProtocol(scheme : String, handler : Void -> Void, callback : Void -> Void) : Void;
+    static function uninterceptProtocol(scheme : String, callback : Void -> Void) : Void;
 }

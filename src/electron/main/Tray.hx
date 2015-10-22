@@ -12,6 +12,7 @@ extern class Tray extends js.node.events.EventEmitter<Tray> {
   function setTitle(title : String) : Void;
   function setHighlightMode(highlight : Bool) : Void;
   function displayBalloon(options : TrayOptions) : Void;
+  function popUpContextMenu( ?position : {x:Int,y:Int} ) : Void;
   function setContextMenu(menu : Menu) : Void;
 }
 
