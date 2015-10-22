@@ -1,2 +1,4 @@
-# hxatom-shell
-Haxe externs for atom-shell
+
+# HXElectron
+
+Haxe externs for [electron](http://electron.atom.io/).
