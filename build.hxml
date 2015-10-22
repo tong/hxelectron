@@ -31,12 +31,14 @@ electron.main.ContentTracing
 electron.main.CrashReporter
 electron.main.Dialog
 electron.main.Dock
-electron.main.GlobalShortCut
+electron.main.GlobalShortcut
 electron.main.Ipc
 electron.main.Menu
 electron.main.MenuItem
 electron.main.Protocol
+electron.main.Session
 electron.main.Tray
+electron.main.WebContents
 
 electron.renderer.Ipc
 electron.renderer.Remote

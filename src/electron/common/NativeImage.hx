@@ -14,4 +14,5 @@ extern class NativeImage {
   function isEmpty() : Bool;
   function getSize() : { width : Int, height : Int }; // TODO check return type
   function setTemplateImage(option : Bool) : Void;
+  function isTemplateImage() : Bool;
 }
