@@ -6,7 +6,10 @@
   "tags": ["electron", "atom-shell"],
   "description": "Electron extern definitions.",
   "releasenote": "First release.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "contributors": ["fponticelli"],
-  "dependencies": {}
+  "dependencies": {
+    "hxnodejs" : "",
+    "npm" : ""
+  }
 }
