@@ -65,6 +65,7 @@ import js.node.events.EventEmitter;
 extern class WebContents extends EventEmitter<WebContents> {
     var session(default,null) : Session;
     function loadUrl( url : String, ?options : {httpReferrer:String,userAgent:String} ) : Void;
+    // function loadURL( url : String, ?options : {httpReferrer:String,userAgent:String} ) : Void;
     function getUrl() : String;
     function getTitle() : String;
     function isLoading() : Bool;
