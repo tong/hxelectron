@@ -84,7 +84,8 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function capturePage( ?rect : {x:Int,y:Int,width:Int,height:Int}, callback : NativeImage->Void ) : Void;
     function print( ?options : Dynamic ) : Void; //TODO
     function printToPDF( options : Dynamic, callback : Dynamic->Void ) : Void; //TODO
-    function loadUrl( url : String, ?options : Dynamic ) : Void;
+    // function loadUrl( url : String, ?options : Dynamic ) : Void;
+    function loadURL( url : String, ?options : Dynamic ) : Void;
     function reload() : Void;
     function setMenu( menu : Menu ) : Void;
     function setProgressBar( progress : Float ) : Void;

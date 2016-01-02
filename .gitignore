@@ -1,1 +1,3 @@
 atom/
+
+bin/node_modules/*
