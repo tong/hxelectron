@@ -1,0 +1,11 @@
+-cp ../src
+--no-output
+-D doc-gen
+-D display
+-D dox
+-dce no
+ImportCore
+
+--each
+-xml xml/js.xml
+-js _
