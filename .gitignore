@@ -1,3 +1,5 @@
 atom/
 
 bin/node_modules/*
+doc/pages/
+doc/xml/

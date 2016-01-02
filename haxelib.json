@@ -8,5 +8,8 @@
   "releasenote": "First release.",
   "version": "0.1.0",
   "contributors": ["fponticelli"],
-  "dependencies": {}
+  "dependencies": {
+    "hxnodejs" : "",
+    "npm" : ""
+  }
 }

@@ -4,6 +4,8 @@
 -D display
 -D dox
 -dce no
+-lib hxnodejs
+-lib npm
 ImportCore
 
 --each
