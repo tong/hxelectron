@@ -11,7 +11,6 @@ import electron.main.BrowserWindow;
 import electron.main.BrowserWindowOptions;
 import electron.main.CommandLine;
 import electron.main.ContentTracing;
-import electron.main.CrashReporter;
 import electron.main.Dialog;
 import electron.main.Dock;
 import electron.main.GlobalShortcut;

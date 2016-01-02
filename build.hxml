@@ -27,7 +27,6 @@ electron.main.BrowserWindow
 electron.main.BrowserWindowOptions
 electron.main.CommandLine
 electron.main.ContentTracing
-electron.main.CrashReporter
 electron.main.Dialog
 electron.main.Dock
 electron.main.GlobalShortcut

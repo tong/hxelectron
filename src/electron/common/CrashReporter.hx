@@ -10,7 +10,7 @@ extern class CrashReporter {
 typedef CrashReporterOptions = {
   ?productName : String,
   companyName : String,
-  submitUrl : String,
+  submitURL : String,
   ?autoSubmit : Bool,
   ?ignoreSystemCrashHandler : Bool,
   ?extra : {}
