@@ -4,10 +4,10 @@ import electron.common.NativeImage;
 
 @:jsRequire("dialog")
 extern class Dialog {
-  function showOpenDialog(?browserWindow : BrowserWindow, ?options : OpenDialogOptions, ?callback : Array<String> -> Void) : Void;
-  function showSaveDialog(?browserWindow : BrowserWindow, ?options : SaveDialogOptions, ?callback : String -> Void) : Void;
-  function showMessageBox(?browserWindow : BrowserWindow, ?options : MessageBoxOptions, ?callback : Int -> Void) : Void;
-  function showErrorBox(title : String, content : String) : Void;
+  static function showOpenDialog(?browserWindow : BrowserWindow, ?options : OpenDialogOptions, ?callback : Array<String> -> Void) : Void;
+  static function showSaveDialog(?browserWindow : BrowserWindow, ?options : SaveDialogOptions, ?callback : String -> Void) : Void;
+  static function showMessageBox(?browserWindow : BrowserWindow, ?options : MessageBoxOptions, ?callback : Int -> Void) : Void;
+  static function showErrorBox(title : String, content : String) : Void;
 }
 
 @:enum abstract OpenDialogOptionsProperties(String) from String to String {
@@ -18,16 +18,16 @@ extern class Dialog {
 }
 
 typedef OpenDialogOptions = {
-  title : String,
-  defaultPath : String,
-  filters : Array<{ name : String, extensions : Array<String>}>,
-  properties : Array<OpenDialogOptionsProperties>
+  ?title : String,
+  ?defaultPath : String,
+  ?filters : Array<{ name : String, extensions : Array<String>}>,
+  ?properties : Array<OpenDialogOptionsProperties>
 }
 
 typedef SaveDialogOptions = {
-  title : String,
-  defaultPath : String,
-  filters : Array<{ name : String, extensions : Array<String>}>
+  ?title : String,
+  ?defaultPath : String,
+  ?filters : Array<{ name : String, extensions : Array<String>}>
 }
 
 @:enum abstract MessageBoxOptionsType(String) from String to String {
