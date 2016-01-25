@@ -39,12 +39,13 @@ typedef SaveDialogOptions = {
 }
 
 typedef MessageBoxOptions = {
-  type : MessageBoxOptionsType,
-  buttons : Array<String>,
-  title : String,
-  message : String,
-  detail : String,
-  icon : NativeImage,
-  cancelId : Int,
-  noLink : Bool
+  ?type : MessageBoxOptionsType,
+  ?buttons : Array<String>,
+  ?defaultId : Int,
+  ?title : String,
+  ?message : String,
+  ?detail : String,
+  ?icon : NativeImage,
+  ?cancelId : Int,
+  ?noLink : Bool
 }
