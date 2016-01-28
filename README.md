@@ -4,11 +4,14 @@
 Haxe externs for [electron](http://electron.atom.io/).
 
 
+# Install using haxelib
+
+```
+haxelib install electron
+```
+
 
 # Get started with Haxe and Electron
-
-
-
 
 Spin up the Haxe Quick Start app to see Electron in action:
 

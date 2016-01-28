@@ -43,6 +43,10 @@ typedef BrowserWindowOptions = {
     @:native("min-height") @:optional var min_height : Bool;
     @:native("max-width") @:optional var max_width : Bool;
     @:native("max-height") @:optional var max_height : Bool;
+    @:optional var minWidth : Int;
+    @:optional var minHeight : Int;
+    @:optional var maxWidth : Int;
+    @:optional var maxHeight : Int;
     @:optional var resizable : Bool;
     @:native("always-on-top") @:optional var always_on_top : Bool;
     @:optional var fullscreen : Bool;
