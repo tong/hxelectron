@@ -50,7 +50,7 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function restore() : Void;
     function isMinimized() : Bool;
     function setFullScreen( flag : Bool ) : Void;
-    function isFullScreen( flag : Bool ) : Void;
+    function isFullScreen() : Bool;
     function setAspectRatio( aspectRatio : Float, ?extraSize : {width:Int,height:Int} ) : Void;
     function setBounds( options : {x:Int,y:Int,width:Int,height:Int} ) : Void;
     function getBounds() : {x:Int,y:Int,width:Int,height:Int};
