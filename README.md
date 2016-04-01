@@ -3,7 +3,7 @@
 
 Haxe externs for [electron](http://electron.atom.io/).
 
-The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS.  
+The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS.
 It is based on Node.js and Chromium and is used in the Atom editor.
 
 
@@ -35,4 +35,4 @@ $ cd demo/
 $ npm install && npm start
 ```
 
-[![Haxelib Version](https://img.shields.io/github/tag/fponticelli/hxelectron.svg?style=flat&label=haxelib)](http://lib.haxe.org/p/inotify)
+[![Haxelib Version](https://img.shields.io/github/tag/fponticelli/hxelectron.svg?style=flat&label=haxelib)](http://lib.haxe.org/p/electron)
