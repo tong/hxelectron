@@ -1,5 +1,6 @@
 package electron.main;
 
+import js.node.Buffer;
 import js.node.events.EventEmitter;
 import electron.common.NativeImage;
 import haxe.Constraints.Function;
@@ -25,6 +26,15 @@ import haxe.Constraints.Function;
     var app_command : BrowserWindowEvent<String->Void> = "app-command";
 }
 
+@:enum abstract ThumbarButtonsFlag(String) from String to String {
+    var enabled = "enabled";
+    var disabled = "disabled";
+    var dismissonclick = "dismissonclick";
+    var nobackground = "nobackground";
+    var hidden = "hidden";
+    var noninteractive = "noninteractive";
+}
+
 @:jsRequire("browser-window")
 extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     static function getAllWindows() : Array<BrowserWindow>;
@@ -39,6 +49,7 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function destroy() : Void;
     function close() : Void;
     function focus() : Void;
+    function blur() : Void;
     function isFocused() : Bool;
     function show() : Void;
     function showInactive() : Void;
@@ -64,6 +75,19 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function getMaximumSize() : Array<Int>;
     function setResizable( resizable : Bool ) : Void;
     function isResizable() : Bool;
+    function setMovable( moveable : Bool ) : Void;
+    function isMovable() : Bool;
+    function setMinimizable( minimizable : Bool ) : Void;
+    function isMinimizable() : Bool;
+    function setMaximizable( maximizable : Bool ) : Void;
+    function isMaximizable() : Bool;
+    function setFullScreenable( fullscreenable : Bool ) : Void;
+    function isFullScreenable() : Bool;
+    function setClosable( closable : Bool ) : Void;
+    function isClosable() : Bool;
+    function isFullScreenable() : Bool;
+    function setClosable( closable : Bool ) : Void;
+    function isClosable() : Bool;
     function setAlwaysOnTop( flag : Bool ) : Void;
     function isAlwaysOnTop() : Bool;
     function center() : Void;
@@ -75,6 +99,11 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function setSkipTaskbar( skip : Bool ) : Void;
     function setKiosk( flag : Bool ) : Void;
     function isKiosk() : Bool;
+    function getNativeWindowHandle() : Buffer;
+    function hookWindowMessage( message : Int, callback : Void->Void ) : Void;
+    function isWindowMessageHooked( message : Int ) : Bool;
+    function unhookWindowMessage( message : Int ) : Bool;
+    function unhookAllWindowMessages() : Bool;
     function setRepresentedFilename( filename : String ) : Void;
     function getRepresentedFilename() : String;
     function setDocumentEdited( edited : Bool ) : Void;
@@ -84,13 +113,14 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function capturePage( ?rect : {x:Int,y:Int,width:Int,height:Int}, callback : NativeImage->Void ) : Void;
     function print( ?options : Dynamic ) : Void; //TODO
     function printToPDF( options : Dynamic, callback : Dynamic->Void ) : Void; //TODO
-    // function loadUrl( url : String, ?options : Dynamic ) : Void;
     function loadURL( url : String, ?options : Dynamic ) : Void;
     function reload() : Void;
     function setMenu( menu : Menu ) : Void;
     function setProgressBar( progress : Float ) : Void;
     function setOverlayIcon( overlay : NativeImage, description : String ) : Void;
-    function setThumbarButtons( buttons : Array<{icon:NativeImage,?tooltip:Bool,?flags:Array<String>,click:Void->Void}> ) : Void; //TODO flags type
+    function setHasShadow( hasShadow : Bool ) : Void;
+    function hasShadow() : Bool;
+    function setThumbarButtons( buttons : Array<{icon:NativeImage,?tooltip:String,?flags:Array<ThumbarButtonsFlag>,click:Void->Void}> ) : Void;
     function showDefinitionForSelection() : Void;
     function setAutoHideMenuBar( hide : Bool ) : Void;
     function isMenuBarAutoHide() : Bool;
@@ -98,9 +128,5 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function isMenuBarVisible() : Bool;
     function setVisibleOnAllWorkspaces( visible : Bool ) : Void;
     function isVisibleOnAllWorkspaces() : Bool;
-    //function on( eventType : BrowserWindowEventType, callback : Void->Void ) : Void; //TODO
-
-    // Old API
-    function openDevTools(?options : { ?detach : Bool }) : Void;
-    function closeDevTools( ?options : Dynamic ) : Void;
+    function setIgnoreMouseEvents( ignore : Bool ) : Void;
 }
