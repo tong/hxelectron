@@ -1,6 +1,6 @@
 atom/
 demo/*.js
-bin/node_modules/*
+demo/node_modules/*
 doc/pages/
 doc/xml/
 haxedoc.xml
