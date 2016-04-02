@@ -85,9 +85,6 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function isFullScreenable() : Bool;
     function setClosable( closable : Bool ) : Void;
     function isClosable() : Bool;
-    function isFullScreenable() : Bool;
-    function setClosable( closable : Bool ) : Void;
-    function isClosable() : Bool;
     function setAlwaysOnTop( flag : Bool ) : Void;
     function isAlwaysOnTop() : Bool;
     function center() : Void;
