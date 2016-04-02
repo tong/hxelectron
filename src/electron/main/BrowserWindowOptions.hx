@@ -14,6 +14,13 @@ package electron.main;
     var hidden_inset = "hidden-inset";
 }
 
+@:enum abstract FontFamily(String) from String to String {
+    var standard = "standard";
+    var serif = "serif";
+    var sansSerif = "sansSerif";
+    var monospace = "monospace";
+}
+
 typedef WebPreferences = {
     @:optional var nodeIntegration : Bool;
     @:optional var preload : String;
@@ -33,7 +40,7 @@ typedef WebPreferences = {
     @:optional var experimentalCanvasFeatures : Bool;
     @:optional var directWrite : Bool;
     @:optional var blinkFeatures : String;
-    @:optional var defaultFontFamily : Dynamic;
+    @:optional var defaultFontFamily : FontFamily;
     @:optional var defaultFontSize : Int;
     @:optional var defaultMonospaceFontSize : Int;
     @:optional var minimumFontSize : Int;
