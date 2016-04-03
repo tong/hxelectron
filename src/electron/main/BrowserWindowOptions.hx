@@ -14,13 +14,14 @@ package electron.main;
     var hidden_inset = "hidden-inset";
 }
 
+@:enum abstract FontFamily(String) from String to String {
+    var standard = "standard";
+    var serif = "serif";
+    var sansSerif = "sansSerif";
+    var monospace = "monospace";
+}
+
 typedef WebPreferences = {
-    @:optional var nodeIntegration : Bool;
-    @:optional var preload : String;
-    @:optional var session : Session;
-    @:optional var partition : String;
-    @:optional var zoomFactor : Float;
-    @:optional var javascript : Bool;
     @:optional var nodeIntegration : Bool;
     @:optional var preload : String;
     @:optional var session : Session;
@@ -39,14 +40,7 @@ typedef WebPreferences = {
     @:optional var experimentalCanvasFeatures : Bool;
     @:optional var directWrite : Bool;
     @:optional var blinkFeatures : String;
-    @:optional var defaultFontFamily : Dynamic;
-    @:optional var defaultFontSize : Int;
-    @:optional var defaultMonospaceFontSize : Int;
-    @:optional var minimumFontSize : Int;
-    @:optional var defaultEncoding : String;
-    @:optional var directWrite : Bool;
-    @:optional var blinkFeatures : String;
-    @:optional var defaultFontFamily : Dynamic;
+    @:optional var defaultFontFamily : FontFamily;
     @:optional var defaultFontSize : Int;
     @:optional var defaultMonospaceFontSize : Int;
     @:optional var minimumFontSize : Int;
@@ -59,22 +53,6 @@ typedef BrowserWindowOptions = {
     @:optional var x : Int;
     @:optional var y : Int;
     @:optional var useContentSize : Bool;
-    @:optional var center : Bool;
-    @:optional var minWidth : Int;
-    @:optional var minHeight : Int;
-    @:optional var maxWidth : Int;
-    @:optional var maxHeight : Int;
-    @:optional var resizable : Bool;
-    @:optional var movable : Bool;
-    @:optional var minimizable : Bool;
-    @:optional var maximizable : Bool;
-    @:optional var closable : Bool;
-    @:optional var alwaysOnTop : Bool;
-    @:optional var fullscreen : Bool;
-    @:optional var fullscreenable : Bool;
-    @:optional var skipTaskbar : Bool;
-    @:optional var kiosk : Bool;
-    @:optional var title : String;
     @:optional var center : Bool;
     @:optional var minWidth : Int;
     @:optional var minHeight : Int;
