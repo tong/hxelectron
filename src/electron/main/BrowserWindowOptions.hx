@@ -15,7 +15,7 @@ import electron.common.NativeImage;
 }
 
 @:enum abstract TitleBarStyle(String) from String to String {
-    var default = "default";
+    @:native("default") var def = "default";
     var hidden = "hidden";
     @:native("hidden-inset") var hidden_inset = "hidden-inset";
 }

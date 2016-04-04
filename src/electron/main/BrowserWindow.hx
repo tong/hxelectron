@@ -104,7 +104,7 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function setKiosk( flag : Bool ) : Void;
     function isKiosk() : Bool;
     function getNativeWindowHandle() : js.node.Buffer;
-    function hookWindowMessage( message:Int, callback->Void->Void ) : Void;//WIN
+    function hookWindowMessage( message:Int, callback:Void->Void ) : Void;//WIN
     function isWindowMessageHooked( message:Int ) : Bool;//WIN
     function unhookWindowMessage( message:Int ) : Void;//WIN
     function unhookAllWindowMessages() : Void;//WIN
@@ -115,9 +115,9 @@ extern class BrowserWindow extends EventEmitter<BrowserWindow> {
     function focusOnWebView() : Void;
     function blurWebView() : Void;
     function capturePage( ?rect : {x:Int,y:Int,width:Int,height:Int}, callback : NativeImage->Void ) : Void;
-    function print( ?options : PrintOptions ) : Void;
-    function printToPDF( options : PrintToPDFOptions, callback : Dynamic->Void ) : Void;
-    function loadURL( url : String, ?options : LoadURLOptions ) : Void;
+    function print( ?options : WebContents.PrintOptions ) : Void;
+    function printToPDF( options : WebContents.PrintToPDFOptions, callback : Dynamic->Void ) : Void;
+    function loadURL( url : String, ?options : WebContents.LoadURLOptions ) : Void;
     function reload() : Void;
     function setMenu( menu : Menu ) : Void;//LIN, WIN
     function setProgressBar( progress : Float ) : Void;

@@ -6,10 +6,10 @@ package electron.common;
 typedef CrashReporterOptions = {
     var companyName : String;
     var submitURL : String;
-    @:optional productName : String;
-    var autoSubmit : Bool;
-    var ignoreSystemCrashHandler : Bool;
-    @:optional extra : {};
+    @:optional var productName : String;
+    @:optional var autoSubmit : Bool;
+    @:optional var ignoreSystemCrashHandler : Bool;
+    @:optional var extra : {};
 }
 
 @:jsRequire("crash-reporter")

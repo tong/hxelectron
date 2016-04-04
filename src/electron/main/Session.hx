@@ -49,14 +49,14 @@ typedef WebRequestFilter = {
 }
 
 typedef WebRequest = {
-    function onBeforeRequest(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,?uploadedData:Array<Data>}->({?cancel:Bool->?redirectUrl:String}->Void)->Void);
-    function onBeforeSendHeaders(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,requestHeaders:Dynamic}->({?cancel:Bool->?requestHeaders:Dynamic}->Void)->Void);
-    function onSendHeaders(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,requestHeaders:Dynamic}->Void);
-    function onHeadersReceived(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,statusLine:String,statusCode:Int,responseHeaders:Dynamic}->{cancel:Bool->responseHeaders:Dynamic->Void}->Void);
-    function onResponseStarted(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,responseHeaders:Dynamic,fromCache:Bool,statusLine:String,statusCode:Int}->Void);
-    function onBeforeRedirect(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,redirectURL:String,statusCode:Int,?ip:String,fromCache:Bool,responseHeaders:Dynamic}->Void);
-    function onCompleted(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,responseHeaders:Dynamic,fromCache:Bool,statusCode:Int,statusLine:String}->Void);
-    function onErrorOccurred(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,fromCache:Bool,error:String}->Void);
+    function onBeforeRequest(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,?uploadedData:Array<electron.main.Protocol.Data>}->({?cancel:Bool, ?redirectUrl:String}->Void)->Void) : Void;
+    function onBeforeSendHeaders(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,requestHeaders:Dynamic}->({?cancel:Bool, ?requestHeaders:Dynamic}->Void)->Void) : Void;
+    function onSendHeaders(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,requestHeaders:Dynamic}->Void) : Void;
+    function onHeadersReceived(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,statusLine:String,statusCode:Int,responseHeaders:Dynamic}->{cancel:Bool, responseHeaders:Dynamic->Void}->Void) : Void;
+    function onResponseStarted(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,responseHeaders:Dynamic,fromCache:Bool,statusLine:String,statusCode:Int}->Void) : Void;
+    function onBeforeRedirect(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,redirectURL:String,statusCode:Int,?ip:String,fromCache:Bool,responseHeaders:Dynamic}->Void) : Void;
+    function onCompleted(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,responseHeaders:Dynamic,fromCache:Bool,statusCode:Int,statusLine:String}->Void) : Void;
+    function onErrorOccurred(?filter:WebRequestFilter, listener:{id:Int,url:String,method:String,resourceType:String,timestamp:Float,fromCache:Bool,error:String}->Void) : Void;
 }
 
 extern class Session extends EventEmitter<Session> {

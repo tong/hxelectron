@@ -73,7 +73,7 @@ import js.node.events.EventEmitter;
     var activateSelection = "activateSelection";
 }
 
-@:enum abstract WebContentsEvent<T:Function>(Event<T>) to Event<T> {
+@:enum abstract WebContentsEvent<T:haxe.Constraints.Function>(Event<T>) to Event<T> {
     var did_finish_load : WebContentsEvent<Void->Void> = "did-finish-load";
     var did_fail_load : WebContentsEvent<Void->Void> = "did-fail-load";
     var did_frame_finish_load : WebContentsEvent<Void->Void> = "did-frame-finish-load";
@@ -104,7 +104,7 @@ import js.node.events.EventEmitter;
 }
 
 typedef PrintToPDFOptions = {
-    marginsType:MarginsType,
+    var marginsType:MarginsType;
     @:optional var pageSize:PageSize;
     @:optional var printBackground:Bool;
     @:optional var printSelectionOnly:Bool;
@@ -126,7 +126,6 @@ extern class WebContents extends EventEmitter<WebContents> {
     var session(default,null) : Session;
     var devToolsWebContents(default,null) : WebContents;
     var hostWebContents(default, null) : WebContents;
-    var devToolsWebContents(default, null) : WebContents;
     var debugger(default, null) : Debugger;
 
     function loadURL( url : String, ?options : LoadURLOptions ) : Void;
@@ -150,7 +149,7 @@ extern class WebContents extends EventEmitter<WebContents> {
     function setUserAgent( userAgent : String ) : Void;
     function getUserAgent() : String;
     function insertCSS( css : String ) : Void;
-    function executeJavaScript( code : String, ?userGesture : Boo, ?callback:Dynamic->Void ) : Void;
+    function executeJavaScript( code : String, ?userGesture : Bool, ?callback:Dynamic->Void ) : Void;
     function setAudioMuted( muted : Bool ) : Void;
     function isAudioMuted() : Bool;
     function undo() : Void;
@@ -180,7 +179,7 @@ extern class WebContents extends EventEmitter<WebContents> {
     function toggleDevTools() : Void;
     function inspectElement( x : Int, y : Int ) : Void;
     function inspectServiceWorker() : Void;
-    function send( channel : String, ?args : haxe.extern.Rest<String> ) : Void;
+    function send( channel : String, args : haxe.extern.Rest<String> ) : Void;
     function enableDeviceEmulation( parameters : {?screenPosition:ScreenPosition,?screenSize:{width:Int,height:Int},?viewPosition:{x:Int,y:Int},?deviceScaleFactor:Int,?viewSize:{width:Int,height:Int},?fitToView:Bool,?offset:{x:Float,y:Float},?scale:Float} ) : Void;
     function disableDeviceEmulation() : Void;
     function sendInputEvent(

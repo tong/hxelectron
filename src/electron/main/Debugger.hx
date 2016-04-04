@@ -5,7 +5,7 @@ package electron.main;
 
 import js.node.events.EventEmitter;
 
-@:enum abstract DebuggerEvent<T:Function>(Event<T>) to Event<T> {
+@:enum abstract DebuggerEvent<T:haxe.Constraints.Function>(Event<T>) to Event<T> {
     var detach = "detach";
     var message = "message";
 }
