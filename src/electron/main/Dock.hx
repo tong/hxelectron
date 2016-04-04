@@ -1,4 +1,9 @@
+/**
+    API v0.37.3
+**/
 package electron.main;
+
+import electron.common.NativeImage;
 
 @:enum abstract BounceType(String) from String to String {
     var critical = "critical";
@@ -7,11 +12,12 @@ package electron.main;
 
 @:jsRequire("Dock")
 extern class Dock {
-    function bounce( ?type : BounceType ) : Void;
-    function cancelBounce( id : Int ) : Void;
-    function setBadge( text : String ) : Void;
-    function getBadge() : String;
-    function hide() : String;
-    function show() : String;
-    function setMenu( menu : Dynamic ) : String; //TODO
+    function bounce(?type : BounceType) : Int;
+    function cancelBounce(id : Int) : Void;
+    function setBadge(text : String) : Void;//OSX
+    function getBadge() : String;//OSX
+    function hide() : String;//OSX
+    function show() : String;//OSX
+    function setMenu(menu : Menu) : String;//OSX
+    function setIcon(image : NativeImage) : Void;//OSX
 }

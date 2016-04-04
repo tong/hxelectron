@@ -1,3 +1,6 @@
+/**
+    API v0.37.3
+**/
 package electron.main;
 
 extern class CommandLine {

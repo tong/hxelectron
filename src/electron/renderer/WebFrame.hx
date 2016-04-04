@@ -1,4 +1,11 @@
+/**
+  API v0.37.3
+**/
 package electron.renderer;
+
+typedef Spellcheck = {
+  var spellcheck : String -> Bool;
+}
 
 @:jsRequire("web-frame")
 extern class WebFrame {
@@ -11,8 +18,6 @@ extern class WebFrame {
   static function registerUrlSchemeAsSecure(scheme : String) : Void;
   static function registerUrlSchemeAsBypassingCsp(scheme : String) : Void;
   static function registerUrlSchemeAsPrivileged(scheme : String) : Void;
+  static function insertText(text : String) : Void;
+  static function executeJavaScript( code:String, ?useGesture:Bool ) : Void;
 }
-
-typedef Spellcheck = {
-  spellcheck : String -> String
-};
