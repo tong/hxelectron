@@ -1,13 +1,13 @@
--cp src
+-lib electron
 -cp demo/src
--lib hxnodejs
--lib npm
 --each
 
 --next
 -js demo/main.js
 -main Main
+-D electron_main
 
 --next
 -js demo/app.js
 -main App
+-D electron_renderer

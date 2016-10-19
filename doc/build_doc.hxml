@@ -1,13 +1,13 @@
--cp ../src
 --no-output
+-lib electron
+-dce no
 -D doc-gen
 -D display
 -D dox
--dce no
--lib hxnodejs
--lib npm
-ImportCore
-
+import.hxml
+--macro include('electron')
 --each
+
+--next
 -xml xml/js.xml
 -js _

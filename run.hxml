@@ -1,0 +1,5 @@
+-neko run.n
+-main Run
+-dce full
+-debug
+#-cmd neko generate.n electron-api.json

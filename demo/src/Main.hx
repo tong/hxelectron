@@ -1,27 +1,23 @@
 
-import electron.main.App;
-import electron.main.BrowserWindow;
-import electron.common.CrashReporter;
-import js.Node.*;
+import electron.BrowserWindow;
 
 class Main {
 
 	static function main() {
 
-		CrashReporter.start({
+		electron.CrashReporter.start({
 			companyName : "hxelectron (not a company)",
 			submitURL : "https://github.com/fponticelli/hxelectron/issues",
 		});
 
-		App.on( window_all_closed, function() {
-			App.quit();
-		});
+		var win : BrowserWindow;
 
-		var mainWindow = null;
-		App.on( ready, function() {
-			mainWindow = new BrowserWindow( { width: 360, height: 700 } );
-			mainWindow.loadURL( 'file://' + __dirname + '/app.html' );
-			mainWindow.on( closed, function() mainWindow = null );
+		electron.App.on( 'ready', function(e) {
+			win = new BrowserWindow( { width: 800, height: 600 } );
+			win.on( electron.BrowserWindowEvent.closed, function(e) {
+				if( js.Node.process.platform != 'darwin' ) electron.App.quit();
+			});
+			win.loadURL( 'file://' + js.Node.__dirname + '/app.html' );
 		});
 	}
 }
