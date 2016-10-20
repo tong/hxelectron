@@ -1,7 +1,7 @@
 atom/
 demo/*.js
 demo/node_modules/*
-doc/pages/
-doc/xml/
+doc/
+all.hxml
 haxedoc.xml
 run.n

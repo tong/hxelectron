@@ -1,6 +1,0 @@
--cmd rm -rf xml/*
--cmd mkdir -p xml
--cmd haxe build_doc.hxml
--cmd rm -rf pages
--cmd haxelib run dox -o pages -i xml --title "electron" -in electron
--cmd static pages
