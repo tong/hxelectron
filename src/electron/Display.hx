@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef Display = {
+@:require(electron) typedef Display = {
 	/**
 		Unique identifier associated with the display.
 	**/

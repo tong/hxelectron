@@ -1,2 +1,2 @@
 package electron;
-@:require("electron") typedef Any = Dynamic;
+@:require(electron) typedef Any = Dynamic;

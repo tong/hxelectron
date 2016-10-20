@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "WebRequest") @:require("electron") extern class WebRequest {
+@:jsRequire("electron", "WebRequest") @:require(electron_main) @:require(electron) extern class WebRequest {
 	/**
 		The listener will be called with listener(details, callback) when a request is about to occur. The uploadData is an array of data objects: The callback has to be called with an response object:
 	**/

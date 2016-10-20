@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "WebContents") @:require("electron") extern class WebContents extends js.node.events.EventEmitter<electron.WebContents> {
+@:jsRequire("electron", "WebContents") @:require(electron_main) @:require(electron) extern class WebContents extends js.node.events.EventEmitter<electron.WebContents> {
 	/**
 		A Integer representing the unique ID of this WebContents.
 	**/

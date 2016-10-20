@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "process") @:require("electron") extern class Process extends js.node.events.EventEmitter<electron.Process> {
+@:jsRequire("electron", "process") @:require(electron_main) @:require(electron) extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
 		Causes the main thread of the current process crash.
 	**/

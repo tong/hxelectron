@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "BrowserWindowProxy") @:require("electron") extern class BrowserWindowProxy {
+@:jsRequire("electron", "BrowserWindowProxy") @:require(electron_renderer) @:require(electron) extern class BrowserWindowProxy {
 	/**
 		A Boolean that is set to true after the child window gets closed.
 	**/

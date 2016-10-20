@@ -1,5 +1,5 @@
 package electron;
-@:enum @:require("electron") abstract AutoUpdaterEvent(String) from String to String {
+@:enum @:require(electron) abstract AutoUpdaterEvent(String) from String to String {
 	/**
 		Emitted when there is an error while updating.
 	**/

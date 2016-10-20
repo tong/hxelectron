@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef ThumbarButton = {
+@:require(electron) typedef ThumbarButton = {
 	/**
 		The icon showing in thumbnail toolbar.
 	**/

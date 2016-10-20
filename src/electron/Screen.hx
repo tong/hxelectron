@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "screen") @:require("electron") extern class Screen extends js.node.events.EventEmitter<electron.Screen> {
+@:jsRequire("electron", "screen") @:require(electron) extern class Screen extends js.node.events.EventEmitter<electron.Screen> {
 	/**
 		The current absolute position of the mouse pointer.
 	**/

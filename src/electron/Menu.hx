@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "Menu") @:require("electron") extern class Menu {
+@:jsRequire("electron", "Menu") @:require(electron_main) @:require(electron) extern class Menu {
 	/**
 		A MenuItem[] array containing the menu's items.
 	**/

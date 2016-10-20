@@ -1,5 +1,5 @@
 package electron;
-@:enum @:require("electron") abstract PowerMonitorEvent(String) from String to String {
+@:enum @:require(electron) abstract PowerMonitorEvent(String) from String to String {
 	/**
 		Emitted when the system is suspending.
 	**/

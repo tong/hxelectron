@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "contentTracing") @:require("electron") extern class ContentTracing {
+@:jsRequire("electron", "contentTracing") @:require(electron_main) @:require(electron) extern class ContentTracing {
 	/**
 		Get a set of category groups. The category groups can change as new code paths are reached. Once all child processes have acknowledged the getCategories request the callback is invoked with an array of category groups.
 	**/

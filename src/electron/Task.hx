@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef Task = {
+@:require(electron) typedef Task = {
 	/**
 		Path of the program to execute, usually you should specify which opens the current program.
 	**/

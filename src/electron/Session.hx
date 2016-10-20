@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "Session") @:require("electron") extern class Session extends js.node.events.EventEmitter<electron.Session> {
+@:jsRequire("electron", "Session") @:require(electron_main) @:require(electron) extern class Session extends js.node.events.EventEmitter<electron.Session> {
 	/**
 		A Cookies object for this session.
 	**/

@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "MenuItem") @:require("electron") extern class MenuItem {
+@:jsRequire("electron", "MenuItem") @:require(electron_main) @:require(electron) extern class MenuItem {
 	/**
 		A Boolean indicating whether the item is enabled, this property can be dynamically changed.
 	**/

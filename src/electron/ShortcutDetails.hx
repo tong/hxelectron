@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef ShortcutDetails = {
+@:require(electron) typedef ShortcutDetails = {
 	/**
 		The target to launch from this shortcut.
 	**/

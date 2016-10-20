@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "Cookies") @:require("electron") extern class Cookies extends js.node.events.EventEmitter<electron.Cookies> {
+@:jsRequire("electron", "Cookies") @:require(electron_main) @:require(electron) extern class Cookies extends js.node.events.EventEmitter<electron.Cookies> {
 	/**
 		Sends a request to get all cookies matching details, callback will be called with callback(error, cookies) on complete. cookies is an Array of cookie objects.
 	**/

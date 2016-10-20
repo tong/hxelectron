@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef JumpListCategory = {
+@:require(electron) typedef JumpListCategory = {
 	/**
 		One of the following:
 	**/

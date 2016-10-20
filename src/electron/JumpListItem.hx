@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef JumpListItem = {
+@:require(electron) typedef JumpListItem = {
 	/**
 		One of the following:
 	**/

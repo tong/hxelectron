@@ -1,5 +1,5 @@
 package electron;
-@:jsRequire("electron", "shell") @:require("electron") extern class Shell {
+@:jsRequire("electron", "shell") @:require(electron) extern class Shell {
 	/**
 		Show the given file in a file manager. If possible, select the file.
 	**/

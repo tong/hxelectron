@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef Certificate = {
+@:require(electron) typedef Certificate = {
 	/**
 		PEM encoded data
 	**/

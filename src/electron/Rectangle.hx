@@ -1,5 +1,5 @@
 package electron;
-@:require("electron") typedef Rectangle = {
+@:require(electron) typedef Rectangle = {
 	/**
 		The x coordinate of the origin of the rectangle
 	**/

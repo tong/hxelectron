@@ -44,9 +44,9 @@ typedef APIMethod = {
 	parameters : Array<APIMethodParameter>
 }
 
-@:enum abstract APIProcess(String) from String to String {
-	var main_ = "main";
-	var renderer = "renderer";
+typedef APIProcess = {
+	var main : Bool;
+	var renderer : Bool;
 }
 
 @:enum abstract APIType(String) from String to String {
@@ -101,6 +101,7 @@ class Run {
 
 			//if( item.name != 'autoUpdater' ) continue;
 			println( '---------------------------- '+item.name );
+			//trace(item.process);
 
 			switch item.type {
 			case class_:
@@ -137,7 +138,7 @@ class Run {
 					}
 				}
 
-				types.push( createClassTypeDefinition( pack, name, sup, fields ) );
+				types.push( createClassTypeDefinition( pack, name, sup, fields, item.process ) );
 
 			case module:
 
@@ -185,7 +186,7 @@ class Run {
 					});
 				}
 
-				types.push( createClassTypeDefinition( pack, name, sup, fields ) );
+				types.push( createClassTypeDefinition( pack, name, sup, fields, item.process ) );
 
 			case structure:
 				types.push({
@@ -221,9 +222,16 @@ class Run {
 
 			type.meta.push({
 				name: ':require',
-				params: [ { expr: EConst( CString( 'electron' ) ), pos: pos } ],
+				params: [ { expr: EConst( CIdent( 'electron' ) ), pos: pos } ],
 				pos: pos
 			});
+			/*
+			type.meta.push({
+				name: ':require',
+				params: [ { expr: EConst( CIdent( 'electron_main' ) ), pos: pos } ],
+				pos: pos
+			});
+			*/
 
 			var pkg = type.pack.join( '.' );
 
@@ -262,23 +270,31 @@ class Run {
 		};
 	}
 
-	static function createClassTypeDefinition( pack : Array<String>, name : String, ?sup : TypePath, fields : Array<Field> ) : TypeDefinition {
+	static function createClassTypeDefinition( pack : Array<String>, name : String, ?sup : TypePath, fields : Array<Field>, process : APIProcess ) : TypeDefinition {
+		var meta = [{
+			name: ":jsRequire",
+			params: [
+				{ expr: EConst( CString( 'electron' ) ), pos: pos },
+				{ expr: EConst( CString( name ) ), pos: pos }
+			],
+			pos: pos
+		}];
+
+		if( !process.main || !process.renderer ) {
+			meta.push({
+				name: ':require',
+				params: [ { expr: EConst( CIdent( if( process.main ) 'electron_main' else 'electron_renderer' ) ), pos: pos } ],
+				pos: pos
+			});
+		}
+
 		return {
 			pack: pack,
 			name: name.charAt( 0 ).toUpperCase() + name.substr( 1 ),
 			isExtern: true,
 			kind: TDClass( sup ),
 			fields: fields,
-			meta: [
-				{
-					name: ":jsRequire",
-					params: [
-						{ expr: EConst( CString( 'electron' ) ), pos: pos },
-						{ expr: EConst( CString( name ) ), pos: pos }
-					],
-					pos: pos
-				}
-			],
+			meta: meta,
 			pos: pos
 		}
 	}

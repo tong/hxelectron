@@ -1,5 +1,5 @@
 package electron;
-@:enum @:require("electron") abstract TrayEvent(String) from String to String {
+@:enum @:require(electron) abstract TrayEvent(String) from String to String {
 	/**
 		Emitted when the tray icon is clicked.
 	**/
