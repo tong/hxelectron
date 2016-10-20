@@ -83,25 +83,30 @@ class Run {
 
 	static var out = 'src';
 	static var pack = [ 'electron' ];
-	static var pos = { min: 0, max: 0, file: '' };
+	static var pos = #if macro null #else { min: 0, max: 0, file: '' } #end;
 
 	static function main() {
 
+		#if macro
+		var file = DEFAULT_API_SOURCE;
+		#else
 		var file = Sys.args()[0];
 		if( file == null ) file = DEFAULT_API_SOURCE;
-		if( !FileSystem.exists( file ) ) error( 'API file not found [$file]' );
+		if( !FileSystem.exists( file ) )
+			error( 'API file not found [$file]' );
+		#end
 
 		var api : API = Json.parse( File.getContent( file ) );
 		var types = new Array<TypeDefinition>();
+
+		pos = cast { min: 0, max: 0, file: "" };
 
 		for( item in api ) {
 
 			var name : String = item.name;
 			var fields = new Array<Field>();
 
-			//if( item.name != 'autoUpdater' ) continue;
 			println( '---------------------------- '+item.name );
-			//trace(item.process);
 
 			switch item.type {
 			case class_:
