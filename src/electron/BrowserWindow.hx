@@ -168,103 +168,103 @@ package electron;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
-	function destroy():Dynamic;
+	function destroy():Void;
 	/**
 		Try to close the window. This has the same effect as a user manually clicking the close button of the window. The web page may cancel the close though. See the close event.
 	**/
-	function close():Dynamic;
+	function close():Void;
 	/**
 		Focuses on the window.
 	**/
-	function focus():Dynamic;
+	function focus():Void;
 	/**
 		Removes focus from the window.
 	**/
-	function blur():Dynamic;
+	function blur():Void;
 	function isFocused():Bool;
 	function isDestroyed():Bool;
 	/**
 		Shows and gives focus to the window.
 	**/
-	function show():Dynamic;
+	function show():Void;
 	/**
 		Shows the window but doesn't focus on it.
 	**/
-	function showInactive():Dynamic;
+	function showInactive():Void;
 	/**
 		Hides the window.
 	**/
-	function hide():Dynamic;
+	function hide():Void;
 	function isVisible():Bool;
 	function isModal():Bool;
 	/**
 		Maximizes the window.
 	**/
-	function maximize():Dynamic;
+	function maximize():Void;
 	/**
 		Unmaximizes the window.
 	**/
-	function unmaximize():Dynamic;
+	function unmaximize():Void;
 	function isMaximized():Bool;
 	/**
 		Minimizes the window. On some platforms the minimized window will be shown in the Dock.
 	**/
-	function minimize():Dynamic;
+	function minimize():Void;
 	/**
 		Restores the window from minimized state to its previous state.
 	**/
-	function restore():Dynamic;
+	function restore():Void;
 	function isMinimized():Bool;
 	/**
 		Sets whether the window should be in fullscreen mode.
 	**/
-	function setFullScreen(flag:Bool):Dynamic;
+	function setFullScreen(flag:Bool):Void;
 	function isFullScreen():Bool;
 	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Just sum any extra width and height areas you have within the overall content view.
 	**/
 	function setAspectRatio(aspectRatio:Float, extraSize:{ @:optional
 	var width : Int; @:optional
-	var height : Int; }):Dynamic;
+	var height : Int; }):Void;
 	/**
 		Resizes and moves the window to the supplied bounds
 	**/
-	function setBounds(bounds:electron.Rectangle, ?animate:Bool):Dynamic;
+	function setBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	function getBounds():electron.Rectangle;
 	/**
 		Resizes and moves the window's client area (e.g. the web page) to the supplied bounds.
 	**/
-	function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Dynamic;
+	function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	function getContentBounds():electron.Rectangle;
 	/**
 		Resizes the window to width and height.
 	**/
-	function setSize(width:Int, height:Int, ?animate:Bool):Dynamic;
+	function setSize(width:Int, height:Int, ?animate:Bool):Void;
 	function getSize():Array<Int>;
 	/**
 		Resizes the window's client area (e.g. the web page) to width and height.
 	**/
-	function setContentSize(width:Int, height:Int, ?animate:Bool):Dynamic;
+	function setContentSize(width:Int, height:Int, ?animate:Bool):Void;
 	function getContentSize():Array<Int>;
 	/**
 		Sets the minimum size of window to width and height.
 	**/
-	function setMinimumSize(width:Int, height:Int):Dynamic;
+	function setMinimumSize(width:Int, height:Int):Void;
 	function getMinimumSize():Array<Int>;
 	/**
 		Sets the maximum size of window to width and height.
 	**/
-	function setMaximumSize(width:Int, height:Int):Dynamic;
+	function setMaximumSize(width:Int, height:Int):Void;
 	function getMaximumSize():Array<Int>;
 	/**
 		Sets whether the window can be manually resized by user.
 	**/
-	function setResizable(resizable:Bool):Dynamic;
+	function setResizable(resizable:Bool):Void;
 	function isResizable():Bool;
 	/**
 		Sets whether the window can be moved by user. On Linux does nothing.
 	**/
-	function setMovable(movable:Bool):Dynamic;
+	function setMovable(movable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -272,7 +272,7 @@ package electron;
 	/**
 		Sets whether the window can be manually minimized by user. On Linux does nothing.
 	**/
-	function setMinimizable(minimizable:Bool):Dynamic;
+	function setMinimizable(minimizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -280,7 +280,7 @@ package electron;
 	/**
 		Sets whether the window can be manually maximized by user. On Linux does nothing.
 	**/
-	function setMaximizable(maximizable:Bool):Dynamic;
+	function setMaximizable(maximizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -288,12 +288,12 @@ package electron;
 	/**
 		Sets whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
 	**/
-	function setFullScreenable(fullscreenable:Bool):Dynamic;
+	function setFullScreenable(fullscreenable:Bool):Void;
 	function isFullScreenable():Bool;
 	/**
 		Sets whether the window can be manually closed by user. On Linux does nothing.
 	**/
-	function setClosable(closable:Bool):Dynamic;
+	function setClosable(closable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -301,21 +301,21 @@ package electron;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
 	**/
-	function setAlwaysOnTop(flag:Bool, level:String):Dynamic;
+	function setAlwaysOnTop(flag:Bool, level:String):Void;
 	function isAlwaysOnTop():Bool;
 	/**
 		Moves window to the center of the screen.
 	**/
-	function center():Dynamic;
+	function center():Void;
 	/**
 		Moves window to x and y.
 	**/
-	function setPosition(x:Int, y:Int, ?animate:Bool):Dynamic;
+	function setPosition(x:Int, y:Int, ?animate:Bool):Void;
 	function getPosition():Array<Int>;
 	/**
 		Changes the title of native window to title.
 	**/
-	function setTitle(title:String):Dynamic;
+	function setTitle(title:String):Void;
 	/**
 		Note: The title of web page can be different from the title of the native window.
 	**/
@@ -323,19 +323,19 @@ package electron;
 	/**
 		Changes the attachment point for sheets on macOS. By default, sheets are attached just below the window frame, but you may want to display them beneath a HTML-rendered toolbar. For example:
 	**/
-	function setSheetOffset(offsetY:Float, ?offsetX:Float):Dynamic;
+	function setSheetOffset(offsetY:Float, ?offsetX:Float):Void;
 	/**
 		Starts or stops flashing the window to attract user's attention.
 	**/
-	function flashFrame(flag:Bool):Dynamic;
+	function flashFrame(flag:Bool):Void;
 	/**
 		Makes the window not show in the taskbar.
 	**/
-	function setSkipTaskbar(skip:Bool):Dynamic;
+	function setSkipTaskbar(skip:Bool):Void;
 	/**
 		Enters or leaves the kiosk mode.
 	**/
-	function setKiosk(flag:Bool):Dynamic;
+	function setKiosk(flag:Bool):Void;
 	function isKiosk():Bool;
 	/**
 		The native type of the handle is HWND on Windows, NSView* on macOS, and Window (unsigned long) on Linux.
@@ -344,35 +344,35 @@ package electron;
 	/**
 		Hooks a windows message. The callback is called when the message is received in the WndProc.
 	**/
-	function hookWindowMessage(message:Int, callback:haxe.Constraints.Function):Dynamic;
+	function hookWindowMessage(message:Int, callback:haxe.Constraints.Function):Void;
 	function isWindowMessageHooked(message:Int):Bool;
 	/**
 		Unhook the window message.
 	**/
-	function unhookWindowMessage(message:Int):Dynamic;
+	function unhookWindowMessage(message:Int):Void;
 	/**
 		Unhooks all of the window messages.
 	**/
-	function unhookAllWindowMessages():Dynamic;
+	function unhookAllWindowMessages():Void;
 	/**
 		Sets the pathname of the file the window represents, and the icon of the file will show in window's title bar.
 	**/
-	function setRepresentedFilename(filename:String):Dynamic;
+	function setRepresentedFilename(filename:String):Void;
 	function getRepresentedFilename():String;
 	/**
 		Specifies whether the window’s document has been edited, and the icon in title bar will become gray when set to true.
 	**/
-	function setDocumentEdited(edited:Bool):Dynamic;
+	function setDocumentEdited(edited:Bool):Void;
 	/**
 		Whether Boolean - Whether the window's document has been edited.
 	**/
-	function isDocumentEdited():Dynamic;
-	function focusOnWebView():Dynamic;
-	function blurWebView():Dynamic;
+	function isDocumentEdited():Void;
+	function focusOnWebView():Void;
+	function blurWebView():Void;
 	/**
 		Same as webContents.capturePage([rect, ]callback).
 	**/
-	function capturePage(rect:electron.Rectangle, callback:haxe.Constraints.Function):Dynamic;
+	function capturePage(rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
 	/**
 		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method:
 	**/
@@ -388,15 +388,15 @@ package electron;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; }):Dynamic;
+	var extraHeaders : String; }):Void;
 	/**
 		Same as webContents.reload.
 	**/
-	function reload():Dynamic;
+	function reload():Void;
 	/**
 		Sets the menu as the window's menu bar, setting it to null will remove the menu bar.
 	**/
-	function setMenu(menu:electron.Menu):Dynamic;
+	function setMenu(menu:electron.Menu):Void;
 	/**
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
@@ -404,15 +404,15 @@ package electron;
 		- Mode for the progress bar (, , , , or )
 	**/
 	@:optional
-	var mode : String; }):Dynamic;
+	var mode : String; }):Void;
 	/**
 		Sets a 16 x 16 pixel overlay onto the current taskbar icon, usually used to convey some sort of application status or to passively notify the user.
 	**/
-	function setOverlayIcon(overlay:electron.NativeImage, description:String):Dynamic;
+	function setOverlayIcon(overlay:electron.NativeImage, description:String):Void;
 	/**
 		Sets whether the window should have a shadow. On Windows and Linux does nothing.
 	**/
-	function setHasShadow(hasShadow:Bool):Dynamic;
+	function setHasShadow(hasShadow:Bool):Void;
 	/**
 		On Windows and Linux always returns true.
 	**/
@@ -424,33 +424,33 @@ package electron;
 	/**
 		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: {x: 0, y: 0, width: 0, height: 0}.
 	**/
-	function setThumbnailClip(region:electron.Rectangle):Dynamic;
+	function setThumbnailClip(region:electron.Rectangle):Void;
 	/**
 		Sets the toolTip that is displayed when hovering over the window thumbnail in the taskbar.
 	**/
-	function setThumbnailToolTip(toolTip:String):Dynamic;
+	function setThumbnailToolTip(toolTip:String):Void;
 	/**
 		Same as webContents.showDefinitionForSelection().
 	**/
-	function showDefinitionForSelection():Dynamic;
+	function showDefinitionForSelection():Void;
 	/**
 		Changes window icon.
 	**/
-	function setIcon(icon:electron.NativeImage):Dynamic;
+	function setIcon(icon:electron.NativeImage):Void;
 	/**
 		Sets whether the window menu bar should hide itself automatically. Once set the menu bar will only show when users press the single Alt key. If the menu bar is already visible, calling setAutoHideMenuBar(true) won't hide it immediately.
 	**/
-	function setAutoHideMenuBar(hide:Bool):Dynamic;
+	function setAutoHideMenuBar(hide:Bool):Void;
 	function isMenuBarAutoHide():Bool;
 	/**
 		Sets whether the menu bar should be visible. If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single Alt key.
 	**/
-	function setMenuBarVisibility(visible:Bool):Dynamic;
+	function setMenuBarVisibility(visible:Bool):Void;
 	function isMenuBarVisible():Bool;
 	/**
 		Sets whether the window should be visible on all workspaces. Note: This API does nothing on Windows.
 	**/
-	function setVisibleOnAllWorkspaces(visible:Bool):Dynamic;
+	function setVisibleOnAllWorkspaces(visible:Bool):Void;
 	/**
 		Note: This API always returns false on Windows.
 	**/
@@ -458,121 +458,121 @@ package electron;
 	/**
 		Makes the window ignore all mouse events. All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events.
 	**/
-	function setIgnoreMouseEvents(ignore:Bool):Dynamic;
+	function setIgnoreMouseEvents(ignore:Bool):Void;
 	/**
 		Prevents the window contents from being captured by other apps. On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with WDA_MONITOR.
 	**/
-	function setContentProtection(enable:Bool):Dynamic;
+	function setContentProtection(enable:Bool):Void;
 	/**
 		Changes whether the window can be focused.
 	**/
-	function setFocusable(focusable:Bool):Dynamic;
+	function setFocusable(focusable:Bool):Void;
 	/**
 		Sets parent as current window's parent window, passing null will turn current window into a top-level window.
 	**/
-	function setParentWindow(parent:electron.BrowserWindow):Dynamic;
+	function setParentWindow(parent:electron.BrowserWindow):Void;
 	function getParentWindow():electron.BrowserWindow;
 	function getChildWindows():Array<BrowserWindow>;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
-	static function destroy():Dynamic;
+	static function destroy():Void;
 	/**
 		Try to close the window. This has the same effect as a user manually clicking the close button of the window. The web page may cancel the close though. See the close event.
 	**/
-	static function close():Dynamic;
+	static function close():Void;
 	/**
 		Focuses on the window.
 	**/
-	static function focus():Dynamic;
+	static function focus():Void;
 	/**
 		Removes focus from the window.
 	**/
-	static function blur():Dynamic;
+	static function blur():Void;
 	static function isFocused():Bool;
 	static function isDestroyed():Bool;
 	/**
 		Shows and gives focus to the window.
 	**/
-	static function show():Dynamic;
+	static function show():Void;
 	/**
 		Shows the window but doesn't focus on it.
 	**/
-	static function showInactive():Dynamic;
+	static function showInactive():Void;
 	/**
 		Hides the window.
 	**/
-	static function hide():Dynamic;
+	static function hide():Void;
 	static function isVisible():Bool;
 	static function isModal():Bool;
 	/**
 		Maximizes the window.
 	**/
-	static function maximize():Dynamic;
+	static function maximize():Void;
 	/**
 		Unmaximizes the window.
 	**/
-	static function unmaximize():Dynamic;
+	static function unmaximize():Void;
 	static function isMaximized():Bool;
 	/**
 		Minimizes the window. On some platforms the minimized window will be shown in the Dock.
 	**/
-	static function minimize():Dynamic;
+	static function minimize():Void;
 	/**
 		Restores the window from minimized state to its previous state.
 	**/
-	static function restore():Dynamic;
+	static function restore():Void;
 	static function isMinimized():Bool;
 	/**
 		Sets whether the window should be in fullscreen mode.
 	**/
-	static function setFullScreen(flag:Bool):Dynamic;
+	static function setFullScreen(flag:Bool):Void;
 	static function isFullScreen():Bool;
 	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Just sum any extra width and height areas you have within the overall content view.
 	**/
 	static function setAspectRatio(aspectRatio:Float, extraSize:{ @:optional
 	var width : Int; @:optional
-	var height : Int; }):Dynamic;
+	var height : Int; }):Void;
 	/**
 		Resizes and moves the window to the supplied bounds
 	**/
-	static function setBounds(bounds:electron.Rectangle, ?animate:Bool):Dynamic;
+	static function setBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	static function getBounds():electron.Rectangle;
 	/**
 		Resizes and moves the window's client area (e.g. the web page) to the supplied bounds.
 	**/
-	static function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Dynamic;
+	static function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	static function getContentBounds():electron.Rectangle;
 	/**
 		Resizes the window to width and height.
 	**/
-	static function setSize(width:Int, height:Int, ?animate:Bool):Dynamic;
+	static function setSize(width:Int, height:Int, ?animate:Bool):Void;
 	static function getSize():Array<Int>;
 	/**
 		Resizes the window's client area (e.g. the web page) to width and height.
 	**/
-	static function setContentSize(width:Int, height:Int, ?animate:Bool):Dynamic;
+	static function setContentSize(width:Int, height:Int, ?animate:Bool):Void;
 	static function getContentSize():Array<Int>;
 	/**
 		Sets the minimum size of window to width and height.
 	**/
-	static function setMinimumSize(width:Int, height:Int):Dynamic;
+	static function setMinimumSize(width:Int, height:Int):Void;
 	static function getMinimumSize():Array<Int>;
 	/**
 		Sets the maximum size of window to width and height.
 	**/
-	static function setMaximumSize(width:Int, height:Int):Dynamic;
+	static function setMaximumSize(width:Int, height:Int):Void;
 	static function getMaximumSize():Array<Int>;
 	/**
 		Sets whether the window can be manually resized by user.
 	**/
-	static function setResizable(resizable:Bool):Dynamic;
+	static function setResizable(resizable:Bool):Void;
 	static function isResizable():Bool;
 	/**
 		Sets whether the window can be moved by user. On Linux does nothing.
 	**/
-	static function setMovable(movable:Bool):Dynamic;
+	static function setMovable(movable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -580,7 +580,7 @@ package electron;
 	/**
 		Sets whether the window can be manually minimized by user. On Linux does nothing.
 	**/
-	static function setMinimizable(minimizable:Bool):Dynamic;
+	static function setMinimizable(minimizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -588,7 +588,7 @@ package electron;
 	/**
 		Sets whether the window can be manually maximized by user. On Linux does nothing.
 	**/
-	static function setMaximizable(maximizable:Bool):Dynamic;
+	static function setMaximizable(maximizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -596,12 +596,12 @@ package electron;
 	/**
 		Sets whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
 	**/
-	static function setFullScreenable(fullscreenable:Bool):Dynamic;
+	static function setFullScreenable(fullscreenable:Bool):Void;
 	static function isFullScreenable():Bool;
 	/**
 		Sets whether the window can be manually closed by user. On Linux does nothing.
 	**/
-	static function setClosable(closable:Bool):Dynamic;
+	static function setClosable(closable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
@@ -609,21 +609,21 @@ package electron;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
 	**/
-	static function setAlwaysOnTop(flag:Bool, level:String):Dynamic;
+	static function setAlwaysOnTop(flag:Bool, level:String):Void;
 	static function isAlwaysOnTop():Bool;
 	/**
 		Moves window to the center of the screen.
 	**/
-	static function center():Dynamic;
+	static function center():Void;
 	/**
 		Moves window to x and y.
 	**/
-	static function setPosition(x:Int, y:Int, ?animate:Bool):Dynamic;
+	static function setPosition(x:Int, y:Int, ?animate:Bool):Void;
 	static function getPosition():Array<Int>;
 	/**
 		Changes the title of native window to title.
 	**/
-	static function setTitle(title:String):Dynamic;
+	static function setTitle(title:String):Void;
 	/**
 		Note: The title of web page can be different from the title of the native window.
 	**/
@@ -631,19 +631,19 @@ package electron;
 	/**
 		Changes the attachment point for sheets on macOS. By default, sheets are attached just below the window frame, but you may want to display them beneath a HTML-rendered toolbar. For example:
 	**/
-	static function setSheetOffset(offsetY:Float, ?offsetX:Float):Dynamic;
+	static function setSheetOffset(offsetY:Float, ?offsetX:Float):Void;
 	/**
 		Starts or stops flashing the window to attract user's attention.
 	**/
-	static function flashFrame(flag:Bool):Dynamic;
+	static function flashFrame(flag:Bool):Void;
 	/**
 		Makes the window not show in the taskbar.
 	**/
-	static function setSkipTaskbar(skip:Bool):Dynamic;
+	static function setSkipTaskbar(skip:Bool):Void;
 	/**
 		Enters or leaves the kiosk mode.
 	**/
-	static function setKiosk(flag:Bool):Dynamic;
+	static function setKiosk(flag:Bool):Void;
 	static function isKiosk():Bool;
 	/**
 		The native type of the handle is HWND on Windows, NSView* on macOS, and Window (unsigned long) on Linux.
@@ -652,35 +652,35 @@ package electron;
 	/**
 		Hooks a windows message. The callback is called when the message is received in the WndProc.
 	**/
-	static function hookWindowMessage(message:Int, callback:haxe.Constraints.Function):Dynamic;
+	static function hookWindowMessage(message:Int, callback:haxe.Constraints.Function):Void;
 	static function isWindowMessageHooked(message:Int):Bool;
 	/**
 		Unhook the window message.
 	**/
-	static function unhookWindowMessage(message:Int):Dynamic;
+	static function unhookWindowMessage(message:Int):Void;
 	/**
 		Unhooks all of the window messages.
 	**/
-	static function unhookAllWindowMessages():Dynamic;
+	static function unhookAllWindowMessages():Void;
 	/**
 		Sets the pathname of the file the window represents, and the icon of the file will show in window's title bar.
 	**/
-	static function setRepresentedFilename(filename:String):Dynamic;
+	static function setRepresentedFilename(filename:String):Void;
 	static function getRepresentedFilename():String;
 	/**
 		Specifies whether the window’s document has been edited, and the icon in title bar will become gray when set to true.
 	**/
-	static function setDocumentEdited(edited:Bool):Dynamic;
+	static function setDocumentEdited(edited:Bool):Void;
 	/**
 		Whether Boolean - Whether the window's document has been edited.
 	**/
-	static function isDocumentEdited():Dynamic;
-	static function focusOnWebView():Dynamic;
-	static function blurWebView():Dynamic;
+	static function isDocumentEdited():Void;
+	static function focusOnWebView():Void;
+	static function blurWebView():Void;
 	/**
 		Same as webContents.capturePage([rect, ]callback).
 	**/
-	static function capturePage(rect:electron.Rectangle, callback:haxe.Constraints.Function):Dynamic;
+	static function capturePage(rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
 	/**
 		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method:
 	**/
@@ -696,15 +696,15 @@ package electron;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; }):Dynamic;
+	var extraHeaders : String; }):Void;
 	/**
 		Same as webContents.reload.
 	**/
-	static function reload():Dynamic;
+	static function reload():Void;
 	/**
 		Sets the menu as the window's menu bar, setting it to null will remove the menu bar.
 	**/
-	static function setMenu(menu:electron.Menu):Dynamic;
+	static function setMenu(menu:electron.Menu):Void;
 	/**
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
@@ -712,15 +712,15 @@ package electron;
 		- Mode for the progress bar (, , , , or )
 	**/
 	@:optional
-	var mode : String; }):Dynamic;
+	var mode : String; }):Void;
 	/**
 		Sets a 16 x 16 pixel overlay onto the current taskbar icon, usually used to convey some sort of application status or to passively notify the user.
 	**/
-	static function setOverlayIcon(overlay:electron.NativeImage, description:String):Dynamic;
+	static function setOverlayIcon(overlay:electron.NativeImage, description:String):Void;
 	/**
 		Sets whether the window should have a shadow. On Windows and Linux does nothing.
 	**/
-	static function setHasShadow(hasShadow:Bool):Dynamic;
+	static function setHasShadow(hasShadow:Bool):Void;
 	/**
 		On Windows and Linux always returns true.
 	**/
@@ -732,33 +732,33 @@ package electron;
 	/**
 		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: {x: 0, y: 0, width: 0, height: 0}.
 	**/
-	static function setThumbnailClip(region:electron.Rectangle):Dynamic;
+	static function setThumbnailClip(region:electron.Rectangle):Void;
 	/**
 		Sets the toolTip that is displayed when hovering over the window thumbnail in the taskbar.
 	**/
-	static function setThumbnailToolTip(toolTip:String):Dynamic;
+	static function setThumbnailToolTip(toolTip:String):Void;
 	/**
 		Same as webContents.showDefinitionForSelection().
 	**/
-	static function showDefinitionForSelection():Dynamic;
+	static function showDefinitionForSelection():Void;
 	/**
 		Changes window icon.
 	**/
-	static function setIcon(icon:electron.NativeImage):Dynamic;
+	static function setIcon(icon:electron.NativeImage):Void;
 	/**
 		Sets whether the window menu bar should hide itself automatically. Once set the menu bar will only show when users press the single Alt key. If the menu bar is already visible, calling setAutoHideMenuBar(true) won't hide it immediately.
 	**/
-	static function setAutoHideMenuBar(hide:Bool):Dynamic;
+	static function setAutoHideMenuBar(hide:Bool):Void;
 	static function isMenuBarAutoHide():Bool;
 	/**
 		Sets whether the menu bar should be visible. If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single Alt key.
 	**/
-	static function setMenuBarVisibility(visible:Bool):Dynamic;
+	static function setMenuBarVisibility(visible:Bool):Void;
 	static function isMenuBarVisible():Bool;
 	/**
 		Sets whether the window should be visible on all workspaces. Note: This API does nothing on Windows.
 	**/
-	static function setVisibleOnAllWorkspaces(visible:Bool):Dynamic;
+	static function setVisibleOnAllWorkspaces(visible:Bool):Void;
 	/**
 		Note: This API always returns false on Windows.
 	**/
@@ -766,19 +766,19 @@ package electron;
 	/**
 		Makes the window ignore all mouse events. All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events.
 	**/
-	static function setIgnoreMouseEvents(ignore:Bool):Dynamic;
+	static function setIgnoreMouseEvents(ignore:Bool):Void;
 	/**
 		Prevents the window contents from being captured by other apps. On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with WDA_MONITOR.
 	**/
-	static function setContentProtection(enable:Bool):Dynamic;
+	static function setContentProtection(enable:Bool):Void;
 	/**
 		Changes whether the window can be focused.
 	**/
-	static function setFocusable(focusable:Bool):Dynamic;
+	static function setFocusable(focusable:Bool):Void;
 	/**
 		Sets parent as current window's parent window, passing null will turn current window into a top-level window.
 	**/
-	static function setParentWindow(parent:electron.BrowserWindow):Dynamic;
+	static function setParentWindow(parent:electron.BrowserWindow):Void;
 	static function getParentWindow():electron.BrowserWindow;
 	static function getChildWindows():Array<BrowserWindow>;
 }

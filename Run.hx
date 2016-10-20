@@ -99,6 +99,7 @@ class Run {
 			var name : String = item.name;
 			var fields = new Array<Field>();
 
+			//if( item.name != 'autoUpdater' ) continue;
 			println( '---------------------------- '+item.name );
 
 			switch item.type {
@@ -287,7 +288,7 @@ class Run {
 		if( access == null ) access = [];
 
 		var name = m.name;
-		var ret = macro : Dynamic;
+		var ret = macro : Void;
 
 		if( m.returns != null )
 			ret = convertType( m.returns.type, m.returns.properties );

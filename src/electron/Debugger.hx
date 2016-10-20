@@ -3,14 +3,14 @@ package electron;
 	/**
 		Attaches the debugger to the webContents.
 	**/
-	function attach(protocolVersion:String):Dynamic;
+	function attach(protocolVersion:String):Void;
 	function isAttached():Bool;
 	/**
 		Detaches the debugger from the webContents.
 	**/
-	function detach():Dynamic;
+	function detach():Void;
 	/**
 		Send given command to the debugging target.
 	**/
-	function sendCommand(method:String, commandParams:Dynamic, callback:haxe.Constraints.Function):Dynamic;
+	function sendCommand(method:String, commandParams:Dynamic, callback:haxe.Constraints.Function):Void;
 }

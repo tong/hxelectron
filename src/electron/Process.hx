@@ -3,15 +3,15 @@ package electron;
 	/**
 		Causes the main thread of the current process crash.
 	**/
-	static function crash():Dynamic;
+	static function crash():Void;
 	/**
 		Causes the main thread of the current process hang.
 	**/
-	static function hang():Dynamic;
+	static function hang():Void;
 	/**
 		Sets the file descriptor soft limit to maxDescriptors or the OS hard limit, whichever is lower for the current process.
 	**/
-	static function setFdLimit(maxDescriptors:Int):Dynamic;
+	static function setFdLimit(maxDescriptors:Int):Void;
 	/**
 		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
 	**/

@@ -3,11 +3,11 @@ package electron;
 	/**
 		Try to close all windows. The before-quit event will be emitted first. If all windows are successfully closed, the will-quit event will be emitted and by default the application will terminate. This method guarantees that all beforeunload and unload event handlers are correctly executed. It is possible that a window cancels the quitting by returning false in the beforeunload event handler.
 	**/
-	static function quit():Dynamic;
+	static function quit():Void;
 	/**
 		Exits immediately with exitCode.  exitCode defaults to 0. All windows will be closed immediately without asking user and the before-quit and will-quit events will not be emitted.
 	**/
-	static function exit(?exitCode:Int):Dynamic;
+	static function exit(?exitCode:Int):Void;
 	/**
 		Relaunches the app when current instance exits. By default the new instance will use the same working directory and command line arguments with current instance. When args is specified, the args will be passed as command line arguments instead. When execPath is specified, the execPath will be executed for relaunch instead of current app. Note that this method does not quit the app when executed, you have to call app.quit or app.exit after calling app.relaunch to make the app restart. When app.relaunch is called for multiple times, multiple instances will be started after current instance exited. An example of restarting current instance immediately and adding a new command line argument to the new instance:
 	**/
@@ -19,20 +19,20 @@ package electron;
 		(optional)
 	**/
 	@:optional
-	var execPath : String; }):Dynamic;
+	var execPath : String; }):Void;
 	static function isReady():Bool;
 	/**
 		On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses on the application's first window.
 	**/
-	static function focus():Dynamic;
+	static function focus():Void;
 	/**
 		Hides all application windows without minimizing them.
 	**/
-	static function hide():Dynamic;
+	static function hide():Void;
 	/**
 		Shows application windows after they were hidden. Does not automatically focus them.
 	**/
-	static function show():Dynamic;
+	static function show():Void;
 	static function getAppPath():String;
 	/**
 		You can request the following paths by the name:
@@ -41,7 +41,7 @@ package electron;
 	/**
 		Overrides the path to a special directory or file associated with name. If the path specifies a directory that does not exist, the directory will be created by this method. On failure an Error is thrown. You can only override paths of a name defined in app.getPath. By default, web pages' cookies and caches will be stored under the userData directory. If you want to change this location, you have to override the userData path before the ready event of the app module is emitted.
 	**/
-	static function setPath(name:String, path:String):Dynamic;
+	static function setPath(name:String, path:String):Void;
 	static function getVersion():String;
 	/**
 		Usually the name field of package.json is a short lowercased name, according to the npm modules spec. You should usually also specify a productName field, which is your application's full capitalized name, and which will be preferred over name by Electron.
@@ -50,7 +50,7 @@ package electron;
 	/**
 		Overrides the current application's name.
 	**/
-	static function setName(name:String):Dynamic;
+	static function setName(name:String):Void;
 	/**
 		Note: When distributing your packaged app, you have to also ship the locales folder. Note: On Windows you have to call it after the ready events gets emitted.
 	**/
@@ -58,11 +58,11 @@ package electron;
 	/**
 		Adds path to the recent documents list. This list is managed by the OS. On Windows you can visit the list from the task bar, and on macOS you can visit it from dock menu.
 	**/
-	static function addRecentDocument(path:String):Dynamic;
+	static function addRecentDocument(path:String):Void;
 	/**
 		Clears the recent documents list.
 	**/
-	static function clearRecentDocuments():Dynamic;
+	static function clearRecentDocuments():Void;
 	/**
 		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with your-protocol:// will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter. On Windows you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches. Note: On macOS, you can only register protocols that have been added to your app's info.plist, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
 	**/
@@ -91,24 +91,24 @@ package electron;
 	/**
 		Sets or removes a custom Jump List for the application, and returns one of the following strings: If categories is null the previously set custom Jump List (if any) will be replaced by the standard Jump List for the app (managed by Windows). JumpListCategory objects should have the following properties: Note: If a JumpListCategory object has neither the type nor the name property set then its type is assumed to be tasks. If the name property is set but the type property is omitted then the type is assumed to be custom. Note: Users can remove items from custom categories, and Windows will not allow a removed item to be added back into a custom category until after the next successful call to app.setJumpList(categories). Any attempt to re-add a removed item to a custom category earlier than that will result in the entire custom category being omitted from the Jump List. The list of removed items can be obtained using app.getJumpListSettings(). JumpListItem objects should have the following properties: Here's a very simple example of creating a custom Jump List:
 	**/
-	static function setJumpList(categories:Array<JumpListCategory>):Dynamic;
+	static function setJumpList(categories:Array<JumpListCategory>):Void;
 	/**
 		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. callback will be called with callback(argv, workingDirectory) when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. The callback is guaranteed to be executed after the ready event of app gets emitted. This method returns false if your process is the primary instance of the application and your app should continue loading. And returns true if your process has sent its parameters to another instance, and you should immediately quit. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
 	**/
-	static function makeSingleInstance(callback:haxe.Constraints.Function):Dynamic;
+	static function makeSingleInstance(callback:haxe.Constraints.Function):Void;
 	/**
 		Releases all locks that were created by makeSingleInstance. This will allow multiple instances of the application to once again run side by side.
 	**/
-	static function releaseSingleInstance():Dynamic;
+	static function releaseSingleInstance():Void;
 	/**
 		Creates an NSUserActivity and sets it as the current activity. The activity is eligible for Handoff to another device afterward.
 	**/
-	static function setUserActivity(type:String, userInfo:Dynamic, webpageURL:String):Dynamic;
+	static function setUserActivity(type:String, userInfo:Dynamic, webpageURL:String):Void;
 	static function getCurrentActivityType():String;
 	/**
 		Changes the Application User Model ID to id.
 	**/
-	static function setAppUserModelId(id:String):Dynamic;
+	static function setAppUserModelId(id:String):Void;
 	/**
 		Imports the certificate in pkcs12 format into the platform certificate store. callback is called with the result of import operation, a value of 0 indicates success while any other value indicates failure according to chromium net_error_list.
 	**/
@@ -120,11 +120,11 @@ package electron;
 		Passphrase for the certificate.
 	**/
 	@:optional
-	var password : String; }, callback:haxe.Constraints.Function):Dynamic;
+	var password : String; }, callback:haxe.Constraints.Function):Void;
 	/**
 		Disables hardware acceleration for current app. This method can only be called before app is ready.
 	**/
-	static function disableHardwareAcceleration():Dynamic;
+	static function disableHardwareAcceleration():Void;
 	/**
 		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the exsistence of a .desktop file to work, for more information please read Desktop Environment Integration.
 	**/
@@ -166,7 +166,7 @@ package electron;
 		to open the app as hidden. Defaults to . The user can edit this setting from the System Preferences so should be checked when the app is opened to know the current value. This setting is only supported on macOS.
 	**/
 	@:optional
-	var openAsHidden : Bool; }):Dynamic;
+	var openAsHidden : Bool; }):Void;
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.
@@ -191,40 +191,40 @@ package electron;
 		(optional) - The app's build version number.
 	**/
 	@:optional
-	var version : String; }):Dynamic;
+	var version : String; }):Void;
 	/**
 		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv, and is mainly used by developers to control some low-level Chromium behaviors.
 	**/
-	static function appendSwitch(switch_:String, value:String):Dynamic;
+	static function appendSwitch(switch_:String, value:String):Void;
 	/**
 		Append an argument to Chromium's command line. The argument will be quoted correctly. Note: This will not affect process.argv.
 	**/
-	static function appendArgument(value:String):Dynamic;
+	static function appendArgument(value:String):Void;
 	/**
 		When critical is passed, the dock icon will bounce until either the application becomes active or the request is canceled. When informational is passed, the dock icon will bounce for one second. However, the request remains active until either the application becomes active or the request is canceled. Returns an ID representing the request.
 	**/
-	static function bounce(type:String):Dynamic;
+	static function bounce(type:String):Void;
 	/**
 		Cancel the bounce of id.
 	**/
-	static function cancelBounce(id:Int):Dynamic;
+	static function cancelBounce(id:Int):Void;
 	/**
 		Bounces the Downloads stack if the filePath is inside the Downloads folder.
 	**/
-	static function downloadFinished(filePath:String):Dynamic;
+	static function downloadFinished(filePath:String):Void;
 	/**
 		Sets the string to be displayed in the dock’s badging area.
 	**/
-	static function setBadge(text:String):Dynamic;
+	static function setBadge(text:String):Void;
 	static function getBadge():String;
 	static function isVisible():Bool;
 	/**
 		Sets the application's dock menu.
 	**/
-	static function setMenu(menu:electron.Menu):Dynamic;
+	static function setMenu(menu:electron.Menu):Void;
 	/**
 		Sets the image associated with this dock icon.
 	**/
-	static function setIcon(image:electron.NativeImage):Dynamic;
+	static function setIcon(image:electron.NativeImage):Void;
 	static function on(eventType:Dynamic, callback:Dynamic -> Void):Void;
 }

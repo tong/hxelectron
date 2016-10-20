@@ -19,7 +19,7 @@ package electron;
 	/**
 		Marks the image as a template image.
 	**/
-	function setTemplateImage(option:Bool):Dynamic;
+	function setTemplateImage(option:Bool):Void;
 	function isTemplateImage():Bool;
 	function crop(rect:{ @:optional
 	var x : Int; @:optional

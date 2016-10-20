@@ -24,7 +24,7 @@ package electron;
 		An object you can define that will be sent along with the report. Only string properties are sent correctly, Nested objects are not supported.
 	**/
 	@:optional
-	var extra : { }; }):Dynamic;
+	var extra : { }; }):Void;
 	/**
 		Returns the date and ID of the last crash report. If no crash reports have been sent or the crash reporter has not been started, null is returned.
 	**/
