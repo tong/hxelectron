@@ -27,9 +27,18 @@ package electron;
 	/**
 		If only the height or the width are specified then the current aspect ratio will be preserved in the resized image.
 	**/
-	function resize(options:{ @:optional
-	var width : Int; @:optional
-	var height : Int; @:optional
+	function resize(options:{ /**
+		(optional)
+	**/
+	@:optional
+	var width : Int; /**
+		(optional)
+	**/
+	@:optional
+	var height : Int; /**
+		(optional) - The desired quality of the resize image. Possible values are , or . The default is . These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
+	**/
+	@:optional
 	var quality : String; }):electron.NativeImage;
 	function getAspectRatio():Float;
 }

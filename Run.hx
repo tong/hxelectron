@@ -8,6 +8,72 @@ import Sys.println;
 
 using StringTools;
 
+typedef APIProperty = {
+	name : String,
+	type : String,
+	?description : String,
+	?properties : Array<APIProperty>
+}
+
+typedef APIInstanceEvent = {
+	name : String,
+	?description : String,
+	returns : Array<APIReturn>
+}
+
+typedef APIMethodParameter = {
+	name : String,
+	type : String,
+	description : String,
+	properties : Array<APIProperty>
+}
+
+typedef APIReturn = {
+	name : String,
+	type : String,
+	description : String,
+	?properties : Array<APIProperty>
+}
+
+typedef APIMethod = {
+	name : String,
+	signature : String,
+	description : String,
+	returns : APIReturn,
+	parameters : Array<APIMethodParameter>
+}
+
+@:enum abstract APIProcess(String) from String to String {
+	var main_ = "main";
+	var renderer = "renderer";
+}
+
+@:enum abstract APIType(String) from String to String {
+	var module = "Module";
+	var class_ = "Class";
+	var structure = "Structure";
+}
+
+typedef APIItem = {
+	name : String,
+	description : String,
+	process : APIProcess,
+	type : APIType,
+	slug : String,
+	websiteUrl : String,
+	repoUrl : String,
+	methods : Array<APIMethod>,
+	?instanceEvents : Array<APIInstanceEvent>,
+	?instanceName : String,
+	?instanceProperties : Array<APIProperty>,
+	?instanceMethods : Array<APIMethod>,
+	?constructorMethod : APIMethod,
+	?staticMethods : Array<APIMethod>,
+	?properties : Array<APIProperty>,
+};
+
+typedef API = Array<APIItem>;
+
 class Run {
 
 	static var DEFAULT_API_SOURCE = 'electron-api.json';
@@ -15,9 +81,7 @@ class Run {
 
 	static var out = 'src';
 	static var pack = [ 'electron' ];
-
 	static var pos = { min: 0, max: 0, file: '' };
-	static var printer : haxe.macro.Printer;
 
 	static function main() {
 
@@ -25,38 +89,34 @@ class Run {
 		if( file == null ) file = DEFAULT_API_SOURCE;
 		if( !FileSystem.exists( file ) ) error( 'API file not found [$file]' );
 
-		var api : Array<Dynamic> = Json.parse( File.getContent( file ) );
+		var api : API = Json.parse( File.getContent( file ) );
 		var types = new Array<TypeDefinition>();
 
 		for( item in api ) {
 
-			//if( item.name != 'BrowserWindow' ) continue;
-			//println("------------------------------------------------------- "+item.type+'\t'+item.name );
-			//traceJson( item );
-
 			var name : String = item.name;
 			var fields = new Array<Field>();
 
+			println( '---------------------------- '+item.name );
+
 			switch item.type {
+			case class_:
 
-			case 'Class':
-
-				var sup = null;
+				var sup : TypePath = null;
 
 				if( item.instanceEvents != null ) {
 
 					sup = {
-						pack: ['js','node','events'],
-						name: 'EventEmitter',
-						params: [TPType(TPath( { name: name, pack:pack } ) )]
+						pack: ['js','node','events'], name: 'EventEmitter',
+						params: [TPType(TPath( { pack: pack, name: name } ) )]
 					};
 
 					var efields = new Array<Field>();
-					for( e in cast( item.instanceEvents, Array<Dynamic> ) ) {
-						var name : String = e.name;
+					for( e in item.instanceEvents ) {
+						var ename : String = e.name;
 						efields.push({
-							name: name.replace( '-', '_' ),
-							kind: FVar( macro : String, { expr: EConst(CString(name)), pos: pos } ),
+							name: ename.replace( '-', '_' ),
+							kind: FVar( macro : String, { expr: EConst(CString(ename)), pos: pos } ),
 							doc: e.description,
 							pos: pos
 						});
@@ -70,65 +130,35 @@ class Run {
 						pos: pos
 					});
 				}
-
 				if( item.instanceProperties != null ) {
-					for( p in cast( item.instanceProperties, Array<Dynamic> ) ) {
-						//TODO
-						trace(p);
-						//f.access.push( AStatic );
+					for( p in item.instanceProperties ) {
 						fields.push( {
-							pos: pos,
 							name: p.name,
 							doc: p.description,
-							kind: FVar( macro:Dynamic )
+							kind: FVar( macro : Dynamic ), //TODO types of properties not availabale in description
+							pos: pos
 						} );
 					}
 				}
-
 				if( item.constructorMethod != null ) {
 					fields.push( convertMethod( item.constructorMethod ) );
 				}
-
 				if( item.instanceMethods != null ) {
-					for( m in cast( item.instanceMethods, Array<Dynamic> ) ) {
-						fields.push( convertMethod( m ) );
-					}
+					for( m in item.instanceMethods )
+						fields.push( convertMethod(m) );
 				}
-
 				if( item.staticMethods != null ) {
-					for( m in cast( item.staticMethods, Array<Dynamic> ) ) {
-						var f = convertMethod( m );
-						f.access.push( AStatic );
-						fields.push( f );
+					for( m in item.instanceMethods ) {
+						fields.push( convertMethod( m, [AStatic] ) );
 					}
 				}
 
-				types.push( {
-	                pos: pos,
-	                pack: pack,
-	                name: name,
-	                isExtern: true,
-	                kind: TDClass( sup ),
-	                fields: fields,
-					meta: [
-						{
-							name: ":jsRequire",
-							params: [
-								{ expr: EConst( CString( 'electron' ) ), pos: pos },
-								{ expr: EConst( CString( item.name ) ), pos: pos }
-							],
-							pos: pos
-						}
-					]
-	            } );
+				types.push( createClassTypeDefinition( pack, name, sup, fields ) );
 
-			case 'Module':
-
-				name = name.charAt( 0 ).toUpperCase() + name.substr( 1 );
-				var sup = null;
+			case module:
 
 				if( item.methods != null ) {
-					for( m in cast( item.methods, Array<Dynamic> ) ) {
+					for( m in item.methods ) {
 						var alreadyAdded = false;
 						for( f in fields ) {
 							if( f.name == m.name ) {
@@ -139,36 +169,13 @@ class Run {
 						if( alreadyAdded ) {
 							warning( 'Duplicate module method name: '+item.name+'.'+m.name );
 						} else {
-							var f = convertMethod( m );
-							f.access.push( AStatic );
-							fields.push( f );
+							fields.push( convertMethod( m, [AStatic] ) );
 						}
 					}
 				}
 
-				if( item.events != null ) {
-					//TODO is eventemitter
-					/*
-					sup = {
-						name: 'EventEmitter',
-						pack: ['js','node','events'],
-						params: [TPType(TPath( { name: name, pack:pack } ) )]
-					};
-					*/
-
-					//TPath( { name:'EventEmitter', pack:['js','node'] } );
-
-					/*
-					for( e in cast( item.events, Array<Dynamic> ) ) {
-						trace(e);
-					}
-					*/
-				}
-
-				///////////////////////////
-				//TODO
-				//if( EVENT_EMITTER_SUB_MODULES.indexOf( name ) != -1 ) {
-				if( name == 'App' ) {
+				/////// TODO / HACK
+				if( name == 'app' ) {
 					fields.push({
 						{
 							name: 'on',
@@ -183,63 +190,35 @@ class Run {
 					});
 				}
 
-				/*
-				if( name == 'App' ) {
-					sup = {
-						pack: [],
-						name: 'js.node.events.EventEmitter',
-						params: [
-							TPType( TPath( { pack: [], name: name } ) )
-						]
-					};
-				}
-				*/
+				types.push( createClassTypeDefinition( pack, name, fields ) );
 
-				types.push( {
-	                pos: pos,
-	                pack: ["electron"],
-	                name: name,
-	                isExtern: true,
-	                kind: TDClass( sup ),
-	                fields: fields,
-	                meta: [
+			case structure:
+				types.push({
+					pos: pos,
+					pack: pack,
+					name: item.name,
+					kind: TDStructure,
+					fields: [for( p in item.properties )
 						{
-							name: ":jsRequire",
-							params: [
-								{ expr: EConst( CString( 'electron' ) ), pos: pos },
-								{ expr: EConst( CString( item.name ) ), pos: pos }
-							],
+							name: p.name,
+							doc: p.description,
+							kind: FVar( convertType( p.type, p.properties ) ),
 							pos: pos
 						}
 					]
-	            } );
-
-			case 'Structure':
-				types.push( {
-	                pos: pos,
-	                pack: ["electron"],
-	                name: item.name,
-	                //isExtern: true,
-	                kind: TDStructure,
-	                fields: fields,
-	                meta: []
-	            } );
-
-			default:
-				trace( "?????" );
+				});
 			}
 		}
 
 		/////// TODO / HACK missing from api description
 		types.push({ pack: pack, name: 'Accelerator', kind: TDAlias(macro:Dynamic), fields: [], meta: [], pos: pos });
 		types.push({ pack: pack, name: 'Any', kind: TDAlias(macro:Dynamic), fields: [], meta: [], pos: pos });
+		//////////////////////////////////////////
 
-		if( !FileSystem.exists( out ) )
-			FileSystem.createDirectory( out );
+		if( !FileSystem.exists( out ) ) FileSystem.createDirectory( out );
 
-		printer = new haxe.macro.Printer();
-
-		var typePaths = new Array();
+		var printer = new haxe.macro.Printer();
+		var typePaths = new Array<String>();
 
 		for( type in types ) {
 
@@ -251,75 +230,82 @@ class Run {
 				pos: pos
 			});
 
-			/*
-			if( item.process.main ) {
-				meta.push({
-					pos: pos,
-					name: ':require',
-					params: [
-						{ expr: EConst( CString( 'electron_main' ) ), pos: pos }
-					]
-				});
-			}
-			if( item.process.renderer ) {
-				meta.push({
-					pos: pos,
-					name: ':require',
-					params: [
-						{ expr: EConst( CString( 'electron_renderer' ) ), pos: pos }
-					]
-				});
-			}
-			*/
-
 			var pkg = type.pack.join( '.' );
-			typePaths.push( pkg+'.'+type.name );
 
-			var dir = out + '/' + pkg;
+			typePaths.push( '$pkg.${type.name}' );
+
+			var dir = '$out/$pkg';
 			if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
-			File.saveContent( dir + '/' + type.name + '.hx', printer.printTypeDefinition( type ) );
+			//trace('$dir/${type.name}.hx');
+			var code = printer.printTypeDefinition( type );
+			File.saveContent( '$dir/${type.name}.hx', code );
 		}
 
-		File.saveContent( 'doc/import.hxml', typePaths.join( '\n' ) );
+		File.saveContent( 'all.hxml', typePaths.join( '\n' ) );
 
-		println( 'Generated '+types.length+' types.' );
+		println( 'Generated [${types.length}] types into [$out]' );
 	}
 
-	static function convertMethod( m : Dynamic ) : Field {
+	static function createClassTypeDefinition( pack : Array<String>, name : String, ?sup : TypePath, fields : Array<Field> ) : TypeDefinition {
+		return {
+			pack: pack,
+			name: name.charAt( 0 ).toUpperCase() + name.substr( 1 ),
+			isExtern: true,
+			kind: TDClass( sup ),
+			fields: fields,
+			meta: [
+				{
+					name: ":jsRequire",
+					params: [
+						{ expr: EConst( CString( 'electron' ) ), pos: pos },
+						{ expr: EConst( CString( name ) ), pos: pos }
+					],
+					pos: pos
+				}
+			],
+			pos: pos
+		}
+	}
 
-		var returnType = macro : Dynamic;
-		if( m.name == null || m.name == "constructor" || m.returns == null )
-            returnType = macro : Void;
-		if( m.returns != null ) {
-			returnType = convertType( m.returns.type );
+	static function convertMethod( m : APIMethod, ?access : Array<Access> ) : Field {
+
+		if( access == null ) access = [];
+
+		var name = m.name;
+		var ret = macro : Dynamic;
+
+		if( name == null || m.returns == null ) {
+			ret = macro : Void;
+		} else {
+			if( m.returns != null ) ret = convertType( m.returns.type );
 		}
 
 		var args = new Array<FunctionArg>();
-		if( m.parameters!= null ) {
-            for( param in cast( m.parameters, Array<Dynamic> ) ) {
+		if( m.parameters != null ) {
+			for( p in m.parameters ) {
 				args.push( {
-					name: escapeName( param.name ),
-					type: convertType( param.type, param.properties ),
-					opt: (param.description == '(optional)')
+					name: escapeName( p.name ),
+					type: convertType( p.type, p.properties ),
+					opt: (p.description == '(optional)')
 				} );
 			}
 		}
 
 		return {
 			pos: pos,
-			access: [],
+			access: access,
 			name: (m.name == null) ? 'new' : m.name,
-            kind: FFun( { args: args, ret: returnType, expr: null } ),
+            kind: FFun( { args: args, ret: ret, expr: null } ),
             doc: m.description
         };
 	}
 
 	static function convertType( type : String, ?properties : Array<Dynamic> ) : ComplexType {
 
-		var c0 = type.charAt( 0 );
-		if( c0 == c0.toLowerCase() ) {
+		var fchar = type.charAt( 0 );
+		if( fchar == fchar.toLowerCase() ) {
 			warning( '??? lowercase type name: '+type );
-			type = type.charAt(0).toUpperCase() + type.substr(1);
+			type = fchar.toUpperCase() + type.substr( 1 );
 		}
 
 		var isArray = if( type.endsWith( '[]' ) ) {
@@ -328,40 +314,31 @@ class Run {
 		} else false;
 
 		var ctype = switch type {
-		case "Array":
-			macro : Array<Dynamic>;
 		case 'Bool','Boolean':
 			macro : Bool;
 		case 'Buffer':
 			macro : js.node.Buffer;
-		case 'Function':
-			if( properties != null ) {
-                    var args = [for(prop in properties) convertType( prop.type, prop.properties )];
-                    var ret = macro : Dynamic;
-                    TFunction( args, ret );
-                } else {
-                    macro : haxe.Constraints.Function;
-                }
-
 		case 'Int','Integer':
 			macro : Int;
 		case 'Double','Float','Number':
 			macro : Float;
+		case 'Function':
+			if( properties == null )
+				macro : haxe.Constraints.Function;
+			else
+				TFunction(
+					[for(prop in properties) convertType( prop.type, prop.properties )],
+					macro : Dynamic
+				);
 		case 'Object':
-			if( properties == null ) {
-				macro : Dynamic;
-				//macro : Dynamic<Dynamic>;
-			} else {
-				var fields = new Array<Field>();
-				for( prop in properties ) {
-					fields.push({
-						pos: pos,
-						name: escapeName( prop.name ),
-						kind: FVar( convertType( prop.type, prop.properties ) ),
-						meta: [ { name: ":optional", pos: pos } ]
-					});
-				}
-				TAnonymous( fields );
+			if( properties == null ) macro : Dynamic else {
+				TAnonymous( [for(p in properties){
+					name: escapeName( p.name ),
+					kind: FVar( convertType( p.type, p.properties ) ),
+					meta: [ { name: ":optional", pos: pos } ], //TODO
+					pos: pos,
+					doc: p.description
+				}] );
 			}
 		case 'String':
 			macro : String;
@@ -371,13 +348,7 @@ class Run {
 			//macro : js.node.Url;
 			//macro : js.html.URL;
 		default:
-			/*
-			var c0 = type.charAt( 0 );
-			if( c0 == c0.toLowerCase() ) {
-				warning( '??? Type name starts with lowercase character: '+type );
-				macro : Dynamic;
-			}
-			*/
+			//macro : Dynamic;
 			TPath( { pack: pack, name: type } );
 		}
 
@@ -393,12 +364,6 @@ class Run {
 		return (KWDS.indexOf( n ) != -1) ? n+'_' : n;
 	}
 
-	static function saveModule( type : TypeDefinition ) {
-		var dir = out + '/' + type.pack.join( '.' );
-		if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
-		File.saveContent( dir + '/' + type.name + '.hx', printer.printTypeDefinition( type ) );
-	}
-
 	static function warning( msg : String ) {
 		println( '!!! WARNING '+msg );
 	}
@@ -406,9 +371,5 @@ class Run {
 	static function error( info : String, code = -1 ) {
 		println( info );
 		Sys.exit( code );
-	}
-
-	static inline function traceJson( obj : Dynamic, sep = '  ' ) {
-		trace( haxe.format.JsonPrinter.print( obj, sep ) );
 	}
 }

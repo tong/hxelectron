@@ -23,9 +23,18 @@ package electron;
 	/**
 		Loads the url in the window. The url must contain the protocol prefix, e.g. the http:// or file://. If the load should bypass http cache then use the pragma header to achieve it.
 	**/
-	function loadURL(url:String, ?options:{ @:optional
-	var httpReferrer : String; @:optional
-	var userAgent : String; @:optional
+	function loadURL(url:String, ?options:{ /**
+		A HTTP Referrer url.
+	**/
+	@:optional
+	var httpReferrer : String; /**
+		A user agent originating the request.
+	**/
+	@:optional
+	var userAgent : String; /**
+		Extra headers separated by "\n"
+	**/
+	@:optional
 	var extraHeaders : String; }):Void;
 	/**
 		Initiates a download of the resource at url without navigating. The will-download event of session will be triggered.
@@ -167,11 +176,26 @@ package electron;
 	/**
 		Starts a request to find all matches for the text in the web page and returns an Integer representing the request id used for the request. The result of the request can be obtained by subscribing to found-in-page event.
 	**/
-	function findInPage(text:String, ?options:{ @:optional
-	var forward : Bool; @:optional
-	var findNext : Bool; @:optional
-	var matchCase : Bool; @:optional
-	var wordStart : Bool; @:optional
+	function findInPage(text:String, ?options:{ /**
+		Whether to search forward or backward, defaults to .
+	**/
+	@:optional
+	var forward : Bool; /**
+		Whether the operation is first request or a follow up, defaults to .
+	**/
+	@:optional
+	var findNext : Bool; /**
+		Whether search should be case-sensitive, defaults to .
+	**/
+	@:optional
+	var matchCase : Bool; /**
+		Whether to look only at the start of words. defaults to .
+	**/
+	@:optional
+	var wordStart : Bool; /**
+		When combined with , accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to .
+	**/
+	@:optional
 	var medialCapitalAsWordStart : Bool; }):Void;
 	/**
 		Stops any findInPage request for the webContents with the provided action.
@@ -192,17 +216,38 @@ package electron;
 	/**
 		Prints window's web page. When silent is set to true, Electron will pick up system's default printer and default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({silent: false, printBackground: false}). Use page-break-before: always; CSS style to force to print to a new page.
 	**/
-	function print(?options:{ @:optional
-	var silent : Bool; @:optional
+	function print(?options:{ /**
+		Don't ask user for print settings. Default is .
+	**/
+	@:optional
+	var silent : Bool; /**
+		Also prints the background color and image of the web page. Default is .
+	**/
+	@:optional
 	var printBackground : Bool; }):Void;
 	/**
 		Prints window's web page as PDF with Chromium's preview printing custom settings. The callback will be called with callback(error, data) on completion. The data is a Buffer that contains the generated PDF data. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
 	**/
-	function printToPDF(options:{ @:optional
-	var marginsType : Int; @:optional
-	var pageSize : String; @:optional
-	var printBackground : Bool; @:optional
-	var printSelectionOnly : Bool; @:optional
+	function printToPDF(options:{ /**
+		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+	**/
+	@:optional
+	var marginsType : Int; /**
+		Specify page size of the generated PDF. Can be , , , , , or an Object containing and in microns.
+	**/
+	@:optional
+	var pageSize : String; /**
+		Whether to print CSS backgrounds.
+	**/
+	@:optional
+	var printBackground : Bool; /**
+		Whether to print selection only.
+	**/
+	@:optional
+	var printSelectionOnly : Bool; /**
+		for landscape, for portrait.
+	**/
+	@:optional
 	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
@@ -215,7 +260,10 @@ package electron;
 	/**
 		Opens the devtools.
 	**/
-	function openDevTools(?options:{ @:optional
+	function openDevTools(?options:{ /**
+		Opens the devtools with specified dock state, can be , , , . Defaults to last used dock state. In mode it's possible to dock back. In mode it's not.
+	**/
+	@:optional
 	var mode : String; }):Void;
 	/**
 		Closes the devtools.
@@ -242,22 +290,70 @@ package electron;
 	/**
 		Enable device emulation with the given parameters.
 	**/
-	function enableDeviceEmulation(parameters:{ @:optional
-	var screenPosition : String; @:optional
-	var screenSize : { @:optional
-	var width : Int; @:optional
-	var height : Int; }; @:optional
-	var viewPosition : { @:optional
-	var x : Int; @:optional
-	var y : Int; }; @:optional
-	var deviceScaleFactor : Int; @:optional
-	var viewSize : { @:optional
-	var width : Int; @:optional
-	var height : Int; }; @:optional
-	var fitToView : Bool; @:optional
-	var offset : { @:optional
-	var x : Float; @:optional
-	var y : Float; }; @:optional
+	function enableDeviceEmulation(parameters:{ /**
+		Specify the screen type to emulate (default: )
+	**/
+	@:optional
+	var screenPosition : String; /**
+		Set the emulated screen size (screenPosition == mobile)
+	**/
+	@:optional
+	var screenSize : { /**
+		Set the emulated screen width
+	**/
+	@:optional
+	var width : Int; /**
+		Set the emulated screen height
+	**/
+	@:optional
+	var height : Int; }; /**
+		Position the view on the screen (screenPosition == mobile) (default: )
+	**/
+	@:optional
+	var viewPosition : { /**
+		Set the x axis offset from top left corner
+	**/
+	@:optional
+	var x : Int; /**
+		Set the y axis offset from top left corner
+	**/
+	@:optional
+	var y : Int; }; /**
+		Set the device scale factor (if zero defaults to original device scale factor) (default: )
+	**/
+	@:optional
+	var deviceScaleFactor : Int; /**
+		Set the emulated view size (empty means no override)
+	**/
+	@:optional
+	var viewSize : { /**
+		Set the emulated view width
+	**/
+	@:optional
+	var width : Int; /**
+		Set the emulated view height
+	**/
+	@:optional
+	var height : Int; }; /**
+		Whether emulated view should be scaled down if necessary to fit into available space (default: )
+	**/
+	@:optional
+	var fitToView : Bool; /**
+		Offset of the emulated view inside available space (not in fit to view mode) (default: )
+	**/
+	@:optional
+	var offset : { /**
+		Set the x axis offset from top left corner
+	**/
+	@:optional
+	var x : Float; /**
+		Set the y axis offset from top left corner
+	**/
+	@:optional
+	var y : Float; }; /**
+		Scale of emulated view inside available space (not in fit to view mode) (default: )
+	**/
+	@:optional
 	var scale : Float; }):Void;
 	/**
 		Disable device emulation enabled by webContents.enableDeviceEmulation.
@@ -266,8 +362,14 @@ package electron;
 	/**
 		Sends an input event to the page. For keyboard events, the event object also have following properties: For mouse events, the event object also have following properties: For the mouseWheel event, the event object also have following properties:
 	**/
-	function sendInputEvent(event:{ @:optional
-	var type : String; @:optional
+	function sendInputEvent(event:{ /**
+		() - The type of the event, can be , , , , , , , , , .
+	**/
+	@:optional
+	var type : String; /**
+		An array of modifiers of the event, can include , , , , , , , , , , , , .
+	**/
+	@:optional
 	var modifiers : Array<String>; }):Void;
 	/**
 		Begin subscribing for presentation events and captured frames, the callback will be called with callback(frameBuffer, dirtyRect) when there is a presentation event. The frameBuffer is a Buffer that contains raw pixel data. On most machines, the pixel data is effectively stored in 32bit BGRA format, but the actual representation depends on the endianness of the processor (most modern processors are little-endian, on machines with big-endian processors the data is in 32bit ARGB format). The dirtyRect is an object with x, y, width, height properties that describes which part of the page was repainted. If onlyDirty is set to true, frameBuffer will only contain the repainted area. onlyDirty defaults to false.

@@ -42,6 +42,9 @@ package electron;
 	var text : String; @:optional
 	var html : String; @:optional
 	var image : electron.NativeImage; @:optional
-	var rtf : String; @:optional
+	var rtf : String; /**
+		The title of the url at .
+	**/
+	@:optional
 	var bookmark : String; }, ?type:String):Void;
 }

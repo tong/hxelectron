@@ -11,8 +11,14 @@ package electron;
 	/**
 		Relaunches the app when current instance exits. By default the new instance will use the same working directory and command line arguments with current instance. When args is specified, the args will be passed as command line arguments instead. When execPath is specified, the execPath will be executed for relaunch instead of current app. Note that this method does not quit the app when executed, you have to call app.quit or app.exit after calling app.relaunch to make the app restart. When app.relaunch is called for multiple times, multiple instances will be started after current instance exited. An example of restarting current instance immediately and adding a new command line argument to the new instance:
 	**/
-	static function relaunch(?options:{ @:optional
-	var args : Array<String>; @:optional
+	static function relaunch(?options:{ /**
+		(optional)
+	**/
+	@:optional
+	var args : Array<String>; /**
+		(optional)
+	**/
+	@:optional
 	var execPath : String; }):Void;
 	static function isReady():Bool;
 	/**
@@ -98,8 +104,14 @@ package electron;
 	/**
 		Imports the certificate in pkcs12 format into the platform certificate store. callback is called with the result of import operation, a value of 0 indicates success while any other value indicates failure according to chromium net_error_list.
 	**/
-	static function importCertificate(options:{ @:optional
-	var certificate : String; @:optional
+	static function importCertificate(options:{ /**
+		Path for the pkcs12 file.
+	**/
+	@:optional
+	var certificate : String; /**
+		Passphrase for the certificate.
+	**/
+	@:optional
 	var password : String; }, callback:haxe.Constraints.Function):Void;
 	/**
 		Disables hardware acceleration for current app. This method can only be called before app is ready.
@@ -118,18 +130,39 @@ package electron;
 	/**
 		Set the app's login item settings. Note: This API has no effect on MAS builds.
 	**/
-	static function setLoginItemSettings(settings:{ @:optional
-	var openAtLogin : Bool; @:optional
+	static function setLoginItemSettings(settings:{ /**
+		to open the app at login, to remove the app as a login item. Defaults to .
+	**/
+	@:optional
+	var openAtLogin : Bool; /**
+		to open the app as hidden. Defaults to . The user can edit this setting from the System Preferences so should be checked when the app is opened to know the current value. This setting is only supported on macOS.
+	**/
+	@:optional
 	var openAsHidden : Bool; }):Void;
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.
 	**/
-	static function setAboutPanelOptions(options:{ @:optional
-	var applicationName : String; @:optional
-	var applicationVersion : String; @:optional
-	var copyright : String; @:optional
-	var credits : String; @:optional
+	static function setAboutPanelOptions(options:{ /**
+		(optional) - The app's name.
+	**/
+	@:optional
+	var applicationName : String; /**
+		(optional) - The app's version.
+	**/
+	@:optional
+	var applicationVersion : String; /**
+		(optional) - Copyright information.
+	**/
+	@:optional
+	var copyright : String; /**
+		(optional) - Credit information.
+	**/
+	@:optional
+	var credits : String; /**
+		(optional) - The app's build version number.
+	**/
+	@:optional
 	var version : String; }):Void;
 	/**
 		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv, and is mainly used by developers to control some low-level Chromium behaviors.

@@ -11,7 +11,10 @@ package electron;
 	/**
 		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent).
 	**/
-	static function openExternal(url:String, ?options:{ @:optional
+	static function openExternal(url:String, ?options:{ /**
+		to bring the opened application to the foreground. The default is .
+	**/
+	@:optional
 	var activate : Bool; }):Bool;
 	/**
 		Move the given file to trash and returns a boolean status for the operation.
