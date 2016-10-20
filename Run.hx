@@ -15,9 +15,10 @@ typedef APIProperty = {
 	?properties : Array<APIProperty>
 }
 
-typedef APIInstanceEvent = {
+typedef APIEvent = {
 	name : String,
 	?description : String,
+	?platforms : Array<String>,
 	returns : Array<APIReturn>
 }
 
@@ -63,13 +64,14 @@ typedef APIItem = {
 	websiteUrl : String,
 	repoUrl : String,
 	methods : Array<APIMethod>,
-	?instanceEvents : Array<APIInstanceEvent>,
+	?instanceEvents : Array<APIEvent>,
 	?instanceName : String,
 	?instanceProperties : Array<APIProperty>,
 	?instanceMethods : Array<APIMethod>,
 	?constructorMethod : APIMethod,
 	?staticMethods : Array<APIMethod>,
 	?properties : Array<APIProperty>,
+	?events : Array<APIEvent>, //TODO
 };
 
 typedef API = Array<APIItem>;
@@ -105,30 +107,11 @@ class Run {
 				var sup : TypePath = null;
 
 				if( item.instanceEvents != null ) {
-
 					sup = {
 						pack: ['js','node','events'], name: 'EventEmitter',
 						params: [TPType(TPath( { pack: pack, name: name } ) )]
 					};
-
-					var efields = new Array<Field>();
-					for( e in item.instanceEvents ) {
-						var ename : String = e.name;
-						efields.push({
-							name: ename.replace( '-', '_' ),
-							kind: FVar( macro : String, { expr: EConst(CString(ename)), pos: pos } ),
-							doc: e.description,
-							pos: pos
-						});
-					}
-					types.push({
-						pack: pack,
-						fields: efields,
-						name: name+'Event',
-						kind: TDAbstract(macro:String,[macro:String],[macro:String]),
-						meta: [ { name: ":enum", pos: pos } ],
-						pos: pos
-					});
+					types.push( createEventAbstract( item.name, item.instanceEvents ) );
 				}
 				if( item.instanceProperties != null ) {
 					for( p in item.instanceProperties ) {
@@ -156,6 +139,16 @@ class Run {
 				types.push( createClassTypeDefinition( pack, name, sup, fields ) );
 
 			case module:
+
+				var sup : TypePath = null;
+
+				if( item.events != null ) {
+					sup = {
+						pack: ['js','node','events'], name: 'EventEmitter',
+						params: [TPType(TPath( { pack: pack, name: uppercaseName( name ) } ) )]
+					};
+					types.push( createEventAbstract( item.name, item.events ) );
+				}
 
 				if( item.methods != null ) {
 					for( m in item.methods ) {
@@ -190,7 +183,7 @@ class Run {
 					});
 				}
 
-				types.push( createClassTypeDefinition( pack, name, fields ) );
+				types.push( createClassTypeDefinition( pack, name, sup, fields ) );
 
 			case structure:
 				types.push({
@@ -244,6 +237,27 @@ class Run {
 		File.saveContent( 'all.hxml', typePaths.join( '\n' ) );
 
 		println( 'Generated [${types.length}] types into [$out]' );
+	}
+
+	static function createEventAbstract( name : String, events : Array<APIEvent> ) : TypeDefinition {
+		var fields = new Array<Field>();
+		for( e in events ) {
+			var ename : String = e.name;
+			fields.push({
+				name: ename.replace( '-', '_' ),
+				kind: FVar( macro : String, { expr: EConst(CString(ename)), pos: pos } ),
+				doc: e.description,
+				pos: pos
+			});
+		}
+		return {
+			pack: pack,
+			fields: fields,
+			name: uppercaseName( name )+'Event',
+			kind: TDAbstract(macro:String,[macro:String],[macro:String]),
+			meta: [ { name: ":enum", pos: pos } ],
+			pos: pos
+		};
 	}
 
 	static function createClassTypeDefinition( pack : Array<String>, name : String, ?sup : TypePath, fields : Array<Field> ) : TypeDefinition {
@@ -358,6 +372,10 @@ class Run {
 			default:
 				throw 'failed to convert array type';
 		};
+	}
+
+	static function uppercaseName( n : String ) : String {
+		return n.charAt( 0 ).toUpperCase() + n.substr( 1 );
 	}
 
 	static function escapeName( n : String ) : String {
