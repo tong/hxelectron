@@ -162,6 +162,7 @@ class Run {
 						if( alreadyAdded ) {
 							warning( 'Duplicate module method name: '+item.name+'.'+m.name );
 						} else {
+							//trace(m);
 							fields.push( convertMethod( m, [AStatic] ) );
 						}
 					}
@@ -288,11 +289,10 @@ class Run {
 		var name = m.name;
 		var ret = macro : Dynamic;
 
-		if( name == null || m.returns == null ) {
+		if( m.returns != null )
+			ret = convertType( m.returns.type, m.returns.properties );
+		else if( name == null )
 			ret = macro : Void;
-		} else {
-			if( m.returns != null ) ret = convertType( m.returns.type );
-		}
 
 		var args = new Array<FunctionArg>();
 		if( m.parameters != null ) {

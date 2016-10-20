@@ -15,11 +15,11 @@ package electron;
 	/**
 		Returns the session's current cache size.
 	**/
-	function getCacheSize(callback:haxe.Constraints.Function):Void;
+	function getCacheSize(callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Clears the session’s HTTP cache.
 	**/
-	function clearCache(callback:haxe.Constraints.Function):Void;
+	function clearCache(callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Clears the data of web storages.
 	**/
@@ -35,11 +35,11 @@ package electron;
 		The types of quotas to clear, can contain: , , .
 	**/
 	@:optional
-	var quotas : Array<String>; }, callback:haxe.Constraints.Function):Void;
+	var quotas : Array<String>; }, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Writes any unwritten DOMStorage data to disk.
 	**/
-	function flushStorageData():Void;
+	function flushStorageData():Dynamic;
 	/**
 		Sets the proxy settings. When pacScript and proxyRules are provided together, the proxyRules option is ignored and pacScript configuration is applied. The proxyRules has to follow the rules below: For example: The proxyBypassRules is a comma separated list of rules described below:
 	**/
@@ -55,5 +55,5 @@ package electron;
 		Rules indicating which URLs should bypass the proxy settings.
 	**/
 	@:optional
-	var proxyBypassRules : String; }, callback:haxe.Constraints.Function):Void;
+	var proxyBypassRules : String; }, callback:haxe.Constraints.Function):Dynamic;
 }

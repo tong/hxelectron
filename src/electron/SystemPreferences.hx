@@ -5,35 +5,35 @@ package electron;
 	/**
 		Posts event as native notifications of macOS. The userInfo is an Object that contains the user information dictionary sent along with the notification.
 	**/
-	static function postNotification(event:String, userInfo:Dynamic):Void;
+	static function postNotification(event:String, userInfo:Dynamic):Dynamic;
 	/**
 		Posts event as native notifications of macOS. The userInfo is an Object that contains the user information dictionary sent along with the notification.
 	**/
-	static function postLocalNotification(event:String, userInfo:Dynamic):Void;
+	static function postLocalNotification(event:String, userInfo:Dynamic):Dynamic;
 	/**
 		Subscribes to native notifications of macOS, callback will be called with callback(event, userInfo) when the corresponding event happens. The userInfo is an Object that contains the user information dictionary sent along with the notification. The id of the subscriber is returned, which can be used to unsubscribe the event. Under the hood this API subscribes to NSDistributedNotificationCenter, example values of event are:
 	**/
-	static function subscribeNotification(event:String, callback:haxe.Constraints.Function):Void;
+	static function subscribeNotification(event:String, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Removes the subscriber with id.
 	**/
-	static function unsubscribeNotification(id:Int):Void;
+	static function unsubscribeNotification(id:Int):Dynamic;
 	/**
 		Same as subscribeNotification, but uses NSNotificationCenter for local defaults. This is necessary for events such as NSUserDefaultsDidChangeNotification
 	**/
-	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Void;
+	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Same as unsubscribeNotification, but removes the subscriber from NSNotificationCenter.
 	**/
-	static function unsubscribeLocalNotification(id:Int):Void;
+	static function unsubscribeLocalNotification(id:Int):Dynamic;
 	/**
 		Get the value of key in system preferences. This API reads from NSUserDefaults on macOS, some popular key and types are:
 	**/
-	static function getUserDefault(key:String, type:String):Void;
+	static function getUserDefault(key:String, type:String):Dynamic;
 	/**
 		This method returns true if DWM composition (Aero Glass) is enabled, and false otherwise. An example of using it to determine if you should create a transparent window or not (transparent windows won't work correctly when DWM composition is disabled):
 	**/
-	static function isAeroGlassEnabled():Void;
+	static function isAeroGlassEnabled():Dynamic;
 	static function getAccentColor():String;
 	static function getColor(color:String):String;
 	static function isInvertedColorScheme():Bool;

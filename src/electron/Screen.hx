@@ -3,7 +3,9 @@ package electron;
 	/**
 		The current absolute position of the mouse pointer.
 	**/
-	static function getCursorScreenPoint():Dynamic;
+	static function getCursorScreenPoint():{ @:optional
+	var x : Int; @:optional
+	var y : Int; };
 	static function getPrimaryDisplay():electron.Display;
 	static function getAllDisplays():Array<Display>;
 	static function getDisplayNearestPoint(point:{ @:optional

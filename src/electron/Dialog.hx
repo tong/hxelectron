@@ -14,7 +14,7 @@ package electron;
 		Contains which features the dialog should use, can contain , , , and .
 	**/
 	@:optional
-	var properties : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
+	var properties : Array<String>; }, ?callback:haxe.Constraints.Function):Dynamic;
 	/**
 		On success this method returns the path of the file chosen by the user, otherwise it returns undefined. The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
 	**/
@@ -25,7 +25,7 @@ package electron;
 	**/
 	@:optional
 	var buttonLabel : String; @:optional
-	var filters : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
+	var filters : Array<String>; }, ?callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(response).
 	**/
@@ -62,9 +62,9 @@ package electron;
 		On Windows Electron will try to figure out which one of the are common buttons (like "Cancel" or "Yes"), and show the others as command links in the dialog. This can make the dialog appear in the style of modern Windows apps. If you don't like this behavior, you can set to .
 	**/
 	@:optional
-	var noLink : Bool; }, callback:haxe.Constraints.Function):Void;
+	var noLink : Bool; }, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Displays a modal dialog that shows an error message. This API can be called safely before the ready event the app module emits, it is usually used to report errors in early stage of startup.  If called before the app readyevent on Linux, the message will be emitted to stderr, and no GUI dialog will appear.
 	**/
-	static function showErrorBox(title:String, content:String):Void;
+	static function showErrorBox(title:String, content:String):Dynamic;
 }

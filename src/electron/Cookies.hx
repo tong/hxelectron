@@ -27,7 +27,7 @@ package electron;
 		(optional) - Filters out session or persistent cookies.
 	**/
 	@:optional
-	var session : Bool; }, callback:haxe.Constraints.Function):Void;
+	var session : Bool; }, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Sets a cookie with details, callback will be called with callback(error) on complete.
 	**/
@@ -63,9 +63,9 @@ package electron;
 		- The expiration date of the cookie as the number of seconds since the UNIX epoch. If omitted then the cookie becomes a session cookie and will not be retained between sessions.
 	**/
 	@:optional
-	var expirationDate : Float; }, callback:haxe.Constraints.Function):Void;
+	var expirationDate : Float; }, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Removes the cookies matching url and name, callback will called with callback() on complete.
 	**/
-	function remove(url:String, name:String, callback:haxe.Constraints.Function):Void;
+	function remove(url:String, name:String, callback:haxe.Constraints.Function):Dynamic;
 }

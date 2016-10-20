@@ -7,6 +7,6 @@ package electron;
 	/**
 		Stops the specified power save blocker.
 	**/
-	static function stop(id:Int):Void;
+	static function stop(id:Int):Dynamic;
 	static function isStarted(id:Int):Bool;
 }

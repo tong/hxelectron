@@ -23,7 +23,7 @@ package electron;
 	/**
 		Play the beep sound.
 	**/
-	static function beep():Void;
+	static function beep():Dynamic;
 	/**
 		Creates or updates a shortcut link at shortcutPath.
 	**/

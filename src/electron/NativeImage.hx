@@ -13,11 +13,13 @@ package electron;
 	**/
 	function getNativeHandle():js.node.Buffer;
 	function isEmpty():Bool;
-	function getSize():Dynamic;
+	function getSize():{ @:optional
+	var width : Int; @:optional
+	var height : Int; };
 	/**
 		Marks the image as a template image.
 	**/
-	function setTemplateImage(option:Bool):Void;
+	function setTemplateImage(option:Bool):Dynamic;
 	function isTemplateImage():Bool;
 	function crop(rect:{ @:optional
 	var x : Int; @:optional

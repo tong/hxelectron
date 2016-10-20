@@ -7,25 +7,25 @@ package electron;
 	/**
 		Removes focus from the child window.
 	**/
-	function blur():Void;
+	function blur():Dynamic;
 	/**
 		Forcefully closes the child window without calling its unload event.
 	**/
-	function close():Void;
+	function close():Dynamic;
 	/**
 		Evaluates the code in the child window.
 	**/
-	function eval(code:String):Void;
+	function eval(code:String):Dynamic;
 	/**
 		Focuses the child window (brings the window to front).
 	**/
-	function focus():Void;
+	function focus():Dynamic;
 	/**
 		Invokes the print dialog on the child window.
 	**/
-	function print():Void;
+	function print():Dynamic;
 	/**
 		Sends a message to the child window with the specified origin or * for no origin preference. In addition to these methods, the child window implements window.opener object with no properties and a single method.
 	**/
-	function postMessage(message:String, targetOrigin:String):Void;
+	function postMessage(message:String, targetOrigin:String):Dynamic;
 }

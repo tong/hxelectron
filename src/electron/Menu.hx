@@ -8,25 +8,25 @@ package electron;
 	/**
 		Pops up this menu as a context menu in the browserWindow.
 	**/
-	function popup(browserWindow:electron.BrowserWindow, x:Float, y:Float, positioningItem:Float):Void;
+	function popup(browserWindow:electron.BrowserWindow, x:Float, y:Float, positioningItem:Float):Dynamic;
 	/**
 		Appends the menuItem to the menu.
 	**/
-	function append(menuItem:electron.MenuItem):Void;
+	function append(menuItem:electron.MenuItem):Dynamic;
 	/**
 		Inserts the menuItem to the pos position of the menu.
 	**/
-	function insert(pos:Int, menuItem:electron.MenuItem):Void;
+	function insert(pos:Int, menuItem:electron.MenuItem):Dynamic;
 	/**
 		Pops up this menu as a context menu in the browserWindow.
 	**/
-	static function popup(browserWindow:electron.BrowserWindow, x:Float, y:Float, positioningItem:Float):Void;
+	static function popup(browserWindow:electron.BrowserWindow, x:Float, y:Float, positioningItem:Float):Dynamic;
 	/**
 		Appends the menuItem to the menu.
 	**/
-	static function append(menuItem:electron.MenuItem):Void;
+	static function append(menuItem:electron.MenuItem):Dynamic;
 	/**
 		Inserts the menuItem to the pos position of the menu.
 	**/
-	static function insert(pos:Int, menuItem:electron.MenuItem):Void;
+	static function insert(pos:Int, menuItem:electron.MenuItem):Dynamic;
 }

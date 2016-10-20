@@ -35,11 +35,11 @@ package electron;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; }):Void;
+	var extraHeaders : String; }):Dynamic;
 	/**
 		Initiates a download of the resource at url without navigating. The will-download event of session will be triggered.
 	**/
-	function downloadURL(url:String):Void;
+	function downloadURL(url:String):Dynamic;
 	function getURL():String;
 	function getTitle():String;
 	function isDestroyed():Bool;
@@ -50,129 +50,129 @@ package electron;
 	/**
 		Stops any pending navigation.
 	**/
-	function stop():Void;
+	function stop():Dynamic;
 	/**
 		Reloads the current web page.
 	**/
-	function reload():Void;
+	function reload():Dynamic;
 	/**
 		Reloads current page and ignores cache.
 	**/
-	function reloadIgnoringCache():Void;
+	function reloadIgnoringCache():Dynamic;
 	function canGoBack():Bool;
 	function canGoForward():Bool;
 	function canGoToOffset(offset:Int):Bool;
 	/**
 		Clears the navigation history.
 	**/
-	function clearHistory():Void;
+	function clearHistory():Dynamic;
 	/**
 		Makes the browser go back a web page.
 	**/
-	function goBack():Void;
+	function goBack():Dynamic;
 	/**
 		Makes the browser go forward a web page.
 	**/
-	function goForward():Void;
+	function goForward():Dynamic;
 	/**
 		Navigates browser to the specified absolute web page index.
 	**/
-	function goToIndex(index:Int):Void;
+	function goToIndex(index:Int):Dynamic;
 	/**
 		Navigates to the specified offset from the "current entry".
 	**/
-	function goToOffset(offset:Int):Void;
+	function goToOffset(offset:Int):Dynamic;
 	function isCrashed():Bool;
 	/**
 		Overrides the user agent for this web page.
 	**/
-	function setUserAgent(userAgent:String):Void;
+	function setUserAgent(userAgent:String):Dynamic;
 	function getUserAgent():String;
 	/**
 		Injects CSS into the current web page.
 	**/
-	function insertCSS(css:String):Void;
+	function insertCSS(css:String):Dynamic;
 	/**
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
 	**/
-	function executeJavaScript(code:String, ?userGesture:Bool, callback:haxe.Constraints.Function):Void;
+	function executeJavaScript(code:String, ?userGesture:Bool, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Mute the audio on the current web page.
 	**/
-	function setAudioMuted(muted:Bool):Void;
+	function setAudioMuted(muted:Bool):Dynamic;
 	function isAudioMuted():Bool;
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/
-	function setZoomFactor(factor:Float):Void;
+	function setZoomFactor(factor:Float):Dynamic;
 	/**
 		Sends a request to get current zoom factor, the callback will be called with callback(zoomFactor).
 	**/
-	function getZoomFactor(callback:haxe.Constraints.Function):Void;
+	function getZoomFactor(callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively.
 	**/
-	function setZoomLevel(level:Float):Void;
+	function setZoomLevel(level:Float):Dynamic;
 	/**
 		Sends a request to get current zoom level, the callback will be called with callback(zoomLevel).
 	**/
-	function getZoomLevel(callback:haxe.Constraints.Function):Void;
+	function getZoomLevel(callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Sets the maximum and minimum zoom level.
 	**/
-	function setZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	function setZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Dynamic;
 	/**
 		Executes the editing command undo in web page.
 	**/
-	function undo():Void;
+	function undo():Dynamic;
 	/**
 		Executes the editing command redo in web page.
 	**/
-	function redo():Void;
+	function redo():Dynamic;
 	/**
 		Executes the editing command cut in web page.
 	**/
-	function cut():Void;
+	function cut():Dynamic;
 	/**
 		Executes the editing command copy in web page.
 	**/
-	function copy():Void;
+	function copy():Dynamic;
 	/**
 		Copy the image at the given position to the clipboard.
 	**/
-	function copyImageAt(x:Int, y:Int):Void;
+	function copyImageAt(x:Int, y:Int):Dynamic;
 	/**
 		Executes the editing command paste in web page.
 	**/
-	function paste():Void;
+	function paste():Dynamic;
 	/**
 		Executes the editing command pasteAndMatchStyle in web page.
 	**/
-	function pasteAndMatchStyle():Void;
+	function pasteAndMatchStyle():Dynamic;
 	/**
 		Executes the editing command delete in web page.
 	**/
-	function delete():Void;
+	function delete():Dynamic;
 	/**
 		Executes the editing command selectAll in web page.
 	**/
-	function selectAll():Void;
+	function selectAll():Dynamic;
 	/**
 		Executes the editing command unselect in web page.
 	**/
-	function unselect():Void;
+	function unselect():Dynamic;
 	/**
 		Executes the editing command replace in web page.
 	**/
-	function replace(text:String):Void;
+	function replace(text:String):Dynamic;
 	/**
 		Executes the editing command replaceMisspelling in web page.
 	**/
-	function replaceMisspelling(text:String):Void;
+	function replaceMisspelling(text:String):Dynamic;
 	/**
 		Inserts text to the focused element.
 	**/
-	function insertText(text:String):Void;
+	function insertText(text:String):Dynamic;
 	/**
 		Starts a request to find all matches for the text in the web page and returns an Integer representing the request id used for the request. The result of the request can be obtained by subscribing to found-in-page event.
 	**/
@@ -196,23 +196,23 @@ package electron;
 		When combined with , accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to .
 	**/
 	@:optional
-	var medialCapitalAsWordStart : Bool; }):Void;
+	var medialCapitalAsWordStart : Bool; }):Dynamic;
 	/**
 		Stops any findInPage request for the webContents with the provided action.
 	**/
-	function stopFindInPage(action:String):Void;
+	function stopFindInPage(action:String):Dynamic;
 	/**
 		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page.
 	**/
-	function capturePage(rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
+	function capturePage(rect:electron.Rectangle, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Checks if any ServiceWorker is registered and returns a boolean as response to callback.
 	**/
-	function hasServiceWorker(callback:haxe.Constraints.Function):Void;
+	function hasServiceWorker(callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Unregisters any ServiceWorker if present and returns a boolean as response to callback when the JS promise is fulfilled or false when the JS promise is rejected.
 	**/
-	function unregisterServiceWorker(callback:haxe.Constraints.Function):Void;
+	function unregisterServiceWorker(callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Prints window's web page. When silent is set to true, Electron will pick up system's default printer and default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({silent: false, printBackground: false}). Use page-break-before: always; CSS style to force to print to a new page.
 	**/
@@ -224,7 +224,7 @@ package electron;
 		Also prints the background color and image of the web page. Default is .
 	**/
 	@:optional
-	var printBackground : Bool; }):Void;
+	var printBackground : Bool; }):Dynamic;
 	/**
 		Prints window's web page as PDF with Chromium's preview printing custom settings. The callback will be called with callback(error, data) on completion. The data is a Buffer that contains the generated PDF data. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
 	**/
@@ -248,15 +248,15 @@ package electron;
 		for landscape, for portrait.
 	**/
 	@:optional
-	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
+	var landscape : Bool; }, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
-	function addWorkSpace(path:String):Void;
+	function addWorkSpace(path:String):Dynamic;
 	/**
 		Removes the specified path from DevTools workspace.
 	**/
-	function removeWorkSpace(path:String):Void;
+	function removeWorkSpace(path:String):Dynamic;
 	/**
 		Opens the devtools.
 	**/
@@ -264,29 +264,29 @@ package electron;
 		Opens the devtools with specified dock state, can be , , , . Defaults to last used dock state. In mode it's possible to dock back. In mode it's not.
 	**/
 	@:optional
-	var mode : String; }):Void;
+	var mode : String; }):Dynamic;
 	/**
 		Closes the devtools.
 	**/
-	function closeDevTools():Void;
+	function closeDevTools():Dynamic;
 	function isDevToolsOpened():Bool;
 	function isDevToolsFocused():Bool;
 	/**
 		Toggles the developer tools.
 	**/
-	function toggleDevTools():Void;
+	function toggleDevTools():Dynamic;
 	/**
 		Starts inspecting element at position (x, y).
 	**/
-	function inspectElement(x:Int, y:Int):Void;
+	function inspectElement(x:Int, y:Int):Dynamic;
 	/**
 		Opens the developer tools for the service worker context.
 	**/
-	function inspectServiceWorker():Void;
+	function inspectServiceWorker():Dynamic;
 	/**
 		Send an asynchronous message to renderer process via channel, you can also send arbitrary arguments. Arguments will be serialized in JSON internally and hence no functions or prototype chain will be included. The renderer process can handle the message by listening to channel with the ipcRenderer module. An example of sending messages from the main process to the renderer process:
 	**/
-	function send(channel:String):Void;
+	function send(channel:String):Dynamic;
 	/**
 		Enable device emulation with the given parameters.
 	**/
@@ -354,11 +354,11 @@ package electron;
 		Scale of emulated view inside available space (not in fit to view mode) (default: )
 	**/
 	@:optional
-	var scale : Float; }):Void;
+	var scale : Float; }):Dynamic;
 	/**
 		Disable device emulation enabled by webContents.enableDeviceEmulation.
 	**/
-	function disableDeviceEmulation():Void;
+	function disableDeviceEmulation():Dynamic;
 	/**
 		Sends an input event to the page. For keyboard events, the event object also have following properties: For mouse events, the event object also have following properties: For the mouseWheel event, the event object also have following properties:
 	**/
@@ -370,44 +370,44 @@ package electron;
 		An array of modifiers of the event, can include , , , , , , , , , , , , .
 	**/
 	@:optional
-	var modifiers : Array<String>; }):Void;
+	var modifiers : Array<String>; }):Dynamic;
 	/**
 		Begin subscribing for presentation events and captured frames, the callback will be called with callback(frameBuffer, dirtyRect) when there is a presentation event. The frameBuffer is a Buffer that contains raw pixel data. On most machines, the pixel data is effectively stored in 32bit BGRA format, but the actual representation depends on the endianness of the processor (most modern processors are little-endian, on machines with big-endian processors the data is in 32bit ARGB format). The dirtyRect is an object with x, y, width, height properties that describes which part of the page was repainted. If onlyDirty is set to true, frameBuffer will only contain the repainted area. onlyDirty defaults to false.
 	**/
-	function beginFrameSubscription(onlyDirty:Bool, callback:haxe.Constraints.Function):Void;
+	function beginFrameSubscription(onlyDirty:Bool, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		End subscribing for frame presentation events.
 	**/
-	function endFrameSubscription():Void;
+	function endFrameSubscription():Dynamic;
 	/**
 		Sets the item as dragging item for current drag-drop operation, file is the absolute path of the file to be dragged, and icon is the image showing under the cursor when dragging.
 	**/
-	function startDrag(item:Dynamic):Void;
+	function startDrag(item:Dynamic):Dynamic;
 	/**
 		Returns true if the process of saving page has been initiated successfully.
 	**/
-	function savePage(fullPath:String, saveType:String, callback:haxe.Constraints.Function):Void;
+	function savePage(fullPath:String, saveType:String, callback:haxe.Constraints.Function):Dynamic;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
-	function showDefinitionForSelection():Void;
+	function showDefinitionForSelection():Dynamic;
 	function isOffscreen():Bool;
 	/**
 		If offscreen rendering is enabled and not painting, start painting.
 	**/
-	function startPainting():Void;
+	function startPainting():Dynamic;
 	/**
 		If offscreen rendering is enabled and painting, stop painting.
 	**/
-	function stopPainting():Void;
+	function stopPainting():Dynamic;
 	function isPainting():Bool;
 	/**
 		If offscreen rendering is enabled sets the frame rate to the specified number. Only values between 1 and 60 are accepted.
 	**/
-	function setFrameRate(fps:Int):Void;
+	function setFrameRate(fps:Int):Dynamic;
 	function getFrameRate():Int;
 	/**
 		If offscreen rendering is enabled invalidates the frame and generates a new one through the 'paint' event.
 	**/
-	function invalidate():Void;
+	function invalidate():Dynamic;
 }
