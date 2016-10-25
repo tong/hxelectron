@@ -3,18 +3,26 @@
 
 Haxe externs for [electron](http://electron.atom.io/).
 
-The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS.
-It is based on Node.js and Chromium and is used in the Atom editor.
+The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS. It is based on Node.js and Chromium and is used in the Atom editor.
 
 
-# Install using haxelib
+## Install
 
 ```sh
 $ haxelib install electron
 ```
 
+## Regenerate Externs
 
-# Get started with Haxe and Electron
+Download latest api description file from the electron releases site: https://github.com/electron/electron/releases.
+
+```sh
+$ haxelib run electron <electron-api.json>
+```
+
+
+
+## Get started with Haxe and Electron
 
 Spin up the Haxe Quick Start app to see Electron in action:
 
@@ -34,5 +42,3 @@ $ cd demo/
 ## Install the dependencies and run
 $ npm install && npm start
 ```
-
-[![Haxelib Version](https://img.shields.io/github/tag/fponticelli/hxelectron.svg?style=flat&label=haxelib)](http://lib.haxe.org/p/electron)
