@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:require(electron) typedef Rectangle = {
 	/**
 		The x coordinate of the origin of the rectangle

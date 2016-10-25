@@ -1,4 +1,12 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+	Perform copy and paste operations on the system clipboard.
+
+	[Documentation](http://electron.atom.io/docs/api/clipboard)
+**/
 @:jsRequire("electron", "clipboard") @:require(electron) extern class Clipboard {
 	static function readText(?type:String):String;
 	/**

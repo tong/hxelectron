@@ -1,4 +1,12 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+	Display native system dialogs for opening and saving files, alerting, etc.
+
+	[Documentation](http://electron.atom.io/docs/api/dialog)
+**/
 @:jsRequire("electron", "dialog") @:require(electron_main) @:require(electron) extern class Dialog {
 	/**
 		On success this method returns an array of file paths chosen by the user, otherwise it returns undefined. The filters specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example: The extensions array should contain extensions without wildcards or dots (e.g. 'png' is good but '.png' and '*.png' are bad). To show all files, use the '*' wildcard (no other wildcard is supported). If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filenames) Note: On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set properties to ['openFile', 'openDirectory'] on these platforms, a directory selector will be shown.

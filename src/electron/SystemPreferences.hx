@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:jsRequire("electron", "systemPreferences") @:require(electron_main) @:require(electron) extern class SystemPreferences extends js.node.events.EventEmitter<electron.SystemPreferences> {
 	static function isDarkMode():Bool;
 	static function isSwipeTrackingFromScrollEventsEnabled():Bool;

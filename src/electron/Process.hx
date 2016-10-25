@@ -1,4 +1,12 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+	Extensions to process object.
+
+	[Documentation](http://electron.atom.io/docs/api/process)
+**/
 @:jsRequire("electron", "process") @:require(electron_main) @:require(electron) extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
 		Causes the main thread of the current process crash.

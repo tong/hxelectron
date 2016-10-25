@@ -92,7 +92,7 @@ class ElectronAPI {
 			var name : String = item.name;
 			var fields = new Array<Field>();
 
-			Sys.println( '---------------------------- '+item.name );
+			//Sys.println( '---------------------------- '+item.name );
 
 			switch item.type {
 			case class_:
@@ -201,18 +201,9 @@ class ElectronAPI {
 			if( type.meta == null ) type.meta = [];
 			type.meta.push({
 				name: ':require',
-				//params: [ { expr: EConst( CIdent( 'electron' ) ), pos: pos } ],
 				params: [ macro $i{'electron'} ],
 				pos: ElectronAPI.pos
 			});
-			/*
-			type.meta.push({
-				name: ':require',
-				params: [ { expr: EConst( CIdent( 'electron_main' ) ), pos: pos } ],
-				pos: pos
-			});
-			*/
-			//var code = printer.printTypeDefinition( type );
 		}
 
 		return types;

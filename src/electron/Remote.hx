@@ -1,4 +1,12 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+	Use main process modules from the renderer process.
+
+	[Documentation](http://electron.atom.io/docs/api/remote)
+**/
 @:jsRequire("electron", "remote") @:require(electron_renderer) @:require(electron) extern class Remote {
 	static function require(module:String):{ @:optional
 	var module : String; };

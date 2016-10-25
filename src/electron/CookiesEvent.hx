@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:enum @:require(electron) abstract CookiesEvent(String) from String to String {
 	/**
 		Emitted when a cookie is changed because it was added, edited, removed, or expired.

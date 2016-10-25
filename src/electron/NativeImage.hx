@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:jsRequire("electron", "NativeImage") @:require(electron) extern class NativeImage {
 	function toPNG():js.node.Buffer;
 	function toJPEG(quality:Int):js.node.Buffer;

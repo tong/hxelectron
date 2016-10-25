@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:enum @:require(electron) abstract ScreenEvent(String) from String to String {
 	/**
 		Emitted when newDisplay has been added.

@@ -22,7 +22,8 @@ class Run {
 			error( 'API file not found [$file]' );
 		#end
 
-		var types = ElectronAPI.build( Json.parse( File.getContent( file ) ), ['electron'] );
+		var api = Json.parse( File.getContent( file ) );
+		var types = ElectronAPI.build( api, ['electron'] );
 
 		/////// TODO / HACK missing from api description
 		//types.push({ pack: pack, name: 'Accelerator', kind: TDAlias(macro:Dynamic), fields: [], meta: [], pos: pos });
@@ -44,8 +45,22 @@ class Run {
 
 			var dir = '$out/$pkg';
 			if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
-			//trace('$dir/${type.name}.hx');
+
 			var code = printer.printTypeDefinition( type );
+
+			var doc = '\n\n///// GENERATED - DO NOT EDIT /////\n\n/**';
+			for( item in api ) {
+				if( item.name == type.name.toLowerCase() ) {
+					if( item.description != null ) doc += '\n\t'+item.description+'\n';
+					if( item.websiteUrl != null ) doc += '\n\t[Documentation]('+item.websiteUrl+')';
+					//if( item.repoUrl != null ) doc += '\n\t[]'+item.repoUrl;
+					break;
+				}
+			}
+			doc += '\n**/\n';
+			var lines = code.split( '\n' );
+			code = lines.shift() + doc + lines.join( '\n' );
+
 			File.saveContent( '$dir/${type.name}.hx', code );
 		}
 

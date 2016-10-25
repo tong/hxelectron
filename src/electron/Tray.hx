@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:jsRequire("electron", "Tray") @:require(electron_main) @:require(electron) extern class Tray extends js.node.events.EventEmitter<electron.Tray> {
 	function new(image:electron.NativeImage):Void;
 	/**

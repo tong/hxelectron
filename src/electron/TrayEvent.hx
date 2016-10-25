@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:enum @:require(electron) abstract TrayEvent(String) from String to String {
 	/**
 		Emitted when the tray icon is clicked.

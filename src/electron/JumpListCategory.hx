@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:require(electron) typedef JumpListCategory = {
 	/**
 		One of the following:

@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:jsRequire("electron", "Debugger") @:require(electron_main) @:require(electron) extern class Debugger extends js.node.events.EventEmitter<electron.Debugger> {
 	/**
 		Attaches the debugger to the webContents.

@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:jsRequire("electron", "BrowserWindow") @:require(electron_main) @:require(electron) extern class BrowserWindow extends js.node.events.EventEmitter<electron.BrowserWindow> {
 	/**
 		A WebContents object this window owns. All web page related events and operations will be done via it. See the webContents documentation for its methods and events.

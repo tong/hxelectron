@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:jsRequire("electron", "crashReporter") @:require(electron) extern class CrashReporter {
 	/**
 		You are required to call this method before using other crashReporter APIs. Note: On macOS, Electron uses a new crashpad client, which is different from breakpad on Windows and Linux. To enable the crash collection feature, you are required to call the crashReporter.start API to initialize crashpad in the main process and in each renderer process from which you wish to collect crash reports.

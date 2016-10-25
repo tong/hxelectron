@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:enum @:require(electron) abstract PowerMonitorEvent(String) from String to String {
 	/**
 		Emitted when the system is suspending.

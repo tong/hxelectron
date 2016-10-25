@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:enum @:require(electron) abstract AutoUpdaterEvent(String) from String to String {
 	/**
 		Emitted when there is an error while updating.

@@ -1,4 +1,12 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+	Manage files and URLs using their default applications.
+
+	[Documentation](http://electron.atom.io/docs/api/shell)
+**/
 @:jsRequire("electron", "shell") @:require(electron) extern class Shell {
 	/**
 		Show the given file in a file manager. If possible, select the file.

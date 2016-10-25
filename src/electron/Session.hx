@@ -1,4 +1,12 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+	Manage browser sessions, cookies, cache, proxy settings, etc.
+
+	[Documentation](http://electron.atom.io/docs/api/session)
+**/
 @:jsRequire("electron", "Session") @:require(electron_main) @:require(electron) extern class Session extends js.node.events.EventEmitter<electron.Session> {
 	/**
 		A Cookies object for this session.

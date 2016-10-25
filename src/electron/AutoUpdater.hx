@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:jsRequire("electron", "autoUpdater") @:require(electron_main) @:require(electron) extern class AutoUpdater extends js.node.events.EventEmitter<electron.AutoUpdater> {
 	/**
 		Sets the url and initialize the auto updater.

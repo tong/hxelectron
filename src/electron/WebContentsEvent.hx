@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:enum @:require(electron) abstract WebContentsEvent(String) from String to String {
 	/**
 		Emitted when the navigation is done, i.e. the spinner of the tab has stopped spinning, and the onload event was dispatched.

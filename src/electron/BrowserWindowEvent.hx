@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:enum @:require(electron) abstract BrowserWindowEvent(String) from String to String {
 	/**
 		Emitted when the document changed its title, calling event.preventDefault() will prevent the native window's title from changing.

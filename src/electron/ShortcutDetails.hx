@@ -1,4 +1,9 @@
 package electron;
+
+///// GENERATED - DO NOT EDIT /////
+
+/**
+**/
 @:require(electron) typedef ShortcutDetails = {
 	/**
 		The target to launch from this shortcut.
