@@ -1,6 +1,6 @@
 -neko run.n
 -main Run
--cp src/
+-cp tool/
 -dce full
--debug
-#-cmd neko generate.n electron-api.json
+--no-traces
+#-debug

@@ -5,6 +5,7 @@ import sys.io.File;
 
 using StringTools;
 
+@:require(sys)
 class Run {
 
 	static var DEFAULT_API_SOURCE = 'electron-api.json';
