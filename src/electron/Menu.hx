@@ -8,7 +8,7 @@ package electron;
 	/**
 		A MenuItem[] array containing the menu's items.
 	**/
-	var items : Dynamic;
+	var items : Array<MenuItem>;
 	function new():Void;
 	/**
 		Pops up this menu as a context menu in the browserWindow.

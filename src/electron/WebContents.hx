@@ -8,23 +8,23 @@ package electron;
 	/**
 		A Integer representing the unique ID of this WebContents.
 	**/
-	var id : Dynamic;
+	var id : Int;
 	/**
 		A Session object (session) used by this webContents.
 	**/
-	var session : Dynamic;
+	var session : electron.Session;
 	/**
 		A WebContents that might own this WebContents.
 	**/
-	var hostWebContents : Dynamic;
+	var hostWebContents : electron.WebContents;
 	/**
 		A WebContents of DevTools for this WebContents. Note: Users should never store this object because it may become null when the DevTools has been closed.
 	**/
-	var devToolsWebContents : Dynamic;
+	var devToolsWebContents : electron.WebContents;
 	/**
 		A Debugger instance for this webContents.
 	**/
-	var debugger : Dynamic;
+	var debugger : electron.Debugger;
 	/**
 		Loads the url in the window. The url must contain the protocol prefix, e.g. the http:// or file://. If the load should bypass http cache then use the pragma header to achieve it.
 	**/
@@ -387,7 +387,9 @@ package electron;
 	/**
 		Sets the item as dragging item for current drag-drop operation, file is the absolute path of the file to be dragged, and icon is the image showing under the cursor when dragging.
 	**/
-	function startDrag(item:Dynamic):Void;
+	function startDrag(item:{ @:optional
+	var file : String; @:optional
+	var icon : electron.NativeImage; }):Void;
 	/**
 		Returns true if the process of saving page has been initiated successfully.
 	**/

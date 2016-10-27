@@ -118,7 +118,7 @@ package electron;
 	**/
 	var cursor_changed : String = "cursor-changed";
 	/**
-		The mediaFlags is an object with the following properties: The editFlags is an object with the following properties: Emitted when there is a new context menu that needs to be handled.
+		Emitted when there is a new context menu that needs to be handled.
 	**/
 	var context_menu : String = "context-menu";
 	/**

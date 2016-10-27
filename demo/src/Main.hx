@@ -13,11 +13,13 @@ class Main {
 		var win : BrowserWindow;
 
 		electron.App.on( 'ready', function(e) {
+
 			win = new BrowserWindow( { width: 800, height: 600 } );
 			win.on( electron.BrowserWindowEvent.closed, function(e) {
 				if( js.Node.process.platform != 'darwin' ) electron.App.quit();
 			});
 			win.loadURL( 'file://' + js.Node.__dirname + '/app.html' );
 		});
+
 	}
 }

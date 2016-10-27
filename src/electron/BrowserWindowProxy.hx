@@ -8,7 +8,7 @@ package electron;
 	/**
 		A Boolean that is set to true after the child window gets closed.
 	**/
-	var closed : Dynamic;
+	var closed : Bool;
 	/**
 		Removes focus from the child window.
 	**/

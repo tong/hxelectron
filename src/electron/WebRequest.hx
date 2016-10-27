@@ -6,11 +6,11 @@ package electron;
 **/
 @:jsRequire("electron", "WebRequest") @:require(electron_main) @:require(electron) extern class WebRequest {
 	/**
-		The listener will be called with listener(details, callback) when a request is about to occur. The uploadData is an array of data objects: The callback has to be called with an response object:
+		The listener will be called with listener(details, callback) when a request is about to occur. The uploadData is an array of UploadData objects. The callback has to be called with an response object.
 	**/
 	function onBeforeRequest(filter:Dynamic, listener:haxe.Constraints.Function):Void;
 	/**
-		The listener will be called with listener(details, callback) before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is made to the server, but before any http data is sent. The callback has to be called with an response object:
+		The listener will be called with listener(details, callback) before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is made to the server, but before any http data is sent. The callback has to be called with an response object.
 	**/
 	function onBeforeSendHeaders(filter:Dynamic, listener:haxe.Constraints.Function):Void;
 	/**
@@ -18,7 +18,7 @@ package electron;
 	**/
 	function onSendHeaders(filter:Dynamic, listener:haxe.Constraints.Function):Void;
 	/**
-		The listener will be called with listener(details, callback) when HTTP response headers of a request have been received. The callback has to be called with an response object:
+		The listener will be called with listener(details, callback) when HTTP response headers of a request have been received. The callback has to be called with an response object.
 	**/
 	function onHeadersReceived(filter:Dynamic, listener:haxe.Constraints.Function):Void;
 	/**

@@ -6,7 +6,7 @@ package electron;
 **/
 @:jsRequire("electron", "desktopCapturer") @:require(electron_renderer) @:require(electron) extern class DesktopCapturer {
 	/**
-		Starts gathering information about all available desktop media sources, and calls callback(error, sources) when finished. sources is an array of Source objects, each Source represents a screen or an individual window that can be captured, and has the following properties:
+		Starts gathering information about all available desktop media sources, and calls callback(error, sources) when finished. sources is an array of DesktopCapturerSource objects, each DesktopCapturerSource represents a screen or an individual window that can be captured.
 	**/
 	static function getSources(options:{ /**
 		An array of Strings that lists the types of desktop sources to be captured, available types are and .

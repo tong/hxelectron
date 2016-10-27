@@ -76,7 +76,6 @@ class ElectronAPI {
 
 	public static var pos(default,null) = #if macro null #else { min: 0, max: 0, file: '' } #end;
 
-	//static var pack = [ 'electron' ];
 	static var pack : Array<String>;
 
 	public static function build( api : Array<APIItem>, pack : Array<String> ) : Array<TypeDefinition> {
@@ -100,7 +99,7 @@ class ElectronAPI {
 				if( item.instanceEvents != null ) {
 					sup = {
 						pack: ['js','node','events'], name: 'EventEmitter',
-						params: [TPType(TPath( { pack: pack, name: name } ) )]
+						params: [TPType(TPath( { name: name, pack: pack } ) )]
 					};
 					types.push( createEventAbstract( item.name, item.instanceEvents ) );
 				}
@@ -109,7 +108,7 @@ class ElectronAPI {
 						fields.push( {
 							name: p.name,
 							doc: p.description,
-							kind: FVar( macro : Dynamic ), //TODO types of properties not availabale in description
+							kind: FVar( convertType( p.type ) ),
 							pos: pos
 						} );
 					}

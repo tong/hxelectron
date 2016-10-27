@@ -8,11 +8,11 @@ package electron;
 	/**
 		A WebContents object this window owns. All web page related events and operations will be done via it. See the webContents documentation for its methods and events.
 	**/
-	var webContents : Dynamic;
+	var webContents : electron.WebContents;
 	/**
 		A Integer representing the unique ID of the window.
 	**/
-	var id : Dynamic;
+	var id : Int;
 	function new(options:{ /**
 		Window's width in pixels. Default is .
 	**/
@@ -158,7 +158,7 @@ package electron;
 	**/
 	@:optional
 	var type : String; /**
-		The style of window title bar. See more about this below.
+		The style of window title bar. Default is . Possible values are:
 	**/
 	@:optional
 	var titleBarStyle : String; /**
@@ -166,10 +166,138 @@ package electron;
 	**/
 	@:optional
 	var thickFrame : Bool; /**
-		Settings of web page's features. See more about this below.
+		Settings of web page's features.
 	**/
 	@:optional
-	var webPreferences : { }; }):Void;
+	var webPreferences : { /**
+		Whether to enable DevTools. If it is set to , can not use to open DevTools. Default is .
+	**/
+	@:optional
+	var devTools : Bool; /**
+		Whether node integration is enabled. Default is .
+	**/
+	@:optional
+	var nodeIntegration : Bool; /**
+		Specifies a script that will be loaded before other scripts run in the page. This script will always have access to node APIs no matter whether node integration is turned on or off. The value should be the absolute file path to the script. When node integration is turned off, the preload script can reintroduce Node global symbols back to the global scope. See example .
+	**/
+	@:optional
+	var preload : String; /**
+		Sets the session used by the page. Instead of passing the Session object directly, you can also choose to use the option instead, which accepts a partition string. When both and are provided, will be preferred. Default is the default session.
+	**/
+	@:optional
+	var session : electron.Session; /**
+		Sets the session used by the page according to the session's partition string. If starts with , the page will use a persistent session available to all pages in the app with the same . If there is no prefix, the page will use an in-memory session. By assigning the same , multiple pages can share the same session. Default is the default session.
+	**/
+	@:optional
+	var partition : String; /**
+		The default zoom factor of the page, represents . Default is .
+	**/
+	@:optional
+	var zoomFactor : Float; /**
+		Enables JavaScript support. Default is .
+	**/
+	@:optional
+	var javascript : Bool; /**
+		When , it will disable the same-origin policy (usually using testing websites by people), and set and to if these two options are not set by user. Default is .
+	**/
+	@:optional
+	var webSecurity : Bool; /**
+		Allow an https page to display content like images from http URLs. Default is .
+	**/
+	@:optional
+	var allowDisplayingInsecureContent : Bool; /**
+		Allow an https page to run JavaScript, CSS or plugins from http URLs. Default is .
+	**/
+	@:optional
+	var allowRunningInsecureContent : Bool; /**
+		Enables image support. Default is .
+	**/
+	@:optional
+	var images : Bool; /**
+		Make TextArea elements resizable. Default is .
+	**/
+	@:optional
+	var textAreasAreResizable : Bool; /**
+		Enables WebGL support. Default is .
+	**/
+	@:optional
+	var webgl : Bool; /**
+		Enables WebAudio support. Default is .
+	**/
+	@:optional
+	var webaudio : Bool; /**
+		Whether plugins should be enabled. Default is .
+	**/
+	@:optional
+	var plugins : Bool; /**
+		Enables Chromium's experimental features. Default is .
+	**/
+	@:optional
+	var experimentalFeatures : Bool; /**
+		Enables Chromium's experimental canvas features. Default is .
+	**/
+	@:optional
+	var experimentalCanvasFeatures : Bool; /**
+		Enables scroll bounce (rubber banding) effect on macOS. Default is .
+	**/
+	@:optional
+	var scrollBounce : Bool; /**
+		A list of feature strings separated by , like to enable. The full list of supported feature strings can be found in the file.
+	**/
+	@:optional
+	var blinkFeatures : String; /**
+		A list of feature strings separated by , like to disable. The full list of supported feature strings can be found in the file.
+	**/
+	@:optional
+	var disableBlinkFeatures : String; /**
+		Sets the default font for the font-family.
+	**/
+	@:optional
+	var defaultFontFamily : { /**
+		Defaults to .
+	**/
+	@:optional
+	var standard : String; /**
+		Defaults to .
+	**/
+	@:optional
+	var serif : String; /**
+		Defaults to .
+	**/
+	@:optional
+	var sansSerif : String; /**
+		Defaults to .
+	**/
+	@:optional
+	var monospace : String; }; /**
+		Defaults to .
+	**/
+	@:optional
+	var defaultFontSize : Int; /**
+		Defaults to .
+	**/
+	@:optional
+	var defaultMonospaceFontSize : Int; /**
+		Defaults to .
+	**/
+	@:optional
+	var minimumFontSize : Int; /**
+		Defaults to .
+	**/
+	@:optional
+	var defaultEncoding : String; /**
+		Whether to throttle animations and timers when the page becomes background. Defaults to .
+	**/
+	@:optional
+	var backgroundThrottling : Bool; /**
+		Whether to enable offscreen rendering for the browser window. Defaults to .
+	**/
+	@:optional
+	var offscreen : Bool; /**
+		Whether to enable Chromium OS-level sandbox.
+	**/
+	@:optional
+	var sandbox : Bool; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
@@ -231,6 +359,10 @@ package electron;
 	function setAspectRatio(aspectRatio:Float, extraSize:{ @:optional
 	var width : Int; @:optional
 	var height : Int; }):Void;
+	/**
+		Uses Quick Look to preview a file at a given path.
+	**/
+	function previewFile(path:String, displayName:String):Void;
 	/**
 		Resizes and moves the window to the supplied bounds
 	**/
@@ -539,6 +671,10 @@ package electron;
 	static function setAspectRatio(aspectRatio:Float, extraSize:{ @:optional
 	var width : Int; @:optional
 	var height : Int; }):Void;
+	/**
+		Uses Quick Look to preview a file at a given path.
+	**/
+	static function previewFile(path:String, displayName:String):Void;
 	/**
 		Resizes and moves the window to the supplied bounds
 	**/

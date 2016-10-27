@@ -32,9 +32,29 @@ package electron;
 	**/
 	static function registerURLSchemeAsBypassingCSP(scheme:String):Void;
 	/**
-		Registers the scheme as secure, bypasses content security policy for resources, allows registering ServiceWorker and supports fetch API.
+		Registers the scheme as secure, bypasses content security policy for resources, allows registering ServiceWorker and supports fetch API. Specify an option with the value of false to omit it from the registration. An example of registering a privileged scheme, without bypassing Content Security Policy:
 	**/
-	static function registerURLSchemeAsPrivileged(scheme:String):Void;
+	static function registerURLSchemeAsPrivileged(scheme:String, ?options:{ /**
+		(optional) Default true.
+	**/
+	@:optional
+	var secure : Bool; /**
+		(optional) Default true.
+	**/
+	@:optional
+	var bypassCSP : Bool; /**
+		(optional) Default true.
+	**/
+	@:optional
+	var allowServiceWorkers : Bool; /**
+		(optional) Default true.
+	**/
+	@:optional
+	var supportFetchAPI : Bool; /**
+		(optional) Default true.
+	**/
+	@:optional
+	var corsEnabled : Bool; }):Void;
 	/**
 		Inserts text to the focused element.
 	**/

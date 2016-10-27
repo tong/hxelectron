@@ -8,15 +8,15 @@ package electron;
 	/**
 		A Boolean indicating whether the item is enabled, this property can be dynamically changed.
 	**/
-	var enabled : Dynamic;
+	var enabled : Bool;
 	/**
 		A Boolean indicating whether the item is visible, this property can be dynamically changed.
 	**/
-	var visible : Dynamic;
+	var visible : Bool;
 	/**
 		A Boolean indicating whether the item is checked, this property can be dynamically changed. A checkbox menu item will toggle the checked property on and off when selected. A radio menu item will turn on its checked property when clicked, and will turn off that property for all adjacent items in the same menu. You can add a click function for additional behavior.
 	**/
-	var checked : Dynamic;
+	var checked : Bool;
 	function new(options:{ /**
 		Will be called with when the menu item is clicked.
 	**/

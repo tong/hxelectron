@@ -38,6 +38,11 @@ package electron;
 		Writes the title and url into the clipboard as a bookmark. Note: Most apps on Windows don't support pasting bookmarks into them so you can use clipboard.write to write both a bookmark and fallback text to the clipboard.
 	**/
 	static function writeBookmark(title:String, url:String, ?type:String):Void;
+	static function readFindText():String;
+	/**
+		Writes the text into the find pasteboard as plain text. This method uses synchronous IPC when called from the renderer process.
+	**/
+	static function writeFindText(text:String):Void;
 	/**
 		Clears the clipboard content.
 	**/

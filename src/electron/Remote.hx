@@ -12,5 +12,6 @@ package electron;
 	var module : String; };
 	static function getCurrentWindow():electron.BrowserWindow;
 	static function getCurrentWebContents():electron.WebContents;
-	static function getGlobal(name:String):electron.Any;
+	static function getGlobal(name:String):{ @:optional
+	var name : String; };
 }

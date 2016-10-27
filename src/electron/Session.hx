@@ -11,15 +11,15 @@ package electron;
 	/**
 		A Cookies object for this session.
 	**/
-	var cookies : Dynamic;
+	var cookies : electron.Cookies;
 	/**
 		A WebRequest object for this session.
 	**/
-	var webRequest : Dynamic;
+	var webRequest : electron.WebRequest;
 	/**
 		A Protocol object (an instance of protocol module) for this session.
 	**/
-	var protocol : Dynamic;
+	var protocol : electron.Protocol;
 	/**
 		Returns the session's current cache size.
 	**/
