@@ -23,14 +23,21 @@ class Run {
 			error( 'API file not found [$file]' );
 		#end
 
+		var pack = ['electron'];
 		var api = Json.parse( File.getContent( file ) );
-		var types = ElectronAPI.build( api, ['electron'] );
+		var types = ElectronAPI.build( api, pack );
 
 		/////// TODO / HACK missing from api description
 		//types.push({ pack: pack, name: 'Accelerator', kind: TDAlias(macro:Dynamic), fields: [], meta: [], pos: pos });
 		//types.push({ pack: pack, name: 'Any', kind: TDAlias(macro:Dynamic), fields: [], meta: [], pos: pos });
-		types.push( ElectronAPI.createDynamicAlias( 'Accelerator' ) );
 		types.push( ElectronAPI.createDynamicAlias( 'Any' ) );
+		types.push( {
+			name: 'Accelerator',
+			pack: pack,
+			kind: TDAbstract( macro:String, [macro:String], [macro:String] ),
+			fields: [],
+			pos: ElectronAPI.pos
+		} );
 		//////////////////////////////////////////
 
 		if( !FileSystem.exists( out ) ) FileSystem.createDirectory( out );

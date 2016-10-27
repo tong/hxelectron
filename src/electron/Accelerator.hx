@@ -4,4 +4,6 @@ package electron;
 
 /**
 **/
-typedef Accelerator = Dynamic;
+abstract Accelerator(String) from String to String {
+
+}
