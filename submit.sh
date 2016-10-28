@@ -1,8 +1,7 @@
 #!/bin/sh
-set -e
-cd doc
-haxe build_doc.hxml || { cd ..; echo "build_doc failed"; exit 1; }
-cd ..
+haxe run.hxml --no-traces -dce full
+neko run.n electron-api.json
+haxe doc.hxml
 rm -f electron.zip
-zip -r electron.zip src doc/ImportCore.hx test extraParams.hxml haxelib.json LICENSE README.md -x "*/\.*"
+zip -r electron.zip src/ haxelib.json LICENSE README.md run.n -x "*/\.*"
 haxelib submit electron.zip

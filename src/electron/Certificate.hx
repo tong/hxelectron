@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef Certificate = {
+@:require(js, electron) typedef Certificate = {
 	/**
 		PEM encoded data
 	**/

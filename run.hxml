@@ -3,4 +3,4 @@
 -cp tool/
 -dce full
 #--no-traces
--debug
+#-debug

@@ -1,7 +1,5 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-typedef Any = Dynamic;
+@:require(js, electron) typedef Any = Dynamic;

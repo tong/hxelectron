@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef BluetoothDevice = {
+@:require(js, electron) typedef BluetoothDevice = {
 	var deviceName : String;
 	var deviceId : String;
 }

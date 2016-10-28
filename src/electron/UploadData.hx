@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef UploadData = {
+@:require(js, electron) typedef UploadData = {
 	/**
 		Content being sent.
 	**/

@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef DesktopCapturerSource = {
+@:require(js, electron) typedef DesktopCapturerSource = {
 	/**
 		The identifier of a window or screen that can be used as a constraint when calling []. The format of the identifier will be or , where is a random generated number.
 	**/
@@ -16,5 +14,5 @@ package electron;
 	/**
 		A thumbnail image. There is no guarantee that the size of the thumbnail is the same as the specified in the passed to . The actual size depends on the scale of the screen or window.
 	**/
-	var thumbnail : electron.NativeImage;
+	var thumbnail : NativeImage;
 }

@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef Task = {
+@:require(js, electron) typedef Task = {
 	/**
 		Path of the program to execute, usually you should specify which opens the current program.
 	**/

@@ -45,9 +45,9 @@ typedef APIProcess = {
 }
 
 @:enum abstract APIType(String) from String to String {
-	var module = "Module";
-	var class_ = "Class";
-	var structure = "Structure";
+	var Module = "Module";
+	var Class_ = "Class";
+	var Structure = "Structure";
 }
 
 typedef APIItem = {
@@ -69,235 +69,166 @@ typedef APIItem = {
 	?events : Array<APIEvent>,
 };
 
-@:require(sys)
+/**
+	Generates extern type definitions from electron-api.json
+**/
 class ElectronAPI {
 
-	static var KWDS = [ 'class', 'switch' ];
+	static var KWDS = ['class','switch'];
 
 	public static var pos(default,null) = #if macro null #else { min: 0, max: 0, file: '' } #end;
 
-	static var pack : Array<String>;
+	public static function build( api : Array<APIItem>, ?pack : Array<String> ) : Array<TypeDefinition> {
 
-	public static function build( api : Array<APIItem>, pack : Array<String> ) : Array<TypeDefinition> {
-
-		ElectronAPI.pack = pack;
+		if( pack == null ) pack = ['electron'];
 
 		var types = new Array<TypeDefinition>();
+		for( item in api )
+			types = types.concat( convertItem( item, pack ) );
 
-		for( item in api ) {
+		///// PATCH ////////////////////////////////////////////////////////////
 
-			var name : String = item.name;
-			var fields = new Array<Field>();
-
-			//Sys.println( '---------------------------- '+item.name );
-
-			switch item.type {
-			case class_:
-
-				var sup : TypePath = null;
-
-				if( item.instanceEvents != null ) {
-					sup = {
-						pack: ['js','node','events'], name: 'EventEmitter',
-						params: [TPType(TPath( { name: name, pack: pack } ) )]
-					};
-					types.push( createEventAbstract( item.name, item.instanceEvents ) );
-				}
-				if( item.instanceProperties != null ) {
-					for( p in item.instanceProperties ) {
-						fields.push( {
-							name: p.name,
-							doc: p.description,
-							kind: FVar( convertType( p.type ) ),
-							pos: pos
-						} );
+		for( type in types ) {
+			switch type.name {
+			case 'App':
+				type.fields.push( {
+					name: 'on',
+					access: [AStatic],
+					kind: FFun( { args: [
+						{ name: 'eventType', type: macro:Dynamic },
+						{ name: 'callback', type: macro:Dynamic->Void }
+					], ret: macro: Void, expr: null } ),
+					pos: pos
+				} );
+			case 'Remote':
+				var manipulateReturn = function(f:Field) {
+					switch f.kind {
+					case FFun(f):
+						switch f.ret {
+						case TPath(p): p.pack = ['electron','main'];
+						default:
+						}
+					default:
 					}
 				}
-				if( item.constructorMethod != null ) {
-					fields.push( convertMethod( item.constructorMethod ) );
-				}
-				if( item.instanceMethods != null ) {
-					for( m in item.instanceMethods )
-						fields.push( convertMethod(m) );
-				}
-				if( item.staticMethods != null ) {
-					for( m in item.instanceMethods ) {
-						fields.push( convertMethod( m, [AStatic] ) );
+				for( f in type.fields ) {
+					switch f.name {
+					case 'getCurrentWindow','getCurrentWebContents': manipulateReturn(f);
 					}
 				}
-
-				types.push( createClassTypeDefinition( pack, name, sup, fields, item.process ) );
-
-			case module:
-
-				var sup : TypePath = null;
-
-				if( item.events != null ) {
-					sup = {
-						pack: ['js','node','events'], name: 'EventEmitter',
-						params: [TPType(TPath( { pack: pack, name: uppercaseName( name ) } ) )]
-					};
-					types.push( createEventAbstract( item.name, item.events ) );
-				}
-
-				if( item.methods != null ) {
-					for( m in item.methods ) {
-						var alreadyAdded = false;
-						for( f in fields ) {
-							if( f.name == m.name ) {
-								alreadyAdded = true;
-								break;
-							}
-						}
-						if( alreadyAdded ) {
-							warning( 'Duplicate module method name: '+item.name+'.'+m.name );
-						} else {
-							//trace(m);
-							fields.push( convertMethod( m, [AStatic] ) );
-						}
-					}
-				}
-
-				/////// TODO / HACK
-				if( name == 'app' ) {
-					fields.push({
-						{
-							name: 'on',
-							access: [AStatic],
-							kind: FFun( { args: [
-								{ name: 'eventType', type: macro:Dynamic },
-								{ name: 'callback', type: macro:Dynamic->Void }
-							], ret: macro: Void, expr: null } ),
-							//doc: m.description,
-							pos: pos
-						}
-					});
-				}
-
-				types.push( createClassTypeDefinition( pack, name, sup, fields, item.process ) );
-
-			case structure:
-				types.push({
-					pos: pos,
-					pack: pack,
-					name: item.name,
-					kind: TDStructure,
-					fields: [for( p in item.properties )
-						{
-							name: p.name,
-							doc: p.description,
-							kind: FVar( convertType( p.type, p.properties ) ),
-							pos: pos
-						}
-					]
-				});
 			}
 		}
 
-		for( type in types ) {
-			if( type.meta == null ) type.meta = [];
-			type.meta.push({
-				name: ':require',
-				params: [ macro $i{'electron'} ],
-				pos: ElectronAPI.pos
-			});
-		}
+		types.push( createAlias( 'Any', pack ) );
+		types.push( createTypeDefinition( pack, 'Accelerator', TDAbstract( macro:String, [macro:String], [macro:String] ) ) );
+
+		////////////////////////////////////////////////////////////////////////
 
 		return types;
 	}
 
-	public static function createDynamicAlias( name : String ) : TypeDefinition {
-		return { pack: pack, name: name, kind: TDAlias(macro : Dynamic), fields: [], meta: [], pos: pos };
+	public static function createAlias( name : String, pack : Array<String>, ?type : ComplexType ) : TypeDefinition {
+		if( type == null ) type = macro : Dynamic;
+		return createTypeDefinition( pack, name, TDAlias(type) );
 	}
 
-	static function createEventAbstract( name : String, events : Array<APIEvent> ) : TypeDefinition {
+	static function convertItem( item : APIItem, pack : Array<String> ) : Array<TypeDefinition> {
+
+		var pack = pack.copy();
+		var meta = [];
 		var fields = new Array<Field>();
-		for( e in events ) {
-			var ename : String = e.name;
-			fields.push({
-				name: ename.replace( '-', '_' ),
-				kind: FVar( macro : String, { expr: EConst(CString(ename)), pos: pos } ),
-				doc: e.description,
-				pos: pos
-			});
+		var extraTypes = new Array<TypeDefinition>();
+
+		if( !item.process.main || !item.process.renderer ) {
+			if( item.process.main ) {
+				pack.push( 'main' );
+				//meta.push( { name: ':require', params: [macro $i{'electron_main'}], pos: pos } );
+			} else if( item.process.renderer ) {
+				pack.push( 'renderer' );
+				//meta.push( { name: ':require', params: [macro $i{'electron_renderer'}], pos: pos } );
+			}
 		}
-		return {
-			pack: pack,
-			fields: fields,
-			name: uppercaseName( name )+'Event',
-			kind: TDAbstract(macro:String,[macro:String],[macro:String]),
-			meta: [ { name: ":enum", pos: pos } ],
-			pos: pos
-		};
+
+		var def = switch item.type {
+
+		case Class_:
+			var sup : TypePath = null;
+			if( item.instanceEvents != null ) {
+				sup = {
+					pack: ['js','node','events'], name: 'EventEmitter',
+					params: [TPType( TPath( { name: item.name, pack: pack } ) )]
+				};
+				extraTypes.push( createEventAbstract( pack, item.name, item.instanceEvents ) );
+			}
+			if( item.instanceProperties != null )
+				for( p in item.instanceProperties )
+					fields.push( createField( p.name, FVar( convertType( p.type ) ), p.description ) );
+			if( item.constructorMethod != null )
+				fields.push( convertMethod( item.constructorMethod ) );
+			if( item.instanceMethods != null )
+				for( m in item.instanceMethods ) fields.push( convertMethod( m ) );
+			if( item.staticMethods != null )
+				for( m in item.instanceMethods ) fields.push( convertMethod( m, [AStatic] ) );
+			createClassTypeDefinition( pack, item.name, sup, fields, meta );
+
+		case Module:
+			var sup : TypePath = null;
+			if( item.methods != null ) {
+				//TODO hack
+				var alreadyAdded = false;
+				for( m in item.methods ) {
+					for( f in fields ) {
+						if( f.name == m.name ) {
+							trace( 'WARNING Duplicate module method name: '+item.name+'.'+m.name );
+							alreadyAdded = true;
+							break;
+						}
+					}
+					if( !alreadyAdded ) fields.push( convertMethod( m, [AStatic] ) );
+				}
+			}
+			createClassTypeDefinition( pack, item.name, sup, fields, meta );
+
+		case Structure:
+			for( p in item.properties ) {
+				//TODO hack to check if field is optional
+				var meta = (p.description != null && p.description.startsWith( '(optional)' ) ) ? [{ name: ':optional', pos: pos }] : [];
+				fields.push( createField( p.name, FVar( convertType( p.type, p.properties ) ), p.description, meta ) );
+			}
+			createTypeDefinition( pack, item.name, TDStructure, fields, meta );
+		}
+
+		var types = [def];
+		for( def in extraTypes ) types.push( def );
+		return types;
 	}
 
-	static function createClassTypeDefinition( pack : Array<String>, name : String, ?sup : TypePath, fields : Array<Field>, process : APIProcess ) : TypeDefinition {
-
-		var meta = [{
-			name: ":jsRequire",
-			params: [
-				{ expr: EConst( CString( 'electron' ) ), pos: pos },
-				{ expr: EConst( CString( name ) ), pos: pos }
-			],
-			pos: pos
-		}];
-
-		if( !process.main || !process.renderer ) {
-			meta.push({
-				name: ':require',
-				params: [ { expr: EConst( CIdent( if( process.main ) 'electron_main' else 'electron_renderer' ) ), pos: pos } ],
-				pos: pos
-			});
-		}
-
-		return {
-			pack: pack,
-			name: name.charAt( 0 ).toUpperCase() + name.substr( 1 ),
-			isExtern: true,
-			kind: TDClass( sup ),
-			fields: fields,
-			meta: meta,
-			pos: pos
-		}
-	}
-
-	static function convertMethod( m : APIMethod, ?access : Array<Access> ) : Field {
-
-		if( access == null ) access = [];
+	static function convertMethod( method : APIMethod, ?access : Array<Access> ) : Field {
 
 		var ret = macro : Void;
-		if( m.returns != null )
-			ret = convertType( m.returns.type, m.returns.properties );
-		else if( m.name == null )
-			ret = macro : Void;
+		if( method.returns != null )
+			ret = convertType( method.returns.type, method.returns.properties );
 
 		var args = new Array<FunctionArg>();
-		if( m.parameters != null ) {
-			for( p in m.parameters ) {
+		if( method.parameters != null ) {
+			for( p in method.parameters ) {
 				args.push( {
 					name: escapeName( p.name ),
 					type: convertType( p.type, p.properties ),
-					opt: (p.description == '(optional)')
+					//TODO hack to check if field is optional
+					opt: p.description != null && p.description.startsWith( '(optional)')
 				} );
 			}
 		}
 
-		return {
-			pos: pos,
-			access: access,
-			name: (m.name == null) ? 'new' : m.name,
-            kind: FFun( { args: args, ret: ret, expr: null } ),
-            doc: m.description
-        };
+		return createField(
+			(method.name == null) ? 'new' : method.name,
+			FFun( { args: args, ret: ret, expr: null } ),
+			access, method.description
+		);
 	}
 
 	static function convertType( type : String, ?properties : Array<Dynamic> ) : ComplexType {
-
-		var fchar = type.charAt( 0 );
-		if( fchar == fchar.toLowerCase() ) {
-			warning( '??? lowercase type name: '+type );
-			type = fchar.toUpperCase() + type.substr( 1 );
-		}
 
 		var isArray = if( type.endsWith( '[]' ) ) {
 			type = type.substr( 0, type.length-2 );
@@ -305,22 +236,20 @@ class ElectronAPI {
 		} else false;
 
 		var ctype = switch type {
-		case 'Bool','Boolean':
-			macro : Bool;
-		case 'Buffer':
-			macro : js.node.Buffer;
-		case 'Int','Integer':
-			macro : Int;
-		case 'Double','Float','Number':
-			macro : Float;
+		case 'Bool','Boolean': macro : Bool;
+		case 'Buffer': macro : js.node.Buffer;
+		case 'Int','Integer': macro : Int;
+		case 'Double','Float','Number': macro : Float;
 		case 'Function':
-			if( properties == null )
-				macro : haxe.Constraints.Function;
-			else
+			if( properties == null ) macro : haxe.Constraints.Function;
+			else {
+				//TODO
+				//for( p in properties ) {
 				TFunction(
-					[for(prop in properties) convertType( prop.type, prop.properties )],
+					[for(p in properties) convertType( p.type, p.properties )],
 					macro : Dynamic
 				);
+			}
 		case 'Object':
 			if( properties == null ) macro : Dynamic else {
 				TAnonymous( [for(p in properties){
@@ -331,41 +260,72 @@ class ElectronAPI {
 					doc: p.description
 				}] );
 			}
-		case 'String','URL':
-			macro : String;
-		default:
-			//macro : Dynamic;
-			TPath( { pack: pack, name: type } );
+		case 'String','URL': macro : String;
+		default: TPath( { pack: [], name: type } );
 		}
 
 		return if( !isArray ) ctype else switch ctype {
-			case TPath(p):
-				TPath( { pack: [], name: 'Array<${p.name}>' } );
-			default:
-				throw 'failed to convert array type';
+			case TPath(p): TPath( { name: 'Array<${p.name}>', pack: [] } );
+			default: throw 'failed to convert array type';
+		}
+	}
+
+	static function createField( name : String, kind: FieldType, ?access : Array<Access>, ?doc : String, ?meta : Metadata ) : Field {
+		return {
+			access: access,
+			name: name,
+			kind: kind,
+			doc: doc,
+			meta: meta,
+			pos: pos
+		}
+	}
+
+	static function createClassTypeDefinition( pack : Array<String>, name : String, sup : TypePath, ?fields : Array<Field>, ?meta : Metadata ) : TypeDefinition {
+		var _meta = [{
+			name: ":jsRequire",
+			params: [
+				{ expr: EConst( CString( 'electron' ) ), pos: pos },
+				{ expr: EConst( CString( name ) ), pos: pos }
+			],
+			pos: pos
+		}];
+		if( meta != null ) _meta = _meta.concat( meta );
+		return createTypeDefinition( pack, name, TDClass( sup ), fields, _meta, true );
+	}
+
+	static function createEventAbstract( pack : Array<String>, name : String, events : Array<APIEvent> ) : TypeDefinition {
+		var fields = new Array<Field>();
+		for( e in events ) {
+			var ename : String = e.name;
+			fields.push({
+				name: ename.replace( '-', '_' ),
+				kind: FVar( macro : String, { expr: EConst(CString(ename)), pos: pos } ),
+				doc: e.description,
+				pos: pos
+			});
+		}
+		return createTypeDefinition( pack, escapeTypeName( name )+'Event', TDAbstract(macro:String,[macro:String],[macro:String]), fields, [{ name: ":enum", pos: pos }] );
+	}
+
+	static function createTypeDefinition( pack : Array<String>, name : String, kind : TypeDefKind, ?fields : Array<Field>, ?meta : Metadata, ?isExtern : Bool ) : TypeDefinition {
+		var _meta = [{ name: ':require', params: [macro $i{'js'},macro $i{'electron'}], pos: pos }];
+		if( meta != null ) _meta = _meta.concat( meta );
+		return {
+			pack: pack,
+			name: escapeTypeName( name ),
+			kind: kind,
+			fields: (fields == null) ? [] : fields,
+			meta: _meta,
+			isExtern: isExtern,
+			pos: pos
 		};
 	}
 
-	static function uppercaseName( n : String ) : String {
-		return n.charAt( 0 ).toUpperCase() + n.substr( 1 );
-	}
+	static function escapeTypeName( name : String ) : String
+		return name.charAt( 0 ).toUpperCase() + name.substr( 1 );
 
-	static function escapeName( n : String ) : String {
-		return (KWDS.indexOf( n ) != -1) ? n+'_' : n;
-	}
+	static function escapeName( name : String ) : String
+		return (KWDS.indexOf( name ) != -1) ? name+'_' : name;
 
-	/*
-	static function warning( msg : String ) {
-		println( '!!! WARNING '+msg );
-	}
-
-	static function error( info : String, code = -1 ) {
-		println( info );
-		Sys.exit( code );
-	}
-	*/
-
-	static function warning( msg : String ) {
-		Sys.println( '!!! WARNING '+msg );
-	}
 }

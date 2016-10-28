@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef MemoryUsageDetails = {
+@:require(js, electron) typedef MemoryUsageDetails = {
 	var count : Float;
 	var size : Float;
 	var liveSize : Float;

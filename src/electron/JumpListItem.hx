@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef JumpListItem = {
+@:require(js, electron) typedef JumpListItem = {
 	/**
 		One of the following:
 	**/

@@ -1,13 +1,11 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 	Perform copy and paste operations on the system clipboard.
 
 	[Documentation](http://electron.atom.io/docs/api/clipboard)
 **/
-@:jsRequire("electron", "clipboard") @:require(electron) extern class Clipboard {
+@:require(js, electron) @:jsRequire("electron", "clipboard") extern class Clipboard {
 	static function readText(?type:String):String;
 	/**
 		Writes the text into the clipboard as plain text.
@@ -18,11 +16,11 @@ package electron;
 		Writes markup to the clipboard.
 	**/
 	static function writeHTML(markup:String, ?type:String):Void;
-	static function readImage(?type:String):electron.NativeImage;
+	static function readImage(?type:String):NativeImage;
 	/**
 		Writes image to the clipboard.
 	**/
-	static function writeImage(image:electron.NativeImage, ?type:String):Void;
+	static function writeImage(image:NativeImage, ?type:String):Void;
 	static function readRTF(?type:String):String;
 	/**
 		Writes the text into the clipboard in RTF.
@@ -56,7 +54,7 @@ package electron;
 	static function write(data:{ @:optional
 	var text : String; @:optional
 	var html : String; @:optional
-	var image : electron.NativeImage; @:optional
+	var image : NativeImage; @:optional
 	var rtf : String; /**
 		The title of the url at .
 	**/

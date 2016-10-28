@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef Display = {
+@:require(js, electron) typedef Display = {
 	/**
 		Unique identifier associated with the display.
 	**/
@@ -21,11 +19,11 @@ package electron;
 		Can be , , .
 	**/
 	var touchSupport : String;
-	var bounds : electron.Rectangle;
+	var bounds : Rectangle;
 	var size : { @:optional
 	var height : Float; @:optional
 	var width : Float; };
-	var workArea : electron.Rectangle;
+	var workArea : Rectangle;
 	var workAreaSize : { @:optional
 	var height : Float; @:optional
 	var width : Float; };

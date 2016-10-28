@@ -1,13 +1,11 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 	Manage files and URLs using their default applications.
 
 	[Documentation](http://electron.atom.io/docs/api/shell)
 **/
-@:jsRequire("electron", "shell") @:require(electron) extern class Shell {
+@:require(js, electron) @:jsRequire("electron", "shell") extern class Shell {
 	/**
 		Show the given file in a file manager. If possible, select the file.
 	**/
@@ -35,9 +33,9 @@ package electron;
 	/**
 		Creates or updates a shortcut link at shortcutPath.
 	**/
-	static function writeShortcutLink(shortcutPath:String, operation:String, options:electron.ShortcutDetails):Bool;
+	static function writeShortcutLink(shortcutPath:String, ?operation:String, options:ShortcutDetails):Bool;
 	/**
 		Resolves the shortcut link at shortcutPath. An exception will be thrown when any error happens.
 	**/
-	static function readShortcutLink(shortcutPath:String):electron.ShortcutDetails;
+	static function readShortcutLink(shortcutPath:String):ShortcutDetails;
 }

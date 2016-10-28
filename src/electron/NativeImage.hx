@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:jsRequire("electron", "NativeImage") @:require(electron) extern class NativeImage {
+@:require(js, electron) @:jsRequire("electron", "NativeImage") extern class NativeImage {
 	function toPNG():js.node.Buffer;
 	function toJPEG(quality:Int):js.node.Buffer;
 	function toBitmap():js.node.Buffer;
@@ -30,7 +28,7 @@ package electron;
 	var x : Int; @:optional
 	var y : Int; @:optional
 	var width : Int; @:optional
-	var height : Int; }):electron.NativeImage;
+	var height : Int; }):NativeImage;
 	/**
 		If only the height or the width are specified then the current aspect ratio will be preserved in the resized image.
 	**/
@@ -46,6 +44,6 @@ package electron;
 		(optional) - The desired quality of the resize image. Possible values are , or . The default is . These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
 	**/
 	@:optional
-	var quality : String; }):electron.NativeImage;
+	var quality : String; }):NativeImage;
 	function getAspectRatio():Float;
 }

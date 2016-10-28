@@ -1,10 +1,8 @@
 package electron;
 
-///// GENERATED - DO NOT EDIT /////
-
 /**
 **/
-@:require(electron) typedef Cookie = {
+@:require(js, electron) typedef Cookie = {
 	/**
 		The name of the cookie.
 	**/
@@ -40,5 +38,6 @@ package electron;
 	/**
 		(optional) - The expiration date of the cookie as the number of seconds since the UNIX epoch. Not provided for session cookies.
 	**/
+	@:optional
 	var expirationDate : Float;
 }

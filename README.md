@@ -17,9 +17,8 @@ $ haxelib install electron
 Download latest api description file from the electron releases site: https://github.com/electron/electron/releases.
 
 ```sh
-$ haxelib run electron <electron-api.json>
+$ haxelib run electron <path/to/electron-api.json>
 ```
-
 
 
 ## Get started with Haxe and Electron
@@ -27,17 +26,14 @@ $ haxelib run electron <electron-api.json>
 Spin up the Haxe Quick Start app to see Electron in action:
 
 ```sh
-## Clone the Haxe Quick Start repository
+## Clone the hxelectron repository
 $ git clone https://github.com/fponticelli/hxelectron
 
 ## Go into the repository
-$ cd hxelectron/
+$ cd hxelectron/demo/
 
 ## Build javascript with Haxe
-$ haxe demo.hxml
-
-## Go into the demo application directory
-$ cd demo/
+$ haxe build.hxml
 
 ## Install the dependencies and run
 $ npm install && npm start
