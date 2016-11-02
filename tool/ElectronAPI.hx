@@ -36,7 +36,8 @@ typedef APIMethod = {
 	signature : String,
 	description : String,
 	returns : APIReturn,
-	parameters : Array<APIMethodParameter>
+	parameters : Array<APIMethodParameter>,
+	platforms : Array<String>
 }
 
 typedef APIProcess = {
@@ -83,8 +84,11 @@ class ElectronAPI {
 		if( pack == null ) pack = ['electron'];
 
 		var types = new Array<TypeDefinition>();
-		for( item in api )
-			types = types.concat( convertItem( item, pack ) );
+		for( item in api ) {
+			//if( item.name != 'net' ) continue;
+			var itemTypes = convertItem( item, pack );
+			types = types.concat( itemTypes );
+		}
 
 		///// PATCH ////////////////////////////////////////////////////////////
 
@@ -212,9 +216,11 @@ class ElectronAPI {
 		var args = new Array<FunctionArg>();
 		if( method.parameters != null ) {
 			for( p in method.parameters ) {
+				//TODO temp hack
+				var type = untyped if( Std.is( p.type, Array ) ) 'Object' else p.type;
 				args.push( {
 					name: escapeName( p.name ),
-					type: convertType( p.type, p.properties ),
+					type: convertType( type, p.properties ),
 					//TODO hack to check if field is optional
 					opt: p.description != null && p.description.startsWith( '(optional)')
 				} );
@@ -224,7 +230,8 @@ class ElectronAPI {
 		return createField(
 			(method.name == null) ? 'new' : method.name,
 			FFun( { args: args, ret: ret, expr: null } ),
-			access, method.description
+			access,
+			method.description
 		);
 	}
 
@@ -239,6 +246,7 @@ class ElectronAPI {
 		case 'Bool','Boolean': macro : Bool;
 		case 'Buffer': macro : js.node.Buffer;
 		case 'Int','Integer': macro : Int;
+		case 'Dynamic': macro : Dynamic; // allows to explicit set type to Dynamic
 		case 'Double','Float','Number': macro : Float;
 		case 'Function':
 			if( properties == null ) macro : haxe.Constraints.Function;
@@ -261,7 +269,7 @@ class ElectronAPI {
 				}] );
 			}
 		case 'String','URL': macro : String;
-		default: TPath( { pack: [], name: type } );
+		default: TPath( { pack: [], name: escapeTypeName( type ) } );
 		}
 
 		return if( !isArray ) ctype else switch ctype {
