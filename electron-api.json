@@ -9,7 +9,7 @@
     "type": "Module",
     "slug": "clipboard",
     "websiteUrl": "http://electron.atom.io/docs/api/clipboard",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/clipboard.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/clipboard.md",
     "methods": [
       {
         "name": "readText",
@@ -334,7 +334,7 @@
     "type": "Module",
     "slug": "crash-reporter",
     "websiteUrl": "http://electron.atom.io/docs/api/crash-reporter",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/crash-reporter.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/crash-reporter.md",
     "methods": [
       {
         "name": "start",
@@ -420,7 +420,7 @@
     "type": "Module",
     "slug": "native-image",
     "websiteUrl": "http://electron.atom.io/docs/api/native-image",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/native-image.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/native-image.md",
     "methods": [
       {
         "name": "createEmpty",
@@ -486,7 +486,7 @@
     "type": "Class",
     "slug": "native-image",
     "websiteUrl": "http://electron.atom.io/docs/api/native-image",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/native-image.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/native-image.md",
     "instanceName": "image",
     "instanceMethods": [
       {
@@ -684,7 +684,7 @@
     "type": "Module",
     "slug": "shell",
     "websiteUrl": "http://electron.atom.io/docs/api/shell",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/shell.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/shell.md",
     "methods": [
       {
         "name": "showItemInFolder",
@@ -833,7 +833,7 @@
     "type": "Module",
     "slug": "app",
     "websiteUrl": "http://electron.atom.io/docs/api/app",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/app.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/app.md",
     "methods": [
       {
         "name": "quit",
@@ -1972,7 +1972,7 @@
     "type": "Module",
     "slug": "auto-updater",
     "websiteUrl": "http://electron.atom.io/docs/api/auto-updater",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/auto-updater.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/auto-updater.md",
     "methods": [
       {
         "name": "setFeedURL",
@@ -2070,7 +2070,7 @@
     "type": "Class",
     "slug": "browser-window",
     "websiteUrl": "http://electron.atom.io/docs/api/browser-window",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/browser-window.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/browser-window.md",
     "staticMethods": [
       {
         "name": "getAllWindows",
@@ -3822,7 +3822,7 @@
     "type": "Module",
     "slug": "content-tracing",
     "websiteUrl": "http://electron.atom.io/docs/api/content-tracing",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/content-tracing.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/content-tracing.md",
     "methods": [
       {
         "name": "getCategories",
@@ -4010,7 +4010,7 @@
     "type": "Module",
     "slug": "dialog",
     "websiteUrl": "http://electron.atom.io/docs/api/dialog",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/dialog.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/dialog.md",
     "methods": [
       {
         "name": "showOpenDialog",
@@ -4220,7 +4220,7 @@
     "type": "Module",
     "slug": "ipc-main",
     "websiteUrl": "http://electron.atom.io/docs/api/ipc-main",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/ipc-main.md"
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/ipc-main.md"
   },
   {
     "name": "globalShortcut",
@@ -4232,7 +4232,7 @@
     "type": "Module",
     "slug": "global-shortcut",
     "websiteUrl": "http://electron.atom.io/docs/api/global-shortcut",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/global-shortcut.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/global-shortcut.md",
     "methods": [
       {
         "name": "register",
@@ -4292,7 +4292,7 @@
     "type": "Class",
     "slug": "menu",
     "websiteUrl": "http://electron.atom.io/docs/api/menu",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/menu.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/menu.md",
     "staticMethods": [
       {
         "name": "setApplicationMenu",
@@ -4404,6 +4404,305 @@
     ]
   },
   {
+    "name": "net",
+    "description": "Issue HTTP/HTTPS requests using Chromium's native networking library",
+    "process": {
+      "main": true,
+      "renderer": false
+    },
+    "type": "Module",
+    "slug": "net",
+    "websiteUrl": "http://electron.atom.io/docs/api/net",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/net.md",
+    "methods": [
+      {
+        "name": "request",
+        "signature": "(options)",
+        "description": "Creates a ClientRequest instance using the provided options which are directly forwarded to the ClientRequest constructor. The net.request method would be used to issue both secure and insecure HTTP requests according to the specified protocol scheme in the options object.",
+        "parameters": [
+          {
+            "name": "options",
+            "type": [
+              "Object",
+              "String"
+            ],
+            "description": "The `ClientRequest` constructor options."
+          }
+        ],
+        "returns": {
+          "type": "ClientRequest"
+        }
+      }
+    ]
+  },
+  {
+    "name": "ClientRequest",
+    "description": "Make HTTP/HTTPS requests.",
+    "process": {
+      "main": true,
+      "renderer": false
+    },
+    "type": "Class",
+    "slug": "client-request",
+    "websiteUrl": "http://electron.atom.io/docs/api/client-request",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/client-request.md",
+    "constructorMethod": {
+      "signature": "(options)",
+      "parameters": [
+        {
+          "name": "options",
+          "type": [
+            "Object",
+            "String"
+          ],
+          "description": "If `options` is a String, it is interpreted as the request URL. If it is an object, it is expected to fully specify an HTTP request via the following properties:"
+        }
+      ]
+    },
+    "instanceName": "request",
+    "instanceMethods": [
+      {
+        "name": "setHeader",
+        "signature": "(name, value)",
+        "description": "Adds an extra HTTP header. The header name will issued as it is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error.",
+        "parameters": [
+          {
+            "name": "name",
+            "type": "String",
+            "description": "An extra HTTP header name."
+          },
+          {
+            "name": "value",
+            "type": "String",
+            "description": "An extra HTTP header value."
+          }
+        ]
+      },
+      {
+        "name": "getHeader",
+        "signature": "(name)",
+        "description": "Returns String - The value of a previously set extra header name.",
+        "parameters": [
+          {
+            "name": "name",
+            "type": "String",
+            "description": "Specify an extra header name."
+          }
+        ]
+      },
+      {
+        "name": "removeHeader",
+        "signature": "(name)",
+        "description": "Removes a previously set extra header name. This method can be called only before first write. Trying to call it after the first write will throw an error.",
+        "parameters": [
+          {
+            "name": "name",
+            "type": "String",
+            "description": "Specify an extra header name."
+          }
+        ]
+      },
+      {
+        "name": "write",
+        "signature": "(chunk[, encoding][, callback])",
+        "description": "callback is essentially a dummy function introduced in the purpose of keeping similarity with the Node.js API. It is called asynchronously in the next tick after chunk content have been delivered to the Chromium networking layer. Contrary to the Node.js implementation, it is not guaranteed that chunk content have been flushed on the wire before callback is called. Adds a chunk of data to the request body. The first write operation may cause the request headers to be issued on the wire. After the first write operation, it is not allowed to add or remove a custom header.",
+        "parameters": [
+          {
+            "name": "chunk",
+            "type": [
+              "String",
+              "Buffer"
+            ],
+            "description": "A chunk of the request body's data. If it is a string, it is converted into a Buffer using the specified encoding."
+          },
+          {
+            "name": "encoding",
+            "type": "String",
+            "description": "(optional) - Used to convert string chunks into Buffer objects. Defaults to 'utf-8'."
+          },
+          {
+            "name": "callback",
+            "type": "Function",
+            "description": "(optional) - Called after the write operation ends."
+          }
+        ]
+      },
+      {
+        "name": "end",
+        "signature": "([chunk][, encoding][, callback])",
+        "description": "Sends the last chunk of the request data. Subsequent write or end operations will not be allowed. The finish event is emitted just after the end operation.",
+        "parameters": [
+          {
+            "name": "chunk",
+            "type": [
+              "String",
+              "Buffer"
+            ],
+            "description": "(optional)"
+          },
+          {
+            "name": "encoding",
+            "type": "String",
+            "description": "(optional)"
+          },
+          {
+            "name": "callback",
+            "type": "Function",
+            "description": "(optional)"
+          }
+        ]
+      },
+      {
+        "name": "abort",
+        "signature": "()",
+        "description": "Cancels an ongoing HTTP transaction. If the request has already emitted the close event, the abort operation will have no effect. Otherwise an ongoing event will emit abort and close events. Additionally, if there is an ongoing response object,it will emit the aborted event."
+      }
+    ],
+    "instanceProperties": [
+      {
+        "name": "chunkedEncoding",
+        "description": "A Boolean specifying whether the request will use HTTP chunked transfer encoding or not. Defaults to false. The property is readable and writable, however it can be set only before the first write operation as the HTTP headers are not yet put on the wire. Trying to set the chunkedEncoding property after the first write will throw an error. Using chunked encoding is strongly recommended if you need to send a large request body as data will be streamed in small chunks instead of being internally buffered inside Electron process memory.",
+        "type": "Boolean"
+      }
+    ],
+    "instanceEvents": [
+      {
+        "name": "response",
+        "returns": [
+          {
+            "name": "response",
+            "type": "IncomingMessage",
+            "description": "An object representing the HTTP response message."
+          }
+        ]
+      },
+      {
+        "name": "login",
+        "description": "Emitted when an authenticating proxy is asking for user credentials. The callback function is expected to be called back with user credentials: Providing empty credentials will cancel the request and report an authentication error on the response object:",
+        "returns": [
+          {
+            "name": "authInfo",
+            "type": "Object",
+            "properties": [
+              {
+                "name": "isProxy",
+                "type": "Boolean",
+                "description": ""
+              },
+              {
+                "name": "scheme",
+                "type": "String",
+                "description": ""
+              },
+              {
+                "name": "host",
+                "type": "String",
+                "description": ""
+              },
+              {
+                "name": "port",
+                "type": "Integer",
+                "description": ""
+              },
+              {
+                "name": "realm",
+                "type": "String",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "callback",
+            "type": "Function"
+          }
+        ]
+      },
+      {
+        "name": "finish",
+        "description": "Emitted just after the last chunk of the request's data has been written into the request object."
+      },
+      {
+        "name": "abort",
+        "description": "Emitted when the request is aborted. The abort event will not be fired if the request is already closed."
+      },
+      {
+        "name": "error",
+        "description": "Emitted when the net module fails to issue a network request. Typically when the request object emits an error event, a close event will subsequently follow and no response object will be provided.",
+        "returns": [
+          {
+            "name": "error",
+            "type": "Error",
+            "description": "an error object providing some information about the failure."
+          }
+        ]
+      },
+      {
+        "name": "close",
+        "description": "Emitted as the last event in the HTTP request-response transaction. The close event indicates that no more events will be emitted on either the request or response objects."
+      }
+    ]
+  },
+  {
+    "name": "IncomingMessage",
+    "description": "Handle responses to HTTP/HTTPS requests.",
+    "process": {
+      "main": true,
+      "renderer": false
+    },
+    "type": "Class",
+    "slug": "incoming-message",
+    "websiteUrl": "http://electron.atom.io/docs/api/incoming-message",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/incoming-message.md",
+    "instanceName": "response",
+    "instanceProperties": [
+      {
+        "name": "statusCode",
+        "description": "An Integer indicating the HTTP response status code.",
+        "type": "Integer"
+      },
+      {
+        "name": "statusMessage",
+        "description": "A String representing the HTTP status message.",
+        "type": "String"
+      },
+      {
+        "name": "headers",
+        "description": "An Object representing the response HTTP headers. The headers object is formatted as follows:",
+        "type": "Object"
+      },
+      {
+        "name": "httpVersion",
+        "description": "A String indicating the HTTP protocol version number. Typical values are '1.0' or '1.1'. Additionally httpVersionMajor and httpVersionMinor are two Integer-valued readable properties that return respectively the HTTP major and minor version numbers.",
+        "type": "String"
+      }
+    ],
+    "instanceEvents": [
+      {
+        "name": "data",
+        "description": "The data event is the usual method of transferring response data into applicative code.",
+        "returns": [
+          {
+            "name": "chunk",
+            "type": "Buffer",
+            "description": "A chunk of response body's data."
+          }
+        ]
+      },
+      {
+        "name": "end",
+        "description": "Indicates that response body has ended."
+      },
+      {
+        "name": "aborted",
+        "description": "Emitted when a request has been canceled during an ongoing HTTP transaction."
+      },
+      {
+        "name": "error",
+        "description": "error Error - Typically holds an error string identifying failure root cause. Emitted when an error was encountered while streaming response data events. For instance, if the server closes the underlying while the response is still streaming, an error event will be emitted on the response object and a close event will subsequently follow on the request object."
+      }
+    ]
+  },
+  {
     "name": "MenuItem",
     "description": "Add items to native application menus and context menus.",
     "process": {
@@ -4413,7 +4712,7 @@
     "type": "Class",
     "slug": "menu-item",
     "websiteUrl": "http://electron.atom.io/docs/api/menu-item",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/menu-item.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/menu-item.md",
     "constructorMethod": {
       "signature": "(options)",
       "parameters": [
@@ -4553,7 +4852,7 @@
     "type": "Module",
     "slug": "power-monitor",
     "websiteUrl": "http://electron.atom.io/docs/api/power-monitor",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/power-monitor.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/power-monitor.md",
     "events": [
       {
         "name": "suspend",
@@ -4589,7 +4888,7 @@
     "type": "Module",
     "slug": "power-save-blocker",
     "websiteUrl": "http://electron.atom.io/docs/api/power-save-blocker",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/power-save-blocker.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/power-save-blocker.md",
     "methods": [
       {
         "name": "start",
@@ -4656,7 +4955,7 @@
     "type": "Module",
     "slug": "protocol",
     "websiteUrl": "http://electron.atom.io/docs/api/protocol",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/protocol.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/protocol.md",
     "methods": [
       {
         "name": "registerStandardSchemes",
@@ -5375,7 +5674,7 @@
     "type": "Module",
     "slug": "screen",
     "websiteUrl": "http://electron.atom.io/docs/api/screen",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/screen.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/screen.md",
     "methods": [
       {
         "name": "getCursorScreenPoint",
@@ -5513,7 +5812,7 @@
     "type": "Module",
     "slug": "session",
     "websiteUrl": "http://electron.atom.io/docs/api/session",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/session.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/session.md",
     "methods": [
       {
         "name": "fromPartition",
@@ -5553,7 +5852,7 @@
     "type": "Class",
     "slug": "session",
     "websiteUrl": "http://electron.atom.io/docs/api/session",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/session.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/session.md",
     "instanceName": "ses",
     "instanceMethods": [
       {
@@ -5707,7 +6006,7 @@
     "type": "Class",
     "slug": "cookies",
     "websiteUrl": "http://electron.atom.io/docs/api/cookies",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/cookies.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/cookies.md",
     "instanceName": "cookies",
     "instanceMethods": [
       {
@@ -5915,7 +6214,7 @@
     "type": "Class",
     "slug": "web-request",
     "websiteUrl": "http://electron.atom.io/docs/api/web-request",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/web-request.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/web-request.md",
     "instanceName": "webRequest",
     "instanceMethods": [
       {
@@ -6367,7 +6666,7 @@
     "type": "Module",
     "slug": "system-preferences",
     "websiteUrl": "http://electron.atom.io/docs/api/system-preferences",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/system-preferences.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/system-preferences.md",
     "methods": [
       {
         "name": "isDarkMode",
@@ -6792,7 +7091,7 @@
     "type": "Class",
     "slug": "tray",
     "websiteUrl": "http://electron.atom.io/docs/api/tray",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/tray.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/tray.md",
     "constructorMethod": {
       "signature": "(image)",
       "parameters": [
@@ -7135,7 +7434,7 @@
     "type": "Module",
     "slug": "web-contents",
     "websiteUrl": "http://electron.atom.io/docs/api/web-contents",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/web-contents.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/web-contents.md",
     "methods": [
       {
         "name": "getAllWebContents",
@@ -7179,7 +7478,7 @@
     "type": "Class",
     "slug": "web-contents",
     "websiteUrl": "http://electron.atom.io/docs/api/web-contents",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/web-contents.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/web-contents.md",
     "instanceName": "contents",
     "instanceMethods": [
       {
@@ -9140,7 +9439,7 @@
     "type": "Class",
     "slug": "debugger",
     "websiteUrl": "http://electron.atom.io/docs/api/debugger",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/debugger.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/debugger.md",
     "instanceName": "debugger",
     "instanceMethods": [
       {
@@ -9252,7 +9551,7 @@
     "type": "Module",
     "slug": "process",
     "websiteUrl": "http://electron.atom.io/docs/api/process",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/process.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/process.md",
     "methods": [
       {
         "name": "crash",
@@ -9357,7 +9656,7 @@
     "type": "Module",
     "slug": "desktop-capturer",
     "websiteUrl": "http://electron.atom.io/docs/api/desktop-capturer",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/desktop-capturer.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/desktop-capturer.md",
     "methods": [
       {
         "name": "getSources",
@@ -9411,7 +9710,7 @@
     "type": "Module",
     "slug": "ipc-renderer",
     "websiteUrl": "http://electron.atom.io/docs/api/ipc-renderer",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/ipc-renderer.md"
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/ipc-renderer.md"
   },
   {
     "name": "remote",
@@ -9423,7 +9722,7 @@
     "type": "Module",
     "slug": "remote",
     "websiteUrl": "http://electron.atom.io/docs/api/remote",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/remote.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/remote.md",
     "methods": [
       {
         "name": "require",
@@ -9472,15 +9771,8 @@
           }
         ],
         "returns": {
-          "type": "Object",
-          "description": "The global variable of name (e.g. global[name]) in the main process.",
-          "properties": [
-            {
-              "name": "name",
-              "type": "String",
-              "description": ""
-            }
-          ]
+          "type": "any",
+          "description": "The global variable of name (e.g. global[name]) in the main process."
         }
       }
     ]
@@ -9495,7 +9787,7 @@
     "type": "Module",
     "slug": "web-frame",
     "websiteUrl": "http://electron.atom.io/docs/api/web-frame",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/web-frame.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/web-frame.md",
     "methods": [
       {
         "name": "setZoomFactor",
@@ -9715,7 +10007,7 @@
     "type": "Class",
     "slug": "browser-window-proxy",
     "websiteUrl": "http://electron.atom.io/docs/api/browser-window-proxy",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/browser-window-proxy.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/browser-window-proxy.md",
     "instanceName": "win",
     "instanceMethods": [
       {
@@ -9782,7 +10074,7 @@
     "type": "Structure",
     "slug": "bluetooth-device",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/bluetooth-device",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/bluetooth-device.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/bluetooth-device.md",
     "properties": [
       {
         "name": "deviceName",
@@ -9805,7 +10097,7 @@
     "type": "Structure",
     "slug": "certificate",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/certificate",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/certificate.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/certificate.md",
     "properties": [
       {
         "name": "data",
@@ -9853,7 +10145,7 @@
     "type": "Structure",
     "slug": "cookie",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/cookie",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/cookie.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/cookie.md",
     "properties": [
       {
         "name": "name",
@@ -9911,7 +10203,7 @@
     "type": "Structure",
     "slug": "desktop-capturer-source",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/desktop-capturer-source",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/desktop-capturer-source.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/desktop-capturer-source.md",
     "properties": [
       {
         "name": "id",
@@ -9939,7 +10231,7 @@
     "type": "Structure",
     "slug": "display",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/display",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/display.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/display.md",
     "properties": [
       {
         "name": "id",
@@ -10027,7 +10319,7 @@
     "type": "Structure",
     "slug": "jump-list-category",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/jump-list-category",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/jump-list-category.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/jump-list-category.md",
     "properties": [
       {
         "name": "type",
@@ -10073,7 +10365,7 @@
     "type": "Structure",
     "slug": "jump-list-item",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/jump-list-item",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/jump-list-item.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/jump-list-item.md",
     "properties": [
       {
         "name": "type",
@@ -10140,7 +10432,7 @@
     "type": "Structure",
     "slug": "memory-usage-details",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/memory-usage-details",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/memory-usage-details.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/memory-usage-details.md",
     "properties": [
       {
         "name": "count",
@@ -10183,7 +10475,7 @@
     "type": "Structure",
     "slug": "rectangle",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/rectangle",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/rectangle.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/rectangle.md",
     "properties": [
       {
         "name": "x",
@@ -10216,7 +10508,7 @@
     "type": "Structure",
     "slug": "shortcut-details",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/shortcut-details",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/shortcut-details.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/shortcut-details.md",
     "properties": [
       {
         "name": "target",
@@ -10264,7 +10556,7 @@
     "type": "Structure",
     "slug": "task",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/task",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/task.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/task.md",
     "properties": [
       {
         "name": "program",
@@ -10307,7 +10599,7 @@
     "type": "Structure",
     "slug": "thumbar-button",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/thumbar-button",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/thumbar-button.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/thumbar-button.md",
     "properties": [
       {
         "name": "icon",
@@ -10341,7 +10633,7 @@
     "type": "Structure",
     "slug": "upload-data",
     "websiteUrl": "http://electron.atom.io/docs/api/structures/upload-data",
-    "repoUrl": "https://github.com/electron/electron/blob/v1.4.4/docs/api/structures/upload-data.md",
+    "repoUrl": "https://github.com/electron/electron/blob/v1.4.5/docs/api/structures/upload-data.md",
     "properties": [
       {
         "name": "bytes",
