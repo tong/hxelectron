@@ -3,13 +3,12 @@
   "url": "https://github.com/fponticelli/hxelectron",
   "license": "MIT",
   "classPath": "src",
-  "tags": ["electron", "atom-shell"],
-  "description": "Electron extern definitions.",
-  "releasenote": "Fixed a few signatures.",
-  "version": "0.1.1",
+  "tags": ["electron"],
+  "description": "Externs for the electron framework",
+  "releasenote": "Autogenerate externs from electron-api.json",
+  "version": "1.0.0-alpha",
   "contributors": ["fponticelli"],
   "dependencies": {
-    "hxnodejs" : "",
-    "npm" : ""
+    "hxnodejs" : ""
   }
 }
