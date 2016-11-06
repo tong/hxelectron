@@ -1,6 +1,7 @@
 package electron.main;
 
-import js.node.events.EventEmitter;
+/**
+**/
+@:require(js, electron) @:jsRequire("electron", "powerMonitor") extern class PowerMonitor {
 
-@:jsRequire("power-monitor")
-extern class PowerMonitor extends EventEmitter<PowerMonitor> {}
+}

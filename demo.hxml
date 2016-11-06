@@ -1,7 +1,6 @@
--cp src
+-lib electron
 -cp demo/src
--lib hxnodejs
--lib npm
+-D fff
 --each
 
 --next

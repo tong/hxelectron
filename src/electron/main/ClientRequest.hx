@@ -1,0 +1,35 @@
+package electron.main;
+
+/**
+**/
+@:require(js, electron) @:jsRequire("electron", "ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {
+	/**
+		A Boolean specifying whether the request will use HTTP chunked transfer encoding or not. Defaults to false. The property is readable and writable, however it can be set only before the first write operation as the HTTP headers are not yet put on the wire. Trying to set the chunkedEncoding property after the first write will throw an error. Using chunked encoding is strongly recommended if you need to send a large request body as data will be streamed in small chunks instead of being internally buffered inside Electron process memory.
+	**/
+	var chunkedEncoding : Bool;
+	function new(options:Dynamic):Void;
+	/**
+		Adds an extra HTTP header. The header name will issued as it is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error.
+	**/
+	function setHeader(name:String, value:String):Void;
+	/**
+		Returns String - The value of a previously set extra header name.
+	**/
+	function getHeader(name:String):Void;
+	/**
+		Removes a previously set extra header name. This method can be called only before first write. Trying to call it after the first write will throw an error.
+	**/
+	function removeHeader(name:String):Void;
+	/**
+		callback is essentially a dummy function introduced in the purpose of keeping similarity with the Node.js API. It is called asynchronously in the next tick after chunk content have been delivered to the Chromium networking layer. Contrary to the Node.js implementation, it is not guaranteed that chunk content have been flushed on the wire before callback is called. Adds a chunk of data to the request body. The first write operation may cause the request headers to be issued on the wire. After the first write operation, it is not allowed to add or remove a custom header.
+	**/
+	function write(chunk:Dynamic, ?encoding:String, ?callback:haxe.Constraints.Function):Void;
+	/**
+		Sends the last chunk of the request data. Subsequent write or end operations will not be allowed. The finish event is emitted just after the end operation.
+	**/
+	function end(?chunk:Dynamic, ?encoding:String, ?callback:haxe.Constraints.Function):Void;
+	/**
+		Cancels an ongoing HTTP transaction. If the request has already emitted the close event, the abort operation will have no effect. Otherwise an ongoing event will emit abort and close events. Additionally, if there is an ongoing response object,it will emit the aborted event.
+	**/
+	function abort():Void;
+}

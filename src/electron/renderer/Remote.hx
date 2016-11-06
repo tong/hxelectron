@@ -1,13 +1,14 @@
 package electron.renderer;
 
-import electron.main.BrowserWindow;
-import electron.main.WebContents;
+/**
+	Use main process modules from the renderer process.
 
-@:jsRequire("remote")
-extern class Remote {
-  static function require(module : String) : Dynamic;
-  static function getCurrentWindow() : BrowserWindow;
-  static function getCurrentWebContent() : WebContents;
-  static function getGlobal(name : String) : String;
-  static var process(default, null) : js.node.Process;
+	[Documentation](http://electron.atom.io/docs/api/remote)
+**/
+@:require(js, electron) @:jsRequire("electron", "remote") extern class Remote {
+	static function require(module:String):{ @:optional
+	var module : String; };
+	static function getCurrentWindow():electron.main.BrowserWindow;
+	static function getCurrentWebContents():electron.main.WebContents;
+	static function getGlobal(name:String):Any;
 }

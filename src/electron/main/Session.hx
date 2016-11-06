@@ -1,48 +1,65 @@
 package electron.main;
 
-import js.node.events.EventEmitter;
+/**
+	Manage browser sessions, cookies, cache, proxy settings, etc.
 
-typedef Cookie = {
-    var name : String;
-    var value : String;
-    var domain : String;
-    var host_only : Bool;
-    var path : String;
-    var secure : Bool;
-    var http_only : Bool;
-    var session : Bool;
-    @:optional var expirationDate : Float;
-}
-
-typedef Cookies = {
-    function get( details : {?url:String,?name:String,?domain:String,?path:String,?secure:Bool,?session:Bool}, callback : js.Error->Array<Cookie>->Void ) : Void;
-    function set( details : {?url:String,?name:String,?value:String,?path:String,?secure:Bool,?session:Bool,?expirationDate:Float}, callback : js.Error->Void ) : Void;
-    function remove( details : {?url:String,?name:String}, callback : js.Error->Void ) : Void;
-}
-
-@:enum abstract Storage(String) from String to String {
-    var appcache = "appcache";
-    var cookies = "cookies";
-    var filesystem = "filesystem";
-    var indexdb = "indexdb";
-    var localstorage = "localstorage";
-    var shadercache = "shadercache";
-    var websql = "websql";
-    var serviceworkers = "serviceworkers";
-}
-
-@:enum abstract Quota(String) from String to String {
-    var temporary = "temporary";
-    var persistent = "persistent";
-    var syncable = "syncable";
-}
-
-extern class Session extends EventEmitter<Session> {
-    var cookies(default,null) : Cookies;
-    function clearCache() : Void;
-    function clearStorageData( ?options : {origin:String,storages:Array<Storage>,quotas:Array<Quota>}, callback : Void->Void ) : Void;
-    function setProxy( config : String, callback : Void->Void ) : Void;
-    function setDownloadPath( path : String ) : Void;
-    function enableNetworkEmulation( options : {?offline:Bool,?latency:Float,?downloadThroughput:Float,?uploadThroughput:Float} ) : Void;
-    function disableNetworkEmulation() : Void;
+	[Documentation](http://electron.atom.io/docs/api/session)
+**/
+@:require(js, electron) @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+	/**
+		A Cookies object for this session.
+	**/
+	var cookies : Cookies;
+	/**
+		A WebRequest object for this session.
+	**/
+	var webRequest : WebRequest;
+	/**
+		A Protocol object (an instance of protocol module) for this session.
+	**/
+	var protocol : Protocol;
+	/**
+		Returns the session's current cache size.
+	**/
+	function getCacheSize(callback:haxe.Constraints.Function):Void;
+	/**
+		Clears the session’s HTTP cache.
+	**/
+	function clearCache(callback:haxe.Constraints.Function):Void;
+	/**
+		Clears the data of web storages.
+	**/
+	function clearStorageData(?options:{ /**
+		Should follow ’s representation .
+	**/
+	@:optional
+	var origin : String; /**
+		The types of storages to clear, can contain: , , , , , , ,
+	**/
+	@:optional
+	var storages : Array<String>; /**
+		The types of quotas to clear, can contain: , , .
+	**/
+	@:optional
+	var quotas : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
+	/**
+		Writes any unwritten DOMStorage data to disk.
+	**/
+	function flushStorageData():Void;
+	/**
+		Sets the proxy settings. When pacScript and proxyRules are provided together, the proxyRules option is ignored and pacScript configuration is applied. The proxyRules has to follow the rules below: For example: The proxyBypassRules is a comma separated list of rules described below:
+	**/
+	function setProxy(config:{ /**
+		The URL associated with the PAC file.
+	**/
+	@:optional
+	var pacScript : String; /**
+		Rules indicating which proxies to use.
+	**/
+	@:optional
+	var proxyRules : String; /**
+		Rules indicating which URLs should bypass the proxy settings.
+	**/
+	@:optional
+	var proxyBypassRules : String; }, callback:haxe.Constraints.Function):Void;
 }

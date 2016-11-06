@@ -1,8 +1,5 @@
 --no-output
 -js x
 -xml haxedoc.xml
--lib hxnodejs
--lib npm
--cp src
--D electron
+-lib electron
 --macro include('electron')

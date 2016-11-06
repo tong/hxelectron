@@ -1,0 +1,6 @@
+-neko run.n
+-main Run
+-cp tool/
+-dce full
+#--no-traces
+#-debug
