@@ -3,19 +3,40 @@
     <head>
         <title>hxelectron-demo</title>
         <style>
+			@keyframes pulse {
+				from {
+					transform: scale3d(1, 1, 1);
+				}
+				50% {
+					transform: scale3d(1.05, 1.05, 1.05);
+				}
+				100% {
+					transform: scale3d(1, 1, 1);
+				}
+			}
             html {
-                font-family: sans-serif;
+                font-family: monospace;
             }
             body {
+                margin: 0;
                 background: #141419;
                 color: #F1471D;
+				overflow: hidden;
             }
-            img {
-                position: absolute;
-                bottom: 10px;
+            #info {
+                position: relative;
+                top: 10px;
                 left: 10px;
+            }
+            img#logo {
+                position: absolute;
+                top: 0; bottom:0; left: 0; right:0;
+                margin: auto;
                 opacity: 0;
-                transition: opacity 2s;
+				animation-delay: 0.2s;
+				animation-duration: 1s;
+			    animation-fill-mode: both;
+				animation-name: pulse;
             }
         </style>
         <script src="app.js" defer></script>
