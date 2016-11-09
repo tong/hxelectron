@@ -6,8 +6,8 @@
   "tags": ["electron"],
   "description": "Externs for the electron framework",
   "releasenote": "Autogenerate externs from electron-api.json",
-  "version": "1.0.0-alpha",
-  "contributors": ["fponticelli"],
+  "version": "1.0.1-alpha",
+  "contributors": ["fponticelli", "tong"],
   "dependencies": {
     "hxnodejs" : ""
   }
