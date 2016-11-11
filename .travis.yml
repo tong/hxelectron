@@ -17,4 +17,4 @@ script:
   - haxe run.hxml
   - neko run.n
   - haxe doc.hxml
-  - haxe demo.hxml
+  - haxe --cwd demo build.hxml

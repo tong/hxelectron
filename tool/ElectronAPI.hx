@@ -268,6 +268,7 @@ class ElectronAPI {
 					doc: p.description
 				}] );
 			}
+		case 'Promise': macro : js.Promise<Dynamic>;
 		case 'String','URL': macro : String;
 		default: TPath( { pack: [], name: escapeTypeName( type ) } );
 		}

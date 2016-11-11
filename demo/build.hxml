@@ -1,12 +1,12 @@
 -lib electron
--cp demo/src
+-cp src
 -D fff
 --each
 
 --next
--js demo/main.js
+-js main.js
 -main Main
 
 --next
--js demo/app.js
+-js app.js
 -main App
