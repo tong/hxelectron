@@ -96,9 +96,9 @@ package electron.main;
 	**/
 	function insertCSS(css:String):Void;
 	/**
-		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
+		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation. If the result of the executed code is a promise the callback result will be the resolved value of the promise.  We recommend that you use the returned Promise to handle code that results in a Promise.
 	**/
-	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):Void;
+	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Dynamic>;
 	/**
 		Mute the audio on the current web page.
 	**/
