@@ -257,9 +257,8 @@ class ElectronAPI {
 			var result = null;
 			
 			for (item in _api) if (item.name == type) {
-				// Is there a cheaper way of getting the types fully qualified haxe name?
-				//result = //convertItem(item, ['electron']);
 				result = {name: item.name, pack: ['electron']};
+				
 				if( !item.process.main || !item.process.renderer ) {
 					if( item.process.main ) {
 						result.pack.push( 'main' );
@@ -299,7 +298,7 @@ class ElectronAPI {
 						
 					} else {
 						// Multiple types might be missing from the json file, we don't want
-						// to create haxe.extern.EitherType<Dynamic,Dynamic> ect.
+						// to create haxe.extern.EitherType<Dynamic,Dynamic> or worse ect.
 						for (type in types) switch type {
 							case TPath(c) if (c.name != 'Dynamic'):
 								types.push( macro:Dynamic );
@@ -356,9 +355,6 @@ class ElectronAPI {
 				
 			}
 			
-			//if (result != null) type = '__hx__multitype';
-			/*trace( types.map( haxe.macro.ComplexTypeTools.toString));
-			trace( haxe.macro.ComplexTypeTools.toString(result) );*/
 			result;
 			
 		} else {
