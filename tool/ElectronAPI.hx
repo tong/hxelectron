@@ -21,7 +21,8 @@ typedef APIMethodParameter = {
 	name : String,
 	type : String,
 	description : String,
-	properties : Array<APIProperty>
+	properties : Array<APIProperty>,
+	required: Null<Bool>,
 }
 
 typedef APIReturn = {
@@ -143,7 +144,7 @@ class ElectronAPI {
 		var fields = new Array<Field>();
 		var extraTypes = new Array<TypeDefinition>();
 
-		if( !item.process.main || !item.process.renderer ) {
+		if( item.process != null && (!item.process.main || !item.process.renderer) ) {
 			if( item.process.main ) {
 				pack.push( 'main' );
 				//meta.push( { name: ':require', params: [macro $i{'electron_main'}], pos: pos } );
@@ -222,16 +223,16 @@ class ElectronAPI {
 					args.push( {
 						name: 'args',
 						type: macro:haxe.extern.Rest<Any>,
-						//TODO hack to check if field is optional
-						opt: p.description != null && p.description.startsWith( '(optional)')
+						// Haxe doesnt allow rest args to be optional.
+						opt: false
 					} );
 					
 				} else {
 					args.push( {
 						name: escapeName( p.name ),
 						type: convertType( type, p.properties ),
-						//TODO hack to check if field is optional
-						opt: p.description != null && p.description.startsWith( '(optional)')
+						// Check `required` for pre `1.4.8` json files, fall back description check if field is optional.
+						opt: p.required != null ? !p.required : p.description != null && p.description.startsWith( '(optional)')
 					} );
 					
 				}
@@ -259,7 +260,7 @@ class ElectronAPI {
 			for (item in _api) if (item.name == type) {
 				result = {name: item.name, pack: ['electron']};
 				
-				if( !item.process.main || !item.process.renderer ) {
+				if( item.process != null && (!item.process.main || !item.process.renderer) ) {
 					if( item.process.main ) {
 						result.pack.push( 'main' );
 						
