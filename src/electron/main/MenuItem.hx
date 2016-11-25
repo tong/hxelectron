@@ -16,43 +16,55 @@ package electron.main;
 	**/
 	var checked : Bool;
 	function new(options:{ /**
-		Will be called with when the menu item is clicked.
+		(optional) Will be called with when the menu item is clicked.
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
-		Define the action of the menu item, when specified the property will be ignored.
+		(optional) Define the action of the menu item, when specified the property will be ignored.
 	**/
 	@:optional
 	var role : String; /**
-		Can be , , , or .
+		(optional) Can be , , , or .
 	**/
 	@:optional
-	var type : String; @:optional
-	var label : String; @:optional
-	var sublabel : String; @:optional
-	var accelerator : Accelerator; @:optional
-	var icon : NativeImage; /**
-		If false, the menu item will be greyed out and unclickable.
+	var type : String; /**
+		(optional)
+	**/
+	@:optional
+	var label : String; /**
+		(optional)
+	**/
+	@:optional
+	var sublabel : String; /**
+		(optional)
+	**/
+	@:optional
+	var accelerator : Accelerator; /**
+		(optional)
+	**/
+	@:optional
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
+		(optional) If false, the menu item will be greyed out and unclickable.
 	**/
 	@:optional
 	var enabled : Bool; /**
-		If false, the menu item will be entirely hidden.
+		(optional) If false, the menu item will be entirely hidden.
 	**/
 	@:optional
 	var visible : Bool; /**
-		Should only be specified for or type menu items.
+		(optional) Should only be specified for or type menu items.
 	**/
 	@:optional
 	var checked : Bool; /**
-		Should be specified for type menu items. If is specified, the can be omitted. If the value is not a then it will be automatically converted to one using .
+		(optional) Should be specified for type menu items. If is specified, the can be omitted. If the value is not a then it will be automatically converted to one using .
 	**/
 	@:optional
-	var submenu : Menu; /**
-		Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
+	var submenu : Array<Dynamic>; /**
+		(optional) Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
 	**/
 	@:optional
 	var id : String; /**
-		This field allows fine-grained definition of the specific location within a given menu.
+		(optional) This field allows fine-grained definition of the specific location within a given menu.
 	**/
 	@:optional
 	var position : String; }):Void;

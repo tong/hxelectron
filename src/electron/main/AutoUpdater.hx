@@ -6,7 +6,7 @@ package electron.main;
 	/**
 		Sets the url and initialize the auto updater.
 	**/
-	static function setFeedURL(url:String, requestHeaders:Dynamic):Void;
+	static function setFeedURL(url:String, ?requestHeaders:Dynamic):Void;
 	static function getFeedURL():String;
 	/**
 		Asks the server whether there is an update. You must call setFeedURL before using this API.

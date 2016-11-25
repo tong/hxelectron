@@ -11,7 +11,7 @@ package electron.renderer;
 	**/
 	@:optional
 	var types : Array<String>; /**
-		(optional) - The suggested size that the media source thumbnail should be scaled to, defaults to .
+		The suggested size that the media source thumbnail should be scaled to, defaults to .
 	**/
 	@:optional
 	var thumbnailSize : { }; }, callback:haxe.Constraints.Function):Void;

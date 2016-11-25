@@ -8,11 +8,13 @@ package electron;
 	**/
 	var type : String;
 	/**
-		Must be set if is , otherwise it should be omitted.
+		(optional) Must be set if is , otherwise it should be omitted.
 	**/
+	@:optional
 	var name : String;
 	/**
-		Array of objects if is or , otherwise it should be omitted.
+		(optional) Array of objects if is or , otherwise it should be omitted.
 	**/
+	@:optional
 	var items : Array<JumpListItem>;
 }

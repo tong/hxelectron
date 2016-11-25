@@ -92,7 +92,7 @@ package electron.main;
 	**/
 	var login : String = "login";
 	/**
-		Emitted when a result is available for webContents.findInPage request.
+		Emitted when a result is available for [webContents.findInPage] request.
 	**/
 	var found_in_page : String = "found-in-page";
 	/**

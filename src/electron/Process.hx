@@ -1,4 +1,4 @@
-package electron.main;
+package electron;
 
 /**
 	Extensions to process object.

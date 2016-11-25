@@ -6,8 +6,7 @@ package electron.renderer;
 	[Documentation](http://electron.atom.io/docs/api/remote)
 **/
 @:require(js, electron) @:jsRequire("electron", "remote") extern class Remote {
-	static function require(module:String):{ @:optional
-	var module : String; };
+	static function require(module:String):Any;
 	static function getCurrentWindow():electron.main.BrowserWindow;
 	static function getCurrentWebContents():electron.main.WebContents;
 	static function getGlobal(name:String):Any;

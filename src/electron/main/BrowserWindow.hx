@@ -11,7 +11,7 @@ package electron.main;
 		A Integer representing the unique ID of the window.
 	**/
 	var id : Int;
-	function new(options:{ /**
+	function new(?options:{ /**
 		Window's width in pixels. Default is .
 	**/
 	@:optional
@@ -20,11 +20,11 @@ package electron.main;
 	**/
 	@:optional
 	var height : Int; /**
-		( if y is used) - Window's left offset from screen. Default is to center the window.
+		( if y is used) Window's left offset from screen. Default is to center the window.
 	**/
 	@:optional
 	var x : Int; /**
-		( if x is used) - Window's top offset from screen. Default is to center the window.
+		( if x is used) Window's top offset from screen. Default is to center the window.
 	**/
 	@:optional
 	var y : Int; /**
@@ -103,7 +103,7 @@ package electron.main;
 		The window icon. On Windows it is recommended to use icons to get best visual effects, you can also leave it undefined so the executable's icon will be used.
 	**/
 	@:optional
-	var icon : NativeImage; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		Whether window should be shown when created. Default is .
 	**/
 	@:optional
@@ -164,6 +164,14 @@ package electron.main;
 	**/
 	@:optional
 	var thickFrame : Bool; /**
+		Add a type of vibrancy effect to the window, only on macOS. Can be , , , , , , , , or .
+	**/
+	@:optional
+	var vibrancy : String; /**
+		Controls the behavior on macOS when option-clicking the green stoplight button on the toolbar or by clicking the Window > Zoom menu item. If , the window will grow to the preferred width of the web page when zoomed, will cause it to zoom to the width of the screen. This will also affect the behavior when calling directly. Default is .
+	**/
+	@:optional
+	var zoomToPageWidth : Bool; /**
 		Settings of web page's features.
 	**/
 	@:optional
@@ -360,7 +368,7 @@ package electron.main;
 	/**
 		Uses Quick Look to preview a file at a given path.
 	**/
-	function previewFile(path:String, displayName:String):Void;
+	function previewFile(path:String, ?displayName:String):Void;
 	/**
 		Resizes and moves the window to the supplied bounds
 	**/
@@ -498,10 +506,7 @@ package electron.main;
 		Specifies whether the window’s document has been edited, and the icon in title bar will become gray when set to true.
 	**/
 	function setDocumentEdited(edited:Bool):Void;
-	/**
-		Whether Boolean - Whether the window's document has been edited.
-	**/
-	function isDocumentEdited():Void;
+	function isDocumentEdited():Bool;
 	function focusOnWebView():Void;
 	function blurWebView():Void;
 	/**
@@ -523,7 +528,11 @@ package electron.main;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; }):Void;
+	var extraHeaders : String; /**
+		[] (optional)
+	**/
+	@:optional
+	var postData : haxe.extern.EitherType<electron.UploadRawData, haxe.extern.EitherType<electron.UploadFile, haxe.extern.EitherType<electron.UploadFileSystem, electron.UploadBlob>>>; }):Void;
 	/**
 		Same as webContents.reload.
 	**/
@@ -536,7 +545,7 @@ package electron.main;
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
 	function setProgressBar(progress:Float, ?options:{ /**
-		- Mode for the progress bar (, , , , or )
+		Mode for the progress bar. Can be , , , , or .
 	**/
 	@:optional
 	var mode : String; }):Void;
@@ -609,6 +618,10 @@ package electron.main;
 	function getParentWindow():BrowserWindow;
 	function getChildWindows():Array<BrowserWindow>;
 	/**
+		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
+	**/
+	function setVibrancy(type:String):Void;
+	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
 	static function destroy():Void;
@@ -672,7 +685,7 @@ package electron.main;
 	/**
 		Uses Quick Look to preview a file at a given path.
 	**/
-	static function previewFile(path:String, displayName:String):Void;
+	static function previewFile(path:String, ?displayName:String):Void;
 	/**
 		Resizes and moves the window to the supplied bounds
 	**/
@@ -810,10 +823,7 @@ package electron.main;
 		Specifies whether the window’s document has been edited, and the icon in title bar will become gray when set to true.
 	**/
 	static function setDocumentEdited(edited:Bool):Void;
-	/**
-		Whether Boolean - Whether the window's document has been edited.
-	**/
-	static function isDocumentEdited():Void;
+	static function isDocumentEdited():Bool;
 	static function focusOnWebView():Void;
 	static function blurWebView():Void;
 	/**
@@ -835,7 +845,11 @@ package electron.main;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; }):Void;
+	var extraHeaders : String; /**
+		[] (optional)
+	**/
+	@:optional
+	var postData : haxe.extern.EitherType<electron.UploadRawData, haxe.extern.EitherType<electron.UploadFile, haxe.extern.EitherType<electron.UploadFileSystem, electron.UploadBlob>>>; }):Void;
 	/**
 		Same as webContents.reload.
 	**/
@@ -848,7 +862,7 @@ package electron.main;
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
 	static function setProgressBar(progress:Float, ?options:{ /**
-		- Mode for the progress bar (, , , , or )
+		Mode for the progress bar. Can be , , , , or .
 	**/
 	@:optional
 	var mode : String; }):Void;
@@ -920,4 +934,8 @@ package electron.main;
 	static function setParentWindow(parent:BrowserWindow):Void;
 	static function getParentWindow():BrowserWindow;
 	static function getChildWindows():Array<BrowserWindow>;
+	/**
+		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
+	**/
+	static function setVibrancy(type:String):Void;
 }

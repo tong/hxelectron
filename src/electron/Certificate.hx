@@ -8,9 +8,21 @@ package electron;
 	**/
 	var data : String;
 	/**
+		Issuer principal
+	**/
+	var issuer : CertificatePrincipal;
+	/**
 		Issuer's Common Name
 	**/
 	var issuerName : String;
+	/**
+		Issuer certificate (if not self-signed)
+	**/
+	var issuerCert : Certificate;
+	/**
+		Subject principal
+	**/
+	var subject : CertificatePrincipal;
 	/**
 		Subject's Common Name
 	**/

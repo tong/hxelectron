@@ -21,7 +21,7 @@ package electron;
 		to bring the opened application to the foreground. The default is .
 	**/
 	@:optional
-	var activate : Bool; }):Bool;
+	var activate : Bool; }, ?callback:haxe.Constraints.Function):Bool;
 	/**
 		Move the given file to trash and returns a boolean status for the operation.
 	**/

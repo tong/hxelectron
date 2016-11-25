@@ -12,7 +12,7 @@ package electron.main;
 	**/
 	var session : Session;
 	/**
-		A WebContents that might own this WebContents.
+		A WebContents instance that might own this WebContents.
 	**/
 	var hostWebContents : WebContents;
 	/**
@@ -38,7 +38,11 @@ package electron.main;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; }):Void;
+	var extraHeaders : String; /**
+		[] (optional)
+	**/
+	@:optional
+	var postData : haxe.extern.EitherType<electron.UploadRawData, haxe.extern.EitherType<electron.UploadFile, haxe.extern.EitherType<electron.UploadFileSystem, electron.UploadBlob>>>; }):Void;
 	/**
 		Initiates a download of the resource at url without navigating. The will-download event of session will be triggered.
 	**/
@@ -121,9 +125,17 @@ package electron.main;
 	**/
 	function getZoomLevel(callback:haxe.Constraints.Function):Void;
 	/**
-		Sets the maximum and minimum zoom level.
+		Deprecated: Call setVisualZoomLevelLimits instead to set the visual zoom level limits. This method will be removed in Electron 2.0.
 	**/
 	function setZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	/**
+		Sets the maximum and minimum pinch-to-zoom level.
+	**/
+	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	/**
+		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
+	**/
+	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
 		Executes the editing command undo in web page.
 	**/
@@ -289,7 +301,7 @@ package electron.main;
 	/**
 		Send an asynchronous message to renderer process via channel, you can also send arbitrary arguments. Arguments will be serialized in JSON internally and hence no functions or prototype chain will be included. The renderer process can handle the message by listening to channel with the ipcRenderer module. An example of sending messages from the main process to the renderer process:
 	**/
-	function send(channel:String):Void;
+	function send(channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
 		Enable device emulation with the given parameters.
 	**/
@@ -366,7 +378,7 @@ package electron.main;
 		Sends an input event to the page. For keyboard events, the event object also have following properties: For mouse events, the event object also have following properties: For the mouseWheel event, the event object also have following properties:
 	**/
 	function sendInputEvent(event:{ /**
-		() - The type of the event, can be , , , , , , , , , .
+		() The type of the event, can be , , , , , , , , , .
 	**/
 	@:optional
 	var type : String; /**
@@ -396,6 +408,16 @@ package electron.main;
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
 	function showDefinitionForSelection():Void;
+	/**
+		Set the size of the page. This is only supported for <webview> guest contents.
+	**/
+	function setSize(options:{ /**
+		Normal size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
+	**/
+	@:optional
+	var normal : { @:optional
+	var width : Int; @:optional
+	var height : Int; }; }):Void;
 	function isOffscreen():Bool;
 	/**
 		If offscreen rendering is enabled and not painting, start painting.

@@ -7,27 +7,27 @@ package electron.main;
 		Sends a request to get all cookies matching details, callback will be called with callback(error, cookies) on complete. cookies is an Array of cookie objects.
 	**/
 	function get(filter:{ /**
-		(optional) - Retrieves cookies which are associated with . Empty implies retrieving cookies of all urls.
+		Retrieves cookies which are associated with . Empty implies retrieving cookies of all urls.
 	**/
 	@:optional
 	var url : String; /**
-		(optional) - Filters cookies by name.
+		Filters cookies by name.
 	**/
 	@:optional
 	var name : String; /**
-		(optional) - Retrieves cookies whose domains match or are subdomains of
+		Retrieves cookies whose domains match or are subdomains of
 	**/
 	@:optional
 	var domain : String; /**
-		(optional) - Retrieves cookies whose path matches .
+		Retrieves cookies whose path matches .
 	**/
 	@:optional
 	var path : String; /**
-		(optional) - Filters cookies by their Secure property.
+		Filters cookies by their Secure property.
 	**/
 	@:optional
 	var secure : Bool; /**
-		(optional) - Filters out session or persistent cookies.
+		Filters out session or persistent cookies.
 	**/
 	@:optional
 	var session : Bool; }, callback:haxe.Constraints.Function):Void;

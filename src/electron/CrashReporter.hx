@@ -12,7 +12,7 @@ package electron;
 	**/
 	@:optional
 	var submitURL : String; /**
-		(optional) - Defaults to .
+		Defaults to .
 	**/
 	@:optional
 	var productName : String; /**
@@ -31,11 +31,9 @@ package electron;
 	/**
 		Returns the date and ID of the last crash report. If no crash reports have been sent or the crash reporter has not been started, null is returned.
 	**/
-	static function getLastCrashReport():{ @:optional
-	var date : String; @:optional
-	var ID : Int; };
+	static function getLastCrashReport():CrashReport;
 	/**
 		Returns all uploaded crash reports. Each report contains the date and uploaded ID.
 	**/
-	static function getUploadedReports():Array<Dynamic>;
+	static function getUploadedReports():Array<CrashReport>;
 }

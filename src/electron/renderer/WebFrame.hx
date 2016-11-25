@@ -14,9 +14,17 @@ package electron.renderer;
 	static function setZoomLevel(level:Float):Void;
 	static function getZoomLevel():Float;
 	/**
-		Sets the maximum and minimum zoom level.
+		Deprecated: Call setVisualZoomLevelLimits instead to set the visual zoom level limits. This method will be removed in Electron 2.0.
 	**/
 	static function setZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	/**
+		Sets the maximum and minimum pinch-to-zoom level.
+	**/
+	static function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	/**
+		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
+	**/
+	static function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
 		Sets a provider for spell checking in input fields and text areas. The provider must be an object that has a spellCheck method that returns whether the word passed is correctly spelled. An example of using node-spellchecker as provider:
 	**/

@@ -7,7 +7,7 @@ package electron.main;
 **/
 @:require(js, electron) @:jsRequire("electron", "dialog") extern class Dialog {
 	/**
-		On success this method returns an array of file paths chosen by the user, otherwise it returns undefined. The filters specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example: The extensions array should contain extensions without wildcards or dots (e.g. 'png' is good but '.png' and '*.png' are bad). To show all files, use the '*' wildcard (no other wildcard is supported). If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filenames) Note: On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set properties to ['openFile', 'openDirectory'] on these platforms, a directory selector will be shown.
+		The filters specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example: The extensions array should contain extensions without wildcards or dots (e.g. 'png' is good but '.png' and '*.png' are bad). To show all files, use the '*' wildcard (no other wildcard is supported). If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filenames) Note: On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set properties to ['openFile', 'openDirectory'] on these platforms, a directory selector will be shown.
 	**/
 	static function showOpenDialog(?browserWindow:BrowserWindow, options:{ @:optional
 	var title : String; @:optional
@@ -16,13 +16,13 @@ package electron.main;
 	**/
 	@:optional
 	var buttonLabel : String; @:optional
-	var filters : Array<String>; /**
-		Contains which features the dialog should use, can contain , , , and .
+	var filters : Array<FileFilter>; /**
+		(optional) Contains which features the dialog should use, can contain , , , and .
 	**/
 	@:optional
-	var properties : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
+	var properties : Array<String>; }, ?callback:haxe.Constraints.Function):Array<String>;
 	/**
-		On success this method returns the path of the file chosen by the user, otherwise it returns undefined. The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
+		The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
 	**/
 	static function showSaveDialog(?browserWindow:BrowserWindow, options:{ @:optional
 	var title : String; @:optional
@@ -31,7 +31,7 @@ package electron.main;
 	**/
 	@:optional
 	var buttonLabel : String; @:optional
-	var filters : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
+	var filters : Array<FileFilter>; }, ?callback:haxe.Constraints.Function):String;
 	/**
 		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(response).
 	**/
@@ -40,7 +40,7 @@ package electron.main;
 	**/
 	@:optional
 	var type : String; /**
-		Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".
+		(optional) Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".
 	**/
 	@:optional
 	var buttons : Array<String>; /**
@@ -68,7 +68,7 @@ package electron.main;
 		On Windows Electron will try to figure out which one of the are common buttons (like "Cancel" or "Yes"), and show the others as command links in the dialog. This can make the dialog appear in the style of modern Windows apps. If you don't like this behavior, you can set to .
 	**/
 	@:optional
-	var noLink : Bool; }, callback:haxe.Constraints.Function):Void;
+	var noLink : Bool; }, ?callback:haxe.Constraints.Function):Int;
 	/**
 		Displays a modal dialog that shows an error message. This API can be called safely before the ready event the app module emits, it is usually used to report errors in early stage of startup.  If called before the app readyevent on Linux, the message will be emitted to stderr, and no GUI dialog will appear.
 	**/

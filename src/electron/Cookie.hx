@@ -36,8 +36,7 @@ package electron;
 	**/
 	var session : Bool;
 	/**
-		(optional) - The expiration date of the cookie as the number of seconds since the UNIX epoch. Not provided for session cookies.
+		The expiration date of the cookie as the number of seconds since the UNIX epoch. Not provided for session cookies.
 	**/
-	@:optional
 	var expirationDate : Float;
 }

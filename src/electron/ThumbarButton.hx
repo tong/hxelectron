@@ -9,12 +9,11 @@ package electron;
 	var icon : NativeImage;
 	var click : haxe.Constraints.Function;
 	/**
-		(optional) - The text of the button's tooltip.
+		The text of the button's tooltip.
 	**/
-	@:optional
 	var tooltip : String;
 	/**
-		(optional) - Control specific states and behaviors of the button. By default, it is .
+		(optional) Control specific states and behaviors of the button. By default, it is .
 	**/
 	@:optional
 	var flags : Array<String>;

@@ -3,7 +3,7 @@ package electron.main;
 /**
 **/
 @:require(js, electron) @:jsRequire("electron", "Tray") extern class Tray extends js.node.events.EventEmitter<electron.main.Tray> {
-	function new(image:NativeImage):Void;
+	function new(image:Dynamic):Void;
 	/**
 		Destroys the tray icon immediately.
 	**/
