@@ -1,6 +1,7 @@
 -lib electron
 -cp src
--D fff
+-dce full
+-debug
 --each
 
 --next

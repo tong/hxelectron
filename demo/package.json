@@ -3,9 +3,10 @@
     "version" : "0.2.0",
     "main"    : "main.js",
     "scripts": {
+        "build": "haxe build.hxml",
         "start": "electron main.js"
     },
     "devDependencies": {
-        "electron": "^1.4.6"
+        "electron": "^1.4.10"
     }
 }
