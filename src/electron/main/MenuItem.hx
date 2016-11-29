@@ -59,7 +59,7 @@ package electron.main;
 		(optional) Should be specified for type menu items. If is specified, the can be omitted. If the value is not a then it will be automatically converted to one using .
 	**/
 	@:optional
-	var submenu : Array<Dynamic>; /**
+	var submenu : haxe.extern.EitherType<Dynamic, electron.main.Menu>; /**
 		(optional) Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
 	**/
 	@:optional

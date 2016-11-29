@@ -127,4 +127,8 @@ package electron.main;
 		Emitted when a new frame is generated. Only the dirty area is passed in the buffer.
 	**/
 	var paint : String = "paint";
+	/**
+		Emitted when the devtools window instructs the webContents to reload
+	**/
+	var devtools_reload_page : String = "devtools-reload-page";
 }

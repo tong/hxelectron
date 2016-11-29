@@ -13,7 +13,7 @@ package electron.main;
 	**/
 	static function checkForUpdates():Void;
 	/**
-		Restarts the app and installs the update after it has been downloaded. It should only be called after update-downloaded has been emitted.
+		Restarts the app and installs the update after it has been downloaded. It should only be called after update-downloaded has been emitted. Note: autoUpdater.quitAndInstall() will close all application windows first and only emit before-quit event on app after that. This is different from the normal quit event sequence.
 	**/
 	static function quitAndInstall():Void;
 }
