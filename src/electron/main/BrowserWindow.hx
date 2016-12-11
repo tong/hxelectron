@@ -370,6 +370,10 @@ package electron.main;
 	**/
 	function previewFile(path:String, ?displayName:String):Void;
 	/**
+		Closes the currently open Quick Look panel.
+	**/
+	function closeFilePreview():Void;
+	/**
 		Resizes and moves the window to the supplied bounds
 	**/
 	function setBounds(bounds:Rectangle, ?animate:Bool):Void;
@@ -514,7 +518,7 @@ package electron.main;
 	**/
 	function capturePage(?rect:Rectangle, callback:haxe.Constraints.Function):Void;
 	/**
-		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method:
+		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method: You can load a URL using a POST request with URL-encoded data by doing the following:
 	**/
 	function loadURL(url:String, ?options:{ /**
 		A HTTP Referrer url.
@@ -574,6 +578,30 @@ package electron.main;
 	**/
 	function setThumbnailToolTip(toolTip:String):Void;
 	/**
+		Sets the properties for the window's taskbar button. Note: relaunchCommand and relaunchDisplayName must always be set together. If one of those properties is not set, then neither will be used.
+	**/
+	function setAppDetails(options:{ /**
+		Window's . It has to be set, otherwise the other options will have no effect.
+	**/
+	@:optional
+	var appId : String; /**
+		Window's .
+	**/
+	@:optional
+	var appIconPath : String; /**
+		Index of the icon in . Ignored when is not set. Default is .
+	**/
+	@:optional
+	var appIconIndex : Int; /**
+		Window's .
+	**/
+	@:optional
+	var relaunchCommand : String; /**
+		Window's .
+	**/
+	@:optional
+	var relaunchDisplayName : String; }):Void;
+	/**
 		Same as webContents.showDefinitionForSelection().
 	**/
 	function showDefinitionForSelection():Void;
@@ -617,6 +645,10 @@ package electron.main;
 	function setParentWindow(parent:BrowserWindow):Void;
 	function getParentWindow():BrowserWindow;
 	function getChildWindows():Array<BrowserWindow>;
+	/**
+		Controls whether to hide cursor when typing.
+	**/
+	function setAutoHideCursor(autoHide:Bool):Void;
 	/**
 		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
 	**/
@@ -686,6 +718,10 @@ package electron.main;
 		Uses Quick Look to preview a file at a given path.
 	**/
 	static function previewFile(path:String, ?displayName:String):Void;
+	/**
+		Closes the currently open Quick Look panel.
+	**/
+	static function closeFilePreview():Void;
 	/**
 		Resizes and moves the window to the supplied bounds
 	**/
@@ -831,7 +867,7 @@ package electron.main;
 	**/
 	static function capturePage(?rect:Rectangle, callback:haxe.Constraints.Function):Void;
 	/**
-		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method:
+		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method: You can load a URL using a POST request with URL-encoded data by doing the following:
 	**/
 	static function loadURL(url:String, ?options:{ /**
 		A HTTP Referrer url.
@@ -891,6 +927,30 @@ package electron.main;
 	**/
 	static function setThumbnailToolTip(toolTip:String):Void;
 	/**
+		Sets the properties for the window's taskbar button. Note: relaunchCommand and relaunchDisplayName must always be set together. If one of those properties is not set, then neither will be used.
+	**/
+	static function setAppDetails(options:{ /**
+		Window's . It has to be set, otherwise the other options will have no effect.
+	**/
+	@:optional
+	var appId : String; /**
+		Window's .
+	**/
+	@:optional
+	var appIconPath : String; /**
+		Index of the icon in . Ignored when is not set. Default is .
+	**/
+	@:optional
+	var appIconIndex : Int; /**
+		Window's .
+	**/
+	@:optional
+	var relaunchCommand : String; /**
+		Window's .
+	**/
+	@:optional
+	var relaunchDisplayName : String; }):Void;
+	/**
 		Same as webContents.showDefinitionForSelection().
 	**/
 	static function showDefinitionForSelection():Void;
@@ -934,6 +994,10 @@ package electron.main;
 	static function setParentWindow(parent:BrowserWindow):Void;
 	static function getParentWindow():BrowserWindow;
 	static function getChildWindows():Array<BrowserWindow>;
+	/**
+		Controls whether to hide cursor when typing.
+	**/
+	static function setAutoHideCursor(autoHide:Bool):Void;
 	/**
 		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
 	**/

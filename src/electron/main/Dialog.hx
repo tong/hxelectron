@@ -7,7 +7,7 @@ package electron.main;
 **/
 @:require(js, electron) @:jsRequire("electron", "dialog") extern class Dialog {
 	/**
-		The filters specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example: The extensions array should contain extensions without wildcards or dots (e.g. 'png' is good but '.png' and '*.png' are bad). To show all files, use the '*' wildcard (no other wildcard is supported). If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filenames) Note: On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set properties to ['openFile', 'openDirectory'] on these platforms, a directory selector will be shown.
+		The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. The filters specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example: The extensions array should contain extensions without wildcards or dots (e.g. 'png' is good but '.png' and '*.png' are bad). To show all files, use the '*' wildcard (no other wildcard is supported). If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filenames) Note: On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set properties to ['openFile', 'openDirectory'] on these platforms, a directory selector will be shown.
 	**/
 	static function showOpenDialog(?browserWindow:BrowserWindow, options:{ @:optional
 	var title : String; @:optional
@@ -22,7 +22,7 @@ package electron.main;
 	@:optional
 	var properties : Array<String>; }, ?callback:haxe.Constraints.Function):Array<String>;
 	/**
-		The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
+		The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
 	**/
 	static function showSaveDialog(?browserWindow:BrowserWindow, options:{ @:optional
 	var title : String; @:optional
@@ -33,7 +33,7 @@ package electron.main;
 	var buttonLabel : String; @:optional
 	var filters : Array<FileFilter>; }, ?callback:haxe.Constraints.Function):String;
 	/**
-		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(response).
+		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(response).
 	**/
 	static function showMessageBox(?browserWindow:BrowserWindow, options:{ /**
 		Can be , , , or . On Windows, "question" displays the same icon as "info", unless you set an icon using the "icon" option.
@@ -61,7 +61,7 @@ package electron.main;
 	@:optional
 	var detail : String; @:optional
 	var icon : NativeImage; /**
-		The value will be returned when user cancels the dialog instead of clicking the buttons of the dialog. By default it is the index of the buttons that have "cancel" or "no" as label, or 0 if there is no such buttons. On macOS and Windows the index of "Cancel" button will always be used as , not matter whether it is already specified.
+		The value will be returned when user cancels the dialog instead of clicking the buttons of the dialog. By default it is the index of the buttons that have "cancel" or "no" as label, or 0 if there is no such buttons. On macOS and Windows the index of the "Cancel" button will always be used as even if it is specified.
 	**/
 	@:optional
 	var cancelId : Int; /**

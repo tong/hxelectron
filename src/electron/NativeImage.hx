@@ -2,42 +2,21 @@ package electron;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "NativeImage") extern class NativeImage {
-	function toPNG():js.node.Buffer;
-	function toJPEG(quality:Int):js.node.Buffer;
-	function toBitmap():js.node.Buffer;
-	function toDataURL():String;
+@:require(js, electron) @:jsRequire("electron", "nativeImage") extern class NativeImage {
 	/**
-		The difference between getBitmap() and toBitmap() is, getBitmap() does not copy the bitmap data, so you have to use the returned Buffer immediately in current event loop tick, otherwise the data might be changed or destroyed.
+		Creates an empty NativeImage instance.
 	**/
-	function getBitmap():js.node.Buffer;
+	static function createEmpty():NativeImage;
 	/**
-		Notice that the returned pointer is a weak pointer to the underlying native image instead of a copy, so you must ensure that the associated nativeImage instance is kept around.
+		Creates a new NativeImage instance from a file located at path. This method returns an empty image if the path does not exist, cannot be read, or is not a valid image.
 	**/
-	function getNativeHandle():js.node.Buffer;
-	function isEmpty():Bool;
-	function getSize():{ @:optional
-	var width : Int; @:optional
-	var height : Int; };
+	static function createFromPath(path:String):NativeImage;
 	/**
-		Marks the image as a template image.
+		Creates a new NativeImage instance from buffer. The default scaleFactor is 1.0.
 	**/
-	function setTemplateImage(option:Bool):Void;
-	function isTemplateImage():Bool;
-	function crop(rect:{ @:optional
-	var x : Int; @:optional
-	var y : Int; @:optional
-	var width : Int; @:optional
-	var height : Int; }):NativeImage;
+	static function createFromBuffer(buffer:js.node.Buffer, ?scaleFactor:Float):NativeImage;
 	/**
-		If only the height or the width are specified then the current aspect ratio will be preserved in the resized image.
+		Creates a new NativeImage instance from dataURL.
 	**/
-	function resize(options:{ @:optional
-	var width : Int; @:optional
-	var height : Int; /**
-		The desired quality of the resize image. Possible values are , or . The default is . These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
-	**/
-	@:optional
-	var quality : String; }):NativeImage;
-	function getAspectRatio():Float;
+	static function createFromDataURL(dataURL:String):Void;
 }

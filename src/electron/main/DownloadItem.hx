@@ -38,5 +38,12 @@ package electron.main;
 	function getTotalBytes():Int;
 	function getReceivedBytes():Int;
 	function getContentDisposition():String;
+	/**
+		Note: The following methods are useful specifically to resume a cancelled item when session is restarted.
+	**/
 	function getState():String;
+	function getURLChain():Array<String>;
+	function getLastModifiedTime():String;
+	function getETag():String;
+	function getStartTime():Float;
 }
