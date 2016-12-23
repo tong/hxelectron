@@ -12,9 +12,21 @@ package electron;
 	**/
 	static function createFromPath(path:String):NativeImage;
 	/**
-		Creates a new NativeImage instance from buffer. The default scaleFactor is 1.0.
+		Creates a new NativeImage instance from buffer.
 	**/
-	static function createFromBuffer(buffer:js.node.Buffer, ?scaleFactor:Float):NativeImage;
+	static function createFromBuffer(buffer:js.node.Buffer, ?options:{ /**
+		Required for bitmap buffers.
+	**/
+	@:optional
+	var width : Int; /**
+		Required for bitmap buffers.
+	**/
+	@:optional
+	var height : Int; /**
+		Defaults to 1.0.
+	**/
+	@:optional
+	var scaleFactor : Float; }):NativeImage;
 	/**
 		Creates a new NativeImage instance from dataURL.
 	**/

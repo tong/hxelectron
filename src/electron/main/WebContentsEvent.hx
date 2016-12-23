@@ -68,6 +68,10 @@ package electron.main;
 	**/
 	var destroyed : String = "destroyed";
 	/**
+		Emitted before dispatching the keydown and keyup events in the page. Calling event.preventDefault will prevent the page keydown/keyup events from being dispatched.
+	**/
+	var before_input_event : String = "before-input-event";
+	/**
 		Emitted when DevTools is opened.
 	**/
 	var devtools_opened : String = "devtools-opened";
