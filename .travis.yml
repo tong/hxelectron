@@ -4,12 +4,12 @@ os:
   - linux
 
 haxe:
-  - "3.2.1"
+  # - "3.2.1"
   - development
 
-matrix:
-  allow_failures:
-    - haxe: development
+# matrix:
+#   allow_failures:
+#     - haxe: development
 
 script:
   - haxelib git electron https://github.com/tong/hxelectron

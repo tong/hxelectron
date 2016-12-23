@@ -4,6 +4,7 @@ demo/*.js
 demo/*.js.map
 demo/node_modules/*
 doc/
+atom/*
 all.hxml
 haxedoc.xml
 run.n
