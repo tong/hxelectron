@@ -1,6 +1,8 @@
 
 # HXElectron
 
+[![Build Status](https://travis-ci.org/fponticelli/hxelectron.svg?branch=master)](https://travis-ci.org/fponticelli/hxelectron)
+
 Haxe externs for [electron](http://electron.atom.io/).
 
 The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS based on Node.js and Chromium.
