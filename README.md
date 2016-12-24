@@ -3,10 +3,11 @@
 
 [![Build Status](https://travis-ci.org/fponticelli/hxelectron.svg?branch=master)](https://travis-ci.org/fponticelli/hxelectron)
 
-Haxe externs for [electron](http://electron.atom.io/).
+[Haxe](https://haxe.org/) externs for [Electron](http://electron.atom.io/).
 
-The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS based on Node.js and Chromium.
-
+The Electron framework lets you write cross-platform desktop applications
+using JavaScript, HTML and CSS. It is based on [Node.js](https://nodejs.org/) and
+[Chromium](http://www.chromium.org)
 
 ## Install
 
@@ -21,7 +22,6 @@ Download latest api description file from the [electron releases site](https://g
 ```shell
 $ haxelib run electron <path/to/electron-api.json>
 ```
-
 
 ## Demo Application
 
