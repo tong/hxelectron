@@ -28,7 +28,11 @@ package electron.renderer;
 	/**
 		Sets a provider for spell checking in input fields and text areas. The provider must be an object that has a spellCheck method that returns whether the word passed is correctly spelled. An example of using node-spellchecker as provider:
 	**/
-	static function setSpellCheckProvider(language:String, autoCorrectWord:Bool, provider:Dynamic):Void;
+	static function setSpellCheckProvider(language:String, autoCorrectWord:Bool, provider:{ /**
+		Returns
+	**/
+	@:optional
+	var spellCheck : haxe.Constraints.Function; }):Void;
 	/**
 		Registers the scheme as secure scheme. Secure schemes do not trigger mixed content warnings. For example, https and data are secure schemes because they cannot be corrupted by active network attackers.
 	**/
@@ -68,7 +72,7 @@ package electron.renderer;
 	/**
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
 	**/
-	static function executeJavaScript(code:String, ?userGesture:Bool):Void;
+	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Returns an object describing usage information of Blink's internal memory caches. This will generate:
 	**/

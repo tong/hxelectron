@@ -15,16 +15,24 @@ package electron.main;
 		A Boolean indicating whether the item is checked, this property can be dynamically changed. A checkbox menu item will toggle the checked property on and off when selected. A radio menu item will turn on its checked property when clicked, and will turn off that property for all adjacent items in the same menu. You can add a click function for additional behavior.
 	**/
 	var checked : Bool;
+	/**
+		A String representing the menu items visible label
+	**/
+	var label : String;
+	/**
+		A Function that is fired when the MenuItem recieves a click event
+	**/
+	var click : haxe.Constraints.Function;
 	function new(options:{ /**
-		(optional) Will be called with when the menu item is clicked.
+		Will be called with when the menu item is clicked.
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
-		(optional) Define the action of the menu item, when specified the property will be ignored.
+		Define the action of the menu item, when specified the property will be ignored.
 	**/
 	@:optional
 	var role : String; /**
-		(optional) Can be , , , or .
+		Can be , , , or .
 	**/
 	@:optional
 	var type : String; /**
@@ -35,36 +43,30 @@ package electron.main;
 		(optional)
 	**/
 	@:optional
-	var sublabel : String; /**
-		(optional)
-	**/
-	@:optional
-	var accelerator : Accelerator; /**
-		(optional)
-	**/
-	@:optional
+	var sublabel : String; @:optional
+	var accelerator : Accelerator; @:optional
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
-		(optional) If false, the menu item will be greyed out and unclickable.
+		If false, the menu item will be greyed out and unclickable.
 	**/
 	@:optional
 	var enabled : Bool; /**
-		(optional) If false, the menu item will be entirely hidden.
+		If false, the menu item will be entirely hidden.
 	**/
 	@:optional
 	var visible : Bool; /**
-		(optional) Should only be specified for or type menu items.
+		Should only be specified for or type menu items.
 	**/
 	@:optional
 	var checked : Bool; /**
-		(optional) Should be specified for type menu items. If is specified, the can be omitted. If the value is not a then it will be automatically converted to one using .
+		Should be specified for type menu items. If is specified, the can be omitted. If the value is not a then it will be automatically converted to one using .
 	**/
 	@:optional
 	var submenu : haxe.extern.EitherType<Dynamic, electron.main.Menu>; /**
-		(optional) Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
+		Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
 	**/
 	@:optional
 	var id : String; /**
-		(optional) This field allows fine-grained definition of the specific location within a given menu.
+		This field allows fine-grained definition of the specific location within a given menu.
 	**/
 	@:optional
 	var position : String; }):Void;

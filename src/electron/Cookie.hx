@@ -18,7 +18,7 @@ package electron;
 	/**
 		Whether the cookie is a host-only cookie.
 	**/
-	var hostOnly : String;
+	var hostOnly : Bool;
 	/**
 		The path of the cookie.
 	**/

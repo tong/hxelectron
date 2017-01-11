@@ -17,10 +17,14 @@ package electron.main;
 	@:optional
 	var buttonLabel : String; @:optional
 	var filters : Array<FileFilter>; /**
-		(optional) Contains which features the dialog should use, can contain , , , and .
+		Contains which features the dialog should use, can contain , , , and .
 	**/
 	@:optional
-	var properties : Array<String>; }, ?callback:haxe.Constraints.Function):Array<String>;
+	var properties : Array<String>; /**
+		Normalize the keyboard access keys across platforms. Default is . Enabling this assumes is used in the button labels for the placement of the keyboard shortcut access key and labels will be converted so they work correctly on each platform, characters are removed on macOS, converted to on Linux, and left untouched on Windows. For example, a button label of will be converted to on Linux and on macOS and can be selected via on Windows and Linux.
+	**/
+	@:optional
+	var normalizeAccessKeys : Bool; }, ?callback:haxe.Constraints.Function):Array<String>;
 	/**
 		The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
 	**/
@@ -40,7 +44,7 @@ package electron.main;
 	**/
 	@:optional
 	var type : String; /**
-		(optional) Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".
+		Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".
 	**/
 	@:optional
 	var buttons : Array<String>; /**

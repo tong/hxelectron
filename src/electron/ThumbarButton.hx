@@ -13,8 +13,7 @@ package electron;
 	**/
 	var tooltip : String;
 	/**
-		(optional) Control specific states and behaviors of the button. By default, it is .
+		Control specific states and behaviors of the button. By default, it is .
 	**/
-	@:optional
 	var flags : Array<String>;
 }

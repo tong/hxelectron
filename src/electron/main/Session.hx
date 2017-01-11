@@ -5,61 +5,13 @@ package electron.main;
 
 	[Documentation](http://electron.atom.io/docs/api/session)
 **/
-@:require(js, electron) @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+@:require(js, electron) @:jsRequire("electron", "session") extern class Session {
 	/**
-		A Cookies object for this session.
+		If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. if there is no persist: prefix, the page will use an in-memory session. If the partition is empty then default session of the app will be returned. To create a Session with options, you have to ensure the Session with the partition has never been used before. There is no way to change the options of an existing Session object.
 	**/
-	var cookies : Cookies;
-	/**
-		A WebRequest object for this session.
-	**/
-	var webRequest : WebRequest;
-	/**
-		A Protocol object (an instance of protocol module) for this session.
-	**/
-	var protocol : Protocol;
-	/**
-		Returns the session's current cache size.
-	**/
-	function getCacheSize(callback:haxe.Constraints.Function):Void;
-	/**
-		Clears the session’s HTTP cache.
-	**/
-	function clearCache(callback:haxe.Constraints.Function):Void;
-	/**
-		Clears the data of web storages.
-	**/
-	function clearStorageData(?options:{ /**
-		Should follow ’s representation .
+	static function fromPartition(partition:String, options:{ /**
+		Whether to enable cache.
 	**/
 	@:optional
-	var origin : String; /**
-		The types of storages to clear, can contain: , , , , , , ,
-	**/
-	@:optional
-	var storages : Array<String>; /**
-		The types of quotas to clear, can contain: , , .
-	**/
-	@:optional
-	var quotas : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
-	/**
-		Writes any unwritten DOMStorage data to disk.
-	**/
-	function flushStorageData():Void;
-	/**
-		Sets the proxy settings. When pacScript and proxyRules are provided together, the proxyRules option is ignored and pacScript configuration is applied. The proxyRules has to follow the rules below: For example: The proxyBypassRules is a comma separated list of rules described below:
-	**/
-	function setProxy(config:{ /**
-		The URL associated with the PAC file.
-	**/
-	@:optional
-	var pacScript : String; /**
-		Rules indicating which proxies to use.
-	**/
-	@:optional
-	var proxyRules : String; /**
-		Rules indicating which URLs should bypass the proxy settings.
-	**/
-	@:optional
-	var proxyBypassRules : String; }, callback:haxe.Constraints.Function):Void;
+	var cache : Bool; }):Session;
 }

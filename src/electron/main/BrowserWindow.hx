@@ -275,7 +275,15 @@ package electron.main;
 		Defaults to .
 	**/
 	@:optional
-	var monospace : String; }; /**
+	var monospace : String; /**
+		Defaults to .
+	**/
+	@:optional
+	var cursive : String; /**
+		Defaults to .
+	**/
+	@:optional
+	var fantasy : String; }; /**
 		Defaults to .
 	**/
 	@:optional
@@ -296,7 +304,7 @@ package electron.main;
 	**/
 	@:optional
 	var backgroundThrottling : Bool; /**
-		Whether to enable offscreen rendering for the browser window. Defaults to .
+		Whether to enable offscreen rendering for the browser window. Defaults to . See the for more details.
 	**/
 	@:optional
 	var offscreen : Bool; /**

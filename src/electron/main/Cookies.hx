@@ -63,7 +63,7 @@ package electron.main;
 	**/
 	@:optional
 	var httpOnly : Bool; /**
-		- The expiration date of the cookie as the number of seconds since the UNIX epoch. If omitted then the cookie becomes a session cookie and will not be retained between sessions.
+		The expiration date of the cookie as the number of seconds since the UNIX epoch. If omitted then the cookie becomes a session cookie and will not be retained between sessions.
 	**/
 	@:optional
 	var expirationDate : Float; }, callback:haxe.Constraints.Function):Void;

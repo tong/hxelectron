@@ -19,4 +19,12 @@ package electron.main;
 		A String indicating the HTTP protocol version number. Typical values are '1.0' or '1.1'. Additionally httpVersionMajor and httpVersionMinor are two Integer-valued readable properties that return respectively the HTTP major and minor version numbers.
 	**/
 	var httpVersion : String;
+	/**
+		An Integer indicating the HTTP protocol major version number.
+	**/
+	var httpVersionMajor : Int;
+	/**
+		An Integer indicating the HTTP protocol minor version number.
+	**/
+	var httpVersionMinor : Int;
 }

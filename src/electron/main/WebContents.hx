@@ -192,23 +192,23 @@ package electron.main;
 		Starts a request to find all matches for the text in the web page and returns an Integer representing the request id used for the request. The result of the request can be obtained by subscribing to found-in-page event.
 	**/
 	function findInPage(text:String, ?options:{ /**
-		Whether to search forward or backward, defaults to .
+		(optional) Whether to search forward or backward, defaults to .
 	**/
 	@:optional
 	var forward : Bool; /**
-		Whether the operation is first request or a follow up, defaults to .
+		(optional) Whether the operation is first request or a follow up, defaults to .
 	**/
 	@:optional
 	var findNext : Bool; /**
-		Whether search should be case-sensitive, defaults to .
+		(optional) Whether search should be case-sensitive, defaults to .
 	**/
 	@:optional
 	var matchCase : Bool; /**
-		Whether to look only at the start of words. defaults to .
+		(optional) Whether to look only at the start of words. defaults to .
 	**/
 	@:optional
 	var wordStart : Bool; /**
-		When combined with , accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to .
+		(optional) When combined with , accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to .
 	**/
 	@:optional
 	var medialCapitalAsWordStart : Bool; }):Void;
@@ -244,23 +244,23 @@ package electron.main;
 		Prints window's web page as PDF with Chromium's preview printing custom settings. The callback will be called with callback(error, data) on completion. The data is a Buffer that contains the generated PDF data. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
 	**/
 	function printToPDF(options:{ /**
-		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+		(optional) Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
 	**/
 	@:optional
 	var marginsType : Int; /**
-		Specify page size of the generated PDF. Can be , , , , , or an Object containing and in microns.
+		(optional) Specify page size of the generated PDF. Can be , , , , , or an Object containing and in microns.
 	**/
 	@:optional
 	var pageSize : String; /**
-		Whether to print CSS backgrounds.
+		(optional) Whether to print CSS backgrounds.
 	**/
 	@:optional
 	var printBackground : Bool; /**
-		Whether to print selection only.
+		(optional) Whether to print selection only.
 	**/
 	@:optional
 	var printSelectionOnly : Bool; /**
-		for landscape, for portrait.
+		(optional) for landscape, for portrait.
 	**/
 	@:optional
 	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
