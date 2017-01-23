@@ -311,7 +311,11 @@ package electron.main;
 		Whether to enable Chromium OS-level sandbox.
 	**/
 	@:optional
-	var sandbox : Bool; }; }):Void;
+	var sandbox : Bool; /**
+		Whether to run Electron APIs and the specified script in a separate JavaScript context. Defaults to . The context that the script runs in will still have full access to the and globals but it will use its own set of JavaScript builtins (, , , etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the script and any Electron APIs being used. This option uses the same technique used by . You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab. This option is currently experimental and may change or be removed in future Electron releases.
+	**/
+	@:optional
+	var contextIsolation : Bool; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
