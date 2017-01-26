@@ -1,8 +1,8 @@
+*node_modules/
 *.zip
 data/
-demo/*.js
-demo/*.js.map
-demo/node_modules/*
+demo/bin/*.js
+demo/bin/*.js.map
 doc/
 atom/*
 all.hxml

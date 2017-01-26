@@ -5,9 +5,9 @@
 --each
 
 --next
--js main.js
+-js bin/main.js
 -main Main
 
 --next
--js app.js
+-js bin/app.js
 -main App
