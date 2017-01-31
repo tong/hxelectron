@@ -4,7 +4,7 @@ os:
   - linux
 
 haxe:
-  - "3.4.0-rc.2"
+  - "3.4.0"
   - development
 
 matrix:
