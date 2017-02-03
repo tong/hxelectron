@@ -6,12 +6,20 @@ import js.Node.process;
 
 class App {
 
+    static inline function setText( id : String, text : String ) {
+        document.getElementById( id ).textContent = text;
+    }
+
     static function main() {
-        window.onload = function(){
-            var info = 'hxelectron - '+process.version+' - '+process.versions['electron'];
-            console.info( info );
-            document.getElementById( 'info' ).textContent = info;
+
+        window.onload = function() {
+
             document.getElementById( 'logo' ).style.opacity = '1';
+
+            setText( 'electron', 'electron '+process.versions['electron'] );
+            setText( 'node', 'node '+process.version );
+            setText( 'system', process.platform +' '+ process.arch );
         }
     }
+    
 }
