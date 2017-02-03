@@ -1,5 +1,6 @@
 
 import haxe.Json;
+import haxe.ds.StringMap;
 import sys.FileSystem;
 import sys.io.File;
 
@@ -13,41 +14,40 @@ class Run {
 	static function main() {
 
 		var args = Sys.args();
+
 		switch args[0] {
+
 		case 'update':
-			//TODO
+			//TODO requires ssl
 			//https://api.github.com/repos/electron/electron/releases
 			//https://github.com/electron/electron/releases/download/v${version}/electron-api.json
-			//var r = haxe.Http.requestUrl( 'https://api.github.com/repos/electron/electron/releases' );
 
 		default:
 
 			#if macro
 			var file = API_SOURCE_FILE;
 			#else
-			var file = Sys.args()[0];
+			var file = args[0];
 			if( file == null ) file = API_SOURCE_FILE;
+			#end
+
 			if( !FileSystem.exists( file ) )
 				error( 'API file not found [$file]' );
-			#end
 
 			var out = 'src';
 			var pack = ['electron'];
 			var api = Json.parse( File.getContent( file ) );
 			var types = ElectronAPI.build( api, pack );
+			var sourceCode = new StringMap<String>();
 			var printer = new haxe.macro.Printer();
-			var typePaths = new Array<String>();
+			//var typePaths = new Array<String>();
 
-			if( FileSystem.exists( out ) ) FileSystem.createDirectory( out );
+			for( i in 0...types.length ) {
 
-			for( type in types ) {
+				var type = types[i];
+				var modulePath = type.pack.join( '.' );
+				var moduleName = type.name;
 
-				var pkg = type.pack.join( '.' );
-				var fullName = '$pkg.${type.name}';
-
-				typePaths.push( fullName );
-
-				var code = printer.printTypeDefinition( type );
 				var doc = '\n\n/**';
 				for( item in api ) {
 					if( item.name == type.name.toLowerCase() ) {
@@ -58,18 +58,31 @@ class Run {
 					}
 				}
 				doc += '\n**/\n';
+
+				var code = printer.printTypeDefinition( type );
 				var lines = code.split( '\n' );
 				code = lines.shift() + doc + lines.join( '\n' );
+				var classPath = modulePath+'.'+moduleName;
+				if( moduleName.endsWith( 'Event' ) ) {
+					code = code.split( '\n' ).slice(1).join( '\n' );
+					sourceCode.set( modulePath, sourceCode.get( modulePath ) +'\n'+code );
+				} else {
+					sourceCode.set( classPath, code );
+				}
+			}
 
-				var dir = '$out/' + pkg.replace( '.', '/' );
-				if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
-				File.saveContent( '$dir/${type.name}.hx', code );
+			for( key in sourceCode.keys() ) {
+				var parts = key.split( '.' );
+				var file = parts.pop();
+				var dir = out + '/' + parts.join( '/' );
+				if( !FileSystem.exists( dir ) )
+					FileSystem.createDirectory( dir );
+				File.saveContent( dir+'/'+file+'.hx', sourceCode.get( key ) );
 			}
 
 			//File.saveContent( 'all.hxml', typePaths.join( '\n' ) );
 
 			Sys.println( 'Generated [${types.length}] types into [$out]' );
-
 		}
 	}
 
