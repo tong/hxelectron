@@ -1,25 +1,27 @@
 
-# Electron
+# HXElectron
 
-[Haxe](https://haxe.org/) externs for [Electron](http://electron.atom.io/).
-
-
-The Electron framework lets you write cross-platform desktop applications
-using JavaScript, HTML and CSS. It is based on [Node.js](https://nodejs.org/) and
-[Chromium](http://www.chromium.org).
+[Haxe](https://haxe.org/) type definitions for [Electron](http://electron.atom.io/).
 
 [![Build Status](https://travis-ci.org/fponticelli/hxelectron.svg?branch=master)](https://travis-ci.org/fponticelli/hxelectron)
 
+The Electron framework lets you write cross-platform desktop applications
+using JavaScript, HTML and CSS based on [Node.js](https://nodejs.org/) and
+[Chromium](http://www.chromium.org).
 
-All type definitions are auto generated from [electron-api.json](electron-api.json) into the [src/](src/) directory. To (re)generate using another electron version run:
 
+## Auto Type Generation
+
+All type definitions are auto generated from [electron-api.json](electron-api.json) into the [src/](src/) directory.  
+To (re)generate type definitions using another electron version run:
 ```sh
-haxelib run electron <path/to/electron-api.json>
+haxelib run electron <path/to/your/electron-api.json>
 ```
+
 
 ## Demo Application
 
-Spin up the Haxe Quick Start app to see Electron in action:
+Spin up the demo application to see electron in action:
 
 ```sh
 ## Clone repository
