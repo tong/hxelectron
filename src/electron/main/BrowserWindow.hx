@@ -204,14 +204,10 @@ package electron.main;
 	**/
 	@:optional
 	var javascript : Bool; /**
-		When , it will disable the same-origin policy (usually using testing websites by people), and set and to if these two options are not set by user. Default is .
+		When , it will disable the same-origin policy (usually using testing websites by people), and set to if this options has not been set by user. Default is .
 	**/
 	@:optional
 	var webSecurity : Bool; /**
-		Allow an https page to display content like images from http URLs. Default is .
-	**/
-	@:optional
-	var allowDisplayingInsecureContent : Bool; /**
 		Allow an https page to run JavaScript, CSS or plugins from http URLs. Default is .
 	**/
 	@:optional
@@ -460,7 +456,7 @@ package electron.main;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
 	**/
-	function setAlwaysOnTop(flag:Bool, ?level:String):Void;
+	function setAlwaysOnTop(flag:Bool, ?level:String, ?relativeLevel:Int):Void;
 	function isAlwaysOnTop():Bool;
 	/**
 		Moves window to the center of the screen.
@@ -809,7 +805,7 @@ package electron.main;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
 	**/
-	static function setAlwaysOnTop(flag:Bool, ?level:String):Void;
+	static function setAlwaysOnTop(flag:Bool, ?level:String, ?relativeLevel:Int):Void;
 	static function isAlwaysOnTop():Bool;
 	/**
 		Moves window to the center of the screen.

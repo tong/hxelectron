@@ -397,13 +397,16 @@ package electron.main;
 	/**
 		Sets the item as dragging item for current drag-drop operation, file is the absolute path of the file to be dragged, and icon is the image showing under the cursor when dragging.
 	**/
-	function startDrag(item:{ @:optional
-	var file : String; @:optional
-	var icon : NativeImage; }):Void;
-	/**
-		Returns true if the process of saving page has been initiated successfully.
+	function startDrag(item:{ /**
+		The path to the file being dragged.
 	**/
-	function savePage(fullPath:String, saveType:String, callback:haxe.Constraints.Function):Void;
+	@:optional
+	var file : String; /**
+		The image must be non-empty on macOS.
+	**/
+	@:optional
+	var icon : NativeImage; }):Void;
+	function savePage(fullPath:String, saveType:String, callback:haxe.Constraints.Function):Bool;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
@@ -434,7 +437,7 @@ package electron.main;
 	function setFrameRate(fps:Int):Void;
 	function getFrameRate():Int;
 	/**
-		If offscreen rendering is enabled invalidates the frame and generates a new one through the 'paint' event.
+		Schedules a full repaint of the window this web contents is in. If offscreen rendering is enabled invalidates the frame and generates a new one through the 'paint' event.
 	**/
 	function invalidate():Void;
 }
@@ -447,7 +450,7 @@ package electron.main;
 	**/
 	var did_finish_load : String = "did-finish-load";
 	/**
-		This event is like did-finish-load but emitted when the load failed or was cancelled, e.g. window.stop() is invoked. The full list of error codes and their meaning is available here. Note that redirect responses will emit errorCode -3; you may want to ignore that error explicitly.
+		This event is like did-finish-load but emitted when the load failed or was cancelled, e.g. window.stop() is invoked. The full list of error codes and their meaning is available here.
 	**/
 	var did_fail_load : String = "did-fail-load";
 	/**
@@ -479,7 +482,7 @@ package electron.main;
 	**/
 	var page_favicon_updated : String = "page-favicon-updated";
 	/**
-		Emitted when the page requests to open a new window for a url. It could be requested by window.open or an external link like <a target='_blank'>. By default a new BrowserWindow will be created for the url. Calling event.preventDefault() will prevent creating new windows. In such case, the event.newGuest may be set with a reference to a BrowserWindow instance to make it used by the Electron's runtime.
+		Emitted when the page requests to open a new window for a url. It could be requested by window.open or an external link like <a target='_blank'>. By default a new BrowserWindow will be created for the url. Calling event.preventDefault() will prevent Electron from automatically creating a new BrowserWindow. If you call event.preventDefault() and manually create a new BrowserWindow then you must set event.newGuest to reference the new BrowserWindow instance, failing to do so may result in unexpected behavior. For example:
 	**/
 	var new_window : String = "new-window";
 	/**
@@ -574,4 +577,8 @@ package electron.main;
 		Emitted when the devtools window instructs the webContents to reload
 	**/
 	var devtools_reload_page : String = "devtools-reload-page";
+	/**
+		Emitted when a <webview>'s web contents is being attached to this web contents. Calling event.preventDefault() will destroy the guest page. This event can be used to configure webPreferences for the webContents of a <webview> before it's loaded, and provides the ability to set settings that can't be set via <webview> attributes.
+	**/
+	var will_attach_webview : String = "will-attach-webview";
 }

@@ -8,7 +8,7 @@ package electron.main;
 	**/
 	static function getCategories(callback:haxe.Constraints.Function):Void;
 	/**
-		Start recording on all processes. Recording begins immediately locally and asynchronously on child processes as soon as they receive the EnableRecording request. The callback will be called once all child processes have acknowledged the startRecording request. categoryFilter is a filter to control what category groups should be traced. A filter can have an optional - prefix to exclude category groups that contain a matching category. Having both included and excluded category patterns in the same list is not supported. Examples: traceOptions controls what kind of tracing is enabled, it is a comma-delimited list. Possible options are: The first 3 options are trace recoding modes and hence mutually exclusive. If more than one trace recording modes appear in the traceOptions string, the last one takes precedence. If none of the trace recording modes are specified, recording mode is record-until-full. The trace option will first be reset to the default option (record_mode set to record-until-full, enable_sampling and enable_systrace set to false) before options parsed from traceOptions are applied on it.
+		Start recording on all processes. Recording begins immediately locally and asynchronously on child processes as soon as they receive the EnableRecording request. The callback will be called once all child processes have acknowledged the startRecording request. categoryFilter is a filter to control what category groups should be traced. A filter can have an optional - prefix to exclude category groups that contain a matching category. Having both included and excluded category patterns in the same list is not supported. Examples: traceOptions controls what kind of tracing is enabled, it is a comma-delimited list. Possible options are: The first 3 options are trace recording modes and hence mutually exclusive. If more than one trace recording modes appear in the traceOptions string, the last one takes precedence. If none of the trace recording modes are specified, recording mode is record-until-full. The trace option will first be reset to the default option (record_mode set to record-until-full, enable_sampling and enable_systrace set to false) before options parsed from traceOptions are applied on it.
 	**/
 	static function startRecording(options:{ @:optional
 	var categoryFilter : String; @:optional
@@ -35,12 +35,4 @@ package electron.main;
 		Get the maximum usage across processes of trace buffer as a percentage of the full state. When the TraceBufferUsage value is determined the callback is called.
 	**/
 	static function getTraceBufferUsage(callback:haxe.Constraints.Function):Void;
-	/**
-		callback will be called every time the given event occurs on any process.
-	**/
-	static function setWatchEvent(categoryName:String, eventName:String, callback:haxe.Constraints.Function):Void;
-	/**
-		Cancel the watch event. This may lead to a race condition with the watch event callback if tracing is enabled.
-	**/
-	static function cancelWatchEvent():Void;
 }

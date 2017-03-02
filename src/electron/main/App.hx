@@ -42,6 +42,11 @@ package electron.main;
 	**/
 	static function getPath(name:String):String;
 	/**
+		Fetches a path's associated icon. On Windows, there a 2 kinds of icons: On Linux and macOS, icons depend on the application associated with file mime type.
+	**/
+	static function getFileIcon(path:String, ?options:{ @:optional
+	var size : String; }, callback:haxe.Constraints.Function):Void;
+	/**
 		Overrides the path to a special directory or file associated with name. If the path specifies a directory that does not exist, the directory will be created by this method. On failure an Error is thrown. You can only override paths of a name defined in app.getPath. By default, web pages' cookies and caches will be stored under the userData directory. If you want to change this location, you have to override the userData path before the ready event of the app module is emitted.
 	**/
 	static function setPath(name:String, path:String):Void;
@@ -129,15 +134,32 @@ package electron.main;
 	**/
 	static function disableHardwareAcceleration():Void;
 	/**
-		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the exsistence of a .desktop file to work, for more information please read Desktop Environment Integration.
+		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the existence of a .desktop file to work, for more information please read Desktop Environment Integration.
 	**/
 	static function setBadgeCount(count:Int):Bool;
 	static function getBadgeCount():Int;
 	static function isUnityRunning():Bool;
 	/**
-		Note: This API has no effect on MAS builds.
+		If you provided path and args options to app.setLoginItemSettings then you need to pass the same arguments here for openAtLogin to be set correctly. Note: This API has no effect on MAS builds.
 	**/
-	static function getLoginItemSettings():{ /**
+	static function getLoginItemSettings(?options:{ /**
+		The executable path to compare against. Defaults to .
+	**/
+	@:optional
+	var path : String; /**
+		The command-line arguments to compare against. Defaults to an empty array.
+	**/
+	@:optional
+	var args : Array<String>; }):{ @:optional
+	var options : { /**
+		The executable path to compare against. Defaults to .
+	**/
+	@:optional
+	var path : String; /**
+		The command-line arguments to compare against. Defaults to an empty array.
+	**/
+	@:optional
+	var args : Array<String>; }; /**
 		if the app is set to open at login.
 	**/
 	@:optional
@@ -159,7 +181,7 @@ package electron.main;
 	@:optional
 	var restoreState : Bool; };
 	/**
-		Set the app's login item settings. Note: This API has no effect on MAS builds.
+		Set the app's login item settings. To work with Electron's autoUpdater on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example: Note: This API has no effect on MAS builds.
 	**/
 	static function setLoginItemSettings(settings:{ /**
 		to open the app at login, to remove the app as a login item. Defaults to .
@@ -169,7 +191,15 @@ package electron.main;
 		to open the app as hidden. Defaults to . The user can edit this setting from the System Preferences so should be checked when the app is opened to know the current value. This setting is only supported on macOS.
 	**/
 	@:optional
-	var openAsHidden : Bool; }):Void;
+	var openAsHidden : Bool; /**
+		The executable to launch at login. Defaults to .
+	**/
+	@:optional
+	var path : String; /**
+		The command-line arguments to pass to the executable. Defaults to an empty array. Take care to wrap paths in quotes.
+	**/
+	@:optional
+	var args : Array<String>; }):Void;
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.

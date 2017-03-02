@@ -17,7 +17,7 @@ package electron.main;
 	@:optional
 	var buttonLabel : String; @:optional
 	var filters : Array<FileFilter>; /**
-		Contains which features the dialog should use, can contain , , , and .
+		Contains which features the dialog should use. The following values are supported:
 	**/
 	@:optional
 	var properties : Array<String>; /**
@@ -35,7 +35,19 @@ package electron.main;
 	**/
 	@:optional
 	var buttonLabel : String; @:optional
-	var filters : Array<FileFilter>; }, ?callback:haxe.Constraints.Function):String;
+	var filters : Array<FileFilter>; /**
+		Message to display above text fields.
+	**/
+	@:optional
+	var message : String; /**
+		Custom label for the text displayed in front of the filename text field.
+	**/
+	@:optional
+	var nameFieldLabel : String; /**
+		Show the tags input box, defaults to .
+	**/
+	@:optional
+	var showsTagField : Bool; }, ?callback:haxe.Constraints.Function):String;
 	/**
 		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(response).
 	**/
@@ -63,7 +75,15 @@ package electron.main;
 		Extra information of the message.
 	**/
 	@:optional
-	var detail : String; @:optional
+	var detail : String; /**
+		If provided, the message box will include a checkbox with the given label. The checkbox state can be inspected only when using .
+	**/
+	@:optional
+	var checkboxLabel : String; /**
+		Initial checked state of the checkbox. by default.
+	**/
+	@:optional
+	var checkboxChecked : Bool; @:optional
 	var icon : NativeImage; /**
 		The value will be returned when user cancels the dialog instead of clicking the buttons of the dialog. By default it is the index of the buttons that have "cancel" or "no" as label, or 0 if there is no such buttons. On macOS and Windows the index of the "Cancel" button will always be used as even if it is specified.
 	**/
