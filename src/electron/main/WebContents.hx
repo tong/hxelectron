@@ -398,7 +398,7 @@ package electron.main;
 		Sets the item as dragging item for current drag-drop operation, file is the absolute path of the file to be dragged, and icon is the image showing under the cursor when dragging.
 	**/
 	function startDrag(item:{ /**
-		The path to the file being dragged.
+		or Array The path(s) to the file(s) being dragged.
 	**/
 	@:optional
 	var file : String; /**

@@ -11,7 +11,27 @@ package electron.main;
 	/**
 		Pops up this menu as a context menu in the browserWindow.
 	**/
-	function popup(?browserWindow:BrowserWindow, ?x:Float, y:Float, ?positioningItem:Float):Void;
+	function popup(?browserWindow:BrowserWindow, ?options:{ /**
+		Default is the current mouse cursor position.
+	**/
+	@:optional
+	var x : Float; /**
+		( if is used) Default is the current mouse cursor position.
+	**/
+	@:optional
+	var y : Float; /**
+		Set to to have this method return immediately called, to return after the menu has been selected or closed. Defaults to .
+	**/
+	@:optional
+	var async : Bool; /**
+		The index of the menu item to be positioned under the mouse cursor at the specified coordinates. Default is -1.
+	**/
+	@:optional
+	var positioningItem : Float; }):Void;
+	/**
+		Closes the context menu in the browserWindow.
+	**/
+	function closePopup(?browserWindow:BrowserWindow):Void;
 	/**
 		Appends the menuItem to the menu.
 	**/
@@ -23,7 +43,27 @@ package electron.main;
 	/**
 		Pops up this menu as a context menu in the browserWindow.
 	**/
-	static function popup(?browserWindow:BrowserWindow, ?x:Float, y:Float, ?positioningItem:Float):Void;
+	static function popup(?browserWindow:BrowserWindow, ?options:{ /**
+		Default is the current mouse cursor position.
+	**/
+	@:optional
+	var x : Float; /**
+		( if is used) Default is the current mouse cursor position.
+	**/
+	@:optional
+	var y : Float; /**
+		Set to to have this method return immediately called, to return after the menu has been selected or closed. Defaults to .
+	**/
+	@:optional
+	var async : Bool; /**
+		The index of the menu item to be positioned under the mouse cursor at the specified coordinates. Default is -1.
+	**/
+	@:optional
+	var positioningItem : Float; }):Void;
+	/**
+		Closes the context menu in the browserWindow.
+	**/
+	static function closePopup(?browserWindow:BrowserWindow):Void;
 	/**
 		Appends the menuItem to the menu.
 	**/

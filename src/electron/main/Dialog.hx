@@ -85,7 +85,7 @@ package electron.main;
 	@:optional
 	var checkboxChecked : Bool; @:optional
 	var icon : NativeImage; /**
-		The value will be returned when user cancels the dialog instead of clicking the buttons of the dialog. By default it is the index of the buttons that have "cancel" or "no" as label, or 0 if there is no such buttons. On macOS and Windows the index of the "Cancel" button will always be used as even if it is specified.
+		The index of the button to be used to cancel the dialog, via the key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, will be used as the return value or callback response. This option is ignored on Windows.
 	**/
 	@:optional
 	var cancelId : Int; /**
