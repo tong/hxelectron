@@ -90,6 +90,7 @@ class ElectronAPI {
 
 		var types = new Array<TypeDefinition>();
 		for( item in api ) {
+			//if( item.name != 'Menu' ) continue;
 			var itemTypes = convertItem( item, pack );
 			types = types.concat( itemTypes );
 		}
@@ -174,9 +175,13 @@ class ElectronAPI {
 			if( item.constructorMethod != null )
 				fields.push( convertMethod( item.constructorMethod ) );
 			if( item.instanceMethods != null )
-				for( m in item.instanceMethods ) fields.push( convertMethod( m ) );
-			if( item.staticMethods != null )
-				for( m in item.instanceMethods ) fields.push( convertMethod( m, [AStatic] ) );
+				for( m in item.instanceMethods )
+					fields.push( convertMethod( m ) );
+			if( item.staticMethods != null ) {
+				for( m in item.staticMethods ) {
+					fields.push( convertMethod( m, [AStatic] ) );
+				}
+			}
 			createClassTypeDefinition( pack, item.name, sup, fields, meta );
 
 		case Module:
@@ -260,24 +265,17 @@ class ElectronAPI {
 
 		inline function findMatch(type:String):Null<{name:String, pack:Array<String>}> {
 			var result = null;
-
 			for (item in _api) if (item.name == type) {
 				result = {name: item.name, pack: ['electron']};
-
 				if( item.process != null && (!item.process.main || !item.process.renderer) ) {
 					if( item.process.main ) {
 						result.pack.push( 'main' );
-
 					} else if( item.process.renderer ) {
 						result.pack.push( 'renderer' );
-
 					}
-
 				}
 				break;
-
 			}
-
 			return result;
 		}
 
