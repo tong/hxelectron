@@ -1,6 +1,7 @@
 package electron;
 
 /**
+	[Documentation](http://electron.atom.io/docs/api/structures/desktop-capturer-source)
 **/
 @:require(js, electron) typedef DesktopCapturerSource = {
 	/**

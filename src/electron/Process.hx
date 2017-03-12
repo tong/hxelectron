@@ -1,9 +1,6 @@
 package electron;
 
 /**
-	Extensions to process object.
-
-	[Documentation](http://electron.atom.io/docs/api/process)
 **/
 @:require(js, electron) @:jsRequire("electron", "process") extern class Process {
 	/**

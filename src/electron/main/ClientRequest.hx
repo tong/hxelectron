@@ -1,6 +1,9 @@
 package electron.main;
 
 /**
+	Make HTTP/HTTPS requests.
+
+	[Documentation](http://electron.atom.io/docs/api/client-request)
 **/
 @:require(js, electron) @:jsRequire("electron", "ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {
 	/**

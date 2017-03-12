@@ -1,6 +1,9 @@
 package electron;
 
 /**
+	Natively wrap images such as tray, dock, and application icons.
+
+	[Documentation](http://electron.atom.io/docs/api/native-image)
 **/
 @:require(js, electron) @:jsRequire("electron", "nativeImage") extern class NativeImage {
 	/**

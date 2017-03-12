@@ -1,6 +1,7 @@
 package electron;
 
 /**
+	[Documentation](http://electron.atom.io/docs/api/structures/upload-data)
 **/
 @:require(js, electron) typedef UploadData = {
 	/**

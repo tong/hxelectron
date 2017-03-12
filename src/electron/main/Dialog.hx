@@ -1,9 +1,6 @@
 package electron.main;
 
 /**
-	Display native system dialogs for opening and saving files, alerting, etc.
-
-	[Documentation](http://electron.atom.io/docs/api/dialog)
 **/
 @:require(js, electron) @:jsRequire("electron", "dialog") extern class Dialog {
 	/**

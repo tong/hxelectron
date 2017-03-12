@@ -1,6 +1,7 @@
 package electron;
 
 /**
+	[Documentation](http://electron.atom.io/docs/api/structures/crash-report)
 **/
 @:require(js, electron) typedef CrashReport = {
 	var date : String;

@@ -1,7 +1,7 @@
 package electron.main;
 
 /**
-	Manage browser sessions, cookies, cache, proxy settings, etc.
+	Get and set properties of a session.
 
 	[Documentation](http://electron.atom.io/docs/api/session)
 **/

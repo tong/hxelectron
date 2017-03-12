@@ -1,9 +1,6 @@
 package electron;
 
 /**
-	Retrieve information about screen size, displays, cursor position, etc.
-
-	[Documentation](http://electron.atom.io/docs/api/screen)
 **/
 @:require(js, electron) @:jsRequire("electron", "screen") extern class Screen {
 	/**

@@ -1,9 +1,6 @@
 package electron.main;
 
 /**
-	Control your application's event lifecycle.
-
-	[Documentation](http://electron.atom.io/docs/api/app)
 **/
 @:require(js, electron) @:jsRequire("electron", "app") extern class App {
 	/**

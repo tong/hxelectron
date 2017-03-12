@@ -1,6 +1,7 @@
 package electron;
 
 /**
+	[Documentation](http://electron.atom.io/docs/api/structures/jump-list-category)
 **/
 @:require(js, electron) typedef JumpListCategory = {
 	/**
