@@ -36,7 +36,7 @@ class Run {
 
 			var out = 'src';
 			var pack = ['electron'];
-			var json : Array<APIItem> = Json.parse( File.getContent( file ) );
+			var json = Json.parse( File.getContent( file ) );
 			var types = ElectronAPI.build( json, pack );
 			var sourceCode = new StringMap<String>();
 			var printer = new haxe.macro.Printer();
@@ -47,7 +47,6 @@ class Run {
 				var type = types[i];
 				var modulePath = type.pack.join( '.' );
 				var moduleName = type.name;
-
 
 				var doc = '\n\n/**';
 				for( item in json ) {
