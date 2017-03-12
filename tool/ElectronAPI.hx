@@ -90,7 +90,6 @@ class ElectronAPI {
 
 		var types = new Array<TypeDefinition>();
 		for( item in api ) {
-			//if( item.name != 'Menu' ) continue;
 			var itemTypes = convertItem( item, pack );
 			types = types.concat( itemTypes );
 		}
@@ -134,11 +133,6 @@ class ElectronAPI {
 		////////////////////////////////////////////////////////////////////////
 
 		return types;
-	}
-
-	static function createAlias( name : String, pack : Array<String>, ?type : ComplexType ) : TypeDefinition {
-		if( type == null ) type = macro : Dynamic;
-		return createTypeDefinition( pack, name, TDAlias(type) );
 	}
 
 	static function convertItem( item : APIItem, pack : Array<String> ) : Array<TypeDefinition> {
@@ -244,7 +238,6 @@ class ElectronAPI {
 					} );
 
 				}
-
 			}
 		}
 
@@ -263,10 +256,10 @@ class ElectronAPI {
 			return known.indexOf(type) > -1;
 		}
 
-		inline function findMatch(type:String):Null<{name:String, pack:Array<String>}> {
+		inline function findMatch( type : String ) : Null<{name:String,pack:Array<String>}> {
 			var result = null;
-			for (item in _api) if (item.name == type) {
-				result = {name: item.name, pack: ['electron']};
+			for( item in _api ) if( item.name == type ) {
+				result = { name: item.name, pack: ['electron'] };
 				if( item.process != null && (!item.process.main || !item.process.renderer) ) {
 					if( item.process.main ) {
 						result.pack.push( 'main' );
@@ -281,81 +274,58 @@ class ElectronAPI {
 
 		var isArray = if( type.endsWith( '[]' ) ) {
 			type = type.substr( 0, type.length-2 );
-			if (findMatch(type) == null && !isKnownType(type)) type = 'Dynamic';
+			if( findMatch( type ) == null && !isKnownType( type ) ) type = 'Dynamic';
 			true;
 		} else false;
 
-		var multiType = if ( type.charAt(0) == '[' && type.charAt(type.length-1) == ']' ) {
-			var raw = type.substr(1, type.length-2).split(',');
+		var multiType = if( type.charAt(0) == '[' && type.charAt(type.length-1) == ']' ) {
+			var raw = type.substr( 1, type.length-2 ).split( ',' );
 			var types = [];
-
-			for (r in raw) {
-				var match = findMatch(r);
-
-				if (match != null) {
-					types.push( TPath( { name: escapeTypeName(match.name), pack: match.pack } ) );
-
+			for( r in raw ) {
+				var match = findMatch( r );
+				if( match != null ) {
+					types.push( TPath( { name: escapeTypeName( match.name ), pack: match.pack } ) );
 				} else {
-					if (isKnownType( r )) {
+					if( isKnownType( r ) ) {
 						types.push( convertType( r ) );
-
 					} else {
 						// Multiple types might be missing from the json file, we don't want
 						// to create haxe.extern.EitherType<Dynamic,Dynamic> or worse ect.
-						for (type in types) switch type {
-							case TPath(c) if (c.name != 'Dynamic'):
+						for( type in types ) switch type {
+							case TPath(c) if( c.name != 'Dynamic' ):
 								types.push( macro:Dynamic );
 								break;
-
 							case _:
 								trace( type );
-
 						}
-
-						if (types.length == 0) types.push( macro:Dynamic );
-
+						if( types.length == 0 ) types.push( macro:Dynamic );
 					}
-
 				}
-
 			}
 
 			var result = null;
 
-			if (types.length > 1) {
+			if( types.length > 1 ) {
 				result = (macro:haxe.extern.EitherType);
 				var current = result;
-
-				for (i in 0...types.length) {
+				for( i in 0...types.length ) {
 					var t = types[i];
-
 					switch current {
-						case TPath(c):
-							if (c.params.length >= 1 && i < types.length-1) {
-								t = TPath( { name: 'EitherType', pack: ['haxe', 'extern'], params: [ TPType(t) ] } );
-
-							}
-
-
-
-						case _:
-
+					case TPath(c):
+						if( c.params.length >= 1 && i < types.length-1 ) {
+							t = TPath( { name: 'EitherType', pack: ['haxe', 'extern'], params: [ TPType(t) ] } );
+						}
+					case _:
 					}
-
 					switch current {
-						case TPath(c):
-							c.params.push( TPType( t ) );
-							if (c.params.length >= 2) current = t;
-
-						case _:
-
+					case TPath(c):
+						c.params.push( TPType( t ) );
+						if( c.params.length >= 2 ) current = t;
+					case _:
 					}
-
 				}
-
 			} else {
 				result = types[0];
-
 			}
 
 			result;
@@ -400,6 +370,11 @@ class ElectronAPI {
 			case TPath(p): TPath( { name: 'Array<${p.name}>', pack: [] } );
 			default: throw 'failed to convert array type';
 		}
+	}
+
+	static function createAlias( name : String, pack : Array<String>, ?type : ComplexType ) : TypeDefinition {
+		if( type == null ) type = macro : Dynamic;
+		return createTypeDefinition( pack, name, TDAlias(type) );
 	}
 
 	static function createField( name : String, kind: FieldType, ?access : Array<Access>, ?doc : String, ?meta : Metadata ) : Field {
