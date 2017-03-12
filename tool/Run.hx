@@ -17,7 +17,7 @@ class Run {
 
 		switch args[0] {
 
-		case 'update':
+		//case 'update':
 			//TODO requires ssl
 			//https://api.github.com/repos/electron/electron/releases
 			//https://github.com/electron/electron/releases/download/v${version}/electron-api.json
@@ -36,8 +36,8 @@ class Run {
 
 			var out = 'src';
 			var pack = ['electron'];
-			var api = Json.parse( File.getContent( file ) );
-			var types = ElectronAPI.build( api, pack );
+			var json : Array<APIItem> = Json.parse( File.getContent( file ) );
+			var types = ElectronAPI.build( json, pack );
 			var sourceCode = new StringMap<String>();
 			var printer = new haxe.macro.Printer();
 			//var typePaths = new Array<String>();
@@ -48,9 +48,10 @@ class Run {
 				var modulePath = type.pack.join( '.' );
 				var moduleName = type.name;
 
+
 				var doc = '\n\n/**';
-				for( item in api ) {
-					if( item.name == type.name.toLowerCase() ) {
+				for( item in json ) {
+					if( item.name == type.name ) {
 						if( item.description != null ) doc += '\n\t'+item.description+'\n';
 						if( item.websiteUrl != null ) doc += '\n\t[Documentation]('+item.websiteUrl+')';
 						//if( item.repoUrl != null ) doc += '\n\t[Website]'+item.repoUrl;
@@ -75,8 +76,7 @@ class Run {
 				var parts = key.split( '.' );
 				var file = parts.pop();
 				var dir = out + '/' + parts.join( '/' );
-				if( !FileSystem.exists( dir ) )
-					FileSystem.createDirectory( dir );
+				if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
 				File.saveContent( dir+'/'+file+'.hx', sourceCode.get( key ) );
 			}
 
