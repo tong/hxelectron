@@ -52,8 +52,7 @@ class Run {
 				for( item in json ) {
 					if( item.name == type.name ) {
 						if( item.description != null ) doc += '\n\t'+item.description+'\n';
-						if( item.websiteUrl != null ) doc += '\n\t[Documentation]('+item.websiteUrl+')';
-						//if( item.repoUrl != null ) doc += '\n\t[Website]'+item.repoUrl;
+						if( item.websiteUrl != null ) doc += '\n\tSee: <'+item.websiteUrl+'>';
 						break;
 					}
 				}
