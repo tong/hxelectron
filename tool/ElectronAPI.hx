@@ -89,9 +89,24 @@ class ElectronAPI {
 		if( pack == null ) pack = ['electron'];
 
 		var types = new Array<TypeDefinition>();
+
 		for( item in api ) {
-			var itemTypes = convertItem( item, pack );
-			types = types.concat( itemTypes );
+			var ntypes = convertItem( item, pack );
+			for( ntype in ntypes ) {
+				switch item.type {
+				case Module:
+					for( otype in types ) {
+						if( ntype.name == otype.name &&
+							ntype.pack.join( '.' ) == otype.pack.join( '.' ) ) {
+								otype.fields = otype.fields.concat( ntype.fields );
+								ntypes.remove( ntype );
+							}
+						}
+				case _:
+				}
+
+			}
+			types = types.concat( ntypes );
 		}
 
 		///// PATCH ////////////////////////////////////////////////////////////
@@ -139,8 +154,6 @@ class ElectronAPI {
 
 		var pack = pack.copy();
 		var meta = [];
-		var fields = new Array<Field>();
-		var extraTypes = new Array<TypeDefinition>();
 
 		if( item.process != null && (!item.process.main || !item.process.renderer) ) {
 			if( item.process.main ) {
@@ -151,6 +164,9 @@ class ElectronAPI {
 				//meta.push( { name: ':require', params: [macro $i{'electron_renderer'}], pos: pos } );
 			}
 		}
+
+		var fields = new Array<Field>();
+		var extraTypes = new Array<TypeDefinition>();
 
 		var def = switch item.type {
 
@@ -194,6 +210,7 @@ class ElectronAPI {
 					if( !alreadyAdded ) fields.push( convertMethod( m, [AStatic] ) );
 				}
 			}
+
 			createClassTypeDefinition( pack, item.name, sup, fields, meta );
 
 		case Structure:
@@ -236,7 +253,6 @@ class ElectronAPI {
 						// Check `required` for pre `1.4.8` json files, fall back description check if field is optional.
 						opt: p.required != null ? !p.required : p.description != null && p.description.startsWith( '(optional)')
 					} );
-
 				}
 			}
 		}
@@ -335,6 +351,7 @@ class ElectronAPI {
 		}
 
 		var ctype = switch type {
+		case 'Blob': macro : js.html.Blob;
 		case 'Bool','Boolean': macro : Bool;
 		case 'Buffer': macro : js.node.Buffer;
 		case 'Int','Integer': macro : Int;
@@ -388,6 +405,20 @@ class ElectronAPI {
 		}
 	}
 
+	static function createTypeDefinition( pack : Array<String>, name : String, kind : TypeDefKind, ?fields : Array<Field>, ?meta : Metadata, ?isExtern : Bool ) : TypeDefinition {
+		var _meta = [{ name: ':require', params: [macro $i{'js'},macro $i{'electron'}], pos: pos }];
+		if( meta != null ) _meta = _meta.concat( meta );
+		return {
+			pack: pack,
+			name: escapeTypeName( name ),
+			kind: kind,
+			fields: (fields == null) ? [] : fields,
+			meta: _meta,
+			isExtern: isExtern,
+			pos: pos
+		};
+	}
+
 	static function createClassTypeDefinition( pack : Array<String>, name : String, sup : TypePath, ?fields : Array<Field>, ?meta : Metadata ) : TypeDefinition {
 		var _meta = [{
 			name: ":jsRequire",
@@ -416,20 +447,6 @@ class ElectronAPI {
 		var _name = escapeTypeName( name );
 		_pack.push( _name );
 		return createTypeDefinition( _pack, _name+'Event', TDAbstract(macro:String,[macro:String],[macro:String]), fields, [{ name: ":enum", pos: pos }] );
-	}
-
-	static function createTypeDefinition( pack : Array<String>, name : String, kind : TypeDefKind, ?fields : Array<Field>, ?meta : Metadata, ?isExtern : Bool ) : TypeDefinition {
-		var _meta = [{ name: ':require', params: [macro $i{'js'},macro $i{'electron'}], pos: pos }];
-		if( meta != null ) _meta = _meta.concat( meta );
-		return {
-			pack: pack,
-			name: escapeTypeName( name ),
-			kind: kind,
-			fields: (fields == null) ? [] : fields,
-			meta: _meta,
-			isExtern: isExtern,
-			pos: pos
-		};
 	}
 
 	static function escapeTypeName( name : String ) : String
