@@ -3,7 +3,7 @@ package electron.main;
 /**
 	Render and control the contents of a BrowserWindow instance.
 
-	[Documentation](http://electron.atom.io/docs/api/web-contents)
+	See: <http://electron.atom.io/docs/api/web-contents>
 **/
 @:require(js, electron) @:jsRequire("electron", "WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
 	/**

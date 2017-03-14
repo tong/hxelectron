@@ -1,7 +1,7 @@
 package electron;
 
 /**
-	[Documentation](http://electron.atom.io/docs/api/structures/remove-password)
+	See: <http://electron.atom.io/docs/api/structures/remove-password>
 **/
 @:require(js, electron) typedef RemovePassword = {
 	/**

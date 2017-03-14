@@ -1,7 +1,7 @@
 package electron;
 
 /**
-	[Documentation](http://electron.atom.io/docs/api/structures/certificate-principal)
+	See: <http://electron.atom.io/docs/api/structures/certificate-principal>
 **/
 @:require(js, electron) typedef CertificatePrincipal = {
 	/**

@@ -1,7 +1,7 @@
 package electron;
 
 /**
-	[Documentation](http://electron.atom.io/docs/api/structures/rectangle)
+	See: <http://electron.atom.io/docs/api/structures/rectangle>
 **/
 @:require(js, electron) typedef Rectangle = {
 	/**

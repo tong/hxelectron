@@ -1,7 +1,7 @@
 package electron;
 
 /**
-	[Documentation](http://electron.atom.io/docs/api/structures/task)
+	See: <http://electron.atom.io/docs/api/structures/task>
 **/
 @:require(js, electron) typedef Task = {
 	/**

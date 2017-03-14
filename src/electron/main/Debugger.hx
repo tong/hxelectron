@@ -3,7 +3,7 @@ package electron.main;
 /**
 	An alternate transport for Chrome's remote debugging protocol.
 
-	[Documentation](http://electron.atom.io/docs/api/debugger)
+	See: <http://electron.atom.io/docs/api/debugger>
 **/
 @:require(js, electron) @:jsRequire("electron", "Debugger") extern class Debugger extends js.node.events.EventEmitter<electron.main.Debugger> {
 	/**

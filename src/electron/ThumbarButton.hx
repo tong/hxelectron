@@ -1,7 +1,7 @@
 package electron;
 
 /**
-	[Documentation](http://electron.atom.io/docs/api/structures/thumbar-button)
+	See: <http://electron.atom.io/docs/api/structures/thumbar-button>
 **/
 @:require(js, electron) typedef ThumbarButton = {
 	/**

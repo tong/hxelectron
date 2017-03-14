@@ -1,7 +1,7 @@
 package electron;
 
 /**
-	[Documentation](http://electron.atom.io/docs/api/structures/shortcut-details)
+	See: <http://electron.atom.io/docs/api/structures/shortcut-details>
 **/
 @:require(js, electron) typedef ShortcutDetails = {
 	/**

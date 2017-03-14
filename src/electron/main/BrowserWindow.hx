@@ -3,7 +3,7 @@ package electron.main;
 /**
 	Create and control browser windows.
 
-	[Documentation](http://electron.atom.io/docs/api/browser-window)
+	See: <http://electron.atom.io/docs/api/browser-window>
 **/
 @:require(js, electron) @:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
 	/**
