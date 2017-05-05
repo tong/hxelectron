@@ -9,7 +9,7 @@ package electron.main;
 	/**
 		A MenuItem[] array containing the menu's items. Each Menu consists of multiple MenuItems and each MenuItem can have a submenu.
 	**/
-	var items : Array<MenuItem>;
+	var items : MenuItem;
 	function new():Void;
 	/**
 		Pops up this menu as a context menu in the browserWindow.
@@ -44,16 +44,16 @@ package electron.main;
 	**/
 	function insert(pos:Int, menuItem:MenuItem):Void;
 	/**
-		Sets menu as the application menu on macOS. On Windows and Linux, the menu will be set as each window's top menu. Note: This API has to be called after the ready event of app module.
+		Sets menu as the application menu on macOS. On Windows and Linux, the menu will be set as each window's top menu. Passing null will remove the menu bar on Windows and Linux but has no effect on macOS. Note: This API has to be called after the ready event of app module.
 	**/
 	static function setApplicationMenu(menu:Menu):Void;
 	static function getApplicationMenu():Menu;
 	/**
-		Sends the action to the first responder of application. This is used for emulating default Cocoa menu behaviors, usually you would just use the role property of MenuItem. See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.
+		Sends the action to the first responder of application. This is used for emulating default macOS menu behaviors. Usually you would just use the role property of a MenuItem. See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.
 	**/
 	static function sendActionToFirstResponder(action:String):Void;
 	/**
 		Generally, the template is just an array of options for constructing a MenuItem. The usage can be referenced above. You can also attach other fields to the element of the template and they will become properties of the constructed menu items.
 	**/
-	static function buildFromTemplate(template:Array<Dynamic>):Menu;
+	static function buildFromTemplate(template:MenuItemConstructorOptions):Menu;
 }

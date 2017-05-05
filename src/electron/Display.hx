@@ -21,11 +21,7 @@ package electron;
 	**/
 	var touchSupport : String;
 	var bounds : Rectangle;
-	var size : { @:optional
-	var height : Float; @:optional
-	var width : Float; };
+	var size : Size;
 	var workArea : Rectangle;
-	var workAreaSize : { @:optional
-	var height : Float; @:optional
-	var width : Float; };
+	var workAreaSize : Size;
 }

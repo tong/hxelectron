@@ -15,5 +15,5 @@ package electron;
 	/**
 		Array of objects if is or , otherwise it should be omitted.
 	**/
-	var items : Array<JumpListItem>;
+	var items : JumpListItem;
 }

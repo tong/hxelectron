@@ -38,7 +38,7 @@ package electron.main;
 		(optional)
 	**/
 	@:optional
-	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
+	var icon : Dynamic; /**
 		(optional)
 	**/
 	@:optional
@@ -50,9 +50,7 @@ package electron.main;
 	/**
 		Pops up the context menu of the tray icon. When menu is passed, the menu will be shown instead of the tray icon's context menu. The position is only available on Windows, and it is (0, 0) by default.
 	**/
-	function popUpContextMenu(?menu:Menu, ?position:{ @:optional
-	var x : Int; @:optional
-	var y : Int; }):Void;
+	function popUpContextMenu(?menu:Menu, ?position:Point):Void;
 	/**
 		Sets the context menu for this icon.
 	**/

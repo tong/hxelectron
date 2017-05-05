@@ -42,9 +42,10 @@ package electron;
 		Clears the clipboard content.
 	**/
 	static function clear(?type:String):Void;
-	static function availableFormats(?type:String):Array<String>;
-	static function has(data:String, ?type:String):Bool;
-	static function read(data:String, ?type:String):String;
+	static function availableFormats(?type:String):String;
+	static function has(format:String, ?type:String):Bool;
+	static function read(format:String):String;
+	static function readBuffer(format:String):js.node.Buffer;
 	/**
 		Writes data to the clipboard.
 	**/

@@ -11,11 +11,11 @@ package electron;
 	/**
 		Organization names
 	**/
-	var organizations : Array<String>;
+	var organizations : String;
 	/**
 		Organization Unit names
 	**/
-	var organizationUnits : Array<String>;
+	var organizationUnits : String;
 	/**
 		Locality
 	**/

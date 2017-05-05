@@ -35,7 +35,7 @@ package electron;
 	/**
 		Returns all uploaded crash reports. Each report contains the date and uploaded ID.
 	**/
-	static function getUploadedReports():Array<CrashReport>;
+	static function getUploadedReports():CrashReport;
 	/**
 		Note: This API can only be called from the main process.
 	**/

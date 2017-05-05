@@ -11,5 +11,5 @@ package electron;
 	/**
 		The actual Buffer content
 	**/
-	var buffer : js.node.Buffer;
+	var data : js.node.Buffer;
 }

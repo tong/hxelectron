@@ -10,9 +10,9 @@ package electron.renderer;
 		An array of Strings that lists the types of desktop sources to be captured, available types are and .
 	**/
 	@:optional
-	var types : Array<String>; /**
-		The suggested size that the media source thumbnail should be scaled to, defaults to .
+	var types : String; /**
+		The size that the media source thumbnail should be scaled to. Default is x .
 	**/
 	@:optional
-	var thumbnailSize : { }; }, callback:haxe.Constraints.Function):Void;
+	var thumbnailSize : Size; }, callback:haxe.Constraints.Function):Void;
 }

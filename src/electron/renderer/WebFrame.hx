@@ -72,7 +72,7 @@ package electron.renderer;
 	/**
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
 	**/
-	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):Void;
+	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Dynamic>;
 	/**
 		Returns an object describing usage information of Blink's internal memory caches. This will generate:
 	**/

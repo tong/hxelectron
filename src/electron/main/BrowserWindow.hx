@@ -106,7 +106,7 @@ package electron.main;
 		The window icon. On Windows it is recommended to use icons to get best visual effects, you can also leave it undefined so the executable's icon will be used.
 	**/
 	@:optional
-	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
+	var icon : Dynamic; /**
 		Whether window should be shown when created. Default is .
 	**/
 	@:optional
@@ -175,6 +175,10 @@ package electron.main;
 	**/
 	@:optional
 	var zoomToPageWidth : Bool; /**
+		Tab group name, allows opening the window as a native tab on macOS 10.12+. Windows with the same tabbing identifier will be grouped together.
+	**/
+	@:optional
+	var tabbingIdentifier : String; /**
 		Settings of web page's features.
 	**/
 	@:optional
@@ -187,10 +191,18 @@ package electron.main;
 	**/
 	@:optional
 	var nodeIntegration : Bool; /**
+		Whether node integration is enabled in web workers. Default is . More about this can be found in .
+	**/
+	@:optional
+	var nodeIntegrationInWorker : Bool; /**
 		Specifies a script that will be loaded before other scripts run in the page. This script will always have access to node APIs no matter whether node integration is turned on or off. The value should be the absolute file path to the script. When node integration is turned off, the preload script can reintroduce Node global symbols back to the global scope. See example .
 	**/
 	@:optional
 	var preload : String; /**
+		If set, this will sandbox the renderer associated with the window, making it compatible with the Chromium OS-level sandbox and disabling the Node.js engine. This is not the same as the option and the APIs available to the preload script are more limited. Read more about the option . This option is currently experimental and may change or be removed in future Electron releases.
+	**/
+	@:optional
+	var sandbox : Bool; /**
 		Sets the session used by the page. Instead of passing the Session object directly, you can also choose to use the option instead, which accepts a partition string. When both and are provided, will be preferred. Default is the default session.
 	**/
 	@:optional
@@ -307,10 +319,6 @@ package electron.main;
 	**/
 	@:optional
 	var offscreen : Bool; /**
-		Whether to enable Chromium OS-level sandbox.
-	**/
-	@:optional
-	var sandbox : Bool; /**
 		Whether to run Electron APIs and the specified script in a separate JavaScript context. Defaults to . The context that the script runs in will still have full access to the and globals but it will use its own set of JavaScript builtins (, , , etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the script and any Electron APIs being used. This option uses the same technique used by . You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab. This option is currently experimental and may change or be removed in future Electron releases.
 	**/
 	@:optional
@@ -348,7 +356,7 @@ package electron.main;
 	function isVisible():Bool;
 	function isModal():Bool;
 	/**
-		Maximizes the window.
+		Maximizes the window. This will also show (but not focus) the window if it isn't being displayed already.
 	**/
 	function maximize():Void;
 	/**
@@ -373,9 +381,7 @@ package electron.main;
 	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Just sum any extra width and height areas you have within the overall content view.
 	**/
-	function setAspectRatio(aspectRatio:Float, ?extraSize:{ @:optional
-	var width : Int; @:optional
-	var height : Int; }):Void;
+	function setAspectRatio(aspectRatio:Float, extraSize:Size):Void;
 	/**
 		Uses Quick Look to preview a file at a given path.
 	**/
@@ -398,22 +404,22 @@ package electron.main;
 		Resizes the window to width and height.
 	**/
 	function setSize(width:Int, height:Int, ?animate:Bool):Void;
-	function getSize():Array<Int>;
+	function getSize():Int;
 	/**
 		Resizes the window's client area (e.g. the web page) to width and height.
 	**/
 	function setContentSize(width:Int, height:Int, ?animate:Bool):Void;
-	function getContentSize():Array<Int>;
+	function getContentSize():Int;
 	/**
 		Sets the minimum size of window to width and height.
 	**/
 	function setMinimumSize(width:Int, height:Int):Void;
-	function getMinimumSize():Array<Int>;
+	function getMinimumSize():Int;
 	/**
 		Sets the maximum size of window to width and height.
 	**/
 	function setMaximumSize(width:Int, height:Int):Void;
-	function getMaximumSize():Array<Int>;
+	function getMaximumSize():Int;
 	/**
 		Sets whether the window can be manually resized by user.
 	**/
@@ -469,7 +475,7 @@ package electron.main;
 		Moves window to x and y.
 	**/
 	function setPosition(x:Int, y:Int, ?animate:Bool):Void;
-	function getPosition():Array<Int>;
+	function getPosition():Int;
 	/**
 		Changes the title of native window to title.
 	**/
@@ -544,10 +550,14 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; /**
-		[] (optional)
+		(optional)
 	**/
 	@:optional
-	var postData : haxe.extern.EitherType<electron.UploadRawData, haxe.extern.EitherType<electron.UploadFile, haxe.extern.EitherType<electron.UploadFileSystem, electron.UploadBlob>>>; }):Void;
+	var postData : Dynamic; /**
+		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified is a data url and needs to load other files.
+	**/
+	@:optional
+	var baseURLForDataURL : String; }):Void;
 	/**
 		Same as webContents.reload.
 	**/
@@ -579,7 +589,7 @@ package electron.main;
 	/**
 		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a Boolean object indicates whether the thumbnail has been added successfully. The number of buttons in thumbnail toolbar should be no greater than 7 due to the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be removed due to the platform's limitation. But you can call the API with an empty array to clean the buttons. The buttons is an array of Button objects: The flags is an array that can include following Strings:
 	**/
-	function setThumbarButtons(buttons:Array<ThumbarButton>):Bool;
+	function setThumbarButtons(buttons:ThumbarButton):Bool;
 	/**
 		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: {x: 0, y: 0, width: 0, height: 0}.
 	**/
@@ -655,7 +665,7 @@ package electron.main;
 	**/
 	function setParentWindow(parent:BrowserWindow):Void;
 	function getParentWindow():BrowserWindow;
-	function getChildWindows():Array<BrowserWindow>;
+	function getChildWindows():BrowserWindow;
 	/**
 		Controls whether to hide cursor when typing.
 	**/
@@ -664,7 +674,11 @@ package electron.main;
 		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
 	**/
 	function setVibrancy(type:String):Void;
-	static function getAllWindows():Array<BrowserWindow>;
+	/**
+		Sets the touchBar layout for the current window. Specifying null or undefined clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+. Note: The TouchBar API is currently experimental and may change or be removed in future Electron releases.
+	**/
+	function setTouchBar(touchBar:TouchBar):Void;
+	static function getAllWindows():BrowserWindow;
 	static function getFocusedWindow():BrowserWindow;
 	static function fromWebContents(webContents:WebContents):BrowserWindow;
 	static function fromId(id:Int):BrowserWindow;
@@ -722,7 +736,7 @@ package electron.main;
 	**/
 	var hide : String = "hide";
 	/**
-		Emitted when the web page has been rendered and window can be displayed without a visual flash.
+		Emitted when the web page has been rendered (while not being shown) and window can be displayed without a visual flash.
 	**/
 	var ready_to_show : String = "ready-to-show";
 	/**

@@ -45,7 +45,7 @@ package electron.main;
 		Note: The following methods are useful specifically to resume a cancelled item when session is restarted.
 	**/
 	function getState():String;
-	function getURLChain():Array<String>;
+	function getURLChain():String;
 	function getLastModifiedTime():String;
 	function getETag():String;
 	function getStartTime():Float;

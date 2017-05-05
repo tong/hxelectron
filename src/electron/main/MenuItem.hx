@@ -31,7 +31,7 @@ package electron.main;
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
-		Define the action of the menu item, when specified the property will be ignored.
+		Define the action of the menu item, when specified the property will be ignored. See .
 	**/
 	@:optional
 	var role : String; /**
@@ -48,7 +48,7 @@ package electron.main;
 	@:optional
 	var sublabel : String; @:optional
 	var accelerator : Accelerator; @:optional
-	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
+	var icon : Dynamic; /**
 		If false, the menu item will be greyed out and unclickable.
 	**/
 	@:optional
@@ -64,7 +64,7 @@ package electron.main;
 		Should be specified for type menu items. If is specified, the can be omitted. If the value is not a then it will be automatically converted to one using .
 	**/
 	@:optional
-	var submenu : haxe.extern.EitherType<Dynamic, electron.main.Menu>; /**
+	var submenu : Dynamic; /**
 		Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
 	**/
 	@:optional

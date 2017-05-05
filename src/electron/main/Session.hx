@@ -37,11 +37,11 @@ package electron.main;
 		The types of storages to clear, can contain: , , , , , , ,
 	**/
 	@:optional
-	var storages : Array<String>; /**
+	var storages : String; /**
 		The types of quotas to clear, can contain: , , .
 	**/
 	@:optional
-	var quotas : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
+	var quotas : String; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Writes any unwritten DOMStorage data to disk.
 	**/
@@ -127,7 +127,7 @@ package electron.main;
 		Complete URL chain for the download.
 	**/
 	@:optional
-	var urlChain : Array<String>; @:optional
+	var urlChain : String; @:optional
 	var mimeType : String; /**
 		Start range for the download.
 	**/
@@ -153,14 +153,6 @@ package electron.main;
 		Clears the session’s HTTP authentication cache.
 	**/
 	function clearAuthCache(options:Dynamic, ?callback:haxe.Constraints.Function):Void;
-	/**
-		If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. if there is no persist: prefix, the page will use an in-memory session. If the partition is empty then default session of the app will be returned. To create a Session with options, you have to ensure the Session with the partition has never been used before. There is no way to change the options of an existing Session object.
-	**/
-	static function fromPartition(partition:String, options:{ /**
-		Whether to enable cache.
-	**/
-	@:optional
-	var cache : Bool; }):Session;
 }
 
 /**

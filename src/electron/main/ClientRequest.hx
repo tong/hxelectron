@@ -12,11 +12,11 @@ package electron.main;
 	var chunkedEncoding : Bool;
 	function new(options:Dynamic):Void;
 	/**
-		Adds an extra HTTP header. The header name will issued as it is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error.
+		Adds an extra HTTP header. The header name will issued as it is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a String, its toString() method will be called to obtain the final value.
 	**/
-	function setHeader(name:String, value:String):Void;
+	function setHeader(name:String, value:Dynamic):Void;
 	/**
-		Returns String - The value of a previously set extra header name.
+		Returns Object - The value of a previously set extra header name.
 	**/
 	function getHeader(name:String):Void;
 	/**
@@ -35,6 +35,10 @@ package electron.main;
 		Cancels an ongoing HTTP transaction. If the request has already emitted the close event, the abort operation will have no effect. Otherwise an ongoing event will emit abort and close events. Additionally, if there is an ongoing response object,it will emit the aborted event.
 	**/
 	function abort():Void;
+	/**
+		Continues any deferred redirection request when the redirection mode is manual.
+	**/
+	function followRedirect():Void;
 }
 
 /**
@@ -61,4 +65,8 @@ package electron.main;
 		Emitted as the last event in the HTTP request-response transaction. The close event indicates that no more events will be emitted on either the request or response objects.
 	**/
 	var close : String = "close";
+	/**
+		Emitted when there is redirection and the mode is manual. Calling request.followRedirect will continue with the redirection.
+	**/
+	var redirect : String = "redirect";
 }

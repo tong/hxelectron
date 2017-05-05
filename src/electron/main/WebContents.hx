@@ -42,10 +42,14 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; /**
-		[] (optional)
+		(optional)
 	**/
 	@:optional
-	var postData : haxe.extern.EitherType<electron.UploadRawData, haxe.extern.EitherType<electron.UploadFile, haxe.extern.EitherType<electron.UploadFileSystem, electron.UploadBlob>>>; }):Void;
+	var postData : Dynamic; /**
+		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified is a data url and needs to load other files.
+	**/
+	@:optional
+	var baseURLForDataURL : String; }):Void;
 	/**
 		Initiates a download of the resource at url without navigating. The will-download event of session will be triggered.
 	**/
@@ -316,27 +320,11 @@ package electron.main;
 		Set the emulated screen size (screenPosition == mobile)
 	**/
 	@:optional
-	var screenSize : { /**
-		Set the emulated screen width
-	**/
-	@:optional
-	var width : Int; /**
-		Set the emulated screen height
-	**/
-	@:optional
-	var height : Int; }; /**
+	var screenSize : Size; /**
 		Position the view on the screen (screenPosition == mobile) (default: )
 	**/
 	@:optional
-	var viewPosition : { /**
-		Set the x axis offset from top left corner
-	**/
-	@:optional
-	var x : Int; /**
-		Set the y axis offset from top left corner
-	**/
-	@:optional
-	var y : Int; }; /**
+	var viewPosition : Point; /**
 		Set the device scale factor (if zero defaults to original device scale factor) (default: )
 	**/
 	@:optional
@@ -344,15 +332,7 @@ package electron.main;
 		Set the emulated view size (empty means no override)
 	**/
 	@:optional
-	var viewSize : { /**
-		Set the emulated view width
-	**/
-	@:optional
-	var width : Int; /**
-		Set the emulated view height
-	**/
-	@:optional
-	var height : Int; }; /**
+	var viewSize : Size; /**
 		Whether emulated view should be scaled down if necessary to fit into available space (default: )
 	**/
 	@:optional
@@ -360,15 +340,7 @@ package electron.main;
 		Offset of the emulated view inside available space (not in fit to view mode) (default: )
 	**/
 	@:optional
-	var offset : { /**
-		Set the x axis offset from top left corner
-	**/
-	@:optional
-	var x : Float; /**
-		Set the y axis offset from top left corner
-	**/
-	@:optional
-	var y : Float; }; /**
+	var offset : Point; /**
 		Scale of emulated view inside available space (not in fit to view mode) (default: )
 	**/
 	@:optional
@@ -388,7 +360,7 @@ package electron.main;
 		An array of modifiers of the event, can include , , , , , , , , , , , , .
 	**/
 	@:optional
-	var modifiers : Array<String>; }):Void;
+	var modifiers : String; }):Void;
 	/**
 		Begin subscribing for presentation events and captured frames, the callback will be called with callback(frameBuffer, dirtyRect) when there is a presentation event. The frameBuffer is a Buffer that contains raw pixel data. On most machines, the pixel data is effectively stored in 32bit BGRA format, but the actual representation depends on the endianness of the processor (most modern processors are little-endian, on machines with big-endian processors the data is in 32bit ARGB format). The dirtyRect is an object with x, y, width, height properties that describes which part of the page was repainted. If onlyDirty is set to true, frameBuffer will only contain the repainted area. onlyDirty defaults to false.
 	**/
@@ -443,6 +415,11 @@ package electron.main;
 		Schedules a full repaint of the window this web contents is in. If offscreen rendering is enabled invalidates the frame and generates a new one through the 'paint' event.
 	**/
 	function invalidate():Void;
+	function getWebRTCIPHandlingPolicy():String;
+	/**
+		Setting the WebRTC IP handling policy allows you to control which IPs are exposed via WebRTC.  See BrowserLeaks for more details.
+	**/
+	function setWebRTCIPHandlingPolicy(policy:String):Void;
 }
 
 /**
