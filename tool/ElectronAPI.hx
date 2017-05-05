@@ -93,18 +93,24 @@ class ElectronAPI {
 		for( item in api ) {
 			var ntypes = convertItem( item, pack );
 			for( ntype in ntypes ) {
-				switch item.type {
-				case Module:
-					for( otype in types ) {
-						if( ntype.name == otype.name &&
-							ntype.pack.join( '.' ) == otype.pack.join( '.' ) ) {
-								otype.fields = otype.fields.concat( ntype.fields );
-								ntypes.remove( ntype );
+				if( ntype == null ) {
+					ntypes.remove( ntype );
+				} else {
+					switch item.type {
+					case Module:
+						for( otype in types ) {
+							if( ntype.name == otype.name &&
+								ntype.pack.join( '.' ) == otype.pack.join( '.' ) ) {
+								ntype.fields = ntype.fields.concat( otype.fields );
+								//otype.fields = otype.fields.concat( ntype.fields );
+								//otype.meta = otype.meta.concat( ntype.meta );
+								//	ntypes.remove( ntype );
+								types.remove( otype );
 							}
 						}
-				case _:
+					case _:
+					}
 				}
-
 			}
 			types = types.concat( ntypes );
 		}
@@ -142,6 +148,7 @@ class ElectronAPI {
 			}
 		}
 
+		types.push( createAlias( 'MenuItemConstructorOptions', pack ) );
 		types.push( createAlias( 'Any', pack ) );
 		types.push( createTypeDefinition( pack, 'Accelerator', TDAbstract( macro:String, [macro:String], [macro:String] ) ) );
 
@@ -267,6 +274,9 @@ class ElectronAPI {
 
 	static function convertType( type : String, ?properties : Array<Dynamic> ) : ComplexType {
 
+		if( type == null )
+			return macro : Dynamic;
+
 		inline function isKnownType(type:String):Bool {
 			var known = ['Bool','Boolean','Buffer','Int','Integer','Dynamic','Double','Float','Number','Function','Object','Promise','String','URL'];
 			return known.indexOf(type) > -1;
@@ -312,75 +322,75 @@ class ElectronAPI {
 								types.push( macro:Dynamic );
 								break;
 							case _:
-								trace( type );
+								//trace( type );
+							}
+							if( types.length == 0 ) types.push( macro:Dynamic );
 						}
-						if( types.length == 0 ) types.push( macro:Dynamic );
 					}
 				}
-			}
 
-			var result = null;
+				var result = null;
 
-			if( types.length > 1 ) {
-				result = (macro:haxe.extern.EitherType);
-				var current = result;
-				for( i in 0...types.length ) {
-					var t = types[i];
-					switch current {
-					case TPath(c):
-						if( c.params.length >= 1 && i < types.length-1 ) {
-							t = TPath( { name: 'EitherType', pack: ['haxe', 'extern'], params: [ TPType(t) ] } );
+				if( types.length > 1 ) {
+					result = (macro:haxe.extern.EitherType);
+					var current = result;
+					for( i in 0...types.length ) {
+						var t = types[i];
+						switch current {
+						case TPath(c):
+							if( c.params.length >= 1 && i < types.length-1 ) {
+								t = TPath( { name: 'EitherType', pack: ['haxe', 'extern'], params: [ TPType(t) ] } );
+							}
+						case _:
 						}
-					case _:
+						switch current {
+						case TPath(c):
+							c.params.push( TPType( t ) );
+							if( c.params.length >= 2 ) current = t;
+						case _:
+						}
 					}
-					switch current {
-					case TPath(c):
-						c.params.push( TPType( t ) );
-						if( c.params.length >= 2 ) current = t;
-					case _:
-					}
+				} else {
+					result = types[0];
 				}
+
+				result;
+
 			} else {
-				result = types[0];
+				null;
 			}
 
-			result;
-
-		} else {
-			null;
-		}
-
-		var ctype = switch type {
-		case 'Blob': macro : js.html.Blob;
-		case 'Bool','Boolean': macro : Bool;
-		case 'Buffer': macro : js.node.Buffer;
-		case 'Int','Integer': macro : Int;
-		case 'Dynamic': macro : Dynamic; // allows to explicit set type to Dynamic
-		case 'Double','Float','Number': macro : Float;
-		case 'Function':
-			if( properties == null ) macro : haxe.Constraints.Function;
-			else {
-				//TODO
-				//for( p in properties ) {
-				TFunction(
-					[for(p in properties) convertType( p.type, p.properties )],
-					macro : Dynamic
-				);
-			}
-		case 'Object':
-			if( properties == null ) macro : Dynamic else {
-				TAnonymous( [for(p in properties){
-					name: escapeName( p.name ),
-					kind: FVar( convertType( '' + p.type, p.properties ) ),
-					meta: [ { name: ":optional", pos: pos } ], //TODO
-					pos: pos,
-					doc: p.description
-				}] );
-			}
-		case 'Promise': macro : js.Promise<Dynamic>;
-		case 'String','URL': macro : String;
-		case _ if (multiType != null): multiType;
-		default: TPath( { pack: [], name: escapeTypeName( type ) } );
+			var ctype = switch type {
+			case 'Blob': macro : js.html.Blob;
+			case 'Bool','Boolean': macro : Bool;
+			case 'Buffer': macro : js.node.Buffer;
+			case 'Int','Integer': macro : Int;
+			case 'Dynamic': macro : Dynamic; // allows to explicit set type to Dynamic
+			case 'Double','Float','Number': macro : Float;
+			case 'Function':
+				if( properties == null ) macro : haxe.Constraints.Function;
+				else {
+					//TODO
+					//for( p in properties ) {
+					TFunction(
+						[for(p in properties) convertType( p.type, p.properties )],
+						macro : Dynamic
+					);
+				}
+			case 'Object':
+				if( properties == null ) macro : Dynamic else {
+					TAnonymous( [for(p in properties){
+						name: escapeName( p.name ),
+						kind: FVar( convertType( '' + p.type, p.properties ) ),
+						meta: [ { name: ":optional", pos: pos } ], //TODO
+						pos: pos,
+						doc: p.description
+					}] );
+				}
+			case 'Promise': macro : js.Promise<Dynamic>;
+			case 'String','URL': macro : String;
+			case _ if (multiType != null): multiType;
+			default: TPath( { pack: [], name: escapeTypeName( type ) } );
 		}
 
 		return if( !isArray ) ctype else switch ctype {

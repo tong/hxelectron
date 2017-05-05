@@ -2,5 +2,5 @@
 -main Run
 -cp tool/
 -dce full
-#--no-traces
+--no-traces
 #-debug
