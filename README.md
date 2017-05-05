@@ -10,7 +10,7 @@ using JavaScript, HTML and CSS based on [Node.js](https://nodejs.org/) and
 [Chromium](http://www.chromium.org).
 
 
-## Auto Type Generation
+## Generate Type Definitions
 
 All type definitions are auto generated from [electron-api.json](electron-api.json) into the [src/](src/) directory.  
 To (re)generate type definitions using another electron version run:
