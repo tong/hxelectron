@@ -24,6 +24,9 @@ haxelib run electron <path/to/your/electron-api.json>
 Spin up the demo application to see electron in action:
 
 ```sh
+## Make sure you have Electron installed (you only need to do this once)
+npm install -g electron
+
 ## Clone repository
 git clone https://github.com/fponticelli/hxelectron
 cd hxelectron/
