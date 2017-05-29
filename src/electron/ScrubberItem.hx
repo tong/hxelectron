@@ -5,11 +5,11 @@ package electron;
 **/
 @:require(js, electron) typedef ScrubberItem = {
 	/**
-		(Optional) The text to appear in this item
+		The text to appear in this item
 	**/
 	var label : String;
 	/**
-		(Optional) The image to appear in this item
+		The image to appear in this item
 	**/
 	var icon : NativeImage;
 }

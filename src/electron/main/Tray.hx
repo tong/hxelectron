@@ -34,18 +34,9 @@ package electron.main;
 	/**
 		Displays a tray balloon.
 	**/
-	function displayBalloon(options:{ /**
-		(optional)
-	**/
-	@:optional
-	var icon : Dynamic; /**
-		(optional)
-	**/
-	@:optional
-	var title : String; /**
-		(optional)
-	**/
-	@:optional
+	function displayBalloon(options:{ @:optional
+	var icon : Dynamic; @:optional
+	var title : String; @:optional
 	var content : String; }):Void;
 	/**
 		Pops up the context menu of the tray icon. When menu is passed, the menu will be shown instead of the tray icon's context menu. The position is only available on Windows, and it is (0, 0) by default.

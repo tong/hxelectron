@@ -23,29 +23,23 @@ package electron.main;
 	**/
 	var label : String;
 	/**
-		A Function that is fired when the MenuItem recieves a click event
+		A Function that is fired when the MenuItem receives a click event
 	**/
 	var click : haxe.Constraints.Function;
 	function new(options:{ /**
-		Will be called with when the menu item is clicked.
+		Will be called with click(menuItem, browserWindow, event) when the menu item is clicked.
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
-		Define the action of the menu item, when specified the property will be ignored. See .
+		Define the action of the menu item, when specified the click property will be ignored. See .
 	**/
 	@:optional
 	var role : String; /**
-		Can be , , , or .
+		Can be normal, separator, submenu, checkbox or radio.
 	**/
 	@:optional
-	var type : String; /**
-		(optional)
-	**/
-	@:optional
-	var label : String; /**
-		(optional)
-	**/
-	@:optional
+	var type : String; @:optional
+	var label : String; @:optional
 	var sublabel : String; @:optional
 	var accelerator : Accelerator; @:optional
 	var icon : Dynamic; /**
@@ -57,11 +51,11 @@ package electron.main;
 	**/
 	@:optional
 	var visible : Bool; /**
-		Should only be specified for or type menu items.
+		Should only be specified for checkbox or radio type menu items.
 	**/
 	@:optional
 	var checked : Bool; /**
-		Should be specified for type menu items. If is specified, the can be omitted. If the value is not a then it will be automatically converted to one using .
+		Should be specified for submenu type menu items. If submenu is specified, the type: 'submenu' can be omitted. If the value is not a Menu then it will be automatically converted to one using Menu.buildFromTemplate.
 	**/
 	@:optional
 	var submenu : Dynamic; /**

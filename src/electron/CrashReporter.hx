@@ -12,15 +12,15 @@ package electron;
 	**/
 	@:optional
 	var submitURL : String; /**
-		Defaults to .
+		Defaults to app.getName().
 	**/
 	@:optional
 	var productName : String; /**
-		Whether crash reports should be sent to the server Default is .
+		Whether crash reports should be sent to the server Default is true.
 	**/
 	@:optional
 	var uploadToServer : Bool; /**
-		Default is .
+		Default is false.
 	**/
 	@:optional
 	var ignoreSystemCrashHandler : Bool; /**

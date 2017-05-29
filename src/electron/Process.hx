@@ -55,4 +55,6 @@ package electron;
 	**/
 	@:optional
 	var swapFree : Int; };
+	static function getCPUUsage(CPUUsage:CPUUsage):Void;
+	static function getIOCounters(IOCounters:IOCounters):Void;
 }

@@ -17,7 +17,7 @@ package electron;
 	**/
 	var scaleFactor : Float;
 	/**
-		Can be , , .
+		Can be available, unavailable, unknown.
 	**/
 	var touchSupport : String;
 	var bounds : Rectangle;

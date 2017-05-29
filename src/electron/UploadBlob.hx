@@ -5,7 +5,7 @@ package electron;
 **/
 @:require(js, electron) typedef UploadBlob = {
 	/**
-		.
+		blob.
 	**/
 	var type : String;
 	/**

@@ -54,7 +54,7 @@ package electron;
 	var html : String; @:optional
 	var image : NativeImage; @:optional
 	var rtf : String; /**
-		The title of the url at .
+		The title of the url at text.
 	**/
 	@:optional
 	var bookmark : String; }, ?type:String):Void;

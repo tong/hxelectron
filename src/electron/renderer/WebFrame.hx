@@ -29,7 +29,7 @@ package electron.renderer;
 		Sets a provider for spell checking in input fields and text areas. The provider must be an object that has a spellCheck method that returns whether the word passed is correctly spelled. An example of using node-spellchecker as provider:
 	**/
 	static function setSpellCheckProvider(language:String, autoCorrectWord:Bool, provider:{ /**
-		Returns
+		Returns Boolean
 	**/
 	@:optional
 	var spellCheck : haxe.Constraints.Function; }):Void;
@@ -45,23 +45,23 @@ package electron.renderer;
 		Registers the scheme as secure, bypasses content security policy for resources, allows registering ServiceWorker and supports fetch API. Specify an option with the value of false to omit it from the registration. An example of registering a privileged scheme, without bypassing Content Security Policy:
 	**/
 	static function registerURLSchemeAsPrivileged(scheme:String, ?options:{ /**
-		(optional) Default true.
+		Default true.
 	**/
 	@:optional
 	var secure : Bool; /**
-		(optional) Default true.
+		Default true.
 	**/
 	@:optional
 	var bypassCSP : Bool; /**
-		(optional) Default true.
+		Default true.
 	**/
 	@:optional
 	var allowServiceWorkers : Bool; /**
-		(optional) Default true.
+		Default true.
 	**/
 	@:optional
 	var supportFetchAPI : Bool; /**
-		(optional) Default true.
+		Default true.
 	**/
 	@:optional
 	var corsEnabled : Bool; }):Void;

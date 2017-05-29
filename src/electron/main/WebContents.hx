@@ -41,12 +41,9 @@ package electron.main;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; /**
-		(optional)
-	**/
-	@:optional
+	var extraHeaders : String; @:optional
 	var postData : Dynamic; /**
-		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified is a data url and needs to load other files.
+		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
 	var baseURLForDataURL : String; }):Void;
@@ -199,23 +196,23 @@ package electron.main;
 		Starts a request to find all matches for the text in the web page and returns an Integer representing the request id used for the request. The result of the request can be obtained by subscribing to found-in-page event.
 	**/
 	function findInPage(text:String, ?options:{ /**
-		(optional) Whether to search forward or backward, defaults to .
+		Whether to search forward or backward, defaults to true.
 	**/
 	@:optional
 	var forward : Bool; /**
-		(optional) Whether the operation is first request or a follow up, defaults to .
+		Whether the operation is first request or a follow up, defaults to false.
 	**/
 	@:optional
 	var findNext : Bool; /**
-		(optional) Whether search should be case-sensitive, defaults to .
+		Whether search should be case-sensitive, defaults to false.
 	**/
 	@:optional
 	var matchCase : Bool; /**
-		(optional) Whether to look only at the start of words. defaults to .
+		Whether to look only at the start of words. defaults to false.
 	**/
 	@:optional
 	var wordStart : Bool; /**
-		(optional) When combined with , accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to .
+		When combined with wordStart, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to false.
 	**/
 	@:optional
 	var medialCapitalAsWordStart : Bool; }):Void;
@@ -239,11 +236,11 @@ package electron.main;
 		Prints window's web page. When silent is set to true, Electron will pick up system's default printer and default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({silent: false, printBackground: false}). Use page-break-before: always; CSS style to force to print to a new page.
 	**/
 	function print(?options:{ /**
-		Don't ask user for print settings. Default is .
+		Don't ask user for print settings. Default is false.
 	**/
 	@:optional
 	var silent : Bool; /**
-		Also prints the background color and image of the web page. Default is .
+		Also prints the background color and image of the web page. Default is false.
 	**/
 	@:optional
 	var printBackground : Bool; }):Void;
@@ -251,23 +248,23 @@ package electron.main;
 		Prints window's web page as PDF with Chromium's preview printing custom settings. The callback will be called with callback(error, data) on completion. The data is a Buffer that contains the generated PDF data. The landscape will be ignored if @page CSS at-rule is used in the web page. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
 	**/
 	function printToPDF(options:{ /**
-		(optional) Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
 	**/
 	@:optional
 	var marginsType : Int; /**
-		(optional) Specify page size of the generated PDF. Can be , , , , , or an Object containing and in microns.
+		Specify page size of the generated PDF. Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns.
 	**/
 	@:optional
 	var pageSize : String; /**
-		(optional) Whether to print CSS backgrounds.
+		Whether to print CSS backgrounds.
 	**/
 	@:optional
 	var printBackground : Bool; /**
-		(optional) Whether to print selection only.
+		Whether to print selection only.
 	**/
 	@:optional
 	var printSelectionOnly : Bool; /**
-		(optional) for landscape, for portrait.
+		true for landscape, false for portrait.
 	**/
 	@:optional
 	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
@@ -283,7 +280,7 @@ package electron.main;
 		Opens the devtools.
 	**/
 	function openDevTools(?options:{ /**
-		Opens the devtools with specified dock state, can be , , , . Defaults to last used dock state. In mode it's possible to dock back. In mode it's not.
+		Opens the devtools with specified dock state, can be right, bottom, undocked, detach. Defaults to last used dock state. In undocked mode it's possible to dock back. In detach mode it's not.
 	**/
 	@:optional
 	var mode : String; }):Void;
@@ -313,7 +310,7 @@ package electron.main;
 		Enable device emulation with the given parameters.
 	**/
 	function enableDeviceEmulation(parameters:{ /**
-		Specify the screen type to emulate (default: )
+		Specify the screen type to emulate (default: desktop)
 	**/
 	@:optional
 	var screenPosition : String; /**
@@ -321,11 +318,11 @@ package electron.main;
 	**/
 	@:optional
 	var screenSize : Size; /**
-		Position the view on the screen (screenPosition == mobile) (default: )
+		Position the view on the screen (screenPosition == mobile) (default: {x: 0, y: 0})
 	**/
 	@:optional
 	var viewPosition : Point; /**
-		Set the device scale factor (if zero defaults to original device scale factor) (default: )
+		Set the device scale factor (if zero defaults to original device scale factor) (default: 0)
 	**/
 	@:optional
 	var deviceScaleFactor : Int; /**
@@ -333,15 +330,15 @@ package electron.main;
 	**/
 	@:optional
 	var viewSize : Size; /**
-		Whether emulated view should be scaled down if necessary to fit into available space (default: )
+		Whether emulated view should be scaled down if necessary to fit into available space (default: false)
 	**/
 	@:optional
 	var fitToView : Bool; /**
-		Offset of the emulated view inside available space (not in fit to view mode) (default: )
+		Offset of the emulated view inside available space (not in fit to view mode) (default: {x: 0, y: 0})
 	**/
 	@:optional
 	var offset : Point; /**
-		Scale of emulated view inside available space (not in fit to view mode) (default: )
+		Scale of emulated view inside available space (not in fit to view mode) (default: 1)
 	**/
 	@:optional
 	var scale : Float; }):Void;
@@ -353,11 +350,11 @@ package electron.main;
 		Sends an input event to the page. For keyboard events, the event object also have following properties: For mouse events, the event object also have following properties: For the mouseWheel event, the event object also have following properties:
 	**/
 	function sendInputEvent(event:{ /**
-		() The type of the event, can be , , , , , , , , , .
+		() The type of the event, can be mouseDown, mouseUp, mouseEnter, mouseLeave, contextMenu, mouseWheel, mouseMove, keyDown, keyUp, char.
 	**/
 	@:optional
 	var type : String; /**
-		An array of modifiers of the event, can include , , , , , , , , , , , , .
+		An array of modifiers of the event, can include shift, control, alt, meta, isKeypad, isAutoRepeat, leftButtonDown, middleButtonDown, rightButtonDown, capsLock, numLock, left, right.
 	**/
 	@:optional
 	var modifiers : String; }):Void;
@@ -373,7 +370,7 @@ package electron.main;
 		Sets the item as dragging item for current drag-drop operation, file is the absolute path of the file to be dragged, and icon is the image showing under the cursor when dragging.
 	**/
 	function startDrag(item:{ /**
-		or Array The path(s) to the file(s) being dragged.
+		or files Array The path(s) to the file(s) being dragged.
 	**/
 	@:optional
 	var file : String; /**

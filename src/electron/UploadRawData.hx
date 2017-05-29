@@ -5,7 +5,7 @@ package electron;
 **/
 @:require(js, electron) typedef UploadRawData = {
 	/**
-		.
+		rawData.
 	**/
 	var type : String;
 	/**

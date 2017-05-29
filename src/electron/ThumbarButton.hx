@@ -14,7 +14,7 @@ package electron;
 	**/
 	var tooltip : String;
 	/**
-		Control specific states and behaviors of the button. By default, it is .
+		Control specific states and behaviors of the button. By default, it is ['enabled'].
 	**/
 	var flags : String;
 }

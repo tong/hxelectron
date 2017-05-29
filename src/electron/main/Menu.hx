@@ -19,11 +19,11 @@ package electron.main;
 	**/
 	@:optional
 	var x : Float; /**
-		( if is used) Default is the current mouse cursor position.
+		( if x is used) Default is the current mouse cursor position.
 	**/
 	@:optional
 	var y : Float; /**
-		Set to to have this method return immediately called, to return after the menu has been selected or closed. Defaults to .
+		Set to true to have this method return immediately called, false to return after the menu has been selected or closed. Defaults to false.
 	**/
 	@:optional
 	var async : Bool; /**
@@ -47,6 +47,9 @@ package electron.main;
 		Sets menu as the application menu on macOS. On Windows and Linux, the menu will be set as each window's top menu. Passing null will remove the menu bar on Windows and Linux but has no effect on macOS. Note: This API has to be called after the ready event of app module.
 	**/
 	static function setApplicationMenu(menu:Menu):Void;
+	/**
+		Note: The returned Menu instance doesn't support dynamic addition or removal of menu items. Instance properties can still be dynamically modified.
+	**/
 	static function getApplicationMenu():Menu;
 	/**
 		Sends the action to the first responder of application. This is used for emulating default macOS menu behaviors. Usually you would just use the role property of a MenuItem. See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.

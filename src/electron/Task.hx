@@ -5,11 +5,11 @@ package electron;
 **/
 @:require(js, electron) typedef Task = {
 	/**
-		Path of the program to execute, usually you should specify which opens the current program.
+		Path of the program to execute, usually you should specify process.execPath which opens the current program.
 	**/
 	var program : String;
 	/**
-		The command line arguments when is executed.
+		The command line arguments when program is executed.
 	**/
 	var arguments : String;
 	/**
@@ -21,7 +21,7 @@ package electron;
 	**/
 	var description : String;
 	/**
-		The absolute path to an icon to be displayed in a JumpList, which can be an arbitrary resource file that contains an icon. You can usually specify to show the icon of the program.
+		The absolute path to an icon to be displayed in a JumpList, which can be an arbitrary resource file that contains an icon. You can usually specify process.execPath to show the icon of the program.
 	**/
 	var iconPath : String;
 	/**

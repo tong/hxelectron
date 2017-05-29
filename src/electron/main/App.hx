@@ -14,10 +14,7 @@ package electron.main;
 	/**
 		Relaunches the app when current instance exits. By default the new instance will use the same working directory and command line arguments with current instance. When args is specified, the args will be passed as command line arguments instead. When execPath is specified, the execPath will be executed for relaunch instead of current app. Note that this method does not quit the app when executed, you have to call app.quit or app.exit after calling app.relaunch to make the app restart. When app.relaunch is called for multiple times, multiple instances will be started after current instance exited. An example of restarting current instance immediately and adding a new command line argument to the new instance:
 	**/
-	static function relaunch(?options:{ /**
-		(optional)
-	**/
-	@:optional
+	static function relaunch(?options:{ @:optional
 	var args : String; @:optional
 	var execPath : String; }):Void;
 	static function isReady():Bool;
@@ -89,7 +86,7 @@ package electron.main;
 	**/
 	@:optional
 	var minItems : Int; /**
-		Array of objects that correspond to items that the user has explicitly removed from custom categories in the Jump List. These items must not be re-added to the Jump List in the call to , Windows will not display any custom category that contains any of the removed items.
+		Array of JumpListItem objects that correspond to items that the user has explicitly removed from custom categories in the Jump List. These items must not be re-added to the Jump List in the call to app.setJumpList(), Windows will not display any custom category that contains any of the removed items.
 	**/
 	@:optional
 	var removedItems : JumpListItem; };
@@ -100,7 +97,7 @@ package electron.main;
 	/**
 		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. callback will be called with callback(argv, workingDirectory) when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. The callback is guaranteed to be executed after the ready event of app gets emitted. This method returns false if your process is the primary instance of the application and your app should continue loading. And returns true if your process has sent its parameters to another instance, and you should immediately quit. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
 	**/
-	static function makeSingleInstance(callback:haxe.Constraints.Function):Void;
+	static function makeSingleInstance(callback:haxe.Constraints.Function):Bool;
 	/**
 		Releases all locks that were created by makeSingleInstance. This will allow multiple instances of the application to once again run side by side.
 	**/
@@ -131,6 +128,10 @@ package electron.main;
 	**/
 	static function disableHardwareAcceleration():Void;
 	/**
+		Returns ProcessMemoryInfo[]:  Array of ProcessMemoryInfo objects that correspond to memory usage statistics of all the processes associated with the app.
+	**/
+	static function getAppMemoryInfo():Void;
+	/**
 		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the existence of a .desktop file to work, for more information please read Desktop Environment Integration.
 	**/
 	static function setBadgeCount(count:Int):Bool;
@@ -140,7 +141,7 @@ package electron.main;
 		If you provided path and args options to app.setLoginItemSettings then you need to pass the same arguments here for openAtLogin to be set correctly. Note: This API has no effect on MAS builds.
 	**/
 	static function getLoginItemSettings(?options:{ /**
-		The executable path to compare against. Defaults to .
+		The executable path to compare against. Defaults to process.execPath.
 	**/
 	@:optional
 	var path : String; /**
@@ -149,7 +150,7 @@ package electron.main;
 	@:optional
 	var args : String; }):{ @:optional
 	var options : { /**
-		The executable path to compare against. Defaults to .
+		The executable path to compare against. Defaults to process.execPath.
 	**/
 	@:optional
 	var path : String; /**
@@ -157,23 +158,23 @@ package electron.main;
 	**/
 	@:optional
 	var args : String; }; /**
-		if the app is set to open at login.
+		true if the app is set to open at login.
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		if the app is set to open as hidden at login. This setting is only supported on macOS.
+		true if the app is set to open as hidden at login. This setting is only supported on macOS.
 	**/
 	@:optional
 	var openAsHidden : Bool; /**
-		if the app was opened at login automatically. This setting is only supported on macOS.
+		true if the app was opened at login automatically. This setting is only supported on macOS.
 	**/
 	@:optional
 	var wasOpenedAtLogin : Bool; /**
-		if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is only supported on macOS.
+		true if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is only supported on macOS.
 	**/
 	@:optional
 	var wasOpenedAsHidden : Bool; /**
-		if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is only supported on macOS.
+		true if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is only supported on macOS.
 	**/
 	@:optional
 	var restoreState : Bool; };
@@ -181,11 +182,11 @@ package electron.main;
 		Set the app's login item settings. To work with Electron's autoUpdater on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example: Note: This API has no effect on MAS builds.
 	**/
 	static function setLoginItemSettings(settings:{ /**
-		to open the app at login, to remove the app as a login item. Defaults to .
+		true to open the app at login, false to remove the app as a login item. Defaults to false.
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		to open the app as hidden. Defaults to . The user can edit this setting from the System Preferences so should be checked when the app is opened to know the current value. This setting is only supported on macOS.
+		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemStatus().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is only supported on macOS.
 	**/
 	@:optional
 	var openAsHidden : Bool; }, ?path:String, ?args:String):Void;

@@ -15,7 +15,7 @@ package electron.main;
 	**/
 	var webRequest : WebRequest;
 	/**
-		A Protocol object (an instance of protocol module) for this session.
+		A Protocol object for this session.
 	**/
 	var protocol : Protocol;
 	/**
@@ -30,15 +30,15 @@ package electron.main;
 		Clears the data of web storages.
 	**/
 	function clearStorageData(?options:{ /**
-		Should follow ’s representation .
+		Should follow window.location.origin’s representation scheme://host:port.
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can contain: , , , , , , ,
+		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers
 	**/
 	@:optional
 	var storages : String; /**
-		The types of quotas to clear, can contain: , , .
+		The types of quotas to clear, can contain: temporary, persistent, syncable.
 	**/
 	@:optional
 	var quotas : String; }, ?callback:haxe.Constraints.Function):Void;

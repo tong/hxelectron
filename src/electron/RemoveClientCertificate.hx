@@ -5,7 +5,7 @@ package electron;
 **/
 @:require(js, electron) typedef RemoveClientCertificate = {
 	/**
-		.
+		clientCertificate.
 	**/
 	var type : String;
 	/**

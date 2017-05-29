@@ -5,7 +5,7 @@ package electron;
 **/
 @:require(js, electron) typedef RemovePassword = {
 	/**
-		.
+		password.
 	**/
 	var type : String;
 	/**
@@ -13,19 +13,19 @@ package electron;
 	**/
 	var origin : String;
 	/**
-		Scheme of the authentication. Can be , , , . Must be provided if removing by .
+		Scheme of the authentication. Can be basic, digest, ntlm, negotiate. Must be provided if removing by origin.
 	**/
 	var scheme : String;
 	/**
-		Realm of the authentication. Must be provided if removing by .
+		Realm of the authentication. Must be provided if removing by origin.
 	**/
 	var realm : String;
 	/**
-		Credentials of the authentication. Must be provided if removing by .
+		Credentials of the authentication. Must be provided if removing by origin.
 	**/
 	var username : String;
 	/**
-		Credentials of the authentication. Must be provided if removing by .
+		Credentials of the authentication. Must be provided if removing by origin.
 	**/
 	var password : String;
 }

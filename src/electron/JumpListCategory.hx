@@ -9,11 +9,11 @@ package electron;
 	**/
 	var type : String;
 	/**
-		Must be set if is , otherwise it should be omitted.
+		Must be set if type is custom, otherwise it should be omitted.
 	**/
 	var name : String;
 	/**
-		Array of objects if is or , otherwise it should be omitted.
+		Array of objects if type is tasks or custom, otherwise it should be omitted.
 	**/
 	var items : JumpListItem;
 }

@@ -5,35 +5,7 @@ package electron;
 
 	See: <http://electron.atom.io/docs/api/native-image>
 **/
-@:require(js, electron) @:jsRequire("electron", "nativeImage") extern class NativeImage {
-	/**
-		Creates an empty NativeImage instance.
-	**/
-	static function createEmpty():NativeImage;
-	/**
-		Creates a new NativeImage instance from a file located at path. This method returns an empty image if the path does not exist, cannot be read, or is not a valid image.
-	**/
-	static function createFromPath(path:String):NativeImage;
-	/**
-		Creates a new NativeImage instance from buffer.
-	**/
-	static function createFromBuffer(buffer:js.node.Buffer, ?options:{ /**
-		Required for bitmap buffers.
-	**/
-	@:optional
-	var width : Int; /**
-		Required for bitmap buffers.
-	**/
-	@:optional
-	var height : Int; /**
-		Defaults to 1.0.
-	**/
-	@:optional
-	var scaleFactor : Float; }):NativeImage;
-	/**
-		Creates a new NativeImage instance from dataURL.
-	**/
-	static function createFromDataURL(dataURL:String):Void;
+@:require(js, electron) @:jsRequire("electron", "NativeImage") extern class NativeImage {
 	function toPNG(?options:{ /**
 		Defaults to 1.0.
 	**/
@@ -82,7 +54,7 @@ package electron;
 	**/
 	@:optional
 	var height : Int; /**
-		The desired quality of the resize image. Possible values are , or . The default is . These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
+		The desired quality of the resize image. Possible values are good, better or best. The default is best. These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
 	**/
 	@:optional
 	var quality : String; }):NativeImage;
@@ -95,11 +67,11 @@ package electron;
 	**/
 	@:optional
 	var scaleFactor : Float; /**
-		Defaults to 0. Required if a bitmap buffer is specified as .
+		Defaults to 0. Required if a bitmap buffer is specified as buffer.
 	**/
 	@:optional
 	var width : Int; /**
-		Defaults to 0. Required if a bitmap buffer is specified as .
+		Defaults to 0. Required if a bitmap buffer is specified as buffer.
 	**/
 	@:optional
 	var height : Int; /**

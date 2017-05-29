@@ -15,11 +15,11 @@ package electron.main;
 	**/
 	var id : Int;
 	function new(?options:{ /**
-		Window's width in pixels. Default is .
+		Window's width in pixels. Default is 800.
 	**/
 	@:optional
 	var width : Int; /**
-		Window's height in pixels. Default is .
+		Window's height in pixels. Default is 600.
 	**/
 	@:optional
 	var height : Int; /**
@@ -31,7 +31,7 @@ package electron.main;
 	**/
 	@:optional
 	var y : Int; /**
-		The and would be used as web page's size, which means the actual window's size will include window frame's size and be slightly larger. Default is .
+		The width and height would be used as web page's size, which means the actual window's size will include window frame's size and be slightly larger. Default is false.
 	**/
 	@:optional
 	var useContentSize : Bool; /**
@@ -39,11 +39,11 @@ package electron.main;
 	**/
 	@:optional
 	var center : Bool; /**
-		Window's minimum width. Default is .
+		Window's minimum width. Default is 0.
 	**/
 	@:optional
 	var minWidth : Int; /**
-		Window's minimum height. Default is .
+		Window's minimum height. Default is 0.
 	**/
 	@:optional
 	var minHeight : Int; /**
@@ -55,103 +55,103 @@ package electron.main;
 	**/
 	@:optional
 	var maxHeight : Int; /**
-		Whether window is resizable. Default is .
+		Whether window is resizable. Default is true.
 	**/
 	@:optional
 	var resizable : Bool; /**
-		Whether window is movable. This is not implemented on Linux. Default is .
+		Whether window is movable. This is not implemented on Linux. Default is true.
 	**/
 	@:optional
 	var movable : Bool; /**
-		Whether window is minimizable. This is not implemented on Linux. Default is .
+		Whether window is minimizable. This is not implemented on Linux. Default is true.
 	**/
 	@:optional
 	var minimizable : Bool; /**
-		Whether window is maximizable. This is not implemented on Linux. Default is .
+		Whether window is maximizable. This is not implemented on Linux. Default is true.
 	**/
 	@:optional
 	var maximizable : Bool; /**
-		Whether window is closable. This is not implemented on Linux. Default is .
+		Whether window is closable. This is not implemented on Linux. Default is true.
 	**/
 	@:optional
 	var closable : Bool; /**
-		Whether the window can be focused. Default is . On Windows setting also implies setting . On Linux setting makes the window stop interacting with wm, so the window will always stay on top in all workspaces.
+		Whether the window can be focused. Default is true. On Windows setting focusable: false also implies setting skipTaskbar: true. On Linux setting focusable: false makes the window stop interacting with wm, so the window will always stay on top in all workspaces.
 	**/
 	@:optional
 	var focusable : Bool; /**
-		Whether the window should always stay on top of other windows. Default is .
+		Whether the window should always stay on top of other windows. Default is false.
 	**/
 	@:optional
 	var alwaysOnTop : Bool; /**
-		Whether the window should show in fullscreen. When explicitly set to the fullscreen button will be hidden or disabled on macOS. Default is .
+		Whether the window should show in fullscreen. When explicitly set to false the fullscreen button will be hidden or disabled on macOS. Default is false.
 	**/
 	@:optional
 	var fullscreen : Bool; /**
-		Whether the window can be put into fullscreen mode. On macOS, also whether the maximize/zoom button should toggle full screen mode or maximize window. Default is .
+		Whether the window can be put into fullscreen mode. On macOS, also whether the maximize/zoom button should toggle full screen mode or maximize window. Default is true.
 	**/
 	@:optional
 	var fullscreenable : Bool; /**
-		Whether to show the window in taskbar. Default is .
+		Whether to show the window in taskbar. Default is false.
 	**/
 	@:optional
 	var skipTaskbar : Bool; /**
-		The kiosk mode. Default is .
+		The kiosk mode. Default is false.
 	**/
 	@:optional
 	var kiosk : Bool; /**
-		Default window title. Default is .
+		Default window title. Default is "Electron".
 	**/
 	@:optional
 	var title : String; /**
-		The window icon. On Windows it is recommended to use icons to get best visual effects, you can also leave it undefined so the executable's icon will be used.
+		The window icon. On Windows it is recommended to use ICO icons to get best visual effects, you can also leave it undefined so the executable's icon will be used.
 	**/
 	@:optional
 	var icon : Dynamic; /**
-		Whether window should be shown when created. Default is .
+		Whether window should be shown when created. Default is true.
 	**/
 	@:optional
 	var show : Bool; /**
-		Specify to create a . Default is .
+		Specify false to create a . Default is true.
 	**/
 	@:optional
 	var frame : Bool; /**
-		Specify parent window. Default is .
+		Specify parent window. Default is null.
 	**/
 	@:optional
 	var parent : BrowserWindow; /**
-		Whether this is a modal window. This only works when the window is a child window. Default is .
+		Whether this is a modal window. This only works when the window is a child window. Default is false.
 	**/
 	@:optional
 	var modal : Bool; /**
-		Whether the web view accepts a single mouse-down event that simultaneously activates the window. Default is .
+		Whether the web view accepts a single mouse-down event that simultaneously activates the window. Default is false.
 	**/
 	@:optional
 	var acceptFirstMouse : Bool; /**
-		Whether to hide cursor when typing. Default is .
+		Whether to hide cursor when typing. Default is false.
 	**/
 	@:optional
 	var disableAutoHideCursor : Bool; /**
-		Auto hide the menu bar unless the key is pressed. Default is .
+		Auto hide the menu bar unless the Alt key is pressed. Default is false.
 	**/
 	@:optional
 	var autoHideMenuBar : Bool; /**
-		Enable the window to be resized larger than screen. Default is .
+		Enable the window to be resized larger than screen. Default is false.
 	**/
 	@:optional
 	var enableLargerThanScreen : Bool; /**
-		Window's background color as Hexadecimal value, like or or (alpha is supported). Default is (white).
+		Window's background color as Hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported). Default is #FFF (white).
 	**/
 	@:optional
 	var backgroundColor : String; /**
-		Whether window should have a shadow. This is only implemented on macOS. Default is .
+		Whether window should have a shadow. This is only implemented on macOS. Default is true.
 	**/
 	@:optional
 	var hasShadow : Bool; /**
-		Forces using dark theme for the window, only works on some GTK+3 desktop environments. Default is .
+		Forces using dark theme for the window, only works on some GTK+3 desktop environments. Default is false.
 	**/
 	@:optional
 	var darkTheme : Bool; /**
-		Makes the window . Default is .
+		Makes the window . Default is false.
 	**/
 	@:optional
 	var transparent : Bool; /**
@@ -159,19 +159,19 @@ package electron.main;
 	**/
 	@:optional
 	var type : String; /**
-		The style of window title bar. Default is . Possible values are:
+		The style of window title bar. Default is default. Possible values are:
 	**/
 	@:optional
 	var titleBarStyle : String; /**
-		Use style for frameless windows on Windows, which adds standard window frame. Setting it to will remove window shadow and window animations. Default is .
+		Use WS_THICKFRAME style for frameless windows on Windows, which adds standard window frame. Setting it to false will remove window shadow and window animations. Default is true.
 	**/
 	@:optional
 	var thickFrame : Bool; /**
-		Add a type of vibrancy effect to the window, only on macOS. Can be , , , , , , , , or .
+		Add a type of vibrancy effect to the window, only on macOS. Can be appearance-based, light, dark, titlebar, selection, menu, popover, sidebar, medium-light or ultra-dark.
 	**/
 	@:optional
 	var vibrancy : String; /**
-		Controls the behavior on macOS when option-clicking the green stoplight button on the toolbar or by clicking the Window > Zoom menu item. If , the window will grow to the preferred width of the web page when zoomed, will cause it to zoom to the width of the screen. This will also affect the behavior when calling directly. Default is .
+		Controls the behavior on macOS when option-clicking the green stoplight button on the toolbar or by clicking the Window > Zoom menu item. If true, the window will grow to the preferred width of the web page when zoomed, false will cause it to zoom to the width of the screen. This will also affect the behavior when calling maximize() directly. Default is false.
 	**/
 	@:optional
 	var zoomToPageWidth : Bool; /**
@@ -183,15 +183,15 @@ package electron.main;
 	**/
 	@:optional
 	var webPreferences : { /**
-		Whether to enable DevTools. If it is set to , can not use to open DevTools. Default is .
+		Whether to enable DevTools. If it is set to false, can not use BrowserWindow.webContents.openDevTools() to open DevTools. Default is true.
 	**/
 	@:optional
 	var devTools : Bool; /**
-		Whether node integration is enabled. Default is .
+		Whether node integration is enabled. Default is true.
 	**/
 	@:optional
 	var nodeIntegration : Bool; /**
-		Whether node integration is enabled in web workers. Default is . More about this can be found in .
+		Whether node integration is enabled in web workers. Default is false. More about this can be found in .
 	**/
 	@:optional
 	var nodeIntegrationInWorker : Bool; /**
@@ -199,71 +199,71 @@ package electron.main;
 	**/
 	@:optional
 	var preload : String; /**
-		If set, this will sandbox the renderer associated with the window, making it compatible with the Chromium OS-level sandbox and disabling the Node.js engine. This is not the same as the option and the APIs available to the preload script are more limited. Read more about the option . This option is currently experimental and may change or be removed in future Electron releases.
+		If set, this will sandbox the renderer associated with the window, making it compatible with the Chromium OS-level sandbox and disabling the Node.js engine. This is not the same as the nodeIntegration option and the APIs available to the preload script are more limited. Read more about the option . This option is currently experimental and may change or be removed in future Electron releases.
 	**/
 	@:optional
 	var sandbox : Bool; /**
-		Sets the session used by the page. Instead of passing the Session object directly, you can also choose to use the option instead, which accepts a partition string. When both and are provided, will be preferred. Default is the default session.
+		Sets the session used by the page. Instead of passing the Session object directly, you can also choose to use the partition option instead, which accepts a partition string. When both session and partition are provided, session will be preferred. Default is the default session.
 	**/
 	@:optional
 	var session : Session; /**
-		Sets the session used by the page according to the session's partition string. If starts with , the page will use a persistent session available to all pages in the app with the same . If there is no prefix, the page will use an in-memory session. By assigning the same , multiple pages can share the same session. Default is the default session.
+		Sets the session used by the page according to the session's partition string. If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. If there is no persist: prefix, the page will use an in-memory session. By assigning the same partition, multiple pages can share the same session. Default is the default session.
 	**/
 	@:optional
 	var partition : String; /**
-		The default zoom factor of the page, represents . Default is .
+		The default zoom factor of the page, 3.0 represents 300%. Default is 1.0.
 	**/
 	@:optional
 	var zoomFactor : Float; /**
-		Enables JavaScript support. Default is .
+		Enables JavaScript support. Default is true.
 	**/
 	@:optional
 	var javascript : Bool; /**
-		When , it will disable the same-origin policy (usually using testing websites by people), and set to if this options has not been set by user. Default is .
+		When false, it will disable the same-origin policy (usually using testing websites by people), and set allowRunningInsecureContent to true if this options has not been set by user. Default is true.
 	**/
 	@:optional
 	var webSecurity : Bool; /**
-		Allow an https page to run JavaScript, CSS or plugins from http URLs. Default is .
+		Allow an https page to run JavaScript, CSS or plugins from http URLs. Default is false.
 	**/
 	@:optional
 	var allowRunningInsecureContent : Bool; /**
-		Enables image support. Default is .
+		Enables image support. Default is true.
 	**/
 	@:optional
 	var images : Bool; /**
-		Make TextArea elements resizable. Default is .
+		Make TextArea elements resizable. Default is true.
 	**/
 	@:optional
 	var textAreasAreResizable : Bool; /**
-		Enables WebGL support. Default is .
+		Enables WebGL support. Default is true.
 	**/
 	@:optional
 	var webgl : Bool; /**
-		Enables WebAudio support. Default is .
+		Enables WebAudio support. Default is true.
 	**/
 	@:optional
 	var webaudio : Bool; /**
-		Whether plugins should be enabled. Default is .
+		Whether plugins should be enabled. Default is false.
 	**/
 	@:optional
 	var plugins : Bool; /**
-		Enables Chromium's experimental features. Default is .
+		Enables Chromium's experimental features. Default is false.
 	**/
 	@:optional
 	var experimentalFeatures : Bool; /**
-		Enables Chromium's experimental canvas features. Default is .
+		Enables Chromium's experimental canvas features. Default is false.
 	**/
 	@:optional
 	var experimentalCanvasFeatures : Bool; /**
-		Enables scroll bounce (rubber banding) effect on macOS. Default is .
+		Enables scroll bounce (rubber banding) effect on macOS. Default is false.
 	**/
 	@:optional
 	var scrollBounce : Bool; /**
-		A list of feature strings separated by , like to enable. The full list of supported feature strings can be found in the file.
+		A list of feature strings separated by ,, like CSSVariables,KeyboardEventKey to enable. The full list of supported feature strings can be found in the file.
 	**/
 	@:optional
 	var blinkFeatures : String; /**
-		A list of feature strings separated by , like to disable. The full list of supported feature strings can be found in the file.
+		A list of feature strings separated by ,, like CSSVariables,KeyboardEventKey to disable. The full list of supported feature strings can be found in the file.
 	**/
 	@:optional
 	var disableBlinkFeatures : String; /**
@@ -271,55 +271,55 @@ package electron.main;
 	**/
 	@:optional
 	var defaultFontFamily : { /**
-		Defaults to .
+		Defaults to Times New Roman.
 	**/
 	@:optional
 	var standard : String; /**
-		Defaults to .
+		Defaults to Times New Roman.
 	**/
 	@:optional
 	var serif : String; /**
-		Defaults to .
+		Defaults to Arial.
 	**/
 	@:optional
 	var sansSerif : String; /**
-		Defaults to .
+		Defaults to Courier New.
 	**/
 	@:optional
 	var monospace : String; /**
-		Defaults to .
+		Defaults to Script.
 	**/
 	@:optional
 	var cursive : String; /**
-		Defaults to .
+		Defaults to Impact.
 	**/
 	@:optional
 	var fantasy : String; }; /**
-		Defaults to .
+		Defaults to 16.
 	**/
 	@:optional
 	var defaultFontSize : Int; /**
-		Defaults to .
+		Defaults to 13.
 	**/
 	@:optional
 	var defaultMonospaceFontSize : Int; /**
-		Defaults to .
+		Defaults to 0.
 	**/
 	@:optional
 	var minimumFontSize : Int; /**
-		Defaults to .
+		Defaults to ISO-8859-1.
 	**/
 	@:optional
 	var defaultEncoding : String; /**
-		Whether to throttle animations and timers when the page becomes background. Defaults to .
+		Whether to throttle animations and timers when the page becomes background. Defaults to true.
 	**/
 	@:optional
 	var backgroundThrottling : Bool; /**
-		Whether to enable offscreen rendering for the browser window. Defaults to . See the for more details.
+		Whether to enable offscreen rendering for the browser window. Defaults to false. See the for more details.
 	**/
 	@:optional
 	var offscreen : Bool; /**
-		Whether to run Electron APIs and the specified script in a separate JavaScript context. Defaults to . The context that the script runs in will still have full access to the and globals but it will use its own set of JavaScript builtins (, , , etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the script and any Electron APIs being used. This option uses the same technique used by . You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab. This option is currently experimental and may change or be removed in future Electron releases.
+		Whether to run Electron APIs and the specified preload script in a separate JavaScript context. Defaults to false. The context that the preload script runs in will still have full access to the document and window globals but it will use its own set of JavaScript builtins (Array, Object, JSON, etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the preload script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the preload script and any Electron APIs being used. This option uses the same technique used by . You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab. This option is currently experimental and may change or be removed in future Electron releases.
 	**/
 	@:optional
 	var contextIsolation : Bool; }; }):Void;
@@ -549,12 +549,9 @@ package electron.main;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; /**
-		(optional)
-	**/
-	@:optional
+	var extraHeaders : String; @:optional
 	var postData : Dynamic; /**
-		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified is a data url and needs to load other files.
+		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
 	var baseURLForDataURL : String; }):Void;
@@ -570,7 +567,7 @@ package electron.main;
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
 	function setProgressBar(progress:Float, ?options:{ /**
-		Mode for the progress bar. Can be , , , , or .
+		Mode for the progress bar. Can be none, normal, indeterminate, error, or paused.
 	**/
 	@:optional
 	var mode : String; }):Void;
@@ -610,7 +607,7 @@ package electron.main;
 	**/
 	@:optional
 	var appIconPath : String; /**
-		Index of the icon in . Ignored when is not set. Default is .
+		Index of the icon in appIconPath. Ignored when appIconPath is not set. Default is 0.
 	**/
 	@:optional
 	var appIconIndex : Int; /**
@@ -678,6 +675,10 @@ package electron.main;
 		Sets the touchBar layout for the current window. Specifying null or undefined clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+. Note: The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	function setTouchBar(touchBar:TouchBar):Void;
+	/**
+		Note: The BrowserView API is currently experimental and may change or be removed in future Electron releases.
+	**/
+	function setBrowserView(browserView:BrowserView):Void;
 	static function getAllWindows():BrowserWindow;
 	static function getFocusedWindow():BrowserWindow;
 	static function fromWebContents(webContents:WebContents):BrowserWindow;
@@ -711,6 +712,10 @@ package electron.main;
 		Emitted when the window is closed. After you have received this event you should remove the reference to the window and avoid using it any more.
 	**/
 	var closed : String = "closed";
+	/**
+		Emitted when window session is going to end due to force shutdown or machine restart or session log off.
+	**/
+	var session_end : String = "session-end";
 	/**
 		Emitted when the web page becomes unresponsive.
 	**/
@@ -803,4 +808,12 @@ package electron.main;
 		Emitted on 3-finger swipe. Possible directions are up, right, down, left.
 	**/
 	var swipe : String = "swipe";
+	/**
+		Emitted when the window opens a sheet.
+	**/
+	var sheet_begin : String = "sheet-begin";
+	/**
+		Emitted when the window has closed a sheet.
+	**/
+	var sheet_end : String = "sheet-end";
 }

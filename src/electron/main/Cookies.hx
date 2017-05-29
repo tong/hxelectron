@@ -10,7 +10,7 @@ package electron.main;
 		Sends a request to get all cookies matching details, callback will be called with callback(error, cookies) on complete. cookies is an Array of cookie objects.
 	**/
 	function get(filter:{ /**
-		Retrieves cookies which are associated with . Empty implies retrieving cookies of all urls.
+		Retrieves cookies which are associated with url. Empty implies retrieving cookies of all urls.
 	**/
 	@:optional
 	var url : String; /**
@@ -18,11 +18,11 @@ package electron.main;
 	**/
 	@:optional
 	var name : String; /**
-		Retrieves cookies whose domains match or are subdomains of
+		Retrieves cookies whose domains match or are subdomains of domains
 	**/
 	@:optional
 	var domain : String; /**
-		Retrieves cookies whose path matches .
+		Retrieves cookies whose path matches path.
 	**/
 	@:optional
 	var path : String; /**
@@ -74,6 +74,10 @@ package electron.main;
 		Removes the cookies matching url and name, callback will called with callback() on complete.
 	**/
 	function remove(url:String, name:String, callback:haxe.Constraints.Function):Void;
+	/**
+		Writes any unwritten cookies data to disk.
+	**/
+	function flushStore(callback:haxe.Constraints.Function):Void;
 }
 
 /**

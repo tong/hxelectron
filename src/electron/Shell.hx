@@ -15,7 +15,7 @@ package electron;
 		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent).
 	**/
 	static function openExternal(url:String, ?options:{ /**
-		to bring the opened application to the foreground. The default is .
+		true to bring the opened application to the foreground. The default is true.
 	**/
 	@:optional
 	var activate : Bool; }, ?callback:haxe.Constraints.Function):Bool;

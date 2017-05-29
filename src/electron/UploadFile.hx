@@ -5,7 +5,7 @@ package electron;
 **/
 @:require(js, electron) typedef UploadFile = {
 	/**
-		.
+		file.
 	**/
 	var type : String;
 	/**
@@ -13,11 +13,11 @@ package electron;
 	**/
 	var filePath : String;
 	/**
-		Defaults to .
+		Defaults to 0.
 	**/
 	var offset : Int;
 	/**
-		Number of bytes to read from . Defaults to .
+		Number of bytes to read from offset. Defaults to 0.
 	**/
 	var length : Int;
 	/**
