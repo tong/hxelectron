@@ -56,6 +56,7 @@ typedef APIItem = {
 	name : String,
 	description : String,
 	process : APIProcess,
+	version : String,
 	type : APIType,
 	slug : String,
 	websiteUrl : String,
@@ -400,11 +401,10 @@ class ElectronAPI {
 	}
 
 	static function createAlias( name : String, pack : Array<String>, ?type : ComplexType ) : TypeDefinition {
-		if( type == null ) type = macro : Dynamic;
-		return createTypeDefinition( pack, name, TDAlias(type) );
+		return createTypeDefinition( pack, name, TDAlias( (type == null) ? macro:Dynamic : type ) );
 	}
 
-	static function createField( name : String, kind: FieldType, ?access : Array<Access>, ?doc : String, ?meta : Metadata ) : Field {
+	static inline function createField( name : String, kind: FieldType, ?access : Array<Access>, ?doc : String, ?meta : Metadata ) : Field {
 		return {
 			access: access,
 			name: name,
@@ -448,7 +448,7 @@ class ElectronAPI {
 			var ename : String = e.name;
 			fields.push({
 				name: ename.replace( '-', '_' ),
-				kind: FVar( macro : String, { expr: EConst(CString(ename)), pos: pos } ),
+				kind: FVar( macro : String, { expr: EConst( CString( ename ) ), pos: pos } ),
 				doc: e.description,
 				pos: pos
 			});

@@ -48,7 +48,7 @@ class Run {
 				var modulePath = type.pack.join( '.' );
 				var moduleName = type.name;
 
-				var doc = '\n\n/**';
+				var doc = '/**';
 				for( item in json ) {
 					if( item.name == type.name ) {
 						if( item.description != null ) doc += '\n\t'+item.description+'\n';
@@ -56,11 +56,13 @@ class Run {
 						break;
 					}
 				}
-				doc += '\n**/\n';
+				doc += '\n**/';
 
 				var code = printer.printTypeDefinition( type );
 				var lines = code.split( '\n' );
-				code = lines.shift() + doc + lines.join( '\n' );
+				code = lines.shift();
+				code += '\n\n// Electron ${json[0].version}' +'\n\n'+ doc +'\n';
+				code += lines.join( '\n' );
 				var classPath = modulePath+'.'+moduleName;
 				if( moduleName.endsWith( 'Event' ) ) {
 					code = code.split( '\n' ).slice(1).join( '\n' );
@@ -83,7 +85,6 @@ class Run {
 			Sys.println( 'Generated [${types.length}] types into [$out]' );
 		}
 	}
-
 
 	static function error( info : String, code = -1 ) {
 		Sys.println( info );
