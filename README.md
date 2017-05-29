@@ -9,8 +9,12 @@ The Electron framework lets you write cross-platform desktop applications
 using JavaScript, HTML and CSS based on [Node.js](https://nodejs.org/) and
 [Chromium](http://www.chromium.org).
 
+HXElectron is available from haxelib:
+```sh
+haxelib install electron
+```
 
-## Generate Type Definitions
+## (Re)Generate Type Definitions
 
 All type definitions are auto generated from [electron-api.json](electron-api.json) into the [src/](src/) directory.  
 To (re)generate type definitions using another electron version run:
