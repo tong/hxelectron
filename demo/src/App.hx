@@ -16,10 +16,10 @@ class App {
 
             document.getElementById( 'logo' ).style.opacity = '1';
 
-            setText( 'electron', 'electron '+process.versions['electron'] );
-            setText( 'node', 'node '+process.version );
             setText( 'system', process.platform +' '+ process.arch );
+            setText( 'node', 'node '+process.version );
+            setText( 'electron', 'electron '+process.versions['electron'] );
         }
     }
-    
+
 }
