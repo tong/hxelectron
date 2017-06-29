@@ -60,8 +60,9 @@ class Run {
 
 				var code = printer.printTypeDefinition( type );
 				var lines = code.split( '\n' );
-				code = lines.shift();
-				code += '\n\n// Electron ${json[0].version}' +'\n\n'+ doc +'\n';
+				code = lines.shift()+'\n';
+				//code += '\n\n// Electron ${json[0].version}\n';
+				code += '\n'+ doc +'\n';
 				code += lines.join( '\n' );
 				var classPath = modulePath+'.'+moduleName;
 				if( moduleName.endsWith( 'Event' ) ) {
