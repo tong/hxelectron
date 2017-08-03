@@ -17,7 +17,7 @@ haxelib install electron
 ## (Re)Generate Type Definitions
 
 All type definitions are auto generated from [electron-api.json](electron-api.json) into the [src/](src/) directory.  
-To (re)generate type definitions using another electron version run:
+To (re)generate type definitions using [another electron version](https://github.com/electron/electron/releases) run:
 ```sh
 haxelib run electron <path/to/your/electron-api.json>
 ```
