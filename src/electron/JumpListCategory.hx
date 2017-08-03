@@ -15,5 +15,5 @@ package electron;
 	/**
 		Array of objects if type is tasks or custom, otherwise it should be omitted.
 	**/
-	var items : JumpListItem;
+	var items : Array<JumpListItem>;
 }

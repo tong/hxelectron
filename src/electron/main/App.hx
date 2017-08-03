@@ -15,7 +15,7 @@ package electron.main;
 		Relaunches the app when current instance exits. By default the new instance will use the same working directory and command line arguments with current instance. When args is specified, the args will be passed as command line arguments instead. When execPath is specified, the execPath will be executed for relaunch instead of current app. Note that this method does not quit the app when executed, you have to call app.quit or app.exit after calling app.relaunch to make the app restart. When app.relaunch is called for multiple times, multiple instances will be started after current instance exited. An example of restarting current instance immediately and adding a new command line argument to the new instance:
 	**/
 	static function relaunch(?options:{ @:optional
-	var args : String; @:optional
+	var args : Array<String>; @:optional
 	var execPath : String; }):Void;
 	static function isReady():Bool;
 	/**
@@ -68,19 +68,19 @@ package electron.main;
 	/**
 		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with your-protocol:// will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter. On Windows you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches. Note: On macOS, you can only register protocols that have been added to your app's info.plist, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
 	**/
-	static function setAsDefaultProtocolClient(protocol:String, ?path:String, ?args:String):Bool;
+	static function setAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		This method checks if the current executable as the default handler for a protocol (aka URI scheme). If so, it will remove the app as the default handler.
 	**/
-	static function removeAsDefaultProtocolClient(protocol:String, ?path:String, ?args:String):Bool;
+	static function removeAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		This method checks if the current executable is the default handler for a protocol (aka URI scheme). If so, it will return true. Otherwise, it will return false. Note: On macOS, you can use this method to check if the app has been registered as the default protocol handler for a protocol. You can also verify this by checking ~/Library/Preferences/com.apple.LaunchServices.plist on the macOS machine. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
 	**/
-	static function isDefaultProtocolClient(protocol:String, ?path:String, ?args:String):Bool;
+	static function isDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		Adds tasks to the Tasks category of the JumpList on Windows. tasks is an array of Task objects. Note: If you'd like to customize the Jump List even more use app.setJumpList(categories) instead.
 	**/
-	static function setUserTasks(tasks:Task):Bool;
+	static function setUserTasks(tasks:Array<Task>):Bool;
 	static function getJumpListSettings():{ /**
 		The minimum number of items that will be shown in the Jump List (for a more detailed description of this value see the ).
 	**/
@@ -89,11 +89,11 @@ package electron.main;
 		Array of JumpListItem objects that correspond to items that the user has explicitly removed from custom categories in the Jump List. These items must not be re-added to the Jump List in the call to app.setJumpList(), Windows will not display any custom category that contains any of the removed items.
 	**/
 	@:optional
-	var removedItems : JumpListItem; };
+	var removedItems : Array<JumpListItem>; };
 	/**
 		Sets or removes a custom Jump List for the application, and returns one of the following strings: If categories is null the previously set custom Jump List (if any) will be replaced by the standard Jump List for the app (managed by Windows). Note: If a JumpListCategory object has neither the type nor the name property set then its type is assumed to be tasks. If the name property is set but the type property is omitted then the type is assumed to be custom. Note: Users can remove items from custom categories, and Windows will not allow a removed item to be added back into a custom category until after the next successful call to app.setJumpList(categories). Any attempt to re-add a removed item to a custom category earlier than that will result in the entire custom category being omitted from the Jump List. The list of removed items can be obtained using app.getJumpListSettings(). Here's a very simple example of creating a custom Jump List:
 	**/
-	static function setJumpList(categories:JumpListCategory):Void;
+	static function setJumpList(categories:Array<JumpListCategory>):Void;
 	/**
 		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. callback will be called with callback(argv, workingDirectory) when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. The callback is guaranteed to be executed after the ready event of app gets emitted. This method returns false if your process is the primary instance of the application and your app should continue loading. And returns true if your process has sent its parameters to another instance, and you should immediately quit. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
 	**/
@@ -148,7 +148,7 @@ package electron.main;
 		The command-line arguments to compare against. Defaults to an empty array.
 	**/
 	@:optional
-	var args : String; }):{ @:optional
+	var args : Array<String>; }):{ @:optional
 	var options : { /**
 		The executable path to compare against. Defaults to process.execPath.
 	**/
@@ -157,7 +157,7 @@ package electron.main;
 		The command-line arguments to compare against. Defaults to an empty array.
 	**/
 	@:optional
-	var args : String; }; /**
+	var args : Array<String>; }; /**
 		true if the app is set to open at login.
 	**/
 	@:optional
@@ -189,7 +189,7 @@ package electron.main;
 		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemStatus().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is only supported on macOS.
 	**/
 	@:optional
-	var openAsHidden : Bool; }, ?path:String, ?args:String):Void;
+	var openAsHidden : Bool; }, ?path:String, ?args:Array<String>):Void;
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.

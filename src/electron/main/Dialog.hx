@@ -13,15 +13,15 @@ package electron.main;
 	**/
 	@:optional
 	var buttonLabel : String; @:optional
-	var filters : FileFilter; /**
+	var filters : Array<FileFilter>; /**
 		Contains which features the dialog should use. The following values are supported:
 	**/
 	@:optional
-	var properties : String; /**
+	var properties : Array<String>; /**
 		Message to display above input boxes.
 	**/
 	@:optional
-	var message : String; }, ?callback:haxe.Constraints.Function):String;
+	var message : String; }, ?callback:haxe.Constraints.Function):Array<String>;
 	/**
 		The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
 	**/
@@ -32,7 +32,7 @@ package electron.main;
 	**/
 	@:optional
 	var buttonLabel : String; @:optional
-	var filters : FileFilter; /**
+	var filters : Array<FileFilter>; /**
 		Message to display above text fields.
 	**/
 	@:optional
@@ -56,7 +56,7 @@ package electron.main;
 		Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".
 	**/
 	@:optional
-	var buttons : String; /**
+	var buttons : Array<String>; /**
 		Index of the button in the buttons array which will be selected by default when the message box opens.
 	**/
 	@:optional

@@ -10,7 +10,7 @@ package electron.renderer;
 		An array of Strings that lists the types of desktop sources to be captured, available types are screen and window.
 	**/
 	@:optional
-	var types : String; /**
+	var types : Array<String>; /**
 		The size that the media source thumbnail should be scaled to. Default is 150 x 150.
 	**/
 	@:optional

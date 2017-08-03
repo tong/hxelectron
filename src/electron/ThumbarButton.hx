@@ -16,5 +16,5 @@ package electron;
 	/**
 		Control specific states and behaviors of the button. By default, it is ['enabled'].
 	**/
-	var flags : String;
+	var flags : Array<String>;
 }

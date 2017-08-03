@@ -58,5 +58,5 @@ package electron.main;
 	/**
 		Generally, the template is just an array of options for constructing a MenuItem. The usage can be referenced above. You can also attach other fields to the element of the template and they will become properties of the constructed menu items.
 	**/
-	static function buildFromTemplate(template:MenuItemConstructorOptions):Menu;
+	static function buildFromTemplate(template:Array<MenuItemConstructorOptions>):Menu;
 }

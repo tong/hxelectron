@@ -37,11 +37,11 @@ package electron.main;
 		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers
 	**/
 	@:optional
-	var storages : String; /**
+	var storages : Array<String>; /**
 		The types of quotas to clear, can contain: temporary, persistent, syncable.
 	**/
 	@:optional
-	var quotas : String; }, ?callback:haxe.Constraints.Function):Void;
+	var quotas : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Writes any unwritten DOMStorage data to disk.
 	**/
@@ -127,7 +127,7 @@ package electron.main;
 		Complete URL chain for the download.
 	**/
 	@:optional
-	var urlChain : String; @:optional
+	var urlChain : Array<String>; @:optional
 	var mimeType : String; /**
 		Start range for the download.
 	**/

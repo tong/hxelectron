@@ -404,22 +404,22 @@ package electron.main;
 		Resizes the window to width and height.
 	**/
 	function setSize(width:Int, height:Int, ?animate:Bool):Void;
-	function getSize():Int;
+	function getSize():Array<Int>;
 	/**
 		Resizes the window's client area (e.g. the web page) to width and height.
 	**/
 	function setContentSize(width:Int, height:Int, ?animate:Bool):Void;
-	function getContentSize():Int;
+	function getContentSize():Array<Int>;
 	/**
 		Sets the minimum size of window to width and height.
 	**/
 	function setMinimumSize(width:Int, height:Int):Void;
-	function getMinimumSize():Int;
+	function getMinimumSize():Array<Int>;
 	/**
 		Sets the maximum size of window to width and height.
 	**/
 	function setMaximumSize(width:Int, height:Int):Void;
-	function getMaximumSize():Int;
+	function getMaximumSize():Array<Int>;
 	/**
 		Sets whether the window can be manually resized by user.
 	**/
@@ -475,7 +475,7 @@ package electron.main;
 		Moves window to x and y.
 	**/
 	function setPosition(x:Int, y:Int, ?animate:Bool):Void;
-	function getPosition():Int;
+	function getPosition():Array<Int>;
 	/**
 		Changes the title of native window to title.
 	**/
@@ -586,7 +586,7 @@ package electron.main;
 	/**
 		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a Boolean object indicates whether the thumbnail has been added successfully. The number of buttons in thumbnail toolbar should be no greater than 7 due to the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be removed due to the platform's limitation. But you can call the API with an empty array to clean the buttons. The buttons is an array of Button objects: The flags is an array that can include following Strings:
 	**/
-	function setThumbarButtons(buttons:ThumbarButton):Bool;
+	function setThumbarButtons(buttons:Array<ThumbarButton>):Bool;
 	/**
 		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: {x: 0, y: 0, width: 0, height: 0}.
 	**/
@@ -662,7 +662,7 @@ package electron.main;
 	**/
 	function setParentWindow(parent:BrowserWindow):Void;
 	function getParentWindow():BrowserWindow;
-	function getChildWindows():BrowserWindow;
+	function getChildWindows():Array<BrowserWindow>;
 	/**
 		Controls whether to hide cursor when typing.
 	**/
@@ -679,7 +679,7 @@ package electron.main;
 		Note: The BrowserView API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	function setBrowserView(browserView:BrowserView):Void;
-	static function getAllWindows():BrowserWindow;
+	static function getAllWindows():Array<BrowserWindow>;
 	static function getFocusedWindow():BrowserWindow;
 	static function fromWebContents(webContents:WebContents):BrowserWindow;
 	static function fromId(id:Int):BrowserWindow;
