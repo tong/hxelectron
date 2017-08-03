@@ -6,6 +6,7 @@ using StringTools;
 typedef APIProperty = {
 	name : String,
 	type : String,
+	collection: Bool,
 	?description : String,
 	?properties : Array<APIProperty>
 }
@@ -22,12 +23,14 @@ typedef APIMethodParameter = {
 	type : String,
 	description : String,
 	properties : Array<APIProperty>,
+	collection: Bool,
 	required: Null<Bool>,
 }
 
 typedef APIReturn = {
 	name : String,
 	type : String,
+	collection: Bool,
 	description : String,
 	?properties : Array<APIProperty>
 }
@@ -189,7 +192,7 @@ class ElectronAPI {
 			}
 			if( item.instanceProperties != null )
 				for( p in item.instanceProperties )
-					fields.push( createField( p.name, FVar( convertType( p.type ) ), p.description ) );
+					fields.push( createField( p.name, FVar( convertType( p.type, false ) ), p.description ) );
 			if( item.constructorMethod != null )
 				fields.push( convertMethod( item.constructorMethod ) );
 			if( item.instanceMethods != null )
@@ -218,14 +221,13 @@ class ElectronAPI {
 					if( !alreadyAdded ) fields.push( convertMethod( m, [AStatic] ) );
 				}
 			}
-
 			createClassTypeDefinition( pack, item.name, sup, fields, meta );
 
 		case Structure:
 			for( p in item.properties ) {
 				//TODO hack to check if field is optional
 				var meta = (p.description != null && p.description.startsWith( '(optional)' ) ) ? [{ name: ':optional', pos: pos }] : [];
-				fields.push( createField( p.name, FVar( convertType( p.type, p.properties ) ), p.description, meta ) );
+				fields.push( createField( p.name, FVar( convertType( p.type, p.properties, p.collection ) ), p.description, meta ) );
 			}
 			createTypeDefinition( pack, item.name, TDStructure, fields, meta );
 		}
@@ -239,25 +241,23 @@ class ElectronAPI {
 
 		var ret = macro : Void;
 		if( method.returns != null )
-			ret = convertType( method.returns.type, method.returns.properties );
+			ret = convertType( method.returns.type, method.returns.properties, method.returns.collection );
 
 		var args = new Array<FunctionArg>();
 		if( method.parameters != null ) {
 			for( p in method.parameters ) {
-				//TODO temp hack
-				var type = untyped if( Std.is( p.type, Array ) ) 'Object' else p.type;
-				if (p.name == '...args') {
+				var type = if( Std.is( p.type, Array ) ) 'Object' else p.type;
+				switch p.name {
+				case '...args':
 					args.push( {
 						name: 'args',
 						type: macro:haxe.extern.Rest<Any>,
-						// Haxe doesnt allow rest args to be optional.
-						opt: false
+						opt: false // Haxe doesnt allow rest args to be optional.
 					} );
-
-				} else {
+				default:
 					args.push( {
 						name: escapeName( p.name ),
-						type: convertType( type, p.properties ),
+						type: convertType( type, p.properties, p.collection ),
 						// Check `required` for pre `1.4.8` json files, fall back description check if field is optional.
 						opt: p.required != null ? !p.required : p.description != null && p.description.startsWith( '(optional)')
 					} );
@@ -273,7 +273,7 @@ class ElectronAPI {
 		);
 	}
 
-	static function convertType( type : String, ?properties : Array<Dynamic> ) : ComplexType {
+	static function convertType( type : String, ?properties : Array<Dynamic>, collection : Bool ) : ComplexType {
 
 		if( type == null )
 			return macro : Dynamic;
@@ -299,12 +299,6 @@ class ElectronAPI {
 			return result;
 		}
 
-		var isArray = if( type.endsWith( '[]' ) ) {
-			type = type.substr( 0, type.length-2 );
-			if( findMatch( type ) == null && !isKnownType( type ) ) type = 'Dynamic';
-			true;
-		} else false;
-
 		var multiType = if( type.charAt(0) == '[' && type.charAt(type.length-1) == ']' ) {
 			var raw = type.substr( 1, type.length-2 ).split( ',' );
 			var types = [];
@@ -314,7 +308,7 @@ class ElectronAPI {
 					types.push( TPath( { name: escapeTypeName( match.name ), pack: match.pack } ) );
 				} else {
 					if( isKnownType( r ) ) {
-						types.push( convertType( r ) );
+						types.push( convertType( r, false ) ); //TODO deterrmine 'collection'
 					} else {
 						// Multiple types might be missing from the json file, we don't want
 						// to create haxe.extern.EitherType<Dynamic,Dynamic> or worse ect.
@@ -329,9 +323,7 @@ class ElectronAPI {
 						}
 					}
 				}
-
 				var result = null;
-
 				if( types.length > 1 ) {
 					result = (macro:haxe.extern.EitherType);
 					var current = result;
@@ -354,19 +346,17 @@ class ElectronAPI {
 				} else {
 					result = types[0];
 				}
-
 				result;
-
 			} else {
 				null;
 			}
 
-			var ctype = switch type {
+		var ctype = switch type {
 			case 'Blob': macro : js.html.Blob;
 			case 'Bool','Boolean': macro : Bool;
 			case 'Buffer': macro : js.node.Buffer;
 			case 'Int','Integer': macro : Int;
-			case 'Dynamic': macro : Dynamic; // allows to explicit set type to Dynamic
+			case 'Dynamic': macro : Dynamic; // Allows to explicit set type to Dynamic
 			case 'Double','Float','Number': macro : Float;
 			case 'Function':
 				if( properties == null ) macro : haxe.Constraints.Function;
@@ -374,7 +364,7 @@ class ElectronAPI {
 					//TODO
 					//for( p in properties ) {
 					TFunction(
-						[for(p in properties) convertType( p.type, p.properties )],
+						[for(p in properties) convertType( p.type, p.properties, false )],
 						macro : Dynamic
 					);
 				}
@@ -382,7 +372,7 @@ class ElectronAPI {
 				if( properties == null ) macro : Dynamic else {
 					TAnonymous( [for(p in properties){
 						name: escapeName( p.name ),
-						kind: FVar( convertType( '' + p.type, p.properties ) ),
+						kind: FVar( convertType( '' + p.type, p.properties, p.collection ) ),
 						meta: [ { name: ":optional", pos: pos } ], //TODO
 						pos: pos,
 						doc: p.description
@@ -390,14 +380,14 @@ class ElectronAPI {
 				}
 			case 'Promise': macro : js.Promise<Dynamic>;
 			case 'String','URL': macro : String;
-			case _ if (multiType != null): multiType;
+			case _ if( multiType != null ): multiType;
 			default: TPath( { pack: [], name: escapeTypeName( type ) } );
 		}
 
-		return if( !isArray ) ctype else switch ctype {
+		return if( collection ) switch ctype {
 			case TPath(p): TPath( { name: 'Array<${p.name}>', pack: [] } );
 			default: throw 'failed to convert array type';
-		}
+		} else ctype;
 	}
 
 	static function createAlias( name : String, pack : Array<String>, ?type : ComplexType ) : TypeDefinition {
