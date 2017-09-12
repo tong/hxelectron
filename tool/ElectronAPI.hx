@@ -395,6 +395,16 @@ class ElectronAPI {
 	}
 
 	static inline function createField( name : String, kind: FieldType, ?access : Array<Access>, ?doc : String, ?meta : Metadata ) : Field {
+		var exp = ~/^([0-9]+).+/;
+		if( exp.match( name ) ) {
+			var v = '"'+name+'"';
+			meta.push({
+				name: ':native',
+				params: [macro $i{'"'+name+'"'}],
+				pos: pos
+			});
+			name = '_$name';
+		}
 		return {
 			access: access,
 			name: name,
