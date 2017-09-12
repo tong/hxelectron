@@ -24,7 +24,7 @@ package electron;
 	**/
 	@:optional
 	var ignoreSystemCrashHandler : Bool; /**
-		An object you can define that will be sent along with the report. Only string properties are sent correctly. Nested objects are not supported.
+		An object you can define that will be sent along with the report. Only string properties are sent correctly. Nested objects are not supported and the property names and values must be less than 64 characters long.
 	**/
 	@:optional
 	var extra : { }; }):Void;
@@ -45,7 +45,7 @@ package electron;
 	**/
 	static function setUploadToServer(uploadToServer:Bool):Void;
 	/**
-		Set an extra parameter to set be sent with the crash report. The values specified here will be sent in addition to any values set via the extra option when start was called. This API is only available on macOS, if you need to add/update extra parameters on Linux and Windows after your first call to start you can call start again with the updated extra options.
+		Set an extra parameter to be sent with the crash report. The values specified here will be sent in addition to any values set via the extra option when start was called. This API is only available on macOS, if you need to add/update extra parameters on Linux and Windows after your first call to start you can call start again with the updated extra options.
 	**/
 	static function setExtraParameter(key:String, value:String):Void;
 }

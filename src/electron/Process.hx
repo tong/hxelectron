@@ -7,14 +7,8 @@ package electron;
 		Causes the main thread of the current process crash.
 	**/
 	static function crash():Void;
-	/**
-		Causes the main thread of the current process hang.
-	**/
-	static function hang():Void;
-	/**
-		Sets the file descriptor soft limit to maxDescriptors or the OS hard limit, whichever is lower for the current process.
-	**/
-	static function setFdLimit(maxDescriptors:Int):Void;
+	static function getCPUUsage():CPUUsage;
+	static function getIOCounters():IOCounters;
 	/**
 		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
 	**/
@@ -55,6 +49,12 @@ package electron;
 	**/
 	@:optional
 	var swapFree : Int; };
-	static function getCPUUsage(CPUUsage:CPUUsage):Void;
-	static function getIOCounters(IOCounters:IOCounters):Void;
+	/**
+		Causes the main thread of the current process hang.
+	**/
+	static function hang():Void;
+	/**
+		Sets the file descriptor soft limit to maxDescriptors or the OS hard limit, whichever is lower for the current process.
+	**/
+	static function setFdLimit(maxDescriptors:Int):Void;
 }

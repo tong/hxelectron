@@ -104,4 +104,12 @@ package electron.main;
 		Emitted when a drag operation ends on the tray or ends at another location.
 	**/
 	var drag_end : String = "drag-end";
+	/**
+		Emitted when the mouse enters the tray icon.
+	**/
+	var mouse_enter : String = "mouse-enter";
+	/**
+		Emitted when the mouse exits the tray icon.
+	**/
+	var mouse_leave : String = "mouse-leave";
 }

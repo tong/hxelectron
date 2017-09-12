@@ -47,6 +47,10 @@ package electron;
 	static function read(format:String):String;
 	static function readBuffer(format:String):js.node.Buffer;
 	/**
+		Writes the buffer into the clipboard as format.
+	**/
+	static function writeBuffer(format:String, buffer:js.node.Buffer, ?type:String):Void;
+	/**
 		Writes data to the clipboard.
 	**/
 	static function write(data:{ @:optional

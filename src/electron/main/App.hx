@@ -95,7 +95,7 @@ package electron.main;
 	**/
 	static function setJumpList(categories:Array<JumpListCategory>):Void;
 	/**
-		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. callback will be called with callback(argv, workingDirectory) when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. The callback is guaranteed to be executed after the ready event of app gets emitted. This method returns false if your process is the primary instance of the application and your app should continue loading. And returns true if your process has sent its parameters to another instance, and you should immediately quit. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
+		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. callback will be called by the first instance with callback(argv, workingDirectory) when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. The callback is guaranteed to be executed after the ready event of app gets emitted. This method returns false if your process is the primary instance of the application and your app should continue loading. And returns true if your process has sent its parameters to another instance, and you should immediately quit. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
 	**/
 	static function makeSingleInstance(callback:haxe.Constraints.Function):Bool;
 	/**
@@ -128,9 +128,12 @@ package electron.main;
 	**/
 	static function disableHardwareAcceleration():Void;
 	/**
-		Returns ProcessMemoryInfo[]:  Array of ProcessMemoryInfo objects that correspond to memory usage statistics of all the processes associated with the app.
+		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behaviour. This method can only be called before app is ready.
 	**/
-	static function getAppMemoryInfo():Void;
+	static function disableDomainBlockingFor3DAPIs():Void;
+	static function getAppMemoryInfo():Array<ProcessMetric>;
+	static function getAppMetrics():Array<ProcessMetric>;
+	static function getGpuFeatureStatus():GPUFeatureStatus;
 	/**
 		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the existence of a .desktop file to work, for more information please read Desktop Environment Integration.
 	**/
@@ -189,7 +192,15 @@ package electron.main;
 		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemStatus().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is only supported on macOS.
 	**/
 	@:optional
-	var openAsHidden : Bool; }, ?path:String, ?args:Array<String>):Void;
+	var openAsHidden : Bool; /**
+		The executable to launch at login. Defaults to process.execPath.
+	**/
+	@:optional
+	var path : String; /**
+		The command-line arguments to pass to the executable. Defaults to an empty array. Take care to wrap paths in quotes.
+	**/
+	@:optional
+	var args : Array<String>; }):Void;
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.
@@ -215,5 +226,9 @@ package electron.main;
 	**/
 	@:optional
 	var version : String; }):Void;
+	/**
+		Enables mixed sandbox mode on the app. This method can only be called before app is ready.
+	**/
+	static function enableMixedSandbox():Void;
 	static function on(eventType:Dynamic, callback:Dynamic -> Void):Void;
 }

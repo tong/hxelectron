@@ -26,7 +26,10 @@ package electron.main;
 		The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename)
 	**/
 	static function showSaveDialog(?browserWindow:BrowserWindow, options:{ @:optional
-	var title : String; @:optional
+	var title : String; /**
+		Absolute directory path, absolute file path, or file name to use by default.
+	**/
+	@:optional
 	var defaultPath : String; /**
 		Custom label for the confirmation button, when left empty the default label will be used.
 	**/
@@ -46,7 +49,7 @@ package electron.main;
 	@:optional
 	var showsTagField : Bool; }, ?callback:haxe.Constraints.Function):String;
 	/**
-		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(response).
+		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. If a callback is passed, the dialog will not block the process. The API call will be asynchronous and the result will be passed via callback(response).
 	**/
 	static function showMessageBox(?browserWindow:BrowserWindow, options:{ /**
 		Can be "none", "info", "error", "question" or "warning". On Windows, "question" displays the same icon as "info", unless you set an icon using the "icon" option. On macOS, both "warning" and "error" display the same warning icon.

@@ -163,6 +163,10 @@ package electron.main;
 	**/
 	@:optional
 	var titleBarStyle : String; /**
+		Shows the title in the tile bar in full screen mode on macOS for all titleBarStyle options. Default is false.
+	**/
+	@:optional
+	var fullscreenWindowTitle : Bool; /**
 		Use WS_THICKFRAME style for frameless windows on Windows, which adds standard window frame. Setting it to false will remove window shadow and window animations. Default is true.
 	**/
 	@:optional
@@ -175,7 +179,7 @@ package electron.main;
 	**/
 	@:optional
 	var zoomToPageWidth : Bool; /**
-		Tab group name, allows opening the window as a native tab on macOS 10.12+. Windows with the same tabbing identifier will be grouped together.
+		Tab group name, allows opening the window as a native tab on macOS 10.12+. Windows with the same tabbing identifier will be grouped together. This also adds a native new tab button to your window's tab bar and allows your app and window to receive the new-window-for-tab event.
 	**/
 	@:optional
 	var tabbingIdentifier : String; /**
@@ -311,7 +315,7 @@ package electron.main;
 	**/
 	@:optional
 	var defaultEncoding : String; /**
-		Whether to throttle animations and timers when the page becomes background. Defaults to true.
+		Whether to throttle animations and timers when the page becomes background. This also affects the [Page Visibility API][#page-visibility]. Defaults to true.
 	**/
 	@:optional
 	var backgroundThrottling : Bool; /**
@@ -322,7 +326,15 @@ package electron.main;
 		Whether to run Electron APIs and the specified preload script in a separate JavaScript context. Defaults to false. The context that the preload script runs in will still have full access to the document and window globals but it will use its own set of JavaScript builtins (Array, Object, JSON, etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the preload script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the preload script and any Electron APIs being used. This option uses the same technique used by . You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab. This option is currently experimental and may change or be removed in future Electron releases.
 	**/
 	@:optional
-	var contextIsolation : Bool; }; }):Void;
+	var contextIsolation : Bool; /**
+		Whether to use native window.open(). Defaults to false. This option is currently experimental.
+	**/
+	@:optional
+	var nativeWindowOpen : Bool; /**
+		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the <webview> will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a <webview> tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the <webview>'s initial settings.
+	**/
+	@:optional
+	var webviewTag : Bool; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
@@ -562,7 +574,7 @@ package electron.main;
 	/**
 		Sets the menu as the window's menu bar, setting it to null will remove the menu bar.
 	**/
-	function setMenu(menu:Menu):Void;
+	function setMenu(menu:Dynamic):Void;
 	/**
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
@@ -683,6 +695,18 @@ package electron.main;
 	static function getFocusedWindow():BrowserWindow;
 	static function fromWebContents(webContents:WebContents):BrowserWindow;
 	static function fromId(id:Int):BrowserWindow;
+	/**
+		Adds Chrome extension located at path, and returns extension's name. The method will also not return if the extension's manifest is missing or incomplete. Note: This API cannot be called before the ready event of the app module is emitted.
+	**/
+	static function addExtension(path:String):Void;
+	/**
+		Remove a Chrome extension by name. Note: This API cannot be called before the ready event of the app module is emitted.
+	**/
+	static function removeExtension(name:String):Void;
+	/**
+		Note: This API cannot be called before the ready event of the app module is emitted.
+	**/
+	static function getExtensions():Dynamic;
 	/**
 		Adds DevTools extension located at path, and returns extension's name. The extension will be remembered so you only need to call this API once, this API is not for programming use. If you try to add an extension that has already been loaded, this method will not return and instead log a warning to the console. The method will also not return if the extension's manifest is missing or incomplete. Note: This API cannot be called before the ready event of the app module is emitted.
 	**/
@@ -816,4 +840,8 @@ package electron.main;
 		Emitted when the window has closed a sheet.
 	**/
 	var sheet_end : String = "sheet-end";
+	/**
+		Emitted when the native new tab button is clicked.
+	**/
+	var new_window_for_tab : String = "new-window-for-tab";
 }

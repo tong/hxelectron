@@ -15,10 +15,11 @@ package electron.main;
 		Adds an extra HTTP header. The header name will issued as it is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a String, its toString() method will be called to obtain the final value.
 	**/
 	function setHeader(name:String, value:Dynamic):Void;
-	/**
-		Returns Object - The value of a previously set extra header name.
+	function getHeader(name:String):{ /**
+		Specify an extra header name.
 	**/
-	function getHeader(name:String):Void;
+	@:optional
+	var name : String; };
 	/**
 		Removes a previously set extra header name. This method can be called only before first write. Trying to call it after the first write will throw an error.
 	**/

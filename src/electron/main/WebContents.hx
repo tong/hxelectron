@@ -11,7 +11,7 @@ package electron.main;
 	**/
 	var id : Int;
 	/**
-		A Session object (session) used by this webContents.
+		A Session used by this webContents.
 	**/
 	var session : Session;
 	/**
@@ -54,6 +54,10 @@ package electron.main;
 	function getURL():String;
 	function getTitle():String;
 	function isDestroyed():Bool;
+	/**
+		Focuses the web page.
+	**/
+	function focus():Void;
 	function isFocused():Bool;
 	function isLoading():Bool;
 	function isLoadingMainFrame():Bool;
@@ -107,6 +111,10 @@ package electron.main;
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation. If the result of the executed code is a promise the callback result will be the resolved value of the promise.  We recommend that you use the returned Promise to handle code that results in a Promise.
 	**/
 	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Dynamic>;
+	/**
+		Ignore application menu shortcuts while this web contents is focused.
+	**/
+	function setIgnoreMenuShortcuts(ignore:Bool):Void;
 	/**
 		Mute the audio on the current web page.
 	**/
@@ -233,7 +241,11 @@ package electron.main;
 	**/
 	function unregisterServiceWorker(callback:haxe.Constraints.Function):Void;
 	/**
-		Prints window's web page. When silent is set to true, Electron will pick up system's default printer and default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({silent: false, printBackground: false}). Use page-break-before: always; CSS style to force to print to a new page.
+		Get the system printer list.
+	**/
+	function getPrinters():Array<PrinterInfo>;
+	/**
+		Prints window's web page. When silent is set to true, Electron will pick the system's default printer if deviceName is empty and the default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({silent: false, printBackground: false, deviceName: ''}). Use page-break-before: always; CSS style to force to print to a new page.
 	**/
 	function print(?options:{ /**
 		Don't ask user for print settings. Default is false.
@@ -243,7 +255,11 @@ package electron.main;
 		Also prints the background color and image of the web page. Default is false.
 	**/
 	@:optional
-	var printBackground : Bool; }):Void;
+	var printBackground : Bool; /**
+		Set the printer device name to use. Default is ''.
+	**/
+	@:optional
+	var deviceName : String; }):Void;
 	/**
 		Prints window's web page as PDF with Chromium's preview printing custom settings. The callback will be called with callback(error, data) on completion. The data is a Buffer that contains the generated PDF data. The landscape will be ignored if @page CSS at-rule is used in the web page. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
 	**/
@@ -347,7 +363,7 @@ package electron.main;
 	**/
 	function disableDeviceEmulation():Void;
 	/**
-		Sends an input event to the page. For keyboard events, the event object also have following properties: For mouse events, the event object also have following properties: For the mouseWheel event, the event object also have following properties:
+		Sends an input event to the page. Note: The BrowserWindow containing the contents needs to be focused for sendInputEvent() to work. For keyboard events, the event object also have following properties: For mouse events, the event object also have following properties: For the mouseWheel event, the event object also have following properties:
 	**/
 	function sendInputEvent(event:{ /**
 		() The type of the event, can be mouseDown, mouseUp, mouseEnter, mouseLeave, contextMenu, mouseWheel, mouseMove, keyDown, keyUp, char.
@@ -417,6 +433,7 @@ package electron.main;
 		Setting the WebRTC IP handling policy allows you to control which IPs are exposed via WebRTC.  See BrowserLeaks for more details.
 	**/
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
+	function getOSProcessId():Int;
 }
 
 /**
@@ -475,6 +492,10 @@ package electron.main;
 	**/
 	var did_navigate_in_page : String = "did-navigate-in-page";
 	/**
+		Emitted when a beforeunload event handler is attempting to cancel a page unload. Calling event.preventDefault() will ignore the beforeunload event handler and allow the page to be unloaded.
+	**/
+	var will_prevent_unload : String = "will-prevent-unload";
+	/**
 		Emitted when the renderer process crashes or is killed.
 	**/
 	var crashed : String = "crashed";
@@ -487,7 +508,7 @@ package electron.main;
 	**/
 	var destroyed : String = "destroyed";
 	/**
-		Emitted before dispatching the keydown and keyup events in the page. Calling event.preventDefault will prevent the page keydown/keyup events from being dispatched.
+		Emitted before dispatching the keydown and keyup events in the page. Calling event.preventDefault will prevent the page keydown/keyup events and the menu shortcuts. To only prevent the menu shortcuts, use setIgnoreMenuShortcuts:
 	**/
 	var before_input_event : String = "before-input-event";
 	/**
@@ -555,7 +576,7 @@ package electron.main;
 	**/
 	var devtools_reload_page : String = "devtools-reload-page";
 	/**
-		Emitted when a <webview>'s web contents is being attached to this web contents. Calling event.preventDefault() will destroy the guest page. This event can be used to configure webPreferences for the webContents of a <webview> before it's loaded, and provides the ability to set settings that can't be set via <webview> attributes.
+		Emitted when a <webview>'s web contents is being attached to this web contents. Calling event.preventDefault() will destroy the guest page. This event can be used to configure webPreferences for the webContents of a <webview> before it's loaded, and provides the ability to set settings that can't be set via <webview> attributes. Note: The specified preload script option will be appear as preloadURL (not preload) in the webPreferences object emitted with this event.
 	**/
 	var will_attach_webview : String = "will-attach-webview";
 }

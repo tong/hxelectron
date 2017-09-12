@@ -16,7 +16,7 @@ package electron.main;
 	**/
 	static function removeListener(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
-		Removes all listeners, or those of the specified channel.
+		Removes listeners of the specified channel.
 	**/
-	static function removeAllListeners(?channel:String):Void;
+	static function removeAllListeners(channel:String):Void;
 }

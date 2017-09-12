@@ -30,17 +30,17 @@ package electron.main;
 	**/
 	static function unsubscribeLocalNotification(id:Int):Void;
 	/**
-		Get the value of key in system preferences. This API uses NSUserDefaults on macOS. Some popular key and types are:
+		This API uses NSUserDefaults on macOS. Some popular key and types are:
 	**/
-	static function getUserDefault(key:String, type:String):Void;
+	static function getUserDefault(key:String, type:String):Any;
 	/**
 		Set the value of key in system preferences. Note that type should match actual type of value. An exception is thrown if they don't. This API uses NSUserDefaults on macOS. Some popular key and types are:
 	**/
 	static function setUserDefault(key:String, type:String, value:String):Void;
 	/**
-		This method returns true if DWM composition (Aero Glass) is enabled, and false otherwise. An example of using it to determine if you should create a transparent window or not (transparent windows won't work correctly when DWM composition is disabled):
+		An example of using it to determine if you should create a transparent window or not (transparent windows won't work correctly when DWM composition is disabled):
 	**/
-	static function isAeroGlassEnabled():Void;
+	static function isAeroGlassEnabled():Bool;
 	static function getAccentColor():String;
 	static function getColor(color:String):String;
 	static function isInvertedColorScheme():Bool;
