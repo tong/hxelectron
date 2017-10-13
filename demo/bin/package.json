@@ -1,11 +1,11 @@
 {
-    "name"    : "hxelectron-demo",
-    "version" : "0.2.0",
-    "main"    : "main.js",
+    "name": "hxelectron-demo",
+    "version": "0.2.0",
+    "main": "main.js",
     "scripts": {
         "start": "electron main.js"
     },
     "devDependencies": {
-        "electron": "^1.4.10"
+        "electron": "^1.7.9"
     }
 }
