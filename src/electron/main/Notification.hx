@@ -35,6 +35,10 @@ package electron.main;
 	**/
 	@:optional
 	var replyPlaceholder : String; /**
+		The name of the sound file to play when the notification is shown.
+	**/
+	@:optional
+	var sound : String; /**
 		Actions to add to the notification. Please read the available actions and limitations in the NotificationAction documentation
 	**/
 	@:optional
