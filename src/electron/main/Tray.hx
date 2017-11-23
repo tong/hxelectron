@@ -87,7 +87,7 @@ package electron.main;
 	/**
 		Emitted when dragged files are dropped in the tray icon.
 	**/
-	var drop_files : electron.main.Tray.TrayEvent<js.html.Event -> String -> Void> = "drop-files";
+	var drop_files : electron.main.Tray.TrayEvent<js.html.Event -> Array<String> -> Void> = "drop-files";
 	/**
 		Emitted when dragged text is dropped in the tray icon.
 	**/

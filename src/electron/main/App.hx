@@ -3,6 +3,50 @@ package electron.main;
 /**
 **/
 @:require(js, electron) @:jsRequire("electron", "app") extern class App {
+	var commandLine : { /**
+		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv, and is mainly used by developers to control some low-level Chromium behaviors.
+	**/
+	@:optional
+	var appendSwitch : haxe.Constraints.Function; /**
+		Append an argument to Chromium's command line. The argument will be quoted correctly. Note: This will not affect process.argv.
+	**/
+	@:optional
+	var appendArgument : haxe.Constraints.Function; };
+	var dock : { /**
+		When critical is passed, the dock icon will bounce until either the application becomes active or the request is canceled. When informational is passed, the dock icon will bounce for one second. However, the request remains active until either the application becomes active or the request is canceled.
+	**/
+	@:optional
+	var bounce : haxe.Constraints.Function; /**
+		Cancel the bounce of id.
+	**/
+	@:optional
+	var cancelBounce : haxe.Constraints.Function; /**
+		Bounces the Downloads stack if the filePath is inside the Downloads folder.
+	**/
+	@:optional
+	var downloadFinished : haxe.Constraints.Function; /**
+		Sets the string to be displayed in the dock’s badging area.
+	**/
+	@:optional
+	var setBadge : haxe.Constraints.Function; @:optional
+	var getBadge : haxe.Constraints.Function; /**
+		Hides the dock icon.
+	**/
+	@:optional
+	var hide : haxe.Constraints.Function; /**
+		Shows the dock icon.
+	**/
+	@:optional
+	var show : haxe.Constraints.Function; @:optional
+	var isVisible : haxe.Constraints.Function; /**
+		Sets the application's dock menu.
+	**/
+	@:optional
+	var setMenu : haxe.Constraints.Function; /**
+		Sets the image associated with this dock icon.
+	**/
+	@:optional
+	var setIcon : haxe.Constraints.Function; };
 	/**
 		Try to close all windows. The before-quit event will be emitted first. If all windows are successfully closed, the will-quit event will be emitted and by default the application will terminate. This method guarantees that all beforeunload and unload event handlers are correctly executed. It is possible that a window cancels the quitting by returning false in the beforeunload event handler.
 	**/

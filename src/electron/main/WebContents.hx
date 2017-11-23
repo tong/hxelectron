@@ -474,11 +474,11 @@ package electron.main;
 	/**
 		Emitted when page receives favicon urls.
 	**/
-	var page_favicon_updated : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Void> = "page-favicon-updated";
+	var page_favicon_updated : electron.main.WebContents.WebContentsEvent<js.html.Event -> Array<String> -> Void> = "page-favicon-updated";
 	/**
 		Emitted when the page requests to open a new window for a url. It could be requested by window.open or an external link like <a target='_blank'>. By default a new BrowserWindow will be created for the url. Calling event.preventDefault() will prevent Electron from automatically creating a new BrowserWindow. If you call event.preventDefault() and manually create a new BrowserWindow then you must set event.newGuest to reference the new BrowserWindow instance, failing to do so may result in unexpected behavior. For example:
 	**/
-	var new_window : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> String -> String -> Dynamic -> String -> Void> = "new-window";
+	var new_window : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> String -> String -> Dynamic -> Array<String> -> Void> = "new-window";
 	/**
 		Emitted when a user or the page wants to start navigation. It can happen when the window.location object is changed or a user clicks a link in the page. This event will not emit when the navigation is started programmatically with APIs like webContents.loadURL and webContents.back. It is also not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose. Calling event.preventDefault() will prevent the navigation.
 	**/
@@ -530,7 +530,7 @@ package electron.main;
 	/**
 		Emitted when a client certificate is requested. The usage is the same with the select-client-certificate event of app.
 	**/
-	var select_client_certificate : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Certificate -> haxe.Constraints.Function -> Void> = "select-client-certificate";
+	var select_client_certificate : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Array<Certificate> -> haxe.Constraints.Function -> Void> = "select-client-certificate";
 	/**
 		Emitted when webContents wants to do basic auth. The usage is the same with the login event of app.
 	**/
@@ -558,7 +558,7 @@ package electron.main;
 	/**
 		Emitted when the cursor's type changes. The type parameter can be default, crosshair, pointer, text, wait, help, e-resize, n-resize, ne-resize, nw-resize, s-resize, se-resize, sw-resize, w-resize, ns-resize, ew-resize, nesw-resize, nwse-resize, col-resize, row-resize, m-panning, e-panning, n-panning, ne-panning, nw-panning, s-panning, se-panning, sw-panning, w-panning, move, vertical-text, cell, context-menu, alias, progress, nodrop, copy, none, not-allowed, zoom-in, zoom-out, grab, grabbing, custom. If the type parameter is custom, the image parameter will hold the custom cursor image in a NativeImage, and scale, size and hotspot will hold additional information about the custom cursor.
 	**/
-	var cursor_changed : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> NativeImage -> Float -> Size -> Point -> Void> = "cursor-changed";
+	var cursor_changed : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> ?NativeImage -> ?Float -> ?Size -> ?Point -> Void> = "cursor-changed";
 	/**
 		Emitted when there is a new context menu that needs to be handled.
 	**/
@@ -566,7 +566,7 @@ package electron.main;
 	/**
 		Emitted when bluetooth device needs to be selected on call to navigator.bluetooth.requestDevice. To use navigator.bluetooth api webBluetooth should be enabled.  If event.preventDefault is not called, first available device will be selected. callback should be called with deviceId to be selected, passing empty string to callback will cancel the request.
 	**/
-	var select_bluetooth_device : electron.main.WebContents.WebContentsEvent<js.html.Event -> BluetoothDevice -> haxe.Constraints.Function -> Void> = "select-bluetooth-device";
+	var select_bluetooth_device : electron.main.WebContents.WebContentsEvent<js.html.Event -> Array<BluetoothDevice> -> haxe.Constraints.Function -> Void> = "select-bluetooth-device";
 	/**
 		Emitted when a new frame is generated. Only the dirty area is passed in the buffer.
 	**/
