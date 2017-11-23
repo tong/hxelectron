@@ -32,7 +32,8 @@ typedef APIReturn = {
 	type : String,
 	collection: Bool,
 	description : String,
-	?properties : Array<APIProperty>
+	?properties : Array<APIProperty>,
+	required: Null<Bool>,
 }
 
 typedef APIMethod = {
@@ -460,8 +461,9 @@ class ElectronAPI {
 			} else {
 				var args = [];
 				for( r in e.returns ) {
-					var t = convertType( r.type, false );
-					args.push(t);
+					var t = convertType( r.type, r.collection );
+					if( !r.required ) t = TOptional(t);
+					args.push( t );
 				}
 				params.push( TPType( TFunction( args, macro:Void ) ) );
 			}
