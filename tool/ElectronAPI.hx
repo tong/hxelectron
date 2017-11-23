@@ -153,8 +153,8 @@ class ElectronAPI {
 			}
 		}
 
+		//types.push( createAlias( 'Any', pack ) );
 		types.push( createAlias( 'MenuItemConstructorOptions', pack ) );
-		types.push( createAlias( 'Any', pack ) );
 		types.push( createTypeDefinition( pack, 'Accelerator', TDAbstract( macro:String, [macro:String], [macro:String] ) ) );
 
 		////////////////////////////////////////////////////////////////////////
@@ -180,6 +180,14 @@ class ElectronAPI {
 		var fields = new Array<Field>();
 		var extraTypes = new Array<TypeDefinition>();
 
+		if( item.properties != null ) {
+			for( p in item.properties ) {
+				//TODO hack to check if field is optional
+				var meta = (p.description != null && p.description.startsWith( '(optional)' ) ) ? [{ name: ':optional', pos: pos }] : [];
+				fields.push( createField( p.name, FVar( convertType( p.type, p.properties, p.collection ) ), p.description, meta ) );
+			}
+		}
+
 		var def = switch item.type {
 
 		case Class_:
@@ -199,11 +207,9 @@ class ElectronAPI {
 			if( item.instanceMethods != null )
 				for( m in item.instanceMethods )
 					fields.push( convertMethod( m ) );
-			if( item.staticMethods != null ) {
-				for( m in item.staticMethods ) {
+			if( item.staticMethods != null )
+				for( m in item.staticMethods )
 					fields.push( convertMethod( m, [AStatic] ) );
-				}
-			}
 			createClassTypeDefinition( pack, item.name, sup, fields, meta );
 
 		case Module:
@@ -225,11 +231,6 @@ class ElectronAPI {
 			createClassTypeDefinition( pack, item.name, sup, fields, meta );
 
 		case Structure:
-			for( p in item.properties ) {
-				//TODO hack to check if field is optional
-				var meta = (p.description != null && p.description.startsWith( '(optional)' ) ) ? [{ name: ':optional', pos: pos }] : [];
-				fields.push( createField( p.name, FVar( convertType( p.type, p.properties, p.collection ) ), p.description, meta ) );
-			}
 			createTypeDefinition( pack, item.name, TDStructure, fields, meta );
 		}
 
