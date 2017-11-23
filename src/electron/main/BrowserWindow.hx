@@ -723,125 +723,125 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:enum abstract BrowserWindowEvent(String) from String to String {
+@:require(js, electron) @:enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the document changed its title, calling event.preventDefault() will prevent the native window's title from changing.
 	**/
-	var page_title_updated : String = "page-title-updated";
+	var page_title_updated : electron.main.BrowserWindow.BrowserWindowEvent<js.html.Event -> String -> Void> = "page-title-updated";
 	/**
 		Emitted when the window is going to be closed. It's emitted before the beforeunload and unload event of the DOM. Calling event.preventDefault() will cancel the close. Usually you would want to use the beforeunload handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than undefined would cancel the close. For example:
 	**/
-	var close : String = "close";
+	var close : electron.main.BrowserWindow.BrowserWindowEvent<js.html.Event -> Void> = "close";
 	/**
 		Emitted when the window is closed. After you have received this event you should remove the reference to the window and avoid using it any more.
 	**/
-	var closed : String = "closed";
+	var closed : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "closed";
 	/**
 		Emitted when window session is going to end due to force shutdown or machine restart or session log off.
 	**/
-	var session_end : String = "session-end";
+	var session_end : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "session-end";
 	/**
 		Emitted when the web page becomes unresponsive.
 	**/
-	var unresponsive : String = "unresponsive";
+	var unresponsive : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "unresponsive";
 	/**
 		Emitted when the unresponsive web page becomes responsive again.
 	**/
-	var responsive : String = "responsive";
+	var responsive : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "responsive";
 	/**
 		Emitted when the window loses focus.
 	**/
-	var blur : String = "blur";
+	var blur : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "blur";
 	/**
 		Emitted when the window gains focus.
 	**/
-	var focus : String = "focus";
+	var focus : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "focus";
 	/**
 		Emitted when the window is shown.
 	**/
-	var show : String = "show";
+	var show : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "show";
 	/**
 		Emitted when the window is hidden.
 	**/
-	var hide : String = "hide";
+	var hide : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "hide";
 	/**
 		Emitted when the web page has been rendered (while not being shown) and window can be displayed without a visual flash.
 	**/
-	var ready_to_show : String = "ready-to-show";
+	var ready_to_show : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "ready-to-show";
 	/**
 		Emitted when window is maximized.
 	**/
-	var maximize : String = "maximize";
+	var maximize : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "maximize";
 	/**
 		Emitted when the window exits from a maximized state.
 	**/
-	var unmaximize : String = "unmaximize";
+	var unmaximize : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "unmaximize";
 	/**
 		Emitted when the window is minimized.
 	**/
-	var minimize : String = "minimize";
+	var minimize : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "minimize";
 	/**
 		Emitted when the window is restored from a minimized state.
 	**/
-	var restore : String = "restore";
+	var restore : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "restore";
 	/**
 		Emitted when the window is being resized.
 	**/
-	var resize : String = "resize";
+	var resize : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "resize";
 	/**
 		Emitted when the window is being moved to a new position. Note: On macOS this event is just an alias of moved.
 	**/
-	var move : String = "move";
+	var move : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "move";
 	/**
 		Emitted once when the window is moved to a new position.
 	**/
-	var moved : String = "moved";
+	var moved : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "moved";
 	/**
 		Emitted when the window enters a full-screen state.
 	**/
-	var enter_full_screen : String = "enter-full-screen";
+	var enter_full_screen : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "enter-full-screen";
 	/**
 		Emitted when the window leaves a full-screen state.
 	**/
-	var leave_full_screen : String = "leave-full-screen";
+	var leave_full_screen : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "leave-full-screen";
 	/**
 		Emitted when the window enters a full-screen state triggered by HTML API.
 	**/
-	var enter_html_full_screen : String = "enter-html-full-screen";
+	var enter_html_full_screen : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "enter-html-full-screen";
 	/**
 		Emitted when the window leaves a full-screen state triggered by HTML API.
 	**/
-	var leave_html_full_screen : String = "leave-html-full-screen";
+	var leave_html_full_screen : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "leave-html-full-screen";
 	/**
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows. Commands are lowercased, underscores are replaced with hyphens, and the APPCOMMAND_ prefix is stripped off. e.g. APPCOMMAND_BROWSER_BACKWARD is emitted as browser-backward.
 	**/
-	var app_command : String = "app-command";
+	var app_command : electron.main.BrowserWindow.BrowserWindowEvent<js.html.Event -> String -> Void> = "app-command";
 	/**
 		Emitted when scroll wheel event phase has begun.
 	**/
-	var scroll_touch_begin : String = "scroll-touch-begin";
+	var scroll_touch_begin : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "scroll-touch-begin";
 	/**
 		Emitted when scroll wheel event phase has ended.
 	**/
-	var scroll_touch_end : String = "scroll-touch-end";
+	var scroll_touch_end : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "scroll-touch-end";
 	/**
 		Emitted when scroll wheel event phase filed upon reaching the edge of element.
 	**/
-	var scroll_touch_edge : String = "scroll-touch-edge";
+	var scroll_touch_edge : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "scroll-touch-edge";
 	/**
 		Emitted on 3-finger swipe. Possible directions are up, right, down, left.
 	**/
-	var swipe : String = "swipe";
+	var swipe : electron.main.BrowserWindow.BrowserWindowEvent<js.html.Event -> String -> Void> = "swipe";
 	/**
 		Emitted when the window opens a sheet.
 	**/
-	var sheet_begin : String = "sheet-begin";
+	var sheet_begin : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "sheet-begin";
 	/**
 		Emitted when the window has closed a sheet.
 	**/
-	var sheet_end : String = "sheet-end";
+	var sheet_end : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "sheet-end";
 	/**
 		Emitted when the native new tab button is clicked.
 	**/
-	var new_window_for_tab : String = "new-window-for-tab";
+	var new_window_for_tab : electron.main.BrowserWindow.BrowserWindowEvent<Void -> Void> = "new-window-for-tab";
 }

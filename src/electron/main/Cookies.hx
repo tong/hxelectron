@@ -82,9 +82,9 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:enum abstract CookiesEvent(String) from String to String {
+@:require(js, electron) @:enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when a cookie is changed because it was added, edited, removed, or expired.
 	**/
-	var changed : String = "changed";
+	var changed : electron.main.Cookies.CookiesEvent<js.html.Event -> Cookie -> String -> Bool -> Void> = "changed";
 }

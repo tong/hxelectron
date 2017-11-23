@@ -52,22 +52,22 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:enum abstract NotificationEvent(String) from String to String {
+@:require(js, electron) @:enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the notification is shown to the user, note this could be fired multiple times as a notification can be shown multiple times through the show() method.
 	**/
-	var show : String = "show";
+	var show : electron.main.Notification.NotificationEvent<js.html.Event -> Void> = "show";
 	/**
 		Emitted when the notification is clicked by the user.
 	**/
-	var click : String = "click";
+	var click : electron.main.Notification.NotificationEvent<js.html.Event -> Void> = "click";
 	/**
 		Emitted when the notification is closed by manual intervention from the user. This event is not guarunteed to be emitted in all cases where the notification is closed.
 	**/
-	var close : String = "close";
+	var close : electron.main.Notification.NotificationEvent<js.html.Event -> Void> = "close";
 	/**
 		Emitted when the user clicks the "Reply" button on a notification with hasReply: true.
 	**/
-	var reply : String = "reply";
-	var action : String = "action";
+	var reply : electron.main.Notification.NotificationEvent<js.html.Event -> String -> Void> = "reply";
+	var action : electron.main.Notification.NotificationEvent<js.html.Event -> Float -> Void> = "action";
 }

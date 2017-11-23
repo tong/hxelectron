@@ -157,9 +157,9 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:enum abstract SessionEvent(String) from String to String {
+@:require(js, electron) @:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron is about to download item in webContents. Calling event.preventDefault() will cancel the download and item will not be available from next tick of the process.
 	**/
-	var will_download : String = "will-download";
+	var will_download : electron.main.Session.SessionEvent<js.html.Event -> DownloadItem -> WebContents -> Void> = "will-download";
 }

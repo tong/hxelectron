@@ -55,61 +55,61 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:enum abstract TrayEvent(String) from String to String {
+@:require(js, electron) @:enum abstract TrayEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the tray icon is clicked.
 	**/
-	var click : String = "click";
+	var click : electron.main.Tray.TrayEvent<js.html.Event -> Rectangle -> Void> = "click";
 	/**
 		Emitted when the tray icon is right clicked.
 	**/
-	var right_click : String = "right-click";
+	var right_click : electron.main.Tray.TrayEvent<js.html.Event -> Rectangle -> Void> = "right-click";
 	/**
 		Emitted when the tray icon is double clicked.
 	**/
-	var double_click : String = "double-click";
+	var double_click : electron.main.Tray.TrayEvent<js.html.Event -> Rectangle -> Void> = "double-click";
 	/**
 		Emitted when the tray balloon shows.
 	**/
-	var balloon_show : String = "balloon-show";
+	var balloon_show : electron.main.Tray.TrayEvent<Void -> Void> = "balloon-show";
 	/**
 		Emitted when the tray balloon is clicked.
 	**/
-	var balloon_click : String = "balloon-click";
+	var balloon_click : electron.main.Tray.TrayEvent<Void -> Void> = "balloon-click";
 	/**
 		Emitted when the tray balloon is closed because of timeout or user manually closes it.
 	**/
-	var balloon_closed : String = "balloon-closed";
+	var balloon_closed : electron.main.Tray.TrayEvent<Void -> Void> = "balloon-closed";
 	/**
 		Emitted when any dragged items are dropped on the tray icon.
 	**/
-	var drop : String = "drop";
+	var drop : electron.main.Tray.TrayEvent<Void -> Void> = "drop";
 	/**
 		Emitted when dragged files are dropped in the tray icon.
 	**/
-	var drop_files : String = "drop-files";
+	var drop_files : electron.main.Tray.TrayEvent<js.html.Event -> String -> Void> = "drop-files";
 	/**
 		Emitted when dragged text is dropped in the tray icon.
 	**/
-	var drop_text : String = "drop-text";
+	var drop_text : electron.main.Tray.TrayEvent<js.html.Event -> String -> Void> = "drop-text";
 	/**
 		Emitted when a drag operation enters the tray icon.
 	**/
-	var drag_enter : String = "drag-enter";
+	var drag_enter : electron.main.Tray.TrayEvent<Void -> Void> = "drag-enter";
 	/**
 		Emitted when a drag operation exits the tray icon.
 	**/
-	var drag_leave : String = "drag-leave";
+	var drag_leave : electron.main.Tray.TrayEvent<Void -> Void> = "drag-leave";
 	/**
 		Emitted when a drag operation ends on the tray or ends at another location.
 	**/
-	var drag_end : String = "drag-end";
+	var drag_end : electron.main.Tray.TrayEvent<Void -> Void> = "drag-end";
 	/**
 		Emitted when the mouse enters the tray icon.
 	**/
-	var mouse_enter : String = "mouse-enter";
+	var mouse_enter : electron.main.Tray.TrayEvent<js.html.Event -> Point -> Void> = "mouse-enter";
 	/**
 		Emitted when the mouse exits the tray icon.
 	**/
-	var mouse_leave : String = "mouse-leave";
+	var mouse_leave : electron.main.Tray.TrayEvent<js.html.Event -> Point -> Void> = "mouse-leave";
 }

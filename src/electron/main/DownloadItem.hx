@@ -53,13 +53,13 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:enum abstract DownloadItemEvent(String) from String to String {
+@:require(js, electron) @:enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the download has been updated and is not done. The state can be one of following:
 	**/
-	var updated : String = "updated";
+	var updated : electron.main.DownloadItem.DownloadItemEvent<js.html.Event -> String -> Void> = "updated";
 	/**
 		Emitted when the download is in a terminal state. This includes a completed download, a cancelled download (via downloadItem.cancel()), and interrupted download that can't be resumed. The state can be one of following:
 	**/
-	var done : String = "done";
+	var done : electron.main.DownloadItem.DownloadItemEvent<js.html.Event -> String -> Void> = "done";
 }

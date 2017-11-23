@@ -23,13 +23,13 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:enum abstract DebuggerEvent(String) from String to String {
+@:require(js, electron) @:enum abstract DebuggerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when debugging session is terminated. This happens either when webContents is closed or devtools is invoked for the attached webContents.
 	**/
-	var detach : String = "detach";
+	var detach : electron.main.Debugger.DebuggerEvent<js.html.Event -> String -> Void> = "detach";
 	/**
 		Emitted whenever debugging target issues instrumentation event.
 	**/
-	var message : String = "message";
+	var message : electron.main.Debugger.DebuggerEvent<js.html.Event -> String -> Dynamic -> Void> = "message";
 }
