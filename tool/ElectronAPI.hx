@@ -275,11 +275,13 @@ class ElectronAPI {
 
 	static function convertType( type : String, ?properties : Array<Dynamic>, collection : Bool ) : ComplexType {
 
+		//trace(type);
+
 		if( type == null )
 			return macro : Dynamic;
 
 		inline function isKnownType(type:String):Bool {
-			var known = ['Bool','Boolean','Buffer','Int','Integer','Dynamic','Double','Float','Number','Function','Object','Promise','String','URL'];
+			var known = ['Bool','Boolean','Buffer','Event','Error','Int','Integer','Dynamic','Double','Float','Number','Function','Object','Promise','String','URL'];
 			return known.indexOf(type) > -1;
 		}
 
@@ -355,7 +357,8 @@ class ElectronAPI {
 			case 'Blob': macro : js.html.Blob;
 			case 'Bool','Boolean': macro : Bool;
 			case 'Buffer': macro : js.node.Buffer;
-			case 'Int','Integer': macro : Int;
+			case 'Event': macro : js.html.Event;
+			case 'Error': macro : js.Error;
 			case 'Dynamic': macro : Dynamic; // Allows to explicit set type to Dynamic
 			case 'Double','Float','Number': macro : Float;
 			case 'Function':
@@ -368,6 +371,7 @@ class ElectronAPI {
 						macro : Dynamic
 					);
 				}
+			case 'Int','Integer': macro : Int;
 			case 'Object':
 				if( properties == null ) macro : Dynamic else {
 					TAnonymous( [for(p in properties){
@@ -443,20 +447,46 @@ class ElectronAPI {
 	}
 
 	static function createEventAbstract( pack : Array<String>, name : String, events : Array<APIEvent> ) : TypeDefinition {
+
+		var _name = escapeTypeName( name );
+		var _pack = pack.copy();
+		_pack.push( _name );
+
 		var fields = new Array<Field>();
 		for( e in events ) {
-			var ename : String = e.name;
+			var params = new Array<TypeParam>();
+			if( e.returns == null ) {
+				params.push( TPType(macro:Void->Void) );
+			} else {
+				var args = [];
+				for( r in e.returns ) {
+					var t = convertType( r.type, false );
+					args.push(t);
+				}
+				params.push( TPType( TFunction( args, macro:Void ) ) );
+			}
+
+			var typePath = { pack: _pack, name: _name+'Event', params: params };
 			fields.push({
-				name: ename.replace( '-', '_' ),
-				kind: FVar( macro : String, { expr: EConst( CString( ename ) ), pos: pos } ),
+				name: e.name.replace( '-', '_' ),
+				kind: FVar( TPath( typePath ), { expr: EConst( CString( e.name ) ), pos: pos } ),
 				doc: e.description,
 				pos: pos
 			});
 		}
-		var _pack = pack.copy();
-		var _name = escapeTypeName( name );
-		_pack.push( _name );
-		return createTypeDefinition( _pack, _name+'Event', TDAbstract(macro:String,[macro:String],[macro:String]), fields, [{ name: ":enum", pos: pos }] );
+
+		return {
+			pack: _pack,
+			name: _name+'Event',
+			params: [ { name: 'T', constraints: [macro:haxe.Constraints.Function] } ],
+			kind: TDAbstract(macro:js.node.events.EventEmitter.Event<T>,[],[macro:js.node.events.EventEmitter.Event<T>]),
+			fields: fields,
+			meta: [
+				{ name: ':require', params: [macro $i{'js'},macro $i{'electron'}], pos: pos },
+				{ name: ":enum", pos: pos }
+			],
+			pos: pos
+		};
 	}
 
 	static function escapeTypeName( name : String ) : String
