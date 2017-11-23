@@ -1,4 +1,5 @@
 
+import electron.main.App;
 import electron.main.BrowserWindow;
 
 class Main {
@@ -12,7 +13,7 @@ class Main {
 
 		electron.main.App.on( 'ready', function(e) {
 			var win = new BrowserWindow( { width: 720, height: 480 } );
-			win.on( closed, function(e) {
+			win.on( closed, function() {
 				if( js.Node.process.platform != 'darwin' )
 					electron.main.App.quit();
 			});
