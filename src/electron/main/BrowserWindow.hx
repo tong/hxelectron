@@ -393,14 +393,17 @@ package electron.main;
 	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Just sum any extra width and height areas you have within the overall content view.
 	**/
+	@:electron_platform(["macOS"])
 	function setAspectRatio(aspectRatio:Float, extraSize:Size):Void;
 	/**
 		Uses Quick Look to preview a file at a given path.
 	**/
+	@:electron_platform(["macOS"])
 	function previewFile(path:String, ?displayName:String):Void;
 	/**
 		Closes the currently open Quick Look panel.
 	**/
+	@:electron_platform(["macOS"])
 	function closeFilePreview():Void;
 	/**
 		Resizes and moves the window to the supplied bounds
@@ -440,26 +443,32 @@ package electron.main;
 	/**
 		Sets whether the window can be moved by user. On Linux does nothing.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function setMovable(movable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function isMovable():Bool;
 	/**
 		Sets whether the window can be manually minimized by user. On Linux does nothing.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function setMinimizable(minimizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function isMinimizable():Bool;
 	/**
 		Sets whether the window can be manually maximized by user. On Linux does nothing.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function setMaximizable(maximizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function isMaximizable():Bool;
 	/**
 		Sets whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
@@ -469,10 +478,12 @@ package electron.main;
 	/**
 		Sets whether the window can be manually closed by user. On Linux does nothing.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function setClosable(closable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function isClosable():Bool;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
@@ -499,6 +510,7 @@ package electron.main;
 	/**
 		Changes the attachment point for sheets on macOS. By default, sheets are attached just below the window frame, but you may want to display them beneath a HTML-rendered toolbar. For example:
 	**/
+	@:electron_platform(["macOS"])
 	function setSheetOffset(offsetY:Float, ?offsetX:Float):Void;
 	/**
 		Starts or stops flashing the window to attract user's attention.
@@ -520,25 +532,33 @@ package electron.main;
 	/**
 		Hooks a windows message. The callback is called when the message is received in the WndProc.
 	**/
+	@:electron_platform(["Windows"])
 	function hookWindowMessage(message:Int, callback:haxe.Constraints.Function):Void;
+	@:electron_platform(["Windows"])
 	function isWindowMessageHooked(message:Int):Bool;
 	/**
 		Unhook the window message.
 	**/
+	@:electron_platform(["Windows"])
 	function unhookWindowMessage(message:Int):Void;
 	/**
 		Unhooks all of the window messages.
 	**/
+	@:electron_platform(["Windows"])
 	function unhookAllWindowMessages():Void;
 	/**
 		Sets the pathname of the file the window represents, and the icon of the file will show in window's title bar.
 	**/
+	@:electron_platform(["macOS"])
 	function setRepresentedFilename(filename:String):Void;
+	@:electron_platform(["macOS"])
 	function getRepresentedFilename():String;
 	/**
 		Specifies whether the window’s document has been edited, and the icon in title bar will become gray when set to true.
 	**/
+	@:electron_platform(["macOS"])
 	function setDocumentEdited(edited:Bool):Void;
+	@:electron_platform(["macOS"])
 	function isDocumentEdited():Bool;
 	function focusOnWebView():Void;
 	function blurWebView():Void;
@@ -574,6 +594,7 @@ package electron.main;
 	/**
 		Sets the menu as the window's menu bar, setting it to null will remove the menu bar.
 	**/
+	@:electron_platform(["Linux", "Windows"])
 	function setMenu(menu:Dynamic):Void;
 	/**
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
@@ -586,30 +607,37 @@ package electron.main;
 	/**
 		Sets a 16 x 16 pixel overlay onto the current taskbar icon, usually used to convey some sort of application status or to passively notify the user.
 	**/
+	@:electron_platform(["Windows"])
 	function setOverlayIcon(overlay:NativeImage, description:String):Void;
 	/**
 		Sets whether the window should have a shadow. On Windows and Linux does nothing.
 	**/
+	@:electron_platform(["macOS"])
 	function setHasShadow(hasShadow:Bool):Void;
 	/**
 		On Windows and Linux always returns true.
 	**/
+	@:electron_platform(["macOS"])
 	function hasShadow():Bool;
 	/**
 		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a Boolean object indicates whether the thumbnail has been added successfully. The number of buttons in thumbnail toolbar should be no greater than 7 due to the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be removed due to the platform's limitation. But you can call the API with an empty array to clean the buttons. The buttons is an array of Button objects: The flags is an array that can include following Strings:
 	**/
+	@:electron_platform(["Windows"])
 	function setThumbarButtons(buttons:Array<ThumbarButton>):Bool;
 	/**
 		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: {x: 0, y: 0, width: 0, height: 0}.
 	**/
+	@:electron_platform(["Windows"])
 	function setThumbnailClip(region:Rectangle):Void;
 	/**
 		Sets the toolTip that is displayed when hovering over the window thumbnail in the taskbar.
 	**/
+	@:electron_platform(["Windows"])
 	function setThumbnailToolTip(toolTip:String):Void;
 	/**
 		Sets the properties for the window's taskbar button. Note: relaunchCommand and relaunchDisplayName must always be set together. If one of those properties is not set, then neither will be used.
 	**/
+	@:electron_platform(["Windows"])
 	function setAppDetails(options:{ /**
 		Window's . It has to be set, otherwise the other options will have no effect.
 	**/
@@ -634,10 +662,12 @@ package electron.main;
 	/**
 		Same as webContents.showDefinitionForSelection().
 	**/
+	@:electron_platform(["macOS"])
 	function showDefinitionForSelection():Void;
 	/**
 		Changes window icon.
 	**/
+	@:electron_platform(["Windows", "Linux"])
 	function setIcon(icon:NativeImage):Void;
 	/**
 		Sets whether the window menu bar should hide itself automatically. Once set the menu bar will only show when users press the single Alt key. If the menu bar is already visible, calling setAutoHideMenuBar(true) won't hide it immediately.
@@ -647,6 +677,7 @@ package electron.main;
 	/**
 		Sets whether the menu bar should be visible. If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single Alt key.
 	**/
+	@:electron_platform(["Windows", "Linux"])
 	function setMenuBarVisibility(visible:Bool):Void;
 	function isMenuBarVisible():Bool;
 	/**
@@ -664,32 +695,39 @@ package electron.main;
 	/**
 		Prevents the window contents from being captured by other apps. On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with WDA_MONITOR.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function setContentProtection(enable:Bool):Void;
 	/**
 		Changes whether the window can be focused.
 	**/
+	@:electron_platform(["Windows"])
 	function setFocusable(focusable:Bool):Void;
 	/**
 		Sets parent as current window's parent window, passing null will turn current window into a top-level window.
 	**/
+	@:electron_platform(["Linux", "macOS"])
 	function setParentWindow(parent:BrowserWindow):Void;
 	function getParentWindow():BrowserWindow;
 	function getChildWindows():Array<BrowserWindow>;
 	/**
 		Controls whether to hide cursor when typing.
 	**/
+	@:electron_platform(["macOS"])
 	function setAutoHideCursor(autoHide:Bool):Void;
 	/**
 		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
 	**/
+	@:electron_platform(["macOS"])
 	function setVibrancy(type:String):Void;
 	/**
 		Sets the touchBar layout for the current window. Specifying null or undefined clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+. Note: The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
+	@:electron_platform(["macOS", "Experimental"])
 	function setTouchBar(touchBar:TouchBar):Void;
 	/**
 		Note: The BrowserView API is currently experimental and may change or be removed in future Electron releases.
 	**/
+	@:electron_platform(["Experimental"])
 	function setBrowserView(browserView:BrowserView):Void;
 	static function getAllWindows():Array<BrowserWindow>;
 	static function getFocusedWindow():BrowserWindow;

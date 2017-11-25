@@ -19,6 +19,7 @@ package electron.main;
 	**/
 	@:optional
 	var webPreferences : { }; }):Void;
+	@:electron_platform(["Experimental"])
 	function setAutoResize(options:{ /**
 		If true, the view's width will grow and shrink together with the window. false by default.
 	**/
@@ -31,7 +32,9 @@ package electron.main;
 	/**
 		Resizes and moves the view to the supplied bounds relative to the window.
 	**/
+	@:electron_platform(["Experimental"])
 	function setBounds(bounds:Rectangle):Void;
+	@:electron_platform(["Experimental"])
 	function setBackgroundColor(color:String):Void;
 	static function fromId(id:Int):BrowserView;
 }

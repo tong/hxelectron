@@ -26,29 +26,37 @@ package electron;
 	/**
 		Returns an Object containing title and url keys representing the bookmark in the clipboard. The title and url values will be empty strings when the bookmark is unavailable.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	static function readBookmark():{ @:optional
 	var title : String; @:optional
 	var url : String; };
 	/**
 		Writes the title and url into the clipboard as a bookmark. Note: Most apps on Windows don't support pasting bookmarks into them so you can use clipboard.write to write both a bookmark and fallback text to the clipboard.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	static function writeBookmark(title:String, url:String, ?type:String):Void;
+	@:electron_platform(["macOS"])
 	static function readFindText():String;
 	/**
 		Writes the text into the find pasteboard as plain text. This method uses synchronous IPC when called from the renderer process.
 	**/
+	@:electron_platform(["macOS"])
 	static function writeFindText(text:String):Void;
 	/**
 		Clears the clipboard content.
 	**/
 	static function clear(?type:String):Void;
 	static function availableFormats(?type:String):Array<String>;
+	@:electron_platform(["Experimental"])
 	static function has(format:String, ?type:String):Bool;
+	@:electron_platform(["Experimental"])
 	static function read(format:String):String;
+	@:electron_platform(["Experimental"])
 	static function readBuffer(format:String):js.node.Buffer;
 	/**
 		Writes the buffer into the clipboard as format.
 	**/
+	@:electron_platform(["Experimental"])
 	static function writeBuffer(format:String, buffer:js.node.Buffer, ?type:String):Void;
 	/**
 		Writes data to the clipboard.

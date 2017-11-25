@@ -114,6 +114,7 @@ package electron.main;
 	/**
 		Ignore application menu shortcuts while this web contents is focused.
 	**/
+	@:electron_platform(["Experimental"])
 	function setIgnoreMenuShortcuts(ignore:Bool):Void;
 	/**
 		Mute the audio on the current web page.
@@ -398,6 +399,7 @@ package electron.main;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
+	@:electron_platform(["macOS"])
 	function showDefinitionForSelection():Void;
 	/**
 		Set the size of the page. This is only supported for <webview> guest contents.

@@ -18,6 +18,7 @@ package electron.main;
 	/**
 		Sets the image associated with this tray icon when pressed on macOS.
 	**/
+	@:electron_platform(["macOS"])
 	function setPressedImage(image:NativeImage):Void;
 	/**
 		Sets the hover text for this tray icon.
@@ -26,14 +27,17 @@ package electron.main;
 	/**
 		Sets the title displayed aside of the tray icon in the status bar.
 	**/
+	@:electron_platform(["macOS"])
 	function setTitle(title:String):Void;
 	/**
 		Sets when the tray's icon background becomes highlighted (in blue). Note: You can use highlightMode with a BrowserWindow by toggling between 'never' and 'always' modes when the window visibility changes.
 	**/
+	@:electron_platform(["macOS"])
 	function setHighlightMode(mode:String):Void;
 	/**
 		Displays a tray balloon.
 	**/
+	@:electron_platform(["Windows"])
 	function displayBalloon(options:{ @:optional
 	var icon : Dynamic; @:optional
 	var title : String; @:optional
@@ -41,6 +45,7 @@ package electron.main;
 	/**
 		Pops up the context menu of the tray icon. When menu is passed, the menu will be shown instead of the tray icon's context menu. The position is only available on Windows, and it is (0, 0) by default.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function popUpContextMenu(?menu:Menu, ?position:Point):Void;
 	/**
 		Sets the context menu for this icon.
@@ -49,6 +54,7 @@ package electron.main;
 	/**
 		The bounds of this tray icon as Object.
 	**/
+	@:electron_platform(["macOS", "Windows"])
 	function getBounds():Rectangle;
 	function isDestroyed():Bool;
 }

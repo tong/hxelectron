@@ -57,6 +57,7 @@ package electron;
 	**/
 	static function crash():Void;
 	static function getCPUUsage():CPUUsage;
+	@:electron_platform(["Windows", "Linux"])
 	static function getIOCounters():IOCounters;
 	/**
 		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
@@ -105,5 +106,6 @@ package electron;
 	/**
 		Sets the file descriptor soft limit to maxDescriptors or the OS hard limit, whichever is lower for the current process.
 	**/
+	@:electron_platform(["macOS", "Linux"])
 	static function setFdLimit(maxDescriptors:Int):Void;
 }

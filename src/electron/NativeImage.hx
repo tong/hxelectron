@@ -61,6 +61,7 @@ package electron;
 	/**
 		Notice that the returned pointer is a weak pointer to the underlying native image instead of a copy, so you must ensure that the associated nativeImage instance is kept around.
 	**/
+	@:electron_platform(["macOS"])
 	function getNativeHandle():js.node.Buffer;
 	function isEmpty():Bool;
 	function getSize():Size;

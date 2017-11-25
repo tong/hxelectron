@@ -30,9 +30,11 @@ package electron;
 	/**
 		Creates or updates a shortcut link at shortcutPath.
 	**/
+	@:electron_platform(["Windows"])
 	static function writeShortcutLink(shortcutPath:String, ?operation:String, options:ShortcutDetails):Bool;
 	/**
 		Resolves the shortcut link at shortcutPath. An exception will be thrown when any error happens.
 	**/
+	@:electron_platform(["Windows"])
 	static function readShortcutLink(shortcutPath:String):ShortcutDetails;
 }
