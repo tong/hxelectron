@@ -3,6 +3,19 @@ import haxe.macro.Expr;
 
 using StringTools;
 
+@:enum abstract APIType(String) from String to String {
+	var Module = "Module";
+	var Class_ = "Class";
+	var Structure = "Structure";
+}
+
+@:enum abstract APIPlatform(String) from String to String {
+	var macOS = "macOS";
+	var windows = "Windows";
+	var linux = "LINUX";
+	var experimental = "Experimental";
+}
+
 typedef APIProperty = {
 	name : String,
 	type : String,
@@ -14,7 +27,7 @@ typedef APIProperty = {
 typedef APIEvent = {
 	name : String,
 	?description : String,
-	?platforms : Array<String>,
+	?platforms : Array<APIPlatform>,
 	returns : Array<APIReturn>
 }
 
@@ -42,18 +55,12 @@ typedef APIMethod = {
 	description : String,
 	returns : APIReturn,
 	parameters : Array<APIMethodParameter>,
-	platforms : Array<String>
+	platforms : Array<APIPlatform>
 }
 
 typedef APIProcess = {
 	var main : Bool;
 	var renderer : Bool;
-}
-
-@:enum abstract APIType(String) from String to String {
-	var Module = "Module";
-	var Class_ = "Class";
-	var Structure = "Structure";
 }
 
 typedef APIItem = {
@@ -276,11 +283,20 @@ class ElectronAPI {
 			}
 		}
 
+		var meta = new Array<MetadataEntry>();
+		if( method.platforms != null ) {
+			var params = new Array<Expr>();
+			for( p in method.platforms )
+				params.push( { expr: EConst( CString( p ) ), pos: pos } );
+			meta.push( { name: ':electron_platform', params: [{ expr: EArrayDecl( params ), pos: pos }], pos: pos } );
+		}
+
 		return createField(
 			(method.name == null) ? 'new' : method.name,
 			FFun( { args: args, ret: ret, expr: null } ),
 			access,
-			method.description
+			method.description,
+			meta
 		);
 	}
 
