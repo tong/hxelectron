@@ -124,6 +124,15 @@ class ElectronAPI {
 
 		for( type in types ) {
 			switch type.name {
+			case 'Screen':
+				// TODO: https://github.com/fponticelli/hxelectron/issues/29
+				for( i in 0...type.meta.length ) {
+					if( type.meta[i].name == ':jsRequire' ) {
+						type.meta.splice( i, 1 );
+						type.meta.push( { name: ':native', params: [macro 'require("electron").screen'], pos: pos } );
+						break;
+					}
+				}
 			case 'App':
 				type.fields.push( {
 					name: 'on',
