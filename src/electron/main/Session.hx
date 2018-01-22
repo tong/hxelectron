@@ -155,6 +155,11 @@ extern class Session extends js.node.events.EventEmitter<electron.main.Session> 
 		Clears the session’s HTTP authentication cache.
 	**/
 	function clearAuthCache(options:Dynamic, ?callback:haxe.Constraints.Function):Void;
+
+	/**
+	    Returns a Session instance from [partition] String
+	**/
+	static function fromPartition(partition:String, ?options:{cache:Bool}):Session;
 }
 
 /**
