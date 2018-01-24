@@ -105,26 +105,29 @@ class ElectronAPI {
 		for( item in api ) {
 			var ntypes = convertItem( item, pack );
 			for( ntype in ntypes ) {
-				if( ntype == null ) {
+				if( ntype == null )
 					ntypes.remove( ntype );
-				} else {
-					switch item.type {
-					case Module:
-						for( otype in types ) {
-							if( ntype.name == otype.name &&
-								ntype.pack.join( '.' ) == otype.pack.join( '.' ) ) {
-								ntype.fields = ntype.fields.concat( otype.fields );
-								//otype.fields = otype.fields.concat( ntype.fields );
-								//otype.meta = otype.meta.concat( ntype.meta );
-								//	ntypes.remove( ntype );
-								types.remove( otype );
-							}
-						}
-					case _:
-					}
-				}
 			}
 			types = types.concat( ntypes );
+		}
+
+		var i = 0, j = 0;
+		while( i < types.length ) {
+			j = 0;
+			while( j < types.length ) {
+				if( i != j ) {
+					var ti = types[i];
+					var tj = types[j];
+					if( ti.name == tj.name &&
+						ti.pack.join( '.' ) == tj.pack.join( '.' ) ) {
+						tj.fields = tj.fields.concat( ti.fields );
+						types.splice( i, 1 );
+						break;
+					}
+				}
+				j++;
+			}
+			i++;
 		}
 
 		///// PATCH ////////////////////////////////////////////////////////////
@@ -186,9 +189,11 @@ class ElectronAPI {
 		if( item.process != null && (!item.process.main || !item.process.renderer) ) {
 			if( item.process.main ) {
 				pack.push( 'main' );
+				//meta.push( { name: ':electron_main', pos: pos } );
 				//meta.push( { name: ':require', params: [macro $i{'electron_main'}], pos: pos } );
 			} else if( item.process.renderer ) {
 				pack.push( 'renderer' );
+				//meta.push( { name: ':electron_renderer', pos: pos } );
 				//meta.push( { name: ':require', params: [macro $i{'electron_renderer'}], pos: pos } );
 			}
 		}
@@ -250,9 +255,7 @@ class ElectronAPI {
 			createTypeDefinition( pack, item.name, TDStructure, fields, meta );
 		}
 
-		var types = [def];
-		for( def in extraTypes ) types.push( def );
-		return types;
+		return [def].concat( extraTypes );
 	}
 
 	static function convertMethod( method : APIMethod, ?access : Array<Access> ) : Field {
@@ -301,8 +304,6 @@ class ElectronAPI {
 	}
 
 	static function convertType( type : String, ?properties : Array<Dynamic>, collection : Bool ) : ComplexType {
-
-		//trace(type);
 
 		if( type == null )
 			return macro : Dynamic;
@@ -401,6 +402,14 @@ class ElectronAPI {
 			case 'Int','Integer': macro : Int;
 			case 'Object':
 				if( properties == null ) macro : Dynamic else {
+					//TODO
+					/*
+					for(p in properties ) {
+						trace(p.type);
+						var t = convertType( '' + p.type, p.properties, p.collection );
+						trace(t);
+					}
+					*/
 					TAnonymous( [for(p in properties){
 						name: escapeName( p.name ),
 						kind: FVar( convertType( '' + p.type, p.properties, p.collection ) ),
