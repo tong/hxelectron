@@ -436,6 +436,9 @@ package electron.main;
 	**/
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
 	function getOSProcessId():Int;
+	static function getAllWebContents():Array<WebContents>;
+	static function getFocusedWebContents():WebContents;
+	static function fromId(id:Int):WebContents;
 }
 
 /**

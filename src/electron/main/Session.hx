@@ -5,9 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/session>
 **/
-@:require(js, electron) 
-@:jsRequire("electron", "session") 
-extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+@:require(js, electron) @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
 	/**
 		A Cookies object for this session.
 	**/
@@ -155,18 +153,23 @@ extern class Session extends js.node.events.EventEmitter<electron.main.Session> 
 		Clears the session’s HTTP authentication cache.
 	**/
 	function clearAuthCache(options:Dynamic, ?callback:haxe.Constraints.Function):Void;
-
 	/**
-	    Returns a Session instance from [partition] String
+		A Session object, the default session object of the app.
 	**/
-	static function fromPartition(partition:String, ?options:{cache:Bool}):Session;
+	var defaultSession : Session;
+	/**
+		If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. if there is no persist: prefix, the page will use an in-memory session. If the partition is empty then default session of the app will be returned. To create a Session with options, you have to ensure the Session with the partition has never been used before. There is no way to change the options of an existing Session object.
+	**/
+	static function fromPartition(partition:String, options:{ /**
+		Whether to enable cache.
+	**/
+	@:optional
+	var cache : Bool; }):Session;
 }
 
 /**
 **/
-@:require(js, electron) 
-@:enum 
-abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:require(js, electron) @:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron is about to download item in webContents. Calling event.preventDefault() will cancel the download and item will not be available from next tick of the process.
 	**/

@@ -10,7 +10,47 @@ package electron.main;
 		A Boolean specifying whether the request will use HTTP chunked transfer encoding or not. Defaults to false. The property is readable and writable, however it can be set only before the first write operation as the HTTP headers are not yet put on the wire. Trying to set the chunkedEncoding property after the first write will throw an error. Using chunked encoding is strongly recommended if you need to send a large request body as data will be streamed in small chunks instead of being internally buffered inside Electron process memory.
 	**/
 	var chunkedEncoding : Bool;
-	function new(options:Dynamic):Void;
+	function new(options:{ /**
+		The HTTP request method. Defaults to the GET method.
+	**/
+	@:optional
+	var method : String; /**
+		The request URL. Must be provided in the absolute form with the protocol scheme specified as http or https.
+	**/
+	@:optional
+	var url : String; /**
+		The instance with which the request is associated.
+	**/
+	@:optional
+	var session : { }; /**
+		The name of the with which the request is associated. Defaults to the empty string. The session option prevails on partition. Thus if a session is explicitly specified, partition is ignored.
+	**/
+	@:optional
+	var partition : String; /**
+		The protocol scheme in the form 'scheme:'. Currently supported values are 'http:' or 'https:'. Defaults to 'http:'.
+	**/
+	@:optional
+	var protocol : String; /**
+		The server host provided as a concatenation of the hostname and the port number 'hostname:port'
+	**/
+	@:optional
+	var host : String; /**
+		The server host name.
+	**/
+	@:optional
+	var hostname : String; /**
+		The server's listening port number.
+	**/
+	@:optional
+	var port : Int; /**
+		The path part of the request URL.
+	**/
+	@:optional
+	var path : String; /**
+		The redirect mode for this request. Should be one of follow, error or manual. Defaults to follow. When mode is error, any redirection will be aborted. When mode is manual the redirection will be deferred until is invoked. Listen for the event in this mode to get more details about the redirect request.
+	**/
+	@:optional
+	var redirect : String; }):Void;
 	/**
 		Adds an extra HTTP header. The header name will issued as it is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a String, its toString() method will be called to obtain the final value.
 	**/
