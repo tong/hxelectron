@@ -4,6 +4,7 @@ HXElectron
 
 [![Build Status](https://img.shields.io/travis/fponticelli/hxelectron/master.svg?style=flat-square)](https://travis-ci.org/fponticelli/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/fponticelli/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
 
+Haxe/JS extern type definitions for [electron](https://electronjs.org/).
 
 The Electron framework lets you write cross-platform desktop applications
 using JavaScript, HTML and CSS based on [Node.js](https://nodejs.org/) and
