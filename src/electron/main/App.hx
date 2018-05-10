@@ -52,7 +52,7 @@ package electron.main;
 	**/
 	static function quit():Void;
 	/**
-		Exits immediately with exitCode.  exitCode defaults to 0. All windows will be closed immediately without asking user and the before-quit and will-quit events will not be emitted.
+		Exits immediately with exitCode. exitCode defaults to 0. All windows will be closed immediately without asking user and the before-quit and will-quit events will not be emitted.
 	**/
 	static function exit(?exitCode:Int):Void;
 	/**
@@ -116,7 +116,6 @@ package electron.main;
 	/**
 		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with your-protocol:// will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter. On Windows you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches. Note: On macOS, you can only register protocols that have been added to your app's info.plist, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
 	**/
-	@:electron_platform(["macOS", "Windows"])
 	static function setAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		This method checks if the current executable as the default handler for a protocol (aka URI scheme). If so, it will remove the app as the default handler.
@@ -164,6 +163,16 @@ package electron.main;
 	@:electron_platform(["macOS"])
 	static function getCurrentActivityType():String;
 	/**
+		Invalidates the current Handoff user activity.
+	**/
+	@:electron_platform(["macOS"])
+	static function invalidateCurrentActivity(type:String):Void;
+	/**
+		Updates the current activity if its type matches type, merging the entries from userInfo into its current userInfo dictionary.
+	**/
+	@:electron_platform(["macOS"])
+	static function updateCurrentActivity(type:String, userInfo:Dynamic):Void;
+	/**
 		Changes the Application User Model ID to id.
 	**/
 	@:electron_platform(["Windows"])
@@ -189,10 +198,8 @@ package electron.main;
 		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behaviour. This method can only be called before app is ready.
 	**/
 	static function disableDomainBlockingFor3DAPIs():Void;
-	@:electron_platform(["Deprecated"])
-	static function getAppMemoryInfo():Array<ProcessMetric>;
 	static function getAppMetrics():Array<ProcessMetric>;
-	static function getGpuFeatureStatus():GPUFeatureStatus;
+	static function getGPUFeatureStatus():GPUFeatureStatus;
 	/**
 		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the existence of a .desktop file to work, for more information please read Desktop Environment Integration.
 	**/
@@ -203,7 +210,7 @@ package electron.main;
 	@:electron_platform(["Linux"])
 	static function isUnityRunning():Bool;
 	/**
-		If you provided path and args options to app.setLoginItemSettings then you need to pass the same arguments here for openAtLogin to be set correctly. Note: This API has no effect on MAS builds.
+		If you provided path and args options to app.setLoginItemSettings then you need to pass the same arguments here for openAtLogin to be set correctly.
 	**/
 	@:electron_platform(["macOS", "Windows"])
 	static function getLoginItemSettings(?options:{ /**
@@ -228,24 +235,24 @@ package electron.main;
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		true if the app is set to open as hidden at login. This setting is only supported on macOS.
+		true if the app is set to open as hidden at login. This setting is not available on .
 	**/
 	@:optional
 	var openAsHidden : Bool; /**
-		true if the app was opened at login automatically. This setting is only supported on macOS.
+		true if the app was opened at login automatically. This setting is not available on .
 	**/
 	@:optional
 	var wasOpenedAtLogin : Bool; /**
-		true if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is only supported on macOS.
+		true if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on .
 	**/
 	@:optional
 	var wasOpenedAsHidden : Bool; /**
-		true if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is only supported on macOS.
+		true if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on .
 	**/
 	@:optional
 	var restoreState : Bool; };
 	/**
-		Set the app's login item settings. To work with Electron's autoUpdater on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example: Note: This API has no effect on MAS builds.
+		Set the app's login item settings. To work with Electron's autoUpdater on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example:
 	**/
 	@:electron_platform(["macOS", "Windows"])
 	static function setLoginItemSettings(settings:{ /**
@@ -253,7 +260,7 @@ package electron.main;
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemStatus().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is only supported on macOS.
+		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemStatus().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is not available on .
 	**/
 	@:optional
 	var openAsHidden : Bool; /**
@@ -267,6 +274,11 @@ package electron.main;
 	var args : Array<String>; }):Void;
 	@:electron_platform(["macOS", "Windows"])
 	static function isAccessibilitySupportEnabled():Bool;
+	/**
+		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. https://www.chromium.org/developers/design-documents/accessibility for more details. Disabled by default. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
+	**/
+	@:electron_platform(["macOS", "Windows"])
+	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
 	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.
 	**/
@@ -293,9 +305,21 @@ package electron.main;
 	@:optional
 	var version : String; }):Void;
 	/**
+		Start accessing a security scoped resource. With this method electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
+	**/
+	@:electron_platform(["macOS (mas)"])
+	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
+	/**
 		Enables mixed sandbox mode on the app. This method can only be called before app is ready.
 	**/
 	@:electron_platform(["Experimental", "macOS", "Windows"])
 	static function enableMixedSandbox():Void;
+	@:electron_platform(["macOS"])
+	static function isInApplicationsFolder():Bool;
+	/**
+		No confirmation dialog will be presented by default, if you wish to allow the user to confirm the operation you may do so using the dialog API. NOTE: This method throws errors if anything other than the user causes the move to fail. For instance if the user cancels the authorization dialog this method returns false. If we fail to perform the copy then this method will throw an error. The message in the error should be informative and tell you exactly what went wrong
+	**/
+	@:electron_platform(["macOS"])
+	static function moveToApplicationsFolder():Bool;
 	static function on(eventType:Dynamic, callback:Dynamic -> Void):Void;
 }

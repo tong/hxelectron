@@ -34,7 +34,7 @@ package electron.main;
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers
+		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers.
 	**/
 	@:optional
 	var storages : Array<String>; /**
@@ -99,9 +99,9 @@ package electron.main;
 	**/
 	function setCertificateVerifyProc(proc:haxe.Constraints.Function):Void;
 	/**
-		Sets the handler which can be used to respond to permission requests for the session. Calling callback(true) will allow the permission and callback(false) will reject it.
+		Sets the handler which can be used to respond to permission requests for the session. Calling callback(true) will allow the permission and callback(false) will reject it. To clear the handler, call setPermissionRequestHandler(null).
 	**/
-	function setPermissionRequestHandler(handler:haxe.Constraints.Function):Void;
+	function setPermissionRequestHandler(handler:Dynamic):Void;
 	/**
 		Clears the host resolver cache.
 	**/
@@ -115,7 +115,7 @@ package electron.main;
 	**/
 	function setUserAgent(userAgent:String, ?acceptLanguages:String):Void;
 	function getUserAgent():String;
-	function getBlobData(identifier:String, callback:haxe.Constraints.Function):js.html.Blob;
+	function getBlobData(identifier:String, callback:haxe.Constraints.Function):Void;
 	/**
 		Allows resuming cancelled or interrupted downloads from previous Session. The API will generate a DownloadItem that can be accessed with the will-download event. The DownloadItem will not have any WebContents associated with it and the initial state will be interrupted. The download will start only when the resume API is called on the DownloadItem.
 	**/
@@ -154,13 +154,18 @@ package electron.main;
 	**/
 	function clearAuthCache(options:Dynamic, ?callback:haxe.Constraints.Function):Void;
 	/**
+		Adds scripts that will be executed on ALL web contents that are associated with this session just before normal preload scripts run.
+	**/
+	function setPreloads(preloads:Array<String>):Void;
+	function getPreloads():Array<String>;
+	/**
 		A Session object, the default session object of the app.
 	**/
 	var defaultSession : Session;
 	/**
 		If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. if there is no persist: prefix, the page will use an in-memory session. If the partition is empty then default session of the app will be returned. To create a Session with options, you have to ensure the Session with the partition has never been used before. There is no way to change the options of an existing Session object.
 	**/
-	static function fromPartition(partition:String, options:{ /**
+	static function fromPartition(partition:String, ?options:{ /**
 		Whether to enable cache.
 	**/
 	@:optional

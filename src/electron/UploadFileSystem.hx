@@ -21,7 +21,7 @@ package electron;
 	**/
 	var length : Int;
 	/**
-		Last Modification time in number of seconds sine the UNIX epoch.
+		Last Modification time in number of seconds since the UNIX epoch.
 	**/
 	var modificationTime : Float;
 }

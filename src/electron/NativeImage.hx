@@ -34,6 +34,11 @@ package electron;
 		Creates a new NativeImage instance from dataURL.
 	**/
 	static function createFromDataURL(dataURL:String):NativeImage;
+	/**
+		Creates a new NativeImage instance from the NSImage that maps to the given image name. See NSImageName for a list of possible values. The hslShift is applied to the image with the following rules This means that [-1, 0, 1] will make the image completely white and [-1, 1, 0] will make the image completely black.
+	**/
+	@:electron_platform(["macOS"])
+	static function createFromNamedImage(imageName:String, hslShift:Array<Float>):NativeImage;
 	function toPNG(?options:{ /**
 		Defaults to 1.0.
 	**/
@@ -79,7 +84,7 @@ package electron;
 	**/
 	@:optional
 	var width : Int; /**
-		Defaults to the image's height
+		Defaults to the image's height.
 	**/
 	@:optional
 	var height : Int; /**

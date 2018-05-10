@@ -38,7 +38,7 @@ package electron.main;
 	**/
 	@:optional
 	var userAgent : String; /**
-		Extra headers separated by "\n"
+		Extra headers separated by "\n".
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
@@ -47,6 +47,10 @@ package electron.main;
 	**/
 	@:optional
 	var baseURLForDataURL : String; }):Void;
+	/**
+		Loads the given file in the window, filePath should be a path to an HTML file relative to the root of your application.  For instance an app structure like this: Would require code like this
+	**/
+	function loadFile(filePath:String):Void;
 	/**
 		Initiates a download of the resource at url without navigating. The will-download event of session will be triggered.
 	**/
@@ -108,7 +112,7 @@ package electron.main;
 	**/
 	function insertCSS(css:String):Void;
 	/**
-		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation. If the result of the executed code is a promise the callback result will be the resolved value of the promise.  We recommend that you use the returned Promise to handle code that results in a Promise.
+		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation. If the result of the executed code is a promise the callback result will be the resolved value of the promise. We recommend that you use the returned Promise to handle code that results in a Promise.
 	**/
 	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Dynamic>;
 	/**
@@ -130,17 +134,13 @@ package electron.main;
 	**/
 	function getZoomFactor(callback:haxe.Constraints.Function):Void;
 	/**
-		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively.
+		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is scale := 1.2 ^ level.
 	**/
 	function setZoomLevel(level:Float):Void;
 	/**
 		Sends a request to get current zoom level, the callback will be called with callback(zoomLevel).
 	**/
 	function getZoomLevel(callback:haxe.Constraints.Function):Void;
-	/**
-		Deprecated: Call setVisualZoomLevelLimits instead to set the visual zoom level limits. This method will be removed in Electron 2.0.
-	**/
-	function setZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 	**/
@@ -202,7 +202,7 @@ package electron.main;
 	**/
 	function insertText(text:String):Void;
 	/**
-		Starts a request to find all matches for the text in the web page and returns an Integer representing the request id used for the request. The result of the request can be obtained by subscribing to found-in-page event.
+		Starts a request to find all matches for the text in the web page. The result of the request can be obtained by subscribing to found-in-page event.
 	**/
 	function findInPage(text:String, ?options:{ /**
 		Whether to search forward or backward, defaults to true.
@@ -224,7 +224,7 @@ package electron.main;
 		When combined with wordStart, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to false.
 	**/
 	@:optional
-	var medialCapitalAsWordStart : Bool; }):Void;
+	var medialCapitalAsWordStart : Bool; }):Int;
 	/**
 		Stops any findInPage request for the webContents with the provided action.
 	**/
@@ -260,7 +260,7 @@ package electron.main;
 		Set the printer device name to use. Default is ''.
 	**/
 	@:optional
-	var deviceName : String; }):Void;
+	var deviceName : String; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Prints window's web page as PDF with Chromium's preview printing custom settings. The callback will be called with callback(error, data) on completion. The data is a Buffer that contains the generated PDF data. The landscape will be ignored if @page CSS at-rule is used in the web page. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
 	**/
@@ -294,7 +294,11 @@ package electron.main;
 	**/
 	function removeWorkSpace(path:String):Void;
 	/**
-		Opens the devtools.
+		Uses the devToolsWebContents as the target WebContents to show devtools. The devToolsWebContents must not have done any navigation, and it should not be used for other purposes after the call. By default Electron manages the devtools by creating an internal WebContents with native view, which developers have very limited control of. With the setDevToolsWebContents method, developers can use any WebContents to show the devtools in it, including BrowserWindow, BrowserView and <webview> tag. Note that closing the devtools does not destroy the devToolsWebContents, it is caller's responsibility to destroy devToolsWebContents. An example of showing devtools in a <webview> tag: An example of showing devtools in a BrowserWindow:
+	**/
+	function setDevToolsWebContents(devToolsWebContents:WebContents):Void;
+	/**
+		Opens the devtools. When contents is a <webview> tag, the mode would be detach by default, explicitly passing an empty mode can force using last used dock state.
 	**/
 	function openDevTools(?options:{ /**
 		Opens the devtools with specified dock state, can be right, bottom, undocked, detach. Defaults to last used dock state. In undocked mode it's possible to dock back. In detach mode it's not.
@@ -327,19 +331,19 @@ package electron.main;
 		Enable device emulation with the given parameters.
 	**/
 	function enableDeviceEmulation(parameters:{ /**
-		Specify the screen type to emulate (default: desktop)
+		Specify the screen type to emulate (default: desktop):
 	**/
 	@:optional
 	var screenPosition : String; /**
-		Set the emulated screen size (screenPosition == mobile)
+		Set the emulated screen size (screenPosition == mobile).
 	**/
 	@:optional
 	var screenSize : Size; /**
-		Position the view on the screen (screenPosition == mobile) (default: {x: 0, y: 0})
+		Position the view on the screen (screenPosition == mobile) (default: {x: 0, y: 0}).
 	**/
 	@:optional
 	var viewPosition : Point; /**
-		Set the device scale factor (if zero defaults to original device scale factor) (default: 0)
+		Set the device scale factor (if zero defaults to original device scale factor) (default: 0).
 	**/
 	@:optional
 	var deviceScaleFactor : Int; /**
@@ -347,15 +351,7 @@ package electron.main;
 	**/
 	@:optional
 	var viewSize : Size; /**
-		Whether emulated view should be scaled down if necessary to fit into available space (default: false)
-	**/
-	@:optional
-	var fitToView : Bool; /**
-		Offset of the emulated view inside available space (not in fit to view mode) (default: {x: 0, y: 0})
-	**/
-	@:optional
-	var offset : Point; /**
-		Scale of emulated view inside available space (not in fit to view mode) (default: 1)
+		Scale of emulated view inside available space (not in fit to view mode) (default: 1).
 	**/
 	@:optional
 	var scale : Float; }):Void;
@@ -367,7 +363,7 @@ package electron.main;
 		Sends an input event to the page. Note: The BrowserWindow containing the contents needs to be focused for sendInputEvent() to work. For keyboard events, the event object also have following properties: For mouse events, the event object also have following properties: For the mouseWheel event, the event object also have following properties:
 	**/
 	function sendInputEvent(event:{ /**
-		() The type of the event, can be mouseDown, mouseUp, mouseEnter, mouseLeave, contextMenu, mouseWheel, mouseMove, keyDown, keyUp, char.
+		() The type of the event, can be mouseDown, mouseUp, mouseEnter, mouseLeave, contextMenu, mouseWheel, mouseMove, keyDown, keyUp or char.
 	**/
 	@:optional
 	var type : String; /**
@@ -432,7 +428,7 @@ package electron.main;
 	function invalidate():Void;
 	function getWebRTCIPHandlingPolicy():String;
 	/**
-		Setting the WebRTC IP handling policy allows you to control which IPs are exposed via WebRTC.  See BrowserLeaks for more details.
+		Setting the WebRTC IP handling policy allows you to control which IPs are exposed via WebRTC. See BrowserLeaks for more details.
 	**/
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
 	function getOSProcessId():Int;
@@ -555,13 +551,13 @@ package electron.main;
 	/**
 		Emitted when a page's theme color changes. This is usually due to encountering a meta tag:
 	**/
-	var did_change_theme_color : electron.main.WebContents.WebContentsEvent<Void -> Void> = "did-change-theme-color";
+	var did_change_theme_color : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "did-change-theme-color";
 	/**
 		Emitted when mouse moves over a link or the keyboard moves the focus to a link.
 	**/
 	var update_target_url : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Void> = "update-target-url";
 	/**
-		Emitted when the cursor's type changes. The type parameter can be default, crosshair, pointer, text, wait, help, e-resize, n-resize, ne-resize, nw-resize, s-resize, se-resize, sw-resize, w-resize, ns-resize, ew-resize, nesw-resize, nwse-resize, col-resize, row-resize, m-panning, e-panning, n-panning, ne-panning, nw-panning, s-panning, se-panning, sw-panning, w-panning, move, vertical-text, cell, context-menu, alias, progress, nodrop, copy, none, not-allowed, zoom-in, zoom-out, grab, grabbing, custom. If the type parameter is custom, the image parameter will hold the custom cursor image in a NativeImage, and scale, size and hotspot will hold additional information about the custom cursor.
+		Emitted when the cursor's type changes. The type parameter can be default, crosshair, pointer, text, wait, help, e-resize, n-resize, ne-resize, nw-resize, s-resize, se-resize, sw-resize, w-resize, ns-resize, ew-resize, nesw-resize, nwse-resize, col-resize, row-resize, m-panning, e-panning, n-panning, ne-panning, nw-panning, s-panning, se-panning, sw-panning, w-panning, move, vertical-text, cell, context-menu, alias, progress, nodrop, copy, none, not-allowed, zoom-in, zoom-out, grab, grabbing or custom. If the type parameter is custom, the image parameter will hold the custom cursor image in a NativeImage, and scale, size and hotspot will hold additional information about the custom cursor.
 	**/
 	var cursor_changed : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> ?NativeImage -> ?Float -> ?Size -> ?Point -> Void> = "cursor-changed";
 	/**
@@ -569,7 +565,7 @@ package electron.main;
 	**/
 	var context_menu : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "context-menu";
 	/**
-		Emitted when bluetooth device needs to be selected on call to navigator.bluetooth.requestDevice. To use navigator.bluetooth api webBluetooth should be enabled.  If event.preventDefault is not called, first available device will be selected. callback should be called with deviceId to be selected, passing empty string to callback will cancel the request.
+		Emitted when bluetooth device needs to be selected on call to navigator.bluetooth.requestDevice. To use navigator.bluetooth api webBluetooth should be enabled. If event.preventDefault is not called, first available device will be selected. callback should be called with deviceId to be selected, passing empty string to callback will cancel the request.
 	**/
 	var select_bluetooth_device : electron.main.WebContents.WebContentsEvent<js.html.Event -> Array<BluetoothDevice> -> haxe.Constraints.Function -> Void> = "select-bluetooth-device";
 	/**
@@ -584,4 +580,12 @@ package electron.main;
 		Emitted when a <webview>'s web contents is being attached to this web contents. Calling event.preventDefault() will destroy the guest page. This event can be used to configure webPreferences for the webContents of a <webview> before it's loaded, and provides the ability to set settings that can't be set via <webview> attributes. Note: The specified preload script option will be appear as preloadURL (not preload) in the webPreferences object emitted with this event.
 	**/
 	var will_attach_webview : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Dynamic -> Void> = "will-attach-webview";
+	/**
+		Emitted when a <webview> has been attached to this web contents.
+	**/
+	var did_attach_webview : electron.main.WebContents.WebContentsEvent<js.html.Event -> WebContents -> Void> = "did-attach-webview";
+	/**
+		Emitted when the associated window logs a console message. Will not be emitted for windows with offscreen rendering enabled.
+	**/
+	var console_message : electron.main.WebContents.WebContentsEvent<Int -> String -> Int -> String -> Void> = "console-message";
 }

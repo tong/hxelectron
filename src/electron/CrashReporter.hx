@@ -4,7 +4,7 @@ package electron;
 **/
 @:require(js, electron) @:jsRequire("electron", "crashReporter") extern class CrashReporter {
 	/**
-		You are required to call this method before using any other crashReporter APIs and in each process (main/renderer) from which you want to collect crash reports. You can pass different options to crashReporter.start when calling from different processes. Note Child processes created via the child_process module will not have access to the Electron modules. Therefore, to collect crash reports from them, use process.crashReporter.start instead. Pass the same options as above along with an additional one called crashesDirectory that should point to a directory to store the crash reports temporarily. You can test this out by calling process.crash() to crash the child process. Note: To collect crash reports from child process in Windows, you need to add this extra code as well. This will start the process that will monitor and send the crash reports. Replace submitURL, productName and crashesDirectory with appropriate values. Note: If you need send additional/updated extra parameters after your first call start you can call setExtraParameter on macOS or call start again with the new/updated extra parameters on Linux and Windows. Note: On macOS, Electron uses a new crashpad client for crash collection and reporting. If you want to enable crash reporting, initializing crashpad from the main process using crashReporter.start is required regardless of which process you want to collect crashes from. Once initialized this way, the crashpad handler collects crashes from all processes. You still have to call crashReporter.start from the renderer or child process, otherwise crashes from them will get reported without companyName, productName or any of the extra information.
+		You are required to call this method before using any other crashReporter APIs and in each process (main/renderer) from which you want to collect crash reports. You can pass different options to crashReporter.start when calling from different processes. Note Child processes created via the child_process module will not have access to the Electron modules. Therefore, to collect crash reports from them, use process.crashReporter.start instead. Pass the same options as above along with an additional one called crashesDirectory that should point to a directory to store the crash reports temporarily. You can test this out by calling process.crash() to crash the child process. Note: To collect crash reports from child process in Windows, you need to add this extra code as well. This will start the process that will monitor and send the crash reports. Replace submitURL, productName and crashesDirectory with appropriate values. Note: If you need send additional/updated extra parameters after your first call start you can call addExtraParameter on macOS or call start again with the new/updated extra parameters on Linux and Windows. Note: On macOS, Electron uses a new crashpad client for crash collection and reporting. If you want to enable crash reporting, initializing crashpad from the main process using crashReporter.start is required regardless of which process you want to collect crashes from. Once initialized this way, the crashpad handler collects crashes from all processes. You still have to call crashReporter.start from the renderer or child process, otherwise crashes from them will get reported without companyName, productName or any of the extra information.
 	**/
 	static function start(options:{ @:optional
 	var companyName : String; /**
@@ -27,7 +27,11 @@ package electron;
 		An object you can define that will be sent along with the report. Only string properties are sent correctly. Nested objects are not supported and the property names and values must be less than 64 characters long.
 	**/
 	@:optional
-	var extra : { }; }):Void;
+	var extra : { }; /**
+		Directory to store the crashreports temporarily (only used when the crash reporter is started via process.crashReporter.start).
+	**/
+	@:optional
+	var crashesDirectory : String; }):Void;
 	/**
 		Returns the date and ID of the last crash report. If no crash reports have been sent or the crash reporter has not been started, null is returned.
 	**/
@@ -50,5 +54,14 @@ package electron;
 		Set an extra parameter to be sent with the crash report. The values specified here will be sent in addition to any values set via the extra option when start was called. This API is only available on macOS, if you need to add/update extra parameters on Linux and Windows after your first call to start you can call start again with the updated extra options.
 	**/
 	@:electron_platform(["macOS"])
-	static function setExtraParameter(key:String, value:String):Void;
+	static function addExtraParameter(key:String, value:String):Void;
+	/**
+		Remove a extra parameter from the current set of parameters so that it will not be sent with the crash report.
+	**/
+	@:electron_platform(["macOS"])
+	static function removeExtraParameter(key:String):Void;
+	/**
+		See all of the current parameters being passed to the crash reporter.
+	**/
+	static function getParameters():Void;
 }
