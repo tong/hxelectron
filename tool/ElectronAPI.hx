@@ -422,6 +422,9 @@ class ElectronAPI {
 				}
 			case 'Promise': macro : js.Promise<Dynamic>;
 			case 'String','URL': macro : String;
+			case 'True','true': macro : Bool; // TODO HACK
+			case 'ReadableStream': macro : Dynamic; // TODO HACK
+			case 'TouchBarItem': macro : Dynamic; // TODO HACK
 			case _ if( multiType != null ): multiType;
 			default: TPath( { pack: [], name: escapeTypeName( type ) } );
 		}

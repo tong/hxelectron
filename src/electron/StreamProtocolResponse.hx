@@ -15,5 +15,5 @@ package electron;
 	/**
 		A Node.js readable stream representing the response body
 	**/
-	var data : ReadableStream;
+	var data : Dynamic;
 }
