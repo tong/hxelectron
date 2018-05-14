@@ -1,5 +1,6 @@
 *node_modules/
 *.zip
+api/
 data/
 demo/bin/*.js
 demo/bin/*.js.map
