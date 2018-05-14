@@ -1,8 +1,10 @@
-package electron.main;
+package electron.renderer;
+
+import electron.main.BrowserWindow;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "dialog") extern class Dialog {
+@:require(js, electron) @:jsRequire("electron", "remote.dialog") extern class Dialog {
 	/**
 		The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. The filters specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example: The extensions array should contain extensions without wildcards or dots (e.g. 'png' is good but '.png' and '*.png' are bad). To show all files, use the '*' wildcard (no other wildcard is supported). If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filenames). Note: On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set properties to ['openFile', 'openDirectory'] on these platforms, a directory selector will be shown.
 	**/

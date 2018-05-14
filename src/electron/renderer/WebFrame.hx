@@ -14,10 +14,6 @@ package electron.renderer;
 	static function setZoomLevel(level:Float):Void;
 	static function getZoomLevel():Float;
 	/**
-		Deprecated: Call setVisualZoomLevelLimits instead to set the visual zoom level limits. This method will be removed in Electron 2.0.
-	**/
-	static function setZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
-	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 	**/
 	static function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
@@ -29,7 +25,7 @@ package electron.renderer;
 		Sets a provider for spell checking in input fields and text areas. The provider must be an object that has a spellCheck method that returns whether the word passed is correctly spelled. An example of using node-spellchecker as provider:
 	**/
 	static function setSpellCheckProvider(language:String, autoCorrectWord:Bool, provider:{ /**
-		Returns Boolean
+		Returns Boolean.
 	**/
 	@:optional
 	var spellCheck : haxe.Constraints.Function; }):Void;
@@ -73,6 +69,22 @@ package electron.renderer;
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
 	**/
 	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Dynamic>;
+	/**
+		Work like executeJavaScript but evaluates scripts in isolated context.
+	**/
+	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<WebSource>, ?userGesture:Bool, ?callback:haxe.Constraints.Function):Void;
+	/**
+		Set the content security policy of the isolated world.
+	**/
+	static function setIsolatedWorldContentSecurityPolicy(worldId:Int, csp:String):Void;
+	/**
+		Set the name of the isolated world. Useful in devtools.
+	**/
+	static function setIsolatedWorldHumanReadableName(worldId:Int, name:String):Void;
+	/**
+		Set the security origin of the isolated world.
+	**/
+	static function setIsolatedWorldSecurityOrigin(worldId:Int, securityOrigin:String):Void;
 	/**
 		Returns an object describing usage information of Blink's internal memory caches. This will generate:
 	**/

@@ -25,7 +25,7 @@ package electron.main;
 	**/
 	function setToolTip(toolTip:String):Void;
 	/**
-		Sets the title displayed aside of the tray icon in the status bar.
+		Sets the title displayed aside of the tray icon in the status bar (Support ANSI colors).
 	**/
 	@:electron_platform(["macOS"])
 	function setTitle(title:String):Void;
@@ -38,7 +38,10 @@ package electron.main;
 		Displays a tray balloon.
 	**/
 	@:electron_platform(["Windows"])
-	function displayBalloon(options:{ @:optional
+	function displayBalloon(options:{ /**
+		-
+	**/
+	@:optional
 	var icon : Dynamic; @:optional
 	var title : String; @:optional
 	var content : String; }):Void;
@@ -65,7 +68,7 @@ package electron.main;
 	/**
 		Emitted when the tray icon is clicked.
 	**/
-	var click : electron.main.Tray.TrayEvent<js.html.Event -> Rectangle -> Void> = "click";
+	var click : electron.main.Tray.TrayEvent<js.html.Event -> Rectangle -> Point -> Void> = "click";
 	/**
 		Emitted when the tray icon is right clicked.
 	**/
@@ -118,4 +121,8 @@ package electron.main;
 		Emitted when the mouse exits the tray icon.
 	**/
 	var mouse_leave : electron.main.Tray.TrayEvent<js.html.Event -> Point -> Void> = "mouse-leave";
+	/**
+		Emitted when the mouse moves in the tray icon.
+	**/
+	var mouse_move : electron.main.Tray.TrayEvent<js.html.Event -> Point -> Void> = "mouse-move";
 }

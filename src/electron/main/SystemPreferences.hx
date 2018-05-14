@@ -28,7 +28,7 @@ package electron.main;
 	@:electron_platform(["macOS"])
 	static function unsubscribeNotification(id:Int):Void;
 	/**
-		Same as subscribeNotification, but uses NSNotificationCenter for local defaults. This is necessary for events such as NSUserDefaultsDidChangeNotification
+		Same as subscribeNotification, but uses NSNotificationCenter for local defaults. This is necessary for events such as NSUserDefaultsDidChangeNotification.
 	**/
 	@:electron_platform(["macOS"])
 	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Void;
@@ -38,15 +38,25 @@ package electron.main;
 	@:electron_platform(["macOS"])
 	static function unsubscribeLocalNotification(id:Int):Void;
 	/**
-		This API uses NSUserDefaults on macOS. Some popular key and types are:
+		Add the specified defaults to your application's NSUserDefaults.
+	**/
+	@:electron_platform(["macOS"])
+	static function registerDefaults(defaults:Dynamic):Void;
+	/**
+		Some popular key and types are:
 	**/
 	@:electron_platform(["macOS"])
 	static function getUserDefault(key:String, type:String):Any;
 	/**
-		Set the value of key in system preferences. Note that type should match actual type of value. An exception is thrown if they don't. This API uses NSUserDefaults on macOS. Some popular key and types are:
+		Set the value of key in NSUserDefaults. Note that type should match actual type of value. An exception is thrown if they don't. Some popular key and types are:
 	**/
 	@:electron_platform(["macOS"])
 	static function setUserDefault(key:String, type:String, value:String):Void;
+	/**
+		Removes the key in NSUserDefaults. This can be used to restore the default or global value of a key previously set with setUserDefault.
+	**/
+	@:electron_platform(["macOS"])
+	static function removeUserDefault(key:String):Void;
 	/**
 		An example of using it to determine if you should create a transparent window or not (transparent windows won't work correctly when DWM composition is disabled):
 	**/

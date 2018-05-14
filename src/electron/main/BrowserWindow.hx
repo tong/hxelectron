@@ -91,6 +91,10 @@ package electron.main;
 	**/
 	@:optional
 	var fullscreenable : Bool; /**
+		Use pre-Lion fullscreen on macOS. Default is false.
+	**/
+	@:optional
+	var simpleFullscreen : Bool; /**
 		Whether to show the window in taskbar. Default is false.
 	**/
 	@:optional
@@ -139,7 +143,7 @@ package electron.main;
 	**/
 	@:optional
 	var enableLargerThanScreen : Bool; /**
-		Window's background color as Hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported). Default is #FFF (white).
+		Window's background color as a hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported). Default is #FFF (white).
 	**/
 	@:optional
 	var backgroundColor : String; /**
@@ -147,6 +151,10 @@ package electron.main;
 	**/
 	@:optional
 	var hasShadow : Bool; /**
+		Set the initial opacity of the window, between 0.0 (fully transparent) and 1.0 (fully opaque). This is only implemented on Windows and macOS.
+	**/
+	@:optional
+	var opacity : Float; /**
 		Forces using dark theme for the window, only works on some GTK+3 desktop environments. Default is false.
 	**/
 	@:optional
@@ -163,7 +171,7 @@ package electron.main;
 	**/
 	@:optional
 	var titleBarStyle : String; /**
-		Shows the title in the tile bar in full screen mode on macOS for all titleBarStyle options. Default is false.
+		Shows the title in the title bar in full screen mode on macOS for all titleBarStyle options. Default is false.
 	**/
 	@:optional
 	var fullscreenWindowTitle : Bool; /**
@@ -171,7 +179,7 @@ package electron.main;
 	**/
 	@:optional
 	var thickFrame : Bool; /**
-		Add a type of vibrancy effect to the window, only on macOS. Can be appearance-based, light, dark, titlebar, selection, menu, popover, sidebar, medium-light or ultra-dark.
+		Add a type of vibrancy effect to the window, only on macOS. Can be appearance-based, light, dark, titlebar, selection, menu, popover, sidebar, medium-light or ultra-dark. Please note that using frame: false in combination with a vibrancy value requires that you use a non-default titleBarStyle as well.
 	**/
 	@:optional
 	var vibrancy : String; /**
@@ -215,6 +223,10 @@ package electron.main;
 	**/
 	@:optional
 	var partition : String; /**
+		When specified, web pages with the same affinity will run in the same renderer process. Note that due to reusing the renderer process, certain webPreferences options will also be shared between the web pages even when you specified different values for them, including but not limited to preload, sandbox and nodeIntegration. So it is suggested to use exact same webPreferences for web pages with the same affinity.
+	**/
+	@:optional
+	var affinity : String; /**
 		The default zoom factor of the page, 3.0 represents 300%. Default is 1.0.
 	**/
 	@:optional
@@ -315,7 +327,7 @@ package electron.main;
 	**/
 	@:optional
 	var defaultEncoding : String; /**
-		Whether to throttle animations and timers when the page becomes background. This also affects the [Page Visibility API][#page-visibility]. Defaults to true.
+		Whether to throttle animations and timers when the page becomes background. This also affects the . Defaults to true.
 	**/
 	@:optional
 	var backgroundThrottling : Bool; /**
@@ -334,7 +346,11 @@ package electron.main;
 		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the <webview> will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a <webview> tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the <webview>'s initial settings.
 	**/
 	@:optional
-	var webviewTag : Bool; }; }):Void;
+	var webviewTag : Bool; /**
+		A list of strings that will be appended to process.argv in the renderer process of this app. Useful for passing small bits of data down to renderer process preload scripts.
+	**/
+	@:optional
+	var additionArguments : Array<String>; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
@@ -391,6 +407,13 @@ package electron.main;
 	function setFullScreen(flag:Bool):Void;
 	function isFullScreen():Bool;
 	/**
+		Enters or leaves simple fullscreen mode. Simple fullscreen mode emulates the native fullscreen behavior found in versions of Mac OS X prior to Lion (10.7).
+	**/
+	@:electron_platform(["macOS"])
+	function setSimpleFullScreen(flag:Bool):Void;
+	@:electron_platform(["macOS"])
+	function isSimpleFullScreen():Bool;
+	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Just sum any extra width and height areas you have within the overall content view.
 	**/
 	@:electron_platform(["macOS"])
@@ -415,6 +438,10 @@ package electron.main;
 	**/
 	function setContentBounds(bounds:Rectangle, ?animate:Bool):Void;
 	function getContentBounds():Rectangle;
+	/**
+		Disable or enable the window.
+	**/
+	function setEnabled(enable:Bool):Void;
 	/**
 		Resizes the window to width and height.
 	**/
@@ -588,6 +615,10 @@ package electron.main;
 	@:optional
 	var baseURLForDataURL : String; }):Void;
 	/**
+		Same as webContents.loadFile, filePath should be a path to an HTML file relative to the root of your application.  See the webContents docs for more information.
+	**/
+	function loadFile(filePath:String):Void;
+	/**
 		Same as webContents.reload.
 	**/
 	function reload():Void;
@@ -600,7 +631,7 @@ package electron.main;
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
 	function setProgressBar(progress:Float, ?options:{ /**
-		Mode for the progress bar. Can be none, normal, indeterminate, error, or paused.
+		Mode for the progress bar. Can be none, normal, indeterminate, error or paused.
 	**/
 	@:optional
 	var mode : String; }):Void;
@@ -619,6 +650,13 @@ package electron.main;
 	**/
 	@:electron_platform(["macOS"])
 	function hasShadow():Bool;
+	/**
+		Sets the opacity of the window. On Linux does nothing.
+	**/
+	@:electron_platform(["Windows", "macOS"])
+	function setOpacity(opacity:Float):Void;
+	@:electron_platform(["Windows", "macOS"])
+	function getOpacity():Float;
 	/**
 		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a Boolean object indicates whether the thumbnail has been added successfully. The number of buttons in thumbnail toolbar should be no greater than 7 due to the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be removed due to the platform's limitation. But you can call the API with an empty array to clean the buttons. The buttons is an array of Button objects: The flags is an array that can include following Strings:
 	**/
@@ -691,7 +729,11 @@ package electron.main;
 	/**
 		Makes the window ignore all mouse events. All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events.
 	**/
-	function setIgnoreMouseEvents(ignore:Bool):Void;
+	function setIgnoreMouseEvents(ignore:Bool, ?options:{ /**
+		If true, forwards mouse move messages to Chromium, enabling mouse related events such as mouseleave. Only used when ignore is true. If ignore is false, forwarding is always disabled regardless of this value.
+	**/
+	@:optional
+	var forward : Bool; }):Void;
 	/**
 		Prevents the window contents from being captured by other apps. On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with WDA_MONITOR.
 	**/
@@ -715,6 +757,36 @@ package electron.main;
 	@:electron_platform(["macOS"])
 	function setAutoHideCursor(autoHide:Bool):Void;
 	/**
+		Selects the previous tab when native tabs are enabled and there are other tabs in the window.
+	**/
+	@:electron_platform(["macOS"])
+	function selectPreviousTab():Void;
+	/**
+		Selects the next tab when native tabs are enabled and there are other tabs in the window.
+	**/
+	@:electron_platform(["macOS"])
+	function selectNextTab():Void;
+	/**
+		Merges all windows into one window with multiple tabs when native tabs are enabled and there is more than one open window.
+	**/
+	@:electron_platform(["macOS"])
+	function mergeAllWindows():Void;
+	/**
+		Moves the current tab into a new window if native tabs are enabled and there is more than one tab in the current window.
+	**/
+	@:electron_platform(["macOS"])
+	function moveTabToNewWindow():Void;
+	/**
+		Toggles the visibility of the tab bar if native tabs are enabled and there is only one tab in the current window.
+	**/
+	@:electron_platform(["macOS"])
+	function toggleTabBar():Void;
+	/**
+		Adds a window as a tab on this window, after the tab for the window instance.
+	**/
+	@:electron_platform(["macOS"])
+	function addTabbedWindow(browserWindow:BrowserWindow):Void;
+	/**
 		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
 	**/
 	@:electron_platform(["macOS"])
@@ -724,14 +796,17 @@ package electron.main;
 	**/
 	@:electron_platform(["macOS", "Experimental"])
 	function setTouchBar(touchBar:TouchBar):Void;
+	@:electron_platform(["Experimental"])
+	function setBrowserView(browserView:BrowserView):Void;
 	/**
 		Note: The BrowserView API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	@:electron_platform(["Experimental"])
-	function setBrowserView(browserView:BrowserView):Void;
+	function getBrowserView():Dynamic;
 	static function getAllWindows():Array<BrowserWindow>;
 	static function getFocusedWindow():BrowserWindow;
 	static function fromWebContents(webContents:WebContents):BrowserWindow;
+	static function fromBrowserView(browserView:BrowserView):Dynamic;
 	static function fromId(id:Int):BrowserWindow;
 	/**
 		Adds Chrome extension located at path, and returns extension's name. The method will also not return if the extension's manifest is missing or incomplete. Note: This API cannot be called before the ready event of the app module is emitted.
@@ -767,7 +842,7 @@ package electron.main;
 	**/
 	var page_title_updated : electron.main.BrowserWindow.BrowserWindowEvent<js.html.Event -> String -> Void> = "page-title-updated";
 	/**
-		Emitted when the window is going to be closed. It's emitted before the beforeunload and unload event of the DOM. Calling event.preventDefault() will cancel the close. Usually you would want to use the beforeunload handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than undefined would cancel the close. For example:
+		Emitted when the window is going to be closed. It's emitted before the beforeunload and unload event of the DOM. Calling event.preventDefault() will cancel the close. Usually you would want to use the beforeunload handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than undefined would cancel the close. For example: Note: There is a subtle difference between the behaviors of window.onbeforeunload = handler and window.addEventListener('beforeunload', handler). It is recommended to always set the event.returnValue explicitly, instead of just returning a value, as the former works more consistently within Electron.
 	**/
 	var close : electron.main.BrowserWindow.BrowserWindowEvent<js.html.Event -> Void> = "close";
 	/**

@@ -29,6 +29,10 @@ package electron.main;
 	**/
 	static function registerHttpProtocol(scheme:String, handler:haxe.Constraints.Function, ?completion:haxe.Constraints.Function):Void;
 	/**
+		Registers a protocol of scheme that will send a Readable as a response. The usage is similar to the other register{Any}Protocol, except that the callback should be called with either a Readable object or an object that has the data, statusCode, and headers properties. Example: It is possible to pass any object that implements the readable stream API (emits data/end/error events). For example, here's how a file could be returned:
+	**/
+	static function registerStreamProtocol(scheme:String, handler:haxe.Constraints.Function, ?completion:haxe.Constraints.Function):Void;
+	/**
 		Unregisters the custom protocol of scheme.
 	**/
 	static function unregisterProtocol(scheme:String, ?completion:haxe.Constraints.Function):Void;
@@ -52,6 +56,10 @@ package electron.main;
 		Intercepts scheme protocol and uses handler as the protocol's new handler which sends a new HTTP request as a response.
 	**/
 	static function interceptHttpProtocol(scheme:String, handler:haxe.Constraints.Function, ?completion:haxe.Constraints.Function):Void;
+	/**
+		Same as protocol.registerStreamProtocol, except that it replaces an existing protocol handler.
+	**/
+	static function interceptStreamProtocol(scheme:String, handler:haxe.Constraints.Function, ?completion:haxe.Constraints.Function):Void;
 	/**
 		Remove the interceptor installed for scheme and restore its original handler.
 	**/

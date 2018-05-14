@@ -31,7 +31,7 @@ package electron.main;
 	**/
 	@:optional
 	var protocol : String; /**
-		The server host provided as a concatenation of the hostname and the port number 'hostname:port'
+		The server host provided as a concatenation of the hostname and the port number 'hostname:port'.
 	**/
 	@:optional
 	var host : String; /**

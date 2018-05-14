@@ -308,6 +308,8 @@ class ElectronAPI {
 		if( type == null )
 			return macro : Dynamic;
 
+		type = Std.string(type);
+
 		inline function isKnownType(type:String):Bool {
 			var known = ['Bool','Boolean','Buffer','Event','Error','Int','Integer','Dynamic','Double','Float','Number','Function','Object','Promise','String','URL'];
 			return known.indexOf(type) > -1;

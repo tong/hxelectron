@@ -19,11 +19,11 @@ package electron.main;
 	**/
 	var checked : Bool;
 	/**
-		A String representing the menu items visible label
+		A String representing the menu items visible label.
 	**/
 	var label : String;
 	/**
-		A Function that is fired when the MenuItem receives a click event
+		A Function that is fired when the MenuItem receives a click event.
 	**/
 	var click : haxe.Constraints.Function;
 	function new(options:{ /**
@@ -55,7 +55,7 @@ package electron.main;
 	**/
 	@:optional
 	var checked : Bool; /**
-		Should be specified for submenu type menu items. If submenu is specified, the type: 'submenu' can be omitted. If the value is not a Menu then it will be automatically converted to one using Menu.buildFromTemplate.
+		Should be specified for submenu type menu items. If submenu is specified, the type: 'submenu' can be omitted. If the value is not a then it will be automatically converted to one using Menu.buildFromTemplate.
 	**/
 	@:optional
 	var submenu : Dynamic; /**

@@ -16,7 +16,7 @@ package electron;
 	**/
 	var noAsar : Bool;
 	/**
-		A Boolean that controls whether or not deprecation warnings are printed to stderr. Setting this to true will silence deprecation warnings.  This property is used instead of the --no-deprecation command line flag.
+		A Boolean that controls whether or not deprecation warnings are printed to stderr. Setting this to true will silence deprecation warnings. This property is used instead of the --no-deprecation command line flag.
 	**/
 	var noDeprecation : Bool;
 	/**
@@ -24,15 +24,15 @@ package electron;
 	**/
 	var resourcesPath : String;
 	/**
-		A Boolean that controls whether or not deprecation warnings will be thrown as exceptions.  Setting this to true will throw errors for deprecations.  This property is used instead of the --throw-deprecation command line flag.
+		A Boolean that controls whether or not deprecation warnings will be thrown as exceptions. Setting this to true will throw errors for deprecations. This property is used instead of the --throw-deprecation command line flag.
 	**/
 	var throwDeprecation : Bool;
 	/**
-		A Boolean that controls whether or not deprecations printed to stderr include their stack trace.  Setting this to true will print  stack traces for deprecations. This property is instead of the --trace-deprecation command line flag.
+		A Boolean that controls whether or not deprecations printed to stderr include their stack trace. Setting this to true will print stack traces for deprecations. This property is instead of the --trace-deprecation command line flag.
 	**/
 	var traceDeprecation : Bool;
 	/**
-		A Boolean that controls whether or not process warnings printed to stderr include their stack trace.  Setting this to true will print stack traces for process warnings (including deprecations).  This property is instead of the --trace-warnings command line flag.
+		A Boolean that controls whether or not process warnings printed to stderr include their stack trace. Setting this to true will print stack traces for process warnings (including deprecations). This property is instead of the --trace-warnings command line flag.
 	**/
 	var traceProcessWarnings : Bool;
 	/**
@@ -75,7 +75,7 @@ package electron;
 	**/
 	@:optional
 	var privateBytes : Int; /**
-		The amount of memory shared between processes, typically memory consumed by the Electron code itself
+		The amount of memory shared between processes, typically memory consumed by the Electron code itself.
 	**/
 	@:optional
 	var sharedBytes : Int; };

@@ -19,6 +19,11 @@ package electron.main;
 	**/
 	@:optional
 	var webPreferences : { }; }):Void;
+	/**
+		Force closing the view, the unload and beforeunload events won't be emitted for the web page. After you're done with a view, call this function in order to free memory and other resources as soon as possible.
+	**/
+	function destroy():Void;
+	function isDestroyed():Bool;
 	@:electron_platform(["Experimental"])
 	function setAutoResize(options:{ /**
 		If true, the view's width will grow and shrink together with the window. false by default.
@@ -36,5 +41,7 @@ package electron.main;
 	function setBounds(bounds:Rectangle):Void;
 	@:electron_platform(["Experimental"])
 	function setBackgroundColor(color:String):Void;
+	static function getAllViews():Array<BrowserView>;
+	static function fromWebContents(webContents:WebContents):Dynamic;
 	static function fromId(id:Int):BrowserView;
 }
