@@ -6,7 +6,7 @@
   "tags": ["electron","node","desktop"],
   "description": "Externs for the electron framework",
   "releasenote": "See CHANGELOG",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "contributors": ["fponticelli", "tong"],
   "dependencies": {
     "hxnodejs" : ""
