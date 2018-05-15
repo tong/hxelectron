@@ -15,15 +15,15 @@
 				from {
 					transform: scale3d(1, 1, 1);
                     filter: drop-shadow(16px 16px 24px rgba(5,5,5,0.9))
-				}
+                }
 				50% {
 					transform: scale3d(1.4, 1.4, 1.4);
                     filter: drop-shadow(24px 24px 48px rgba(5,5,5,0.3))
-				}
+                }
 				100% {
 					transform: scale3d(1, 1, 1);
                     filter: drop-shadow(16px 16px 24px rgba(5,5,5,0.9))
-				}
+                }
 			}
             * {
                 margin: 0;
@@ -59,17 +59,21 @@
                 position: relative;
                 left: 2px;
             }
-            img#logo {
+            img.logo {
                 position: absolute;
                 top: 0; bottom:0; left: 0; right:0;
                 margin: auto;
+                pointer-events: none;
+
+            }
+            img#logo-haxe {
                 opacity: 0;
 				animation-delay: 0.3s;
 				animation-duration: 1s;
 			    animation-fill-mode: both;
 				animation-name: pulse;
                 filter: drop-shadow(16px 16px 24px rgba(5,5,5,0.9));
-                pointer-events: none;
+                z-index: 2;
             }
         </style>
         <script src="app.js" defer></script>
@@ -83,6 +87,6 @@
             <div id="haxe"></div>
         </div>
         <div id="updates"></div>
-        <img id="logo" src="http://haxe.org/img/haxe-logo.svg" />
+        <img class="logo" id="logo-haxe" src="http://haxe.org/img/haxe-logo.svg" />
     </body>
 </html>

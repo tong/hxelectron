@@ -15,7 +15,7 @@ class App {
 
         window.onload = function() {
 
-            document.getElementById( 'logo' ).style.opacity = '1';
+            document.getElementById( 'logo-haxe' ).style.opacity = '1';
 
             setText( 'system', process.platform +' '+ process.arch );
             setText( 'node', 'node '+process.version );
