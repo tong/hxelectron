@@ -401,12 +401,22 @@ package electron.main;
 		Set the size of the page. This is only supported for <webview> guest contents.
 	**/
 	function setSize(options:{ /**
+		true to make the webview container automatically resize within the bounds specified by the attributes normal, min and max.
+	**/
+	@:optional
+	var enableAutoSize : Bool; /**
 		Normal size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
 	**/
 	@:optional
-	var normal : { @:optional
-	var width : Int; @:optional
-	var height : Int; }; }):Void;
+	var normal : Size; /**
+		Minimum size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
+	**/
+	@:optional
+	var min : Size; /**
+		Maximium size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
+	**/
+	@:optional
+	var max : Size; }):Void;
 	function isOffscreen():Bool;
 	/**
 		If offscreen rendering is enabled and not painting, start painting.
