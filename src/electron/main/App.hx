@@ -100,7 +100,7 @@ package electron.main;
 	**/
 	static function setName(name:String):Void;
 	/**
-		Note: When distributing your packaged app, you have to also ship the locales folder. Note: On Windows you have to call it after the ready events gets emitted.
+		To set the locale, you'll want to use a command line switch at app startup, which may be found here. Note: When distributing your packaged app, you have to also ship the locales folder. Note: On Windows you have to call it after the ready events gets emitted.
 	**/
 	static function getLocale():String;
 	/**
