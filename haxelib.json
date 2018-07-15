@@ -3,10 +3,10 @@
   "url": "https://github.com/fponticelli/hxelectron",
   "license": "MIT",
   "classPath": "src",
-  "tags": ["electron","node","desktop"],
+  "tags": ["electron","node","desktop","web","javascript","nodejs","application"],
   "description": "Externs for the electron framework",
   "releasenote": "See CHANGELOG",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "contributors": ["fponticelli", "tong"],
   "dependencies": {
     "hxnodejs" : ""
