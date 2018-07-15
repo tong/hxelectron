@@ -189,13 +189,15 @@ class ElectronAPI {
 		if( item.process != null && (!item.process.main || !item.process.renderer) ) {
 			if( item.process.main ) {
 				pack.push( 'main' );
-				//meta.push( { name: ':electron_main', pos: pos } );
+				meta.push( { name: ':electron', params: [macro 'main'], pos: pos } );
 				//meta.push( { name: ':require', params: [macro $i{'electron_main'}], pos: pos } );
 			} else if( item.process.renderer ) {
 				pack.push( 'renderer' );
-				//meta.push( { name: ':electron_renderer', pos: pos } );
+				meta.push( { name: ':electron', params: [macro 'renderer'], pos: pos } );
 				//meta.push( { name: ':require', params: [macro $i{'electron_renderer'}], pos: pos } );
 			}
+		} else {
+			meta.push( { name: ':electron', params: [], pos: pos } );
 		}
 
 		var fields = new Array<Field>();
