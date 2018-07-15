@@ -6,7 +6,6 @@ HXElectron
 
 [![Build Status](https://img.shields.io/travis/fponticelli/hxelectron/master.svg?style=flat-square)](https://travis-ci.org/fponticelli/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/fponticelli/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
 
-
 The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS based on [Node.js](https://nodejs.org/) and [Chromium](http://www.chromium.org).
 
 
@@ -42,6 +41,15 @@ cd demo/
 haxe build.hxml
 electron bin/
 ```
+
+### Metadata
+
+The haxe externs are attributed with following metadata:
+ - `@:require(js,electron)`
+ - `@:electron` for types in `electron.*` (available in the main and renderer process).
+ - `@:electron("main")` for types in `electron.main.*` (only available in the main process).
+ - `@:electron("renderer")` for types in `electron.renderer.*` (only available in the renderer process).
+
 
 
 ## Generate Type Definitions
