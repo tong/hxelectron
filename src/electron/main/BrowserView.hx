@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/browser-view>
 **/
-@:require(js, electron) @:jsRequire("electron", "BrowserView") extern class BrowserView {
+@:require(js, electron) @:jsRequire("electron", "BrowserView") @:electron("main") extern class BrowserView {
 	/**
 		A WebContents object owned by this view.
 	**/

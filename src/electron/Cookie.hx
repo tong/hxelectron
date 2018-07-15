@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/cookie>
 **/
-@:require(js, electron) typedef Cookie = {
+@:require(js, electron) @:electron typedef Cookie = {
 	/**
 		The name of the cookie.
 	**/

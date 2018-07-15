@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/incoming-message>
 **/
-@:require(js, electron) @:jsRequire("electron", "IncomingMessage") extern class IncomingMessage extends js.node.events.EventEmitter<electron.main.IncomingMessage> {
+@:require(js, electron) @:jsRequire("electron", "IncomingMessage") @:electron("main") extern class IncomingMessage extends js.node.events.EventEmitter<electron.main.IncomingMessage> {
 	/**
 		An Integer indicating the HTTP response status code.
 	**/

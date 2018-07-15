@@ -2,7 +2,7 @@ package electron.renderer;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "ipcRenderer") extern class IpcRenderer {
+@:require(js, electron) @:jsRequire("electron", "ipcRenderer") @:electron("renderer") extern class IpcRenderer {
 	/**
 		Listens to channel, when a new message arrives listener would be called with listener(event, args...).
 	**/

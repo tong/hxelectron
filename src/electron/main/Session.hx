@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/session>
 **/
-@:require(js, electron) @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+@:require(js, electron) @:jsRequire("electron", "Session") @:electron("main") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
 	/**
 		A Cookies object for this session.
 	**/

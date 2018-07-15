@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/notification>
 **/
-@:require(js, electron) @:jsRequire("electron", "Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
+@:require(js, electron) @:jsRequire("electron", "Notification") @:electron("main") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
 	function new(options:{ /**
 		A title for the notification, which will be shown at the top of the notification window when it is shown.
 	**/

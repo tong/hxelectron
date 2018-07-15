@@ -2,7 +2,7 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "systemPreferences") extern class SystemPreferences {
+@:require(js, electron) @:jsRequire("electron", "systemPreferences") @:electron("main") extern class SystemPreferences {
 	@:electron_platform(["macOS"])
 	static function isDarkMode():Bool;
 	@:electron_platform(["macOS"])

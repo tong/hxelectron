@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/web-request>
 **/
-@:require(js, electron) @:jsRequire("electron", "WebRequest") extern class WebRequest {
+@:require(js, electron) @:jsRequire("electron", "WebRequest") @:electron("main") extern class WebRequest {
 	/**
 		The listener will be called with listener(details, callback) when a request is about to occur. The uploadData is an array of UploadData objects. The callback has to be called with an response object.
 	**/

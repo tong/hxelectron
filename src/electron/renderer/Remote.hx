@@ -2,7 +2,7 @@ package electron.renderer;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "remote") extern class Remote {
+@:require(js, electron) @:jsRequire("electron", "remote") @:electron("renderer") extern class Remote {
 	/**
 		The process object in the main process. This is the same as remote.getGlobal('process') but is cached.
 	**/

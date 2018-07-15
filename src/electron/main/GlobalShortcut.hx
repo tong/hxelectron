@@ -2,7 +2,7 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "globalShortcut") extern class GlobalShortcut {
+@:require(js, electron) @:jsRequire("electron", "globalShortcut") @:electron("main") extern class GlobalShortcut {
 	/**
 		Registers a global shortcut of accelerator. The callback is called when the registered shortcut is pressed by the user. When the accelerator is already taken by other applications, this call will silently fail. This behavior is intended by operating systems, since they don't want applications to fight for global shortcuts.
 	**/

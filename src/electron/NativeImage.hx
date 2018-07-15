@@ -5,7 +5,7 @@ package electron;
 
 	See: <http://electron.atom.io/docs/api/native-image>
 **/
-@:require(js, electron) @:jsRequire("electron", "nativeImage") extern class NativeImage {
+@:require(js, electron) @:jsRequire("electron", "nativeImage") @:electron extern class NativeImage {
 	/**
 		Creates an empty NativeImage instance.
 	**/

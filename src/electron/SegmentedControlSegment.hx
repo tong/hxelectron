@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/segmented-control-segment>
 **/
-@:require(js, electron) typedef SegmentedControlSegment = {
+@:require(js, electron) @:electron typedef SegmentedControlSegment = {
 	/**
 		The text to appear in this segment
 	**/

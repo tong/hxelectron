@@ -2,7 +2,7 @@ package electron.renderer;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "webFrame") extern class WebFrame {
+@:require(js, electron) @:jsRequire("electron", "webFrame") @:electron("renderer") extern class WebFrame {
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/

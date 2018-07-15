@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/desktop-capturer-source>
 **/
-@:require(js, electron) typedef DesktopCapturerSource = {
+@:require(js, electron) @:electron typedef DesktopCapturerSource = {
 	/**
 		The identifier of a window or screen that can be used as a chromeMediaSourceId constraint when calling [navigator.webkitGetUserMedia]. The format of the identifier will be window:XX or screen:XX, where XX is a random generated number.
 	**/

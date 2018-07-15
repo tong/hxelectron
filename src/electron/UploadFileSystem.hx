@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/upload-file-system>
 **/
-@:require(js, electron) typedef UploadFileSystem = {
+@:require(js, electron) @:electron typedef UploadFileSystem = {
 	/**
 		fileSystem.
 	**/

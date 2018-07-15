@@ -2,7 +2,7 @@ package electron;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "clipboard") extern class Clipboard {
+@:require(js, electron) @:jsRequire("electron", "clipboard") @:electron extern class Clipboard {
 	static function readText(?type:String):String;
 	/**
 		Writes the text into the clipboard as plain text.

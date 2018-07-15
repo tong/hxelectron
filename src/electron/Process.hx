@@ -2,7 +2,7 @@ package electron;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "process") extern class Process {
+@:require(js, electron) @:jsRequire("electron", "process") @:electron extern class Process {
 	/**
 		A Boolean. When app is started by being passed as parameter to the default app, this property is true in the main process, otherwise it is undefined.
 	**/

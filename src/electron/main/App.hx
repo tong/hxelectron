@@ -2,7 +2,7 @@ package electron.main;
 
 /**
 **/
-@:require(js, electron) @:jsRequire("electron", "app") extern class App {
+@:require(js, electron) @:jsRequire("electron", "app") @:electron("main") extern class App {
 	var commandLine : { /**
 		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv, and is mainly used by developers to control some low-level Chromium behaviors.
 	**/

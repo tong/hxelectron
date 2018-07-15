@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/stream-protocol-response>
 **/
-@:require(js, electron) typedef StreamProtocolResponse = {
+@:require(js, electron) @:electron typedef StreamProtocolResponse = {
 	/**
 		The HTTP response code
 	**/

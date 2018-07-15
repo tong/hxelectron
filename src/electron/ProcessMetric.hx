@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/process-metric>
 **/
-@:require(js, electron) typedef ProcessMetric = {
+@:require(js, electron) @:electron typedef ProcessMetric = {
 	/**
 		Process id of the process.
 	**/

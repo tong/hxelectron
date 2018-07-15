@@ -2,7 +2,7 @@ package electron;
 
 /**
 **/
-@:require(js, electron) @:native("require(\"electron\").screen") extern class Screen {
+@:require(js, electron) @:electron @:native("require(\"electron\").screen") extern class Screen {
 	/**
 		The current absolute position of the mouse pointer.
 	**/

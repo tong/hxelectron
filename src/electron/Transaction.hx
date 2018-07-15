@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/transaction>
 **/
-@:require(js, electron) typedef Transaction = {
+@:require(js, electron) @:electron typedef Transaction = {
 	var transactionIdentifier : String;
 	var transactionDate : String;
 	var originalTransactionIdentifier : String;

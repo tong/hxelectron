@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/scrubber-item>
 **/
-@:require(js, electron) typedef ScrubberItem = {
+@:require(js, electron) @:electron typedef ScrubberItem = {
 	/**
 		The text to appear in this item
 	**/

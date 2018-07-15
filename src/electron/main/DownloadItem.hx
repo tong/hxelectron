@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/download-item>
 **/
-@:require(js, electron) @:jsRequire("electron", "DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
+@:require(js, electron) @:jsRequire("electron", "DownloadItem") @:electron("main") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
 	/**
 		The API is only available in session's will-download callback function. If user doesn't set the save path via the API, Electron will use the original routine to determine the save path(Usually prompts a save dialog).
 	**/

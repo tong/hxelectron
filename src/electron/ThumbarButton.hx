@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/thumbar-button>
 **/
-@:require(js, electron) typedef ThumbarButton = {
+@:require(js, electron) @:electron typedef ThumbarButton = {
 	/**
 		The icon showing in thumbnail toolbar.
 	**/

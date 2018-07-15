@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/certificate>
 **/
-@:require(js, electron) typedef Certificate = {
+@:require(js, electron) @:electron typedef Certificate = {
 	/**
 		PEM encoded data
 	**/

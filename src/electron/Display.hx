@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/display>
 **/
-@:require(js, electron) typedef Display = {
+@:require(js, electron) @:electron typedef Display = {
 	/**
 		Unique identifier associated with the display.
 	**/

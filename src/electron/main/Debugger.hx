@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/debugger>
 **/
-@:require(js, electron) @:jsRequire("electron", "Debugger") extern class Debugger extends js.node.events.EventEmitter<electron.main.Debugger> {
+@:require(js, electron) @:jsRequire("electron", "Debugger") @:electron("main") extern class Debugger extends js.node.events.EventEmitter<electron.main.Debugger> {
 	/**
 		Attaches the debugger to the webContents.
 	**/

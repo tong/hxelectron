@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/menu-item>
 **/
-@:require(js, electron) @:jsRequire("electron", "MenuItem") extern class MenuItem {
+@:require(js, electron) @:jsRequire("electron", "MenuItem") @:electron("main") extern class MenuItem {
 	/**
 		A Boolean indicating whether the item is enabled, this property can be dynamically changed.
 	**/

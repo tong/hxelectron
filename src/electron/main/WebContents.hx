@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/web-contents>
 **/
-@:require(js, electron) @:jsRequire("electron", "WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
+@:require(js, electron) @:jsRequire("electron", "WebContents") @:electron("main") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
 	/**
 		A Integer representing the unique ID of this WebContents.
 	**/

@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/jump-list-item>
 **/
-@:require(js, electron) typedef JumpListItem = {
+@:require(js, electron) @:electron typedef JumpListItem = {
 	/**
 		One of the following:
 	**/

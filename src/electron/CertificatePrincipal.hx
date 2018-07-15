@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/certificate-principal>
 **/
-@:require(js, electron) typedef CertificatePrincipal = {
+@:require(js, electron) @:electron typedef CertificatePrincipal = {
 	/**
 		Common Name
 	**/

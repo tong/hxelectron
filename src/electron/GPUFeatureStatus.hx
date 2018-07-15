@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/gpu-feature-status>
 **/
-@:require(js, electron) typedef GPUFeatureStatus = {
+@:require(js, electron) @:electron typedef GPUFeatureStatus = {
 	/**
 		Canvas
 	**/

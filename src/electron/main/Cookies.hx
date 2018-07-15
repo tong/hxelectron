@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/cookies>
 **/
-@:require(js, electron) @:jsRequire("electron", "Cookies") extern class Cookies extends js.node.events.EventEmitter<electron.main.Cookies> {
+@:require(js, electron) @:jsRequire("electron", "Cookies") @:electron("main") extern class Cookies extends js.node.events.EventEmitter<electron.main.Cookies> {
 	/**
 		Sends a request to get all cookies matching filter, callback will be called with callback(error, cookies) on complete.
 	**/

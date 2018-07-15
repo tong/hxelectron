@@ -3,7 +3,7 @@ package electron;
 /**
 	See: <http://electron.atom.io/docs/api/structures/task>
 **/
-@:require(js, electron) typedef Task = {
+@:require(js, electron) @:electron typedef Task = {
 	/**
 		Path of the program to execute, usually you should specify process.execPath which opens the current program.
 	**/

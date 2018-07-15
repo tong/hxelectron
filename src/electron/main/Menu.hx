@@ -5,7 +5,7 @@ package electron.main;
 
 	See: <http://electron.atom.io/docs/api/menu>
 **/
-@:require(js, electron) @:jsRequire("electron", "Menu") extern class Menu extends js.node.events.EventEmitter<electron.main.Menu> {
+@:require(js, electron) @:jsRequire("electron", "Menu") @:electron("main") extern class Menu extends js.node.events.EventEmitter<electron.main.Menu> {
 	/**
 		A MenuItem[] array containing the menu's items. Each Menu consists of multiple MenuItems and each MenuItem can have a submenu.
 	**/
