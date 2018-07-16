@@ -12,7 +12,7 @@ matrix:
     - haxe: development
 
 script:
-  - haxelib git electron https://github.com/fponticelli/hxelectron
+  - haxelib git electron https://github.com/tong/hxelectron
   - haxe run.hxml
   - neko run.n
   - haxe doc.hxml
