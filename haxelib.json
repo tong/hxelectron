@@ -7,7 +7,7 @@
   "description": "Externs for the electron framework",
   "releasenote": "See CHANGELOG",
   "version": "2.0.5",
-  "contributors": ["fponticelli", "tong"],
+  "contributors": ["tong","fponticelli"],
   "dependencies": {
     "hxnodejs" : ""
   }
