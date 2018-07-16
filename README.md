@@ -4,7 +4,7 @@ HXElectron
 
 > Haxe→JS type definitions for [electron](https://electronjs.org/).
 
-[![Build Status](https://img.shields.io/travis/fponticelli/hxelectron/master.svg?style=flat-square)](https://travis-ci.org/fponticelli/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/fponticelli/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
+[![Build Status](https://img.shields.io/travis/tong/hxelectron/master.svg?style=flat-square)](https://travis-ci.org/tong/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/tong/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
 
 The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS based on [Node.js](https://nodejs.org/) and [Chromium](http://www.chromium.org).
 
@@ -15,7 +15,7 @@ The Electron framework lets you write cross-platform desktop applications using 
 # Release version from haxelib:
 haxelib install electron
 # Development version from git:
-haxelib git electron https://github.com/fponticelli/hxelectron.git
+haxelib git electron https://github.com/tong/hxelectron.git
 ```
 
 
@@ -30,7 +30,7 @@ Spin up the demo application to see electron in action:
 npm install -g electron
 
 ## Clone this repository
-git clone https://github.com/fponticelli/hxelectron
+git clone https://github.com/tong/hxelectron
 cd hxelectron/
 
 ## Set the haxelib development directory
