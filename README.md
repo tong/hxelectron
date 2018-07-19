@@ -49,7 +49,7 @@ The haxe externs are attributed with following metadata:
  - `@:electron` for types in `electron.*` (available in the main and renderer process).
  - `@:electron("main")` for types in `electron.main.*` (only available in the main process).
  - `@:electron("renderer")` for types in `electron.renderer.*` (only available in the renderer process).
-
+ - `@:electron_platform(["Linux"|"macOS"|"Windows"])` the supporting platforms (only if specific).
 
 
 ## Generate Type Definitions
