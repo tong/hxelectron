@@ -60,6 +60,19 @@ package electron;
 	@:electron_platform(["Windows", "Linux"])
 	static function getIOCounters():IOCounters;
 	/**
+		Returns an object with V8 heap statistics. Note that all statistics are reported in Kilobytes.
+	**/
+	static function getHeapStatistics():{ @:optional
+	var totalHeapSize : Int; @:optional
+	var totalHeapSizeExecutable : Int; @:optional
+	var totalPhysicalSize : Int; @:optional
+	var totalAvailableSize : Int; @:optional
+	var usedHeapSize : Int; @:optional
+	var heapSizeLimit : Int; @:optional
+	var mallocedMemory : Int; @:optional
+	var peakMallocedMemory : Int; @:optional
+	var doesZapGarbage : Bool; };
+	/**
 		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
 	**/
 	static function getProcessMemoryInfo():{ /**

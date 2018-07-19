@@ -11,6 +11,9 @@ package electron.renderer;
 		e.g.
 	**/
 	static function require(module:String):Any;
+	/**
+		Note: Do not use removeAllListeners on BrowserWindow. Use of this can remove all blur listeners, disable click events on touch bar buttons, and other unintended consequences.
+	**/
 	static function getCurrentWindow():electron.main.BrowserWindow;
 	static function getCurrentWebContents():electron.main.WebContents;
 	static function getGlobal(name:String):Any;

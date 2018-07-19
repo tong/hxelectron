@@ -3,6 +3,10 @@ package electron.main;
 /**
 **/
 @:require(js, electron) @:jsRequire("electron", "app") @:electron("main") extern class App {
+	/**
+		A Boolean property that returns  true if the app is packaged, false otherwise. For many apps, this property can be used to distinguish development and production environments.
+	**/
+	var isPackaged : Bool;
 	var commandLine : { /**
 		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv, and is mainly used by developers to control some low-level Chromium behaviors.
 	**/
@@ -62,6 +66,7 @@ package electron.main;
 	var args : Array<String>; @:optional
 	var execPath : String; }):Void;
 	static function isReady():Bool;
+	static function whenReady():js.Promise<Dynamic>;
 	/**
 		On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses on the application's first window.
 	**/
@@ -125,7 +130,6 @@ package electron.main;
 	/**
 		This method checks if the current executable is the default handler for a protocol (aka URI scheme). If so, it will return true. Otherwise, it will return false. Note: On macOS, you can use this method to check if the app has been registered as the default protocol handler for a protocol. You can also verify this by checking ~/Library/Preferences/com.apple.LaunchServices.plist on the macOS machine. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
 	**/
-	@:electron_platform(["macOS", "Windows"])
 	static function isDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		Adds tasks to the Tasks category of the JumpList on Windows. tasks is an array of Task objects. Note: If you'd like to customize the Jump List even more use app.setJumpList(categories) instead.
@@ -148,13 +152,17 @@ package electron.main;
 	@:electron_platform(["Windows"])
 	static function setJumpList(categories:Array<JumpListCategory>):Void;
 	/**
-		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. callback will be called by the first instance with callback(argv, workingDirectory) when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. The callback is guaranteed to be executed after the ready event of app gets emitted. This method returns false if your process is the primary instance of the application and your app should continue loading. And returns true if your process has sent its parameters to another instance, and you should immediately quit. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
+		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock you can assume that another instance of your application is already running with the lock and exit immediately. I.e. This method returns true if your process is the primary instance of your application and your app should continue loading.  It returns false if your process should immediately quit as it has sent its parameters to another instance that has already acquired the lock. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
 	**/
-	static function makeSingleInstance(callback:haxe.Constraints.Function):Bool;
+	static function requestSingleInstanceLock():Bool;
 	/**
-		Releases all locks that were created by makeSingleInstance. This will allow multiple instances of the application to once again run side by side.
+		This method returns whether or not this instance of your app is currently holding the single instance lock.  You can request the lock with app.requestSingleInstanceLock() and release with app.releaseSingleInstanceLock()
 	**/
-	static function releaseSingleInstance():Void;
+	static function hasSingleInstanceLock():Bool;
+	/**
+		Releases all locks that were created by requestSingleInstanceLock. This will allow multiple instances of the application to once again run side by side.
+	**/
+	static function releaseSingleInstanceLock():Void;
 	/**
 		Creates an NSUserActivity and sets it as the current activity. The activity is eligible for Handoff to another device afterward.
 	**/

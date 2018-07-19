@@ -18,25 +18,40 @@ package electron.main;
 	@:electron_platform(["macOS"])
 	static function postLocalNotification(event:String, userInfo:Dynamic):Void;
 	/**
+		Posts event as native notifications of macOS. The userInfo is an Object that contains the user information dictionary sent along with the notification.
+	**/
+	@:electron_platform(["macOS"])
+	static function postWorkspaceNotification(event:String, userInfo:Dynamic):Void;
+	/**
 		Subscribes to native notifications of macOS, callback will be called with callback(event, userInfo) when the corresponding event happens. The userInfo is an Object that contains the user information dictionary sent along with the notification. The id of the subscriber is returned, which can be used to unsubscribe the event. Under the hood this API subscribes to NSDistributedNotificationCenter, example values of event are:
 	**/
 	@:electron_platform(["macOS"])
 	static function subscribeNotification(event:String, callback:haxe.Constraints.Function):Void;
-	/**
-		Removes the subscriber with id.
-	**/
-	@:electron_platform(["macOS"])
-	static function unsubscribeNotification(id:Int):Void;
 	/**
 		Same as subscribeNotification, but uses NSNotificationCenter for local defaults. This is necessary for events such as NSUserDefaultsDidChangeNotification.
 	**/
 	@:electron_platform(["macOS"])
 	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Void;
 	/**
+		Same as subscribeNotification, but uses NSWorkspace.sharedWorkspace.notificationCenter. This is necessary for events such as NSWorkspaceDidActivateApplicationNotification.
+	**/
+	@:electron_platform(["macOS"])
+	static function subscribeWorkspaceNotification(event:String, callback:haxe.Constraints.Function):Void;
+	/**
+		Removes the subscriber with id.
+	**/
+	@:electron_platform(["macOS"])
+	static function unsubscribeNotification(id:Int):Void;
+	/**
 		Same as unsubscribeNotification, but removes the subscriber from NSNotificationCenter.
 	**/
 	@:electron_platform(["macOS"])
 	static function unsubscribeLocalNotification(id:Int):Void;
+	/**
+		Same as unsubscribeNotification, but removes the subscriber from NSWorkspace.sharedWorkspace.notificationCenter.
+	**/
+	@:electron_platform(["macOS"])
+	static function unsubscribeWorkspaceNotification(id:Int):Void;
 	/**
 		Add the specified defaults to your application's NSUserDefaults.
 	**/

@@ -35,6 +35,13 @@ package electron.main;
 	@:electron_platform(["macOS"])
 	function setHighlightMode(mode:String):Void;
 	/**
+		Sets the option to ignore double click events. Ignoring these events allows you to detect every individual click of the tray icon. This value is set to false by default.
+	**/
+	@:electron_platform(["macOS"])
+	function setIgnoreDoubleClickEvents(ignore:Bool):Void;
+	@:electron_platform(["macOS"])
+	function getIgnoreDoubleClickEvents():Bool;
+	/**
 		Displays a tray balloon.
 	**/
 	@:electron_platform(["Windows"])
