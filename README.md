@@ -1,13 +1,9 @@
 
 HXElectron
 ==========
-
-> Haxe→JS type definitions for [electron](https://electronjs.org/).
+Haxe type definitions for [electron](https://electronjs.org/) the framework lets you build cross-platform desktop applications with JavaScript, HTML, and CSS.
 
 [![Build Status](https://img.shields.io/travis/tong/hxelectron/master.svg?style=flat-square)](https://travis-ci.org/tong/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/tong/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
-
-The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS based on [Node.js](https://nodejs.org/) and [Chromium](http://www.chromium.org).
-
 
 ## Installation
 
@@ -28,7 +24,7 @@ Spin up the demo application to see electron in action:
 
 ```sh
 ## Make sure you have Electron installed (you only need to do this once)
-npm install -g electron
+npm install -g electron@latest
 
 ## Clone this repository
 git clone https://github.com/tong/hxelectron
