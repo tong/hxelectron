@@ -12,9 +12,10 @@ The Electron framework lets you write cross-platform desktop applications using 
 ## Installation
 
 ```sh
-# Release version from haxelib:
+# Release version from haxelib
 haxelib install electron
-# Development version from git:
+
+# Development version from git
 haxelib git electron https://github.com/tong/hxelectron.git
 ```
 
@@ -64,8 +65,13 @@ Do **not** make changes to the externs itself but edit the [generator](tool/Elec
 ```sh
 ## Edit hxelectron/tool/ElectronAPI.hx
 # …
+
 ## Rebuild the generator (run.n)
 haxe run.hxml
+
 ## Generate externs
 neko run.n
+
+## Build haxedoc.xml to insure everything is fine
+haxe haxedoc.hxml
 ```
