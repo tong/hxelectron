@@ -15,5 +15,5 @@ script:
   - haxelib git electron https://github.com/tong/hxelectron
   - haxe run.hxml
   - neko run.n
-  - haxe doc.hxml
+  - haxe haxedoc.hxml
   - haxe --cwd demo build.hxml
