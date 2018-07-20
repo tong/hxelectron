@@ -3,7 +3,7 @@ import js.Browser.console;
 import js.Browser.document;
 import js.Browser.window;
 import js.Node.process;
-import js.node.ChildProcess.spawn;
+import js.node.ChildProcess;
 
 class App {
 
@@ -21,8 +21,9 @@ class App {
             setText( 'node', 'node '+process.version );
             setText( 'electron', 'electron '+process.versions['electron'] );
 
-            spawn( 'haxe', ['-version'] ).stderr.on( 'data', function(buf) {
-                setText( 'haxe', 'haxe $buf' );
+            ChildProcess.spawn( 'haxe', ['-version'] ).stdout.on( 'data', function(buf) {
+				var version = buf.toString();
+                setText( 'haxe', 'haxe $version' );
             });
         }
     }

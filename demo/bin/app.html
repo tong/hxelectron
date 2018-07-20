@@ -41,21 +41,27 @@
 				overflow: hidden;
                 cursor: default;
             }
+			a {
+				color: var(--color-orange-2);
+				text-decoration: none;
+			}
             *::selection {
                 background: var(--color-orange-2);
                 color: var(--color-yellow);
             }
-            #info {
-                position: relative;
+			header, main {
+				position: relative;
                 top: 16px;
                 left: 16px;
+			}
+            header {
                 text-transform: uppercase;
             }
-            #info h1 {
+            header h1 {
                 font-family: Helvetica, sans-serif;
                 font-size: 32pt;
             }
-            #info div {
+            main div {
                 position: relative;
                 left: 2px;
             }
@@ -64,7 +70,6 @@
                 top: 0; bottom:0; left: 0; right:0;
                 margin: auto;
                 pointer-events: none;
-
             }
             img#logo-haxe {
                 opacity: 0;
@@ -75,18 +80,26 @@
                 filter: drop-shadow(16px 16px 24px rgba(5,5,5,0.9));
                 z-index: 2;
             }
+			footer {
+				position: fixed;
+				right: 0;
+				bottom: 0;
+				display: none;
+			}
         </style>
         <script src="app.js" defer></script>
     </head>
     <body>
-        <div id="info">
-            <h1>HXElectron</h1>
-            <div id="system"></div>
+		<header>
+			<h1>HXElectron</h1>
+		</header>
+		<main>
+			<div id="system"></div>
             <div id="node"></div>
             <div id="electron"></div>
             <div id="haxe"></div>
-        </div>
-        <div id="updates"></div>
-        <img class="logo" id="logo-haxe" src="http://haxe.org/img/haxe-logo.svg" />
+		</main>
+		<img class="logo" id="logo-haxe" src="https://haxe.org/img/haxe-logo.svg"/>
+		<footer><a href="https://github.com/tong/hxelectron">https://github.com/tong/hxelectron</a></footer>
     </body>
 </html>
