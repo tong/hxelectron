@@ -21,14 +21,4 @@ package electron;
 	**/
 	@:electron_platform(["Windows"])
 	static function dipToScreenPoint(point:Point):Point;
-	/**
-		Converts a screen physical rect to a screen DIP rect. The DPI scale is performed relative to the display nearest to window. If window is null, scaling will be performed to the display nearest to rect.
-	**/
-	//@:electron_platform(["Windows"])
-	//static function screenToDipRect(window:BrowserWindow, rect:Rectangle):Rectangle;
-	/**
-		Converts a screen DIP rect to a screen physical rect. The DPI scale is performed relative to the display nearest to window. If window is null, scaling will be performed to the display nearest to rect.
-	**/
-	//@:electron_platform(["Windows"])
-	//static function dipToScreenRect(window:BrowserWindow, rect:Rectangle):Rectangle;
 }

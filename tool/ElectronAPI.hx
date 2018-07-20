@@ -143,6 +143,14 @@ class ElectronAPI {
 						break;
 					}
 				}
+				// TODO: https://github.com/tong/hxelectron/issues/35
+				var i = 0;
+				while( i < type.fields.length ) {
+					switch type.fields[i].name {
+					case 'screenToDipRect','dipToScreenRect': type.fields.splice(i,1);
+					default: i++;
+					}
+				}
 			case 'App':
 				type.fields.push( {
 					name: 'on',
