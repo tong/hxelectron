@@ -1,11 +1,13 @@
 {
     "name": "hxelectron-demo",
     "version": "0.2.0",
+    "description": "A minimal Electron application",
+    "repository": "https://github.com/tong/hxelectron",
     "main": "main.js",
     "scripts": {
-        "start": "electron main.js"
+        "start": "electron ."
     },
     "devDependencies": {
-        "electron": "^2.0.5"
+        "electron": "^2.0.7"
     }
 }
