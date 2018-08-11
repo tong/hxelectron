@@ -1,11 +1,9 @@
 package electron.main;
-
 /**
 	An alternate transport for Chrome's remote debugging protocol.
-
-	See: <http://electron.atom.io/docs/api/debugger>
+	@see http://electron.atom.io/docs/api/debugger
 **/
-@:require(js, electron) @:jsRequire("electron", "Debugger") @:electron("main") extern class Debugger extends js.node.events.EventEmitter<electron.main.Debugger> {
+@:jsRequire("electron", "Debugger") extern class Debugger extends js.node.events.EventEmitter<electron.main.Debugger> {
 	/**
 		Attaches the debugger to the webContents.
 	**/
@@ -18,18 +16,15 @@ package electron.main;
 	/**
 		Send given command to the debugging target.
 	**/
-	function sendCommand(method:String, ?commandParams:Dynamic, ?callback:haxe.Constraints.Function):Void;
+	function sendCommand(method:String, ?commandParams:Any, ?callback:haxe.Constraints.Function):Void;
 }
-
-/**
-**/
-@:require(js, electron) @:enum abstract DebuggerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract DebuggerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when debugging session is terminated. This happens either when webContents is closed or devtools is invoked for the attached webContents.
 	**/
-	var detach : electron.main.Debugger.DebuggerEvent<js.html.Event -> String -> Void> = "detach";
+	var detach : electron.main.DebuggerEvent<js.html.Event -> String -> Void> = "detach";
 	/**
 		Emitted whenever debugging target issues instrumentation event.
 	**/
-	var message : electron.main.Debugger.DebuggerEvent<js.html.Event -> String -> Dynamic -> Void> = "message";
+	var message : electron.main.DebuggerEvent<js.html.Event -> String -> Any -> Void> = "message";
 }

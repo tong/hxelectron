@@ -1,11 +1,9 @@
 package electron.main;
-
 /**
 	Add items to native application menus and context menus.
-
-	See: <http://electron.atom.io/docs/api/menu-item>
+	@see http://electron.atom.io/docs/api/menu-item
 **/
-@:require(js, electron) @:jsRequire("electron", "MenuItem") @:electron("main") extern class MenuItem {
+@:jsRequire("electron", "MenuItem") extern class MenuItem {
 	/**
 		A Boolean indicating whether the item is enabled, this property can be dynamically changed.
 	**/
@@ -41,7 +39,7 @@ package electron.main;
 	var type : String; @:optional
 	var label : String; @:optional
 	var sublabel : String; @:optional
-	var accelerator : Accelerator; @:optional
+	var accelerator : electron.Accelerator; @:optional
 	var icon : Dynamic; /**
 		If false, the menu item will be greyed out and unclickable.
 	**/

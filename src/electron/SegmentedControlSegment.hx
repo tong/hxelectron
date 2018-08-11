@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/segmented-control-segment>
+	@see http://electron.atom.io/docs/api/structures/segmented-control-segment
 **/
-@:require(js, electron) @:electron typedef SegmentedControlSegment = {
+typedef SegmentedControlSegment = {
 	/**
 		The text to appear in this segment
 	**/
@@ -11,7 +10,7 @@ package electron;
 	/**
 		The image to appear in this segment
 	**/
-	var icon : NativeImage;
+	var icon : electron.NativeImage;
 	/**
 		Whether this segment is selectable. Default: true
 	**/

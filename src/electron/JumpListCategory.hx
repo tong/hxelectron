@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/jump-list-category>
+	@see http://electron.atom.io/docs/api/structures/jump-list-category
 **/
-@:require(js, electron) @:electron typedef JumpListCategory = {
+typedef JumpListCategory = {
 	/**
 		One of the following:
 	**/
@@ -15,5 +14,5 @@ package electron;
 	/**
 		Array of objects if type is tasks or custom, otherwise it should be omitted.
 	**/
-	var items : Array<JumpListItem>;
+	var items : Array<electron.JumpListItem>;
 }

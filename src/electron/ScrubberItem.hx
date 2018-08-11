@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/scrubber-item>
+	@see http://electron.atom.io/docs/api/structures/scrubber-item
 **/
-@:require(js, electron) @:electron typedef ScrubberItem = {
+typedef ScrubberItem = {
 	/**
 		The text to appear in this item
 	**/
@@ -11,5 +10,5 @@ package electron;
 	/**
 		The image to appear in this item
 	**/
-	var icon : NativeImage;
+	var icon : electron.NativeImage;
 }

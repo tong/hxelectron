@@ -1,23 +1,32 @@
 package electron.main;
-
 /**
 	Get and set properties of a session.
-
-	See: <http://electron.atom.io/docs/api/session>
+	@see http://electron.atom.io/docs/api/session
 **/
-@:require(js, electron) @:jsRequire("electron", "Session") @:electron("main") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+@:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+	/**
+		A Session object, the default session object of the app.
+	**/
+	static var defaultSession : electron.main.Session;
+	/**
+		If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. if there is no persist: prefix, the page will use an in-memory session. If the partition is empty then default session of the app will be returned. To create a Session with options, you have to ensure the Session with the partition has never been used before. There is no way to change the options of an existing Session object.
+	**/
+	static function fromPartition(partition:String, ?options:{ /**
+		Whether to enable cache.
+	**/
+	var cache : Bool; }):electron.main.Session;
 	/**
 		A Cookies object for this session.
 	**/
-	var cookies : Cookies;
+	var cookies : electron.main.Cookies;
 	/**
 		A WebRequest object for this session.
 	**/
-	var webRequest : WebRequest;
+	var webRequest : electron.main.WebRequest;
 	/**
 		A Protocol object for this session.
 	**/
-	var protocol : Protocol;
+	var protocol : electron.main.Protocol;
 	/**
 		Callback is invoked with the session's current cache size.
 	**/
@@ -34,7 +43,7 @@ package electron.main;
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers, cachestorage.
+		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers.
 	**/
 	@:optional
 	var storages : Array<String>; /**
@@ -52,15 +61,12 @@ package electron.main;
 	function setProxy(config:{ /**
 		The URL associated with the PAC file.
 	**/
-	@:optional
 	var pacScript : String; /**
 		Rules indicating which proxies to use.
 	**/
-	@:optional
 	var proxyRules : String; /**
 		Rules indicating which URLs should bypass the proxy settings.
 	**/
-	@:optional
 	var proxyBypassRules : String; }, callback:haxe.Constraints.Function):Void;
 	/**
 		Resolves the proxy information for url. The callback will be called with callback(proxy) when the request is performed.
@@ -101,7 +107,7 @@ package electron.main;
 	/**
 		Sets the handler which can be used to respond to permission requests for the session. Calling callback(true) will allow the permission and callback(false) will reject it. To clear the handler, call setPermissionRequestHandler(null).
 	**/
-	function setPermissionRequestHandler(handler:Dynamic):Void;
+	function setPermissionRequestHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
 		Clears the host resolver cache.
 	**/
@@ -122,28 +128,22 @@ package electron.main;
 	function createInterruptedDownload(options:{ /**
 		Absolute path of the download.
 	**/
-	@:optional
 	var path : String; /**
 		Complete URL chain for the download.
 	**/
-	@:optional
 	var urlChain : Array<String>; @:optional
 	var mimeType : String; /**
 		Start range for the download.
 	**/
-	@:optional
 	var offset : Int; /**
 		Total length of the download.
 	**/
-	@:optional
 	var length : Int; /**
 		Last-Modified header value.
 	**/
-	@:optional
 	var lastModified : String; /**
 		ETag header value.
 	**/
-	@:optional
 	var eTag : String; /**
 		Time when download was started in number of seconds since UNIX epoch.
 	**/
@@ -152,31 +152,16 @@ package electron.main;
 	/**
 		Clears the session’s HTTP authentication cache.
 	**/
-	function clearAuthCache(options:Dynamic, ?callback:haxe.Constraints.Function):Void;
+	function clearAuthCache(options:haxe.extern.EitherType<electron.RemovePassword, electron.RemoveClientCertificate>, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Adds scripts that will be executed on ALL web contents that are associated with this session just before normal preload scripts run.
 	**/
 	function setPreloads(preloads:Array<String>):Void;
 	function getPreloads():Array<String>;
-	/**
-		A Session object, the default session object of the app.
-	**/
-	var defaultSession : Session;
-	/**
-		If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. if there is no persist: prefix, the page will use an in-memory session. If the partition is empty then default session of the app will be returned. To create a Session with options, you have to ensure the Session with the partition has never been used before. There is no way to change the options of an existing Session object.
-	**/
-	static function fromPartition(partition:String, ?options:{ /**
-		Whether to enable cache.
-	**/
-	@:optional
-	var cache : Bool; }):Session;
 }
-
-/**
-**/
-@:require(js, electron) @:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron is about to download item in webContents. Calling event.preventDefault() will cancel the download and item will not be available from next tick of the process.
 	**/
-	var will_download : electron.main.Session.SessionEvent<js.html.Event -> DownloadItem -> WebContents -> Void> = "will-download";
+	var will_download : electron.main.SessionEvent<js.html.Event -> electron.main.DownloadItem -> electron.main.WebContents -> Void> = "will-download";
 }

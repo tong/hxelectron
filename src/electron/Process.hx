@@ -1,117 +1,71 @@
 package electron;
-
 /**
+	Extensions to process object.
+	@see http://electron.atom.io/docs/api/process
 **/
-@:require(js, electron) @:jsRequire("electron", "process") @:electron extern class Process {
+@:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
 		A Boolean. When app is started by being passed as parameter to the default app, this property is true in the main process, otherwise it is undefined.
 	**/
-	var defaultApp : Bool;
+	static var defaultApp : Bool;
 	/**
 		A Boolean. For Mac App Store build, this property is true, for other builds it is undefined.
 	**/
-	var mas : Bool;
+	static var mas : Bool;
 	/**
 		A Boolean that controls ASAR support inside your application. Setting this to true will disable the support for asar archives in Node's built-in modules.
 	**/
-	var noAsar : Bool;
+	static var noAsar : Bool;
 	/**
 		A Boolean that controls whether or not deprecation warnings are printed to stderr. Setting this to true will silence deprecation warnings. This property is used instead of the --no-deprecation command line flag.
 	**/
-	var noDeprecation : Bool;
+	static var noDeprecation : Bool;
 	/**
 		A String representing the path to the resources directory.
 	**/
-	var resourcesPath : String;
+	static var resourcesPath : String;
 	/**
 		A Boolean that controls whether or not deprecation warnings will be thrown as exceptions. Setting this to true will throw errors for deprecations. This property is used instead of the --throw-deprecation command line flag.
 	**/
-	var throwDeprecation : Bool;
+	static var throwDeprecation : Bool;
 	/**
 		A Boolean that controls whether or not deprecations printed to stderr include their stack trace. Setting this to true will print stack traces for deprecations. This property is instead of the --trace-deprecation command line flag.
 	**/
-	var traceDeprecation : Bool;
+	static var traceDeprecation : Bool;
 	/**
 		A Boolean that controls whether or not process warnings printed to stderr include their stack trace. Setting this to true will print stack traces for process warnings (including deprecations). This property is instead of the --trace-warnings command line flag.
 	**/
-	var traceProcessWarnings : Bool;
+	static var traceProcessWarnings : Bool;
 	/**
 		A String representing the current process's type, can be "browser" (i.e. main process) or "renderer".
 	**/
-	var type : String;
+	static var type : String;
 	/**
 		A Boolean. If the app is running as a Windows Store app (appx), this property is true, for otherwise it is undefined.
 	**/
-	var windowsStore : Bool;
-	var versions : { /**
+	static var windowsStore : Bool;
+	static var versions : { /**
 		A String representing Chrome's version string.
 	**/
-	@:optional
 	var chrome : String; /**
 		A String representing Electron's version string.
 	**/
-	@:optional
 	var electron : String; };
 	/**
 		Causes the main thread of the current process crash.
 	**/
 	static function crash():Void;
-	static function getCPUUsage():CPUUsage;
+	static function getCPUUsage():electron.CPUUsage;
 	@:electron_platform(["Windows", "Linux"])
-	static function getIOCounters():IOCounters;
-	/**
-		Returns an object with V8 heap statistics. Note that all statistics are reported in Kilobytes.
-	**/
-	static function getHeapStatistics():{ @:optional
-	var totalHeapSize : Int; @:optional
-	var totalHeapSizeExecutable : Int; @:optional
-	var totalPhysicalSize : Int; @:optional
-	var totalAvailableSize : Int; @:optional
-	var usedHeapSize : Int; @:optional
-	var heapSizeLimit : Int; @:optional
-	var mallocedMemory : Int; @:optional
-	var peakMallocedMemory : Int; @:optional
-	var doesZapGarbage : Bool; };
+	static function getIOCounters():electron.IOCounters;
 	/**
 		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
 	**/
-	static function getProcessMemoryInfo():{ /**
-		The amount of memory currently pinned to actual physical RAM.
-	**/
-	@:optional
-	var workingSetSize : Int; /**
-		The maximum amount of memory that has ever been pinned to actual physical RAM.
-	**/
-	@:optional
-	var peakWorkingSetSize : Int; /**
-		The amount of memory not shared by other processes, such as JS heap or HTML content.
-	**/
-	@:optional
-	var privateBytes : Int; /**
-		The amount of memory shared between processes, typically memory consumed by the Electron code itself.
-	**/
-	@:optional
-	var sharedBytes : Int; };
+	static function getProcessMemoryInfo():Any;
 	/**
 		Returns an object giving memory usage statistics about the entire system. Note that all statistics are reported in Kilobytes.
 	**/
-	static function getSystemMemoryInfo():{ /**
-		The total amount of physical memory in Kilobytes available to the system.
-	**/
-	@:optional
-	var total : Int; /**
-		The total amount of memory not being used by applications or disk cache.
-	**/
-	@:optional
-	var free : Int; /**
-		The total amount of swap memory in Kilobytes available to the system.
-	**/
-	@:optional
-	var swapTotal : Int; /**
-		The free amount of swap memory in Kilobytes available to the system.
-	**/
-	@:optional
-	var swapFree : Int; };
+	static function getSystemMemoryInfo():Any;
 	/**
 		Causes the main thread of the current process hang.
 	**/
@@ -121,4 +75,10 @@ package electron;
 	**/
 	@:electron_platform(["macOS", "Linux"])
 	static function setFdLimit(maxDescriptors:Int):Void;
+}
+@:enum abstract ProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+	/**
+		Emitted when Electron has loaded its internal initialization script and is beginning to load the web page or the main script. It can be used by the preload script to add removed Node global symbols back to the global scope when node integration is turned off:
+	**/
+	var loaded : electron.ProcessEvent<Void -> Void> = "loaded";
 }

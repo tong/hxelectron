@@ -1,15 +1,16 @@
 package electron.main;
-
 /**
 	Create and control views.
-
-	See: <http://electron.atom.io/docs/api/browser-view>
+	@see http://electron.atom.io/docs/api/browser-view
 **/
-@:require(js, electron) @:jsRequire("electron", "BrowserView") @:electron("main") extern class BrowserView {
+@:jsRequire("electron", "BrowserView") extern class BrowserView {
+	static function getAllViews():Array<electron.main.BrowserView>;
+	static function fromWebContents(webContents:electron.main.WebContents):haxe.extern.EitherType<electron.main.BrowserView, Dynamic>;
+	static function fromId(id:Int):electron.main.BrowserView;
 	/**
 		A WebContents object owned by this view.
 	**/
-	var webContents : WebContents;
+	var webContents : electron.main.WebContents;
 	/**
 		A Integer representing the unique ID of the view.
 	**/
@@ -18,7 +19,7 @@ package electron.main;
 		See .
 	**/
 	@:optional
-	var webPreferences : { }; }):Void;
+	var webPreferences : Any; }):Void;
 	/**
 		Force closing the view, the unload and beforeunload events won't be emitted for the web page. After you're done with a view, call this function in order to free memory and other resources as soon as possible.
 	**/
@@ -28,20 +29,15 @@ package electron.main;
 	function setAutoResize(options:{ /**
 		If true, the view's width will grow and shrink together with the window. false by default.
 	**/
-	@:optional
 	var width : Bool; /**
 		If true, the view's height will grow and shrink together with the window. false by default.
 	**/
-	@:optional
 	var height : Bool; }):Void;
 	/**
 		Resizes and moves the view to the supplied bounds relative to the window.
 	**/
 	@:electron_platform(["Experimental"])
-	function setBounds(bounds:Rectangle):Void;
+	function setBounds(bounds:electron.Rectangle):Void;
 	@:electron_platform(["Experimental"])
 	function setBackgroundColor(color:String):Void;
-	static function getAllViews():Array<BrowserView>;
-	static function fromWebContents(webContents:WebContents):Dynamic;
-	static function fromId(id:Int):BrowserView;
 }

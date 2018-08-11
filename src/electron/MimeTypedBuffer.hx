@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/mime-typed-buffer>
+	@see http://electron.atom.io/docs/api/structures/mime-typed-buffer
 **/
-@:require(js, electron) @:electron typedef MimeTypedBuffer = {
+typedef MimeTypedBuffer = {
 	/**
 		The mimeType of the Buffer that you are sending
 	**/

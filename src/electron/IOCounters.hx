@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/io-counters>
+	@see http://electron.atom.io/docs/api/structures/io-counters
 **/
-@:require(js, electron) @:electron typedef IOCounters = {
+typedef IOCounters = {
 	/**
 		The number of I/O read operations.
 	**/

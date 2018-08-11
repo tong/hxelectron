@@ -1,11 +1,9 @@
 package electron.main;
-
 /**
 	Control file downloads from remote sources.
-
-	See: <http://electron.atom.io/docs/api/download-item>
+	@see http://electron.atom.io/docs/api/download-item
 **/
-@:require(js, electron) @:jsRequire("electron", "DownloadItem") @:electron("main") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
+@:jsRequire("electron", "DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
 	/**
 		The API is only available in session's will-download callback function. If user doesn't set the save path via the API, Electron will use the original routine to determine the save path(Usually prompts a save dialog).
 	**/
@@ -47,16 +45,13 @@ package electron.main;
 	function getETag():String;
 	function getStartTime():Float;
 }
-
-/**
-**/
-@:require(js, electron) @:enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the download has been updated and is not done. The state can be one of following:
 	**/
-	var updated : electron.main.DownloadItem.DownloadItemEvent<js.html.Event -> String -> Void> = "updated";
+	var updated : electron.main.DownloadItemEvent<js.html.Event -> String -> Void> = "updated";
 	/**
 		Emitted when the download is in a terminal state. This includes a completed download, a cancelled download (via downloadItem.cancel()), and interrupted download that can't be resumed. The state can be one of following:
 	**/
-	var done : electron.main.DownloadItem.DownloadItemEvent<js.html.Event -> String -> Void> = "done";
+	var done : electron.main.DownloadItemEvent<js.html.Event -> String -> Void> = "done";
 }

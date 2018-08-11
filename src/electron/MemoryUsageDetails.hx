@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/memory-usage-details>
+	@see http://electron.atom.io/docs/api/structures/memory-usage-details
 **/
-@:require(js, electron) @:electron typedef MemoryUsageDetails = {
+typedef MemoryUsageDetails = {
 	var count : Float;
 	var size : Float;
 	var liveSize : Float;

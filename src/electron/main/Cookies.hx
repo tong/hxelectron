@@ -1,11 +1,9 @@
 package electron.main;
-
 /**
 	Query and modify a session's cookies.
-
-	See: <http://electron.atom.io/docs/api/cookies>
+	@see http://electron.atom.io/docs/api/cookies
 **/
-@:require(js, electron) @:jsRequire("electron", "Cookies") @:electron("main") extern class Cookies extends js.node.events.EventEmitter<electron.main.Cookies> {
+@:jsRequire("electron", "Cookies") extern class Cookies extends js.node.events.EventEmitter<electron.main.Cookies> {
 	/**
 		Sends a request to get all cookies matching filter, callback will be called with callback(error, cookies) on complete.
 	**/
@@ -40,7 +38,6 @@ package electron.main;
 	function set(details:{ /**
 		The url to associate the cookie with.
 	**/
-	@:optional
 	var url : String; /**
 		The name of the cookie. Empty by default if omitted.
 	**/
@@ -79,12 +76,9 @@ package electron.main;
 	**/
 	function flushStore(callback:haxe.Constraints.Function):Void;
 }
-
-/**
-**/
-@:require(js, electron) @:enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when a cookie is changed because it was added, edited, removed, or expired.
 	**/
-	var changed : electron.main.Cookies.CookiesEvent<js.html.Event -> Cookie -> String -> Bool -> Void> = "changed";
+	var changed : electron.main.CookiesEvent<js.html.Event -> electron.Cookie -> String -> Bool -> Void> = "changed";
 }

@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/shortcut-details>
+	@see http://electron.atom.io/docs/api/structures/shortcut-details
 **/
-@:require(js, electron) @:electron typedef ShortcutDetails = {
+typedef ShortcutDetails = {
 	/**
 		The target to launch from this shortcut.
 	**/

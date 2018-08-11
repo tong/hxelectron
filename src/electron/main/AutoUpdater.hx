@@ -1,17 +1,17 @@
 package electron.main;
-
 /**
+	Enable apps to automatically update themselves.
+	@see http://electron.atom.io/docs/api/auto-updater
 **/
-@:require(js, electron) @:jsRequire("electron", "autoUpdater") @:electron("main") extern class AutoUpdater {
+@:jsRequire("electron", "autoUpdater") extern class AutoUpdater extends js.node.events.EventEmitter<electron.main.AutoUpdater> {
 	/**
 		Sets the url and initialize the auto updater.
 	**/
-	static function setFeedURL(options:{ @:optional
-	var url : String; /**
+	static function setFeedURL(options:{ var url : String; /**
 		HTTP request headers.
 	**/
 	@:optional
-	var headers : { }; /**
+	var headers : Any; /**
 		Either json or default, see the README for more information.
 	**/
 	@:optional
@@ -25,4 +25,26 @@ package electron.main;
 		Restarts the app and installs the update after it has been downloaded. It should only be called after update-downloaded has been emitted. Under the hood calling autoUpdater.quitAndInstall() will close all application windows first, and automatically call app.quit() after all windows have been closed. Note: If the application is quit without calling this API after the update-downloaded event has been emitted, the application will still be replaced by the updated one on the next run.
 	**/
 	static function quitAndInstall():Void;
+}
+@:enum abstract AutoUpdaterEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+	/**
+		Emitted when there is an error while updating.
+	**/
+	var error : electron.main.AutoUpdaterEvent<js.Error -> Void> = "error";
+	/**
+		Emitted when checking if an update has started.
+	**/
+	var checking_for_update : electron.main.AutoUpdaterEvent<Void -> Void> = "checking-for-update";
+	/**
+		Emitted when there is an available update. The update is downloaded automatically.
+	**/
+	var update_available : electron.main.AutoUpdaterEvent<Void -> Void> = "update-available";
+	/**
+		Emitted when there is no available update.
+	**/
+	var update_not_available : electron.main.AutoUpdaterEvent<Void -> Void> = "update-not-available";
+	/**
+		Emitted when an update has been downloaded. On Windows only releaseName is available.
+	**/
+	var update_downloaded : electron.main.AutoUpdaterEvent<js.html.Event -> String -> String -> Date -> String -> Void> = "update-downloaded";
 }

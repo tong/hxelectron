@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/certificate>
+	@see http://electron.atom.io/docs/api/structures/certificate
 **/
-@:require(js, electron) @:electron typedef Certificate = {
+typedef Certificate = {
 	/**
 		PEM encoded data
 	**/
@@ -11,7 +10,7 @@ package electron;
 	/**
 		Issuer principal
 	**/
-	var issuer : CertificatePrincipal;
+	var issuer : electron.CertificatePrincipal;
 	/**
 		Issuer's Common Name
 	**/
@@ -19,11 +18,11 @@ package electron;
 	/**
 		Issuer certificate (if not self-signed)
 	**/
-	var issuerCert : Certificate;
+	var issuerCert : electron.Certificate;
 	/**
 		Subject principal
 	**/
-	var subject : CertificatePrincipal;
+	var subject : electron.CertificatePrincipal;
 	/**
 		Subject's Common Name
 	**/

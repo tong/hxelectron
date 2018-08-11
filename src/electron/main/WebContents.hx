@@ -1,11 +1,12 @@
 package electron.main;
-
 /**
 	Render and control the contents of a BrowserWindow instance.
-
-	See: <http://electron.atom.io/docs/api/web-contents>
+	@see http://electron.atom.io/docs/api/web-contents
 **/
-@:require(js, electron) @:jsRequire("electron", "WebContents") @:electron("main") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
+@:jsRequire("electron", "WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
+	static function getAllWebContents():Array<electron.main.WebContents>;
+	static function getFocusedWebContents():electron.main.WebContents;
+	static function fromId(id:Int):electron.main.WebContents;
 	/**
 		A Integer representing the unique ID of this WebContents.
 	**/
@@ -13,27 +14,27 @@ package electron.main;
 	/**
 		A Session used by this webContents.
 	**/
-	var session : Session;
+	var session : electron.main.Session;
 	/**
 		A WebContents instance that might own this WebContents.
 	**/
-	var hostWebContents : WebContents;
+	var hostWebContents : electron.main.WebContents;
 	/**
 		A WebContents of DevTools for this WebContents. Note: Users should never store this object because it may become null when the DevTools has been closed.
 	**/
-	var devToolsWebContents : WebContents;
+	var devToolsWebContents : electron.main.WebContents;
 	/**
 		A Debugger instance for this webContents.
 	**/
-	var debugger : Debugger;
+	var debugger : electron.main.Debugger;
 	/**
 		Loads the url in the window. The url must contain the protocol prefix, e.g. the http:// or file://. If the load should bypass http cache then use the pragma header to achieve it.
 	**/
 	function loadURL(url:String, ?options:{ /**
-		An HTTP Referrer url.
+		A HTTP Referrer url.
 	**/
 	@:optional
-	var httpReferrer : Dynamic; /**
+	var httpReferrer : String; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -114,7 +115,7 @@ package electron.main;
 	/**
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation. If the result of the executed code is a promise the callback result will be the resolved value of the promise. We recommend that you use the returned Promise to handle code that results in a Promise.
 	**/
-	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Dynamic>;
+	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Any>;
 	/**
 		Ignore application menu shortcuts while this web contents is focused.
 	**/
@@ -232,7 +233,7 @@ package electron.main;
 	/**
 		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page.
 	**/
-	function capturePage(?rect:Rectangle, callback:haxe.Constraints.Function):Void;
+	function capturePage(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
 	/**
 		Checks if any ServiceWorker is registered and returns a boolean as response to callback.
 	**/
@@ -244,7 +245,7 @@ package electron.main;
 	/**
 		Get the system printer list.
 	**/
-	function getPrinters():Array<PrinterInfo>;
+	function getPrinters():Array<electron.PrinterInfo>;
 	/**
 		Prints window's web page. When silent is set to true, Electron will pick the system's default printer if deviceName is empty and the default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({silent: false, printBackground: false, deviceName: ''}). Use page-break-before: always; CSS style to force to print to a new page.
 	**/
@@ -296,14 +297,13 @@ package electron.main;
 	/**
 		Uses the devToolsWebContents as the target WebContents to show devtools. The devToolsWebContents must not have done any navigation, and it should not be used for other purposes after the call. By default Electron manages the devtools by creating an internal WebContents with native view, which developers have very limited control of. With the setDevToolsWebContents method, developers can use any WebContents to show the devtools in it, including BrowserWindow, BrowserView and <webview> tag. Note that closing the devtools does not destroy the devToolsWebContents, it is caller's responsibility to destroy devToolsWebContents. An example of showing devtools in a <webview> tag: An example of showing devtools in a BrowserWindow:
 	**/
-	function setDevToolsWebContents(devToolsWebContents:WebContents):Void;
+	function setDevToolsWebContents(devToolsWebContents:electron.main.WebContents):Void;
 	/**
 		Opens the devtools. When contents is a <webview> tag, the mode would be detach by default, explicitly passing an empty mode can force using last used dock state.
 	**/
 	function openDevTools(?options:{ /**
 		Opens the devtools with specified dock state, can be right, bottom, undocked, detach. Defaults to last used dock state. In undocked mode it's possible to dock back. In detach mode it's not.
 	**/
-	@:optional
 	var mode : String; }):Void;
 	/**
 		Closes the devtools.
@@ -333,27 +333,21 @@ package electron.main;
 	function enableDeviceEmulation(parameters:{ /**
 		Specify the screen type to emulate (default: desktop):
 	**/
-	@:optional
 	var screenPosition : String; /**
 		Set the emulated screen size (screenPosition == mobile).
 	**/
-	@:optional
-	var screenSize : Size; /**
+	var screenSize : electron.Size; /**
 		Position the view on the screen (screenPosition == mobile) (default: {x: 0, y: 0}).
 	**/
-	@:optional
-	var viewPosition : Point; /**
+	var viewPosition : electron.Point; /**
 		Set the device scale factor (if zero defaults to original device scale factor) (default: 0).
 	**/
-	@:optional
 	var deviceScaleFactor : Int; /**
 		Set the emulated view size (empty means no override)
 	**/
-	@:optional
-	var viewSize : Size; /**
+	var viewSize : electron.Size; /**
 		Scale of emulated view inside available space (not in fit to view mode) (default: 1).
 	**/
-	@:optional
 	var scale : Float; }):Void;
 	/**
 		Disable device emulation enabled by webContents.enableDeviceEmulation.
@@ -365,14 +359,12 @@ package electron.main;
 	function sendInputEvent(event:{ /**
 		() The type of the event, can be mouseDown, mouseUp, mouseEnter, mouseLeave, contextMenu, mouseWheel, mouseMove, keyDown, keyUp or char.
 	**/
-	@:optional
 	var type : String; /**
 		An array of modifiers of the event, can include shift, control, alt, meta, isKeypad, isAutoRepeat, leftButtonDown, middleButtonDown, rightButtonDown, capsLock, numLock, left, right.
 	**/
-	@:optional
 	var modifiers : Array<String>; }):Void;
 	/**
-		Begin subscribing for presentation events and captured frames, the callback will be called with callback(image, dirtyRect) when there is a presentation event. The image is an instance of NativeImage that stores the captured frame. The dirtyRect is an object with x, y, width, height properties that describes which part of the page was repainted. If onlyDirty is set to true, image will only contain the repainted area. onlyDirty defaults to false.
+		Begin subscribing for presentation events and captured frames, the callback will be called with callback(frameBuffer, dirtyRect) when there is a presentation event. The frameBuffer is a Buffer that contains raw pixel data. On most machines, the pixel data is effectively stored in 32bit BGRA format, but the actual representation depends on the endianness of the processor (most modern processors are little-endian, on machines with big-endian processors the data is in 32bit ARGB format). The dirtyRect is an object with x, y, width, height properties that describes which part of the page was repainted. If onlyDirty is set to true, frameBuffer will only contain the repainted area. onlyDirty defaults to false.
 	**/
 	function beginFrameSubscription(?onlyDirty:Bool, callback:haxe.Constraints.Function):Void;
 	/**
@@ -385,12 +377,10 @@ package electron.main;
 	function startDrag(item:{ /**
 		or files Array The path(s) to the file(s) being dragged.
 	**/
-	@:optional
 	var file : String; /**
 		The image must be non-empty on macOS.
 	**/
-	@:optional
-	var icon : NativeImage; }):Void;
+	var icon : electron.NativeImage; }):Void;
 	function savePage(fullPath:String, saveType:String, callback:haxe.Constraints.Function):Bool;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
@@ -408,15 +398,15 @@ package electron.main;
 		Normal size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
 	**/
 	@:optional
-	var normal : Size; /**
+	var normal : electron.Size; /**
 		Minimum size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
 	**/
 	@:optional
-	var min : Size; /**
+	var min : electron.Size; /**
 		Maximium size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
 	**/
 	@:optional
-	var max : Size; }):Void;
+	var max : electron.Size; }):Void;
 	function isOffscreen():Bool;
 	/**
 		If offscreen rendering is enabled and not painting, start painting.
@@ -442,169 +432,154 @@ package electron.main;
 	**/
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
 	function getOSProcessId():Int;
-	function getProcessId():Int;
-	static function getAllWebContents():Array<WebContents>;
-	static function getFocusedWebContents():WebContents;
-	static function fromId(id:Int):WebContents;
 }
-
-/**
-**/
-@:require(js, electron) @:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the navigation is done, i.e. the spinner of the tab has stopped spinning, and the onload event was dispatched.
 	**/
-	var did_finish_load : electron.main.WebContents.WebContentsEvent<Void -> Void> = "did-finish-load";
+	var did_finish_load : electron.main.WebContentsEvent<Void -> Void> = "did-finish-load";
 	/**
 		This event is like did-finish-load but emitted when the load failed or was cancelled, e.g. window.stop() is invoked. The full list of error codes and their meaning is available here.
 	**/
-	var did_fail_load : electron.main.WebContents.WebContentsEvent<js.html.Event -> Int -> String -> String -> Bool -> Int -> Int -> Void> = "did-fail-load";
+	var did_fail_load : electron.main.WebContentsEvent<js.html.Event -> Int -> String -> String -> Bool -> Void> = "did-fail-load";
 	/**
 		Emitted when a frame has done navigation.
 	**/
-	var did_frame_finish_load : electron.main.WebContents.WebContentsEvent<js.html.Event -> Bool -> Int -> Int -> Void> = "did-frame-finish-load";
+	var did_frame_finish_load : electron.main.WebContentsEvent<js.html.Event -> Bool -> Void> = "did-frame-finish-load";
 	/**
 		Corresponds to the points in time when the spinner of the tab started spinning.
 	**/
-	var did_start_loading : electron.main.WebContents.WebContentsEvent<Void -> Void> = "did-start-loading";
+	var did_start_loading : electron.main.WebContentsEvent<Void -> Void> = "did-start-loading";
 	/**
 		Corresponds to the points in time when the spinner of the tab stopped spinning.
 	**/
-	var did_stop_loading : electron.main.WebContents.WebContentsEvent<Void -> Void> = "did-stop-loading";
+	var did_stop_loading : electron.main.WebContentsEvent<Void -> Void> = "did-stop-loading";
+	/**
+		Emitted when details regarding a requested resource are available. status indicates the socket connection to download the resource.
+	**/
+	var did_get_response_details : electron.main.WebContentsEvent<js.html.Event -> Bool -> String -> String -> Int -> String -> String -> Any -> String -> Void> = "did-get-response-details";
+	/**
+		Emitted when a redirect is received while requesting a resource.
+	**/
+	var did_get_redirect_request : electron.main.WebContentsEvent<js.html.Event -> String -> String -> Bool -> Int -> String -> String -> Any -> Void> = "did-get-redirect-request";
 	/**
 		Emitted when the document in the given frame is loaded.
 	**/
-	var dom_ready : electron.main.WebContents.WebContentsEvent<js.html.Event -> Void> = "dom-ready";
+	var dom_ready : electron.main.WebContentsEvent<js.html.Event -> Void> = "dom-ready";
 	/**
 		Emitted when page receives favicon urls.
 	**/
-	var page_favicon_updated : electron.main.WebContents.WebContentsEvent<js.html.Event -> Array<String> -> Void> = "page-favicon-updated";
+	var page_favicon_updated : electron.main.WebContentsEvent<js.html.Event -> Array<String> -> Void> = "page-favicon-updated";
 	/**
 		Emitted when the page requests to open a new window for a url. It could be requested by window.open or an external link like <a target='_blank'>. By default a new BrowserWindow will be created for the url. Calling event.preventDefault() will prevent Electron from automatically creating a new BrowserWindow. If you call event.preventDefault() and manually create a new BrowserWindow then you must set event.newGuest to reference the new BrowserWindow instance, failing to do so may result in unexpected behavior. For example:
 	**/
-	var new_window : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> String -> String -> Dynamic -> Array<String> -> Referrer -> Void> = "new-window";
+	var new_window : electron.main.WebContentsEvent<js.html.Event -> String -> String -> String -> Any -> Array<String> -> Void> = "new-window";
 	/**
 		Emitted when a user or the page wants to start navigation. It can happen when the window.location object is changed or a user clicks a link in the page. This event will not emit when the navigation is started programmatically with APIs like webContents.loadURL and webContents.back. It is also not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose. Calling event.preventDefault() will prevent the navigation.
 	**/
-	var will_navigate : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Void> = "will-navigate";
+	var will_navigate : electron.main.WebContentsEvent<js.html.Event -> String -> Void> = "will-navigate";
 	/**
-		Emitted when any frame (including main) starts navigating. isInplace will be true for in-page navigations.
+		Emitted when a navigation is done. This event is not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose.
 	**/
-	var did_start_navigation : electron.main.WebContents.WebContentsEvent<String -> Bool -> Bool -> Int -> Int -> Void> = "did-start-navigation";
+	var did_navigate : electron.main.WebContentsEvent<js.html.Event -> String -> Void> = "did-navigate";
 	/**
-		Emitted when a main frame navigation is done. This event is not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose.
+		Emitted when an in-page navigation happened. When in-page navigation happens, the page URL changes but does not cause navigation outside of the page. Examples of this occurring are when anchor links are clicked or when the DOM hashchange event is triggered.
 	**/
-	var did_navigate : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Int -> String -> Void> = "did-navigate";
-	/**
-		Emitted when any frame navigation is done. This event is not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose.
-	**/
-	var did_frame_navigate : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Int -> String -> Bool -> Int -> Int -> Void> = "did-frame-navigate";
-	/**
-		Emitted when an in-page navigation happened in any frame. When in-page navigation happens, the page URL changes but does not cause navigation outside of the page. Examples of this occurring are when anchor links are clicked or when the DOM hashchange event is triggered.
-	**/
-	var did_navigate_in_page : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Bool -> Int -> Int -> Void> = "did-navigate-in-page";
+	var did_navigate_in_page : electron.main.WebContentsEvent<js.html.Event -> String -> Bool -> Void> = "did-navigate-in-page";
 	/**
 		Emitted when a beforeunload event handler is attempting to cancel a page unload. Calling event.preventDefault() will ignore the beforeunload event handler and allow the page to be unloaded.
 	**/
-	var will_prevent_unload : electron.main.WebContents.WebContentsEvent<js.html.Event -> Void> = "will-prevent-unload";
+	var will_prevent_unload : electron.main.WebContentsEvent<js.html.Event -> Void> = "will-prevent-unload";
 	/**
 		Emitted when the renderer process crashes or is killed.
 	**/
-	var crashed : electron.main.WebContents.WebContentsEvent<js.html.Event -> Bool -> Void> = "crashed";
-	/**
-		Emitted when the web page becomes unresponsive.
-	**/
-	var unresponsive : electron.main.WebContents.WebContentsEvent<Void -> Void> = "unresponsive";
-	/**
-		Emitted when the unresponsive web page becomes responsive again.
-	**/
-	var responsive : electron.main.WebContents.WebContentsEvent<Void -> Void> = "responsive";
+	var crashed : electron.main.WebContentsEvent<js.html.Event -> Bool -> Void> = "crashed";
 	/**
 		Emitted when a plugin process has crashed.
 	**/
-	var plugin_crashed : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> String -> Void> = "plugin-crashed";
+	var plugin_crashed : electron.main.WebContentsEvent<js.html.Event -> String -> String -> Void> = "plugin-crashed";
 	/**
 		Emitted when webContents is destroyed.
 	**/
-	var destroyed : electron.main.WebContents.WebContentsEvent<Void -> Void> = "destroyed";
+	var destroyed : electron.main.WebContentsEvent<Void -> Void> = "destroyed";
 	/**
 		Emitted before dispatching the keydown and keyup events in the page. Calling event.preventDefault will prevent the page keydown/keyup events and the menu shortcuts. To only prevent the menu shortcuts, use setIgnoreMenuShortcuts:
 	**/
-	var before_input_event : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "before-input-event";
+	var before_input_event : electron.main.WebContentsEvent<js.html.Event -> Any -> Void> = "before-input-event";
 	/**
 		Emitted when DevTools is opened.
 	**/
-	var devtools_opened : electron.main.WebContents.WebContentsEvent<Void -> Void> = "devtools-opened";
+	var devtools_opened : electron.main.WebContentsEvent<Void -> Void> = "devtools-opened";
 	/**
 		Emitted when DevTools is closed.
 	**/
-	var devtools_closed : electron.main.WebContents.WebContentsEvent<Void -> Void> = "devtools-closed";
+	var devtools_closed : electron.main.WebContentsEvent<Void -> Void> = "devtools-closed";
 	/**
 		Emitted when DevTools is focused / opened.
 	**/
-	var devtools_focused : electron.main.WebContents.WebContentsEvent<Void -> Void> = "devtools-focused";
+	var devtools_focused : electron.main.WebContentsEvent<Void -> Void> = "devtools-focused";
 	/**
 		Emitted when failed to verify the certificate for url. The usage is the same with the certificate-error event of app.
 	**/
-	var certificate_error : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> String -> Certificate -> haxe.Constraints.Function -> Void> = "certificate-error";
+	var certificate_error : electron.main.WebContentsEvent<js.html.Event -> String -> String -> electron.Certificate -> haxe.Constraints.Function -> Void> = "certificate-error";
 	/**
 		Emitted when a client certificate is requested. The usage is the same with the select-client-certificate event of app.
 	**/
-	var select_client_certificate : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Array<Certificate> -> haxe.Constraints.Function -> Void> = "select-client-certificate";
+	var select_client_certificate : electron.main.WebContentsEvent<js.html.Event -> String -> Array<electron.Certificate> -> haxe.Constraints.Function -> Void> = "select-client-certificate";
 	/**
 		Emitted when webContents wants to do basic auth. The usage is the same with the login event of app.
 	**/
-	var login : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Dynamic -> haxe.Constraints.Function -> Void> = "login";
+	var login : electron.main.WebContentsEvent<js.html.Event -> Any -> Any -> haxe.Constraints.Function -> Void> = "login";
 	/**
 		Emitted when a result is available for [webContents.findInPage] request.
 	**/
-	var found_in_page : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "found-in-page";
+	var found_in_page : electron.main.WebContentsEvent<js.html.Event -> Any -> Void> = "found-in-page";
 	/**
 		Emitted when media starts playing.
 	**/
-	var media_started_playing : electron.main.WebContents.WebContentsEvent<Void -> Void> = "media-started-playing";
+	var media_started_playing : electron.main.WebContentsEvent<Void -> Void> = "media-started-playing";
 	/**
 		Emitted when media is paused or done playing.
 	**/
-	var media_paused : electron.main.WebContents.WebContentsEvent<Void -> Void> = "media-paused";
+	var media_paused : electron.main.WebContentsEvent<Void -> Void> = "media-paused";
 	/**
 		Emitted when a page's theme color changes. This is usually due to encountering a meta tag:
 	**/
-	var did_change_theme_color : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "did-change-theme-color";
+	var did_change_theme_color : electron.main.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "did-change-theme-color";
 	/**
 		Emitted when mouse moves over a link or the keyboard moves the focus to a link.
 	**/
-	var update_target_url : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> Void> = "update-target-url";
+	var update_target_url : electron.main.WebContentsEvent<js.html.Event -> String -> Void> = "update-target-url";
 	/**
 		Emitted when the cursor's type changes. The type parameter can be default, crosshair, pointer, text, wait, help, e-resize, n-resize, ne-resize, nw-resize, s-resize, se-resize, sw-resize, w-resize, ns-resize, ew-resize, nesw-resize, nwse-resize, col-resize, row-resize, m-panning, e-panning, n-panning, ne-panning, nw-panning, s-panning, se-panning, sw-panning, w-panning, move, vertical-text, cell, context-menu, alias, progress, nodrop, copy, none, not-allowed, zoom-in, zoom-out, grab, grabbing or custom. If the type parameter is custom, the image parameter will hold the custom cursor image in a NativeImage, and scale, size and hotspot will hold additional information about the custom cursor.
 	**/
-	var cursor_changed : electron.main.WebContents.WebContentsEvent<js.html.Event -> String -> ?NativeImage -> ?Float -> ?Size -> ?Point -> Void> = "cursor-changed";
+	var cursor_changed : electron.main.WebContentsEvent<js.html.Event -> String -> ?electron.NativeImage -> ?Float -> ?electron.Size -> ?electron.Point -> Void> = "cursor-changed";
 	/**
 		Emitted when there is a new context menu that needs to be handled.
 	**/
-	var context_menu : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "context-menu";
+	var context_menu : electron.main.WebContentsEvent<js.html.Event -> Any -> Void> = "context-menu";
 	/**
 		Emitted when bluetooth device needs to be selected on call to navigator.bluetooth.requestDevice. To use navigator.bluetooth api webBluetooth should be enabled. If event.preventDefault is not called, first available device will be selected. callback should be called with deviceId to be selected, passing empty string to callback will cancel the request.
 	**/
-	var select_bluetooth_device : electron.main.WebContents.WebContentsEvent<js.html.Event -> Array<BluetoothDevice> -> haxe.Constraints.Function -> Void> = "select-bluetooth-device";
+	var select_bluetooth_device : electron.main.WebContentsEvent<js.html.Event -> Array<electron.BluetoothDevice> -> haxe.Constraints.Function -> Void> = "select-bluetooth-device";
 	/**
 		Emitted when a new frame is generated. Only the dirty area is passed in the buffer.
 	**/
-	var paint : electron.main.WebContents.WebContentsEvent<js.html.Event -> Rectangle -> NativeImage -> Void> = "paint";
+	var paint : electron.main.WebContentsEvent<js.html.Event -> electron.Rectangle -> electron.NativeImage -> Void> = "paint";
 	/**
 		Emitted when the devtools window instructs the webContents to reload
 	**/
-	var devtools_reload_page : electron.main.WebContents.WebContentsEvent<Void -> Void> = "devtools-reload-page";
+	var devtools_reload_page : electron.main.WebContentsEvent<Void -> Void> = "devtools-reload-page";
 	/**
 		Emitted when a <webview>'s web contents is being attached to this web contents. Calling event.preventDefault() will destroy the guest page. This event can be used to configure webPreferences for the webContents of a <webview> before it's loaded, and provides the ability to set settings that can't be set via <webview> attributes. Note: The specified preload script option will be appear as preloadURL (not preload) in the webPreferences object emitted with this event.
 	**/
-	var will_attach_webview : electron.main.WebContents.WebContentsEvent<js.html.Event -> Dynamic -> Dynamic -> Void> = "will-attach-webview";
+	var will_attach_webview : electron.main.WebContentsEvent<js.html.Event -> Any -> Any -> Void> = "will-attach-webview";
 	/**
 		Emitted when a <webview> has been attached to this web contents.
 	**/
-	var did_attach_webview : electron.main.WebContents.WebContentsEvent<js.html.Event -> WebContents -> Void> = "did-attach-webview";
+	var did_attach_webview : electron.main.WebContentsEvent<js.html.Event -> electron.main.WebContents -> Void> = "did-attach-webview";
 	/**
 		Emitted when the associated window logs a console message. Will not be emitted for windows with offscreen rendering enabled.
 	**/
-	var console_message : electron.main.WebContents.WebContentsEvent<js.html.Event -> Int -> String -> Int -> String -> Void> = "console-message";
+	var console_message : electron.main.WebContentsEvent<Int -> String -> Int -> String -> Void> = "console-message";
 }

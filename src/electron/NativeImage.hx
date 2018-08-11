@@ -1,19 +1,17 @@
 package electron;
-
 /**
-	Natively wrap images such as tray, dock, and application icons.
-
-	See: <http://electron.atom.io/docs/api/native-image>
+	Create tray, dock, and application icons using PNG or JPG files.
+	@see http://electron.atom.io/docs/api/native-image
 **/
-@:require(js, electron) @:jsRequire("electron", "nativeImage") @:electron extern class NativeImage {
+@:jsRequire("electron", "nativeImage") extern class NativeImage {
 	/**
 		Creates an empty NativeImage instance.
 	**/
-	static function createEmpty():NativeImage;
+	static function createEmpty():electron.NativeImage;
 	/**
 		Creates a new NativeImage instance from a file located at path. This method returns an empty image if the path does not exist, cannot be read, or is not a valid image.
 	**/
-	static function createFromPath(path:String):NativeImage;
+	static function createFromPath(path:String):electron.NativeImage;
 	/**
 		Creates a new NativeImage instance from buffer.
 	**/
@@ -29,16 +27,16 @@ package electron;
 		Defaults to 1.0.
 	**/
 	@:optional
-	var scaleFactor : Float; }):NativeImage;
+	var scaleFactor : Float; }):electron.NativeImage;
 	/**
 		Creates a new NativeImage instance from dataURL.
 	**/
-	static function createFromDataURL(dataURL:String):NativeImage;
+	static function createFromDataURL(dataURL:String):electron.NativeImage;
 	/**
 		Creates a new NativeImage instance from the NSImage that maps to the given image name. See NSImageName for a list of possible values. The hslShift is applied to the image with the following rules This means that [-1, 0, 1] will make the image completely white and [-1, 1, 0] will make the image completely black.
 	**/
 	@:electron_platform(["macOS"])
-	static function createFromNamedImage(imageName:String, hslShift:Array<Float>):NativeImage;
+	static function createFromNamedImage(imageName:String, hslShift:Array<Float>):electron.NativeImage;
 	function toPNG(?options:{ /**
 		Defaults to 1.0.
 	**/
@@ -69,13 +67,13 @@ package electron;
 	@:electron_platform(["macOS"])
 	function getNativeHandle():js.node.Buffer;
 	function isEmpty():Bool;
-	function getSize():Size;
+	function getSize():electron.Size;
 	/**
 		Marks the image as a template image.
 	**/
 	function setTemplateImage(option:Bool):Void;
 	function isTemplateImage():Bool;
-	function crop(rect:Rectangle):NativeImage;
+	function crop(rect:electron.Rectangle):electron.NativeImage;
 	/**
 		If only the height or the width are specified then the current aspect ratio will be preserved in the resized image.
 	**/
@@ -91,7 +89,7 @@ package electron;
 		The desired quality of the resize image. Possible values are good, better or best. The default is best. These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
 	**/
 	@:optional
-	var quality : String; }):NativeImage;
+	var quality : String; }):electron.NativeImage;
 	function getAspectRatio():Float;
 	/**
 		Add an image representation for a specific scale factor. This can be used to explicitly add different scale factor representations to an image. This can be called on empty images.
@@ -99,7 +97,6 @@ package electron;
 	function addRepresentation(options:{ /**
 		The scale factor to add the image representation for.
 	**/
-	@:optional
 	var scaleFactor : Float; /**
 		Defaults to 0. Required if a bitmap buffer is specified as buffer.
 	**/

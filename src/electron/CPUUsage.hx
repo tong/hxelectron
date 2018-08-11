@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/cpu-usage>
+	@see http://electron.atom.io/docs/api/structures/cpu-usage
 **/
-@:require(js, electron) @:electron typedef CPUUsage = {
+typedef CPUUsage = {
 	/**
 		Percentage of CPU used since the last call to getCPUUsage. First call returns 0.
 	**/

@@ -1,7 +1,4 @@
 package electron;
-
-/**
-**/
-@:require(js, electron) abstract Accelerator(String) from String to String {
+abstract Accelerator(String) from String to String {
 
 }

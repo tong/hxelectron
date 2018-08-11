@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/jump-list-item>
+	@see http://electron.atom.io/docs/api/structures/jump-list-item
 **/
-@:require(js, electron) @:electron typedef JumpListItem = {
+typedef JumpListItem = {
 	/**
 		One of the following:
 	**/

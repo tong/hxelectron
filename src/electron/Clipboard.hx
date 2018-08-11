@@ -1,8 +1,9 @@
 package electron;
-
 /**
+	Perform copy and paste operations on the system clipboard.
+	@see http://electron.atom.io/docs/api/clipboard
 **/
-@:require(js, electron) @:jsRequire("electron", "clipboard") @:electron extern class Clipboard {
+@:jsRequire("electron", "clipboard") extern class Clipboard {
 	static function readText(?type:String):String;
 	/**
 		Writes the text into the clipboard as plain text.
@@ -13,11 +14,11 @@ package electron;
 		Writes markup to the clipboard.
 	**/
 	static function writeHTML(markup:String, ?type:String):Void;
-	static function readImage(?type:String):NativeImage;
+	static function readImage(?type:String):electron.NativeImage;
 	/**
 		Writes image to the clipboard.
 	**/
-	static function writeImage(image:NativeImage, ?type:String):Void;
+	static function writeImage(image:electron.NativeImage, ?type:String):Void;
 	static function readRTF(?type:String):String;
 	/**
 		Writes the text into the clipboard in RTF.
@@ -27,9 +28,7 @@ package electron;
 		Returns an Object containing title and url keys representing the bookmark in the clipboard. The title and url values will be empty strings when the bookmark is unavailable.
 	**/
 	@:electron_platform(["macOS", "Windows"])
-	static function readBookmark():{ @:optional
-	var title : String; @:optional
-	var url : String; };
+	static function readBookmark():Any;
 	/**
 		Writes the title and url into the clipboard as a bookmark. Note: Most apps on Windows don't support pasting bookmarks into them so you can use clipboard.write to write both a bookmark and fallback text to the clipboard.
 	**/
@@ -64,7 +63,7 @@ package electron;
 	static function write(data:{ @:optional
 	var text : String; @:optional
 	var html : String; @:optional
-	var image : NativeImage; @:optional
+	var image : electron.NativeImage; @:optional
 	var rtf : String; /**
 		The title of the url at text.
 	**/

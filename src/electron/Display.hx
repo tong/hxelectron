@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/display>
+	@see http://electron.atom.io/docs/api/structures/display
 **/
-@:require(js, electron) @:electron typedef Display = {
+typedef Display = {
 	/**
 		Unique identifier associated with the display.
 	**/
@@ -20,8 +19,8 @@ package electron;
 		Can be available, unavailable, unknown.
 	**/
 	var touchSupport : String;
-	var bounds : Rectangle;
-	var size : Size;
-	var workArea : Rectangle;
-	var workAreaSize : Size;
+	var bounds : electron.Rectangle;
+	var size : electron.Size;
+	var workArea : electron.Rectangle;
+	var workAreaSize : electron.Size;
 }

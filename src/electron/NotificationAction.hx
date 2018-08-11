@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/notification-action>
+	@see http://electron.atom.io/docs/api/structures/notification-action
 **/
-@:require(js, electron) @:electron typedef NotificationAction = {
+typedef NotificationAction = {
 	/**
 		The type of action, can be button.
 	**/

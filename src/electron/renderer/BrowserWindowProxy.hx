@@ -1,11 +1,9 @@
 package electron.renderer;
-
 /**
 	Manipulate the child browser window
-
-	See: <http://electron.atom.io/docs/api/browser-window-proxy>
+	@see http://electron.atom.io/docs/api/browser-window-proxy
 **/
-@:require(js, electron) @:jsRequire("electron", "BrowserWindowProxy") @:electron("renderer") extern class BrowserWindowProxy {
+@:jsRequire("electron", "BrowserWindowProxy") extern class BrowserWindowProxy {
 	/**
 		A Boolean that is set to true after the child window gets closed.
 	**/

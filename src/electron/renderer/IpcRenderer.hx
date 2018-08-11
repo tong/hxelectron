@@ -1,8 +1,9 @@
 package electron.renderer;
-
 /**
+	Communicate asynchronously from a renderer process to the main process.
+	@see http://electron.atom.io/docs/api/ipc-renderer
 **/
-@:require(js, electron) @:jsRequire("electron", "ipcRenderer") @:electron("renderer") extern class IpcRenderer {
+@:jsRequire("electron", "ipcRenderer") extern class IpcRenderer {
 	/**
 		Listens to channel, when a new message arrives listener would be called with listener(event, args...).
 	**/

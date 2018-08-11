@@ -1,16 +1,16 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/upload-file
+	@see http://electron.atom.io/docs/api/structures/upload-file-system
 **/
-typedef UploadFile = {
+typedef UploadFileSystem = {
 	/**
-		file.
+		fileSystem.
 	**/
 	var type : String;
 	/**
-		Path of file to be uploaded.
+		FileSystem url to read data for upload.
 	**/
-	var filePath : String;
+	var filsSystemURL : String;
 	/**
 		Defaults to 0.
 	**/

@@ -1,9 +1,8 @@
 package electron;
-
 /**
-	See: <http://electron.atom.io/docs/api/structures/stream-protocol-response>
+	@see http://electron.atom.io/docs/api/structures/stream-protocol-response
 **/
-@:require(js, electron) @:electron typedef StreamProtocolResponse = {
+typedef StreamProtocolResponse = {
 	/**
 		The HTTP response code
 	**/
@@ -11,7 +10,7 @@ package electron;
 	/**
 		An object containing the response headers
 	**/
-	var headers : { };
+	var headers : Any;
 	/**
 		A Node.js readable stream representing the response body
 	**/

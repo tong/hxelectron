@@ -1,24 +1,16 @@
 package electron.main;
-
 /**
+	In-app purchases on Mac App Store.
+	@see http://electron.atom.io/docs/api/in-app-purchase
 **/
-@:require(js, electron) @:jsRequire("electron", "inAppPurchase") @:electron("main") extern class InAppPurchase {
-	/**
-		You should listen for the transactions-updated event as soon as possible and certainly before you call purchaseProduct.
-	**/
+@:jsRequire("electron", "inAppPurchase") extern class InAppPurchase extends js.node.events.EventEmitter<electron.main.InAppPurchase> {
 	static function purchaseProduct(productID:String, ?quantity:Int, ?callback:haxe.Constraints.Function):Void;
-	/**
-		Retrieves the product descriptions.
-	**/
-	static function getProducts(productIDs:Array<String>, callback:haxe.Constraints.Function):Void;
 	static function canMakePayments():Bool;
 	static function getReceiptURL():String;
+}
+@:enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
-		Completes all pending transactions.
+		Emitted when one or more transactions have been updated.
 	**/
-	static function finishAllTransactions():Void;
-	/**
-		Completes the pending transactions corresponding to the date.
-	**/
-	static function finishTransactionByDate(date:String):Void;
+	var transactions_updated : electron.main.InAppPurchaseEvent<js.html.Event -> Array<electron.Transaction> -> Void> = "transactions-updated";
 }

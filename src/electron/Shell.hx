@@ -1,8 +1,9 @@
 package electron;
-
 /**
+	Manage files and URLs using their default applications.
+	@see http://electron.atom.io/docs/api/shell
 **/
-@:require(js, electron) @:jsRequire("electron", "shell") @:electron extern class Shell {
+@:jsRequire("electron", "shell") extern class Shell {
 	/**
 		Show the given file in a file manager. If possible, select the file.
 	**/
@@ -17,7 +18,6 @@ package electron;
 	static function openExternal(url:String, ?options:{ /**
 		true to bring the opened application to the foreground. The default is true.
 	**/
-	@:optional
 	var activate : Bool; }, ?callback:haxe.Constraints.Function):Bool;
 	/**
 		Move the given file to trash and returns a boolean status for the operation.
@@ -31,10 +31,10 @@ package electron;
 		Creates or updates a shortcut link at shortcutPath.
 	**/
 	@:electron_platform(["Windows"])
-	static function writeShortcutLink(shortcutPath:String, ?operation:String, options:ShortcutDetails):Bool;
+	static function writeShortcutLink(shortcutPath:String, ?operation:String, options:electron.ShortcutDetails):Bool;
 	/**
 		Resolves the shortcut link at shortcutPath. An exception will be thrown when any error happens.
 	**/
 	@:electron_platform(["Windows"])
-	static function readShortcutLink(shortcutPath:String):ShortcutDetails;
+	static function readShortcutLink(shortcutPath:String):electron.ShortcutDetails;
 }
