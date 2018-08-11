@@ -1,11 +1,12 @@
 
 HXElectron
 ==========
-Haxe type definitions for [electron](https://electronjs.org/) the framework lets you build cross-platform desktop applications with JavaScript, HTML, and CSS.
+Haxe type definitions for [electron](https://electronjs.org/), a framework for building cross-platform desktop applications with JavaScript, HTML, and CSS.
 
 [![Build Status](https://img.shields.io/travis/tong/hxelectron/master.svg?style=flat-square)](https://travis-ci.org/tong/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/tong/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
 
-## Installation
+
+## Install
 
 ```sh
 # Release version from haxelib
@@ -16,11 +17,34 @@ haxelib git electron https://github.com/tong/hxelectron.git
 ```
 
 
+## Generate Type Definitions
+
+All type definitions are generated from [electron-api.json](electron-api.json) by [ElectronAPI.hx](ElectronAPI.hx).  
+
+To (re)generate for another electron version download the description file from https://github.com/electron/electron/releases and run:
+
+```sh
+## Generate type definitions
+haxe --macro ElectronAPI.generate("optional/path/to/electron-api.json")
+
+## Build haxedoc.xml to insure everything is fine
+haxe haxedoc.hxml
+```
+
+By default `hxelectron/electron-api.json` is used if you ommit the path argument to your custom description file.
+
+
 ## Usage
+
+### Metadata
+
+The haxe externs are attributed with following metadata:
+ - `@:electron_platform(["Linux"|"macOS"|"Windows"])` the supporting platforms (only if specific).
+
 
 ### Demo Application
 
-Spin up the demo application to see electron in action:
+Spin up the included demo application to see electron in action:
 
 ```sh
 ## Make sure you have Electron installed (you only need to do this once)
@@ -37,37 +61,4 @@ haxelib dev electron .
 cd demo/
 haxe build.hxml
 electron bin/
-```
-
-### Metadata
-
-The haxe externs are attributed with following metadata:
- - `@:require(js,electron)`
- - `@:electron` for types in `electron.*` (available in the main and renderer process).
- - `@:electron("main")` for types in `electron.main.*` (only available in the main process).
- - `@:electron("renderer")` for types in `electron.renderer.*` (only available in the renderer process).
- - `@:electron_platform(["Linux"|"macOS"|"Windows"])` the supporting platforms (only if specific).
-
-
-## Generate Type Definitions
-
-All type definitions are auto generated from [electron-api.json](electron-api.json) into the [src/](src/) directory.  
-To (re)generate type definitions using another [electron version](https://github.com/electron/electron/releases) run:
-```sh
-haxelib run electron [path/to/your/electron-api.json]
-```
-
-Do **not** make changes to the externs itself but edit the [generator](tool/ElectronAPI.hx).
-```sh
-## Edit hxelectron/tool/ElectronAPI.hx
-# …
-
-## Rebuild the generator (run.n)
-haxe run.hxml
-
-## Generate externs
-neko run.n
-
-## Build haxedoc.xml to insure everything is fine
-haxe haxedoc.hxml
 ```

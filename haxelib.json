@@ -1,14 +1,14 @@
 {
-  "name": "electron",
-  "url": "https://github.com/fponticelli/hxelectron",
-  "license": "MIT",
-  "classPath": "src",
-  "tags": ["electron","node","desktop","web","javascript","nodejs","application"],
-  "description": "Externs for the electron framework",
-  "releasenote": "See CHANGELOG",
-  "version": "3.0.0-beta.3",
-  "contributors": ["tong","fponticelli"],
-  "dependencies": {
-    "hxnodejs" : ""
-  }
+	"name": "electron",
+	"url": "https://github.com/tong/hxelectron",
+	"license": "MIT",
+	"classPath": "src",
+	"tags": ["electron","node","desktop","web","javascript","nodejs","application"],
+	"description": "Type definitions for the electron framework",
+	"releasenote": "See CHANGELOG",
+	"version": "2.0.7-beta.1",
+	"contributors": ["tong","fponticelli"],
+	"dependencies": {
+		"hxnodejs": ""
+	}
 }

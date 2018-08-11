@@ -11,9 +11,11 @@ matrix:
   allow_failures:
     - haxe: development
 
+install:
+  - haxelib install hxnodejs
+  - haxelib dev electron .
+
 script:
-  - haxelib git electron https://github.com/tong/hxelectron
-  - haxe run.hxml
-  - neko run.n
+  - haxe --macro 'ElectronAPI.generate()'
   - haxe haxedoc.hxml
   - haxe --cwd demo build.hxml
