@@ -9,7 +9,7 @@ haxe:
 
 matrix:
   allow_failures:
-    - haxe: development
+    - haxe: "3.4.7"
 
 install:
   - haxelib install hxnodejs
