@@ -288,11 +288,6 @@ private class Gen {
 		var t : ComplexType = switch name {
 		case null,'null': macro : Dynamic;
 		//case 'Accelerator': macro : String;
-		/*
-		case 'Array':
-			trace(name,properties);
-			macro : Dynamic;
-		*/
 		case 'Any','any': macro : Any;
 		case 'Blob': macro : js.html.Blob;
 		case 'Bool','Boolean': macro : Bool;
@@ -319,7 +314,10 @@ private class Gen {
 			}
 		case 'Promise': macro : js.Promise<Any>;
 		case 'String': macro: String;
-		case 'MenuItemConstructorOptions','ReadableStream','TouchBarItem':
+		case 'ReadableStream':
+			//TODO type param
+			macro : js.node.stream.Readable<Dynamic>; //macro : js.node.stream.Readable.IReadable;
+		case 'MenuItemConstructorOptions','TouchBarItem':
 			// TODO HACK
 			macro : Dynamic;
 		case 'URL': macro: String; // TODO macro: js.html.URL;
