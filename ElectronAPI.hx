@@ -13,6 +13,7 @@ using haxe.macro.ComplexTypeTools;
 using haxe.macro.MacroStringTools;
 using haxe.macro.TypeTools;
 
+@:require(haxe_ver >= 4.0)
 class ElectronAPI {
 
 	public static function generate( apiFile = 'electron-api.json', destination = 'src', clean = false ) {
