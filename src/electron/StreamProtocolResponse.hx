@@ -14,5 +14,5 @@ typedef StreamProtocolResponse = {
 	/**
 		A Node.js readable stream representing the response body
 	**/
-	var data : Dynamic;
+	var data : js.node.stream.Readable<Dynamic>;
 }
