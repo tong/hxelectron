@@ -80,14 +80,7 @@ private class Gen {
 		} );
 
 		for( item in items ) {
-			//Sys.println('--------- '+item.name+' / '+item.type );
-			//if( item.name != 'session' || item.name != 'Session' ) continue;
-			/*
-			if( item.name == 'session' || item.name == 'Session' ) {
-				Sys.println('--------- '+item.name);
-				processItem( item );
-			}
-			*/
+			//if( item.name != 'BrowserWindow' ) continue;
 			processItem( item );
 		}
 
@@ -246,7 +239,7 @@ private class Gen {
 					args.push( {
 						name: p.name,
 						type: if( Std.is( p.type, Array ) ) {
-							createMultiType( cast p.type );
+							createMultiType( cast p.type  );
 						} else {
 							getComplexType( p.type, p.collection, p.properties );
 						},
@@ -279,10 +272,17 @@ private class Gen {
 		return { name: name, access: access, kind: kind, meta: meta, doc: getDoc( doc ), pos: null }
 	}
 
-	function createMultiType( type : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) : ComplexType {
-		return TPath( { pack: ['haxe','extern'], name: 'EitherType', params: type.map( t -> {
-			return TPType( getComplexType( t.typeName, t.collection, t.properties ) );
-		} ) } );
+	function createMultiType( types : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) : ComplexType {
+		return function createEitherType( remain : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) {
+			var params = new Array<TypeParam>();
+			var t1 = remain.shift();
+			params.push( TPType( getComplexType( t1.typeName, t1.collection, t1.properties ) ) );
+			params.push( (remain.length > 1)
+				? TPType( createEitherType( remain ) )
+				: TPType( getComplexType( remain[0].typeName, remain[0].collection, remain[0].properties ) )
+			);
+			return TPath( { pack: ['haxe','extern'], name: 'EitherType', params: params } );
+		}( types );
 	}
 
 	function getComplexType( name, collection = false, ?properties : Array<Dynamic>, optional = false ) : ComplexType {
@@ -318,18 +318,13 @@ private class Gen {
 		case 'ReadableStream':
 			//TODO type param
 			macro : js.node.stream.Readable<Dynamic>; //macro : js.node.stream.Readable.IReadable;
-		case 'MenuItemConstructorOptions','TouchBarItem':
-			// TODO HACK
+		case 'MenuItemConstructorOptions','TouchBarItem': // TODO HACK
 			macro : Dynamic;
 		case 'URL': macro: String; // TODO macro: js.html.URL;
 		case _ if( Std.is( name, Array ) ):
-			//trace("Array: "+name );
-			//var type : Array<Dynamic> = cast name;
-			//trace(type.length);
-			//if( types.length == 1 ) getComplexType( types[0].type ) else macro : Dynamic;
-			//var mt = createMultiType( cast type );
-			//traceCT(mt);
-			macro : Dynamic;
+			createMultiType( cast name );
+		case _ if( name.startsWith( 'TouchBar' ) ):  //TODO HACK
+			macro: Dynamic;
 		default:
 			var pack = [];
 			if( name == 'Accelerator' ) pack = root.copy() else {
