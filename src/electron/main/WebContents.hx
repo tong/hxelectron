@@ -43,7 +43,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : Dynamic; /**
+	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, haxe.extern.EitherType<Array<electron.UploadFileSystem>, Array<electron.UploadBlob>>>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
@@ -545,7 +545,7 @@ package electron.main;
 	/**
 		Emitted when a page's theme color changes. This is usually due to encountering a meta tag:
 	**/
-	var did_change_theme_color : electron.main.WebContentsEvent<js.html.Event -> Dynamic -> Void> = "did-change-theme-color";
+	var did_change_theme_color : electron.main.WebContentsEvent<js.html.Event -> haxe.extern.EitherType<String, Dynamic> -> Void> = "did-change-theme-color";
 	/**
 		Emitted when mouse moves over a link or the keyboard moves the focus to a link.
 	**/

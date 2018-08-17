@@ -23,7 +23,7 @@ package electron.main;
 		An icon to use in the notification.
 	**/
 	@:optional
-	var icon : Dynamic; /**
+	var icon : haxe.extern.EitherType<String, electron.NativeImage>; /**
 		Whether or not to add an inline reply option to the notification.
 	**/
 	@:optional

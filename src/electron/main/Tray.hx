@@ -40,7 +40,7 @@ package electron.main;
 		-
 	**/
 	@:optional
-	var icon : Dynamic; var title : String; var content : String; }):Void;
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; var title : String; var content : String; }):Void;
 	/**
 		Pops up the context menu of the tray icon. When menu is passed, the menu will be shown instead of the tray icon's context menu. The position is only available on Windows, and it is (0, 0) by default.
 	**/

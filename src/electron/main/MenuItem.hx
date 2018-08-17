@@ -40,7 +40,7 @@ package electron.main;
 	var label : String; @:optional
 	var sublabel : String; @:optional
 	var accelerator : electron.Accelerator; @:optional
-	var icon : Dynamic; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		If false, the menu item will be greyed out and unclickable.
 	**/
 	@:optional
@@ -56,7 +56,7 @@ package electron.main;
 		Should be specified for submenu type menu items. If submenu is specified, the type: 'submenu' can be omitted. If the value is not a then it will be automatically converted to one using Menu.buildFromTemplate.
 	**/
 	@:optional
-	var submenu : Dynamic; /**
+	var submenu : haxe.extern.EitherType<Array<Dynamic>, electron.main.Menu>; /**
 		Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
 	**/
 	@:optional

@@ -137,7 +137,7 @@ package electron.main;
 		The window icon. On Windows it is recommended to use ICO icons to get best visual effects, you can also leave it undefined so the executable's icon will be used.
 	**/
 	@:optional
-	var icon : Dynamic; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		Whether window should be shown when created. Default is true.
 	**/
 	@:optional
@@ -636,7 +636,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : Dynamic; /**
+	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, haxe.extern.EitherType<Array<electron.UploadFileSystem>, Array<electron.UploadBlob>>>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
@@ -821,7 +821,7 @@ package electron.main;
 		Sets the touchBar layout for the current window. Specifying null or undefined clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+. Note: The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	@:electron_platform(["macOS", "Experimental"])
-	function setTouchBar(touchBar:electron.main.TouchBar):Void;
+	function setTouchBar(touchBar:Dynamic):Void;
 	@:electron_platform(["Experimental"])
 	function setBrowserView(browserView:electron.main.BrowserView):Void;
 	/**

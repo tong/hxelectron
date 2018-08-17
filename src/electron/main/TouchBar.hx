@@ -8,6 +8,6 @@ package electron.main;
 		A TouchBarItem that will replace the "esc" button on the touch bar when set. Setting to null restores the default "esc" button. Changing this value immediately updates the escape item in the touch bar.
 	**/
 	var escapeItem : Dynamic;
-	function new(options:{ var items : Array<Dynamic>; @:optional
-	var escapeItem : Dynamic; }):Void;
+	function new(options:{ var items : Array<haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>>>>>>>>; @:optional
+	var escapeItem : haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>>>>>>>>; }):Void;
 }

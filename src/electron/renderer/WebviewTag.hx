@@ -83,7 +83,7 @@ package electron.renderer;
 		-
 	**/
 	@:optional
-	var postData : Dynamic; /**
+	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, haxe.extern.EitherType<Array<electron.UploadFileSystem>, Array<electron.UploadBlob>>>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
