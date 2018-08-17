@@ -288,7 +288,8 @@ private class Gen {
 	function getComplexType( name, collection = false, ?properties : Array<Dynamic>, optional = false ) : ComplexType {
 		var t : ComplexType = switch name {
 		case null,'null': macro : Dynamic;
-		//case 'Accelerator': macro : String;
+		case 'Accelerator': // TODO HACK
+			TPath( { name: name, pack: root.copy() } );
 		case 'Any','any': macro : Any;
 		case 'Blob': macro : js.html.Blob;
 		case 'Bool','Boolean': macro : Bool;
@@ -327,15 +328,13 @@ private class Gen {
 			macro: Dynamic;
 		default:
 			var pack = [];
-			if( name == 'Accelerator' ) pack = root.copy() else {
-				for( item in this.items ) {
-					if( item.name == name || item.name == uncapitalize( name ) ) {
-						pack = getItemPack( item );
-						break;
-					}
+			for( item in this.items ) {
+				if( item.name == name || item.name == uncapitalize( name ) ) {
+					pack = getItemPack( item );
+					break;
 				}
 			}
-			if( pack.length == 0 ) warning( '[$name] not found' );
+			if( pack.length == 0 ) Context.warning( '[$name] not found', Context.currentPos() );
 			TPath( { name: name, pack: pack } );
 		}
 		if( collection ) t = TPath( { name: 'Array<${t.toString()}>', pack: [] } );
@@ -355,9 +354,6 @@ private class Gen {
 
 	static inline function uncapitalize( s : String ) : String
 		return s.charAt( 0 ).toLowerCase() + s.substr( 1 );
-
-	static inline function warning( msg )
-		Context.warning( msg, Context.currentPos() );
 }
 
 #end
