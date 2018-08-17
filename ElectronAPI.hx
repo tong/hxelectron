@@ -238,11 +238,7 @@ private class Gen {
 				default:
 					args.push( {
 						name: p.name,
-						type: if( Std.is( p.type, Array ) ) {
-							createMultiType( cast p.type  );
-						} else {
-							getComplexType( p.type, p.collection, p.properties );
-						},
+						type: getComplexType( p.type, p.collection, p.properties ),
 						opt: (p.required == null) ? true : !p.required
 					} );
 				}
@@ -250,11 +246,7 @@ private class Gen {
 		}
 		var ret = if( m.returns == null ) macro : Void else {
 			//TODO how to handle return doc
-			if( Std.is( m.returns.type, Array ) ) {
-				createMultiType( cast m.returns.type );
-			} else {
-				getComplexType( m.returns.type, m.returns.collection );
-			}
+			getComplexType( m.returns.type, m.returns.collection );
 		}
 		return createField( m.name, FFun( { args: args, ret: ret, expr: null } ), access, meta, m.description );
 	}
