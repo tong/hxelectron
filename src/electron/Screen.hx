@@ -3,7 +3,7 @@ package electron;
 	Retrieve information about screen size, displays, cursor position, etc.
 	@see http://electron.atom.io/docs/api/screen
 **/
-@:jsRequire("electron", "screen") extern class Screen extends js.node.events.EventEmitter<electron.Screen> {
+@:native('require(\"electron\").screen') extern class Screen extends js.node.events.EventEmitter<electron.Screen> {
 	/**
 		The current absolute position of the mouse pointer.
 	**/

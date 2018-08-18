@@ -81,6 +81,7 @@ private class Gen {
 
 		for( item in items ) {
 			//if( item.name != 'BrowserWindow' ) continue;
+			if( item.name == 'screen' ) trace(item.type);
 			processItem( item );
 		}
 
@@ -163,6 +164,15 @@ private class Gen {
 				], ret: macro : Void, expr: null } ),
 				pos: null
 			} );
+		case 'Screen':
+			// TODO: https://github.com/fponticelli/hxelectron/issues/29
+			for( i in 0...type.meta.length ) {
+				if( type.meta[i].name == ':jsRequire' ) {
+					type.meta.splice( i, 1 );
+					type.meta.push( { name: ':native', params: [macro 'require("electron").screen'], pos: null } );
+					break;
+				}
+			}
 		}
 
 		this.types.set( item.name, type );
