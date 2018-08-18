@@ -197,6 +197,7 @@ private class Gen {
 			fields.push({
 				name: e.name.replace( '-', '_' ),
 				kind: FVar( TPath( { pack: pack, name: _name, params: params } ), macro $v{e.name} ),
+				meta: (e.platforms == null ) ? null : [createPlatformMetadata(e)],
 				doc: getDoc( e.description ),
 				pos: null
 			});
@@ -219,11 +220,9 @@ private class Gen {
 	}
 
 	function createFunField( m : Method, ?access : Array<Access> ) : Field {
-		var meta : Metadata = if( m.platforms == null ) [] else [{
-			name: ':electron_platform',
-			params: [ macro $a{ m.platforms.map( p -> macro $v{p} ) } ],
-			pos: null
-		}];
+
+		var meta : Metadata = [];
+		if( m.platforms != null ) meta.push( createPlatformMetadata( m ) );
 
 		var args = new Array<FunctionArg>();
 		if( m.parameters != null ) {
@@ -244,10 +243,12 @@ private class Gen {
 				}
 			}
 		}
+
 		var ret = if( m.returns == null ) macro : Void else {
 			//TODO how to handle return doc
 			getComplexType( m.returns.type, m.returns.collection );
 		}
+
 		return createField( m.name, FFun( { args: args, ret: ret, expr: null } ), access, meta, m.description );
 	}
 
@@ -298,13 +299,20 @@ private class Gen {
 		case 'Integer': macro : Int;
 		case 'Object':
 			if( properties == null || properties.length == 0 ) macro : Any else {
-				TAnonymous( [for(p in properties) {
-					name: p.name,
-					kind: FVar( getComplexType( p.type, p.collection, p.properties ) ),
-					meta: (p.required == null || p.required) ? null : [{ name: ":optional", pos: null }],
-					doc: getDoc( p.description ),
-					pos: null
-				}] );
+				var fields = new Array<Field>();
+				for( p in properties ) {
+					var meta : Metadata = [];
+					if( p.required != null && !p.required ) meta.push( { name: ":optional", pos: null } );
+					if( p.platforms != null ) meta.push( createPlatformMetadata( p ) );
+					fields.push({
+						name: p.name,
+						kind: FVar( getComplexType( p.type, p.collection, p.properties ) ),
+						meta: meta,
+						doc: getDoc( p.description ),
+						pos: null
+					});
+				}
+				TAnonymous( fields );
 			}
 		case 'Promise': macro : js.Promise<Any>;
 		case 'String': macro: String;
@@ -339,6 +347,14 @@ private class Gen {
 			return null;
 		s = s.trim();
 		return (s.length == 0) ? null : s;
+	}
+
+	static function createPlatformMetadata( e : { ?platforms : Array<String> } ) : MetadataEntry {
+		return if( e.platforms == null ) null else {
+			name: ':electron_platforms',
+			params: [macro $a{ e.platforms.map( p -> macro $v{p} ) }],
+			pos: null
+		};
 	}
 
 	static inline function capitalize( s : String ) : String
