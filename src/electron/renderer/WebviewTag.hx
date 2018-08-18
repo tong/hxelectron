@@ -303,7 +303,7 @@ package electron.renderer;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function showDefinitionForSelection():Void;
 	function getWebContents():electron.main.WebContents;
 }

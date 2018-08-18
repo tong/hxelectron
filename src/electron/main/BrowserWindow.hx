@@ -436,24 +436,24 @@ package electron.main;
 	/**
 		Enters or leaves simple fullscreen mode. Simple fullscreen mode emulates the native fullscreen behavior found in versions of Mac OS X prior to Lion (10.7).
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setSimpleFullScreen(flag:Bool):Void;
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function isSimpleFullScreen():Bool;
 	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Just sum any extra width and height areas you have within the overall content view.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setAspectRatio(aspectRatio:Float, extraSize:electron.Size):Void;
 	/**
 		Uses Quick Look to preview a file at a given path.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function previewFile(path:String, ?displayName:String):Void;
 	/**
 		Closes the currently open Quick Look panel.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function closeFilePreview():Void;
 	/**
 		Resizes and moves the window to the supplied bounds
@@ -497,32 +497,32 @@ package electron.main;
 	/**
 		Sets whether the window can be moved by user. On Linux does nothing.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function setMovable(movable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function isMovable():Bool;
 	/**
 		Sets whether the window can be manually minimized by user. On Linux does nothing.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function setMinimizable(minimizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function isMinimizable():Bool;
 	/**
 		Sets whether the window can be manually maximized by user. On Linux does nothing.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function setMaximizable(maximizable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function isMaximizable():Bool;
 	/**
 		Sets whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
@@ -532,12 +532,12 @@ package electron.main;
 	/**
 		Sets whether the window can be manually closed by user. On Linux does nothing.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function setClosable(closable:Bool):Void;
 	/**
 		On Linux always returns true.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function isClosable():Bool;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
@@ -564,7 +564,7 @@ package electron.main;
 	/**
 		Changes the attachment point for sheets on macOS. By default, sheets are attached just below the window frame, but you may want to display them beneath a HTML-rendered toolbar. For example:
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setSheetOffset(offsetY:Float, ?offsetX:Float):Void;
 	/**
 		Starts or stops flashing the window to attract user's attention.
@@ -586,33 +586,33 @@ package electron.main;
 	/**
 		Hooks a windows message. The callback is called when the message is received in the WndProc.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function hookWindowMessage(message:Int, callback:haxe.Constraints.Function):Void;
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function isWindowMessageHooked(message:Int):Bool;
 	/**
 		Unhook the window message.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function unhookWindowMessage(message:Int):Void;
 	/**
 		Unhooks all of the window messages.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function unhookAllWindowMessages():Void;
 	/**
 		Sets the pathname of the file the window represents, and the icon of the file will show in window's title bar.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setRepresentedFilename(filename:String):Void;
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function getRepresentedFilename():String;
 	/**
 		Specifies whether the window’s document has been edited, and the icon in title bar will become gray when set to true.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setDocumentEdited(edited:Bool):Void;
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function isDocumentEdited():Bool;
 	function focusOnWebView():Void;
 	function blurWebView():Void;
@@ -652,7 +652,7 @@ package electron.main;
 	/**
 		Sets the menu as the window's menu bar, setting it to null will remove the menu bar.
 	**/
-	@:electron_platform(["Linux", "Windows"])
+	@:electron_platforms(["Linux", "Windows"])
 	function setMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
 	/**
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
@@ -664,44 +664,44 @@ package electron.main;
 	/**
 		Sets a 16 x 16 pixel overlay onto the current taskbar icon, usually used to convey some sort of application status or to passively notify the user.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function setOverlayIcon(overlay:haxe.extern.EitherType<electron.NativeImage, Dynamic>, description:String):Void;
 	/**
 		Sets whether the window should have a shadow. On Windows and Linux does nothing.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setHasShadow(hasShadow:Bool):Void;
 	/**
 		On Windows and Linux always returns true.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function hasShadow():Bool;
 	/**
 		Sets the opacity of the window. On Linux does nothing.
 	**/
-	@:electron_platform(["Windows", "macOS"])
+	@:electron_platforms(["Windows", "macOS"])
 	function setOpacity(opacity:Float):Void;
-	@:electron_platform(["Windows", "macOS"])
+	@:electron_platforms(["Windows", "macOS"])
 	function getOpacity():Float;
 	/**
 		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a Boolean object indicates whether the thumbnail has been added successfully. The number of buttons in thumbnail toolbar should be no greater than 7 due to the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be removed due to the platform's limitation. But you can call the API with an empty array to clean the buttons. The buttons is an array of Button objects: The flags is an array that can include following Strings:
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function setThumbarButtons(buttons:Array<electron.ThumbarButton>):Bool;
 	/**
 		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: {x: 0, y: 0, width: 0, height: 0}.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function setThumbnailClip(region:electron.Rectangle):Void;
 	/**
 		Sets the toolTip that is displayed when hovering over the window thumbnail in the taskbar.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function setThumbnailToolTip(toolTip:String):Void;
 	/**
 		Sets the properties for the window's taskbar button. Note: relaunchCommand and relaunchDisplayName must always be set together. If one of those properties is not set, then neither will be used.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function setAppDetails(options:{ /**
 		Window's . It has to be set, otherwise the other options will have no effect.
 	**/
@@ -726,12 +726,12 @@ package electron.main;
 	/**
 		Same as webContents.showDefinitionForSelection().
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function showDefinitionForSelection():Void;
 	/**
 		Changes window icon.
 	**/
-	@:electron_platform(["Windows", "Linux"])
+	@:electron_platforms(["Windows", "Linux"])
 	function setIcon(icon:electron.NativeImage):Void;
 	/**
 		Sets whether the window menu bar should hide itself automatically. Once set the menu bar will only show when users press the single Alt key. If the menu bar is already visible, calling setAutoHideMenuBar(true) won't hide it immediately.
@@ -741,7 +741,7 @@ package electron.main;
 	/**
 		Sets whether the menu bar should be visible. If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single Alt key.
 	**/
-	@:electron_platform(["Windows", "Linux"])
+	@:electron_platforms(["Windows", "Linux"])
 	function setMenuBarVisibility(visible:Bool):Void;
 	function isMenuBarVisible():Bool;
 	/**
@@ -763,71 +763,71 @@ package electron.main;
 	/**
 		Prevents the window contents from being captured by other apps. On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with WDA_MONITOR.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	function setContentProtection(enable:Bool):Void;
 	/**
 		Changes whether the window can be focused.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	function setFocusable(focusable:Bool):Void;
 	/**
 		Sets parent as current window's parent window, passing null will turn current window into a top-level window.
 	**/
-	@:electron_platform(["Linux", "macOS"])
+	@:electron_platforms(["Linux", "macOS"])
 	function setParentWindow(parent:electron.main.BrowserWindow):Void;
 	function getParentWindow():electron.main.BrowserWindow;
 	function getChildWindows():Array<electron.main.BrowserWindow>;
 	/**
 		Controls whether to hide cursor when typing.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setAutoHideCursor(autoHide:Bool):Void;
 	/**
 		Selects the previous tab when native tabs are enabled and there are other tabs in the window.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function selectPreviousTab():Void;
 	/**
 		Selects the next tab when native tabs are enabled and there are other tabs in the window.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function selectNextTab():Void;
 	/**
 		Merges all windows into one window with multiple tabs when native tabs are enabled and there is more than one open window.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function mergeAllWindows():Void;
 	/**
 		Moves the current tab into a new window if native tabs are enabled and there is more than one tab in the current window.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function moveTabToNewWindow():Void;
 	/**
 		Toggles the visibility of the tab bar if native tabs are enabled and there is only one tab in the current window.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function toggleTabBar():Void;
 	/**
 		Adds a window as a tab on this window, after the tab for the window instance.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function addTabbedWindow(browserWindow:electron.main.BrowserWindow):Void;
 	/**
 		Adds a vibrancy effect to the browser window. Passing null or an empty string will remove the vibrancy effect on the window.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	function setVibrancy(type:String):Void;
 	/**
 		Sets the touchBar layout for the current window. Specifying null or undefined clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+. Note: The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
-	@:electron_platform(["macOS", "Experimental"])
+	@:electron_platforms(["macOS", "Experimental"])
 	function setTouchBar(touchBar:Dynamic):Void;
-	@:electron_platform(["Experimental"])
+	@:electron_platforms(["Experimental"])
 	function setBrowserView(browserView:electron.main.BrowserView):Void;
 	/**
 		Note: The BrowserView API is currently experimental and may change or be removed in future Electron releases.
 	**/
-	@:electron_platform(["Experimental"])
+	@:electron_platforms(["Experimental"])
 	function getBrowserView():haxe.extern.EitherType<electron.main.BrowserView, Dynamic>;
 }
 @:enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
@@ -846,6 +846,7 @@ package electron.main;
 	/**
 		Emitted when window session is going to end due to force shutdown or machine restart or session log off.
 	**/
+	@:electron_platforms(["Windows"])
 	var session_end : electron.main.BrowserWindowEvent<Void -> Void> = "session-end";
 	/**
 		Emitted when the web page becomes unresponsive.
@@ -902,6 +903,7 @@ package electron.main;
 	/**
 		Emitted once when the window is moved to a new position.
 	**/
+	@:electron_platforms(["macOS"])
 	var moved : electron.main.BrowserWindowEvent<Void -> Void> = "moved";
 	/**
 		Emitted when the window enters a full-screen state.
@@ -922,33 +924,41 @@ package electron.main;
 	/**
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows. Commands are lowercased, underscores are replaced with hyphens, and the APPCOMMAND_ prefix is stripped off. e.g. APPCOMMAND_BROWSER_BACKWARD is emitted as browser-backward.
 	**/
+	@:electron_platforms(["Windows"])
 	var app_command : electron.main.BrowserWindowEvent<js.html.Event -> String -> Void> = "app-command";
 	/**
 		Emitted when scroll wheel event phase has begun.
 	**/
+	@:electron_platforms(["macOS"])
 	var scroll_touch_begin : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-begin";
 	/**
 		Emitted when scroll wheel event phase has ended.
 	**/
+	@:electron_platforms(["macOS"])
 	var scroll_touch_end : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-end";
 	/**
 		Emitted when scroll wheel event phase filed upon reaching the edge of element.
 	**/
+	@:electron_platforms(["macOS"])
 	var scroll_touch_edge : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-edge";
 	/**
 		Emitted on 3-finger swipe. Possible directions are up, right, down, left.
 	**/
+	@:electron_platforms(["macOS"])
 	var swipe : electron.main.BrowserWindowEvent<js.html.Event -> String -> Void> = "swipe";
 	/**
 		Emitted when the window opens a sheet.
 	**/
+	@:electron_platforms(["macOS"])
 	var sheet_begin : electron.main.BrowserWindowEvent<Void -> Void> = "sheet-begin";
 	/**
 		Emitted when the window has closed a sheet.
 	**/
+	@:electron_platforms(["macOS"])
 	var sheet_end : electron.main.BrowserWindowEvent<Void -> Void> = "sheet-end";
 	/**
 		Emitted when the native new tab button is clicked.
 	**/
+	@:electron_platforms(["macOS"])
 	var new_window_for_tab : electron.main.BrowserWindowEvent<Void -> Void> = "new-window-for-tab";
 }

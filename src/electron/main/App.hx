@@ -14,27 +14,37 @@ package electron.main;
 	static var dock : { /**
 		When critical is passed, the dock icon will bounce until either the application becomes active or the request is canceled. When informational is passed, the dock icon will bounce for one second. However, the request remains active until either the application becomes active or the request is canceled.
 	**/
+	@:electron_platforms(["macOS"])
 	var bounce : haxe.Constraints.Function; /**
 		Cancel the bounce of id.
 	**/
+	@:electron_platforms(["macOS"])
 	var cancelBounce : haxe.Constraints.Function; /**
 		Bounces the Downloads stack if the filePath is inside the Downloads folder.
 	**/
+	@:electron_platforms(["macOS"])
 	var downloadFinished : haxe.Constraints.Function; /**
 		Sets the string to be displayed in the dock’s badging area.
 	**/
-	var setBadge : haxe.Constraints.Function; var getBadge : haxe.Constraints.Function; /**
+	@:electron_platforms(["macOS"])
+	var setBadge : haxe.Constraints.Function; @:electron_platforms(["macOS"])
+	var getBadge : haxe.Constraints.Function; /**
 		Hides the dock icon.
 	**/
+	@:electron_platforms(["macOS"])
 	var hide : haxe.Constraints.Function; /**
 		Shows the dock icon.
 	**/
-	var show : haxe.Constraints.Function; var isVisible : haxe.Constraints.Function; /**
+	@:electron_platforms(["macOS"])
+	var show : haxe.Constraints.Function; @:electron_platforms(["macOS"])
+	var isVisible : haxe.Constraints.Function; /**
 		Sets the application's dock menu.
 	**/
+	@:electron_platforms(["macOS"])
 	var setMenu : haxe.Constraints.Function; /**
 		Sets the image associated with this dock icon.
 	**/
+	@:electron_platforms(["macOS"])
 	var setIcon : haxe.Constraints.Function; };
 	/**
 		Try to close all windows. The before-quit event will be emitted first. If all windows are successfully closed, the will-quit event will be emitted and by default the application will terminate. This method guarantees that all beforeunload and unload event handlers are correctly executed. It is possible that a window cancels the quitting by returning false in the beforeunload event handler.
@@ -58,12 +68,12 @@ package electron.main;
 	/**
 		Hides all application windows without minimizing them.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function hide():Void;
 	/**
 		Shows application windows after they were hidden. Does not automatically focus them.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function show():Void;
 	static function getAppPath():String;
 	/**
@@ -94,12 +104,12 @@ package electron.main;
 	/**
 		Adds path to the recent documents list. This list is managed by the OS. On Windows you can visit the list from the task bar, and on macOS you can visit it from dock menu.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function addRecentDocument(path:String):Void;
 	/**
 		Clears the recent documents list.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function clearRecentDocuments():Void;
 	/**
 		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with your-protocol:// will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter. On Windows you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches. Note: On macOS, you can only register protocols that have been added to your app's info.plist, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
@@ -108,24 +118,24 @@ package electron.main;
 	/**
 		This method checks if the current executable as the default handler for a protocol (aka URI scheme). If so, it will remove the app as the default handler.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function removeAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		This method checks if the current executable is the default handler for a protocol (aka URI scheme). If so, it will return true. Otherwise, it will return false. Note: On macOS, you can use this method to check if the app has been registered as the default protocol handler for a protocol. You can also verify this by checking ~/Library/Preferences/com.apple.LaunchServices.plist on the macOS machine. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function isDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		Adds tasks to the Tasks category of the JumpList on Windows. tasks is an array of Task objects. Note: If you'd like to customize the Jump List even more use app.setJumpList(categories) instead.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	static function setUserTasks(tasks:Array<electron.Task>):Bool;
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	static function getJumpListSettings():Any;
 	/**
 		Sets or removes a custom Jump List for the application, and returns one of the following strings: If categories is null the previously set custom Jump List (if any) will be replaced by the standard Jump List for the app (managed by Windows). Note: If a JumpListCategory object has neither the type nor the name property set then its type is assumed to be tasks. If the name property is set but the type property is omitted then the type is assumed to be custom. Note: Users can remove items from custom categories, and Windows will not allow a removed item to be added back into a custom category until after the next successful call to app.setJumpList(categories). Any attempt to re-add a removed item to a custom category earlier than that will result in the entire custom category being omitted from the Jump List. The list of removed items can be obtained using app.getJumpListSettings(). Here's a very simple example of creating a custom Jump List:
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	static function setJumpList(categories:Array<electron.JumpListCategory>):Void;
 	/**
 		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. callback will be called by the first instance with callback(argv, workingDirectory) when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. The callback is guaranteed to be executed after the ready event of app gets emitted. This method returns false if your process is the primary instance of the application and your app should continue loading. And returns true if your process has sent its parameters to another instance, and you should immediately quit. On macOS the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line the system's single instance mechanism will be bypassed and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
@@ -138,29 +148,29 @@ package electron.main;
 	/**
 		Creates an NSUserActivity and sets it as the current activity. The activity is eligible for Handoff to another device afterward.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function setUserActivity(type:String, userInfo:Any, ?webpageURL:String):Void;
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function getCurrentActivityType():String;
 	/**
 		Invalidates the current Handoff user activity.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function invalidateCurrentActivity(type:String):Void;
 	/**
 		Updates the current activity if its type matches type, merging the entries from userInfo into its current userInfo dictionary.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function updateCurrentActivity(type:String, userInfo:Any):Void;
 	/**
 		Changes the Application User Model ID to id.
 	**/
-	@:electron_platform(["Windows"])
+	@:electron_platforms(["Windows"])
 	static function setAppUserModelId(id:String):Void;
 	/**
 		Imports the certificate in pkcs12 format into the platform certificate store. callback is called with the result of import operation, a value of 0 indicates success while any other value indicates failure according to chromium net_error_list.
 	**/
-	@:electron_platform(["LINUX"])
+	@:electron_platforms(["LINUX"])
 	static function importCertificate(options:{ /**
 		Path for the pkcs12 file.
 	**/
@@ -181,16 +191,16 @@ package electron.main;
 	/**
 		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the existence of a .desktop file to work, for more information please read Desktop Environment Integration.
 	**/
-	@:electron_platform(["Linux", "macOS"])
+	@:electron_platforms(["Linux", "macOS"])
 	static function setBadgeCount(count:Int):Bool;
-	@:electron_platform(["Linux", "macOS"])
+	@:electron_platforms(["Linux", "macOS"])
 	static function getBadgeCount():Int;
-	@:electron_platform(["Linux"])
+	@:electron_platforms(["Linux"])
 	static function isUnityRunning():Bool;
 	/**
 		If you provided path and args options to app.setLoginItemSettings then you need to pass the same arguments here for openAtLogin to be set correctly.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function getLoginItemSettings(?options:{ /**
 		The executable path to compare against. Defaults to process.execPath.
 	**/
@@ -203,7 +213,7 @@ package electron.main;
 	/**
 		Set the app's login item settings. To work with Electron's autoUpdater on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example:
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function setLoginItemSettings(settings:{ /**
 		true to open the app at login, false to remove the app as a login item. Defaults to false.
 	**/
@@ -221,17 +231,17 @@ package electron.main;
 	**/
 	@:optional
 	var args : Array<String>; }):Void;
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
 		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. https://www.chromium.org/developers/design-documents/accessibility for more details. Disabled by default. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
 	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function setAboutPanelOptions(options:{ /**
 		The app's name.
 	**/
@@ -256,19 +266,19 @@ package electron.main;
 	/**
 		Start accessing a security scoped resource. With this method electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
 	**/
-	@:electron_platform(["macOS (mas)"])
+	@:electron_platforms(["macOS (mas)"])
 	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
 	/**
 		Enables mixed sandbox mode on the app. This method can only be called before app is ready.
 	**/
-	@:electron_platform(["Experimental", "macOS", "Windows"])
+	@:electron_platforms(["Experimental", "macOS", "Windows"])
 	static function enableMixedSandbox():Void;
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function isInApplicationsFolder():Bool;
 	/**
 		No confirmation dialog will be presented by default, if you wish to allow the user to confirm the operation you may do so using the dialog API. NOTE: This method throws errors if anything other than the user causes the move to fail. For instance if the user cancels the authorization dialog this method returns false. If we fail to perform the copy then this method will throw an error. The message in the error should be informative and tell you exactly what went wrong
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function moveToApplicationsFolder():Bool;
 	static function on(eventType:Dynamic, callback:Dynamic -> Void):Void;
 }
@@ -300,38 +310,47 @@ package electron.main;
 	/**
 		Emitted when the user wants to open a file with the application. The open-file event is usually emitted when the application is already open and the OS wants to reuse the application to open the file. open-file is also emitted when a file is dropped onto the dock and the application is not yet running. Make sure to listen for the open-file event very early in your application startup to handle this case (even before the ready event is emitted). You should call event.preventDefault() if you want to handle this event. On Windows, you have to parse process.argv (in the main process) to get the filepath.
 	**/
+	@:electron_platforms(["macOS"])
 	var open_file : electron.main.AppEvent<js.html.Event -> String -> Void> = "open-file";
 	/**
 		Emitted when the user wants to open a URL with the application. Your application's Info.plist file must define the url scheme within the CFBundleURLTypes key, and set NSPrincipalClass to AtomApplication. You should call event.preventDefault() if you want to handle this event.
 	**/
+	@:electron_platforms(["macOS"])
 	var open_url : electron.main.AppEvent<js.html.Event -> String -> Void> = "open-url";
 	/**
 		Emitted when the application is activated. Various actions can trigger this event, such as launching the application for the first time, attempting to re-launch the application when it's already running, or clicking on the application's dock or taskbar icon.
 	**/
+	@:electron_platforms(["macOS"])
 	var activate : electron.main.AppEvent<js.html.Event -> Bool -> Void> = "activate";
 	/**
 		Emitted during Handoff when an activity from a different device wants to be resumed. You should call event.preventDefault() if you want to handle this event. A user activity can be continued only in an app that has the same developer Team ID as the activity's source app and that supports the activity's type. Supported activity types are specified in the app's Info.plist under the NSUserActivityTypes key.
 	**/
+	@:electron_platforms(["macOS"])
 	var continue_activity : electron.main.AppEvent<js.html.Event -> String -> Any -> Void> = "continue-activity";
 	/**
 		Emitted during Handoff before an activity from a different device wants to be resumed. You should call event.preventDefault() if you want to handle this event.
 	**/
+	@:electron_platforms(["macOS"])
 	var will_continue_activity : electron.main.AppEvent<js.html.Event -> String -> Void> = "will-continue-activity";
 	/**
 		Emitted during Handoff when an activity from a different device fails to be resumed.
 	**/
+	@:electron_platforms(["macOS"])
 	var continue_activity_error : electron.main.AppEvent<js.html.Event -> String -> String -> Void> = "continue-activity-error";
 	/**
 		Emitted during Handoff after an activity from this device was successfully resumed on another one.
 	**/
+	@:electron_platforms(["macOS"])
 	var activity_was_continued : electron.main.AppEvent<js.html.Event -> String -> Any -> Void> = "activity-was-continued";
 	/**
 		Emitted when Handoff is about to be resumed on another device. If you need to update the state to be transferred, you should call event.preventDefault() immediately, construct a new userInfo dictionary and call app.updateCurrentActiviy() in a timely manner. Otherwise the operation will fail and continue-activity-error will be called.
 	**/
+	@:electron_platforms(["macOS"])
 	var update_activity_state : electron.main.AppEvent<js.html.Event -> String -> Any -> Void> = "update-activity-state";
 	/**
 		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current BrowserWindow has a tabbingIdentifier
 	**/
+	@:electron_platforms(["macOS"])
 	var new_window_for_tab : electron.main.AppEvent<js.html.Event -> Void> = "new-window-for-tab";
 	/**
 		Emitted when a browserWindow gets blurred.
@@ -368,5 +387,6 @@ package electron.main;
 	/**
 		Emitted when Chrome's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var accessibility_support_changed : electron.main.AppEvent<js.html.Event -> Bool -> Void> = "accessibility-support-changed";
 }

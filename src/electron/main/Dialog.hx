@@ -112,7 +112,7 @@ package electron.main;
 	/**
 		On macOS, this displays a modal dialog that shows a message and certificate information, and gives the user the option of trusting/importing the certificate. If you provide a browserWindow argument the dialog will be attached to the parent window, making it modal. On Windows the options are more limited, due to the Win32 APIs used:
 	**/
-	@:electron_platform(["macOS", "Windows"])
+	@:electron_platforms(["macOS", "Windows"])
 	static function showCertificateTrustDialog(?browserWindow:electron.main.BrowserWindow, options:{ /**
 		The certificate to trust/import.
 	**/

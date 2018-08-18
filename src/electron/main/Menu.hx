@@ -15,7 +15,7 @@ package electron.main;
 	/**
 		Sends the action to the first responder of application. This is used for emulating default macOS menu behaviors. Usually you would just use the role property of a MenuItem. See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.
 	**/
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function sendActionToFirstResponder(action:String):Void;
 	/**
 		Generally, the template is just an array of options for constructing a MenuItem. The usage can be referenced above. You can also attach other fields to the element of the template and they will become properties of the constructed menu items.

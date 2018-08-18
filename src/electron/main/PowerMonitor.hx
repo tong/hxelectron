@@ -18,13 +18,16 @@ package electron.main;
 	/**
 		Emitted when the system changes to AC power.
 	**/
+	@:electron_platforms(["Windows"])
 	var on_ac : electron.main.PowerMonitorEvent<Void -> Void> = "on-ac";
 	/**
 		Emitted when system changes to battery power.
 	**/
+	@:electron_platforms(["Windows"])
 	var on_battery : electron.main.PowerMonitorEvent<Void -> Void> = "on-battery";
 	/**
 		Emitted when the system is about to reboot or shut down. If the event handler invokes e.preventDefault(), Electron will attempt to delay system shutdown in order for the app to exit cleanly. If e.preventDefault() is called, the app should exit as soon as possible by calling something like app.quit().
 	**/
+	@:electron_platforms(["Linux", "macOS"])
 	var shutdown : electron.main.PowerMonitorEvent<Void -> Void> = "shutdown";
 }

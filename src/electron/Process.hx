@@ -56,7 +56,7 @@ package electron;
 	**/
 	static function crash():Void;
 	static function getCPUUsage():electron.CPUUsage;
-	@:electron_platform(["Windows", "Linux"])
+	@:electron_platforms(["Windows", "Linux"])
 	static function getIOCounters():electron.IOCounters;
 	/**
 		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
@@ -73,7 +73,7 @@ package electron;
 	/**
 		Sets the file descriptor soft limit to maxDescriptors or the OS hard limit, whichever is lower for the current process.
 	**/
-	@:electron_platform(["macOS", "Linux"])
+	@:electron_platforms(["macOS", "Linux"])
 	static function setFdLimit(maxDescriptors:Int):Void;
 }
 @:enum abstract ProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {

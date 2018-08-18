@@ -25,7 +25,7 @@ package electron.main;
 	**/
 	function destroy():Void;
 	function isDestroyed():Bool;
-	@:electron_platform(["Experimental"])
+	@:electron_platforms(["Experimental"])
 	function setAutoResize(options:{ /**
 		If true, the view's width will grow and shrink together with the window. false by default.
 	**/
@@ -36,8 +36,8 @@ package electron.main;
 	/**
 		Resizes and moves the view to the supplied bounds relative to the window.
 	**/
-	@:electron_platform(["Experimental"])
+	@:electron_platforms(["Experimental"])
 	function setBounds(bounds:electron.Rectangle):Void;
-	@:electron_platform(["Experimental"])
+	@:electron_platforms(["Experimental"])
 	function setBackgroundColor(color:String):Void;
 }

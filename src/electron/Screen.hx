@@ -8,7 +8,7 @@ package electron;
 		The current absolute position of the mouse pointer.
 	**/
 	static function getCursorScreenPoint():electron.Point;
-	@:electron_platform(["macOS"])
+	@:electron_platforms(["macOS"])
 	static function getMenuBarHeight():Int;
 	static function getPrimaryDisplay():electron.Display;
 	static function getAllDisplays():Array<electron.Display>;
