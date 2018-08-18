@@ -36,12 +36,6 @@ By default `hxelectron/electron-api.json` is used if you ommit the path argument
 
 ## Usage
 
-### Metadata
-
-The haxe externs are attributed with following metadata:
- - `@:electron_platform(["Linux"|"macOS"|"Windows"])` the supporting platforms (only if specific).
-
-
 ### Demo Application
 
 Spin up the included demo application to see electron in action:
@@ -62,3 +56,8 @@ cd demo/
 haxe build.hxml
 electron bin/
 ```
+
+### Metadata
+
+The haxe externs are attributed with following metadata:
+ - `@:electron_platforms(["Linux"|"macOS"|"Windows"])` the supporting platforms (only if specific).
