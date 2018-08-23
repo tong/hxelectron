@@ -81,7 +81,6 @@ private class Gen {
 
 		for( item in items ) {
 			//if( item.name != 'BrowserWindow' ) continue;
-			if( item.name == 'screen' ) trace(item.type);
 			processItem( item );
 		}
 
