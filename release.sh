@@ -1,18 +1,17 @@
 #!/bin/sh
 
-## Rebuild generator
-haxe run.hxml --no-traces -dce full
+## Generate clean type definitions
+haxe --macro 'ElectronAPI.generate("electron-api.json","src",true)'
 
-## Build clean externs
-rm -rf src/
-neko run.n electron-api.json
+## Build haxedoc.xml
+haxe haxedoc.hxml
 
-## Build haxedoc.xml (insure everything is fine)
-haxe doc.hxml
+## Build demo application (test wise)
+haxe --cwd demo build.hxml
 
 ## Create zip
 rm -f electron.zip
-zip -r electron.zip src/ electron-api.json haxedoc.xml haxelib.json LICENSE README.md run.n -x "*/\.*"
+zip -r electron.zip src/ ElectronAPI.hx electron-api.json haxedoc.xml haxelib.json LICENSE README.md -x "*/\.*"
 
 ## Release haxelib
-#haxelib submit electron.zip
+haxelib submit electron.zip
