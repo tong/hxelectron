@@ -389,4 +389,8 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS", "Windows"])
 	var accessibility_support_changed : electron.main.AppEvent<js.html.Event -> Bool -> Void> = "accessibility-support-changed";
+	/**
+		Emitted when Electron has created a new session.
+	**/
+	var session_created : electron.main.AppEvent<js.html.Event -> electron.main.Session -> Void> = "session-created";
 }

@@ -49,7 +49,7 @@ package electron.main;
 	/**
 		Sets the context menu for this icon.
 	**/
-	function setContextMenu(menu:electron.main.Menu):Void;
+	function setContextMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
 	/**
 		The bounds of this tray icon as Object.
 	**/

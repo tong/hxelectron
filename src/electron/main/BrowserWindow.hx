@@ -377,7 +377,7 @@ package electron.main;
 		A list of strings that will be appended to process.argv in the renderer process of this app. Useful for passing small bits of data down to renderer process preload scripts.
 	**/
 	@:optional
-	var additionArguments : Array<String>; }; }):Void;
+	var additionalArguments : Array<String>; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
