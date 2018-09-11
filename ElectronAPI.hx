@@ -275,7 +275,7 @@ private class Gen {
 	}
 
 	function createMultiType( types : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) : ComplexType {
-		return function createEitherType( remain : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) {
+		return cast function createEitherType( remain : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) {
 			var params = new Array<TypeParam>();
 			var t1 = remain.shift();
 			params.push( TPType( getComplexType( t1.typeName, t1.collection, t1.properties ) ) );
