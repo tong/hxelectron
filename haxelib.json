@@ -6,7 +6,7 @@
 	"tags": ["electron","node","desktop","web","javascript","nodejs","application"],
 	"description": "Type definitions for the electron framework",
 	"releasenote": "See CHANGELOG",
-	"version": "2.0.9",
+	"version": "2.0.10",
 	"contributors": ["tong","fponticelli"],
 	"dependencies": {
 		"hxnodejs": ""
