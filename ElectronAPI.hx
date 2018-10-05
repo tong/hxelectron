@@ -2,7 +2,6 @@
 #if macro
 
 import haxe.Json;
-import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import sys.FileSystem;
@@ -16,7 +15,7 @@ using haxe.macro.TypeTools;
 @:require(haxe_ver >= 4.0)
 class ElectronAPI {
 
-	public static function generate( apiFile = 'electron-api.json', destination = 'src', clean = false ) {
+	public static function generate( apiFile = 'electron-api.json', destination = 'src', clean = false, addDocumentation = true ) {
 
 		if( !FileSystem.exists( apiFile ) )
 			Context.fatalError( 'API description file [$apiFile] not found', Context.currentPos() );
@@ -24,7 +23,7 @@ class ElectronAPI {
 		if( clean ) rmdir( destination );
 
 		var items : Array<Item> = Json.parse( File.getContent( apiFile ) );
-		var types = new Gen( ['electron'], true ).process( items );
+		var types = new Gen( ['electron'], addDocumentation ).process( items );
 		var printer = new haxe.macro.Printer();
 		for( tds in types ) {
 			var type = tds[0];
