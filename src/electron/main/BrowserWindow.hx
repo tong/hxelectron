@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create and control browser windows.
-	@see http://electron.atom.io/docs/api/browser-window
+	@see http://electronjs.org/docs/api/browser-window
 **/
 @:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
 	static function getAllWindows():Array<electron.main.BrowserWindow>;
@@ -170,7 +170,7 @@ package electron.main;
 	**/
 	@:optional
 	var enableLargerThanScreen : Bool; /**
-		Window's background color as a hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported). Default is #FFF (white).
+		Window's background color as a hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported). Default is #FFF (white). If transparent is set to true, only values with transparent (#00-------) or opaque (#FF-----) alpha values are respected.
 	**/
 	@:optional
 	var backgroundColor : String; /**
@@ -370,7 +370,7 @@ package electron.main;
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
-		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the <webview> will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a <webview> tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the <webview>'s initial settings.
+		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the 's initial settings.
 	**/
 	@:optional
 	var webviewTag : Bool; /**
@@ -834,7 +834,7 @@ package electron.main;
 	/**
 		Emitted when the document changed its title, calling event.preventDefault() will prevent the native window's title from changing.
 	**/
-	var page_title_updated : electron.main.BrowserWindowEvent<js.html.Event -> String -> Void> = "page-title-updated";
+	var page_title_updated : electron.main.BrowserWindowEvent<(js.html.Event, String) -> Void> = "page-title-updated";
 	/**
 		Emitted when the window is going to be closed. It's emitted before the beforeunload and unload event of the DOM. Calling event.preventDefault() will cancel the close. Usually you would want to use the beforeunload handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than undefined would cancel the close. For example: Note: There is a subtle difference between the behaviors of window.onbeforeunload = handler and window.addEventListener('beforeunload', handler). It is recommended to always set the event.returnValue explicitly, instead of just returning a value, as the former works more consistently within Electron.
 	**/
@@ -925,7 +925,7 @@ package electron.main;
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows. Commands are lowercased, underscores are replaced with hyphens, and the APPCOMMAND_ prefix is stripped off. e.g. APPCOMMAND_BROWSER_BACKWARD is emitted as browser-backward.
 	**/
 	@:electron_platforms(["Windows"])
-	var app_command : electron.main.BrowserWindowEvent<js.html.Event -> String -> Void> = "app-command";
+	var app_command : electron.main.BrowserWindowEvent<(js.html.Event, String) -> Void> = "app-command";
 	/**
 		Emitted when scroll wheel event phase has begun.
 	**/
@@ -945,7 +945,7 @@ package electron.main;
 		Emitted on 3-finger swipe. Possible directions are up, right, down, left.
 	**/
 	@:electron_platforms(["macOS"])
-	var swipe : electron.main.BrowserWindowEvent<js.html.Event -> String -> Void> = "swipe";
+	var swipe : electron.main.BrowserWindowEvent<(js.html.Event, String) -> Void> = "swipe";
 	/**
 		Emitted when the window opens a sheet.
 	**/

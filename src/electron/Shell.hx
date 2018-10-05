@@ -1,7 +1,7 @@
 package electron;
 /**
 	Manage files and URLs using their default applications.
-	@see http://electron.atom.io/docs/api/shell
+	@see http://electronjs.org/docs/api/shell
 **/
 @:jsRequire("electron", "shell") extern class Shell {
 	/**

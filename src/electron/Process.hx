@@ -1,7 +1,7 @@
 package electron;
 /**
 	Extensions to process object.
-	@see http://electron.atom.io/docs/api/process
+	@see http://electronjs.org/docs/api/process
 **/
 @:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**

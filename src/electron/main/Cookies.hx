@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Query and modify a session's cookies.
-	@see http://electron.atom.io/docs/api/cookies
+	@see http://electronjs.org/docs/api/cookies
 **/
 @:jsRequire("electron", "Cookies") extern class Cookies extends js.node.events.EventEmitter<electron.main.Cookies> {
 	/**
@@ -80,5 +80,5 @@ package electron.main;
 	/**
 		Emitted when a cookie is changed because it was added, edited, removed, or expired.
 	**/
-	var changed : electron.main.CookiesEvent<js.html.Event -> electron.Cookie -> String -> Bool -> Void> = "changed";
+	var changed : electron.main.CookiesEvent<(js.html.Event, electron.Cookie, String, Bool) -> Void> = "changed";
 }

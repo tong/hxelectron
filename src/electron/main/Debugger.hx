@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	An alternate transport for Chrome's remote debugging protocol.
-	@see http://electron.atom.io/docs/api/debugger
+	@see http://electronjs.org/docs/api/debugger
 **/
 @:jsRequire("electron", "Debugger") extern class Debugger extends js.node.events.EventEmitter<electron.main.Debugger> {
 	/**
@@ -22,9 +22,9 @@ package electron.main;
 	/**
 		Emitted when debugging session is terminated. This happens either when webContents is closed or devtools is invoked for the attached webContents.
 	**/
-	var detach : electron.main.DebuggerEvent<js.html.Event -> String -> Void> = "detach";
+	var detach : electron.main.DebuggerEvent<(js.html.Event, String) -> Void> = "detach";
 	/**
 		Emitted whenever debugging target issues instrumentation event.
 	**/
-	var message : electron.main.DebuggerEvent<js.html.Event -> String -> Any -> Void> = "message";
+	var message : electron.main.DebuggerEvent<(js.html.Event, String, Any) -> Void> = "message";
 }

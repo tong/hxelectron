@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create OS desktop notifications
-	@see http://electron.atom.io/docs/api/notification
+	@see http://electronjs.org/docs/api/notification
 **/
 @:jsRequire("electron", "Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
 	static function isSupported():Bool;
@@ -70,7 +70,7 @@ package electron.main;
 		Emitted when the user clicks the "Reply" button on a notification with hasReply: true.
 	**/
 	@:electron_platforms(["macOS"])
-	var reply : electron.main.NotificationEvent<js.html.Event -> String -> Void> = "reply";
+	var reply : electron.main.NotificationEvent<(js.html.Event, String) -> Void> = "reply";
 	@:electron_platforms(["macOS"])
-	var action : electron.main.NotificationEvent<js.html.Event -> Float -> Void> = "action";
+	var action : electron.main.NotificationEvent<(js.html.Event, Float) -> Void> = "action";
 }

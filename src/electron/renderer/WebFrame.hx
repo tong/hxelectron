@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Customize the rendering of the current web page.
-	@see http://electron.atom.io/docs/api/web-frame
+	@see http://electronjs.org/docs/api/web-frame
 **/
 @:jsRequire("electron", "webFrame") extern class WebFrame {
 	/**

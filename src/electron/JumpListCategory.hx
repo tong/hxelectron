@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/jump-list-category
+	@see http://electronjs.org/docs/api/structures/jump-list-category
 **/
 typedef JumpListCategory = {
 	/**

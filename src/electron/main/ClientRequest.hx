@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Make HTTP/HTTPS requests.
-	@see http://electron.atom.io/docs/api/client-request
+	@see http://electronjs.org/docs/api/client-request
 **/
 @:jsRequire("electron", "ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {
 	/**
@@ -40,7 +40,7 @@ package electron.main;
 	/**
 		Emitted when an authenticating proxy is asking for user credentials. The callback function is expected to be called back with user credentials: Providing empty credentials will cancel the request and report an authentication error on the response object:
 	**/
-	var login : electron.main.ClientRequestEvent<Any -> haxe.Constraints.Function -> Void> = "login";
+	var login : electron.main.ClientRequestEvent<(Any, haxe.Constraints.Function) -> Void> = "login";
 	/**
 		Emitted just after the last chunk of the request's data has been written into the request object.
 	**/
@@ -60,5 +60,5 @@ package electron.main;
 	/**
 		Emitted when there is redirection and the mode is manual. Calling request.followRedirect will continue with the redirection.
 	**/
-	var redirect : electron.main.ClientRequestEvent<Int -> String -> String -> Any -> Void> = "redirect";
+	var redirect : electron.main.ClientRequestEvent<(Int, String, String, Any) -> Void> = "redirect";
 }

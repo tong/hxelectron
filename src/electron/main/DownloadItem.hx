@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Control file downloads from remote sources.
-	@see http://electron.atom.io/docs/api/download-item
+	@see http://electronjs.org/docs/api/download-item
 **/
 @:jsRequire("electron", "DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
 	/**
@@ -49,9 +49,9 @@ package electron.main;
 	/**
 		Emitted when the download has been updated and is not done. The state can be one of following:
 	**/
-	var updated : electron.main.DownloadItemEvent<js.html.Event -> String -> Void> = "updated";
+	var updated : electron.main.DownloadItemEvent<(js.html.Event, String) -> Void> = "updated";
 	/**
 		Emitted when the download is in a terminal state. This includes a completed download, a cancelled download (via downloadItem.cancel()), and interrupted download that can't be resumed. The state can be one of following:
 	**/
-	var done : electron.main.DownloadItemEvent<js.html.Event -> String -> Void> = "done";
+	var done : electron.main.DownloadItemEvent<(js.html.Event, String) -> Void> = "done";
 }

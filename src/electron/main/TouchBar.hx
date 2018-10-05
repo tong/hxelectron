@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create TouchBar layouts for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar
+	@see http://electronjs.org/docs/api/touch-bar
 **/
 @:jsRequire("electron", "TouchBar") extern class TouchBar {
 	/**

@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/thumbar-button
+	@see http://electronjs.org/docs/api/structures/thumbar-button
 **/
 typedef ThumbarButton = {
 	/**

@@ -2,7 +2,7 @@ package electron.main;
 /**
 	Collect tracing data from Chromium's content module for finding performance
 	bottlenecks and slow operations.
-	@see http://electron.atom.io/docs/api/content-tracing
+	@see http://electronjs.org/docs/api/content-tracing
 **/
 @:jsRequire("electron", "contentTracing") extern class ContentTracing {
 	/**

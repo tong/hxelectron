@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Get and set properties of a session.
-	@see http://electron.atom.io/docs/api/session
+	@see http://electronjs.org/docs/api/session
 **/
 @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
 	/**
@@ -163,5 +163,5 @@ package electron.main;
 	/**
 		Emitted when Electron is about to download item in webContents. Calling event.preventDefault() will cancel the download and item will not be available from next tick of the process.
 	**/
-	var will_download : electron.main.SessionEvent<js.html.Event -> electron.main.DownloadItem -> electron.main.WebContents -> Void> = "will-download";
+	var will_download : electron.main.SessionEvent<(js.html.Event, electron.main.DownloadItem, electron.main.WebContents) -> Void> = "will-download";
 }

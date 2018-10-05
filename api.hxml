@@ -1,2 +1,2 @@
---macro ElectronAPI.generate()
+--macro ElectronAPI.generate("electron-api.json","src",false,true)
 -D eval-stack

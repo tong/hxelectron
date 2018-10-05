@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/mime-typed-buffer
+	@see http://electronjs.org/docs/api/structures/mime-typed-buffer
 **/
 typedef MimeTypedBuffer = {
 	/**

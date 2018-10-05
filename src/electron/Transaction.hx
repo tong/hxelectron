@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/transaction
+	@see http://electronjs.org/docs/api/structures/transaction
 **/
 typedef Transaction = {
 	var transactionIdentifier : String;

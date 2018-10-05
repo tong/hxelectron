@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Enable apps to automatically update themselves.
-	@see http://electron.atom.io/docs/api/auto-updater
+	@see http://electronjs.org/docs/api/auto-updater
 **/
 @:jsRequire("electron", "autoUpdater") extern class AutoUpdater extends js.node.events.EventEmitter<electron.main.AutoUpdater> {
 	/**
@@ -46,5 +46,5 @@ package electron.main;
 	/**
 		Emitted when an update has been downloaded. On Windows only releaseName is available.
 	**/
-	var update_downloaded : electron.main.AutoUpdaterEvent<js.html.Event -> String -> String -> Date -> String -> Void> = "update-downloaded";
+	var update_downloaded : electron.main.AutoUpdaterEvent<(js.html.Event, String, String, Date, String) -> Void> = "update-downloaded";
 }

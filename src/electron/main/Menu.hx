@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create native application menus and context menus.
-	@see http://electron.atom.io/docs/api/menu
+	@see http://electronjs.org/docs/api/menu
 **/
 @:jsRequire("electron", "Menu") extern class Menu extends js.node.events.EventEmitter<electron.main.Menu> {
 	/**

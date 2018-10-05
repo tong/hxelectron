@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Communicate asynchronously from a renderer process to the main process.
-	@see http://electron.atom.io/docs/api/ipc-renderer
+	@see http://electronjs.org/docs/api/ipc-renderer
 **/
 @:jsRequire("electron", "ipcRenderer") extern class IpcRenderer {
 	/**

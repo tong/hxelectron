@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Add icons and context menus to the system's notification area.
-	@see http://electron.atom.io/docs/api/tray
+	@see http://electronjs.org/docs/api/tray
 **/
 @:jsRequire("electron", "Tray") extern class Tray extends js.node.events.EventEmitter<electron.main.Tray> {
 	function new(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;
@@ -61,17 +61,17 @@ package electron.main;
 	/**
 		Emitted when the tray icon is clicked.
 	**/
-	var click : electron.main.TrayEvent<js.html.Event -> electron.Rectangle -> electron.Point -> Void> = "click";
+	var click : electron.main.TrayEvent<(js.html.Event, electron.Rectangle, electron.Point) -> Void> = "click";
 	/**
 		Emitted when the tray icon is right clicked.
 	**/
 	@:electron_platforms(["macOS", "Windows"])
-	var right_click : electron.main.TrayEvent<js.html.Event -> electron.Rectangle -> Void> = "right-click";
+	var right_click : electron.main.TrayEvent<(js.html.Event, electron.Rectangle) -> Void> = "right-click";
 	/**
 		Emitted when the tray icon is double clicked.
 	**/
 	@:electron_platforms(["macOS", "Windows"])
-	var double_click : electron.main.TrayEvent<js.html.Event -> electron.Rectangle -> Void> = "double-click";
+	var double_click : electron.main.TrayEvent<(js.html.Event, electron.Rectangle) -> Void> = "double-click";
 	/**
 		Emitted when the tray balloon shows.
 	**/
@@ -96,12 +96,12 @@ package electron.main;
 		Emitted when dragged files are dropped in the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var drop_files : electron.main.TrayEvent<js.html.Event -> Array<String> -> Void> = "drop-files";
+	var drop_files : electron.main.TrayEvent<(js.html.Event, Array<String>) -> Void> = "drop-files";
 	/**
 		Emitted when dragged text is dropped in the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var drop_text : electron.main.TrayEvent<js.html.Event -> String -> Void> = "drop-text";
+	var drop_text : electron.main.TrayEvent<(js.html.Event, String) -> Void> = "drop-text";
 	/**
 		Emitted when a drag operation enters the tray icon.
 	**/
@@ -121,15 +121,15 @@ package electron.main;
 		Emitted when the mouse enters the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var mouse_enter : electron.main.TrayEvent<js.html.Event -> electron.Point -> Void> = "mouse-enter";
+	var mouse_enter : electron.main.TrayEvent<(js.html.Event, electron.Point) -> Void> = "mouse-enter";
 	/**
 		Emitted when the mouse exits the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var mouse_leave : electron.main.TrayEvent<js.html.Event -> electron.Point -> Void> = "mouse-leave";
+	var mouse_leave : electron.main.TrayEvent<(js.html.Event, electron.Point) -> Void> = "mouse-leave";
 	/**
 		Emitted when the mouse moves in the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var mouse_move : electron.main.TrayEvent<js.html.Event -> electron.Point -> Void> = "mouse-move";
+	var mouse_move : electron.main.TrayEvent<(js.html.Event, electron.Point) -> Void> = "mouse-move";
 }

@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Display external web content in an isolated frame and process.
-	@see http://electron.atom.io/docs/api/webview-tag
+	@see http://electronjs.org/docs/api/webview-tag
 **/
 @:native("webviewTag") extern class WebviewTag extends js.html.Element {
 	/**

@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/gpu-feature-status
+	@see http://electronjs.org/docs/api/structures/gpu-feature-status
 **/
 typedef GPUFeatureStatus = {
 	/**

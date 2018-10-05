@@ -1,7 +1,7 @@
 package electron;
 /**
 	Submit crash reports to a remote server.
-	@see http://electron.atom.io/docs/api/crash-reporter
+	@see http://electronjs.org/docs/api/crash-reporter
 **/
 @:jsRequire("electron", "crashReporter") extern class CrashReporter {
 	/**

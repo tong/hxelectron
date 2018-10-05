@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/memory-info
+	@see http://electronjs.org/docs/api/structures/memory-info
 **/
 typedef MemoryInfo = {
 	/**

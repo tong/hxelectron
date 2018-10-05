@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Get system preferences.
-	@see http://electron.atom.io/docs/api/system-preferences
+	@see http://electronjs.org/docs/api/system-preferences
 **/
 @:jsRequire("electron", "systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.main.SystemPreferences> {
 	@:electron_platforms(["macOS"])
@@ -72,9 +72,9 @@ package electron.main;
 }
 @:enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	@:electron_platforms(["Windows"])
-	var accent_color_changed : electron.main.SystemPreferencesEvent<js.html.Event -> String -> Void> = "accent-color-changed";
+	var accent_color_changed : electron.main.SystemPreferencesEvent<(js.html.Event, String) -> Void> = "accent-color-changed";
 	@:electron_platforms(["Windows"])
 	var color_changed : electron.main.SystemPreferencesEvent<js.html.Event -> Void> = "color-changed";
 	@:electron_platforms(["Windows"])
-	var inverted_color_scheme_changed : electron.main.SystemPreferencesEvent<js.html.Event -> Bool -> Void> = "inverted-color-scheme-changed";
+	var inverted_color_scheme_changed : electron.main.SystemPreferencesEvent<(js.html.Event, Bool) -> Void> = "inverted-color-scheme-changed";
 }

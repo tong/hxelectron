@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Monitor power state changes.
-	@see http://electron.atom.io/docs/api/power-monitor
+	@see http://electronjs.org/docs/api/power-monitor
 **/
 @:jsRequire("electron", "powerMonitor") extern class PowerMonitor extends js.node.events.EventEmitter<electron.main.PowerMonitor> {
 

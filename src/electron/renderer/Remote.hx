@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Use main process modules from the renderer process.
-	@see http://electron.atom.io/docs/api/remote
+	@see http://electronjs.org/docs/api/remote
 **/
 @:jsRequire("electron", "remote") extern class Remote {
 	/**

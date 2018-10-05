@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Add items to native application menus and context menus.
-	@see http://electron.atom.io/docs/api/menu-item
+	@see http://electronjs.org/docs/api/menu-item
 **/
 @:jsRequire("electron", "MenuItem") extern class MenuItem {
 	/**
