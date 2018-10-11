@@ -9,5 +9,5 @@ doc/
 atom/*
 all.hxml
 haxedoc.xml
-run.n
+package-lock.json
 ISSUES.md
