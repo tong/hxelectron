@@ -2,7 +2,7 @@ package electron.renderer;
 /**
 	Access information about media sources that can be used to capture audio and
 	video from the desktop using the navigator.mediaDevices.getUserMedia API.
-	@see http://electronjs.org/docs/api/desktop-capturer
+	@see http://electron.atom.io/docs/api/desktop-capturer
 **/
 @:jsRequire("electron", "desktopCapturer") extern class DesktopCapturer {
 	/**

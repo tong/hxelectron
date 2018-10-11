@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Manipulate the child browser window
-	@see http://electronjs.org/docs/api/browser-window-proxy
+	@see http://electron.atom.io/docs/api/browser-window-proxy
 **/
 @:jsRequire("electron", "BrowserWindowProxy") extern class BrowserWindowProxy {
 	/**

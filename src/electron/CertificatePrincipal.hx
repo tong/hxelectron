@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/certificate-principal
+	@see http://electron.atom.io/docs/api/structures/certificate-principal
 **/
 typedef CertificatePrincipal = {
 	/**

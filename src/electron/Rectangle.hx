@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/rectangle
+	@see http://electron.atom.io/docs/api/structures/rectangle
 **/
 typedef Rectangle = {
 	/**

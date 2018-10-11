@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Make HTTP/HTTPS requests.
-	@see http://electronjs.org/docs/api/client-request
+	@see http://electron.atom.io/docs/api/client-request
 **/
 @:jsRequire("electron", "ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {
 	/**
@@ -34,6 +34,10 @@ package electron.main;
 		Continues any deferred redirection request when the redirection mode is manual.
 	**/
 	function followRedirect():Void;
+	/**
+		You can use this method in conjunction with POST requests to get the progress of a file upload or other data transfer.
+	**/
+	function getUploadProgress():Any;
 }
 @:enum abstract ClientRequestEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	var response : electron.main.ClientRequestEvent<electron.main.IncomingMessage -> Void> = "response";

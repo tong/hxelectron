@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create native application menus and context menus.
-	@see http://electronjs.org/docs/api/menu
+	@see http://electron.atom.io/docs/api/menu
 **/
 @:jsRequire("electron", "Menu") extern class Menu extends js.node.events.EventEmitter<electron.main.Menu> {
 	/**
@@ -13,12 +13,12 @@ package electron.main;
 	**/
 	static function getApplicationMenu():haxe.extern.EitherType<electron.main.Menu, Dynamic>;
 	/**
-		Sends the action to the first responder of application. This is used for emulating default macOS menu behaviors. Usually you would just use the role property of a MenuItem. See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.
+		Sends the action to the first responder of application. This is used for emulating default macOS menu behaviors. Usually you would use the role property of a MenuItem. See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.
 	**/
 	@:electron_platforms(["macOS"])
 	static function sendActionToFirstResponder(action:String):Void;
 	/**
-		Generally, the template is just an array of options for constructing a MenuItem. The usage can be referenced above. You can also attach other fields to the element of the template and they will become properties of the constructed menu items.
+		Generally, the template is an array of options for constructing a MenuItem. The usage can be referenced above. You can also attach other fields to the element of the template and they will become properties of the constructed menu items.
 	**/
 	static function buildFromTemplate(template:Array<Dynamic>):electron.main.Menu;
 	/**

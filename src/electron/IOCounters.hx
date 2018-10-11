@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/io-counters
+	@see http://electron.atom.io/docs/api/structures/io-counters
 **/
 typedef IOCounters = {
 	/**

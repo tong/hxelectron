@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/remove-password
+	@see http://electron.atom.io/docs/api/structures/remove-password
 **/
 typedef RemovePassword = {
 	/**

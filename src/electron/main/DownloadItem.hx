@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Control file downloads from remote sources.
-	@see http://electronjs.org/docs/api/download-item
+	@see http://electron.atom.io/docs/api/download-item
 **/
 @:jsRequire("electron", "DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
 	/**

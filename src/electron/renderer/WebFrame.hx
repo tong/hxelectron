@@ -1,9 +1,33 @@
 package electron.renderer;
 /**
 	Customize the rendering of the current web page.
-	@see http://electronjs.org/docs/api/web-frame
+	@see http://electron.atom.io/docs/api/web-frame
 **/
 @:jsRequire("electron", "webFrame") extern class WebFrame {
+	/**
+		A WebFrame representing top frame in frame hierarchy to which webFrame belongs, the property would be null if top frame is not in the current renderer process.
+	**/
+	static var top : electron.renderer.WebFrame;
+	/**
+		A WebFrame representing the frame which opened webFrame, the property would be null if there's no opener or opener is not in the current renderer process.
+	**/
+	static var opener : electron.renderer.WebFrame;
+	/**
+		A WebFrame representing parent frame of webFrame, the property would be null if webFrame is top or parent is not in the current renderer process.
+	**/
+	static var parent : electron.renderer.WebFrame;
+	/**
+		A WebFrame representing the first child frame of webFrame, the property would be null if webFrame has no children or if first child is not in the current renderer process.
+	**/
+	static var firstChild : electron.renderer.WebFrame;
+	/**
+		A WebFrame representing next sibling frame, the property would be null if webFrame is the last frame in its parent or if the next sibling is not in the current renderer process.
+	**/
+	static var nextSibling : electron.renderer.WebFrame;
+	/**
+		An Integer representing the unique frame id in the current renderer process. Distinct WebFrame instances that refer to the same underlying frame will have the same routingId.
+	**/
+	static var routingId : Int;
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/
@@ -29,10 +53,6 @@ package electron.renderer;
 		Returns Boolean.
 	**/
 	var spellCheck : haxe.Constraints.Function; }):Void;
-	/**
-		Registers the scheme as secure scheme. Secure schemes do not trigger mixed content warnings. For example, https and data are secure schemes because they cannot be corrupted by active network attackers.
-	**/
-	static function registerURLSchemeAsSecure(scheme:String):Void;
 	/**
 		Resources will be loaded from this scheme regardless of the current page's Content Security Policy.
 	**/
@@ -93,4 +113,7 @@ package electron.renderer;
 		Attempts to free memory that is no longer being used (like images from a previous navigation). Note that blindly calling this method probably makes Electron slower since it will have to refill these emptied caches, you should only call it if an event in your app has occurred that makes you think your page is actually using less memory (i.e. you have navigated from a super heavy page to a mostly empty one, and intend to stay there).
 	**/
 	static function clearCache():Void;
+	static function getFrameForSelector(selector:String):electron.renderer.WebFrame;
+	static function findFrameByName(name:String):electron.renderer.WebFrame;
+	static function findFrameByRoutingId(routingId:Int):electron.renderer.WebFrame;
 }

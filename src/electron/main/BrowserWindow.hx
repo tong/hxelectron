@@ -1,11 +1,11 @@
 package electron.main;
 /**
 	Create and control browser windows.
-	@see http://electronjs.org/docs/api/browser-window
+	@see http://electron.atom.io/docs/api/browser-window
 **/
 @:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
 	static function getAllWindows():Array<electron.main.BrowserWindow>;
-	static function getFocusedWindow():electron.main.BrowserWindow;
+	static function getFocusedWindow():haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
 	static function fromWebContents(webContents:electron.main.WebContents):electron.main.BrowserWindow;
 	static function fromBrowserView(browserView:electron.main.BrowserView):haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
 	static function fromId(id:Int):electron.main.BrowserWindow;
@@ -305,7 +305,7 @@ package electron.main;
 		A list of feature strings separated by ,, like CSSVariables,KeyboardEventKey to enable. The full list of supported feature strings can be found in the file.
 	**/
 	@:optional
-	var blinkFeatures : String; /**
+	var enableBlinkFeatures : String; /**
 		A list of feature strings separated by ,, like CSSVariables,KeyboardEventKey to disable. The full list of supported feature strings can be found in the file.
 	**/
 	@:optional
@@ -370,14 +370,26 @@ package electron.main;
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
-		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the 's initial settings.
+		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the <webview> will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a <webview> tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the <webview>'s initial settings.
 	**/
 	@:optional
 	var webviewTag : Bool; /**
 		A list of strings that will be appended to process.argv in the renderer process of this app. Useful for passing small bits of data down to renderer process preload scripts.
 	**/
 	@:optional
-	var additionalArguments : Array<String>; }; }):Void;
+	var additionalArguments : Array<String>; /**
+		Whether to enable browser style consecutive dialog protection. Default is false.
+	**/
+	@:optional
+	var safeDialogs : Bool; /**
+		The message to display when consecutive dialog protection is triggered. If not defined the default message would be used, note that currently the default message is in English and not localized.
+	**/
+	@:optional
+	var safeDialogsMessage : String; /**
+		Whether dragging and dropping a file or link onto the page causes a navigation. Default is false.
+	**/
+	@:optional
+	var navigateOnDragDrop : Bool; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
@@ -441,7 +453,7 @@ package electron.main;
 	@:electron_platforms(["macOS"])
 	function isSimpleFullScreen():Bool;
 	/**
-		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Just sum any extra width and height areas you have within the overall content view.
+		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Sum any extra width and height areas you have within the overall content view. Calling this function with a value of 0 will remove any previously set aspect ratios.
 	**/
 	@:electron_platforms(["macOS"])
 	function setAspectRatio(aspectRatio:Float, extraSize:electron.Size):Void;
@@ -470,7 +482,7 @@ package electron.main;
 	**/
 	function setEnabled(enable:Bool):Void;
 	/**
-		Resizes the window to width and height.
+		Resizes the window to width and height. If width or height are below any set minimum size constraints the window will snap to its minimum size.
 	**/
 	function setSize(width:Int, height:Int, ?animate:Bool):Void;
 	function getSize():Array<Int>;
@@ -544,6 +556,11 @@ package electron.main;
 	**/
 	function setAlwaysOnTop(flag:Bool, ?level:String, ?relativeLevel:Int):Void;
 	function isAlwaysOnTop():Bool;
+	/**
+		Moves window to top(z-order) regardless of focus
+	**/
+	@:electron_platforms(["macOS", "Windows"])
+	function moveTop():Void;
 	/**
 		Moves window to the center of the screen.
 	**/
@@ -624,10 +641,10 @@ package electron.main;
 		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method: You can load a URL using a POST request with URL-encoded data by doing the following:
 	**/
 	function loadURL(url:String, ?options:{ /**
-		A HTTP Referrer url.
+		An HTTP Referrer url.
 	**/
 	@:optional
-	var httpReferrer : String; /**
+	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -636,7 +653,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, haxe.extern.EitherType<Array<electron.UploadFileSystem>, Array<electron.UploadBlob>>>>; /**
+	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, Array<electron.UploadBlob>>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
@@ -683,6 +700,11 @@ package electron.main;
 	function setOpacity(opacity:Float):Void;
 	@:electron_platforms(["Windows", "macOS"])
 	function getOpacity():Float;
+	/**
+		Setting a window shape determines the area within the window where the system permits drawing and user interaction. Outside of the given region, no pixels will be drawn and no mouse events will be registered. Mouse events outside of the region will not be received by that window, but will fall through to whatever is behind the window.
+	**/
+	@:electron_platforms(["Windows", "Linux", "Experimental"])
+	function setShape(rects:Array<electron.Rectangle>):Void;
 	/**
 		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a Boolean object indicates whether the thumbnail has been added successfully. The number of buttons in thumbnail toolbar should be no greater than 7 due to the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be removed due to the platform's limitation. But you can call the API with an empty array to clean the buttons. The buttons is an array of Button objects: The flags is an array that can include following Strings:
 	**/
@@ -836,7 +858,7 @@ package electron.main;
 	**/
 	var page_title_updated : electron.main.BrowserWindowEvent<(js.html.Event, String) -> Void> = "page-title-updated";
 	/**
-		Emitted when the window is going to be closed. It's emitted before the beforeunload and unload event of the DOM. Calling event.preventDefault() will cancel the close. Usually you would want to use the beforeunload handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than undefined would cancel the close. For example: Note: There is a subtle difference between the behaviors of window.onbeforeunload = handler and window.addEventListener('beforeunload', handler). It is recommended to always set the event.returnValue explicitly, instead of just returning a value, as the former works more consistently within Electron.
+		Emitted when the window is going to be closed. It's emitted before the beforeunload and unload event of the DOM. Calling event.preventDefault() will cancel the close. Usually you would want to use the beforeunload handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than undefined would cancel the close. For example: Note: There is a subtle difference between the behaviors of window.onbeforeunload = handler and window.addEventListener('beforeunload', handler). It is recommended to always set the event.returnValue explicitly, instead of only returning a value, as the former works more consistently within Electron.
 	**/
 	var close : electron.main.BrowserWindowEvent<js.html.Event -> Void> = "close";
 	/**
@@ -897,7 +919,7 @@ package electron.main;
 	**/
 	var resize : electron.main.BrowserWindowEvent<Void -> Void> = "resize";
 	/**
-		Emitted when the window is being moved to a new position. Note: On macOS this event is just an alias of moved.
+		Emitted when the window is being moved to a new position. Note: On macOS this event is an alias of moved.
 	**/
 	var move : electron.main.BrowserWindowEvent<Void -> Void> = "move";
 	/**

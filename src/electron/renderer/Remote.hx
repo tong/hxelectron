@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Use main process modules from the renderer process.
-	@see http://electronjs.org/docs/api/remote
+	@see http://electron.atom.io/docs/api/remote
 **/
 @:jsRequire("electron", "remote") extern class Remote {
 	/**
@@ -12,6 +12,9 @@ package electron.renderer;
 		e.g.
 	**/
 	static function require(module:String):Any;
+	/**
+		Note: Do not use removeAllListeners on BrowserWindow. Use of this can remove all blur listeners, disable click events on touch bar buttons, and other unintended consequences.
+	**/
 	static function getCurrentWindow():electron.main.BrowserWindow;
 	static function getCurrentWebContents():electron.main.WebContents;
 	static function getGlobal(name:String):Any;

@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Display external web content in an isolated frame and process.
-	@see http://electronjs.org/docs/api/webview-tag
+	@see http://electron.atom.io/docs/api/webview-tag
 **/
 @:native("webviewTag") extern class WebviewTag extends js.html.Element {
 	/**
@@ -51,27 +51,19 @@ package electron.renderer;
 	/**
 		A list of strings which specifies the blink features to be enabled separated by ,. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
 	**/
-	var blinkfeatures : Dynamic;
+	var enableblinkfeatures : Dynamic;
 	/**
 		A list of strings which specifies the blink features to be disabled separated by ,. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
 	**/
 	var disableblinkfeatures : Dynamic;
 	/**
-		A value that links the webview to a specific webContents. When a webview first loads a new webContents is created and this attribute is set to its instance identifier. Setting this attribute on a new or existing webview connects it to the existing webContents that currently renders in a different webview. The existing webview will see the destroy event and will then create a new webContents when a new url is loaded.
-	**/
-	var guestinstance : Dynamic;
-	/**
-		When this attribute is present the webview contents will be prevented from resizing when the webview element itself is resized. This can be used in combination with webContents.setSize to manually resize the webview contents in reaction to a window size change. This can make resizing faster compared to relying on the webview element bounds to automatically resize the contents.
-	**/
-	var disableguestresize : Dynamic;
-	/**
 		Loads the url in the webview, the url must contain the protocol prefix, e.g. the http:// or file://.
 	**/
 	function loadURL(url:String, ?options:{ /**
-		A HTTP Referrer url.
+		An HTTP Referrer url.
 	**/
 	@:optional
-	var httpReferrer : String; /**
+	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -79,11 +71,8 @@ package electron.renderer;
 		Extra headers separated by "\n"
 	**/
 	@:optional
-	var extraHeaders : String; /**
-		-
-	**/
-	@:optional
-	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, haxe.extern.EitherType<Array<electron.UploadFileSystem>, Array<electron.UploadBlob>>>>; /**
+	var extraHeaders : String; @:optional
+	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, Array<electron.UploadBlob>>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional

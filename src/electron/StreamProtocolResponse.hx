@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/stream-protocol-response
+	@see http://electron.atom.io/docs/api/structures/stream-protocol-response
 **/
 typedef StreamProtocolResponse = {
 	/**

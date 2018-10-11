@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Add icons and context menus to the system's notification area.
-	@see http://electronjs.org/docs/api/tray
+	@see http://electron.atom.io/docs/api/tray
 **/
 @:jsRequire("electron", "Tray") extern class Tray extends js.node.events.EventEmitter<electron.main.Tray> {
 	function new(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;
@@ -32,6 +32,13 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS"])
 	function setHighlightMode(mode:String):Void;
+	/**
+		Sets the option to ignore double click events. Ignoring these events allows you to detect every individual click of the tray icon. This value is set to false by default.
+	**/
+	@:electron_platforms(["macOS"])
+	function setIgnoreDoubleClickEvents(ignore:Bool):Void;
+	@:electron_platforms(["macOS"])
+	function getIgnoreDoubleClickEvents():Bool;
 	/**
 		Displays a tray balloon.
 	**/

@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Communicate asynchronously from the main process to renderer processes.
-	@see http://electronjs.org/docs/api/ipc-main
+	@see http://electron.atom.io/docs/api/ipc-main
 **/
 @:jsRequire("electron", "ipcMain") extern class IpcMain {
 	/**

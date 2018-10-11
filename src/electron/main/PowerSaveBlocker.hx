@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Block the system from entering low-power (sleep) mode.
-	@see http://electronjs.org/docs/api/power-save-blocker
+	@see http://electron.atom.io/docs/api/power-save-blocker
 **/
 @:jsRequire("electron", "powerSaveBlocker") extern class PowerSaveBlocker {
 	/**

@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/cpu-usage
+	@see http://electron.atom.io/docs/api/structures/cpu-usage
 **/
 typedef CPUUsage = {
 	/**

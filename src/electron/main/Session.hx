@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Get and set properties of a session.
-	@see http://electronjs.org/docs/api/session
+	@see http://electron.atom.io/docs/api/session
 **/
 @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
 	/**
@@ -43,7 +43,7 @@ package electron.main;
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers.
+		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers, cachestorage.
 	**/
 	@:optional
 	var storages : Array<String>; /**

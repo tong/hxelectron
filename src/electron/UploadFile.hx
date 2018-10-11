@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/upload-file
+	@see http://electron.atom.io/docs/api/structures/upload-file
 **/
 typedef UploadFile = {
 	/**

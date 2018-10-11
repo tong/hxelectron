@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Register a custom protocol and intercept existing protocol requests.
-	@see http://electronjs.org/docs/api/protocol
+	@see http://electron.atom.io/docs/api/protocol
 **/
 @:jsRequire("electron", "protocol") extern class Protocol {
 	/**

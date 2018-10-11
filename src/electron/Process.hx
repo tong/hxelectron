@@ -1,7 +1,7 @@
 package electron;
 /**
 	Extensions to process object.
-	@see http://electronjs.org/docs/api/process
+	@see http://electron.atom.io/docs/api/process
 **/
 @:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
@@ -58,6 +58,10 @@ package electron;
 	static function getCPUUsage():electron.CPUUsage;
 	@:electron_platforms(["Windows", "Linux"])
 	static function getIOCounters():electron.IOCounters;
+	/**
+		Returns an object with V8 heap statistics. Note that all statistics are reported in Kilobytes.
+	**/
+	static function getHeapStatistics():Any;
 	/**
 		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
 	**/

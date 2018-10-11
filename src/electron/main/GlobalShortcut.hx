@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Detect keyboard events when the application does not have keyboard focus.
-	@see http://electronjs.org/docs/api/global-shortcut
+	@see http://electron.atom.io/docs/api/global-shortcut
 **/
 @:jsRequire("electron", "globalShortcut") extern class GlobalShortcut {
 	/**

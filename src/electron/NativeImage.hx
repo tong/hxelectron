@@ -1,7 +1,7 @@
 package electron;
 /**
 	Create tray, dock, and application icons using PNG or JPG files.
-	@see http://electronjs.org/docs/api/native-image
+	@see http://electron.atom.io/docs/api/native-image
 **/
 @:jsRequire("electron", "nativeImage") extern class NativeImage {
 	/**

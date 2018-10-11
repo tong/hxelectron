@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/display
+	@see http://electron.atom.io/docs/api/structures/display
 **/
 typedef Display = {
 	/**

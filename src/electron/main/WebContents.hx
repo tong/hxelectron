@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Render and control the contents of a BrowserWindow instance.
-	@see http://electronjs.org/docs/api/web-contents
+	@see http://electron.atom.io/docs/api/web-contents
 **/
 @:jsRequire("electron", "WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
 	static function getAllWebContents():Array<electron.main.WebContents>;
@@ -31,10 +31,10 @@ package electron.main;
 		Loads the url in the window. The url must contain the protocol prefix, e.g. the http:// or file://. If the load should bypass http cache then use the pragma header to achieve it.
 	**/
 	function loadURL(url:String, ?options:{ /**
-		A HTTP Referrer url.
+		An HTTP Referrer url.
 	**/
 	@:optional
-	var httpReferrer : String; /**
+	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -43,7 +43,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, haxe.extern.EitherType<Array<electron.UploadFileSystem>, Array<electron.UploadBlob>>>>; /**
+	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, Array<electron.UploadBlob>>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
@@ -364,7 +364,7 @@ package electron.main;
 	**/
 	var modifiers : Array<String>; }):Void;
 	/**
-		Begin subscribing for presentation events and captured frames, the callback will be called with callback(frameBuffer, dirtyRect) when there is a presentation event. The frameBuffer is a Buffer that contains raw pixel data. On most machines, the pixel data is effectively stored in 32bit BGRA format, but the actual representation depends on the endianness of the processor (most modern processors are little-endian, on machines with big-endian processors the data is in 32bit ARGB format). The dirtyRect is an object with x, y, width, height properties that describes which part of the page was repainted. If onlyDirty is set to true, frameBuffer will only contain the repainted area. onlyDirty defaults to false.
+		Begin subscribing for presentation events and captured frames, the callback will be called with callback(image, dirtyRect) when there is a presentation event. The image is an instance of NativeImage that stores the captured frame. The dirtyRect is an object with x, y, width, height properties that describes which part of the page was repainted. If onlyDirty is set to true, image will only contain the repainted area. onlyDirty defaults to false.
 	**/
 	function beginFrameSubscription(?onlyDirty:Bool, callback:haxe.Constraints.Function):Void;
 	/**
@@ -387,26 +387,6 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS"])
 	function showDefinitionForSelection():Void;
-	/**
-		Set the size of the page. This is only supported for <webview> guest contents.
-	**/
-	function setSize(options:{ /**
-		true to make the webview container automatically resize within the bounds specified by the attributes normal, min and max.
-	**/
-	@:optional
-	var enableAutoSize : Bool; /**
-		Normal size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
-	**/
-	@:optional
-	var normal : electron.Size; /**
-		Minimum size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
-	**/
-	@:optional
-	var min : electron.Size; /**
-		Maximium size of the page. This can be used in combination with the attribute to manually resize the webview guest contents.
-	**/
-	@:optional
-	var max : electron.Size; }):Void;
 	function isOffscreen():Bool;
 	/**
 		If offscreen rendering is enabled and not painting, start painting.
@@ -432,6 +412,7 @@ package electron.main;
 	**/
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
 	function getOSProcessId():Int;
+	function getProcessId():Int;
 }
 @:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
@@ -441,11 +422,11 @@ package electron.main;
 	/**
 		This event is like did-finish-load but emitted when the load failed or was cancelled, e.g. window.stop() is invoked. The full list of error codes and their meaning is available here.
 	**/
-	var did_fail_load : electron.main.WebContentsEvent<(js.html.Event, Int, String, String, Bool) -> Void> = "did-fail-load";
+	var did_fail_load : electron.main.WebContentsEvent<(js.html.Event, Int, String, String, Bool, Int, Int) -> Void> = "did-fail-load";
 	/**
 		Emitted when a frame has done navigation.
 	**/
-	var did_frame_finish_load : electron.main.WebContentsEvent<(js.html.Event, Bool) -> Void> = "did-frame-finish-load";
+	var did_frame_finish_load : electron.main.WebContentsEvent<(js.html.Event, Bool, Int, Int) -> Void> = "did-frame-finish-load";
 	/**
 		Corresponds to the points in time when the spinner of the tab started spinning.
 	**/
@@ -454,14 +435,6 @@ package electron.main;
 		Corresponds to the points in time when the spinner of the tab stopped spinning.
 	**/
 	var did_stop_loading : electron.main.WebContentsEvent<Void -> Void> = "did-stop-loading";
-	/**
-		Emitted when details regarding a requested resource are available. status indicates the socket connection to download the resource.
-	**/
-	var did_get_response_details : electron.main.WebContentsEvent<(js.html.Event, Bool, String, String, Int, String, String, Any, String) -> Void> = "did-get-response-details";
-	/**
-		Emitted when a redirect is received while requesting a resource.
-	**/
-	var did_get_redirect_request : electron.main.WebContentsEvent<(js.html.Event, String, String, Bool, Int, String, String, Any) -> Void> = "did-get-redirect-request";
 	/**
 		Emitted when the document in the given frame is loaded.
 	**/
@@ -473,19 +446,27 @@ package electron.main;
 	/**
 		Emitted when the page requests to open a new window for a url. It could be requested by window.open or an external link like <a target='_blank'>. By default a new BrowserWindow will be created for the url. Calling event.preventDefault() will prevent Electron from automatically creating a new BrowserWindow. If you call event.preventDefault() and manually create a new BrowserWindow then you must set event.newGuest to reference the new BrowserWindow instance, failing to do so may result in unexpected behavior. For example:
 	**/
-	var new_window : electron.main.WebContentsEvent<(js.html.Event, String, String, String, Any, Array<String>) -> Void> = "new-window";
+	var new_window : electron.main.WebContentsEvent<(js.html.Event, String, String, String, Any, Array<String>, electron.Referrer) -> Void> = "new-window";
 	/**
 		Emitted when a user or the page wants to start navigation. It can happen when the window.location object is changed or a user clicks a link in the page. This event will not emit when the navigation is started programmatically with APIs like webContents.loadURL and webContents.back. It is also not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose. Calling event.preventDefault() will prevent the navigation.
 	**/
 	var will_navigate : electron.main.WebContentsEvent<(js.html.Event, String) -> Void> = "will-navigate";
 	/**
-		Emitted when a navigation is done. This event is not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose.
+		Emitted when any frame (including main) starts navigating. isInplace will be true for in-page navigations.
 	**/
-	var did_navigate : electron.main.WebContentsEvent<(js.html.Event, String) -> Void> = "did-navigate";
+	var did_start_navigation : electron.main.WebContentsEvent<(String, Bool, Bool, Int, Int) -> Void> = "did-start-navigation";
 	/**
-		Emitted when an in-page navigation happened. When in-page navigation happens, the page URL changes but does not cause navigation outside of the page. Examples of this occurring are when anchor links are clicked or when the DOM hashchange event is triggered.
+		Emitted when a main frame navigation is done. This event is not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose.
 	**/
-	var did_navigate_in_page : electron.main.WebContentsEvent<(js.html.Event, String, Bool) -> Void> = "did-navigate-in-page";
+	var did_navigate : electron.main.WebContentsEvent<(js.html.Event, String, Int, String) -> Void> = "did-navigate";
+	/**
+		Emitted when any frame navigation is done. This event is not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose.
+	**/
+	var did_frame_navigate : electron.main.WebContentsEvent<(js.html.Event, String, Int, String, Bool, Int, Int) -> Void> = "did-frame-navigate";
+	/**
+		Emitted when an in-page navigation happened in any frame. When in-page navigation happens, the page URL changes but does not cause navigation outside of the page. Examples of this occurring are when anchor links are clicked or when the DOM hashchange event is triggered.
+	**/
+	var did_navigate_in_page : electron.main.WebContentsEvent<(js.html.Event, String, Bool, Int, Int) -> Void> = "did-navigate-in-page";
 	/**
 		Emitted when a beforeunload event handler is attempting to cancel a page unload. Calling event.preventDefault() will ignore the beforeunload event handler and allow the page to be unloaded.
 	**/
@@ -494,6 +475,14 @@ package electron.main;
 		Emitted when the renderer process crashes or is killed.
 	**/
 	var crashed : electron.main.WebContentsEvent<(js.html.Event, Bool) -> Void> = "crashed";
+	/**
+		Emitted when the web page becomes unresponsive.
+	**/
+	var unresponsive : electron.main.WebContentsEvent<Void -> Void> = "unresponsive";
+	/**
+		Emitted when the unresponsive web page becomes responsive again.
+	**/
+	var responsive : electron.main.WebContentsEvent<Void -> Void> = "responsive";
 	/**
 		Emitted when a plugin process has crashed.
 	**/
@@ -581,5 +570,5 @@ package electron.main;
 	/**
 		Emitted when the associated window logs a console message. Will not be emitted for windows with offscreen rendering enabled.
 	**/
-	var console_message : electron.main.WebContentsEvent<(Int, String, Int, String) -> Void> = "console-message";
+	var console_message : electron.main.WebContentsEvent<(js.html.Event, Int, String, Int, String) -> Void> = "console-message";
 }

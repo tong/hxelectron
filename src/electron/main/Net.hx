@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Issue HTTP/HTTPS requests using Chromium's native networking library
-	@see http://electronjs.org/docs/api/net
+	@see http://electron.atom.io/docs/api/net
 **/
 @:jsRequire("electron", "net") extern class Net {
 	/**

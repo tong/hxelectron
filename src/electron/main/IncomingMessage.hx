@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Handle responses to HTTP/HTTPS requests.
-	@see http://electronjs.org/docs/api/incoming-message
+	@see http://electron.atom.io/docs/api/incoming-message
 **/
 @:jsRequire("electron", "IncomingMessage") extern class IncomingMessage extends js.node.events.EventEmitter<electron.main.IncomingMessage> {
 	/**

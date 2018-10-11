@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Monitor power state changes.
-	@see http://electronjs.org/docs/api/power-monitor
+	@see http://electron.atom.io/docs/api/power-monitor
 **/
 @:jsRequire("electron", "powerMonitor") extern class PowerMonitor extends js.node.events.EventEmitter<electron.main.PowerMonitor> {
 
@@ -30,4 +30,14 @@ package electron.main;
 	**/
 	@:electron_platforms(["Linux", "macOS"])
 	var shutdown : electron.main.PowerMonitorEvent<Void -> Void> = "shutdown";
+	/**
+		Emitted when the system is about to lock the screen.
+	**/
+	@:electron_platforms(["macOS", "Windows"])
+	var lock_screen : electron.main.PowerMonitorEvent<Void -> Void> = "lock-screen";
+	/**
+		Emitted as soon as the systems screen is unlocked.
+	**/
+	@:electron_platforms(["macOS", "Windows"])
+	var unlock_screen : electron.main.PowerMonitorEvent<Void -> Void> = "unlock-screen";
 }
