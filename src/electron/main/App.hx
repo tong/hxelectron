@@ -227,7 +227,7 @@ package electron.main;
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemStatus().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is not available on .
+		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemSettings().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is not available on .
 	**/
 	@:optional
 	var openAsHidden : Bool; /**
