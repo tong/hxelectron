@@ -9,10 +9,10 @@ Haxe type definitions for [electron](https://electronjs.org/), a framework for b
 ## Install
 
 ```sh
-# Release version from haxelib
+# Release version
 haxelib install electron
 
-# Development version from git
+# Development version
 haxelib git electron https://github.com/tong/hxelectron.git
 ```
 
@@ -20,7 +20,6 @@ haxelib git electron https://github.com/tong/hxelectron.git
 ## Generate Type Definitions
 
 All type definitions are generated from [electron-api.json](electron-api.json) by [ElectronAPI.hx](ElectronAPI.hx).  
-
 To (re)generate for another electron version download the description file from https://github.com/electron/electron/releases and run:
 
 ```sh
