@@ -400,7 +400,7 @@ package electron.main;
 	/**
 		Emitted when Electron has created a new session.
 	**/
-	var session_created : electron.main.AppEvent<(js.html.Event, electron.main.Session) -> Void> = "session-created";
+	var session_created : electron.main.AppEvent<electron.main.Session -> Void> = "session-created";
 	/**
 		This event will be emitted inside the primary instance of your application when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. This event is guaranteed to be emitted after the ready event of app gets emitted.
 	**/
