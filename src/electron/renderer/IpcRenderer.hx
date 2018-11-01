@@ -29,9 +29,9 @@ package electron.renderer;
 	**/
 	static function sendSync(channel:String, args:haxe.extern.Rest<Any>):Any;
 	/**
-		Sends a message to a window with windowid via channel.
+		Sends a message to a window with webContentsId via channel.
 	**/
-	static function sendTo(windowId:Float, channel:String, args:haxe.extern.Rest<Any>):Void;
+	static function sendTo(webContentsId:Float, channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
 		Like ipcRenderer.send but the event will be sent to the <webview> element in the host page instead of the main process.
 	**/

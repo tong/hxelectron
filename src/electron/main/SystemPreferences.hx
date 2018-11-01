@@ -27,12 +27,12 @@ package electron.main;
 		Subscribes to native notifications of macOS, callback will be called with callback(event, userInfo) when the corresponding event happens. The userInfo is an Object that contains the user information dictionary sent along with the notification. The id of the subscriber is returned, which can be used to unsubscribe the event. Under the hood this API subscribes to NSDistributedNotificationCenter, example values of event are:
 	**/
 	@:electron_platforms(["macOS"])
-	static function subscribeNotification(event:String, callback:haxe.Constraints.Function):Void;
+	static function subscribeNotification(event:String, callback:haxe.Constraints.Function):Float;
 	/**
 		Same as subscribeNotification, but uses NSNotificationCenter for local defaults. This is necessary for events such as NSUserDefaultsDidChangeNotification.
 	**/
 	@:electron_platforms(["macOS"])
-	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Void;
+	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Float;
 	/**
 		Same as subscribeNotification, but uses NSWorkspace.sharedWorkspace.notificationCenter. This is necessary for events such as NSWorkspaceDidActivateApplicationNotification.
 	**/
