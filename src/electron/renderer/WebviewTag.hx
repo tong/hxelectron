@@ -256,7 +256,7 @@ package electron.renderer;
 		Specify page size of the generated PDF. Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns.
 	**/
 	@:optional
-	var pageSize : String; /**
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
 		Whether to print CSS backgrounds.
 	**/
 	@:optional
