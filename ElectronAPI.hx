@@ -360,7 +360,7 @@ private class Gen {
 	static function createPlatformMetadata( e : { ?platforms : Array<String> } ) : MetadataEntry {
 		return if( e.platforms == null ) null else {
 			name: ':electron_platforms',
-			params: [macro $a{ e.platforms.map( p -> macro $v{p} ) }],
+			params: [macro $a{ e.platforms.map( p -> return macro $v{p} ) }],
 			pos: null
 		};
 	}
