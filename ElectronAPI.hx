@@ -358,11 +358,24 @@ private class Gen {
 	}
 
 	static function createPlatformMetadata( e : { ?platforms : Array<String> } ) : MetadataEntry {
-		return if( e.platforms == null ) null else {
+		if( e.platforms == null )
+			return null;
+		var ereg = ~/^([a-zA-Z]+)( +\(([a-zA-Z]+)\))?$/;
+		var flags = new Array<String>();
+		for( p in e.platforms ) {
+			if( ereg.match( p ) ) {
+				flags.push( ereg.matched(1) );
+				if( ereg.matched(3) != null ) flags.push( ereg.matched(3) );
+			} else {
+				Context.warning( 'unknown platform restriction [$p]', Context.currentPos() );
+				return null;
+			}
+		}
+		return {
 			name: ':electron_platforms',
-			params: [macro $a{ e.platforms.map( p -> return macro $v{p} ) }],
+			params: [macro $a{ flags.map( p -> return macro $v{p} ) }],
 			pos: null
-		};
+		}
 	}
 
 	static inline function capitalize( s : String ) : String

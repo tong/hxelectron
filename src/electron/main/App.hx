@@ -274,7 +274,7 @@ package electron.main;
 	/**
 		Start accessing a security scoped resource. With this method electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
 	**/
-	@:electron_platforms(["macOS (mas)"])
+	@:electron_platforms(["macOS", "mas"])
 	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
 	/**
 		Enables mixed sandbox mode on the app. This method can only be called before app is ready.
