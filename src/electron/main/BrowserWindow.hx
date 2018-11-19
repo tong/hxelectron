@@ -843,7 +843,7 @@ package electron.main;
 		Sets the touchBar layout for the current window. Specifying null or undefined clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+. Note: The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	@:electron_platforms(["macOS", "Experimental"])
-	function setTouchBar(touchBar:Dynamic):Void;
+	function setTouchBar(touchBar:electron.main.TouchBar):Void;
 	@:electron_platforms(["Experimental"])
 	function setBrowserView(browserView:electron.main.BrowserView):Void;
 	/**

@@ -79,8 +79,7 @@ private class Gen {
 		} );
 
 		for( item in items ) {
-			//if( item.name != 'BrowserWindow' ) continue;
-			processItem( item );
+			this.types.set( item.name, processItem( item ) );
 		}
 
 		var map = new Map<String,Array<TypeDefinition>>();
@@ -89,7 +88,7 @@ private class Gen {
 		return map;
 	}
 
-	function processItem( item : Item ) {
+	function processItem( item : Item, ?module : String ) : TypeDefinition {
 
 		var type : TypeDefinition = {
 			pack: getItemPack( item ),
@@ -114,13 +113,20 @@ private class Gen {
 				{ pack: ['js','node','events'], name: 'EventEmitter', params: [TPType( TPath( { name: type.name, pack: type.pack } ) )] };
 			}
 			type.kind = TDClass( sup );
-			type.meta.push( { name: ':jsRequire', params: [macro $v{'electron'}, macro $v{item.name}], pos: null } );
+			var jsRequireName = item.name;
+			if( module != null ) jsRequireName = module+'.'+jsRequireName;
+			type.meta.push( { name: ':jsRequire', params: [macro $v{'electron'}, macro $v{jsRequireName}], pos: null } );
 			if( item.staticMethods != null ) for( m in item.staticMethods ) type.fields.push( createFunField( m, [AStatic] ) );
 			if( item.instanceProperties != null ) for( p in item.instanceProperties ) type.fields.push( createVarField( p ) );
 			if( item.constructorMethod != null ) type.fields.push( createFunField( cast { name: 'new', parameters:  item.constructorMethod.parameters } ) );
 			if( item.instanceMethods != null ) for( m in item.instanceMethods ) type.fields.push( createFunField( m ) );
-			//TODO inline type definitions in TouchBar (only)
-			//if( item.staticProperties != null ) for( p in item.staticProperties ) type.fields.push( createVarField( p, [AStatic] ) );
+			if( item.staticProperties != null ) {
+				for( p in item.staticProperties ) {
+					var t = processItem( cast p, type.name );
+					if( !this.extraTypes.exists( type.name ) ) this.extraTypes.set( type.name, [t] );
+					else this.extraTypes.get( type.name ).push( t );
+				}
+			}
 			mergeTypeItem( type, item );
 
 		case Module:
@@ -173,7 +179,7 @@ private class Gen {
 			}
 		}
 
-		this.types.set( item.name, type );
+		return type;
 	}
 
 	function getItemPack( item : Item ) : Array<String> {
@@ -332,8 +338,8 @@ private class Gen {
 		case 'URL': macro: String; // TODO macro: js.html.URL;
 		case _ if( Std.is( name, Array ) ):
 			createMultiType( cast name );
-		case _ if( name.startsWith( 'TouchBar' ) ):  //TODO HACK
-			macro: Dynamic;
+		//case _ if( name.startsWith( 'TouchBar' ) ):  //TODO HACK
+		//	macro: Dynamic;
 		default:
 			var pack = [];
 			for( item in this.items ) {
