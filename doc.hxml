@@ -1,3 +1,0 @@
-haxedoc.hxml
---next
--cmd haxelib run dox -i ./ -o doc/ --title HXElectron -D version 3.0.8 -D source-path https://github.com/tong/hxelectron/blob/master/src -D description 'Type definitions for the electron framework'

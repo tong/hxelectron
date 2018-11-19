@@ -5,7 +5,7 @@ api/
 data/
 demo/bin/*.js
 demo/bin/*.js.map
-doc/
+docs/
 atom/*
 all.hxml
 haxedoc.xml

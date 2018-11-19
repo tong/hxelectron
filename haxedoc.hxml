@@ -3,5 +3,3 @@
 -xml haxedoc.xml
 -lib electron
 --macro include('electron')
-#--next
-#-cmd haxelib run dox -o doc -i . --title "HXElectron" -in electron -D version 1.0.1-alpha -D source-path https://github.com/fponticelli/hxelectron/tree/master/src
