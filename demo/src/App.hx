@@ -17,13 +17,13 @@ class App {
 
             document.getElementById( 'logo-haxe' ).style.opacity = '1';
 
-            setText( 'system', process.platform +' '+ process.arch );
-            setText( 'node', 'node '+process.version );
-            setText( 'electron', 'electron '+process.versions['electron'] );
+            setText( 'system-version', process.platform +' '+ process.arch );
+            setText( 'node-version', 'node '+process.version );
+            setText( 'electron-version', 'electron '+process.versions['electron'] );
 
             ChildProcess.spawn( 'haxe', ['-version'] ).stdout.on( 'data', function(buf) {
 				var version = buf.toString();
-                setText( 'haxe', 'haxe $version' );
+                setText( 'haxe-version', 'haxe $version' );
             });
         }
     }
