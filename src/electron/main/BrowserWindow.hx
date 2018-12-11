@@ -366,7 +366,7 @@ package electron.main;
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
-		Whether to use native window.open(). Defaults to false. This option is currently experimental.
+		Whether to use native window.open(). If set to true, the webPreferences of child window will always be the same with parent window, regardless of the parameters passed to window.open(). Defaults to false. This option is currently experimental.
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
