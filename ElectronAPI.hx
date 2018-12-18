@@ -348,7 +348,7 @@ private class Gen {
 					break;
 				}
 			}
-			if( pack.length == 0 ) Context.warning( '[$name] not found', Context.currentPos() );
+			//if( pack.length == 0 ) Context.warning( '[$name] not found', Context.currentPos() );
 			TPath( { name: name, pack: pack } );
 		}
 		if( collection ) t = TPath( { name: 'Array<${t.toString()}>', pack: [] } );
@@ -379,7 +379,7 @@ private class Gen {
 		}
 		return {
 			name: ':electron_platforms',
-			params: [macro $a{ flags.map( p -> return macro $v{p} ) }],
+			params: [macro $a{ flags.map( function(p) return macro $v{p} ) }],
 			pos: null
 		}
 	}
