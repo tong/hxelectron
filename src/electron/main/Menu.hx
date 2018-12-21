@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create native application menus and context menus.
-	@see http://electron.atom.io/docs/api/menu
+	@see http://electronjs.org/docs/api/menu
 **/
 @:jsRequire("electron", "Menu") extern class Menu extends js.node.events.EventEmitter<electron.main.Menu> {
 	/**
@@ -29,7 +29,7 @@ package electron.main;
 	/**
 		Pops up this menu as a context menu in the BrowserWindow.
 	**/
-	function popup(options:{ /**
+	function popup(?options:{ /**
 		Default is the focused window.
 	**/
 	@:optional

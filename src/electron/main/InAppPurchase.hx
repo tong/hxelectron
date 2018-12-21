@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	In-app purchases on Mac App Store.
-	@see http://electron.atom.io/docs/api/in-app-purchase
+	@see http://electronjs.org/docs/api/in-app-purchase
 **/
 @:jsRequire("electron", "inAppPurchase") extern class InAppPurchase extends js.node.events.EventEmitter<electron.main.InAppPurchase> {
 	/**

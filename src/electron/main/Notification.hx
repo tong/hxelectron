@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create OS desktop notifications
-	@see http://electron.atom.io/docs/api/notification
+	@see http://electronjs.org/docs/api/notification
 **/
 @:jsRequire("electron", "Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
 	static function isSupported():Bool;

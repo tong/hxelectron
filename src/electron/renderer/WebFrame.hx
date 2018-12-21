@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Customize the rendering of the current web page.
-	@see http://electron.atom.io/docs/api/web-frame
+	@see http://electronjs.org/docs/api/web-frame
 **/
 @:jsRequire("electron", "webFrame") extern class WebFrame {
 	/**
@@ -90,7 +90,7 @@ package electron.renderer;
 	**/
 	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Any>;
 	/**
-		Work like executeJavaScript but evaluates scripts in isolated context.
+		Work like executeJavaScript but evaluates scripts in an isolated context.
 	**/
 	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool, ?callback:haxe.Constraints.Function):Void;
 	/**

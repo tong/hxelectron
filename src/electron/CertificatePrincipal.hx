@@ -1,30 +1,30 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/certificate-principal
+	@see http://electronjs.org/docs/api/structures/certificate-principal
 **/
 typedef CertificatePrincipal = {
 	/**
-		Common Name
+		Common Name.
 	**/
 	var commonName : String;
 	/**
-		Organization names
+		Organization names.
 	**/
 	var organizations : Array<String>;
 	/**
-		Organization Unit names
+		Organization Unit names.
 	**/
 	var organizationUnits : Array<String>;
 	/**
-		Locality
+		Locality.
 	**/
 	var locality : String;
 	/**
-		State or province
+		State or province.
 	**/
 	var state : String;
 	/**
-		Country or region
+		Country or region.
 	**/
 	var country : String;
 }

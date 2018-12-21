@@ -1,7 +1,7 @@
 package electron.renderer;
 /**
 	Display external web content in an isolated frame and process.
-	@see http://electron.atom.io/docs/api/webview-tag
+	@see http://electronjs.org/docs/api/webview-tag
 **/
 @:native("webviewTag") extern class WebviewTag extends js.html.Element {
 	/**
@@ -16,6 +16,10 @@ package electron.renderer;
 		When this attribute is present the guest page in webview will have node integration and can use node APIs like require and process to access low level system resources. Node integration is disabled by default in the guest page.
 	**/
 	var nodeintegration : Dynamic;
+	/**
+		When this attribute is false the guest page in webview will not have access to the remote module. The remote module is avaiable by default.
+	**/
+	var enableremotemodule : Dynamic;
 	/**
 		When this attribute is present the guest page in webview will be able to use browser plugins. Plugins are disabled by default.
 	**/
@@ -77,9 +81,14 @@ package electron.renderer;
 	**/
 	@:optional
 	var baseURLForDataURL : String; }):Void;
+	/**
+		Initiates a download of the resource at url without navigating.
+	**/
+	function downloadURL(url:String):Void;
 	function getURL():String;
 	function getTitle():String;
 	function isLoading():Bool;
+	function isLoadingMainFrame():Bool;
 	function isWaitingForResponse():Bool;
 	/**
 		Stops any pending navigation.
@@ -153,6 +162,7 @@ package electron.renderer;
 	**/
 	function setAudioMuted(muted:Bool):Void;
 	function isAudioMuted():Bool;
+	function isCurrentlyAudible():Bool;
 	/**
 		Executes editing command undo in page.
 	**/
@@ -286,13 +296,32 @@ package electron.renderer;
 	**/
 	function setZoomFactor(factor:Float):Void;
 	/**
-		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively.
+		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is scale := 1.2 ^ level.
 	**/
 	function setZoomLevel(level:Float):Void;
+	/**
+		Sends a request to get current zoom factor, the callback will be called with callback(zoomFactor).
+	**/
+	function getZoomFactor(callback:haxe.Constraints.Function):Void;
+	/**
+		Sends a request to get current zoom level, the callback will be called with callback(zoomLevel).
+	**/
+	function getZoomLevel(callback:haxe.Constraints.Function):Void;
+	/**
+		Sets the maximum and minimum pinch-to-zoom level.
+	**/
+	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	/**
+		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
+	**/
+	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
 	@:electron_platforms(["macOS"])
 	function showDefinitionForSelection():Void;
+	/**
+		It depends on the remote module, it is therefore not available when this module is disabled.
+	**/
 	function getWebContents():electron.main.WebContents;
 }

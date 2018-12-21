@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Control your application's event lifecycle.
-	@see http://electron.atom.io/docs/api/app
+	@see http://electronjs.org/docs/api/app
 **/
 @:jsRequire("electron", "app") extern class App extends js.node.events.EventEmitter<electron.main.App> {
 	/**
@@ -176,7 +176,7 @@ package electron.main;
 	@:electron_platforms(["Windows"])
 	static function setAppUserModelId(id:String):Void;
 	/**
-		Imports the certificate in pkcs12 format into the platform certificate store. callback is called with the result of import operation, a value of 0 indicates success while any other value indicates failure according to chromium net_error_list.
+		Imports the certificate in pkcs12 format into the platform certificate store. callback is called with the result of import operation, a value of 0 indicates success while any other value indicates failure according to Chromium net_error_list.
 	**/
 	@:electron_platforms(["LINUX"])
 	static function importCertificate(options:{ /**
@@ -196,6 +196,10 @@ package electron.main;
 	static function disableDomainBlockingFor3DAPIs():Void;
 	static function getAppMetrics():Array<electron.ProcessMetric>;
 	static function getGPUFeatureStatus():electron.GPUFeatureStatus;
+	/**
+		For infoType equal to complete: Promise is fulfilled with Object containing all the GPU Information as in chromium's GPUInfo object. This includes the version and driver information that's shown on chrome://gpu page. For infoType equal to basic: Promise is fulfilled with Object containing fewer attributes than when requested with complete. Here's an example of basic response: Using basic should be preferred if only basic information like vendorId or driverId is needed.
+	**/
+	static function getGPUInfo(infoType:String):js.Promise<Any>;
 	/**
 		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS it shows on the dock icon. On Linux it only works for Unity launcher, Note: Unity launcher requires the existence of a .desktop file to work, for more information please read Desktop Environment Integration.
 	**/
@@ -247,6 +251,11 @@ package electron.main;
 	@:electron_platforms(["macOS", "Windows"])
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
 	/**
+		Show the about panel with the values defined in the app's .plist file or with the options set via app.setAboutPanelOptions(options).
+	**/
+	@:electron_platforms(["macOS"])
+	static function showAboutPanel():Void;
+	/**
 		Set the about panel options. This will override the values defined in the app's .plist file. See the Apple docs for more details.
 	**/
 	@:electron_platforms(["macOS"])
@@ -272,10 +281,15 @@ package electron.main;
 	@:optional
 	var version : String; }):Void;
 	/**
-		Start accessing a security scoped resource. With this method electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
+		Start accessing a security scoped resource. With this method Electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
 	**/
 	@:electron_platforms(["macOS", "mas"])
 	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
+	/**
+		Enables full sandbox mode on the app. This method can only be called before app is ready.
+	**/
+	@:electron_platforms(["Experimental", "macOS", "Windows"])
+	static function enableSandbox():Void;
 	/**
 		Enables mixed sandbox mode on the app. This method can only be called before app is ready.
 	**/
@@ -405,4 +419,12 @@ package electron.main;
 		This event will be emitted inside the primary instance of your application when a second instance has been executed. argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. This event is guaranteed to be emitted after the ready event of app gets emitted.
 	**/
 	var second_instance : electron.main.AppEvent<(js.html.Event, Array<String>, String) -> Void> = "second-instance";
+	/**
+		Emitted when remote.require() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the module from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_require : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String) -> Void> = "remote-require";
+	/**
+		Emitted when remote.getGlobal() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the global from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_global : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String) -> Void> = "remote-get-global";
 }

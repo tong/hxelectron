@@ -1,7 +1,7 @@
 package electron;
 /**
 	Manage files and URLs using their default applications.
-	@see http://electron.atom.io/docs/api/shell
+	@see http://electronjs.org/docs/api/shell
 **/
 @:jsRequire("electron", "shell") extern class Shell {
 	/**
@@ -18,7 +18,12 @@ package electron;
 	static function openExternal(url:String, ?options:{ /**
 		true to bring the opened application to the foreground. The default is true.
 	**/
-	var activate : Bool; }, ?callback:haxe.Constraints.Function):Bool;
+	@:optional
+	var activate : Bool; /**
+		The working directory.
+	**/
+	@:optional
+	var workingDirectory : String; }, ?callback:haxe.Constraints.Function):Bool;
 	/**
 		Move the given file to trash and returns a boolean status for the operation.
 	**/

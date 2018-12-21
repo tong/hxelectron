@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Get system preferences.
-	@see http://electron.atom.io/docs/api/system-preferences
+	@see http://electronjs.org/docs/api/system-preferences
 **/
 @:jsRequire("electron", "systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.main.SystemPreferences> {
 	@:electron_platforms(["macOS"])
@@ -84,6 +84,31 @@ package electron.main;
 	static function getColor(color:String):String;
 	@:electron_platforms(["Windows"])
 	static function isInvertedColorScheme():Bool;
+	/**
+		Gets the macOS appearance setting that is currently applied to your application, maps to NSApplication.effectiveAppearance Please note that until Electron is built targeting the 10.14 SDK, your application's effectiveAppearance will default to 'light' and won't inherit the OS preference. In the interim in order for your application to inherit the OS preference you must set the NSRequiresAquaSystemAppearance key in your apps Info.plist to false.  If you are using electron-packager or electron-forge just set the enableDarwinDarkMode packager option to true.  See the Electron Packager API for more details.
+	**/
+	@:electron_platforms(["macOS"])
+	static function getEffectiveAppearance():String;
+	/**
+		Gets the macOS appearance setting that you have declared you want for your application, maps to NSApplication.appearance. You can use the setAppLevelAppearance API to set this value.
+	**/
+	@:electron_platforms(["macOS"])
+	static function getAppLevelAppearance():String;
+	/**
+		Sets the appearance setting for your application, this should override the system default and override the value of getEffectiveAppearance.
+	**/
+	@:electron_platforms(["macOS"])
+	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<String, Dynamic>):Void;
+	/**
+		This user consent was not required until macOS 10.14 Mojave, so this method will always return granted if your system is running 10.13 High Sierra or lower.
+	**/
+	@:electron_platforms(["macOS"])
+	static function getMediaAccessStatus(mediaType:String):String;
+	/**
+		Important: In order to properly leverage this API, you must set the NSMicrophoneUsageDescription and NSCameraUsageDescription strings in your app's Info.plist file. The values for these keys will be used to populate the permission dialogs so that the user will be properly informed as to the purpose of the permission request. See Electron Application Distribution for more information about how to set these in the context of Electron. This user consent was not required until macOS 10.14 Mojave, so this method will always return true if your system is running 10.13 High Sierra or lower.
+	**/
+	@:electron_platforms(["macOS"])
+	static function askForMediaAccess(mediaType:String):js.Promise<Any>;
 }
 @:enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	@:electron_platforms(["Windows"])
@@ -92,4 +117,9 @@ package electron.main;
 	var color_changed : electron.main.SystemPreferencesEvent<js.html.Event -> Void> = "color-changed";
 	@:electron_platforms(["Windows"])
 	var inverted_color_scheme_changed : electron.main.SystemPreferencesEvent<(js.html.Event, Bool) -> Void> = "inverted-color-scheme-changed";
+	/**
+		NOTE: This event is only emitted after you have called startAppLevelAppearanceTrackingOS
+	**/
+	@:electron_platforms(["macOS"])
+	var appearance_changed : electron.main.SystemPreferencesEvent<String -> Void> = "appearance-changed";
 }

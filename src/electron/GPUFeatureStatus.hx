@@ -1,59 +1,59 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/gpu-feature-status
+	@see http://electronjs.org/docs/api/structures/gpu-feature-status
 **/
 typedef GPUFeatureStatus = {
 	/**
-		Canvas
+		Canvas.
 	**/
 	@:native("2d_canvas")
 	var _2d_canvas : String;
 	/**
-		Flash
+		Flash.
 	**/
 	var flash_3d : String;
 	/**
-		Flash Stage3D
+		Flash Stage3D.
 	**/
 	var flash_stage3d : String;
 	/**
-		Flash Stage3D Baseline profile
+		Flash Stage3D Baseline profile.
 	**/
 	var flash_stage3d_baseline : String;
 	/**
-		Compositing
+		Compositing.
 	**/
 	var gpu_compositing : String;
 	/**
-		Multiple Raster Threads
+		Multiple Raster Threads.
 	**/
 	var multiple_raster_threads : String;
 	/**
-		Native GpuMemoryBuffers
+		Native GpuMemoryBuffers.
 	**/
 	var native_gpu_memory_buffers : String;
 	/**
-		Rasterization
+		Rasterization.
 	**/
 	var rasterization : String;
 	/**
-		Video Decode
+		Video Decode.
 	**/
 	var video_decode : String;
 	/**
-		Video Encode
+		Video Encode.
 	**/
 	var video_encode : String;
 	/**
-		VPx Video Decode
+		VPx Video Decode.
 	**/
 	var vpx_decode : String;
 	/**
-		WebGL
+		WebGL.
 	**/
 	var webgl : String;
 	/**
-		WebGL2
+		WebGL2.
 	**/
 	var webgl2 : String;
 }

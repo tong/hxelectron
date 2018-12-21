@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Render and control the contents of a BrowserWindow instance.
-	@see http://electron.atom.io/docs/api/web-contents
+	@see http://electronjs.org/docs/api/web-contents
 **/
 @:jsRequire("electron", "WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
 	static function getAllWebContents():Array<electron.main.WebContents>;
@@ -51,7 +51,19 @@ package electron.main;
 	/**
 		Loads the given file in the window, filePath should be a path to an HTML file relative to the root of your application.  For instance an app structure like this: Would require code like this
 	**/
-	function loadFile(filePath:String):Void;
+	function loadFile(filePath:String, ?options:{ /**
+		Passed to url.format().
+	**/
+	@:optional
+	var query : Any; /**
+		Passed to url.format().
+	**/
+	@:optional
+	var search : String; /**
+		Passed to url.format().
+	**/
+	@:optional
+	var hash : String; }):Void;
 	/**
 		Initiates a download of the resource at url without navigating. The will-download event of session will be triggered.
 	**/
@@ -126,6 +138,7 @@ package electron.main;
 	**/
 	function setAudioMuted(muted:Bool):Void;
 	function isAudioMuted():Bool;
+	function isCurrentlyAudible():Bool;
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/
@@ -218,11 +231,11 @@ package electron.main;
 	**/
 	@:optional
 	var matchCase : Bool; /**
-		Whether to look only at the start of words. defaults to false.
+		(Deprecated) Whether to look only at the start of words. defaults to false.
 	**/
 	@:optional
 	var wordStart : Bool; /**
-		When combined with wordStart, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to false.
+		(Deprecated) When combined with wordStart, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to false.
 	**/
 	@:optional
 	var medialCapitalAsWordStart : Bool; }):Int;
@@ -247,7 +260,7 @@ package electron.main;
 	**/
 	function getPrinters():Array<electron.PrinterInfo>;
 	/**
-		Prints window's web page. When silent is set to true, Electron will pick the system's default printer if deviceName is empty and the default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({silent: false, printBackground: false, deviceName: ''}). Use page-break-before: always; CSS style to force to print to a new page.
+		Prints window's web page. When silent is set to true, Electron will pick the system's default printer if deviceName is empty and the default settings for printing. Calling window.print() in web page is equivalent to calling webContents.print({ silent: false, printBackground: false, deviceName: '' }). Use page-break-before: always; CSS style to force to print to a new page.
 	**/
 	function print(?options:{ /**
 		Don't ask user for print settings. Default is false.
@@ -337,7 +350,7 @@ package electron.main;
 		Set the emulated screen size (screenPosition == mobile).
 	**/
 	var screenSize : electron.Size; /**
-		Position the view on the screen (screenPosition == mobile) (default: {x: 0, y: 0}).
+		Position the view on the screen (screenPosition == mobile) (default: { x: 0, y: 0 }).
 	**/
 	var viewPosition : electron.Point; /**
 		Set the device scale factor (if zero defaults to original device scale factor) (default: 0).
@@ -413,6 +426,14 @@ package electron.main;
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
 	function getOSProcessId():Int;
 	function getProcessId():Int;
+	/**
+		Takes a V8 heap snapshot and saves it to filePath.
+	**/
+	function takeHeapSnapshot(filePath:String):js.Promise<Any>;
+	/**
+		Controls whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
+	**/
+	function setBackgroundThrottling(allowed:Bool):Void;
 }
 @:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
@@ -454,7 +475,15 @@ package electron.main;
 	/**
 		Emitted when any frame (including main) starts navigating. isInplace will be true for in-page navigations.
 	**/
-	var did_start_navigation : electron.main.WebContentsEvent<(String, Bool, Bool, Int, Int) -> Void> = "did-start-navigation";
+	var did_start_navigation : electron.main.WebContentsEvent<(js.html.Event, String, Bool, Bool, Int, Int) -> Void> = "did-start-navigation";
+	/**
+		Emitted as a server side redirect occurs during navigation.  For example a 302 redirect. This event will be emitted after did-start-navigation and always before the did-redirect-navigation event for the same navigation. Calling event.preventDefault() will prevent the navigation (not just the redirect).
+	**/
+	var will_redirect : electron.main.WebContentsEvent<(js.html.Event, String, Bool, Bool, Int, Int) -> Void> = "will-redirect";
+	/**
+		Emitted after a server side redirect occurs during navigation.  For example a 302 redirect. This event can not be prevented, if you want to prevent redirects you should checkout out the will-redirect event above.
+	**/
+	var did_redirect_navigation : electron.main.WebContentsEvent<(js.html.Event, String, Bool, Bool, Int, Int) -> Void> = "did-redirect-navigation";
 	/**
 		Emitted when a main frame navigation is done. This event is not emitted for in-page navigations, such as clicking anchor links or updating the window.location.hash. Use did-navigate-in-page event for this purpose.
 	**/
@@ -571,4 +600,12 @@ package electron.main;
 		Emitted when the associated window logs a console message. Will not be emitted for windows with offscreen rendering enabled.
 	**/
 	var console_message : electron.main.WebContentsEvent<(js.html.Event, Int, String, Int, String) -> Void> = "console-message";
+	/**
+		Emitted when remote.require() is called in the renderer process. Calling event.preventDefault() will prevent the module from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_require : electron.main.WebContentsEvent<(js.html.Event, String) -> Void> = "remote-require";
+	/**
+		Emitted when remote.getGlobal() is called in the renderer process. Calling event.preventDefault() will prevent the global from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_global : electron.main.WebContentsEvent<(js.html.Event, String) -> Void> = "remote-get-global";
 }

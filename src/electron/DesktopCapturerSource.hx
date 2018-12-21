@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/desktop-capturer-source
+	@see http://electronjs.org/docs/api/structures/desktop-capturer-source
 **/
 typedef DesktopCapturerSource = {
 	/**
@@ -8,7 +8,7 @@ typedef DesktopCapturerSource = {
 	**/
 	var id : String;
 	/**
-		A screen source will be named either Entire Screen or Screen <index>, while the name of a window source will match the window title.
+		A screen source will be named either Entire Screen or Screen , while the name of a window source will match the window title.
 	**/
 	var name : String;
 	/**

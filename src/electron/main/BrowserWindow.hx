@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create and control browser windows.
-	@see http://electron.atom.io/docs/api/browser-window
+	@see http://electronjs.org/docs/api/browser-window
 **/
 @:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
 	static function getAllWindows():Array<electron.main.BrowserWindow>;
@@ -170,7 +170,7 @@ package electron.main;
 	**/
 	@:optional
 	var enableLargerThanScreen : Bool; /**
-		Window's background color as a hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported). Default is #FFF (white). If transparent is set to true, only values with transparent (#00-------) or opaque (#FF-----) alpha values are respected.
+		Window's background color as a hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported if transparent is set to true). Default is #FFF (white).
 	**/
 	@:optional
 	var backgroundColor : String; /**
@@ -242,6 +242,10 @@ package electron.main;
 	**/
 	@:optional
 	var sandbox : Bool; /**
+		Whether to enable the module. Default is true.
+	**/
+	@:optional
+	var enableRemoteModule : Bool; /**
 		Sets the session used by the page. Instead of passing the Session object directly, you can also choose to use the partition option instead, which accepts a partition string. When both session and partition are provided, session will be preferred. Default is the default session.
 	**/
 	@:optional
@@ -294,10 +298,6 @@ package electron.main;
 	**/
 	@:optional
 	var experimentalFeatures : Bool; /**
-		Enables Chromium's experimental canvas features. Default is false.
-	**/
-	@:optional
-	var experimentalCanvasFeatures : Bool; /**
 		Enables scroll bounce (rubber banding) effect on macOS. Default is false.
 	**/
 	@:optional
@@ -362,7 +362,7 @@ package electron.main;
 	**/
 	@:optional
 	var offscreen : Bool; /**
-		Whether to run Electron APIs and the specified preload script in a separate JavaScript context. Defaults to false. The context that the preload script runs in will still have full access to the document and window globals but it will use its own set of JavaScript builtins (Array, Object, JSON, etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the preload script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the preload script and any Electron APIs being used. This option uses the same technique used by . You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab. This option is currently experimental and may change or be removed in future Electron releases.
+		Whether to run Electron APIs and the specified preload script in a separate JavaScript context. Defaults to false. The context that the preload script runs in will still have full access to the document and window globals but it will use its own set of JavaScript builtins (Array, Object, JSON, etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the preload script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the preload script and any Electron APIs being used. This option uses the same technique used by . You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab.
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
@@ -370,7 +370,7 @@ package electron.main;
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
-		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the <webview> will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a <webview> tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the <webview>'s initial settings.
+		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the 's initial settings.
 	**/
 	@:optional
 	var webviewTag : Bool; /**
@@ -452,11 +452,16 @@ package electron.main;
 	function setSimpleFullScreen(flag:Bool):Void;
 	@:electron_platforms(["macOS"])
 	function isSimpleFullScreen():Bool;
+	function isNormal():Bool;
 	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size. Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Sum any extra width and height areas you have within the overall content view. Calling this function with a value of 0 will remove any previously set aspect ratios.
 	**/
 	@:electron_platforms(["macOS"])
 	function setAspectRatio(aspectRatio:Float, extraSize:electron.Size):Void;
+	/**
+		Sets the background color of the window. See Setting backgroundColor.
+	**/
+	function setBackgroundColor(backgroundColor:String):Void;
 	/**
 		Uses Quick Look to preview a file at a given path.
 	**/
@@ -468,7 +473,7 @@ package electron.main;
 	@:electron_platforms(["macOS"])
 	function closeFilePreview():Void;
 	/**
-		Resizes and moves the window to the supplied bounds
+		Resizes and moves the window to the supplied bounds. Any properties that are not supplied will default to their current values.
 	**/
 	function setBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	function getBounds():electron.Rectangle;
@@ -477,6 +482,10 @@ package electron.main;
 	**/
 	function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	function getContentBounds():electron.Rectangle;
+	/**
+		Note: whatever the current state of the window : maximized, minimized or in fullscreen, this function always returns the position and size of the window in normal state. In normal state, getBounds and getNormalBounds returns the same Rectangle.
+	**/
+	function getNormalBounds():electron.Rectangle;
 	/**
 		Disable or enable the window.
 	**/
@@ -661,7 +670,19 @@ package electron.main;
 	/**
 		Same as webContents.loadFile, filePath should be a path to an HTML file relative to the root of your application.  See the webContents docs for more information.
 	**/
-	function loadFile(filePath:String):Void;
+	function loadFile(filePath:String, ?options:{ /**
+		Passed to url.format().
+	**/
+	@:optional
+	var query : Any; /**
+		Passed to url.format().
+	**/
+	@:optional
+	var search : String; /**
+		Passed to url.format().
+	**/
+	@:optional
+	var hash : String; }):Void;
 	/**
 		Same as webContents.reload.
 	**/
@@ -711,7 +732,7 @@ package electron.main;
 	@:electron_platforms(["Windows"])
 	function setThumbarButtons(buttons:Array<electron.ThumbarButton>):Bool;
 	/**
-		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: {x: 0, y: 0, width: 0, height: 0}.
+		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: { x: 0, y: 0, width: 0, height: 0 }.
 	**/
 	@:electron_platforms(["Windows"])
 	function setThumbnailClip(region:electron.Rectangle):Void;
@@ -756,6 +777,11 @@ package electron.main;
 	@:electron_platforms(["Windows", "Linux"])
 	function setIcon(icon:electron.NativeImage):Void;
 	/**
+		Sets whether the window traffic light buttons should be visible. This cannot be called when titleBarStyle is set to customButtonsOnHover.
+	**/
+	@:electron_platforms(["macOS"])
+	function setWindowButtonVisibility(visible:Bool):Void;
+	/**
 		Sets whether the window menu bar should hide itself automatically. Once set the menu bar will only show when users press the single Alt key. If the menu bar is already visible, calling setAutoHideMenuBar(true) won't hide it immediately.
 	**/
 	function setAutoHideMenuBar(hide:Bool):Void;
@@ -769,7 +795,11 @@ package electron.main;
 	/**
 		Sets whether the window should be visible on all workspaces. Note: This API does nothing on Windows.
 	**/
-	function setVisibleOnAllWorkspaces(visible:Bool):Void;
+	function setVisibleOnAllWorkspaces(visible:Bool, ?options:{ /**
+		Sets whether the window should be visible above fullscreen windows
+	**/
+	@:optional
+	var visibleOnFullScreen : Bool; }):Void;
 	/**
 		Note: This API always returns false on Windows.
 	**/
@@ -915,9 +945,19 @@ package electron.main;
 	**/
 	var restore : electron.main.BrowserWindowEvent<Void -> Void> = "restore";
 	/**
-		Emitted when the window is being resized.
+		Emitted before the window is resized. Calling event.preventDefault() will prevent the window from being resized. Note that this is only emitted when the window is being resized manually. Resizing the window with setBounds/setSize will not emit this event.
+	**/
+	@:electron_platforms(["macOS", "Windows"])
+	var will_resize : electron.main.BrowserWindowEvent<(js.html.Event, electron.Rectangle) -> Void> = "will-resize";
+	/**
+		Emitted after the window has been resized.
 	**/
 	var resize : electron.main.BrowserWindowEvent<Void -> Void> = "resize";
+	/**
+		Emitted before the window is moved. Calling event.preventDefault() will prevent the window from being moved. Note that this is only emitted when the window is being resized manually. Resizing the window with setBounds/setSize will not emit this event.
+	**/
+	@:electron_platforms(["Windows"])
+	var will_move : electron.main.BrowserWindowEvent<(js.html.Event, electron.Rectangle) -> Void> = "will-move";
 	/**
 		Emitted when the window is being moved to a new position. Note: On macOS this event is an alias of moved.
 	**/
@@ -943,6 +983,11 @@ package electron.main;
 		Emitted when the window leaves a full-screen state triggered by HTML API.
 	**/
 	var leave_html_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "leave-html-full-screen";
+	/**
+		Emitted when the window is set or unset to show always on top of other windows.
+	**/
+	@:electron_platforms(["macOS"])
+	var always_on_top_changed : electron.main.BrowserWindowEvent<(js.html.Event, Bool) -> Void> = "always-on-top-changed";
 	/**
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows. Commands are lowercased, underscores are replaced with hyphens, and the APPCOMMAND_ prefix is stripped off. e.g. APPCOMMAND_BROWSER_BACKWARD is emitted as browser-backward.
 	**/

@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Add items to native application menus and context menus.
-	@see http://electron.atom.io/docs/api/menu-item
+	@see http://electronjs.org/docs/api/menu-item
 **/
 @:jsRequire("electron", "MenuItem") extern class MenuItem {
 	/**
@@ -53,6 +53,10 @@ package electron.main;
 	**/
 	@:optional
 	var checked : Bool; /**
+		If false, the accelerator won't be registered with the system, but it will still be displayed. Defaults to true.
+	**/
+	@:optional
+	var registerAccelerator : Bool; /**
 		Should be specified for submenu type menu items. If submenu is specified, the type: 'submenu' can be omitted. If the value is not a then it will be automatically converted to one using Menu.buildFromTemplate.
 	**/
 	@:optional
@@ -61,8 +65,20 @@ package electron.main;
 	**/
 	@:optional
 	var id : String; /**
-		This field allows fine-grained definition of the specific location within a given menu.
+		Inserts this item before the item with the specified label. If the referenced item doesn't exist the item will be inserted at the end of the menu. Also implies that the menu item in question should be placed in the same “group” as the item.
 	**/
 	@:optional
-	var position : String; }):Void;
+	var before : Array<String>; /**
+		Inserts this item after the item with the specified label. If the referenced item doesn't exist the item will be inserted at the end of the menu.
+	**/
+	@:optional
+	var after : Array<String>; /**
+		Provides a means for a single context menu to declare the placement of their containing group before the containing group of the item with the specified label.
+	**/
+	@:optional
+	var beforeGroupContaining : Array<String>; /**
+		Provides a means for a single context menu to declare the placement of their containing group after the containing group of the item with the specified label.
+	**/
+	@:optional
+	var afterGroupContaining : Array<String>; }):Void;
 }

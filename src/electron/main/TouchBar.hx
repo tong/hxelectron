@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create TouchBar layouts for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar
+	@see http://electronjs.org/docs/api/touch-bar
 **/
 @:jsRequire("electron", "TouchBar") extern class TouchBar {
 	/**
@@ -13,7 +13,7 @@ package electron.main;
 }
 /**
 	Create a button in the touch bar for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar-button
+	@see http://electronjs.org/docs/api/touch-bar-button
 **/
 @:jsRequire("electron", "TouchBar.TouchBarButton") extern class TouchBarButton {
 	/**
@@ -52,7 +52,7 @@ package electron.main;
 }
 /**
 	Create a color picker in the touch bar for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar-color-picker
+	@see http://electronjs.org/docs/api/touch-bar-color-picker
 **/
 @:jsRequire("electron", "TouchBar.TouchBarColorPicker") extern class TouchBarColorPicker {
 	/**
@@ -79,7 +79,7 @@ package electron.main;
 }
 /**
 	Create a group in the touch bar for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar-group
+	@see http://electronjs.org/docs/api/touch-bar-group
 **/
 @:jsRequire("electron", "TouchBar.TouchBarGroup") extern class TouchBarGroup {
 	function new(options:{ /**
@@ -89,7 +89,7 @@ package electron.main;
 }
 /**
 	Create a label in the touch bar for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar-label
+	@see http://electronjs.org/docs/api/touch-bar-label
 **/
 @:jsRequire("electron", "TouchBar.TouchBarLabel") extern class TouchBarLabel {
 	/**
@@ -112,7 +112,7 @@ package electron.main;
 }
 /**
 	Create a popover in the touch bar for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar-popover
+	@see http://electronjs.org/docs/api/touch-bar-popover
 **/
 @:jsRequire("electron", "TouchBar.TouchBarPopover") extern class TouchBarPopover {
 	/**
@@ -143,7 +143,7 @@ package electron.main;
 }
 /**
 	Create a scrubber (a scrollable selector)
-	@see http://electron.atom.io/docs/api/touch-bar-scrubber
+	@see http://electronjs.org/docs/api/touch-bar-scrubber
 **/
 @:jsRequire("electron", "TouchBar.TouchBarScrubber") extern class TouchBarScrubber {
 	/**
@@ -198,7 +198,7 @@ package electron.main;
 }
 /**
 	Create a segmented control (a button group) where one button has a selected state
-	@see http://electron.atom.io/docs/api/touch-bar-segmented-control
+	@see http://electronjs.org/docs/api/touch-bar-segmented-control
 **/
 @:jsRequire("electron", "TouchBar.TouchBarSegmentedControl") extern class TouchBarSegmentedControl {
 	/**
@@ -235,7 +235,7 @@ package electron.main;
 }
 /**
 	Create a slider in the touch bar for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar-slider
+	@see http://electronjs.org/docs/api/touch-bar-slider
 **/
 @:jsRequire("electron", "TouchBar.TouchBarSlider") extern class TouchBarSlider {
 	/**
@@ -278,7 +278,7 @@ package electron.main;
 }
 /**
 	Create a spacer between two items in the touch bar for native macOS applications
-	@see http://electron.atom.io/docs/api/touch-bar-spacer
+	@see http://electronjs.org/docs/api/touch-bar-spacer
 **/
 @:jsRequire("electron", "TouchBar.TouchBarSpacer") extern class TouchBarSpacer {
 	function new(options:{ /**

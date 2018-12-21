@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/printer-info
+	@see http://electronjs.org/docs/api/structures/printer-info
 **/
 typedef PrinterInfo = {
 	var name : String;

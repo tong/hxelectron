@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Query and modify a session's cookies.
-	@see http://electron.atom.io/docs/api/cookies
+	@see http://electronjs.org/docs/api/cookies
 **/
 @:jsRequire("electron", "Cookies") extern class Cookies extends js.node.events.EventEmitter<electron.main.Cookies> {
 	/**

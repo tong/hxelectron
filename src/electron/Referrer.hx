@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electron.atom.io/docs/api/structures/referrer
+	@see http://electronjs.org/docs/api/structures/referrer
 **/
 typedef Referrer = {
 	/**

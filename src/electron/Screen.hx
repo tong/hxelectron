@@ -1,7 +1,7 @@
 package electron;
 /**
 	Retrieve information about screen size, displays, cursor position, etc.
-	@see http://electron.atom.io/docs/api/screen
+	@see http://electronjs.org/docs/api/screen
 **/
 @:native('require(\"electron\").screen') extern class Screen extends js.node.events.EventEmitter<electron.Screen> {
 	/**

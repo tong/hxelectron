@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Intercept and modify the contents of a request at various stages of its lifetime.
-	@see http://electron.atom.io/docs/api/web-request
+	@see http://electronjs.org/docs/api/web-request
 **/
 @:jsRequire("electron", "WebRequest") extern class WebRequest {
 	/**

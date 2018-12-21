@@ -1,7 +1,7 @@
 package electron.main;
 /**
-	Logging network events.
-	@see http://electron.atom.io/docs/api/net-log
+	Logging network events for a session.
+	@see http://electronjs.org/docs/api/net-log
 **/
 @:jsRequire("electron", "netLog") extern class NetLog {
 	/**

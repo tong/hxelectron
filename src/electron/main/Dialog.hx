@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Display native system dialogs for opening and saving files, alerting, etc.
-	@see http://electron.atom.io/docs/api/dialog
+	@see http://electronjs.org/docs/api/dialog
 **/
 @:jsRequire("electron", "dialog") extern class Dialog {
 	/**
@@ -93,7 +93,7 @@ package electron.main;
 	@:optional
 	var checkboxChecked : Bool; @:optional
 	var icon : electron.NativeImage; /**
-		The index of the button to be used to cancel the dialog, via the Esc key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, 0 will be used as the return value or callback response. This option is ignored on Windows.
+		The index of the button to be used to cancel the dialog, via the Esc key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, 0 will be used as the return value or callback response.
 	**/
 	@:optional
 	var cancelId : Int; /**

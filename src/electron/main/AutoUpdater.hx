@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Enable apps to automatically update themselves.
-	@see http://electron.atom.io/docs/api/auto-updater
+	@see http://electronjs.org/docs/api/auto-updater
 **/
 @:jsRequire("electron", "autoUpdater") extern class AutoUpdater extends js.node.events.EventEmitter<electron.main.AutoUpdater> {
 	/**
@@ -22,7 +22,7 @@ package electron.main;
 	**/
 	static function checkForUpdates():Void;
 	/**
-		Restarts the app and installs the update after it has been downloaded. It should only be called after update-downloaded has been emitted. Under the hood calling autoUpdater.quitAndInstall() will close all application windows first, and automatically call app.quit() after all windows have been closed. Note: If the application is quit without calling this API after the update-downloaded event has been emitted, the application will still be replaced by the updated one on the next run.
+		Restarts the app and installs the update after it has been downloaded. It should only be called after update-downloaded has been emitted. Under the hood calling autoUpdater.quitAndInstall() will close all application windows first, and automatically call app.quit() after all windows have been closed. Note: It is not strictly necessary to call this function to apply an update, as a successfully downloaded update will always be applied the next time the application starts.
 	**/
 	static function quitAndInstall():Void;
 }
@@ -44,7 +44,7 @@ package electron.main;
 	**/
 	var update_not_available : electron.main.AutoUpdaterEvent<Void -> Void> = "update-not-available";
 	/**
-		Emitted when an update has been downloaded. On Windows only releaseName is available.
+		Emitted when an update has been downloaded. On Windows only releaseName is available. Note: It is not strictly necessary to handle this event. A successfully downloaded update will still be applied the next time the application starts.
 	**/
 	var update_downloaded : electron.main.AutoUpdaterEvent<(js.html.Event, String, String, Date, String) -> Void> = "update-downloaded";
 	/**

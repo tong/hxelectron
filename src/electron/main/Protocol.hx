@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Register a custom protocol and intercept existing protocol requests.
-	@see http://electron.atom.io/docs/api/protocol
+	@see http://electronjs.org/docs/api/protocol
 **/
 @:jsRequire("electron", "protocol") extern class Protocol {
 	/**
@@ -14,7 +14,7 @@ package electron.main;
 	var secure : Bool; }):Void;
 	static function registerServiceWorkerSchemes(schemes:Array<String>):Void;
 	/**
-		Registers a protocol of scheme that will send the file as a response. The handler will be called with handler(request, callback) when a request is going to be created with scheme. completion will be called with completion(null) when scheme is successfully registered or completion(error) when failed. To handle the request, the callback should be called with either the file's path or an object that has a path property, e.g. callback(filePath) or callback({path: filePath}). When callback is called with nothing, a number, or an object that has an error property, the request will fail with the error number you specified. For the available error numbers you can use, please see the net error list. By default the scheme is treated like http:, which is parsed differently than protocols that follow the "generic URI syntax" like file:, so you probably want to call protocol.registerStandardSchemes to have your scheme treated as a standard scheme.
+		Registers a protocol of scheme that will send the file as a response. The handler will be called with handler(request, callback) when a request is going to be created with scheme. completion will be called with completion(null) when scheme is successfully registered or completion(error) when failed. To handle the request, the callback should be called with either the file's path or an object that has a path property, e.g. callback(filePath) or callback({ path: filePath }). When callback is called with nothing, a number, or an object that has an error property, the request will fail with the error number you specified. For the available error numbers you can use, please see the net error list. By default the scheme is treated like http:, which is parsed differently than protocols that follow the "generic URI syntax" like file:, so you probably want to call protocol.registerStandardSchemes to have your scheme treated as a standard scheme.
 	**/
 	static function registerFileProtocol(scheme:String, handler:haxe.Constraints.Function, ?completion:haxe.Constraints.Function):Void;
 	/**

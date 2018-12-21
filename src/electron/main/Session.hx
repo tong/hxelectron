@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Get and set properties of a session.
-	@see http://electron.atom.io/docs/api/session
+	@see http://electronjs.org/docs/api/session
 **/
 @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
 	/**
@@ -27,6 +27,10 @@ package electron.main;
 		A Protocol object for this session.
 	**/
 	var protocol : electron.main.Protocol;
+	/**
+		A NetLog object for this session.
+	**/
+	var netLog : electron.main.NetLog;
 	/**
 		Callback is invoked with the session's current cache size.
 	**/
@@ -108,6 +112,10 @@ package electron.main;
 		Sets the handler which can be used to respond to permission requests for the session. Calling callback(true) will allow the permission and callback(false) will reject it. To clear the handler, call setPermissionRequestHandler(null).
 	**/
 	function setPermissionRequestHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
+	/**
+		Sets the handler which can be used to respond to permission checks for the session. Returning true will allow the permission and false will reject it. To clear the handler, call setPermissionCheckHandler(null).
+	**/
+	function setPermissionCheckHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
 		Clears the host resolver cache.
 	**/

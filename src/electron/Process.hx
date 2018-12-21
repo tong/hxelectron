@@ -1,7 +1,7 @@
 package electron;
 /**
 	Extensions to process object.
-	@see http://electron.atom.io/docs/api/process
+	@see http://electronjs.org/docs/api/process
 **/
 @:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
@@ -24,6 +24,10 @@ package electron;
 		A String representing the path to the resources directory.
 	**/
 	static var resourcesPath : String;
+	/**
+		A Boolean. When the renderer process is sandboxed, this property is true, otherwise it is undefined.
+	**/
+	static var sandboxed : Bool;
 	/**
 		A Boolean that controls whether or not deprecation warnings will be thrown as exceptions. Setting this to true will throw errors for deprecations. This property is used instead of the --throw-deprecation command line flag.
 	**/
@@ -55,6 +59,10 @@ package electron;
 		Causes the main thread of the current process crash.
 	**/
 	static function crash():Void;
+	/**
+		Indicates the creation time of the application. The time is represented as number of milliseconds since epoch. It returns null if it is unable to get the process creation time.
+	**/
+	static function getCreationTime():haxe.extern.EitherType<Float, Dynamic>;
 	static function getCPUUsage():electron.CPUUsage;
 	@:electron_platforms(["Windows", "Linux"])
 	static function getIOCounters():electron.IOCounters;
@@ -63,13 +71,13 @@ package electron;
 	**/
 	static function getHeapStatistics():Any;
 	/**
-		Returns an object giving memory usage statistics about the current process. Note that all statistics are reported in Kilobytes.
-	**/
-	static function getProcessMemoryInfo():Any;
-	/**
 		Returns an object giving memory usage statistics about the entire system. Note that all statistics are reported in Kilobytes.
 	**/
 	static function getSystemMemoryInfo():Any;
+	/**
+		Takes a V8 heap snapshot and saves it to filePath.
+	**/
+	static function takeHeapSnapshot(filePath:String):Bool;
 	/**
 		Causes the main thread of the current process hang.
 	**/

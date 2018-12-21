@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Add icons and context menus to the system's notification area.
-	@see http://electron.atom.io/docs/api/tray
+	@see http://electronjs.org/docs/api/tray
 **/
 @:jsRequire("electron", "Tray") extern class Tray extends js.node.events.EventEmitter<electron.main.Tray> {
 	function new(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;

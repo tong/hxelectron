@@ -1,7 +1,7 @@
 package electron.main;
 /**
 	Create and control views.
-	@see http://electron.atom.io/docs/api/browser-view
+	@see http://electronjs.org/docs/api/browser-view
 **/
 @:jsRequire("electron", "BrowserView") extern class BrowserView {
 	static function getAllViews():Array<electron.main.BrowserView>;
