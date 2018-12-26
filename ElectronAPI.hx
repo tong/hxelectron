@@ -12,7 +12,6 @@ using haxe.macro.ComplexTypeTools;
 using haxe.macro.MacroStringTools;
 using haxe.macro.TypeTools;
 
-@:require(haxe_ver >= 4.0)
 class ElectronAPI {
 
 	public static function generate( apiFile = 'electron-api.json', destination = 'src', clean = false, addDocumentation = true ) {
@@ -35,6 +34,15 @@ class ElectronAPI {
 					code += '\n'+printer.printTypeDefinition( e );
 				}
 			}
+			#if (haxe_ver < 4)
+			var doc = getTypeDoc( type, items );
+			if( doc != null ) {
+				var lines = code.split( '\n' );
+				code = lines.shift()+'\n';
+				code += '/**'+doc+'\n**/\n';
+				code += lines.join( '\n' );
+			}
+			#end
 			var dir = destination + '/' + type.pack.join( '/' );
 			if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
 			File.saveContent( '$dir/${type.name}.hx', '$code\n' );
@@ -50,6 +58,20 @@ class ElectronAPI {
 			FileSystem.deleteDirectory( path );
 		}
 	}
+
+	#if (haxe_ver < 4)
+	static function getTypeDoc( type : TypeDefinition, items : Array<Item> ) : String {
+		for( item in items ) {
+			if( item.name == type.name ) {
+				var doc = '';
+				if( item.description != null ) doc += '\n\t'+item.description;
+				if( item.websiteUrl != null ) doc += '\n\t@see '+item.websiteUrl;
+				return doc;
+			}
+		}
+		return null;
+	}
+	#end
 }
 
 private class Gen {
@@ -101,9 +123,11 @@ private class Gen {
 		};
 
 		if( addDocumentation ) {
+			#if haxe4
 			type.doc = '';
 			if( item.description != null && item.description.length > 0 ) type.doc += item.description+'\n';
 			type.doc += '@see '+item.websiteUrl;
+			#end
 		}
 
 		switch item.type {
@@ -280,7 +304,7 @@ private class Gen {
 	}
 
 	function createMultiType( types : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) : ComplexType {
-		return cast function createEitherType( remain : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) {
+		function createEitherType( remain : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) {
 			var params = new Array<TypeParam>();
 			var t1 = remain.shift();
 			params.push( TPType( getComplexType( t1.typeName, t1.collection, t1.properties ) ) );
@@ -289,7 +313,8 @@ private class Gen {
 				: TPType( getComplexType( remain[0].typeName, remain[0].collection, remain[0].properties ) )
 			);
 			return TPath( { pack: ['haxe','extern'], name: 'EitherType', params: params } );
-		}( types );
+		}
+		return createEitherType( types );
 	}
 
 	function getComplexType( name, collection = false, ?properties : Array<Dynamic>, optional = false ) : ComplexType {
