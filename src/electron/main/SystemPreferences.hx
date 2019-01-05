@@ -99,6 +99,8 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS"])
 	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<String, Dynamic>):Void;
+	@:electron_platforms(["macOS"])
+	static function isTrustedAccessibilityClient(prompt:Bool):Bool;
 	/**
 		This user consent was not required until macOS 10.14 Mojave, so this method will always return granted if your system is running 10.13 High Sierra or lower.
 	**/

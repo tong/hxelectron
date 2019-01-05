@@ -246,7 +246,7 @@ package electron.main;
 	@:electron_platforms(["macOS", "Windows"])
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
-		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. https://www.chromium.org/developers/design-documents/accessibility for more details. Disabled by default. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
+		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default. This API must be called after the ready event is emitted. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
 	**/
 	@:electron_platforms(["macOS", "Windows"])
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
