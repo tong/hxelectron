@@ -434,6 +434,7 @@ package electron.main;
 		Controls whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
 	**/
 	function setBackgroundThrottling(allowed:Bool):Void;
+	function getType():String;
 }
 @:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
@@ -608,4 +609,20 @@ package electron.main;
 		Emitted when remote.getGlobal() is called in the renderer process. Calling event.preventDefault() will prevent the global from being returned. Custom value can be returned by setting event.returnValue.
 	**/
 	var remote_get_global : electron.main.WebContentsEvent<(js.html.Event, String) -> Void> = "remote-get-global";
+	/**
+		Emitted when remote.getBuiltin() is called in the renderer process. Calling event.preventDefault() will prevent the module from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_builtin : electron.main.WebContentsEvent<(js.html.Event, String) -> Void> = "remote-get-builtin";
+	/**
+		Emitted when remote.getCurrentWindow() is called in the renderer process. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_current_window : electron.main.WebContentsEvent<js.html.Event -> Void> = "remote-get-current-window";
+	/**
+		Emitted when remote.getCurrentWebContents() is called in the renderer process. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_current_web_contents : electron.main.WebContentsEvent<js.html.Event -> Void> = "remote-get-current-web-contents";
+	/**
+		Emitted when <webview>.getWebContents() is called in the renderer process. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_guest_web_contents : electron.main.WebContentsEvent<(js.html.Event, electron.main.WebContents) -> Void> = "remote-get-guest-web-contents";
 }

@@ -427,4 +427,20 @@ package electron.main;
 		Emitted when remote.getGlobal() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the global from being returned. Custom value can be returned by setting event.returnValue.
 	**/
 	var remote_get_global : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String) -> Void> = "remote-get-global";
+	/**
+		Emitted when remote.getBuiltin() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the module from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_builtin : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String) -> Void> = "remote-get-builtin";
+	/**
+		Emitted when remote.getCurrentWindow() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_current_window : electron.main.AppEvent<(js.html.Event, electron.main.WebContents) -> Void> = "remote-get-current-window";
+	/**
+		Emitted when remote.getCurrentWebContents() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_current_web_contents : electron.main.AppEvent<(js.html.Event, electron.main.WebContents) -> Void> = "remote-get-current-web-contents";
+	/**
+		Emitted when <webview>.getWebContents() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+	**/
+	var remote_get_guest_web_contents : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, electron.main.WebContents) -> Void> = "remote-get-guest-web-contents";
 }
