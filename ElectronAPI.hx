@@ -319,6 +319,7 @@ private class Gen {
 
 	function getComplexType( name, collection = false, ?properties : Array<Dynamic>, optional = false ) : ComplexType {
 		var t : ComplexType = switch name {
+		case 'undefined': macro : Dynamic;
 		case null,'null': macro : Dynamic;
 		case 'Accelerator': // TODO HACK
 			TPath( { name: name, pack: root.copy() } );
