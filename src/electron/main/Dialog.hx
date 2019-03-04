@@ -26,7 +26,7 @@ package electron.main;
 		Create when packaged for the Mac App Store.
 	**/
 	@:optional
-	var securityScopedBookmarks : Bool; }, ?callback:haxe.Constraints.Function):Array<String>;
+	var securityScopedBookmarks : Bool; }, ?callback:haxe.Constraints.Function):haxe.extern.EitherType<Array<String>, Dynamic>;
 	/**
 		The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. The filters specifies an array of file types that can be displayed, see dialog.showOpenDialog for an example. If a callback is passed, the API call will be asynchronous and the result will be passed via callback(filename).
 	**/
@@ -56,7 +56,7 @@ package electron.main;
 		Create a when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.
 	**/
 	@:optional
-	var securityScopedBookmarks : Bool; }, ?callback:haxe.Constraints.Function):String;
+	var securityScopedBookmarks : Bool; }, ?callback:haxe.Constraints.Function):haxe.extern.EitherType<String, Dynamic>;
 	/**
 		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. If a callback is passed, the dialog will not block the process. The API call will be asynchronous and the result will be passed via callback(response).
 	**/
