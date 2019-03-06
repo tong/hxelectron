@@ -355,7 +355,7 @@ private class Gen {
 				TAnonymous( fields );
 			}
 		case 'Promise': macro : js.Promise<Any>;
-		case 'String': macro: String;
+		case 'String','string': macro: String;
 		case 'ReadableStream':
 			//TODO type param
 			macro : js.node.stream.Readable<Dynamic>; //macro : js.node.stream.Readable.IReadable;
@@ -392,7 +392,7 @@ private class Gen {
 	static function createPlatformMetadata( e : { ?platforms : Array<String> } ) : MetadataEntry {
 		if( e.platforms == null )
 			return null;
-		var ereg = ~/^([a-zA-Z]+)( +\(([a-zA-Z]+)\))?$/;
+		var ereg = ~/^\(*([a-zA-Z]+)( +\(([a-zA-Z]+)\))?\)*$/;
 		var flags = new Array<String>();
 		for( p in e.platforms ) {
 			if( ereg.match( p ) ) {
@@ -431,6 +431,7 @@ private class Gen {
 	var Windows = "Windows";
 	var Linux = "Linux";
 	var Experimental = "Experimental";
+	var Deprecated = "(Deprecated)";
 }
 
 typedef Property = {
