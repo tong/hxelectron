@@ -182,7 +182,7 @@ private class Gen {
 		// Post patch
 		switch type.name {
 		case 'App':
-			//TODO
+			//TODO:
 			type.fields.push( {
 				name: 'on',
 				access: [AStatic],
@@ -283,7 +283,7 @@ private class Gen {
 		}
 
 		var ret = if( m.returns == null ) macro : Void else {
-			//TODO how to handle return doc
+			//TODO: handle return doc
 			getComplexType( m.returns.type, m.returns.collection );
 		}
 
@@ -291,7 +291,7 @@ private class Gen {
 	}
 
 	function createField( name : String, kind : FieldType, access : Array<Access>, ?meta : Metadata, ?doc : String  ) : Field {
-		//TODO test/improve
+		//TODO: test/improve
 		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i;
 		if( !expr.match( name ) ) {
 			//trace("INVALID TYPE NAME: "+name);
@@ -321,7 +321,7 @@ private class Gen {
 		var t : ComplexType = switch name {
 		case 'undefined': macro : Dynamic;
 		case null,'null': macro : Dynamic;
-		case 'Accelerator': // TODO HACK
+		case 'Accelerator': // TODO: HACK
 			TPath( { name: name, pack: root.copy() } );
 		case 'Any','any': macro : Any;
 		case 'Blob': macro : js.html.Blob;
@@ -333,7 +333,7 @@ private class Gen {
 		case 'Error': macro : js.Error;
 		case 'Event': macro : js.html.Event;
 		case 'Function':
-			//TODO
+			//TODO:
 			//trace("Function",properties);
 			macro : haxe.Constraints.Function;
 		case 'Integer': macro : Int;
@@ -357,15 +357,13 @@ private class Gen {
 		case 'Promise': macro : js.Promise<Any>;
 		case 'String','string': macro: String;
 		case 'ReadableStream':
-			//TODO type param
+			//TODO: type param
 			macro : js.node.stream.Readable<Dynamic>; //macro : js.node.stream.Readable.IReadable;
-		case 'MenuItemConstructorOptions','TouchBarItem': // TODO HACK
+		case 'MenuItemConstructorOptions','TouchBarItem': // TODO: HACK
 			macro : Dynamic;
-		case 'URL': macro: String; // TODO macro: js.html.URL;
+		case 'URL': macro: String; // TODO: macro: js.html.URL;
 		case _ if( Std.is( name, Array ) ):
 			createMultiType( cast name );
-		//case _ if( name.startsWith( 'TouchBar' ) ):  //TODO HACK
-		//	macro: Dynamic;
 		default:
 			var pack = [];
 			for( item in this.items ) {
