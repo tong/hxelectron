@@ -12,11 +12,11 @@ typedef Cookie = {
 	**/
 	var value : String;
 	/**
-		The domain of the cookie.
+		The domain of the cookie; this will be normalized with a preceding dot so that it's also valid for subdomains.
 	**/
 	var domain : String;
 	/**
-		Whether the cookie is a host-only cookie.
+		Whether the cookie is a host-only cookie; this will only be true if no domain was passed.
 	**/
 	var hostOnly : Bool;
 	/**

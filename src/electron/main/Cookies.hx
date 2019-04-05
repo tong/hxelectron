@@ -47,7 +47,7 @@ package electron.main;
 	**/
 	@:optional
 	var value : String; /**
-		The domain of the cookie. Empty by default if omitted.
+		The domain of the cookie; this will be normalized with a preceding dot so that it's also valid for subdomains. Empty by default if omitted.
 	**/
 	@:optional
 	var domain : String; /**
