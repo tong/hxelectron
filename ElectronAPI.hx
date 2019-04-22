@@ -330,7 +330,12 @@ private class Gen {
 		case 'Date': macro : Date;
 		case 'Double','Float','Number': macro : Float;
 		case 'Dynamic': macro : Dynamic; // Allows to explicit set type to Dynamic
-		case 'Error': macro : js.Error;
+		case 'Error':
+			#if (haxe_ver>=4)
+			macro : js.lib.Error;
+			#else
+			macro : js.Error;
+			#end
 		case 'Event': macro : js.html.Event;
 		case 'Function':
 			//TODO:
@@ -354,7 +359,12 @@ private class Gen {
 				}
 				TAnonymous( fields );
 			}
-		case 'Promise': macro : js.Promise<Any>;
+		case 'Promise':
+			#if (haxe_ver>=4)
+			macro : js.lib.Promise<Any>;
+			#else
+			macro : js.Promise<Any>;
+			#end
 		case 'String','string': macro: String;
 		case 'ReadableStream':
 			//TODO: type param
