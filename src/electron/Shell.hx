@@ -15,6 +15,18 @@ package electron;
 	/**
 		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent).
 	**/
+	static function openExternalSync(url:String, ?options:{ /**
+		true to bring the opened application to the foreground. The default is true.
+	**/
+	@:optional
+	var activate : Bool; /**
+		The working directory.
+	**/
+	@:optional
+	var workingDirectory : String; }):Bool;
+	/**
+		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent).
+	**/
 	static function openExternal(url:String, ?options:{ /**
 		true to bring the opened application to the foreground. The default is true.
 	**/
@@ -23,7 +35,7 @@ package electron;
 		The working directory.
 	**/
 	@:optional
-	var workingDirectory : String; }, ?callback:haxe.Constraints.Function):Bool;
+	var workingDirectory : String; }):js.lib.Promise<Any>;
 	/**
 		Move the given file to trash and returns a boolean status for the operation.
 	**/

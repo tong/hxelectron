@@ -130,7 +130,7 @@ package electron.main;
 	**/
 	@:optional
 	var kiosk : Bool; /**
-		Default window title. Default is "Electron".
+		Default window title. Default is "Electron". If the HTML tag is defined in the HTML file loaded by loadURL(), this property will be ignored.
 	**/
 	@:optional
 	var title : String; /**
@@ -170,7 +170,7 @@ package electron.main;
 	**/
 	@:optional
 	var enableLargerThanScreen : Bool; /**
-		Window's background color as a hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha is supported if transparent is set to true). Default is #FFF (white).
+		Window's background color as a hexadecimal value, like #66CD00 or #FFF or #80FFFFFF (alpha in #AARRGGBB format is supported if transparent is set to true). Default is #FFF (white).
 	**/
 	@:optional
 	var backgroundColor : String; /**
@@ -226,7 +226,7 @@ package electron.main;
 	**/
 	@:optional
 	var devTools : Bool; /**
-		Whether node integration is enabled. Default is true.
+		Whether node integration is enabled. Default is false.
 	**/
 	@:optional
 	var nodeIntegration : Bool; /**
@@ -234,6 +234,10 @@ package electron.main;
 	**/
 	@:optional
 	var nodeIntegrationInWorker : Bool; /**
+		Experimental option for enabling NodeJS support in sub-frames such as iframes. All your preloads will load for every iframe, you can use process.isMainFrame to determine if you are in the main frame or not.
+	**/
+	@:optional
+	var nodeIntegrationInSubFrames : Bool; /**
 		Specifies a script that will be loaded before other scripts run in the page. This script will always have access to node APIs no matter whether node integration is turned on or off. The value should be the absolute file path to the script. When node integration is turned off, the preload script can reintroduce Node global symbols back to the global scope. See example .
 	**/
 	@:optional
@@ -366,11 +370,11 @@ package electron.main;
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
-		Whether to use native window.open(). If set to true, the webPreferences of child window will always be the same with parent window, regardless of the parameters passed to window.open(). Defaults to false. This option is currently experimental.
+		Whether to use native window.open(). Defaults to false. Child windows will always have node integration disabled. This option is currently experimental.
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
-		Whether to enable the . Defaults to the value of the nodeIntegration option. The preload script configured for the will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the 's initial settings.
+		Whether to enable the . Defaults to false. The preload script configured for the will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a tag with a possibly malicious preload script. You can use the will-attach-webview event on to strip away the preload script and to validate or alter the 's initial settings.
 	**/
 	@:optional
 	var webviewTag : Bool; /**
@@ -389,7 +393,11 @@ package electron.main;
 		Whether dragging and dropping a file or link onto the page causes a navigation. Default is false.
 	**/
 	@:optional
-	var navigateOnDragDrop : Bool; }; }):Void;
+	var navigateOnDragDrop : Bool; /**
+		Autoplay policy to apply to content in the window, can be no-user-gesture-required, user-gesture-required, document-user-activation-required. Defaults to no-user-gesture-required.
+	**/
+	@:optional
+	var autoplayPolicy : String; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
@@ -584,7 +592,7 @@ package electron.main;
 	**/
 	function setTitle(title:String):Void;
 	/**
-		Note: The title of web page can be different from the title of the native window.
+		Note: The title of the web page can be different from the title of the native window.
 	**/
 	function getTitle():String;
 	/**
@@ -643,9 +651,13 @@ package electron.main;
 	function focusOnWebView():Void;
 	function blurWebView():Void;
 	/**
-		Same as webContents.capturePage([rect, ]callback).
+		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page. Deprecated Soon
 	**/
 	function capturePage(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
+	/**
+		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
+	**/
+	function capturePage(?rect:electron.Rectangle):Void;
 	/**
 		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method: You can load a URL using a POST request with URL-encoded data by doing the following:
 	**/
@@ -666,7 +678,7 @@ package electron.main;
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
-	var baseURLForDataURL : String; }):Void;
+	var baseURLForDataURL : String; }):js.lib.Promise<Any>;
 	/**
 		Same as webContents.loadFile, filePath should be a path to an HTML file relative to the root of your application.  See the webContents docs for more information.
 	**/
@@ -682,16 +694,21 @@ package electron.main;
 		Passed to url.format().
 	**/
 	@:optional
-	var hash : String; }):Void;
+	var hash : String; }):js.lib.Promise<Any>;
 	/**
 		Same as webContents.reload.
 	**/
 	function reload():Void;
 	/**
-		Sets the menu as the window's menu bar, setting it to null will remove the menu bar.
+		Sets the menu as the window's menu bar.
 	**/
 	@:electron_platforms(["Linux", "Windows"])
 	function setMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
+	/**
+		Remove the window's menu bar.
+	**/
+	@:electron_platforms(["Linux", "Windows"])
+	function removeMenu():Void;
 	/**
 		Sets progress value in progress bar. Valid range is [0, 1.0]. Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1. On Linux platform, only supports Unity desktop environment, you need to specify the *.desktop file name to desktopName field in package.json. By default, it will assume app.getName().desktop. On Windows, a mode can be passed. Accepted values are none, normal, indeterminate, error, and paused. If you call setProgressBar without a mode set (but with a value within the valid range), normal will be assumed.
 	**/
@@ -825,7 +842,6 @@ package electron.main;
 	/**
 		Sets parent as current window's parent window, passing null will turn current window into a top-level window.
 	**/
-	@:electron_platforms(["Linux", "macOS"])
 	function setParentWindow(parent:electron.main.BrowserWindow):Void;
 	function getParentWindow():electron.main.BrowserWindow;
 	function getChildWindows():Array<electron.main.BrowserWindow>;
@@ -876,11 +892,20 @@ package electron.main;
 	function setTouchBar(touchBar:electron.main.TouchBar):Void;
 	@:electron_platforms(["Experimental"])
 	function setBrowserView(browserView:electron.main.BrowserView):Void;
-	/**
-		Note: The BrowserView API is currently experimental and may change or be removed in future Electron releases.
-	**/
 	@:electron_platforms(["Experimental"])
 	function getBrowserView():haxe.extern.EitherType<electron.main.BrowserView, Dynamic>;
+	/**
+		Replacement API for setBrowserView supporting work with multi browser views.
+	**/
+	@:electron_platforms(["Experimental"])
+	function addBrowserView(browserView:electron.main.BrowserView):Void;
+	@:electron_platforms(["Experimental"])
+	function removeBrowserView(browserView:electron.main.BrowserView):Void;
+	/**
+		Returns array of BrowserView what was an attached with addBrowserView or setBrowserView. Note: The BrowserView API is currently experimental and may change or be removed in future Electron releases.
+	**/
+	@:electron_platforms(["Experimental"])
+	function getBrowserViews():Void;
 }
 @:enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
@@ -989,9 +1014,9 @@ package electron.main;
 	@:electron_platforms(["macOS"])
 	var always_on_top_changed : electron.main.BrowserWindowEvent<(js.html.Event, Bool) -> Void> = "always-on-top-changed";
 	/**
-		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows. Commands are lowercased, underscores are replaced with hyphens, and the APPCOMMAND_ prefix is stripped off. e.g. APPCOMMAND_BROWSER_BACKWARD is emitted as browser-backward.
+		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows. Commands are lowercased, underscores are replaced with hyphens, and the APPCOMMAND_ prefix is stripped off. e.g. APPCOMMAND_BROWSER_BACKWARD is emitted as browser-backward. The following app commands are explictly supported on Linux:
 	**/
-	@:electron_platforms(["Windows"])
+	@:electron_platforms(["Windows", "Linux"])
 	var app_command : electron.main.BrowserWindowEvent<(js.html.Event, String) -> Void> = "app-command";
 	/**
 		Emitted when scroll wheel event phase has begun.

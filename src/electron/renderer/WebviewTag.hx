@@ -17,6 +17,10 @@ package electron.renderer;
 	**/
 	var nodeintegration : Dynamic;
 	/**
+		Experimental option for enabling NodeJS support in sub-frames such as iframes inside the webview. All your preloads will load for every iframe, you can use process.isMainFrame to determine if you are in the main frame or not. This option is disabled by default in the guest page.
+	**/
+	var nodeintegrationinsubframes : Dynamic;
+	/**
 		When this attribute is false the guest page in webview will not have access to the remote module. The remote module is avaiable by default.
 	**/
 	var enableremotemodule : Dynamic;
@@ -280,9 +284,13 @@ package electron.renderer;
 	@:optional
 	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
 	/**
-		Captures a snapshot of the webview's page. Same as webContents.capturePage([rect, ]callback).
+		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page. Deprecated Soon
 	**/
 	function capturePage(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
+	/**
+		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
+	**/
+	function capturePage(?rect:electron.Rectangle):Void;
 	/**
 		Send an asynchronous message to renderer process via channel, you can also send arbitrary arguments. The renderer process can handle the message by listening to the channel event with the ipcRenderer module. See webContents.send for examples.
 	**/
@@ -299,14 +307,8 @@ package electron.renderer;
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is scale := 1.2 ^ level.
 	**/
 	function setZoomLevel(level:Float):Void;
-	/**
-		Sends a request to get current zoom factor, the callback will be called with callback(zoomFactor).
-	**/
-	function getZoomFactor(callback:haxe.Constraints.Function):Void;
-	/**
-		Sends a request to get current zoom level, the callback will be called with callback(zoomLevel).
-	**/
-	function getZoomLevel(callback:haxe.Constraints.Function):Void;
+	function getZoomFactor():Float;
+	function getZoomLevel():Float;
 	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 	**/

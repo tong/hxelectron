@@ -47,7 +47,7 @@ package electron.main;
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
-	var baseURLForDataURL : String; }):Void;
+	var baseURLForDataURL : String; }):js.lib.Promise<Any>;
 	/**
 		Loads the given file in the window, filePath should be a path to an HTML file relative to the root of your application.  For instance an app structure like this: Would require code like this
 	**/
@@ -63,7 +63,7 @@ package electron.main;
 		Passed to url.format().
 	**/
 	@:optional
-	var hash : String; }):Void;
+	var hash : String; }):js.lib.Promise<Any>;
 	/**
 		Initiates a download of the resource at url without navigating. The will-download event of session will be triggered.
 	**/
@@ -127,7 +127,7 @@ package electron.main;
 	/**
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation. If the result of the executed code is a promise the callback result will be the resolved value of the promise. We recommend that you use the returned Promise to handle code that results in a Promise.
 	**/
-	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Any>;
+	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
 	/**
 		Ignore application menu shortcuts while this web contents is focused.
 	**/
@@ -143,18 +143,12 @@ package electron.main;
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/
 	function setZoomFactor(factor:Float):Void;
-	/**
-		Sends a request to get current zoom factor, the callback will be called with callback(zoomFactor).
-	**/
-	function getZoomFactor(callback:haxe.Constraints.Function):Void;
+	function getZoomFactor():Float;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is scale := 1.2 ^ level.
 	**/
 	function setZoomLevel(level:Float):Void;
-	/**
-		Sends a request to get current zoom level, the callback will be called with callback(zoomLevel).
-	**/
-	function getZoomLevel(callback:haxe.Constraints.Function):Void;
+	function getZoomLevel():Float;
 	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 	**/
@@ -231,11 +225,11 @@ package electron.main;
 	**/
 	@:optional
 	var matchCase : Bool; /**
-		(Deprecated) Whether to look only at the start of words. defaults to false.
+		Whether to look only at the start of words. defaults to false.
 	**/
 	@:optional
 	var wordStart : Bool; /**
-		(Deprecated) When combined with wordStart, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to false.
+		When combined with wordStart, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to false.
 	**/
 	@:optional
 	var medialCapitalAsWordStart : Bool; }):Int;
@@ -244,9 +238,13 @@ package electron.main;
 	**/
 	function stopFindInPage(action:String):Void;
 	/**
-		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page.
+		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page. Deprecated Soon
 	**/
 	function capturePage(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
+	/**
+		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
+	**/
+	function capturePage(?rect:electron.Rectangle):Void;
 	/**
 		Checks if any ServiceWorker is registered and returns a boolean as response to callback.
 	**/
@@ -317,7 +315,11 @@ package electron.main;
 	function openDevTools(?options:{ /**
 		Opens the devtools with specified dock state, can be right, bottom, undocked, detach. Defaults to last used dock state. In undocked mode it's possible to dock back. In detach mode it's not.
 	**/
-	var mode : String; }):Void;
+	var mode : String; /**
+		Whether to bring the opened devtools window to the foreground. The default is true.
+	**/
+	@:optional
+	var activate : Bool; }):Void;
 	/**
 		Closes the devtools.
 	**/
@@ -340,6 +342,10 @@ package electron.main;
 		Send an asynchronous message to renderer process via channel, you can also send arbitrary arguments. Arguments will be serialized in JSON internally and hence no functions or prototype chain will be included. The renderer process can handle the message by listening to channel with the ipcRenderer module. An example of sending messages from the main process to the renderer process:
 	**/
 	function send(channel:String, args:haxe.extern.Rest<Any>):Void;
+	/**
+		Send an asynchronous message to a specific frame in a renderer process via channel. Arguments will be serialized as JSON internally and as such no functions or prototype chains will be included. The renderer process can handle the message by listening to channel with the ipcRenderer module. If you want to get the frameId of a given renderer context you should use the webFrame.routingId value.  E.g. You can also read frameId from all incoming IPC messages in the main process.
+	**/
+	function sendToFrame(frameId:Int, channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
 		Enable device emulation with the given parameters.
 	**/
@@ -429,7 +435,7 @@ package electron.main;
 	/**
 		Takes a V8 heap snapshot and saves it to filePath.
 	**/
-	function takeHeapSnapshot(filePath:String):js.Promise<Any>;
+	function takeHeapSnapshot(filePath:String):js.lib.Promise<Any>;
 	/**
 		Controls whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
 	**/
@@ -601,6 +607,22 @@ package electron.main;
 		Emitted when the associated window logs a console message. Will not be emitted for windows with offscreen rendering enabled.
 	**/
 	var console_message : electron.main.WebContentsEvent<(js.html.Event, Int, String, Int, String) -> Void> = "console-message";
+	/**
+		Emitted when the preload script preloadPath throws an unhandled exception error.
+	**/
+	var preload_error : electron.main.WebContentsEvent<(js.html.Event, String, js.lib.Error) -> Void> = "preload-error";
+	/**
+		Emitted when the renderer process sends an asynchronous message via ipcRenderer.send().
+	**/
+	var ipc_message : electron.main.WebContentsEvent<(js.html.Event, String, Array<Any>) -> Void> = "ipc-message";
+	/**
+		Emitted when the renderer process sends a synchronous message via ipcRenderer.sendSync().
+	**/
+	var ipc_message_sync : electron.main.WebContentsEvent<(js.html.Event, String, Array<Any>) -> Void> = "ipc-message-sync";
+	/**
+		Emitted when desktopCapturer.getSources() is called in the renderer process. Calling event.preventDefault() will make it return empty sources.
+	**/
+	var desktop_capturer_get_sources : electron.main.WebContentsEvent<js.html.Event -> Void> = "desktop-capturer-get-sources";
 	/**
 		Emitted when remote.require() is called in the renderer process. Calling event.preventDefault() will prevent the module from being returned. Custom value can be returned by setting event.returnValue.
 	**/

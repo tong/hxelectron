@@ -30,7 +30,7 @@ package electron.main;
 	/**
 		Emitted when there is an error while updating.
 	**/
-	var error : electron.main.AutoUpdaterEvent<js.Error -> Void> = "error";
+	var error : electron.main.AutoUpdaterEvent<js.lib.Error -> Void> = "error";
 	/**
 		Emitted when checking if an update has started.
 	**/

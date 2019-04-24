@@ -29,7 +29,7 @@ package electron.main;
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
-		Define the action of the menu item, when specified the click property will be ignored. See .
+		Can be undo, redo, cut, copy, paste, pasteandmatchstyle, delete, selectall, reload, forcereload, toggledevtools, resetzoom, zoomin, zoomout, togglefullscreen, window, minimize, close, help, about, services, hide, hideothers, unhide, quit, startspeaking, stopspeaking, close, minimize, zoom or front Define the action of the menu item, when specified the click property will be ignored. See .
 	**/
 	@:optional
 	var role : String; /**

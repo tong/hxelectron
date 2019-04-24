@@ -56,7 +56,7 @@ package electron.main;
 	/**
 		Emitted when the net module fails to issue a network request. Typically when the request object emits an error event, a close event will subsequently follow and no response object will be provided.
 	**/
-	var error : electron.main.ClientRequestEvent<js.Error -> Void> = "error";
+	var error : electron.main.ClientRequestEvent<js.lib.Error -> Void> = "error";
 	/**
 		Emitted as the last event in the HTTP request-response transaction. The close event indicates that no more events will be emitted on either the request or response objects.
 	**/

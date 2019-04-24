@@ -12,7 +12,7 @@ package electron.main;
 		Posts event as native notifications of macOS. The userInfo is an Object that contains the user information dictionary sent along with the notification.
 	**/
 	@:electron_platforms(["macOS"])
-	static function postNotification(event:String, userInfo:Any):Void;
+	static function postNotification(event:String, userInfo:Any, ?deliverImmediately:Bool):Void;
 	/**
 		Posts event as native notifications of macOS. The userInfo is an Object that contains the user information dictionary sent along with the notification.
 	**/
@@ -78,12 +78,22 @@ package electron.main;
 	**/
 	@:electron_platforms(["Windows"])
 	static function isAeroGlassEnabled():Bool;
-	@:electron_platforms(["Windows"])
+	/**
+		This API is only available on macOS 10.14 Mojave or newer.
+	**/
+	@:electron_platforms(["Windows", "macOS"])
 	static function getAccentColor():String;
-	@:electron_platforms(["Windows"])
+	@:electron_platforms(["Windows", "macOS"])
 	static function getColor(color:String):String;
+	/**
+		Returns one of several standard system colors that automatically adapt to vibrancy and changes in accessibility settings like 'Increase contrast' and 'Reduce transparency'. See Apple Documentation for  more details.
+	**/
+	@:electron_platforms(["macOS"])
+	static function getSystemColor(color:String):Void;
 	@:electron_platforms(["Windows"])
 	static function isInvertedColorScheme():Bool;
+	@:electron_platforms(["Windows"])
+	static function isHighContrastColorScheme():Bool;
 	/**
 		Gets the macOS appearance setting that is currently applied to your application, maps to NSApplication.effectiveAppearance Please note that until Electron is built targeting the 10.14 SDK, your application's effectiveAppearance will default to 'light' and won't inherit the OS preference. In the interim in order for your application to inherit the OS preference you must set the NSRequiresAquaSystemAppearance key in your apps Info.plist to false.  If you are using electron-packager or electron-forge just set the enableDarwinDarkMode packager option to true.  See the Electron Packager API for more details.
 	**/
@@ -110,7 +120,7 @@ package electron.main;
 		Important: In order to properly leverage this API, you must set the NSMicrophoneUsageDescription and NSCameraUsageDescription strings in your app's Info.plist file. The values for these keys will be used to populate the permission dialogs so that the user will be properly informed as to the purpose of the permission request. See Electron Application Distribution for more information about how to set these in the context of Electron. This user consent was not required until macOS 10.14 Mojave, so this method will always return true if your system is running 10.13 High Sierra or lower.
 	**/
 	@:electron_platforms(["macOS"])
-	static function askForMediaAccess(mediaType:String):js.Promise<Any>;
+	static function askForMediaAccess(mediaType:String):js.lib.Promise<Any>;
 }
 @:enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	@:electron_platforms(["Windows"])
@@ -119,6 +129,8 @@ package electron.main;
 	var color_changed : electron.main.SystemPreferencesEvent<js.html.Event -> Void> = "color-changed";
 	@:electron_platforms(["Windows"])
 	var inverted_color_scheme_changed : electron.main.SystemPreferencesEvent<(js.html.Event, Bool) -> Void> = "inverted-color-scheme-changed";
+	@:electron_platforms(["Windows"])
+	var high_contrast_color_scheme_changed : electron.main.SystemPreferencesEvent<(js.html.Event, Bool) -> Void> = "high-contrast-color-scheme-changed";
 	/**
 		NOTE: This event is only emitted after you have called startAppLevelAppearanceTrackingOS
 	**/

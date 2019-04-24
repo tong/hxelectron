@@ -58,7 +58,7 @@ package electron.main;
 	@:optional
 	var securityScopedBookmarks : Bool; }, ?callback:haxe.Constraints.Function):haxe.extern.EitherType<String, Dynamic>;
 	/**
-		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. If a callback is passed, the dialog will not block the process. The API call will be asynchronous and the result will be passed via callback(response).
+		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button. The browserWindow argument allows the dialog to attach itself to a parent window, making it modal. If the callback and browserWindow arguments are passed, the dialog will not block the process. The API call will be asynchronous and the result will be passed via callback(response).
 	**/
 	static function showMessageBox(?browserWindow:electron.main.BrowserWindow, options:{ /**
 		Can be "none", "info", "error", "question" or "warning". On Windows, "question" displays the same icon as "info", unless you set an icon using the "icon" option. On macOS, both "warning" and "error" display the same warning icon.

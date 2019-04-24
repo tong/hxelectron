@@ -47,40 +47,12 @@ package electron.renderer;
 	**/
 	static function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
-		Sets a provider for spell checking in input fields and text areas. The provider must be an object that has a spellCheck method that returns whether the word passed is correctly spelled. An example of using node-spellchecker as provider:
+		Sets a provider for spell checking in input fields and text areas. The provider must be an object that has a spellCheck method that accepts an array of individual words for spellchecking. The spellCheck function runs asynchronously and calls the callback function with an array of misspelt words when complete. An example of using node-spellchecker as provider:
 	**/
-	static function setSpellCheckProvider(language:String, autoCorrectWord:Bool, provider:{ /**
-		Returns Boolean.
+	static function setSpellCheckProvider(language:String, provider:{ /**
+		.
 	**/
 	var spellCheck : haxe.Constraints.Function; }):Void;
-	/**
-		Resources will be loaded from this scheme regardless of the current page's Content Security Policy.
-	**/
-	static function registerURLSchemeAsBypassingCSP(scheme:String):Void;
-	/**
-		Registers the scheme as secure, bypasses content security policy for resources, allows registering ServiceWorker and supports fetch API. Specify an option with the value of false to omit it from the registration. An example of registering a privileged scheme, without bypassing Content Security Policy:
-	**/
-	static function registerURLSchemeAsPrivileged(scheme:String, ?options:{ /**
-		Default true.
-	**/
-	@:optional
-	var secure : Bool; /**
-		Default true.
-	**/
-	@:optional
-	var bypassCSP : Bool; /**
-		Default true.
-	**/
-	@:optional
-	var allowServiceWorkers : Bool; /**
-		Default true.
-	**/
-	@:optional
-	var supportFetchAPI : Bool; /**
-		Default true.
-	**/
-	@:optional
-	var corsEnabled : Bool; }):Void;
 	/**
 		Inserts text to the focused element.
 	**/
@@ -88,7 +60,7 @@ package electron.renderer;
 	/**
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
 	**/
-	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.Promise<Any>;
+	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
 	/**
 		Work like executeJavaScript but evaluates scripts in an isolated context.
 	**/
@@ -96,15 +68,34 @@ package electron.renderer;
 	/**
 		Set the content security policy of the isolated world.
 	**/
+	@:electron_platforms(["Deprecated"])
 	static function setIsolatedWorldContentSecurityPolicy(worldId:Int, csp:String):Void;
 	/**
 		Set the name of the isolated world. Useful in devtools.
 	**/
+	@:electron_platforms(["Deprecated"])
 	static function setIsolatedWorldHumanReadableName(worldId:Int, name:String):Void;
 	/**
 		Set the security origin of the isolated world.
 	**/
+	@:electron_platforms(["Deprecated"])
 	static function setIsolatedWorldSecurityOrigin(worldId:Int, securityOrigin:String):Void;
+	/**
+		Set the security origin, content security policy and name of the isolated world. Note: If the csp is specified, then the securityOrigin also has to be specified.
+	**/
+	static function setIsolatedWorldInfo(worldId:Int, info:{ /**
+		Security origin for the isolated world.
+	**/
+	@:optional
+	var securityOrigin : String; /**
+		Content Security Policy for the isolated world.
+	**/
+	@:optional
+	var csp : String; /**
+		Name for isolated world. Useful in devtools.
+	**/
+	@:optional
+	var name : String; }):Void;
 	/**
 		Returns an object describing usage information of Blink's internal memory caches. This will generate:
 	**/
