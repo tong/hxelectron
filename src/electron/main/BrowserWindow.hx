@@ -651,12 +651,9 @@ package electron.main;
 	function focusOnWebView():Void;
 	function blurWebView():Void;
 	/**
-		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page. Deprecated Soon
-	**/
-	function capturePage(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
-	/**
 		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
 	**/
+	@:overload(function(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void { })
 	function capturePage(?rect:electron.Rectangle):Void;
 	/**
 		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method: You can load a URL using a POST request with URL-encoded data by doing the following:

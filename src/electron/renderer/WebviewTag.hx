@@ -284,12 +284,9 @@ package electron.renderer;
 	@:optional
 	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
 	/**
-		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page. Deprecated Soon
-	**/
-	function capturePage(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
-	/**
 		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
 	**/
+	@:overload(function(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void { })
 	function capturePage(?rect:electron.Rectangle):Void;
 	/**
 		Send an asynchronous message to renderer process via channel, you can also send arbitrary arguments. The renderer process can handle the message by listening to the channel event with the ipcRenderer module. See webContents.send for examples.

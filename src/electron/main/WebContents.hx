@@ -238,12 +238,9 @@ package electron.main;
 	**/
 	function stopFindInPage(action:String):Void;
 	/**
-		Captures a snapshot of the page within rect. Upon completion callback will be called with callback(image). The image is an instance of NativeImage that stores data of the snapshot. Omitting rect will capture the whole visible page. Deprecated Soon
-	**/
-	function capturePage(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void;
-	/**
 		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
 	**/
+	@:overload(function(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void { })
 	function capturePage(?rect:electron.Rectangle):Void;
 	/**
 		Checks if any ServiceWorker is registered and returns a boolean as response to callback.

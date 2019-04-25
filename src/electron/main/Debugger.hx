@@ -14,12 +14,9 @@ package electron.main;
 	**/
 	function detach():Void;
 	/**
-		Send given command to the debugging target. Deprecated Soon
-	**/
-	function sendCommand(method:String, ?commandParams:Any, ?callback:haxe.Constraints.Function):Void;
-	/**
 		Send given command to the debugging target.
 	**/
+	@:overload(function(method:String, ?commandParams:Any, ?callback:haxe.Constraints.Function):Void { })
 	function sendCommand(method:String, ?commandParams:Any):js.lib.Promise<Any>;
 }
 @:enum abstract DebuggerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {

@@ -89,12 +89,9 @@ package electron.main;
 	**/
 	static function getPath(name:String):String;
 	/**
-		Fetches a path's associated icon. On Windows, there a 2 kinds of icons: On Linux and macOS, icons depend on the application associated with file mime type. Deprecated Soon
-	**/
-	static function getFileIcon(path:String, ?options:{ var size : String; }, callback:haxe.Constraints.Function):Void;
-	/**
 		Fetches a path's associated icon. On Windows, there a 2 kinds of icons: On Linux and macOS, icons depend on the application associated with file mime type.
 	**/
+	@:overload(function(path:String, ?options:{ var size : String; }, callback:haxe.Constraints.Function):Void { })
 	static function getFileIcon(path:String, ?options:{ var size : String; }):js.lib.Promise<Any>;
 	/**
 		Overrides the path to a special directory or file associated with name. If the path specifies a directory that does not exist, the directory will be created by this method. On failure an Error is thrown. You can only override paths of a name defined in app.getPath. By default, web pages' cookies and caches will be stored under the userData directory. If you want to change this location, you have to override the userData path before the ready event of the app module is emitted.

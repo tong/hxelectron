@@ -32,10 +32,7 @@ package electron.main;
 		Unregisters the custom protocol of scheme.
 	**/
 	static function unregisterProtocol(scheme:String, ?completion:haxe.Constraints.Function):Void;
-	/**
-		The callback will be called with a boolean that indicates whether there is already a handler for scheme. Deprecated Soon
-	**/
-	static function isProtocolHandled(scheme:String, callback:haxe.Constraints.Function):Void;
+	@:overload(function(scheme:String, callback:haxe.Constraints.Function):Void { })
 	static function isProtocolHandled(scheme:String):js.lib.Promise<Any>;
 	/**
 		Intercepts scheme protocol and uses handler as the protocol's new handler which sends a file as a response.

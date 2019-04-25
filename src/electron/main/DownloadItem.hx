@@ -12,8 +12,8 @@ package electron.main;
 	/**
 		This API allows the user to set custom options for the save dialog that opens for the download item by default. The API is only available in session's will-download callback function.
 	**/
-	function setSaveDialogOptions(options:Dynamic):Void;
-	function getSaveDialogOptions():Dynamic;
+	function setSaveDialogOptions(options:SaveDialogOptions):Void;
+	function getSaveDialogOptions():SaveDialogOptions;
 	/**
 		Pauses the download.
 	**/
