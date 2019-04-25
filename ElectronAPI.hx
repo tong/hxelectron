@@ -188,7 +188,11 @@ private class Gen {
 
 		// Create @:overload for duplicate method definitions
 		switch type.kind {
+		#if (haxe_ver < 4)
+		case TDClass(superClass,interfaces,isInterface):
+		#else
 		case TDClass(superClass,interfaces,isInterface,isFinal):
+		#end
 			var i = 0;
 			while( i < type.fields.length ) {
 				var a = type.fields[i];
