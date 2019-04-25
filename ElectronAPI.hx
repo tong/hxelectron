@@ -99,6 +99,13 @@ private class Gen {
 			fields: [],
 			pos: null
 		} );
+		this.types.set( 'SaveDialogOptions', {
+			pack: root.copy().concat(['main']),
+			name: 'SaveDialogOptions',
+			kind: TDAlias( macro : Dynamic ),
+			fields: [],
+			pos: null
+		} );
 
 		for( item in items ) {
 			this.types.set( item.name, processItem( item ) );
@@ -177,6 +184,35 @@ private class Gen {
 			if( item.methods != null ) for( m in item.methods ) type.fields.push( createFunField( m ) );
 			//TODO domEvents
 			//if( item.domEvents != null ) {
+		}
+
+		// Create @:overload for duplicate method definitions
+		switch type.kind {
+		case TDClass(superClass,interfaces,isInterface,isFinal):
+			var i = 0;
+			while( i < type.fields.length ) {
+				var a = type.fields[i];
+				var j = 0;
+				while( j < type.fields.length ) {
+					if( j != i ) {
+						var b = type.fields[j];
+						if( a.name == b.name ) {
+							type.fields.splice( i, 1 );
+							var expr : Expr;
+							switch a.kind {
+							case FFun(f):
+								f.expr = { expr: EBlock([]), pos: Context.currentPos() };
+								expr = { expr: EFunction( null, f ), pos: Context.currentPos() };
+							default:
+							}
+							b.meta.push( { name: ':overload', params: [expr], pos: Context.currentPos() } );
+						}
+					}
+					j++;
+				}
+				i++;
+			}
+		default:
 		}
 
 		// Post patch
