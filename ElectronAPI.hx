@@ -331,9 +331,9 @@ private class Gen {
 	}
 
 	function createField( name : String, kind : FieldType, access : Array<Access>, ?meta : Metadata, ?doc : String  ) : Field {
-		//TODO: test/improve
-		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i;
-		if( !expr.match( name ) ) {
+		var kwds = ['class','private','switch'];
+		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i; //TODO: test/improve
+		if( !expr.match( name ) || kwds.indexOf( name ) != -1  ) {
 			//trace("INVALID TYPE NAME: "+name);
 			var _name = '_'+name;
 			if( meta == null ) meta = [];
