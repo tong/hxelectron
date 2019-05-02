@@ -377,7 +377,7 @@ private class Gen {
 			macro : js.Error;
 			#end
 		case 'Event': macro : js.html.Event;
-		case 'Function':
+		case 'Function','VoidFunction':
 			//TODO:
 			//trace("Function",properties);
 			macro : haxe.Constraints.Function;
