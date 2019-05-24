@@ -906,9 +906,9 @@ package electron.main;
 }
 @:enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
-		Emitted when the document changed its title, calling event.preventDefault() will prevent the native window's title from changing.
+		Emitted when the document changed its title, calling event.preventDefault() will prevent the native window's title from changing. explicitSet is false when title is synthesized from file url.
 	**/
-	var page_title_updated : electron.main.BrowserWindowEvent<(js.html.Event, String) -> Void> = "page-title-updated";
+	var page_title_updated : electron.main.BrowserWindowEvent<(js.html.Event, String, Bool) -> Void> = "page-title-updated";
 	/**
 		Emitted when the window is going to be closed. It's emitted before the beforeunload and unload event of the DOM. Calling event.preventDefault() will cancel the close. Usually you would want to use the beforeunload handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than undefined would cancel the close. For example: Note: There is a subtle difference between the behaviors of window.onbeforeunload = handler and window.addEventListener('beforeunload', handler). It is recommended to always set the event.returnValue explicitly, instead of only returning a value, as the former works more consistently within Electron.
 	**/

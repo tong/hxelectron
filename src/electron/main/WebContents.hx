@@ -465,6 +465,10 @@ package electron.main;
 	**/
 	var dom_ready : electron.main.WebContentsEvent<js.html.Event -> Void> = "dom-ready";
 	/**
+		Fired when page title is set during navigation. explicitSet is false when title is synthesized from file url.
+	**/
+	var page_title_updated : electron.main.WebContentsEvent<(js.html.Event, String, Bool) -> Void> = "page-title-updated";
+	/**
 		Emitted when page receives favicon urls.
 	**/
 	var page_favicon_updated : electron.main.WebContentsEvent<(js.html.Event, Array<String>) -> Void> = "page-favicon-updated";
