@@ -23,11 +23,6 @@ class Main {
 
 	static function main() {
 
-		electron.CrashReporter.start({
-			companyName: 'hxelectron',
-			submitURL : "https://github.com/tong/hxelectron/issues"
-		});
-
 		electron.main.App.on( ready, function(e) {
 			createWindow();
 		});
