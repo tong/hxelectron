@@ -8,7 +8,12 @@ class Main {
 	static var window : BrowserWindow;
 
 	static function createWindow() {
-		window = new BrowserWindow( { width: 720, height: 480 } );
+		window = new BrowserWindow( {
+			width: 720, height: 480,
+			webPreferences: {
+				nodeIntegration: true
+			}
+		} );
 		window.on( closed, function() {
 			window = null;
 		});
