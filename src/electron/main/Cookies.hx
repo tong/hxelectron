@@ -61,7 +61,7 @@ package electron.main;
 		Sets a cookie with details, callback will be called with callback(error) on complete. Deprecated Soon
 	**/
 	@:overload(function(details:{ /**
-		The url to associate the cookie with.
+		The url to associate the cookie with. The promise will be rejected if the url is invalid.
 	**/
 	var url : String; /**
 		The name of the cookie. Empty by default if omitted.

@@ -5,6 +5,42 @@ package electron.main;
 **/
 @:jsRequire("electron", "MenuItem") extern class MenuItem {
 	/**
+		A String indicating the item's unique id, this property can be dynamically changed.
+	**/
+	var id : String;
+	/**
+		A String indicating the item's visible label, this property can be dynamically changed.
+	**/
+	var label : String;
+	/**
+		A Function that is fired when the MenuItem receives a click event. It can be called with menuItem.click(event, focusedWindow, focusedWebContents).
+	**/
+	var click : haxe.Constraints.Function;
+	/**
+		A Menu (optional) containing the menu item's submenu, if present.
+	**/
+	var submenu : electron.main.Menu;
+	/**
+		A String indicating the type of the item.
+	**/
+	var type : String;
+	/**
+		A String (optional) indicating the item's role, if set.
+	**/
+	var role : String;
+	/**
+		A String (optional) indicating the item's accelerator, if set.
+	**/
+	var accelerator : String;
+	/**
+		A NativeImage | String (optional) indicating the item's icon, if set.
+	**/
+	var icon : electron.NativeImage;
+	/**
+		A String indicating the item's sublabel, this property can be dynamically changed.
+	**/
+	var sublabel : String;
+	/**
 		A Boolean indicating whether the item is enabled, this property can be dynamically changed.
 	**/
 	var enabled : Bool;
@@ -17,19 +53,23 @@ package electron.main;
 	**/
 	var checked : Bool;
 	/**
-		A String representing the menu items visible label.
+		A Boolean indicating if the accelerator should be registered with the system or just displayed, this property can be dynamically changed.
 	**/
-	var label : String;
+	var registerAccelerator : Bool;
 	/**
-		A Function that is fired when the MenuItem receives a click event.
+		A Number indicating an item's sequential unique id.
 	**/
-	var click : haxe.Constraints.Function;
+	var commandId : Float;
+	/**
+		A Menu that the item is a part of.
+	**/
+	var menu : electron.main.Menu;
 	function new(options:{ /**
 		Will be called with click(menuItem, browserWindow, event) when the menu item is clicked.
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
-		Can be undo, redo, cut, copy, paste, pasteandmatchstyle, delete, selectall, reload, forcereload, toggledevtools, resetzoom, zoomin, zoomout, togglefullscreen, window, minimize, close, help, about, services, hide, hideothers, unhide, quit, startspeaking, stopspeaking, close, minimize, zoom or front Define the action of the menu item, when specified the click property will be ignored. See .
+		Can be undo, redo, cut, copy, paste, pasteandmatchstyle, delete, selectall, reload, forcereload, toggledevtools, resetzoom, zoomin, zoomout, togglefullscreen, window, minimize, close, help, about, services, hide, hideothers, unhide, quit, startspeaking, stopspeaking, close, minimize, zoom, front, appMenu, fileMenu, editMenu, viewMenu or windowMenu Define the action of the menu item, when specified the click property will be ignored. See .
 	**/
 	@:optional
 	var role : String; /**
