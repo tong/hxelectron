@@ -25,7 +25,7 @@ package electron.main;
 	**/
 	var type : String;
 	/**
-		A String (optional) indicating the item's role, if set.
+		A String (optional) indicating the item's role, if set. Can be undo, redo, cut, copy, paste, pasteandmatchstyle, delete, selectall, reload, forcereload, toggledevtools, resetzoom, zoomin, zoomout, togglefullscreen, window, minimize, close, help, about, services, hide, hideothers, unhide, quit, startspeaking, stopspeaking, close, minimize, zoom, front, appMenu, fileMenu, editMenu, viewMenu or windowMenu
 	**/
 	var role : String;
 	/**
