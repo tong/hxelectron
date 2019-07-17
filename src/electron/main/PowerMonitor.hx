@@ -4,7 +4,14 @@ package electron.main;
 	@see http://electronjs.org/docs/api/power-monitor
 **/
 @:jsRequire("electron", "powerMonitor") extern class PowerMonitor extends js.node.events.EventEmitter<electron.main.PowerMonitor> {
-
+	/**
+		Calculate the system idle state. idleThreshold is the amount of time (in seconds) before considered idle. callback will be called synchronously on some systems and with an idleState argument that describes the system's state. locked is available on supported systems only.
+	**/
+	static function querySystemIdleState(idleThreshold:Int, callback:haxe.Constraints.Function):Void;
+	/**
+		Calculate system idle time in seconds.
+	**/
+	static function querySystemIdleTime(callback:haxe.Constraints.Function):Void;
 }
 @:enum abstract PowerMonitorEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

@@ -131,9 +131,4 @@ package electron.main;
 	var inverted_color_scheme_changed : electron.main.SystemPreferencesEvent<(js.html.Event, Bool) -> Void> = "inverted-color-scheme-changed";
 	@:electron_platforms(["Windows"])
 	var high_contrast_color_scheme_changed : electron.main.SystemPreferencesEvent<(js.html.Event, Bool) -> Void> = "high-contrast-color-scheme-changed";
-	/**
-		NOTE: This event is only emitted after you have called startAppLevelAppearanceTrackingOS
-	**/
-	@:electron_platforms(["macOS"])
-	var appearance_changed : electron.main.SystemPreferencesEvent<String -> Void> = "appearance-changed";
 }
