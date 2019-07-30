@@ -109,6 +109,16 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS"])
 	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<String, Dynamic>):Void;
+	/**
+		NOTE: This API will return false on macOS systems older than Sierra 10.12.2.
+	**/
+	@:electron_platforms(["macOS"])
+	static function canPromptTouchID():Bool;
+	/**
+		This API itself will not protect your user data; rather, it is a mechanism to allow you to do so. Native apps will need to set Access Control Constants like kSecAccessControlUserPresence on the their keychain entry so that reading it would auto-prompt for Touch ID biometric consent. This could be done with node-keytar, such that one would store an encryption key with node-keytar and only fetch it if promptTouchID() resolves. NOTE: This API will return a rejected Promise on macOS systems older than Sierra 10.12.2.
+	**/
+	@:electron_platforms(["macOS"])
+	static function promptTouchID(reason:String):js.lib.Promise<Any>;
 	@:electron_platforms(["macOS"])
 	static function isTrustedAccessibilityClient(prompt:Bool):Bool;
 	/**
@@ -121,6 +131,10 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS"])
 	static function askForMediaAccess(mediaType:String):js.lib.Promise<Any>;
+	/**
+		Returns an object with system animation settings.
+	**/
+	static function getAnimationSettings():Any;
 }
 @:enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	@:electron_platforms(["Windows"])

@@ -7,11 +7,21 @@ package electron.main;
 	/**
 		Calculate the system idle state. idleThreshold is the amount of time (in seconds) before considered idle. callback will be called synchronously on some systems and with an idleState argument that describes the system's state. locked is available on supported systems only.
 	**/
+	@:electron_platforms(["Deprecated"])
 	static function querySystemIdleState(idleThreshold:Int, callback:haxe.Constraints.Function):Void;
 	/**
 		Calculate system idle time in seconds.
 	**/
+	@:electron_platforms(["Deprecated"])
 	static function querySystemIdleTime(callback:haxe.Constraints.Function):Void;
+	/**
+		Calculate the system idle state. idleThreshold is the amount of time (in seconds) before considered idle.  locked is available on supported systems only.
+	**/
+	static function getSystemIdleState(idleThreshold:Int):String;
+	/**
+		Calculate system idle time in seconds.
+	**/
+	static function getSystemIdleTime():Int;
 }
 @:enum abstract PowerMonitorEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

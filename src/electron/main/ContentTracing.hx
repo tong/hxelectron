@@ -21,7 +21,8 @@ package electron.main;
 	@:overload(function(resultFilePath:String, callback:haxe.Constraints.Function):Void { })
 	static function stopRecording(resultFilePath:String):js.lib.Promise<Any>;
 	/**
-		Get the maximum usage across processes of trace buffer as a percentage of the full state. When the TraceBufferUsage value is determined the callback is called.
+		Get the maximum usage across processes of trace buffer as a percentage of the full state.
 	**/
-	static function getTraceBufferUsage(callback:haxe.Constraints.Function):Void;
+	@:overload(function(callback:haxe.Constraints.Function):Void { })
+	static function getTraceBufferUsage():js.lib.Promise<Any>;
 }

@@ -7,11 +7,13 @@ package electron.main;
 	/**
 		You should listen for the transactions-updated event as soon as possible and certainly before you call purchaseProduct.
 	**/
-	static function purchaseProduct(productID:String, ?quantity:Int, ?callback:haxe.Constraints.Function):Void;
+	@:overload(function(productID:String, ?quantity:Int, ?callback:haxe.Constraints.Function):Void { })
+	static function purchaseProduct(productID:String, ?quantity:Int):js.lib.Promise<Any>;
 	/**
 		Retrieves the product descriptions.
 	**/
-	static function getProducts(productIDs:Array<String>, callback:haxe.Constraints.Function):Void;
+	@:overload(function(productIDs:Array<String>, callback:haxe.Constraints.Function):Void { })
+	static function getProducts(productIDs:Array<String>):js.lib.Promise<Any>;
 	static function canMakePayments():Bool;
 	static function getReceiptURL():String;
 	/**

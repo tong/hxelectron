@@ -27,4 +27,8 @@ typedef Task = {
 		The icon index in the icon file. If an icon file consists of two or more icons, set this value to identify the icon. If an icon file consists of one icon, this value is 0.
 	**/
 	var iconIndex : Float;
+	/**
+		The working directory. Default is empty.
+	**/
+	var workingDirectory : String;
 }

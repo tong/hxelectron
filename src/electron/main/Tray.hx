@@ -23,12 +23,14 @@ package electron.main;
 	**/
 	function setToolTip(toolTip:String):Void;
 	/**
-		Sets the title displayed aside of the tray icon in the status bar (Support ANSI colors).
+		Sets the title displayed next to the tray icon in the status bar (Support ANSI colors).
 	**/
 	@:electron_platforms(["macOS"])
 	function setTitle(title:String):Void;
+	@:electron_platforms(["macOS"])
+	function getTitle(title:String):String;
 	/**
-		Sets when the tray's icon background becomes highlighted (in blue). Note: You can use highlightMode with a BrowserWindow by toggling between 'never' and 'always' modes when the window visibility changes.
+		Sets when the tray's icon background becomes highlighted (in blue). Deprecated Note: You can use highlightMode with a BrowserWindow by toggling between 'never' and 'always' modes when the window visibility changes.
 	**/
 	@:electron_platforms(["macOS"])
 	function setHighlightMode(mode:String):Void;
@@ -68,17 +70,17 @@ package electron.main;
 	/**
 		Emitted when the tray icon is clicked.
 	**/
-	var click : electron.main.TrayEvent<(js.html.Event, electron.Rectangle, electron.Point) -> Void> = "click";
+	var click : electron.main.TrayEvent<(electron.KeyboardEvent, electron.Rectangle, electron.Point) -> Void> = "click";
 	/**
 		Emitted when the tray icon is right clicked.
 	**/
 	@:electron_platforms(["macOS", "Windows"])
-	var right_click : electron.main.TrayEvent<(js.html.Event, electron.Rectangle) -> Void> = "right-click";
+	var right_click : electron.main.TrayEvent<(electron.KeyboardEvent, electron.Rectangle) -> Void> = "right-click";
 	/**
 		Emitted when the tray icon is double clicked.
 	**/
 	@:electron_platforms(["macOS", "Windows"])
-	var double_click : electron.main.TrayEvent<(js.html.Event, electron.Rectangle) -> Void> = "double-click";
+	var double_click : electron.main.TrayEvent<(electron.KeyboardEvent, electron.Rectangle) -> Void> = "double-click";
 	/**
 		Emitted when the tray balloon shows.
 	**/
@@ -128,15 +130,15 @@ package electron.main;
 		Emitted when the mouse enters the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var mouse_enter : electron.main.TrayEvent<(js.html.Event, electron.Point) -> Void> = "mouse-enter";
+	var mouse_enter : electron.main.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-enter";
 	/**
 		Emitted when the mouse exits the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var mouse_leave : electron.main.TrayEvent<(js.html.Event, electron.Point) -> Void> = "mouse-leave";
+	var mouse_leave : electron.main.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-leave";
 	/**
 		Emitted when the mouse moves in the tray icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var mouse_move : electron.main.TrayEvent<(js.html.Event, electron.Point) -> Void> = "mouse-move";
+	var mouse_move : electron.main.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-move";
 }

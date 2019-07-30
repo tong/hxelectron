@@ -1,9 +1,9 @@
 package electron.main;
 /**
-	Get and set properties of a session.
+	Manage browser sessions, cookies, cache, proxy settings, etc.
 	@see http://electronjs.org/docs/api/session
 **/
-@:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+@:jsRequire("electron", "session") extern class Session {
 	/**
 		A Session object, the default session object of the app.
 	**/
@@ -31,17 +31,26 @@ package electron.main;
 		A NetLog object for this session.
 	**/
 	var netLog : electron.main.NetLog;
-	/**
-		Callback is invoked with the session's current cache size.
-	**/
-	function getCacheSize(callback:haxe.Constraints.Function):Void;
+	@:overload(function(callback:haxe.Constraints.Function):Void { })
+	function getCacheSize():js.lib.Promise<Any>;
 	/**
 		Clears the session’s HTTP cache.
 	**/
-	function clearCache(callback:haxe.Constraints.Function):Void;
-	/**
-		Clears the data of web storages.
+	@:overload(function(callback:haxe.Constraints.Function):Void { })
+	function clearCache():js.lib.Promise<Any>;
+	@:overload(function(?options:{ /**
+		Should follow window.location.origin’s representation scheme://host:port.
 	**/
+	@:optional
+	var origin : String; /**
+		The types of storages to clear, can contain: appcache, cookies, filesystem, indexdb, localstorage, shadercache, websql, serviceworkers, cachestorage.
+	**/
+	@:optional
+	var storages : Array<String>; /**
+		The types of quotas to clear, can contain: temporary, persistent, syncable.
+	**/
+	@:optional
+	var quotas : Array<String>; }, ?callback:haxe.Constraints.Function):Void { })
 	function clearStorageData(?options:{ /**
 		Should follow window.location.origin’s representation scheme://host:port.
 	**/
@@ -54,7 +63,7 @@ package electron.main;
 		The types of quotas to clear, can contain: temporary, persistent, syncable.
 	**/
 	@:optional
-	var quotas : Array<String>; }, ?callback:haxe.Constraints.Function):Void;
+	var quotas : Array<String>; }):js.lib.Promise<Any>;
 	/**
 		Writes any unwritten DOMStorage data to disk.
 	**/
@@ -62,6 +71,16 @@ package electron.main;
 	/**
 		Sets the proxy settings. When pacScript and proxyRules are provided together, the proxyRules option is ignored and pacScript configuration is applied. The proxyRules has to follow the rules below: For example: The proxyBypassRules is a comma separated list of rules described below:
 	**/
+	@:overload(function(config:{ /**
+		The URL associated with the PAC file.
+	**/
+	var pacScript : String; /**
+		Rules indicating which proxies to use.
+	**/
+	var proxyRules : String; /**
+		Rules indicating which URLs should bypass the proxy settings.
+	**/
+	var proxyBypassRules : String; }, callback:haxe.Constraints.Function):Void { })
 	function setProxy(config:{ /**
 		The URL associated with the PAC file.
 	**/
@@ -71,11 +90,9 @@ package electron.main;
 	var proxyRules : String; /**
 		Rules indicating which URLs should bypass the proxy settings.
 	**/
-	var proxyBypassRules : String; }, callback:haxe.Constraints.Function):Void;
-	/**
-		Resolves the proxy information for url. The callback will be called with callback(proxy) when the request is performed.
-	**/
-	function resolveProxy(url:String, callback:haxe.Constraints.Function):Void;
+	var proxyBypassRules : String; }):js.lib.Promise<Any>;
+	@:overload(function(url:String, callback:haxe.Constraints.Function):Void { })
+	function resolveProxy(url:String):js.lib.Promise<Any>;
 	/**
 		Sets download saving directory. By default, the download directory will be the Downloads under the respective app folder.
 	**/
@@ -119,7 +136,8 @@ package electron.main;
 	/**
 		Clears the host resolver cache.
 	**/
-	function clearHostResolverCache(?callback:haxe.Constraints.Function):Void;
+	@:overload(function(?callback:haxe.Constraints.Function):Void { })
+	function clearHostResolverCache():js.lib.Promise<Any>;
 	/**
 		Dynamically sets whether to always send credentials for HTTP NTLM or Negotiate authentication.
 	**/
@@ -129,7 +147,8 @@ package electron.main;
 	**/
 	function setUserAgent(userAgent:String, ?acceptLanguages:String):Void;
 	function getUserAgent():String;
-	function getBlobData(identifier:String, callback:haxe.Constraints.Function):Void;
+	@:overload(function(identifier:String, callback:haxe.Constraints.Function):Void { })
+	function getBlobData(identifier:String):js.lib.Promise<Any>;
 	/**
 		Allows resuming cancelled or interrupted downloads from previous Session. The API will generate a DownloadItem that can be accessed with the will-download event. The DownloadItem will not have any WebContents associated with it and the initial state will be interrupted. The download will start only when the resume API is called on the DownloadItem.
 	**/
@@ -157,10 +176,10 @@ package electron.main;
 	**/
 	@:optional
 	var startTime : Float; }):Void;
-	/**
-		Clears the session’s HTTP authentication cache.
-	**/
-	function clearAuthCache(options:haxe.extern.EitherType<electron.RemovePassword, electron.RemoveClientCertificate>, ?callback:haxe.Constraints.Function):Void;
+	@:electron_platforms(["deprecated"])
+	@:overload(function(options:haxe.extern.EitherType<electron.RemovePassword, electron.RemoveClientCertificate>, callback:haxe.Constraints.Function):Void { })
+	@:overload(function():js.lib.Promise<Any> { })
+	function clearAuthCache(options:haxe.extern.EitherType<electron.RemovePassword, electron.RemoveClientCertificate>):js.lib.Promise<Any>;
 	/**
 		Adds scripts that will be executed on ALL web contents that are associated with this session just before normal preload scripts run.
 	**/

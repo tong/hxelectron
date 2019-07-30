@@ -32,7 +32,13 @@ package electron.main;
 	var width : Bool; /**
 		If true, the view's height will grow and shrink together with the window. false by default.
 	**/
-	var height : Bool; }):Void;
+	var height : Bool; /**
+		If true, the view's x position and width will grow and shrink proportionly with the window. false by default.
+	**/
+	var horizontal : Bool; /**
+		If true, the view's y position and height will grow and shrink proportinaly with the window. false by default.
+	**/
+	var vertical : Bool; }):Void;
 	/**
 		Resizes and moves the view to the supplied bounds relative to the window.
 	**/

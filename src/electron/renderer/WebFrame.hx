@@ -54,17 +54,23 @@ package electron.renderer;
 	**/
 	var spellCheck : haxe.Constraints.Function; }):Void;
 	/**
+		Inserts css as a style sheet in the document.
+	**/
+	static function insertCSS(css:String):Void;
+	/**
 		Inserts text to the focused element.
 	**/
 	static function insertText(text:String):Void;
 	/**
 		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
 	**/
-	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
+	@:overload(function(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any> { })
+	static function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Any>;
 	/**
-		Work like executeJavaScript but evaluates scripts in an isolated context.
+		Works like executeJavaScript but evaluates scripts in an isolated context.
 	**/
-	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool, ?callback:haxe.Constraints.Function):Void;
+	@:overload(function(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any> { })
+	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool):js.lib.Promise<Any>;
 	/**
 		Set the content security policy of the isolated world.
 	**/

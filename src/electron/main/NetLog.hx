@@ -19,5 +19,6 @@ package electron.main;
 	/**
 		Stops recording network events. If not called, net logging will automatically end when app quits.
 	**/
-	static function stopLogging(?callback:haxe.Constraints.Function):Void;
+	@:overload(function(?callback:haxe.Constraints.Function):Void { })
+	static function stopLogging():js.lib.Promise<Any>;
 }

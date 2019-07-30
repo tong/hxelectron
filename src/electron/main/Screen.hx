@@ -1,9 +1,9 @@
-package electron;
+package electron.main;
 /**
 	Retrieve information about screen size, displays, cursor position, etc.
 	@see http://electronjs.org/docs/api/screen
 **/
-@:native('require(\"electron\").screen') extern class Screen extends js.node.events.EventEmitter<electron.Screen> {
+@:native('require(\"electron\").screen') extern class Screen extends js.node.events.EventEmitter<electron.main.Screen> {
 	/**
 		The current absolute position of the mouse pointer.
 	**/
@@ -37,13 +37,13 @@ package electron;
 	/**
 		Emitted when newDisplay has been added.
 	**/
-	var display_added : electron.ScreenEvent<(js.html.Event, electron.Display) -> Void> = "display-added";
+	var display_added : electron.main.ScreenEvent<(js.html.Event, electron.Display) -> Void> = "display-added";
 	/**
 		Emitted when oldDisplay has been removed.
 	**/
-	var display_removed : electron.ScreenEvent<(js.html.Event, electron.Display) -> Void> = "display-removed";
+	var display_removed : electron.main.ScreenEvent<(js.html.Event, electron.Display) -> Void> = "display-removed";
 	/**
 		Emitted when one or more metrics change in a display. The changedMetrics is an array of strings that describe the changes. Possible changes are bounds, workArea, scaleFactor and rotation.
 	**/
-	var display_metrics_changed : electron.ScreenEvent<(js.html.Event, electron.Display, Array<String>) -> Void> = "display-metrics-changed";
+	var display_metrics_changed : electron.main.ScreenEvent<(js.html.Event, electron.Display, Array<String>) -> Void> = "display-metrics-changed";
 }

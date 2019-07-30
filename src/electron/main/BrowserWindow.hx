@@ -130,7 +130,7 @@ package electron.main;
 	**/
 	@:optional
 	var kiosk : Bool; /**
-		Default window title. Default is "Electron". If the HTML tag is defined in the HTML file loaded by loadURL(), this property will be ignored.
+		Default window title. Default is "Electron". If the HTML tag </code> is defined in the HTML file loaded by <code>loadURL()</code>, this property will be ignored.</foo>
 	**/
 	@:optional
 	var title : String; /**
@@ -234,7 +234,7 @@ package electron.main;
 	**/
 	@:optional
 	var nodeIntegrationInWorker : Bool; /**
-		Experimental option for enabling NodeJS support in sub-frames such as iframes. All your preloads will load for every iframe, you can use process.isMainFrame to determine if you are in the main frame or not.
+		Experimental option for enabling Node.js support in sub-frames such as iframes and child windows. All your preloads will load for every iframe, you can use process.isMainFrame to determine if you are in the main frame or not.
 	**/
 	@:optional
 	var nodeIntegrationInSubFrames : Bool; /**
@@ -290,10 +290,6 @@ package electron.main;
 	**/
 	@:optional
 	var webgl : Bool; /**
-		Enables WebAudio support. Default is true.
-	**/
-	@:optional
-	var webaudio : Bool; /**
 		Whether plugins should be enabled. Default is false.
 	**/
 	@:optional
@@ -370,7 +366,7 @@ package electron.main;
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
-		Whether to use native window.open(). Defaults to false. Child windows will always have node integration disabled. This option is currently experimental.
+		Whether to use native window.open(). Defaults to false. Child windows will always have node integration disabled unless nodeIntegrationInSubFrames is true. This option is currently experimental.
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
@@ -397,7 +393,11 @@ package electron.main;
 		Autoplay policy to apply to content in the window, can be no-user-gesture-required, user-gesture-required, document-user-activation-required. Defaults to no-user-gesture-required.
 	**/
 	@:optional
-	var autoplayPolicy : String; }; }):Void;
+	var autoplayPolicy : String; /**
+		Whether to prevent the window from resizing when entering HTML Fullscreen. Default is false.
+	**/
+	@:optional
+	var disableHtmlFullscreenWindowResize : Bool; }; }):Void;
 	/**
 		Force closing the window, the unload and beforeunload event won't be emitted for the web page, and close event will also not be emitted for this window, but it guarantees the closed event will be emitted.
 	**/
@@ -576,7 +576,6 @@ package electron.main;
 	/**
 		Moves window to top(z-order) regardless of focus
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	function moveTop():Void;
 	/**
 		Moves window to the center of the screen.
@@ -654,7 +653,7 @@ package electron.main;
 		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
 	**/
 	@:overload(function(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void { })
-	function capturePage(?rect:electron.Rectangle):Void;
+	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
 	/**
 		Same as webContents.loadURL(url[, options]). The url can be a remote address (e.g. http://) or a path to a local HTML file using the file:// protocol. To ensure that file URLs are properly formatted, it is recommended to use Node's url.format method: You can load a URL using a POST request with URL-encoded data by doing the following:
 	**/

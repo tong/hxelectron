@@ -1,9 +1,9 @@
 package electron;
 /**
-	Create tray, dock, and application icons using PNG or JPG files.
+	Natively wrap images such as tray, dock, and application icons.
 	@see http://electronjs.org/docs/api/native-image
 **/
-@:jsRequire("electron", "nativeImage") extern class NativeImage {
+@:jsRequire("electron", "NativeImage") extern class NativeImage {
 	/**
 		Creates an empty NativeImage instance.
 	**/
@@ -13,7 +13,15 @@ package electron;
 	**/
 	static function createFromPath(path:String):electron.NativeImage;
 	/**
-		Creates a new NativeImage instance from buffer.
+		Creates a new NativeImage instance from buffer that contains the raw bitmap pixel data returned by toBitmap(). The specific format is platform-dependent.
+	**/
+	static function createFromBitmap(buffer:js.node.Buffer, options:{ var width : Int; var height : Int; /**
+		Defaults to 1.0.
+	**/
+	@:optional
+	var scaleFactor : Float; }):electron.NativeImage;
+	/**
+		Creates a new NativeImage instance from buffer. Tries to decode as PNG or JPEG first.
 	**/
 	static function createFromBuffer(buffer:js.node.Buffer, ?options:{ /**
 		Required for bitmap buffers.

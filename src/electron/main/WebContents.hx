@@ -125,9 +125,10 @@ package electron.main;
 	**/
 	function insertCSS(css:String):Void;
 	/**
-		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation. If the result of the executed code is a promise the callback result will be the resolved value of the promise. We recommend that you use the returned Promise to handle code that results in a Promise.
+		Evaluates code in page. In the browser window some HTML APIs like requestFullScreen can only be invoked by a gesture from the user. Setting userGesture to true will remove this limitation.
 	**/
-	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
+	@:overload(function(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any> { })
+	function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Any>;
 	/**
 		Ignore application menu shortcuts while this web contents is focused.
 	**/
@@ -241,15 +242,7 @@ package electron.main;
 		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
 	**/
 	@:overload(function(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void { })
-	function capturePage(?rect:electron.Rectangle):Void;
-	/**
-		Checks if any ServiceWorker is registered and returns a boolean as response to callback.
-	**/
-	function hasServiceWorker(callback:haxe.Constraints.Function):Void;
-	/**
-		Unregisters any ServiceWorker if present and returns a boolean as response to callback when the JS promise is fulfilled or false when the JS promise is rejected.
-	**/
-	function unregisterServiceWorker(callback:haxe.Constraints.Function):Void;
+	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
 	/**
 		Get the system printer list.
 	**/
@@ -271,8 +264,29 @@ package electron.main;
 	@:optional
 	var deviceName : String; }, ?callback:haxe.Constraints.Function):Void;
 	/**
-		Prints window's web page as PDF with Chromium's preview printing custom settings. The callback will be called with callback(error, data) on completion. The data is a Buffer that contains the generated PDF data. The landscape will be ignored if @page CSS at-rule is used in the web page. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
+		Prints window's web page as PDF with Chromium's preview printing custom settings. The landscape will be ignored if @page CSS at-rule is used in the web page. By default, an empty options will be regarded as: Use page-break-before: always; CSS style to force to print to a new page. An example of webContents.printToPDF:
 	**/
+	@:overload(function(options:{ /**
+		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+	**/
+	@:optional
+	var marginsType : Int; /**
+		Specify page size of the generated PDF. Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns.
+	**/
+	@:optional
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
+		Whether to print CSS backgrounds.
+	**/
+	@:optional
+	var printBackground : Bool; /**
+		Whether to print selection only.
+	**/
+	@:optional
+	var printSelectionOnly : Bool; /**
+		true for landscape, false for portrait.
+	**/
+	@:optional
+	var landscape : Bool; }, callback:haxe.Constraints.Function):Void { })
 	function printToPDF(options:{ /**
 		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
 	**/
@@ -293,7 +307,7 @@ package electron.main;
 		true for landscape, false for portrait.
 	**/
 	@:optional
-	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
+	var landscape : Bool; }):js.lib.Promise<Any>;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
@@ -331,6 +345,10 @@ package electron.main;
 		Starts inspecting element at position (x, y).
 	**/
 	function inspectElement(x:Int, y:Int):Void;
+	/**
+		Opens the developer tools for the shared worker context.
+	**/
+	function inspectSharedWorker():Void;
 	/**
 		Opens the developer tools for the service worker context.
 	**/
@@ -397,7 +415,7 @@ package electron.main;
 		The image must be non-empty on macOS.
 	**/
 	var icon : electron.NativeImage; }):Void;
-	function savePage(fullPath:String, saveType:String, callback:haxe.Constraints.Function):Bool;
+	function savePage(fullPath:String, saveType:String):js.lib.Promise<Any>;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
@@ -532,6 +550,14 @@ package electron.main;
 		Emitted before dispatching the keydown and keyup events in the page. Calling event.preventDefault will prevent the page keydown/keyup events and the menu shortcuts. To only prevent the menu shortcuts, use setIgnoreMenuShortcuts:
 	**/
 	var before_input_event : electron.main.WebContentsEvent<(js.html.Event, Any) -> Void> = "before-input-event";
+	/**
+		Emitted when the window enters a full-screen state triggered by HTML API.
+	**/
+	var enter_html_full_screen : electron.main.WebContentsEvent<Void -> Void> = "enter-html-full-screen";
+	/**
+		Emitted when the window leaves a full-screen state triggered by HTML API.
+	**/
+	var leave_html_full_screen : electron.main.WebContentsEvent<Void -> Void> = "leave-html-full-screen";
 	/**
 		Emitted when DevTools is opened.
 	**/

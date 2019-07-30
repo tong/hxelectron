@@ -8,7 +8,7 @@ typedef ProcessMetric = {
 	**/
 	var pid : Int;
 	/**
-		Process type (Browser or Tab or GPU etc).
+		Process type. One of the following values:
 	**/
 	var type : String;
 	/**

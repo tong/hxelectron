@@ -5,17 +5,33 @@ package electron.main;
 **/
 @:jsRequire("electron", "app") extern class App extends js.node.events.EventEmitter<electron.main.App> {
 	/**
+		A Menu property that return Menu if one has been set and null otherwise. Users can pass a Menu to set this property.
+	**/
+	static var applicationMenu : electron.main.Menu;
+	/**
+		A Boolean property that's true if Chrome's accessibility support is enabled, false otherwise. This property will be true if the use of assistive technologies, such as screen readers, has been detected. Setting this property to true manually enables Chrome's accessibility support, allowing developers to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default. This API must be called after the ready event is emitted. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
+	**/
+	static var accessibilitySupportEnabled : Bool;
+	/**
+		A String which is the user agent string Electron will use as a global fallback. This is the user agent that will be used when no user agent is set at the webContents or session level.  Useful for ensuring your entire app has the same user agent.  Set to a custom value as early as possible in your apps initialization to ensure that your overridden value is used.
+	**/
+	static var userAgentFallback : String;
+	/**
 		A Boolean property that returns  true if the app is packaged, false otherwise. For many apps, this property can be used to distinguish development and production environments.
 	**/
 	static var isPackaged : Bool;
+	/**
+		A Boolean which when true disables the overrides that Electron has in place to ensure renderer processes are restarted on every navigation.  The current default value for this property is false. The intention is for these overrides to become disabled by default and then at some point in the future this property will be removed.  This property impacts which native modules you can use in the renderer process.  For more information on the direction Electron is going with renderer process restarts and usage of native modules in the renderer process please check out this Tracking Issue.
+	**/
+	static var allowRendererProcessReuse : Bool;
 	static var commandLine : { /**
-		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv, and is mainly used by developers to control some low-level Chromium behaviors.
+		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv. The intended usage of this function is to control Chromium's behavior.
 	**/
 	var appendSwitch : haxe.Constraints.Function; /**
-		Append an argument to Chromium's command line. The argument will be quoted correctly. Note: This will not affect process.argv.
+		Append an argument to Chromium's command line. The argument will be quoted correctly. Switches will precede arguments regardless of appending order. If you're appending an argument like --switch=value, consider using appendSwitch('switch', 'value') instead. Note: This will not affect process.argv. The intended usage of this function is to control Chromium's behavior.
 	**/
 	var appendArgument : haxe.Constraints.Function; var hasSwitch : haxe.Constraints.Function; /**
-		Note: When the switch is not present, it returns empty string.
+		Note: When the switch is not present or has no value, it returns empty string.
 	**/
 	var getSwitchValue : haxe.Constraints.Function; };
 	static var dock : { /**
@@ -39,16 +55,14 @@ package electron.main;
 		Hides the dock icon.
 	**/
 	@:electron_platforms(["macOS"])
-	var hide : haxe.Constraints.Function; /**
-		Shows the dock icon.
-	**/
-	@:electron_platforms(["macOS"])
+	var hide : haxe.Constraints.Function; @:electron_platforms(["macOS"])
 	var show : haxe.Constraints.Function; @:electron_platforms(["macOS"])
 	var isVisible : haxe.Constraints.Function; /**
 		Sets the application's dock menu.
 	**/
 	@:electron_platforms(["macOS"])
-	var setMenu : haxe.Constraints.Function; /**
+	var setMenu : haxe.Constraints.Function; @:electron_platforms(["macOS"])
+	var getMenu : haxe.Constraints.Function; /**
 		Sets the image associated with this dock icon.
 	**/
 	@:electron_platforms(["macOS"])
@@ -83,6 +97,10 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS"])
 	static function show():Void;
+	/**
+		Sets or creates a directory your app's logs which can then be manipulated with app.getPath() or app.setPath(pathName, newPath). On macOS, this directory will be set by deafault to /Library/Logs/YourAppName, and on Linux and Windows it will be placed inside your userData directory.
+	**/
+	static function setAppLogsPath(?path:String):Void;
 	static function getAppPath():String;
 	/**
 		You can request the following paths by the name:
@@ -94,7 +112,7 @@ package electron.main;
 	@:overload(function(path:String, ?options:{ var size : String; }, callback:haxe.Constraints.Function):Void { })
 	static function getFileIcon(path:String, ?options:{ var size : String; }):js.lib.Promise<Any>;
 	/**
-		Overrides the path to a special directory or file associated with name. If the path specifies a directory that does not exist, the directory will be created by this method. On failure an Error is thrown. You can only override paths of a name defined in app.getPath. By default, web pages' cookies and caches will be stored under the userData directory. If you want to change this location, you have to override the userData path before the ready event of the app module is emitted.
+		Overrides the path to a special directory or file associated with name. If the path specifies a directory that does not exist, an Error is thrown. In that case, the directory should be created with fs.mkdirSync or similar. You can only override paths of a name defined in app.getPath. By default, web pages' cookies and caches will be stored under the userData directory. If you want to change this location, you have to override the userData path before the ready event of the app module is emitted.
 	**/
 	static function setPath(name:String, path:String):Void;
 	static function getVersion():String;
@@ -125,7 +143,7 @@ package electron.main;
 	@:electron_platforms(["macOS", "Windows"])
 	static function clearRecentDocuments():Void;
 	/**
-		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with your-protocol:// will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter. On Windows, you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches. Note: On macOS, you can only register protocols that have been added to your app's info.plist, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
+		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with your-protocol:// will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter. On Windows, you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches. Note: On macOS, you can only register protocols that have been added to your app's info.plist, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details. Note: In a Windows Store environment (when packaged as an appx) this API will return true for all calls but the registry key it sets won't be accessible by other applications.  In order to register your Windows Store application as a default protocol handler you must declare the protocol in your manifest. The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
 	**/
 	static function setAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
@@ -150,7 +168,7 @@ package electron.main;
 	@:electron_platforms(["Windows"])
 	static function setJumpList(categories:Array<electron.JumpListCategory>):Void;
 	/**
-		This method makes your application a Single Instance Application - instead of allowing multiple instances of your app to run, this will ensure that only a single instance of your app is running, and other instances signal this instance and exit. The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately. I.e. This method returns true if your process is the primary instance of your application and your app should continue loading.  It returns false if your process should immediately quit as it has sent its parameters to another instance that has already acquired the lock. On macOS, the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line, the system's single instance mechanism will be bypassed, and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
+		The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately. I.e. This method returns true if your process is the primary instance of your application and your app should continue loading.  It returns false if your process should immediately quit as it has sent its parameters to another instance that has already acquired the lock. On macOS, the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line, the system's single instance mechanism will be bypassed, and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
 	**/
 	static function requestSingleInstanceLock():Bool;
 	/**
@@ -251,10 +269,13 @@ package electron.main;
 	**/
 	@:optional
 	var args : Array<String>; }):Void;
+	/**
+		Deprecated Soon
+	**/
 	@:electron_platforms(["macOS", "Windows"])
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
-		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default. This API must be called after the ready event is emitted. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
+		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default. This API must be called after the ready event is emitted. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default. Deprecated Soon
 	**/
 	@:electron_platforms(["macOS", "Windows"])
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
@@ -296,6 +317,12 @@ package electron.main;
 	**/
 	@:optional
 	var iconPath : String; }):Void;
+	static function isEmojiPanelSupported():Bool;
+	/**
+		Show the platform's native emoji picker.
+	**/
+	@:electron_platforms(["macOS", "Windows"])
+	static function showEmojiPanel():Void;
 	/**
 		Start accessing a security scoped resource. With this method Electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
 	**/
@@ -304,7 +331,7 @@ package electron.main;
 	/**
 		Enables full sandbox mode on the app. This method can only be called before app is ready.
 	**/
-	@:electron_platforms(["Experimental", "macOS", "Windows"])
+	@:electron_platforms(["Experimental"])
 	static function enableSandbox():Void;
 	@:electron_platforms(["macOS"])
 	static function isInApplicationsFolder():Bool;
@@ -417,6 +444,10 @@ package electron.main;
 		Emitted when the gpu process crashes or is killed.
 	**/
 	var gpu_process_crashed : electron.main.AppEvent<(js.html.Event, Bool) -> Void> = "gpu-process-crashed";
+	/**
+		Emitted when the renderer process of webContents crashes or is killed.
+	**/
+	var renderer_process_crashed : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, Bool) -> Void> = "renderer-process-crashed";
 	/**
 		Emitted when Chrome's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/

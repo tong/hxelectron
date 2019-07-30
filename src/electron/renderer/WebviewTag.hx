@@ -9,10 +9,6 @@ package electron.renderer;
 	**/
 	var src : Dynamic;
 	/**
-		When this attribute is present the webview container will automatically resize within the bounds specified by the attributes minwidth, minheight, maxwidth, and maxheight. These constraints do not impact the webview unless autosize is enabled. When autosize is enabled, the webview container size cannot be less than the minimum values or greater than the maximum.
-	**/
-	var autosize : Dynamic;
-	/**
 		When this attribute is present the guest page in webview will have node integration and can use node APIs like require and process to access low level system resources. Node integration is disabled by default in the guest page.
 	**/
 	var nodeintegration : Dynamic;
@@ -21,7 +17,7 @@ package electron.renderer;
 	**/
 	var nodeintegrationinsubframes : Dynamic;
 	/**
-		When this attribute is false the guest page in webview will not have access to the remote module. The remote module is avaiable by default.
+		When this attribute is false the guest page in webview will not have access to the remote module. The remote module is available by default.
 	**/
 	var enableremotemodule : Dynamic;
 	/**
@@ -84,7 +80,7 @@ package electron.renderer;
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
 	**/
 	@:optional
-	var baseURLForDataURL : String; }):Void;
+	var baseURLForDataURL : String; }):js.lib.Promise<Any>;
 	/**
 		Initiates a download of the resource at url without navigating.
 	**/
@@ -142,7 +138,8 @@ package electron.renderer;
 	/**
 		Evaluates code in page. If userGesture is set, it will create the user gesture context in the page. HTML APIs like requestFullScreen, which require user action, can take advantage of this option for automation.
 	**/
-	function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):Void;
+	@:overload(function(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any> { })
+	function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Any>;
 	/**
 		Opens a DevTools window for guest page.
 	**/
@@ -157,6 +154,10 @@ package electron.renderer;
 		Starts inspecting element at position (x, y) of guest page.
 	**/
 	function inspectElement(x:Int, y:Int):Void;
+	/**
+		Opens the DevTools for the shared worker context present in the guest page.
+	**/
+	function inspectSharedWorker():Void;
 	/**
 		Opens the DevTools for the service worker context present in the guest page.
 	**/
@@ -260,8 +261,29 @@ package electron.renderer;
 	@:optional
 	var deviceName : String; }):Void;
 	/**
-		Prints webview's web page as PDF, Same as webContents.printToPDF(options, callback).
+		Prints webview's web page as PDF, Same as webContents.printToPDF(options).
 	**/
+	@:overload(function(options:{ /**
+		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+	**/
+	@:optional
+	var marginsType : Int; /**
+		Specify page size of the generated PDF. Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns.
+	**/
+	@:optional
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
+		Whether to print CSS backgrounds.
+	**/
+	@:optional
+	var printBackground : Bool; /**
+		Whether to print selection only.
+	**/
+	@:optional
+	var printSelectionOnly : Bool; /**
+		true for landscape, false for portrait.
+	**/
+	@:optional
+	var landscape : Bool; }, callback:haxe.Constraints.Function):Void { })
 	function printToPDF(options:{ /**
 		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
 	**/
@@ -282,12 +304,12 @@ package electron.renderer;
 		true for landscape, false for portrait.
 	**/
 	@:optional
-	var landscape : Bool; }, callback:haxe.Constraints.Function):Void;
+	var landscape : Bool; }):js.lib.Promise<Any>;
 	/**
 		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
 	**/
 	@:overload(function(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void { })
-	function capturePage(?rect:electron.Rectangle):Void;
+	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
 	/**
 		Send an asynchronous message to renderer process via channel, you can also send arbitrary arguments. The renderer process can handle the message by listening to the channel event with the ipcRenderer module. See webContents.send for examples.
 	**/
@@ -323,4 +345,5 @@ package electron.renderer;
 		It depends on the remote module, it is therefore not available when this module is disabled.
 	**/
 	function getWebContents():electron.main.WebContents;
+	function getWebContentsId():Float;
 }

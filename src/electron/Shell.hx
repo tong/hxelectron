@@ -7,13 +7,13 @@ package electron;
 	/**
 		Show the given file in a file manager. If possible, select the file.
 	**/
-	static function showItemInFolder(fullPath:String):Bool;
+	static function showItemInFolder(fullPath:String):Void;
 	/**
 		Open the given file in the desktop's default manner.
 	**/
 	static function openItem(fullPath:String):Bool;
 	/**
-		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent).
+		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent). Deprecated
 	**/
 	static function openExternalSync(url:String, ?options:{ /**
 		true to bring the opened application to the foreground. The default is true.

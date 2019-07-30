@@ -35,4 +35,8 @@ typedef JumpListItem = {
 		The index of the icon in the resource file. If a resource file contains multiple icons this value can be used to specify the zero-based index of the icon that should be displayed for this task. If a resource file contains only one icon, this property should be set to zero.
 	**/
 	var iconIndex : Float;
+	/**
+		The working directory. Default is empty.
+	**/
+	var workingDirectory : String;
 }
