@@ -5,7 +5,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "WebRequest") extern class WebRequest {
 	/**
-		The listener will be called with listener(details, callback) when a request is about to occur. The uploadData is an array of UploadData objects. The callback has to be called with an response object.
+		The listener will be called with listener(details, callback) when a request is about to occur. The uploadData is an array of UploadData objects. The callback has to be called with an response object. Some examples of valid urls:
 	**/
 	function onBeforeRequest(?filter:{ /**
 		Array of URL patterns that will be used to filter out the requests that do not match the URL patterns.

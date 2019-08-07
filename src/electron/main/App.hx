@@ -98,7 +98,7 @@ package electron.main;
 	@:electron_platforms(["macOS"])
 	static function show():Void;
 	/**
-		Sets or creates a directory your app's logs which can then be manipulated with app.getPath() or app.setPath(pathName, newPath). On macOS, this directory will be set by deafault to /Library/Logs/YourAppName, and on Linux and Windows it will be placed inside your userData directory.
+		Sets or creates a directory your app's logs which can then be manipulated with app.getPath() or app.setPath(pathName, newPath). Calling app.setAppLogsPath() without a path parameter will result in this directory being set to /Library/Logs/YourAppName on macOS, and inside the userData directory on Linux and Windows.
 	**/
 	static function setAppLogsPath(?path:String):Void;
 	static function getAppPath():String;
@@ -313,7 +313,7 @@ package electron.main;
 	**/
 	@:optional
 	var website : String; /**
-		Path to the app's icon.
+		Path to the app's icon. Will be shown as 64x64 pixels while retaining aspect ratio.
 	**/
 	@:optional
 	var iconPath : String; }):Void;

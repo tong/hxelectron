@@ -1007,7 +1007,6 @@ package electron.main;
 	/**
 		Emitted when the window is set or unset to show always on top of other windows.
 	**/
-	@:electron_platforms(["macOS"])
 	var always_on_top_changed : electron.main.BrowserWindowEvent<(js.html.Event, Bool) -> Void> = "always-on-top-changed";
 	/**
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows. Commands are lowercased, underscores are replaced with hyphens, and the APPCOMMAND_ prefix is stripped off. e.g. APPCOMMAND_BROWSER_BACKWARD is emitted as browser-backward. The following app commands are explictly supported on Linux:
