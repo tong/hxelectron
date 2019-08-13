@@ -718,14 +718,9 @@ package electron.main;
 	@:electron_platforms(["Windows"])
 	function setOverlayIcon(overlay:haxe.extern.EitherType<electron.NativeImage, Dynamic>, description:String):Void;
 	/**
-		Sets whether the window should have a shadow. On Windows and Linux does nothing.
+		Sets whether the window should have a shadow.
 	**/
-	@:electron_platforms(["macOS"])
 	function setHasShadow(hasShadow:Bool):Void;
-	/**
-		On Windows and Linux always returns true.
-	**/
-	@:electron_platforms(["macOS"])
 	function hasShadow():Bool;
 	/**
 		Sets the opacity of the window. On Linux does nothing.
