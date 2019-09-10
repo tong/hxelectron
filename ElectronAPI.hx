@@ -228,7 +228,7 @@ private class Gen {
 				access: [AStatic],
 				kind: FFun( { args: [
 					{ name: 'eventType', type: macro : Dynamic },
-					{ name: 'callback', type: macro : Dynamic->Void }
+					{ name: 'callback', type: macro : (js.html.Event,String) -> Void }
 				], ret: macro : Void, expr: null } ),
 				pos: null
 			} );
