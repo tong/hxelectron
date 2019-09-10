@@ -226,10 +226,17 @@ private class Gen {
 			type.fields.push( {
 				name: 'on',
 				access: [AStatic],
-				kind: FFun( { args: [
-					{ name: 'eventType', type: macro : Dynamic },
-					{ name: 'callback', type: macro : (js.html.Event,String) -> Void }
-				], ret: macro : Void, expr: null } ),
+				kind: FFun( {
+					params: [
+						{ name: 'T', constraints: [macro:haxe.Constraints.Function] },
+					],
+					args: [
+						{ name: 'eventType', type: macro : Dynamic },
+						{ name: 'callback', type: macro:T }
+					],
+					ret: macro : Void,
+					expr: null
+				} ),
 				pos: null
 			} );
 		case 'Screen':
