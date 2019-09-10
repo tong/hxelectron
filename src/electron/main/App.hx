@@ -340,7 +340,7 @@ package electron.main;
 	**/
 	@:electron_platforms(["macOS"])
 	static function moveToApplicationsFolder():Bool;
-	static function on(eventType:Dynamic, callback:Dynamic -> Void):Void;
+	static function on(eventType:Dynamic, callback:(js.html.Event, String) -> Void):Void;
 }
 @:enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
