@@ -34,10 +34,13 @@ package electron;
 	**/
 	@:electron_platforms(["macOS", "Windows"])
 	static function writeBookmark(title:String, url:String, ?type:String):Void;
+	/**
+		This method uses synchronous IPC when called from the renderer process. The cached value is reread from the find pasteboard whenever the application is activated.
+	**/
 	@:electron_platforms(["macOS"])
 	static function readFindText():String;
 	/**
-		Writes the text into the find pasteboard as plain text. This method uses synchronous IPC when called from the renderer process.
+		Writes the text into the find pasteboard (the pasteboard that holds information about the current state of the active application’s find panel) as plain text. This method uses synchronous IPC when called from the renderer process.
 	**/
 	@:electron_platforms(["macOS"])
 	static function writeFindText(text:String):Void;
@@ -65,7 +68,7 @@ package electron;
 	var html : String; @:optional
 	var image : electron.NativeImage; @:optional
 	var rtf : String; /**
-		The title of the url at text.
+		The title of the URL at text.
 	**/
 	@:optional
 	var bookmark : String; }, ?type:String):Void;
