@@ -39,10 +39,11 @@ class ElectronAPI {
 			if( doc != null ) {
 				var lines = code.split( '\n' );
 				code = lines.shift()+'\n';
-				code += '/**'+doc+'\n**/\n';
+				code += '/**'+doc+'\n**/\n'; //!!!!
 				code += lines.join( '\n' );
 			}
 			#end
+
 			var dir = destination + '/' + type.pack.join( '/' );
 			if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
 			File.saveContent( '$dir/${type.name}.hx', '$code\n' );
@@ -76,6 +77,8 @@ class ElectronAPI {
 
 private class Gen {
 
+	static var KWDS = ['class','private','switch'];
+
 	var root : Array<String>;
 	var addDocumentation : Bool;
 	var items : Array<Item>;
@@ -92,6 +95,21 @@ private class Gen {
 		this.items = items;
 
 		// Pre patch
+		function addAlias( name : String, ?type : ComplexType, ?pack : Array<String> ) {
+			if( type == null ) type = macro : Dynamic;
+			var _pack = root.copy();
+			if( pack != null ) _pack = _pack.concat( pack );
+			this.types.set( name, {
+				pack: _pack,
+				name: name,
+				kind: TDAlias( type ),
+				fields: [],
+				pos: null
+			} );
+		}
+		addAlias( 'Partial' );
+		addAlias( 'Record' );
+		addAlias( 'SaveDialogOptions' );
 		this.types.set( 'Accelerator', {
 			pack: root.copy(),
 			name: 'Accelerator',
@@ -99,26 +117,22 @@ private class Gen {
 			fields: [],
 			pos: null
 		} );
-		this.types.set( 'SaveDialogOptions', {
-			pack: root.copy().concat(['main']),
-			name: 'SaveDialogOptions',
-			kind: TDAlias( macro : Dynamic ),
-			fields: [],
-			pos: null
-		} );
 
 		for( item in items ) {
+			//if( item.name != 'WebContents' ) continue;
 			this.types.set( item.name, processItem( item ) );
 		}
 
 		var map = new Map<String,Array<TypeDefinition>>();
-		for( t in types )
+		for( t in types ) {
 			map.set( t.name, extraTypes.exists( t.name ) ? [t].concat( extraTypes.get( t.name ) ) : [t] );
+		}
+
 		return map;
 	}
 
 	function processItem( item : Item, ?module : String ) : TypeDefinition {
-
+		
 		var type : TypeDefinition = {
 			pack: getItemPack( item ),
 			name: item.name,
@@ -151,6 +165,7 @@ private class Gen {
 			if( item.instanceProperties != null ) for( p in item.instanceProperties ) type.fields.push( createVarField( p ) );
 			if( item.constructorMethod != null ) type.fields.push( createFunField( cast { name: 'new', parameters:  item.constructorMethod.parameters } ) );
 			if( item.instanceMethods != null ) for( m in item.instanceMethods ) type.fields.push( createFunField( m ) );
+			/*TODO:
 			if( item.staticProperties != null ) {
 				for( p in item.staticProperties ) {
 					var t = processItem( cast p, type.name );
@@ -158,6 +173,7 @@ private class Gen {
 					else this.extraTypes.get( type.name ).push( t );
 				}
 			}
+			*/
 			mergeTypeItem( type, item );
 
 		case Module:
@@ -186,37 +202,43 @@ private class Gen {
 			//if( item.domEvents != null ) {
 		}
 
-		// Create @:overload for duplicate method definitions
-		switch type.kind {
-		#if (haxe_ver < 4)
-		case TDClass(superClass,interfaces,isInterface):
-		#else
-		case TDClass(superClass,interfaces,isInterface,isFinal):
-		#end
-			var i = 0;
-			while( i < type.fields.length ) {
-				var a = type.fields[i];
-				var j = 0;
-				while( j < type.fields.length ) {
-					if( j != i ) {
-						var b = type.fields[j];
-						if( a.name == b.name ) {
-							type.fields.splice( i, 1 );
-							var expr : Expr;
-							switch a.kind {
-							case FFun(f):
-								f.expr = { expr: EBlock([]), pos: Context.currentPos() };
-								expr = { expr: EFunction( null, f ), pos: Context.currentPos() };
-							default:
+		if( type.kind != null ) {
+			// Create @:overload for duplicate method definitions
+			switch type.kind {
+			#if (haxe_ver < 4)
+			case TDClass(superClass,interfaces,isInterface):
+			#else
+			case TDClass(superClass,interfaces,isInterface,isFinal):
+			#end
+				var i = 0;
+				while( i < type.fields.length ) {
+					var a = type.fields[i];
+					var j = 0;
+					while( j < type.fields.length ) {
+						if( j != i ) {
+							var b = type.fields[j];
+							if( a.name == b.name ) {
+								type.fields.splice( i, 1 );
+								var expr : Expr;
+								switch a.kind {
+								case FFun(f):
+									f.expr = { expr: EBlock([]), pos: Context.currentPos() };
+									expr = { expr: EFunction( null, f ), pos: Context.currentPos() };
+								default:
+								}
+								b.meta.push( { name: ':overload', params: [expr], pos: Context.currentPos() } );
 							}
-							b.meta.push( { name: ':overload', params: [expr], pos: Context.currentPos() } );
 						}
+						j++;
 					}
-					j++;
+					i++;
 				}
-				i++;
+			default:
 			}
-		default:
+		} else {
+			//trace(type);
+			type.kind = TDClass();
+			///type.kind = TDAlias( macro : Dynamic );
 		}
 
 		// Post patch
@@ -274,6 +296,39 @@ private class Gen {
 
 	function createEventEnumAbstract( name : String, pack : Array<String>, events : Array<Event> ) {
 		var _name = name+'Event';
+		var type : TypeDefinition;
+		if( extraTypes.exists( name ) ) {
+			for( et in extraTypes.get( name ) ) {
+				if( et.name == _name ) {
+					type = et;
+					break;
+				}
+			}
+		} else {
+			type = {
+				name: _name,
+				pack: pack,
+				params: [{ name: 'T', constraints: [macro:haxe.Constraints.Function] }],
+				kind: TDAbstract(macro:js.node.events.EventEmitter.Event<T>,[],[macro:js.node.events.EventEmitter.Event<T>]),
+				fields: [],
+				meta: [{ name: ":enum", pos: null }],
+				pos: null
+			};
+			this.extraTypes.set( name, [type] );
+		}
+		for( e in events ) {
+			var params : Array<TypeParam> = if( e.returns == null ) [TPType(macro : Void->Void)] else {
+				[TPType( TFunction( [for(r in e.returns) getComplexType( r.type, r.collection, !r.required )], macro : Void ) )];
+			}
+			type.fields.push({
+				name: e.name.replace( '-', '_' ),
+				kind: FVar( TPath( { pack: pack, name: _name, params: params } ), macro $v{e.name} ),
+				meta: (e.platforms == null ) ? null : [createPlatformMetadata(e)],
+				doc: getDoc( e.description ),
+				pos: null
+			});
+		}
+		/*
 		var fields = [];
 		for( e in events ) {
 			var params : Array<TypeParam> = if( e.returns == null ) [TPType(macro : Void->Void)] else {
@@ -298,6 +353,7 @@ private class Gen {
 		};
 		if( !this.extraTypes.exists( name ) ) this.extraTypes.set( name, [type] );
 		else this.extraTypes.get( name ).push( type );
+		*/
 	}
 
 	function createVarField( p : Property, ?access : Array<Access> ) : Field {
@@ -321,7 +377,7 @@ private class Gen {
 					} );
 				default:
 					args.push( {
-						name: p.name,
+						name: escapeArgument( p.name ),
 						type: getComplexType( p.type, p.collection, p.properties ),
 						opt: (p.required == null) ? true : !p.required
 					} );
@@ -338,9 +394,9 @@ private class Gen {
 	}
 
 	function createField( name : String, kind : FieldType, access : Array<Access>, ?meta : Metadata, ?doc : String  ) : Field {
-		var kwds = ['class','private','switch'];
+		//var kwds = ['class','private','switch'];
 		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i; //TODO: test/improve
-		if( !expr.match( name ) || kwds.indexOf( name ) != -1  ) {
+		if( !expr.match( name ) || KWDS.indexOf( name ) != -1  ) {
 			//trace("INVALID TYPE NAME: "+name);
 			var _name = '_'+name;
 			if( meta == null ) meta = [];
@@ -372,10 +428,11 @@ private class Gen {
 			TPath( { name: name, pack: root.copy() } );
 		case 'Any','any': macro : Any;
 		case 'Blob': macro : js.html.Blob;
-		case 'Bool','Boolean': macro : Bool;
+		case 'Bool','Boolean','boolean': macro : Bool;
 		case 'Buffer': macro : js.node.Buffer;
 		case 'Date': macro : Date;
-		case 'Double','Float','Number': macro : Float;
+		case 'NodeJS.Process': macro : js.node.Process;
+		case 'Double','Float','Number','number': macro : Float;
 		case 'Dynamic': macro : Dynamic; // Allows to explicit set type to Dynamic
 		case 'Error':
 			#if (haxe_ver>=4)
@@ -465,6 +522,14 @@ private class Gen {
 		}
 	}
 
+	static function escapeArgument( name : String ) : String {
+		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i; //TODO: test/improve
+		if( !expr.match( name ) || KWDS.indexOf( name ) != -1  ) {
+			return name+'_';
+		}
+		return name;
+	}
+	
 	static inline function capitalize( s : String ) : String
 		return s.charAt( 0 ).toUpperCase() + s.substr( 1 );
 
