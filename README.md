@@ -56,7 +56,7 @@ haxelib dev electron .
 ## Build and run the demo application
 cd demo/
 haxe build.hxml
-electron bin/
+electron ./
 ```
 
 ### Metadata
