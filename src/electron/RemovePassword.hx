@@ -4,7 +4,7 @@ package electron;
 **/
 typedef RemovePassword = {
 	/**
-		password.
+		`password`.
 	**/
 	var type : String;
 	/**
@@ -12,19 +12,19 @@ typedef RemovePassword = {
 	**/
 	var origin : String;
 	/**
-		Scheme of the authentication. Can be basic, digest, ntlm, negotiate. Must be provided if removing by origin.
+		Scheme of the authentication. Can be `basic`, `digest`, `ntlm`, `negotiate`. Must be provided if removing by `origin`.
 	**/
 	var scheme : String;
 	/**
-		Realm of the authentication. Must be provided if removing by origin.
+		Realm of the authentication. Must be provided if removing by `origin`.
 	**/
 	var realm : String;
 	/**
-		Credentials of the authentication. Must be provided if removing by origin.
+		Credentials of the authentication. Must be provided if removing by `origin`.
 	**/
 	var username : String;
 	/**
-		Credentials of the authentication. Must be provided if removing by origin.
+		Credentials of the authentication. Must be provided if removing by `origin`.
 	**/
 	var password : String;
 }

@@ -32,7 +32,7 @@ typedef Product = {
 	**/
 	var formattedPrice : String;
 	/**
-		A Boolean value that indicates whether the App Store has downloadable content for this product. true if at least one file has been associated with the product.
+		A Boolean value that indicates whether the App Store has downloadable content for this product. `true` if at least one file has been associated with the product.
 	**/
 	var isDownloadable : Bool;
 }

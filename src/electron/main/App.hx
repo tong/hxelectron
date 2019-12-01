@@ -1,87 +1,93 @@
 package electron.main;
 /**
-	Control your application's event lifecycle.
 	@see http://electronjs.org/docs/api/app
 **/
 @:jsRequire("electron", "app") extern class App extends js.node.events.EventEmitter<electron.main.App> {
 	/**
-		A Menu property that return Menu if one has been set and null otherwise. Users can pass a Menu to set this property.
-	**/
-	static var applicationMenu : electron.main.Menu;
-	/**
-		A Boolean property that's true if Chrome's accessibility support is enabled, false otherwise. This property will be true if the use of assistive technologies, such as screen readers, has been detected. Setting this property to true manually enables Chrome's accessibility support, allowing developers to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default. This API must be called after the ready event is emitted. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
+		A `Boolean` property that's `true` if Chrome's accessibility support is enabled, `false` otherwise. This property will be `true` if the use of assistive technologies, such as screen readers, has been detected. Setting this property to `true` manually enables Chrome's accessibility support, allowing developers to expose accessibility switch to users in application settings.
+		
+		See Chromium's accessibility docs for more details. Disabled by default.
+		
+		This API must be called after the `ready` event is emitted.
+		
+		**Note:** Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
 	**/
 	static var accessibilitySupportEnabled : Bool;
 	/**
-		A String which is the user agent string Electron will use as a global fallback. This is the user agent that will be used when no user agent is set at the webContents or session level.  Useful for ensuring your entire app has the same user agent.  Set to a custom value as early as possible in your apps initialization to ensure that your overridden value is used.
+		A `Menu | null` property that returns `Menu` if one has been set and `null` otherwise. Users can pass a Menu to set this property.
 	**/
-	static var userAgentFallback : String;
+	static var applicationMenu : haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
-		A Boolean property that returns  true if the app is packaged, false otherwise. For many apps, this property can be used to distinguish development and production environments.
+		An `Integer` property that returns the badge count for current app. Setting the count to `0` will hide the badge.
+		
+		On macOS, setting this with any nonzero integer shows on the dock icon. On Linux, this property only works for Unity launcher.
+		
+		**Note:** Unity launcher requires the existence of a `.desktop` file to work, for more information please read Desktop Environment Integration.
+	**/
+	static var badgeCount : Int;
+	/**
+		A `CommandLine` object that allows you to read and manipulate the command line arguments that Chromium uses.
+	**/
+	static var commandLine : electron.main.CommandLine;
+	/**
+		A `Dock` object that allows you to perform actions on your app icon in the user's dock on macOS.
+	**/
+	static var dock : electron.main.Dock;
+	/**
+		A `Boolean` property that returns  `true` if the app is packaged, `false` otherwise. For many apps, this property can be used to distinguish development and production environments.
 	**/
 	static var isPackaged : Bool;
 	/**
-		A Boolean which when true disables the overrides that Electron has in place to ensure renderer processes are restarted on every navigation.  The current default value for this property is false. The intention is for these overrides to become disabled by default and then at some point in the future this property will be removed.  This property impacts which native modules you can use in the renderer process.  For more information on the direction Electron is going with renderer process restarts and usage of native modules in the renderer process please check out this Tracking Issue.
+		A `String` property that indicates the current application's name, which is the name in the application's `package.json` file.
+		
+		Usually the `name` field of `package.json` is a short lowercase name, according to the npm modules spec. You should usually also specify a `productName` field, which is your application's full capitalized name, and which will be preferred over `name` by Electron.
+	**/
+	static var name : String;
+	/**
+		A `String` which is the user agent string Electron will use as a global fallback.
+		
+		This is the user agent that will be used when no user agent is set at the `webContents` or `session` level.  It is useful for ensuring that your entire app has the same user agent.  Set to a custom value as early as possible in your app's initialization to ensure that your overridden value is used.
+	**/
+	static var userAgentFallback : String;
+	/**
+		A `Boolean` which when `true` disables the overrides that Electron has in place to ensure renderer processes are restarted on every navigation.  The current default value for this property is `false`.
+		
+		The intention is for these overrides to become disabled by default and then at some point in the future this property will be removed.  This property impacts which native modules you can use in the renderer process.  For more information on the direction Electron is going with renderer process restarts and usage of native modules in the renderer process please check out this Tracking Issue.
 	**/
 	static var allowRendererProcessReuse : Bool;
-	static var commandLine : { /**
-		Append a switch (with optional value) to Chromium's command line. Note: This will not affect process.argv. The intended usage of this function is to control Chromium's behavior.
-	**/
-	var appendSwitch : haxe.Constraints.Function; /**
-		Append an argument to Chromium's command line. The argument will be quoted correctly. Switches will precede arguments regardless of appending order. If you're appending an argument like --switch=value, consider using appendSwitch('switch', 'value') instead. Note: This will not affect process.argv. The intended usage of this function is to control Chromium's behavior.
-	**/
-	var appendArgument : haxe.Constraints.Function; var hasSwitch : haxe.Constraints.Function; /**
-		Note: When the switch is not present or has no value, it returns empty string.
-	**/
-	var getSwitchValue : haxe.Constraints.Function; };
-	static var dock : { /**
-		When critical is passed, the dock icon will bounce until either the application becomes active or the request is canceled. When informational is passed, the dock icon will bounce for one second. However, the request remains active until either the application becomes active or the request is canceled. Nota Bene: This method can only be used while the app is not focused; when the app is focused it will return -1.
-	**/
-	@:electron_platforms(["macOS"])
-	var bounce : haxe.Constraints.Function; /**
-		Cancel the bounce of id.
-	**/
-	@:electron_platforms(["macOS"])
-	var cancelBounce : haxe.Constraints.Function; /**
-		Bounces the Downloads stack if the filePath is inside the Downloads folder.
-	**/
-	@:electron_platforms(["macOS"])
-	var downloadFinished : haxe.Constraints.Function; /**
-		Sets the string to be displayed in the dock’s badging area.
-	**/
-	@:electron_platforms(["macOS"])
-	var setBadge : haxe.Constraints.Function; @:electron_platforms(["macOS"])
-	var getBadge : haxe.Constraints.Function; /**
-		Hides the dock icon.
-	**/
-	@:electron_platforms(["macOS"])
-	var hide : haxe.Constraints.Function; @:electron_platforms(["macOS"])
-	var show : haxe.Constraints.Function; @:electron_platforms(["macOS"])
-	var isVisible : haxe.Constraints.Function; /**
-		Sets the application's dock menu.
-	**/
-	@:electron_platforms(["macOS"])
-	var setMenu : haxe.Constraints.Function; @:electron_platforms(["macOS"])
-	var getMenu : haxe.Constraints.Function; /**
-		Sets the image associated with this dock icon.
-	**/
-	@:electron_platforms(["macOS"])
-	var setIcon : haxe.Constraints.Function; };
 	/**
-		Try to close all windows. The before-quit event will be emitted first. If all windows are successfully closed, the will-quit event will be emitted and by default the application will terminate. This method guarantees that all beforeunload and unload event handlers are correctly executed. It is possible that a window cancels the quitting by returning false in the beforeunload event handler.
+		Try to close all windows. The `before-quit` event will be emitted first. If all windows are successfully closed, the `will-quit` event will be emitted and by default the application will terminate.
+		
+		This method guarantees that all `beforeunload` and `unload` event handlers are correctly executed. It is possible that a window cancels the quitting by returning `false` in the `beforeunload` event handler.
 	**/
 	static function quit():Void;
 	/**
-		Exits immediately with exitCode. exitCode defaults to 0. All windows will be closed immediately without asking the user, and the before-quit and will-quit events will not be emitted.
+		Exits immediately with `exitCode`. `exitCode` defaults to 0.
+		
+		All windows will be closed immediately without asking the user, and the `before-quit` and `will-quit` events will not be emitted.
 	**/
 	static function exit(?exitCode:Int):Void;
 	/**
-		Relaunches the app when current instance exits. By default, the new instance will use the same working directory and command line arguments with current instance. When args is specified, the args will be passed as command line arguments instead. When execPath is specified, the execPath will be executed for relaunch instead of current app. Note that this method does not quit the app when executed, you have to call app.quit or app.exit after calling app.relaunch to make the app restart. When app.relaunch is called for multiple times, multiple instances will be started after current instance exited. An example of restarting current instance immediately and adding a new command line argument to the new instance:
+		Relaunches the app when current instance exits.
+		
+		By default, the new instance will use the same working directory and command line arguments with current instance. When `args` is specified, the `args` will be passed as command line arguments instead. When `execPath` is specified, the `execPath` will be executed for relaunch instead of current app.
+		
+		Note that this method does not quit the app when executed, you have to call `app.quit` or `app.exit` after calling `app.relaunch` to make the app restart.
+		
+		When `app.relaunch` is called for multiple times, multiple instances will be started after current instance exited.
+		
+		An example of restarting current instance immediately and adding a new command line argument to the new instance:
 	**/
 	static function relaunch(?options:{ @:optional
 	var args : Array<String>; @:optional
 	var execPath : String; }):Void;
+	/**
+		`true` if Electron has finished initializing, `false` otherwise.
+	**/
 	static function isReady():Bool;
+	/**
+		fulfilled when Electron is initialized. May be used as a convenient alternative to checking `app.isReady()` and subscribing to the `ready` event if the app is not ready yet.
+	**/
 	static function whenReady():js.lib.Promise<Any>;
 	/**
 		On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses on the application's first window.
@@ -90,121 +96,198 @@ package electron.main;
 	/**
 		Hides all application windows without minimizing them.
 	**/
-	@:electron_platforms(["macOS"])
 	static function hide():Void;
 	/**
 		Shows application windows after they were hidden. Does not automatically focus them.
 	**/
-	@:electron_platforms(["macOS"])
 	static function show():Void;
 	/**
-		Sets or creates a directory your app's logs which can then be manipulated with app.getPath() or app.setPath(pathName, newPath). Calling app.setAppLogsPath() without a path parameter will result in this directory being set to /Library/Logs/YourAppName on macOS, and inside the userData directory on Linux and Windows.
+		Sets or creates a directory your app's logs which can then be manipulated with `app.getPath()` or `app.setPath(pathName, newPath)`.
+		
+		Calling `app.setAppLogsPath()` without a `path` parameter will result in this directory being set to `~/Library/Logs/YourAppName` on _macOS_, and inside the `userData` directory on _Linux_ and _Windows_.
 	**/
 	static function setAppLogsPath(?path:String):Void;
+	/**
+		The current application directory.
+	**/
 	static function getAppPath():String;
 	/**
-		You can request the following paths by the name:
+		A path to a special directory or file associated with `name`. On failure, an `Error` is thrown.
+		
+		If `app.getPath('logs')` is called without called `app.setAppLogsPath()` being called first, a default log directory will be created equivalent to calling `app.setAppLogsPath()` without a `path` parameter.
 	**/
 	static function getPath(name:String):String;
 	/**
-		Fetches a path's associated icon. On Windows, there a 2 kinds of icons: On Linux and macOS, icons depend on the application associated with file mime type.
+		fulfilled with the app's icon, which is a NativeImage.
+		
+		Fetches a path's associated icon.
+		
+		On _Windows_, there a 2 kinds of icons:
+		
+		* Icons associated with certain file extensions, like `.mp3`, `.png`, etc.
+		* Icons inside the file itself, like `.exe`, `.dll`, `.ico`.
+		
+		On _Linux_ and _macOS_, icons depend on the application associated with file mime type.
 	**/
-	@:overload(function(path:String, ?options:{ var size : String; }, callback:haxe.Constraints.Function):Void { })
 	static function getFileIcon(path:String, ?options:{ var size : String; }):js.lib.Promise<Any>;
 	/**
-		Overrides the path to a special directory or file associated with name. If the path specifies a directory that does not exist, an Error is thrown. In that case, the directory should be created with fs.mkdirSync or similar. You can only override paths of a name defined in app.getPath. By default, web pages' cookies and caches will be stored under the userData directory. If you want to change this location, you have to override the userData path before the ready event of the app module is emitted.
+		Overrides the `path` to a special directory or file associated with `name`. If the path specifies a directory that does not exist, an `Error` is thrown. In that case, the directory should be created with `fs.mkdirSync` or similar.
+		
+		You can only override paths of a `name` defined in `app.getPath`.
+		
+		By default, web pages' cookies and caches will be stored under the `userData` directory. If you want to change this location, you have to override the `userData` path before the `ready` event of the `app` module is emitted.
 	**/
 	static function setPath(name:String, path:String):Void;
+	/**
+		The version of the loaded application. If no version is found in the application's `package.json` file, the version of the current bundle or executable is returned.
+	**/
 	static function getVersion():String;
 	/**
-		Usually the name field of package.json is a short lowercased name, according to the npm modules spec. You should usually also specify a productName field, which is your application's full capitalized name, and which will be preferred over name by Electron.
+		The current application's name, which is the name in the application's `package.json` file.
+		
+		Usually the `name` field of `package.json` is a short lowercase name, according to the npm modules spec. You should usually also specify a `productName` field, which is your application's full capitalized name, and which will be preferred over `name` by Electron.
+		
+		**Deprecated**
 	**/
 	static function getName():String;
 	/**
 		Overrides the current application's name.
+		
+		**Deprecated**
 	**/
 	static function setName(name:String):Void;
 	/**
-		To set the locale, you'll want to use a command line switch at app startup, which may be found here. Note: When distributing your packaged app, you have to also ship the locales folder. Note: On Windows, you have to call it after the ready events gets emitted.
+		The current application locale. Possible return values are documented here.
+		
+		To set the locale, you'll want to use a command line switch at app startup, which may be found here.
+		
+		**Note:** When distributing your packaged app, you have to also ship the `locales` folder.
+		
+		**Note:** On Windows, you have to call it after the `ready` events gets emitted.
 	**/
 	static function getLocale():String;
 	/**
-		Note: When unable to detect locale country code, it returns empty string.
+		User operating system's locale two-letter ISO 3166 country code. The value is taken from native OS APIs.
+		
+		**Note:** When unable to detect locale country code, it returns empty string.
 	**/
 	static function getLocaleCountryCode():String;
 	/**
-		Adds path to the recent documents list. This list is managed by the OS. On Windows, you can visit the list from the task bar, and on macOS, you can visit it from dock menu.
+		Adds `path` to the recent documents list.
+		
+		This list is managed by the OS. On Windows, you can visit the list from the task bar, and on macOS, you can visit it from dock menu.
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function addRecentDocument(path:String):Void;
 	/**
 		Clears the recent documents list.
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function clearRecentDocuments():Void;
 	/**
-		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with your-protocol:// will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter. On Windows, you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches. Note: On macOS, you can only register protocols that have been added to your app's info.plist, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details. Note: In a Windows Store environment (when packaged as an appx) this API will return true for all calls but the registry key it sets won't be accessible by other applications.  In order to register your Windows Store application as a default protocol handler you must declare the protocol in your manifest. The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
+		Whether the call succeeded.
+		
+		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with `your-protocol://` will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter.
+		
+		On Windows, you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches.
+		
+		**Note:** On macOS, you can only register protocols that have been added to your app's `info.plist`, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details.
+		
+		**Note:** In a Windows Store environment (when packaged as an `appx`) this API will return `true` for all calls but the registry key it sets won't be accessible by other applications.  In order to register your Windows Store application as a default protocol handler you must declare the protocol in your manifest.
+		
+		The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
 	**/
 	static function setAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
+		Whether the call succeeded.
+		
 		This method checks if the current executable as the default handler for a protocol (aka URI scheme). If so, it will remove the app as the default handler.
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function removeAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
-		This method checks if the current executable is the default handler for a protocol (aka URI scheme). If so, it will return true. Otherwise, it will return false. Note: On macOS, you can use this method to check if the app has been registered as the default protocol handler for a protocol. You can also verify this by checking ~/Library/Preferences/com.apple.LaunchServices.plist on the macOS machine. Please refer to Apple's documentation for details. The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
+		This method checks if the current executable is the default handler for a protocol (aka URI scheme). If so, it will return true. Otherwise, it will return false.
+		
+		**Note:** On macOS, you can use this method to check if the app has been registered as the default protocol handler for a protocol. You can also verify this by checking `~/Library/Preferences/com.apple.LaunchServices.plist` on the macOS machine. Please refer to Apple's documentation for details.
+		
+		The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
 	**/
 	static function isDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
-		Adds tasks to the Tasks category of the JumpList on Windows. tasks is an array of Task objects. Note: If you'd like to customize the Jump List even more use app.setJumpList(categories) instead.
+		Adds `tasks` to the Tasks category of the Jump List on Windows.
+		
+		`tasks` is an array of `Task` objects.
+		
+		Whether the call succeeded.
+		
+		**Note:** If you'd like to customize the Jump List even more use `app.setJumpList(categories)` instead.
 	**/
-	@:electron_platforms(["Windows"])
 	static function setUserTasks(tasks:Array<electron.Task>):Bool;
-	@:electron_platforms(["Windows"])
+	/**
+		* `minItems` Integer - The minimum number of items that will be shown in the Jump List (for a more detailed description of this value see the MSDN docs).
+		* `removedItems` JumpListItem[] - Array of `JumpListItem` objects that correspond to items that the user has explicitly removed from custom categories in the Jump List. These items must not be re-added to the Jump List in the **next** call to `app.setJumpList()`, Windows will not display any custom category that contains any of the removed items.
+	**/
 	static function getJumpListSettings():Any;
 	/**
-		Sets or removes a custom Jump List for the application, and returns one of the following strings: If categories is null the previously set custom Jump List (if any) will be replaced by the standard Jump List for the app (managed by Windows). Note: If a JumpListCategory object has neither the type nor the name property set then its type is assumed to be tasks. If the name property is set but the type property is omitted then the type is assumed to be custom. Note: Users can remove items from custom categories, and Windows will not allow a removed item to be added back into a custom category until after the next successful call to app.setJumpList(categories). Any attempt to re-add a removed item to a custom category earlier than that will result in the entire custom category being omitted from the Jump List. The list of removed items can be obtained using app.getJumpListSettings(). Here's a very simple example of creating a custom Jump List:
+		Sets or removes a custom Jump List for the application, and returns one of the following strings:
+		
+		* `ok` - Nothing went wrong.
+		* `error` - One or more errors occurred, enable runtime logging to figure out the likely cause.
+		* `invalidSeparatorError` - An attempt was made to add a separator to a custom category in the Jump List. Separators are only allowed in the standard `Tasks` category.
+		* `fileTypeRegistrationError` - An attempt was made to add a file link to the Jump List for a file type the app isn't registered to handle.
+		* `customCategoryAccessDeniedError` - Custom categories can't be added to the Jump List due to user privacy or group policy settings.
+		
+		If `categories` is `null` the previously set custom Jump List (if any) will be replaced by the standard Jump List for the app (managed by Windows).
+		
+		**Note:** If a `JumpListCategory` object has neither the `type` nor the `name` property set then its `type` is assumed to be `tasks`. If the `name` property is set but the `type` property is omitted then the `type` is assumed to be `custom`.
+		
+		**Note:** Users can remove items from custom categories, and Windows will not allow a removed item to be added back into a custom category until **after** the next successful call to `app.setJumpList(categories)`. Any attempt to re-add a removed item to a custom category earlier than that will result in the entire custom category being omitted from the Jump List. The list of removed items can be obtained using `app.getJumpListSettings()`.
+		
+		Here's a very simple example of creating a custom Jump List:
 	**/
-	@:electron_platforms(["Windows"])
-	static function setJumpList(categories:Array<electron.JumpListCategory>):Void;
+	static function setJumpList(categories:haxe.extern.EitherType<Array<Dynamic>, Dynamic>):Void;
 	/**
-		The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately. I.e. This method returns true if your process is the primary instance of your application and your app should continue loading.  It returns false if your process should immediately quit as it has sent its parameters to another instance that has already acquired the lock. On macOS, the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the open-file and open-url events will be emitted for that. However when users start your app in command line, the system's single instance mechanism will be bypassed, and you have to use this method to ensure single instance. An example of activating the window of primary instance when a second instance starts:
+		The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately.
+		
+		I.e. This method returns `true` if your process is the primary instance of your application and your app should continue loading.  It returns `false` if your process should immediately quit as it has sent its parameters to another instance that has already acquired the lock.
+		
+		On macOS, the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the `open-file` and `open-url` events will be emitted for that. However when users start your app in command line, the system's single instance mechanism will be bypassed, and you have to use this method to ensure single instance.
+		
+		An example of activating the window of primary instance when a second instance starts:
 	**/
 	static function requestSingleInstanceLock():Bool;
 	/**
-		This method returns whether or not this instance of your app is currently holding the single instance lock.  You can request the lock with app.requestSingleInstanceLock() and release with app.releaseSingleInstanceLock()
+		This method returns whether or not this instance of your app is currently holding the single instance lock.  You can request the lock with `app.requestSingleInstanceLock()` and release with `app.releaseSingleInstanceLock()`
 	**/
 	static function hasSingleInstanceLock():Bool;
 	/**
-		Releases all locks that were created by requestSingleInstanceLock. This will allow multiple instances of the application to once again run side by side.
+		Releases all locks that were created by `requestSingleInstanceLock`. This will allow multiple instances of the application to once again run side by side.
 	**/
 	static function releaseSingleInstanceLock():Void;
 	/**
-		Creates an NSUserActivity and sets it as the current activity. The activity is eligible for Handoff to another device afterward.
+		Creates an `NSUserActivity` and sets it as the current activity. The activity is eligible for Handoff to another device afterward.
 	**/
-	@:electron_platforms(["macOS"])
 	static function setUserActivity(type:String, userInfo:Any, ?webpageURL:String):Void;
-	@:electron_platforms(["macOS"])
+	/**
+		The type of the currently running activity.
+	**/
 	static function getCurrentActivityType():String;
 	/**
 		Invalidates the current Handoff user activity.
 	**/
-	@:electron_platforms(["macOS"])
-	static function invalidateCurrentActivity(type:String):Void;
+	static function invalidateCurrentActivity():Void;
 	/**
-		Updates the current activity if its type matches type, merging the entries from userInfo into its current userInfo dictionary.
+		Marks the current Handoff user activity as inactive without invalidating it.
 	**/
-	@:electron_platforms(["macOS"])
+	static function resignCurrentActivity():Void;
+	/**
+		Updates the current activity if its type matches `type`, merging the entries from `userInfo` into its current `userInfo` dictionary.
+	**/
 	static function updateCurrentActivity(type:String, userInfo:Any):Void;
 	/**
-		Changes the Application User Model ID to id.
+		Changes the Application User Model ID to `id`.
 	**/
-	@:electron_platforms(["Windows"])
 	static function setAppUserModelId(id:String):Void;
 	/**
-		Imports the certificate in pkcs12 format into the platform certificate store. callback is called with the result of import operation, a value of 0 indicates success while any other value indicates failure according to Chromium net_error_list.
+		Imports the certificate in pkcs12 format into the platform certificate store. `callback` is called with the `result` of import operation, a value of `0` indicates success while any other value indicates failure according to Chromium net_error_list.
 	**/
-	@:electron_platforms(["LINUX"])
 	static function importCertificate(options:{ /**
 		Path for the pkcs12 file.
 	**/
@@ -213,34 +296,69 @@ package electron.main;
 	**/
 	var password : String; }, callback:haxe.Constraints.Function):Void;
 	/**
-		Disables hardware acceleration for current app. This method can only be called before app is ready.
+		Disables hardware acceleration for current app.
+		
+		This method can only be called before app is ready.
 	**/
 	static function disableHardwareAcceleration():Void;
 	/**
-		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behaviour. This method can only be called before app is ready.
+		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behaviour.
+		
+		This method can only be called before app is ready.
 	**/
 	static function disableDomainBlockingFor3DAPIs():Void;
+	/**
+		Array of `ProcessMetric` objects that correspond to memory and CPU usage statistics of all the processes associated with the app.
+	**/
 	static function getAppMetrics():Array<electron.ProcessMetric>;
+	/**
+		The Graphics Feature Status from `chrome://gpu/`.
+		
+		**Note:** This information is only usable after the `gpu-info-update` event is emitted.
+	**/
 	static function getGPUFeatureStatus():electron.GPUFeatureStatus;
 	/**
-		For infoType equal to complete: Promise is fulfilled with Object containing all the GPU Information as in chromium's GPUInfo object. This includes the version and driver information that's shown on chrome://gpu page. For infoType equal to basic: Promise is fulfilled with Object containing fewer attributes than when requested with complete. Here's an example of basic response: Using basic should be preferred if only basic information like vendorId or driverId is needed.
+		For `infoType` equal to `complete`: Promise is fulfilled with `Object` containing all the GPU Information as in chromium's GPUInfo object. This includes the version and driver information that's shown on `chrome://gpu` page.
+		
+		For `infoType` equal to `basic`: Promise is fulfilled with `Object` containing fewer attributes than when requested with `complete`. Here's an example of basic response:
+		
+		Using `basic` should be preferred if only basic information like `vendorId` or `driverId` is needed.
 	**/
 	static function getGPUInfo(infoType:String):js.lib.Promise<Any>;
 	/**
-		Sets the counter badge for current app. Setting the count to 0 will hide the badge. On macOS, it shows on the dock icon. On Linux, it only works for Unity launcher. Note: Unity launcher requires the existence of a .desktop file to work, for more information please read Desktop Environment Integration.
+		Whether the call succeeded.
+		
+		Sets the counter badge for current app. Setting the count to `0` will hide the badge.
+		
+		On macOS, it shows on the dock icon. On Linux, it only works for Unity launcher.
+		
+		**Note:** Unity launcher requires the existence of a `.desktop` file to work, for more information please read Desktop Environment Integration.
+		
+		**Deprecated**
 	**/
-	@:electron_platforms(["Linux", "macOS"])
 	static function setBadgeCount(count:Int):Bool;
-	@:electron_platforms(["Linux", "macOS"])
+	/**
+		The current value displayed in the counter badge.
+		
+		**Deprecated**
+	**/
 	static function getBadgeCount():Int;
-	@:electron_platforms(["Linux"])
+	/**
+		Whether the current desktop environment is Unity launcher.
+	**/
 	static function isUnityRunning():Bool;
 	/**
-		If you provided path and args options to app.setLoginItemSettings, then you need to pass the same arguments here for openAtLogin to be set correctly.
+		If you provided `path` and `args` options to `app.setLoginItemSettings`, then you need to pass the same arguments here for `openAtLogin` to be set correctly.
+		
+		
+		* `openAtLogin` Boolean - `true` if the app is set to open at login.
+		* `openAsHidden` Boolean _macOS_ - `true` if the app is set to open as hidden at login. This setting is not available on MAS builds.
+		* `wasOpenedAtLogin` Boolean _macOS_ - `true` if the app was opened at login automatically. This setting is not available on MAS builds.
+		* `wasOpenedAsHidden` Boolean _macOS_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds.
+		* `restoreState` Boolean _macOS_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds.
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function getLoginItemSettings(?options:{ /**
-		The executable path to compare against. Defaults to process.execPath.
+		The executable path to compare against. Defaults to `process.execPath`.
 	**/
 	@:optional
 	var path : String; /**
@@ -249,19 +367,20 @@ package electron.main;
 	@:optional
 	var args : Array<String>; }):Any;
 	/**
-		Set the app's login item settings. To work with Electron's autoUpdater on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example:
+		Set the app's login item settings.
+		
+		To work with Electron's `autoUpdater` on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example:
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function setLoginItemSettings(settings:{ /**
-		true to open the app at login, false to remove the app as a login item. Defaults to false.
+		`true` to open the app at login, `false` to remove the app as a login item. Defaults to `false`.
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		true to open the app as hidden. Defaults to false. The user can edit this setting from the System Preferences so app.getLoginItemSettings().wasOpenedAsHidden should be checked when the app is opened to know the current value. This setting is not available on .
+		`true` to open the app as hidden. Defaults to `false`. The user can edit this setting from the System Preferences so `app.getLoginItemSettings().wasOpenedAsHidden` should be checked when the app is opened to know the current value. This setting is not available on MAS builds.
 	**/
 	@:optional
 	var openAsHidden : Bool; /**
-		The executable to launch at login. Defaults to process.execPath.
+		The executable to launch at login. Defaults to `process.execPath`.
 	**/
 	@:optional
 	var path : String; /**
@@ -270,24 +389,28 @@ package electron.main;
 	@:optional
 	var args : Array<String>; }):Void;
 	/**
-		Deprecated Soon
+		`true` if Chrome's accessibility support is enabled, `false` otherwise. This API will return `true` if the use of assistive technologies, such as screen readers, has been detected. See https://www.chromium.org/developers/design-documents/accessibility for more details.
+		
+		**Deprecated**
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
-		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default. This API must be called after the ready event is emitted. Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default. Deprecated Soon
+		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default.
+		
+		This API must be called after the `ready` event is emitted.
+		
+		**Note:** Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
+		
+		**Deprecated**
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
 	/**
-		Show the app's about panel options. These options can be overridden with app.setAboutPanelOptions(options).
+		Show the app's about panel options. These options can be overridden with `app.setAboutPanelOptions(options)`.
 	**/
-	@:electron_platforms(["macOS", "Linux"])
 	static function showAboutPanel():Void;
 	/**
-		Set the about panel options. This will override the values defined in the app's .plist file on MacOS. See the Apple docs for more details. On Linux, values must be set in order to be shown; there are no defaults.
+		Set the about panel options. This will override the values defined in the app's `.plist` file on MacOS. See the Apple docs for more details. On Linux, values must be set in order to be shown; there are no defaults.
 	**/
-	@:electron_platforms(["macOS", "Linux"])
 	static function setAboutPanelOptions(options:{ /**
 		The app's name.
 	**/
@@ -309,6 +432,10 @@ package electron.main;
 	**/
 	@:optional
 	var credits : String; /**
+		List of app authors.
+	**/
+	@:optional
+	var authors : Array<String>; /**
 		The app's website.
 	**/
 	@:optional
@@ -317,176 +444,221 @@ package electron.main;
 	**/
 	@:optional
 	var iconPath : String; }):Void;
+	/**
+		whether or not the current OS version allows for native emoji pickers.
+	**/
 	static function isEmojiPanelSupported():Bool;
 	/**
 		Show the platform's native emoji picker.
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	static function showEmojiPanel():Void;
 	/**
+		This function **must** be called once you have finished accessing the security scoped file. If you do not remember to stop accessing the bookmark, kernel resources will be leaked and your app will lose its ability to reach outside the sandbox completely, until your app is restarted.
+		
 		Start accessing a security scoped resource. With this method Electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
 	**/
-	@:electron_platforms(["macOS", "mas"])
 	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
 	/**
-		Enables full sandbox mode on the app. This method can only be called before app is ready.
+		Enables full sandbox mode on the app.
+		
+		This method can only be called before app is ready.
 	**/
-	@:electron_platforms(["Experimental"])
 	static function enableSandbox():Void;
-	@:electron_platforms(["macOS"])
+	/**
+		Whether the application is currently running from the systems Application folder. Use in combination with `app.moveToApplicationsFolder()`
+	**/
 	static function isInApplicationsFolder():Bool;
 	/**
-		No confirmation dialog will be presented by default. If you wish to allow the user to confirm the operation, you may do so using the dialog API. NOTE: This method throws errors if anything other than the user causes the move to fail. For instance if the user cancels the authorization dialog, this method returns false. If we fail to perform the copy, then this method will throw an error. The message in the error should be informative and tell you exactly what went wrong
+		Whether the move was successful. Please note that if the move is successful, your application will quit and relaunch.
+		
+		No confirmation dialog will be presented by default. If you wish to allow the user to confirm the operation, you may do so using the `dialog` API.
+		
+		**NOTE:** This method throws errors if anything other than the user causes the move to fail. For instance if the user cancels the authorization dialog, this method returns false. If we fail to perform the copy, then this method will throw an error. The message in the error should be informative and tell you exactly what went wrong.
+		
+		By default, if an app of the same name as the one being moved exists in the Applications directory and is _not_ running, the existing app will be trashed and the active app moved into its place. If it _is_ running, the pre-existing running app will assume focus and the the previously active app will quit itself. This behavior can be changed by providing the optional conflict handler, where the boolean returned by the handler determines whether or not the move conflict is resolved with default behavior.  i.e. returning `false` will ensure no further action is taken, returning `true` will result in the default behavior and the method continuing.
+		
+		For example:
+		
+		Would mean that if an app already exists in the user directory, if the user chooses to 'Continue Move' then the function would continue with its default behavior and the existing app will be trashed and the active app moved into its place.
 	**/
-	@:electron_platforms(["macOS"])
-	static function moveToApplicationsFolder():Bool;
+	static function moveToApplicationsFolder(?options:{ /**
+		A handler for potential conflict in move failure.
+	**/
+	@:optional
+	var conflictHandler : haxe.Constraints.Function; }):Bool;
 	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
 }
 @:enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
-		Emitted when the application has finished basic startup. On Windows and Linux, the will-finish-launching event is the same as the ready event; on macOS, this event represents the applicationWillFinishLaunching notification of NSApplication. You would usually set up listeners for the open-file and open-url events here, and start the crash reporter and auto updater. In most cases, you should do everything in the ready event handler.
+		Emitted when the application has finished basic startup. On Windows and Linux, the `will-finish-launching` event is the same as the `ready` event; on macOS, this event represents the `applicationWillFinishLaunching` notification of `NSApplication`. You would usually set up listeners for the `open-file` and `open-url` events here, and start the crash reporter and auto updater.
+		
+		In most cases, you should do everything in the `ready` event handler.
 	**/
 	var will_finish_launching : electron.main.AppEvent<Void -> Void> = "will-finish-launching";
 	/**
-		Emitted when Electron has finished initializing. On macOS, launchInfo holds the userInfo of the NSUserNotification that was used to open the application, if it was launched from Notification Center. You can call app.isReady() to check if this event has already fired.
+		Emitted when Electron has finished initializing. On macOS, `launchInfo` holds the `userInfo` of the `NSUserNotification` that was used to open the application, if it was launched from Notification Center. You can call `app.isReady()` to check if this event has already fired.
 	**/
-	var ready : electron.main.AppEvent<Any -> Void> = "ready";
+	var ready : electron.main.AppEvent<Void -> Void> = "ready";
 	/**
-		Emitted when all windows have been closed. If you do not subscribe to this event and all windows are closed, the default behavior is to quit the app; however, if you subscribe, you control whether the app quits or not. If the user pressed Cmd + Q, or the developer called app.quit(), Electron will first try to close all the windows and then emit the will-quit event, and in this case the window-all-closed event would not be emitted.
+		Emitted when all windows have been closed.
+		
+		If you do not subscribe to this event and all windows are closed, the default behavior is to quit the app; however, if you subscribe, you control whether the app quits or not. If the user pressed `Cmd + Q`, or the developer called `app.quit()`, Electron will first try to close all the windows and then emit the `will-quit` event, and in this case the `window-all-closed` event would not be emitted.
 	**/
 	var window_all_closed : electron.main.AppEvent<Void -> Void> = "window-all-closed";
 	/**
-		Emitted before the application starts closing its windows. Calling event.preventDefault() will prevent the default behavior, which is terminating the application. Note: If application quit was initiated by autoUpdater.quitAndInstall(), then before-quit is emitted after emitting close event on all windows and closing them. Note: On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
+		Emitted before the application starts closing its windows. Calling `event.preventDefault()` will prevent the default behavior, which is terminating the application.
+		
+		**Note:** If application quit was initiated by `autoUpdater.quitAndInstall()`, then `before-quit` is emitted *after* emitting `close` event on all windows and closing them.
+		
+		**Note:** On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
 	**/
-	var before_quit : electron.main.AppEvent<js.html.Event -> Void> = "before-quit";
+	var before_quit : electron.main.AppEvent<Void -> Void> = "before-quit";
 	/**
-		Emitted when all windows have been closed and the application will quit. Calling event.preventDefault() will prevent the default behaviour, which is terminating the application. See the description of the window-all-closed event for the differences between the will-quit and window-all-closed events. Note: On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
+		Emitted when all windows have been closed and the application will quit. Calling `event.preventDefault()` will prevent the default behaviour, which is terminating the application.
+		
+		See the description of the `window-all-closed` event for the differences between the `will-quit` and `window-all-closed` events.
+		
+		**Note:** On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
 	**/
-	var will_quit : electron.main.AppEvent<js.html.Event -> Void> = "will-quit";
+	var will_quit : electron.main.AppEvent<Void -> Void> = "will-quit";
 	/**
-		Emitted when the application is quitting. Note: On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
+		Emitted when the application is quitting.
+		
+		**Note:** On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
 	**/
-	var quit : electron.main.AppEvent<(js.html.Event, Int) -> Void> = "quit";
+	var quit : electron.main.AppEvent<Void -> Void> = "quit";
 	/**
-		Emitted when the user wants to open a file with the application. The open-file event is usually emitted when the application is already open and the OS wants to reuse the application to open the file. open-file is also emitted when a file is dropped onto the dock and the application is not yet running. Make sure to listen for the open-file event very early in your application startup to handle this case (even before the ready event is emitted). You should call event.preventDefault() if you want to handle this event. On Windows, you have to parse process.argv (in the main process) to get the filepath.
+		Emitted when the user wants to open a file with the application. The `open-file` event is usually emitted when the application is already open and the OS wants to reuse the application to open the file. `open-file` is also emitted when a file is dropped onto the dock and the application is not yet running. Make sure to listen for the `open-file` event very early in your application startup to handle this case (even before the `ready` event is emitted).
+		
+		You should call `event.preventDefault()` if you want to handle this event.
+		
+		On Windows, you have to parse `process.argv` (in the main process) to get the filepath.
 	**/
-	@:electron_platforms(["macOS"])
-	var open_file : electron.main.AppEvent<(js.html.Event, String) -> Void> = "open-file";
+	var open_file : electron.main.AppEvent<Void -> Void> = "open-file";
 	/**
-		Emitted when the user wants to open a URL with the application. Your application's Info.plist file must define the url scheme within the CFBundleURLTypes key, and set NSPrincipalClass to AtomApplication. You should call event.preventDefault() if you want to handle this event.
+		Emitted when the user wants to open a URL with the application. Your application's `Info.plist` file must define the URL scheme within the `CFBundleURLTypes` key, and set `NSPrincipalClass` to `AtomApplication`.
+		
+		You should call `event.preventDefault()` if you want to handle this event.
 	**/
-	@:electron_platforms(["macOS"])
-	var open_url : electron.main.AppEvent<(js.html.Event, String) -> Void> = "open-url";
+	var open_url : electron.main.AppEvent<Void -> Void> = "open-url";
 	/**
 		Emitted when the application is activated. Various actions can trigger this event, such as launching the application for the first time, attempting to re-launch the application when it's already running, or clicking on the application's dock or taskbar icon.
 	**/
-	@:electron_platforms(["macOS"])
-	var activate : electron.main.AppEvent<(js.html.Event, Bool) -> Void> = "activate";
+	var activate : electron.main.AppEvent<Void -> Void> = "activate";
 	/**
-		Emitted during Handoff when an activity from a different device wants to be resumed. You should call event.preventDefault() if you want to handle this event. A user activity can be continued only in an app that has the same developer Team ID as the activity's source app and that supports the activity's type. Supported activity types are specified in the app's Info.plist under the NSUserActivityTypes key.
+		Emitted during Handoff when an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
+		
+		A user activity can be continued only in an app that has the same developer Team ID as the activity's source app and that supports the activity's type. Supported activity types are specified in the app's `Info.plist` under the `NSUserActivityTypes` key.
 	**/
-	@:electron_platforms(["macOS"])
-	var continue_activity : electron.main.AppEvent<(js.html.Event, String, Any) -> Void> = "continue-activity";
+	var continue_activity : electron.main.AppEvent<Void -> Void> = "continue-activity";
 	/**
-		Emitted during Handoff before an activity from a different device wants to be resumed. You should call event.preventDefault() if you want to handle this event.
+		Emitted during Handoff before an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
 	**/
-	@:electron_platforms(["macOS"])
-	var will_continue_activity : electron.main.AppEvent<(js.html.Event, String) -> Void> = "will-continue-activity";
+	var will_continue_activity : electron.main.AppEvent<Void -> Void> = "will-continue-activity";
 	/**
 		Emitted during Handoff when an activity from a different device fails to be resumed.
 	**/
-	@:electron_platforms(["macOS"])
-	var continue_activity_error : electron.main.AppEvent<(js.html.Event, String, String) -> Void> = "continue-activity-error";
+	var continue_activity_error : electron.main.AppEvent<Void -> Void> = "continue-activity-error";
 	/**
 		Emitted during Handoff after an activity from this device was successfully resumed on another one.
 	**/
-	@:electron_platforms(["macOS"])
-	var activity_was_continued : electron.main.AppEvent<(js.html.Event, String, Any) -> Void> = "activity-was-continued";
+	var activity_was_continued : electron.main.AppEvent<Void -> Void> = "activity-was-continued";
 	/**
-		Emitted when Handoff is about to be resumed on another device. If you need to update the state to be transferred, you should call event.preventDefault() immediately, construct a new userInfo dictionary and call app.updateCurrentActiviy() in a timely manner. Otherwise, the operation will fail and continue-activity-error will be called.
+		Emitted when Handoff is about to be resumed on another device. If you need to update the state to be transferred, you should call `event.preventDefault()` immediately, construct a new `userInfo` dictionary and call `app.updateCurrentActiviy()` in a timely manner. Otherwise, the operation will fail and `continue-activity-error` will be called.
 	**/
-	@:electron_platforms(["macOS"])
-	var update_activity_state : electron.main.AppEvent<(js.html.Event, String, Any) -> Void> = "update-activity-state";
+	var update_activity_state : electron.main.AppEvent<Void -> Void> = "update-activity-state";
 	/**
-		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current BrowserWindow has a tabbingIdentifier
+		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`
 	**/
-	@:electron_platforms(["macOS"])
-	var new_window_for_tab : electron.main.AppEvent<js.html.Event -> Void> = "new-window-for-tab";
+	var new_window_for_tab : electron.main.AppEvent<Void -> Void> = "new-window-for-tab";
 	/**
 		Emitted when a browserWindow gets blurred.
 	**/
-	var browser_window_blur : electron.main.AppEvent<(js.html.Event, electron.main.BrowserWindow) -> Void> = "browser-window-blur";
+	var browser_window_blur : electron.main.AppEvent<Void -> Void> = "browser-window-blur";
 	/**
 		Emitted when a browserWindow gets focused.
 	**/
-	var browser_window_focus : electron.main.AppEvent<(js.html.Event, electron.main.BrowserWindow) -> Void> = "browser-window-focus";
+	var browser_window_focus : electron.main.AppEvent<Void -> Void> = "browser-window-focus";
 	/**
 		Emitted when a new browserWindow is created.
 	**/
-	var browser_window_created : electron.main.AppEvent<(js.html.Event, electron.main.BrowserWindow) -> Void> = "browser-window-created";
+	var browser_window_created : electron.main.AppEvent<Void -> Void> = "browser-window-created";
 	/**
 		Emitted when a new webContents is created.
 	**/
-	var web_contents_created : electron.main.AppEvent<(js.html.Event, electron.main.WebContents) -> Void> = "web-contents-created";
+	var web_contents_created : electron.main.AppEvent<Void -> Void> = "web-contents-created";
 	/**
-		Emitted when failed to verify the certificate for url, to trust the certificate you should prevent the default behavior with event.preventDefault() and call callback(true).
+		Emitted when failed to verify the `certificate` for `url`, to trust the certificate you should prevent the default behavior with `event.preventDefault()` and call `callback(true)`.
 	**/
-	var certificate_error : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String, String, electron.Certificate, haxe.Constraints.Function) -> Void> = "certificate-error";
+	var certificate_error : electron.main.AppEvent<Void -> Void> = "certificate-error";
 	/**
-		Emitted when a client certificate is requested. The url corresponds to the navigation entry requesting the client certificate and callback can be called with an entry filtered from the list. Using event.preventDefault() prevents the application from using the first certificate from the store.
+		Emitted when a client certificate is requested.
+		
+		The `url` corresponds to the navigation entry requesting the client certificate and `callback` can be called with an entry filtered from the list. Using `event.preventDefault()` prevents the application from using the first certificate from the store.
 	**/
-	var select_client_certificate : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String, Array<electron.Certificate>, haxe.Constraints.Function) -> Void> = "select-client-certificate";
+	var select_client_certificate : electron.main.AppEvent<Void -> Void> = "select-client-certificate";
 	/**
-		Emitted when webContents wants to do basic auth. The default behavior is to cancel all authentications. To override this you should prevent the default behavior with event.preventDefault() and call callback(username, password) with the credentials.
+		Emitted when `webContents` wants to do basic auth.
+		
+		The default behavior is to cancel all authentications. To override this you should prevent the default behavior with `event.preventDefault()` and call `callback(username, password)` with the credentials.
 	**/
-	var login : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, Any, Any, haxe.Constraints.Function) -> Void> = "login";
+	var login : electron.main.AppEvent<Void -> Void> = "login";
 	/**
-		Emitted when the gpu process crashes or is killed.
+		Emitted whenever there is a GPU info update.
 	**/
-	var gpu_process_crashed : electron.main.AppEvent<(js.html.Event, Bool) -> Void> = "gpu-process-crashed";
+	var gpu_info_update : electron.main.AppEvent<Void -> Void> = "gpu-info-update";
 	/**
-		Emitted when the renderer process of webContents crashes or is killed.
+		Emitted when the GPU process crashes or is killed.
 	**/
-	var renderer_process_crashed : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, Bool) -> Void> = "renderer-process-crashed";
+	var gpu_process_crashed : electron.main.AppEvent<Void -> Void> = "gpu-process-crashed";
+	/**
+		Emitted when the renderer process of `webContents` crashes or is killed.
+	**/
+	var renderer_process_crashed : electron.main.AppEvent<Void -> Void> = "renderer-process-crashed";
 	/**
 		Emitted when Chrome's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
-	@:electron_platforms(["macOS", "Windows"])
-	var accessibility_support_changed : electron.main.AppEvent<(js.html.Event, Bool) -> Void> = "accessibility-support-changed";
+	var accessibility_support_changed : electron.main.AppEvent<Void -> Void> = "accessibility-support-changed";
 	/**
-		Emitted when Electron has created a new session.
+		Emitted when Electron has created a new `session`.
 	**/
-	var session_created : electron.main.AppEvent<electron.main.Session -> Void> = "session-created";
+	var session_created : electron.main.AppEvent<Void -> Void> = "session-created";
 	/**
-		This event will be emitted inside the primary instance of your application when a second instance has been executed and calls app.requestSingleInstanceLock(). argv is an Array of the second instance's command line arguments, and workingDirectory is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized. This event is guaranteed to be emitted after the ready event of app gets emitted. Note: Extra command line arguments might be added by Chromium, such as --original-process-start-time.
+		This event will be emitted inside the primary instance of your application when a second instance has been executed and calls `app.requestSingleInstanceLock()`.
+		
+		`argv` is an Array of the second instance's command line arguments, and `workingDirectory` is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized.
+		
+		This event is guaranteed to be emitted after the `ready` event of `app` gets emitted.
+		
+		**Note:** Extra command line arguments might be added by Chromium, such as `--original-process-start-time`.
 	**/
-	var second_instance : electron.main.AppEvent<(js.html.Event, Array<String>, String) -> Void> = "second-instance";
+	var second_instance : electron.main.AppEvent<Void -> Void> = "second-instance";
 	/**
-		Emitted when desktopCapturer.getSources() is called in the renderer process of webContents. Calling event.preventDefault() will make it return empty sources.
+		Emitted when `desktopCapturer.getSources()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will make it return empty sources.
 	**/
-	var desktop_capturer_get_sources : electron.main.AppEvent<(js.html.Event, electron.main.WebContents) -> Void> = "desktop-capturer-get-sources";
+	var desktop_capturer_get_sources : electron.main.AppEvent<Void -> Void> = "desktop-capturer-get-sources";
 	/**
-		Emitted when remote.require() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the module from being returned. Custom value can be returned by setting event.returnValue.
+		Emitted when `remote.require()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_require : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String) -> Void> = "remote-require";
+	var remote_require : electron.main.AppEvent<Void -> Void> = "remote-require";
 	/**
-		Emitted when remote.getGlobal() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the global from being returned. Custom value can be returned by setting event.returnValue.
+		Emitted when `remote.getGlobal()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the global from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_global : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String) -> Void> = "remote-get-global";
+	var remote_get_global : electron.main.AppEvent<Void -> Void> = "remote-get-global";
 	/**
-		Emitted when remote.getBuiltin() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the module from being returned. Custom value can be returned by setting event.returnValue.
+		Emitted when `remote.getBuiltin()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_builtin : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, String) -> Void> = "remote-get-builtin";
+	var remote_get_builtin : electron.main.AppEvent<Void -> Void> = "remote-get-builtin";
 	/**
-		Emitted when remote.getCurrentWindow() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+		Emitted when `remote.getCurrentWindow()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_current_window : electron.main.AppEvent<(js.html.Event, electron.main.WebContents) -> Void> = "remote-get-current-window";
+	var remote_get_current_window : electron.main.AppEvent<Void -> Void> = "remote-get-current-window";
 	/**
-		Emitted when remote.getCurrentWebContents() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+		Emitted when `remote.getCurrentWebContents()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_current_web_contents : electron.main.AppEvent<(js.html.Event, electron.main.WebContents) -> Void> = "remote-get-current-web-contents";
+	var remote_get_current_web_contents : electron.main.AppEvent<Void -> Void> = "remote-get-current-web-contents";
 	/**
-		Emitted when <webview>.getWebContents() is called in the renderer process of webContents. Calling event.preventDefault() will prevent the object from being returned. Custom value can be returned by setting event.returnValue.
+		Emitted when `<webview>.getWebContents()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_guest_web_contents : electron.main.AppEvent<(js.html.Event, electron.main.WebContents, electron.main.WebContents) -> Void> = "remote-get-guest-web-contents";
+	var remote_get_guest_web_contents : electron.main.AppEvent<Void -> Void> = "remote-get-guest-web-contents";
 }

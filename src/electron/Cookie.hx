@@ -16,7 +16,7 @@ typedef Cookie = {
 	**/
 	var domain : String;
 	/**
-		Whether the cookie is a host-only cookie; this will only be true if no domain was passed.
+		Whether the cookie is a host-only cookie; this will only be `true` if no domain was passed.
 	**/
 	var hostOnly : Bool;
 	/**

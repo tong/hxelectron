@@ -4,7 +4,7 @@ package electron;
 **/
 typedef ProcessMemoryInfo = {
 	/**
-		and The amount of memory currently pinned to actual physical RAM in Kilobytes.
+		The amount of memory currently pinned to actual physical RAM in Kilobytes.
 	**/
 	var residentSet : Int;
 	/**

@@ -10,9 +10,9 @@ typedef StreamProtocolResponse = {
 	/**
 		An object containing the response headers.
 	**/
-	var headers : Any;
+	var headers : Record;
 	/**
 		A Node.js readable stream representing the response body.
 	**/
-	var data : js.node.stream.Readable<Dynamic>;
+	var data : haxe.extern.EitherType<Dynamic, Dynamic>;
 }

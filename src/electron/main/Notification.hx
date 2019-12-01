@@ -1,11 +1,49 @@
 package electron.main;
 /**
-	Create OS desktop notifications
 	@see http://electronjs.org/docs/api/notification
 **/
 @:jsRequire("electron", "Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
+	/**
+		Whether or not desktop notifications are supported on the current system
+	**/
 	static function isSupported():Bool;
-	function new(options:{ /**
+	/**
+		A `String` property representing the title of the notification.
+	**/
+	var title : String;
+	/**
+		A `String` property representing the subtitle of the notification.
+	**/
+	var subtitle : String;
+	/**
+		A `String` property representing the body of the notification.
+	**/
+	var body : String;
+	/**
+		A `String` property representing the reply placeholder of the notification.
+	**/
+	var replyPlaceholder : String;
+	/**
+		A `String` property representing the sound of the notification.
+	**/
+	var sound : String;
+	/**
+		A `String` property representing the close button text of the notification.
+	**/
+	var closeButtonText : String;
+	/**
+		A `Boolean` property representing whether the notification is silent.
+	**/
+	var silent : Bool;
+	/**
+		A `Boolean` property representing whether the notification has a reply action.
+	**/
+	var hasReply : Bool;
+	/**
+		A `NotificationAction[]` property representing the actions of the notification.
+	**/
+	var actions : Array<electron.NotificationAction>;
+	function new(?options:{ /**
 		A title for the notification, which will be shown at the top of the notification window when it is shown.
 	**/
 	var title : String; /**
@@ -23,7 +61,7 @@ package electron.main;
 		An icon to use in the notification.
 	**/
 	@:optional
-	var icon : haxe.extern.EitherType<String, electron.NativeImage>; /**
+	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
 		Whether or not to add an inline reply option to the notification.
 	**/
 	@:optional
@@ -36,7 +74,7 @@ package electron.main;
 	**/
 	@:optional
 	var sound : String; /**
-		Actions to add to the notification. Please read the available actions and limitations in the NotificationAction documentation.
+		Actions to add to the notification. Please read the available actions and limitations in the `NotificationAction` documentation.
 	**/
 	@:optional
 	var actions : Array<electron.NotificationAction>; /**
@@ -45,7 +83,9 @@ package electron.main;
 	@:optional
 	var closeButtonText : String; }):Void;
 	/**
-		Immediately shows the notification to the user, please note this means unlike the HTML5 Notification implementation, instantiating a new Notification does not immediately show it to the user, you need to call this method before the OS will display it. If the notification has been shown before, this method will dismiss the previously shown notification and create a new one with identical properties.
+		Immediately shows the notification to the user, please note this means unlike the HTML5 Notification implementation, instantiating a `new Notification` does not immediately show it to the user, you need to call this method before the OS will display it.
+		
+		If the notification has been shown before, this method will dismiss the previously shown notification and create a new one with identical properties.
 	**/
 	function show():Void;
 	/**
@@ -55,22 +95,22 @@ package electron.main;
 }
 @:enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
-		Emitted when the notification is shown to the user, note this could be fired multiple times as a notification can be shown multiple times through the show() method.
+		Emitted when the notification is shown to the user, note this could be fired multiple times as a notification can be shown multiple times through the `show()` method.
 	**/
-	var show : electron.main.NotificationEvent<js.html.Event -> Void> = "show";
+	var show : electron.main.NotificationEvent<Void -> Void> = "show";
 	/**
 		Emitted when the notification is clicked by the user.
 	**/
-	var click : electron.main.NotificationEvent<js.html.Event -> Void> = "click";
+	var click : electron.main.NotificationEvent<Void -> Void> = "click";
 	/**
-		Emitted when the notification is closed by manual intervention from the user. This event is not guaranteed to be emitted in all cases where the notification is closed.
+		Emitted when the notification is closed by manual intervention from the user.
+		
+		This event is not guaranteed to be emitted in all cases where the notification is closed.
 	**/
-	var close : electron.main.NotificationEvent<js.html.Event -> Void> = "close";
+	var close : electron.main.NotificationEvent<Void -> Void> = "close";
 	/**
-		Emitted when the user clicks the "Reply" button on a notification with hasReply: true.
+		Emitted when the user clicks the "Reply" button on a notification with `hasReply: true`.
 	**/
-	@:electron_platforms(["macOS"])
-	var reply : electron.main.NotificationEvent<(js.html.Event, String) -> Void> = "reply";
-	@:electron_platforms(["macOS"])
-	var action : electron.main.NotificationEvent<(js.html.Event, Float) -> Void> = "action";
+	var reply : electron.main.NotificationEvent<Void -> Void> = "reply";
+	var action : electron.main.NotificationEvent<Void -> Void> = "action";
 }

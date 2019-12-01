@@ -4,7 +4,7 @@ package electron;
 **/
 typedef NotificationAction = {
 	/**
-		The type of action, can be button.
+		The type of action, can be `button`.
 	**/
 	var type : String;
 	/**

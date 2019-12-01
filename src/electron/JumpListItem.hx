@@ -8,27 +8,27 @@ typedef JumpListItem = {
 	**/
 	var type : String;
 	/**
-		Path of the file to open, should only be set if type is file.
+		Path of the file to open, should only be set if `type` is `file`.
 	**/
 	var path : String;
 	/**
-		Path of the program to execute, usually you should specify process.execPath which opens the current program. Should only be set if type is task.
+		Path of the program to execute, usually you should specify `process.execPath` which opens the current program. Should only be set if `type` is `task`.
 	**/
 	var program : String;
 	/**
-		The command line arguments when program is executed. Should only be set if type is task.
+		The command line arguments when `program` is executed. Should only be set if `type` is `task`.
 	**/
 	var args : String;
 	/**
-		The text to be displayed for the item in the Jump List. Should only be set if type is task.
+		The text to be displayed for the item in the Jump List. Should only be set if `type` is `task`.
 	**/
 	var title : String;
 	/**
-		Description of the task (displayed in a tooltip). Should only be set if type is task.
+		Description of the task (displayed in a tooltip). Should only be set if `type` is `task`.
 	**/
 	var description : String;
 	/**
-		The absolute path to an icon to be displayed in a Jump List, which can be an arbitrary resource file that contains an icon (e.g. .ico, .exe, .dll). You can usually specify process.execPath to show the program icon.
+		The absolute path to an icon to be displayed in a Jump List, which can be an arbitrary resource file that contains an icon (e.g. `.ico`, `.exe`, `.dll`). You can usually specify `process.execPath` to show the program icon.
 	**/
 	var iconPath : String;
 	/**

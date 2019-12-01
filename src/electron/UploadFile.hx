@@ -4,7 +4,7 @@ package electron;
 **/
 typedef UploadFile = {
 	/**
-		file.
+		`file`.
 	**/
 	var type : String;
 	/**
@@ -12,11 +12,11 @@ typedef UploadFile = {
 	**/
 	var filePath : String;
 	/**
-		Defaults to 0.
+		Defaults to `0`.
 	**/
 	var offset : Int;
 	/**
-		Number of bytes to read from offset. Defaults to 0.
+		Number of bytes to read from `offset`. Defaults to `0`.
 	**/
 	var length : Int;
 	/**

@@ -1,2 +1,2 @@
-package electron.main;
+package electron;
 typedef SaveDialogOptions = Dynamic;

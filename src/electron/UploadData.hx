@@ -12,7 +12,7 @@ typedef UploadData = {
 	**/
 	var file : String;
 	/**
-		UUID of blob data. Use method to retrieve the data.
+		UUID of blob data. Use ses.getBlobData method to retrieve the data.
 	**/
 	var blobUUID : String;
 }

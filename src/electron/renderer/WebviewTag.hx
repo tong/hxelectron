@@ -1,73 +1,18 @@
 package electron.renderer;
 /**
-	Display external web content in an isolated frame and process.
 	@see http://electronjs.org/docs/api/webview-tag
 **/
 @:native("webviewTag") extern class WebviewTag extends js.html.Element {
 	/**
-		Returns the visible URL. Writing to this attribute initiates top-level navigation. Assigning src its own value will reload the current page. The src attribute can also accept data URLs, such as data:text/plain,Hello, world!.
-	**/
-	var src : Dynamic;
-	/**
-		When this attribute is present the guest page in webview will have node integration and can use node APIs like require and process to access low level system resources. Node integration is disabled by default in the guest page.
-	**/
-	var nodeintegration : Dynamic;
-	/**
-		Experimental option for enabling NodeJS support in sub-frames such as iframes inside the webview. All your preloads will load for every iframe, you can use process.isMainFrame to determine if you are in the main frame or not. This option is disabled by default in the guest page.
-	**/
-	var nodeintegrationinsubframes : Dynamic;
-	/**
-		When this attribute is false the guest page in webview will not have access to the remote module. The remote module is available by default.
-	**/
-	var enableremotemodule : Dynamic;
-	/**
-		When this attribute is present the guest page in webview will be able to use browser plugins. Plugins are disabled by default.
-	**/
-	var plugins : Dynamic;
-	/**
-		Specifies a script that will be loaded before other scripts run in the guest page. The protocol of script's URL must be either file: or asar:, because it will be loaded by require in guest page under the hood. When the guest page doesn't have node integration this script will still have access to all Node APIs, but global objects injected by Node will be deleted after this script has finished executing. Note: This option will be appear as preloadURL (not preload) in the webPreferences specified to the will-attach-webview event.
-	**/
-	var preload : Dynamic;
-	/**
-		Sets the referrer URL for the guest page.
-	**/
-	var httpreferrer : Dynamic;
-	/**
-		Sets the user agent for the guest page before the page is navigated to. Once the page is loaded, use the setUserAgent method to change the user agent.
-	**/
-	var useragent : Dynamic;
-	/**
-		When this attribute is present the guest page will have web security disabled. Web security is enabled by default.
-	**/
-	var disablewebsecurity : Dynamic;
-	/**
-		Sets the session used by the page. If partition starts with persist:, the page will use a persistent session available to all pages in the app with the same partition. if there is no persist: prefix, the page will use an in-memory session. By assigning the same partition, multiple pages can share the same session. If the partition is unset then default session of the app will be used. This value can only be modified before the first navigation, since the session of an active renderer process cannot change. Subsequent attempts to modify the value will fail with a DOM exception.
-	**/
-	var partition : Dynamic;
-	/**
-		When this attribute is present the guest page will be allowed to open new windows. Popups are disabled by default.
-	**/
-	var allowpopups : Dynamic;
-	/**
-		A list of strings which specifies the web preferences to be set on the webview, separated by ,. The full list of supported preference strings can be found in BrowserWindow. The string follows the same format as the features string in window.open. A name by itself is given a true boolean value. A preference can be set to another value by including an =, followed by the value. Special values yes and 1 are interpreted as true, while no and 0 are interpreted as false.
-	**/
-	var webpreferences : Dynamic;
-	/**
-		A list of strings which specifies the blink features to be enabled separated by ,. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
-	**/
-	var enableblinkfeatures : Dynamic;
-	/**
-		A list of strings which specifies the blink features to be disabled separated by ,. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
-	**/
-	var disableblinkfeatures : Dynamic;
-	/**
-		Loads the url in the webview, the url must contain the protocol prefix, e.g. the http:// or file://.
+		The promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
+		
+		Loads the `url` in the webview, the `url` must contain the protocol prefix, e.g. the `http://` or `file://`.
 	**/
 	function loadURL(url:String, ?options:{ /**
 		An HTTP Referrer url.
 	**/
 	@:optional
-	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
+	var httpReferrer : haxe.extern.EitherType<Dynamic, Dynamic>; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -76,19 +21,34 @@ package electron.renderer;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<electron.UploadRawData>, haxe.extern.EitherType<Array<electron.UploadFile>, Array<electron.UploadBlob>>>; /**
-		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified url is a data url and needs to load other files.
+	var postData : haxe.extern.EitherType<Array<Dynamic>, haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>>; /**
+		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
 	var baseURLForDataURL : String; }):js.lib.Promise<Any>;
 	/**
-		Initiates a download of the resource at url without navigating.
+		Initiates a download of the resource at `url` without navigating.
 	**/
 	function downloadURL(url:String):Void;
+	/**
+		The URL of guest page.
+	**/
 	function getURL():String;
+	/**
+		The title of guest page.
+	**/
 	function getTitle():String;
+	/**
+		Whether guest page is still loading resources.
+	**/
 	function isLoading():Bool;
+	/**
+		Whether the main frame (and not just iframes or frames within it) is still loading.
+	**/
 	function isLoadingMainFrame():Bool;
+	/**
+		Whether the guest page is waiting for a first-response for the main resource of the page.
+	**/
 	function isWaitingForResponse():Bool;
 	/**
 		Stops any pending navigation.
@@ -102,8 +62,17 @@ package electron.renderer;
 		Reloads the guest page and ignores cache.
 	**/
 	function reloadIgnoringCache():Void;
+	/**
+		Whether the guest page can go back.
+	**/
 	function canGoBack():Bool;
+	/**
+		Whether the guest page can go forward.
+	**/
 	function canGoForward():Bool;
+	/**
+		Whether the guest page can go to `offset`.
+	**/
 	function canGoToOffset(offset:Int):Bool;
 	/**
 		Clears the navigation history.
@@ -125,20 +94,35 @@ package electron.renderer;
 		Navigates to the specified offset from the "current entry".
 	**/
 	function goToOffset(offset:Int):Void;
+	/**
+		Whether the renderer process has crashed.
+	**/
 	function isCrashed():Bool;
 	/**
 		Overrides the user agent for the guest page.
 	**/
 	function setUserAgent(userAgent:String):Void;
+	/**
+		The user agent for guest page.
+	**/
 	function getUserAgent():String;
 	/**
-		Injects CSS into the guest page.
+		A promise that resolves with a key for the inserted CSS that can later be used to remove the CSS via `<webview>.removeInsertedCSS(key)`.
+		
+		Injects CSS into the current web page and returns a unique key for the inserted stylesheet.
 	**/
-	function insertCSS(css:String):Void;
+	function insertCSS(css:String):js.lib.Promise<Any>;
 	/**
-		Evaluates code in page. If userGesture is set, it will create the user gesture context in the page. HTML APIs like requestFullScreen, which require user action, can take advantage of this option for automation.
+		Resolves if the removal was successful.
+		
+		Removes the inserted CSS from the current web page. The stylesheet is identified by its key, which is returned from `<webview>.insertCSS(css)`.
 	**/
-	@:overload(function(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any> { })
+	function removeInsertedCSS(key:String):js.lib.Promise<Any>;
+	/**
+		A promise that resolves with the result of the executed code or is rejected if the result of the code is a rejected promise.
+		
+		Evaluates `code` in page. If `userGesture` is set, it will create the user gesture context in the page. HTML APIs like `requestFullScreen`, which require user action, can take advantage of this option for automation.
+	**/
 	function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Any>;
 	/**
 		Opens a DevTools window for guest page.
@@ -148,10 +132,16 @@ package electron.renderer;
 		Closes the DevTools window of guest page.
 	**/
 	function closeDevTools():Void;
+	/**
+		Whether guest page has a DevTools window attached.
+	**/
 	function isDevToolsOpened():Bool;
+	/**
+		Whether DevTools window of guest page is focused.
+	**/
 	function isDevToolsFocused():Bool;
 	/**
-		Starts inspecting element at position (x, y) of guest page.
+		Starts inspecting element at position (`x`, `y`) of guest page.
 	**/
 	function inspectElement(x:Int, y:Int):Void;
 	/**
@@ -166,133 +156,122 @@ package electron.renderer;
 		Set guest page muted.
 	**/
 	function setAudioMuted(muted:Bool):Void;
+	/**
+		Whether guest page has been muted.
+	**/
 	function isAudioMuted():Bool;
+	/**
+		Whether audio is currently playing.
+	**/
 	function isCurrentlyAudible():Bool;
 	/**
-		Executes editing command undo in page.
+		Executes editing command `undo` in page.
 	**/
 	function undo():Void;
 	/**
-		Executes editing command redo in page.
+		Executes editing command `redo` in page.
 	**/
 	function redo():Void;
 	/**
-		Executes editing command cut in page.
+		Executes editing command `cut` in page.
 	**/
 	function cut():Void;
 	/**
-		Executes editing command copy in page.
+		Executes editing command `copy` in page.
 	**/
 	function copy():Void;
 	/**
-		Executes editing command paste in page.
+		Executes editing command `paste` in page.
 	**/
 	function paste():Void;
 	/**
-		Executes editing command pasteAndMatchStyle in page.
+		Executes editing command `pasteAndMatchStyle` in page.
 	**/
 	function pasteAndMatchStyle():Void;
 	/**
-		Executes editing command delete in page.
+		Executes editing command `delete` in page.
 	**/
 	function delete():Void;
 	/**
-		Executes editing command selectAll in page.
+		Executes editing command `selectAll` in page.
 	**/
 	function selectAll():Void;
 	/**
-		Executes editing command unselect in page.
+		Executes editing command `unselect` in page.
 	**/
 	function unselect():Void;
 	/**
-		Executes editing command replace in page.
+		Executes editing command `replace` in page.
 	**/
 	function replace(text:String):Void;
 	/**
-		Executes editing command replaceMisspelling in page.
+		Executes editing command `replaceMisspelling` in page.
 	**/
 	function replaceMisspelling(text:String):Void;
 	/**
-		Inserts text to the focused element.
+		Inserts `text` to the focused element.
 	**/
-	function insertText(text:String):Void;
+	function insertText(text:String):js.lib.Promise<Any>;
 	/**
-		Starts a request to find all matches for the text in the web page. The result of the request can be obtained by subscribing to found-in-page event.
+		The request id used for the request.
+		
+		Starts a request to find all matches for the `text` in the web page. The result of the request can be obtained by subscribing to `found-in-page` event.
 	**/
 	function findInPage(text:String, ?options:{ /**
-		Whether to search forward or backward, defaults to true.
+		Whether to search forward or backward, defaults to `true`.
 	**/
 	@:optional
 	var forward : Bool; /**
-		Whether the operation is first request or a follow up, defaults to false.
+		Whether the operation is first request or a follow up, defaults to `false`.
 	**/
 	@:optional
 	var findNext : Bool; /**
-		Whether search should be case-sensitive, defaults to false.
+		Whether search should be case-sensitive, defaults to `false`.
 	**/
 	@:optional
 	var matchCase : Bool; /**
-		Whether to look only at the start of words. defaults to false.
+		Whether to look only at the start of words. defaults to `false`.
 	**/
 	@:optional
 	var wordStart : Bool; /**
-		When combined with wordStart, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to false.
+		When combined with `wordStart`, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to `false`.
 	**/
 	@:optional
 	var medialCapitalAsWordStart : Bool; }):Int;
 	/**
-		Stops any findInPage request for the webview with the provided action.
+		Stops any `findInPage` request for the `webview` with the provided `action`.
 	**/
 	function stopFindInPage(action:String):Void;
 	/**
-		Prints webview's web page. Same as webContents.print([options]).
+		Prints `webview`'s web page. Same as `webContents.print([options])`.
 	**/
 	function print(?options:{ /**
-		Don't ask user for print settings. Default is false.
+		Don't ask user for print settings. Default is `false`.
 	**/
 	@:optional
 	var silent : Bool; /**
-		Also prints the background color and image of the web page. Default is false.
+		Also prints the background color and image of the web page. Default is `false`.
 	**/
 	@:optional
 	var printBackground : Bool; /**
-		Set the printer device name to use. Default is ''.
+		Set the printer device name to use. Default is `''`.
 	**/
 	@:optional
-	var deviceName : String; }):Void;
+	var deviceName : String; }):js.lib.Promise<Any>;
 	/**
-		Prints webview's web page as PDF, Same as webContents.printToPDF(options).
+		Resolves with the generated PDF data.
+		
+		Prints `webview`'s web page as PDF, Same as `webContents.printToPDF(options)`.
 	**/
-	@:overload(function(options:{ /**
-		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
-	**/
-	@:optional
-	var marginsType : Int; /**
-		Specify page size of the generated PDF. Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns.
-	**/
-	@:optional
-	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
-		Whether to print CSS backgrounds.
-	**/
-	@:optional
-	var printBackground : Bool; /**
-		Whether to print selection only.
-	**/
-	@:optional
-	var printSelectionOnly : Bool; /**
-		true for landscape, false for portrait.
-	**/
-	@:optional
-	var landscape : Bool; }, callback:haxe.Constraints.Function):Void { })
 	function printToPDF(options:{ /**
 		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
 	**/
 	@:optional
 	var marginsType : Int; /**
-		Specify page size of the generated PDF. Can be A3, A4, A5, Legal, Letter, Tabloid or an Object containing height and width in microns.
+		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width` in microns.
 	**/
 	@:optional
-	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
+	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; /**
 		Whether to print CSS backgrounds.
 	**/
 	@:optional
@@ -301,49 +280,64 @@ package electron.renderer;
 	**/
 	@:optional
 	var printSelectionOnly : Bool; /**
-		true for landscape, false for portrait.
+		`true` for landscape, `false` for portrait.
 	**/
 	@:optional
 	var landscape : Bool; }):js.lib.Promise<Any>;
 	/**
-		Captures a snapshot of the page within rect. Omitting rect will capture the whole visible page.
+		Resolves with a NativeImage
+		
+		Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page.
 	**/
-	@:overload(function(?rect:electron.Rectangle, callback:haxe.Constraints.Function):Void { })
 	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
 	/**
-		Send an asynchronous message to renderer process via channel, you can also send arbitrary arguments. The renderer process can handle the message by listening to the channel event with the ipcRenderer module. See webContents.send for examples.
+		Send an asynchronous message to renderer process via `channel`, you can also send arbitrary arguments. The renderer process can handle the message by listening to the `channel` event with the `ipcRenderer` module.
+		
+		See webContents.send for examples.
 	**/
-	function send(channel:String, args:haxe.extern.Rest<Any>):Void;
+	function send(channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Any>;
 	/**
-		Sends an input event to the page. See webContents.sendInputEvent for detailed description of event object.
+		Sends an input `event` to the page.
+		
+		See webContents.sendInputEvent for detailed description of `event` object.
 	**/
-	function sendInputEvent(event:Any):Void;
+	function sendInputEvent(event:haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>):js.lib.Promise<Any>;
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/
 	function setZoomFactor(factor:Float):Void;
 	/**
-		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is scale := 1.2 ^ level.
+		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is `scale := 1.2 ^ level`.
 	**/
 	function setZoomLevel(level:Float):Void;
+	/**
+		the current zoom factor.
+	**/
 	function getZoomFactor():Float;
+	/**
+		the current zoom level.
+	**/
 	function getZoomLevel():Float;
 	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 	**/
-	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
 		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
 	**/
-	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
+	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
-	@:electron_platforms(["macOS"])
 	function showDefinitionForSelection():Void;
 	/**
-		It depends on the remote module, it is therefore not available when this module is disabled.
+		The web contents associated with this `webview`.
+		
+		It depends on the `remote` module, it is therefore not available when this module is disabled.
 	**/
 	function getWebContents():electron.main.WebContents;
+	/**
+		The WebContents ID of this `webview`.
+	**/
 	function getWebContentsId():Float;
 }

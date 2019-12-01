@@ -4,7 +4,7 @@ package electron;
 **/
 typedef RemoveClientCertificate = {
 	/**
-		clientCertificate.
+		`clientCertificate`.
 	**/
 	var type : String;
 	/**

@@ -4,7 +4,7 @@ package electron;
 **/
 typedef UploadBlob = {
 	/**
-		blob.
+		`blob`.
 	**/
 	var type : String;
 	/**

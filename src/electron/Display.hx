@@ -1,5 +1,6 @@
 package electron;
 /**
+	The `Display` object represents a physical display connected to the system. A fake `Display` may exist on a headless system, or a `Display` may correspond to a remote, virtual display.
 	@see http://electronjs.org/docs/api/structures/display
 **/
 typedef Display = {
@@ -16,7 +17,7 @@ typedef Display = {
 	**/
 	var scaleFactor : Float;
 	/**
-		Can be available, unavailable, unknown.
+		Can be `available`, `unavailable`, `unknown`.
 	**/
 	var touchSupport : String;
 	/**
@@ -24,7 +25,7 @@ typedef Display = {
 	**/
 	var monochrome : Bool;
 	/**
-		Can be available, unavailable, unknown.
+		Can be `available`, `unavailable`, `unknown`.
 	**/
 	var accelerometerSupport : String;
 	/**
@@ -44,7 +45,7 @@ typedef Display = {
 	var workArea : electron.Rectangle;
 	var workAreaSize : electron.Size;
 	/**
-		true for an internal display and false for an external display
+		`true` for an internal display and `false` for an external display
 	**/
 	var internal : Bool;
 }

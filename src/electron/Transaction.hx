@@ -16,7 +16,7 @@ typedef Transaction = {
 	**/
 	var originalTransactionIdentifier : String;
 	/**
-		The transaction state, can be purchasing, purchased, failed, restored or deferred.
+		The transaction state, can be `purchasing`, `purchased`, `failed`, `restored` or `deferred`.
 	**/
 	var transactionState : String;
 	/**

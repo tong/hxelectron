@@ -4,7 +4,7 @@ package electron;
 **/
 typedef UploadRawData = {
 	/**
-		rawData.
+		`rawData`.
 	**/
 	var type : String;
 	/**
