@@ -18,8 +18,8 @@
                     filter: drop-shadow(16px 16px 24px rgba(5,5,5,0.9))
                 }
 				50% {
-					transform: scale3d(1.4, 1.4, 1.4);
-                    filter: drop-shadow(24px 24px 48px rgba(5,5,5,0.3))
+					transform: scale3d(1.5, 1.5, 1.5);
+                    filter: drop-shadow(24px 24px 48px rgba(5,5,5,0.5))
                 }
 				100% {
 					transform: scale3d(1, 1, 1);
@@ -31,14 +31,11 @@
                 padding: 0;
             }
             body {
-                font-size: 9pt;
                 font-family: monospace;
                 background: var(--color-black);
                 color: var(--color-orange-2);
-
                 width: 100%;
                 height: 100%;
-
 				overflow: hidden;
                 cursor: default;
             }
@@ -52,15 +49,15 @@
             }
 			header, main {
 				position: relative;
-                top: 16px;
-                left: 16px;
+                top: 1rem;
+                left: 1rem;
 			}
             header {
                 text-transform: uppercase;
             }
             header h1 {
-                font-family: Helvetica, sans-serif;
-                font-size: 32pt;
+				font-family: Helvetica, sans-serif;
+                font-size: 3rem;
             }
             main div {
                 position: relative;
@@ -70,6 +67,7 @@
                 position: absolute;
                 top: 0; bottom:0; left: 0; right:0;
                 margin: auto;
+				width: 50vmin;
                 pointer-events: none;
             }
             img#logo-haxe {
@@ -92,7 +90,7 @@
     </head>
     <body>
 		<header>
-			<h1>HXElectron</h1>
+			<h1><a href="https://github.com/tong/hxelectron">hxelectron</a></h1>
 		</header>
 		<main>
 			<div id="system-version"></div>
@@ -100,7 +98,7 @@
             <div id="electron-version"></div>
             <div id="haxe-version"></div>
 		</main>
-		<img class="logo" id="logo-haxe" src="https://haxe.org/img/haxe-logo.svg"/>
+		<img class="logo" id="logo-haxe" src="haxe-logo.svg"/>
 		<footer>
             <a href="https://github.com/tong/hxelectron">https://github.com/tong/hxelectron</a>
         </footer>

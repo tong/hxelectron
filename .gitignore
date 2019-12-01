@@ -1,10 +1,9 @@
 _*
-*node_modules/
 *.zip
 api/
 data/
-demo/bin/*.js
-demo/bin/*.js.map
+demo/*.js
+demo/*.js.map
 docs/
 atom/*
 all.hxml
