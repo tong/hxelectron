@@ -37,7 +37,7 @@ package electron.main;
 	**/
 	function abort():Void;
 	/**
-		Continues any deferred redirection request when the redirection mode is `manual`.
+		Continues any pending redirection. Can only be called during a `'redirect'` event.
 	**/
 	function followRedirect():Void;
 	/**
@@ -80,7 +80,7 @@ package electron.main;
 	**/
 	var close : electron.main.ClientRequestEvent<Void -> Void> = "close";
 	/**
-		Emitted when there is redirection and the mode is `manual`. Calling `request.followRedirect` will continue with the redirection.
+		Emitted when the server returns a redirect response (e.g. 301 Moved Permanently). Calling `request.followRedirect` will continue with the redirection.  If this event is handled, `request.followRedirect` must be called **synchronously**, otherwise the request will be cancelled.
 	**/
 	var redirect : electron.main.ClientRequestEvent<Void -> Void> = "redirect";
 }

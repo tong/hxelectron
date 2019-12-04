@@ -601,6 +601,8 @@ package electron.main;
 		Emitted when `webContents` wants to do basic auth.
 		
 		The default behavior is to cancel all authentications. To override this you should prevent the default behavior with `event.preventDefault()` and call `callback(username, password)` with the credentials.
+		
+		If `callback` is called without a username or password, the authentication request will be cancelled and the authentication error will be returned to the page.
 	**/
 	var login : electron.main.AppEvent<Void -> Void> = "login";
 	/**
