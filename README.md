@@ -32,8 +32,6 @@ haxe haxedoc.hxml
 
 By default `hxelectron/electron-api.json` is used if you ommit the path argument to your custom description file.
 
-NOTE: The types in this repository (and on haxelib) are generated with and for 4.0.0-preview.5.
-You have to (re)generate them for haxe < 4.
 
 
 ## Usage
@@ -53,8 +51,9 @@ cd hxelectron/
 ## Set the haxelib development directory
 haxelib dev electron .
 
-## Build and run the demo application
+## Install electron, build and run the demo application
 cd demo/
+npm install
 haxe build.hxml
 electron ./
 ```
