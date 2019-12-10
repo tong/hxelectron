@@ -372,10 +372,8 @@ package electron.main;
 	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
 	/**
 		Get the system printer list.
-		
-		Returns `PrinterInfo[]`.
 	**/
-	function getPrinters():Void;
+	function getPrinters():Array<electron.PrinterInfo>;
 	/**
 		Prints window's web page. When `silent` is set to `true`, Electron will pick the system's default printer if `deviceName` is empty and the default settings for printing.
 		
