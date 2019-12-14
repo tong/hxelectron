@@ -53,9 +53,9 @@ haxelib dev electron .
 
 ## Install electron, build and run the demo application
 cd demo/
-npm install
 haxe build.hxml
-electron ./
+npm install
+npm run start
 ```
 
 ### Metadata
