@@ -41,9 +41,6 @@ By default `hxelectron/electron-api.json` is used if you ommit the path argument
 Spin up the included demo application to see electron in action:
 
 ```sh
-## Make sure you have Electron installed (you only need to do this once)
-npm install -g electron@latest
-
 ## Clone this repository
 git clone https://github.com/tong/hxelectron
 cd hxelectron/
@@ -51,7 +48,7 @@ cd hxelectron/
 ## Set the haxelib development directory
 haxelib dev electron .
 
-## Install electron, build and run the demo application
+## Install electron, build and run the application
 cd demo/
 haxe build.hxml
 npm install
