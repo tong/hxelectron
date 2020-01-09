@@ -4,8 +4,8 @@
     "description": "",
     "slug": "app",
     "websiteUrl": "http://electronjs.org/docs/api/app",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/app.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/app.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -2387,8 +2387,8 @@
     "description": "",
     "slug": "auto-updater",
     "websiteUrl": "http://electronjs.org/docs/api/auto-updater",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/auto-updater.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/auto-updater.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -2577,8 +2577,8 @@
     "description": "",
     "slug": "browser-view",
     "websiteUrl": "http://electronjs.org/docs/api/browser-view",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/browser-view.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/browser-view.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -2821,8 +2821,8 @@
     "description": "",
     "slug": "browser-window-proxy",
     "websiteUrl": "http://electronjs.org/docs/api/browser-window-proxy",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/browser-window-proxy.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/browser-window-proxy.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": false,
@@ -2924,8 +2924,8 @@
     "description": "",
     "slug": "browser-window",
     "websiteUrl": "http://electronjs.org/docs/api/browser-window",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/browser-window.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/browser-window.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -6766,8 +6766,8 @@
     "description": "",
     "slug": "client-request",
     "websiteUrl": "http://electronjs.org/docs/api/client-request",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/client-request.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/client-request.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -7298,8 +7298,8 @@
     "description": "",
     "slug": "clipboard",
     "websiteUrl": "http://electronjs.org/docs/api/clipboard",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/clipboard.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/clipboard.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -7944,8 +7944,8 @@
     "description": "",
     "slug": "command-line",
     "websiteUrl": "http://electronjs.org/docs/api/command-line",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/command-line.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/command-line.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -8048,8 +8048,8 @@
     "description": "",
     "slug": "content-tracing",
     "websiteUrl": "http://electronjs.org/docs/api/content-tracing",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/content-tracing.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/content-tracing.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -8180,8 +8180,8 @@
     "description": "",
     "slug": "context-bridge",
     "websiteUrl": "http://electronjs.org/docs/api/context-bridge",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/context-bridge.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/context-bridge.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": false,
@@ -8235,8 +8235,8 @@
     "description": "",
     "slug": "cookies",
     "websiteUrl": "http://electronjs.org/docs/api/cookies",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/cookies.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/cookies.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -8489,8 +8489,8 @@
     "description": "",
     "slug": "crash-reporter",
     "websiteUrl": "http://electronjs.org/docs/api/crash-reporter",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/crash-reporter.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/crash-reporter.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -8702,8 +8702,8 @@
     "description": "",
     "slug": "debugger",
     "websiteUrl": "http://electronjs.org/docs/api/debugger",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/debugger.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/debugger.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -8844,8 +8844,8 @@
     "description": "",
     "slug": "desktop-capturer",
     "websiteUrl": "http://electronjs.org/docs/api/desktop-capturer",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/desktop-capturer.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/desktop-capturer.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": false,
@@ -8914,8 +8914,8 @@
     "description": "",
     "slug": "dialog",
     "websiteUrl": "http://electronjs.org/docs/api/dialog",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/dialog.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/dialog.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -9865,8 +9865,8 @@
     "description": "",
     "slug": "dock",
     "websiteUrl": "http://electronjs.org/docs/api/dock",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/dock.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/dock.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -10097,8 +10097,8 @@
     "description": "",
     "slug": "download-item",
     "websiteUrl": "http://electronjs.org/docs/api/download-item",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/download-item.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/download-item.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -10454,8 +10454,8 @@
     "description": "",
     "slug": "global-shortcut",
     "websiteUrl": "http://electronjs.org/docs/api/global-shortcut",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/global-shortcut.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/global-shortcut.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -10569,8 +10569,8 @@
     "description": "",
     "slug": "in-app-purchase",
     "websiteUrl": "http://electronjs.org/docs/api/in-app-purchase",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/in-app-purchase.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/in-app-purchase.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -10701,8 +10701,8 @@
     "description": "",
     "slug": "incoming-message",
     "websiteUrl": "http://electronjs.org/docs/api/incoming-message",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/incoming-message.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/incoming-message.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -10815,8 +10815,8 @@
     "description": "",
     "slug": "ipc-main",
     "websiteUrl": "http://electronjs.org/docs/api/ipc-main",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/ipc-main.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/ipc-main.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -11101,8 +11101,8 @@
     "description": "",
     "slug": "ipc-renderer",
     "websiteUrl": "http://electronjs.org/docs/api/ipc-renderer",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/ipc-renderer.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/ipc-renderer.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": false,
@@ -11391,8 +11391,8 @@
     "description": "",
     "slug": "menu-item",
     "websiteUrl": "http://electronjs.org/docs/api/menu-item",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/menu-item.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/menu-item.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -12195,8 +12195,8 @@
     "description": "",
     "slug": "menu",
     "websiteUrl": "http://electronjs.org/docs/api/menu",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/menu.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/menu.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -12487,8 +12487,8 @@
     "description": "",
     "slug": "native-image",
     "websiteUrl": "http://electronjs.org/docs/api/native-image",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/native-image.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/native-image.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -12689,8 +12689,8 @@
     "description": "",
     "slug": "native-image",
     "websiteUrl": "http://electronjs.org/docs/api/native-image",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/native-image.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/native-image.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -13054,8 +13054,8 @@
     "description": "",
     "slug": "native-theme",
     "websiteUrl": "http://electronjs.org/docs/api/native-theme",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/native-theme.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/native-theme.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -13135,8 +13135,8 @@
     "description": "",
     "slug": "net-log",
     "websiteUrl": "http://electronjs.org/docs/api/net-log",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/net-log.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/net-log.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -13259,8 +13259,8 @@
     "description": "",
     "slug": "net",
     "websiteUrl": "http://electronjs.org/docs/api/net",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/net.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/net.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -13306,8 +13306,8 @@
     "description": "",
     "slug": "notification",
     "websiteUrl": "http://electronjs.org/docs/api/notification",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/notification.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/notification.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -13645,8 +13645,8 @@
     "description": "",
     "slug": "power-monitor",
     "websiteUrl": "http://electronjs.org/docs/api/power-monitor",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/power-monitor.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/power-monitor.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -13767,8 +13767,8 @@
     "description": "",
     "slug": "power-save-blocker",
     "websiteUrl": "http://electronjs.org/docs/api/power-save-blocker",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/power-save-blocker.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/power-save-blocker.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -13849,8 +13849,8 @@
     "description": "",
     "slug": "process",
     "websiteUrl": "http://electronjs.org/docs/api/process",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/process.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/process.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -14319,8 +14319,8 @@
     "description": "",
     "slug": "protocol",
     "websiteUrl": "http://electronjs.org/docs/api/protocol",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/protocol.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/protocol.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -15845,8 +15845,8 @@
     "description": "",
     "slug": "remote",
     "websiteUrl": "http://electronjs.org/docs/api/remote",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/remote.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/remote.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": false,
@@ -15936,8 +15936,8 @@
     "description": "",
     "slug": "screen",
     "websiteUrl": "http://electronjs.org/docs/api/screen",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/screen.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/screen.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -16213,8 +16213,8 @@
     "description": "",
     "slug": "session",
     "websiteUrl": "http://electronjs.org/docs/api/session",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/session.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/session.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -16277,8 +16277,8 @@
     "description": "",
     "slug": "session",
     "websiteUrl": "http://electronjs.org/docs/api/session",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/session.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/session.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -17237,8 +17237,8 @@
     "description": "",
     "slug": "shell",
     "websiteUrl": "http://electronjs.org/docs/api/shell",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/shell.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/shell.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -17448,8 +17448,8 @@
     "description": "",
     "slug": "system-preferences",
     "websiteUrl": "http://electronjs.org/docs/api/system-preferences",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/system-preferences.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/system-preferences.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -18827,8 +18827,8 @@
     "description": "",
     "slug": "touch-bar-button",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-button",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-button.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-button.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -18955,8 +18955,8 @@
     "description": "",
     "slug": "touch-bar-color-picker",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-color-picker",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-color-picker.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-color-picker.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19044,8 +19044,8 @@
     "description": "",
     "slug": "touch-bar-group",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-group",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-group.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-group.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19085,8 +19085,8 @@
     "description": "",
     "slug": "touch-bar-label",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-label",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-label.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-label.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19155,8 +19155,8 @@
     "description": "",
     "slug": "touch-bar-popover",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-popover",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-popover.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-popover.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19239,8 +19239,8 @@
     "description": "",
     "slug": "touch-bar-scrubber",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-scrubber",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-scrubber.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-scrubber.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19446,8 +19446,8 @@
     "description": "",
     "slug": "touch-bar-segmented-control",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-segmented-control",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-segmented-control.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-segmented-control.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19610,8 +19610,8 @@
     "description": "",
     "slug": "touch-bar-slider",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-slider",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-slider.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-slider.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19728,8 +19728,8 @@
     "description": "",
     "slug": "touch-bar-spacer",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar-spacer",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar-spacer.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar-spacer.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19783,8 +19783,8 @@
     "description": "",
     "slug": "touch-bar",
     "websiteUrl": "http://electronjs.org/docs/api/touch-bar",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/touch-bar.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/touch-bar.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -19992,8 +19992,8 @@
     "description": "",
     "slug": "tray",
     "websiteUrl": "http://electronjs.org/docs/api/tray",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/tray.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/tray.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -20560,8 +20560,8 @@
     "description": "",
     "slug": "web-contents",
     "websiteUrl": "http://electronjs.org/docs/api/web-contents",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/web-contents.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/web-contents.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": true,
@@ -20619,8 +20619,8 @@
     "description": "",
     "slug": "web-contents",
     "websiteUrl": "http://electronjs.org/docs/api/web-contents",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/web-contents.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/web-contents.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -24787,8 +24787,8 @@
     "description": "",
     "slug": "web-frame",
     "websiteUrl": "http://electronjs.org/docs/api/web-frame",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/web-frame.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/web-frame.md",
+    "version": "7.1.8",
     "type": "Module",
     "process": {
       "main": false,
@@ -25381,8 +25381,8 @@
     "description": "",
     "slug": "web-request",
     "websiteUrl": "http://electronjs.org/docs/api/web-request",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/web-request.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/web-request.md",
+    "version": "7.1.8",
     "type": "Class",
     "process": {
       "main": true,
@@ -26719,8 +26719,8 @@
     "description": "",
     "slug": "webview-tag",
     "websiteUrl": "http://electronjs.org/docs/api/webview-tag",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/webview-tag.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/webview-tag.md",
+    "version": "7.1.8",
     "type": "Element",
     "process": {
       "main": false,
@@ -28478,8 +28478,8 @@
     "description": "",
     "slug": "bluetooth-device",
     "websiteUrl": "http://electronjs.org/docs/api/structures/bluetooth-device",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/bluetooth-device.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/bluetooth-device.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "deviceName",
@@ -28507,8 +28507,8 @@
     "description": "",
     "slug": "certificate-principal",
     "websiteUrl": "http://electronjs.org/docs/api/structures/certificate-principal",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/certificate-principal.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/certificate-principal.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "commonName",
@@ -28572,8 +28572,8 @@
     "description": "",
     "slug": "certificate",
     "websiteUrl": "http://electronjs.org/docs/api/structures/certificate",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/certificate.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/certificate.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "data",
@@ -28668,8 +28668,8 @@
     "description": "",
     "slug": "cookie",
     "websiteUrl": "http://electronjs.org/docs/api/structures/cookie",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/cookie.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/cookie.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "name",
@@ -28755,8 +28755,8 @@
     "description": "",
     "slug": "cpu-usage",
     "websiteUrl": "http://electronjs.org/docs/api/structures/cpu-usage",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/cpu-usage.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/cpu-usage.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "percentCPUUsage",
@@ -28782,8 +28782,8 @@
     "description": "",
     "slug": "crash-report",
     "websiteUrl": "http://electronjs.org/docs/api/structures/crash-report",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/crash-report.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/crash-report.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "date",
@@ -28810,8 +28810,8 @@
     "description": "",
     "slug": "custom-scheme",
     "websiteUrl": "http://electronjs.org/docs/api/structures/custom-scheme",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/custom-scheme.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/custom-scheme.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "scheme",
@@ -28888,8 +28888,8 @@
     "description": "",
     "slug": "desktop-capturer-source",
     "websiteUrl": "http://electronjs.org/docs/api/structures/desktop-capturer-source",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/desktop-capturer-source.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/desktop-capturer-source.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "id",
@@ -28942,8 +28942,8 @@
     "description": "The `Display` object represents a physical display connected to the system. A fake `Display` may exist on a headless system, or a `Display` may correspond to a remote, virtual display.",
     "slug": "display",
     "websiteUrl": "http://electronjs.org/docs/api/structures/display",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/display.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/display.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "id",
@@ -29095,8 +29095,8 @@
     "description": "",
     "slug": "event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "preventDefault",
@@ -29114,8 +29114,8 @@
     "description": "",
     "slug": "extension-info",
     "websiteUrl": "http://electronjs.org/docs/api/structures/extension-info",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/extension-info.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/extension-info.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "name",
@@ -29143,8 +29143,8 @@
     "description": "",
     "slug": "file-filter",
     "websiteUrl": "http://electronjs.org/docs/api/structures/file-filter",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/file-filter.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/file-filter.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "name",
@@ -29172,8 +29172,8 @@
     "description": "",
     "slug": "file-path-with-headers",
     "websiteUrl": "http://electronjs.org/docs/api/structures/file-path-with-headers",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/file-path-with-headers.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/file-path-with-headers.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "path",
@@ -29210,8 +29210,8 @@
     "description": "Possible values:\n\n* `disabled_software` - Software only. Hardware acceleration disabled (yellow)\n* `disabled_off` - Disabled (red)\n* `disabled_off_ok` - Disabled (yellow)\n* `unavailable_software` - Software only, hardware acceleration unavailable (yellow)\n* `unavailable_off` - Unavailable (red)\n* `unavailable_off_ok` - Unavailable (yellow)\n* `enabled_readback` - Hardware accelerated but at reduced performance (yellow)\n* `enabled_force` - Hardware accelerated on all pages (green)\n* `enabled` - Hardware accelerated (green)\n* `enabled_on` - Enabled (green)\n* `enabled_force_on` - Force enabled (green)",
     "slug": "gpu-feature-status",
     "websiteUrl": "http://electronjs.org/docs/api/structures/gpu-feature-status",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/gpu-feature-status.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/gpu-feature-status.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "2d_canvas",
@@ -29338,8 +29338,8 @@
     "description": "",
     "slug": "input-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/input-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/input-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/input-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "modifiers",
@@ -29411,8 +29411,8 @@
     "description": "",
     "slug": "io-counters",
     "websiteUrl": "http://electronjs.org/docs/api/structures/io-counters",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/io-counters.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/io-counters.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "readOperationCount",
@@ -29471,8 +29471,8 @@
     "description": "",
     "slug": "ipc-main-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/ipc-main-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/ipc-main-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/ipc-main-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "frameId",
@@ -29525,8 +29525,8 @@
     "description": "",
     "slug": "ipc-main-invoke-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/ipc-main-invoke-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/ipc-main-invoke-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/ipc-main-invoke-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "frameId",
@@ -29553,8 +29553,8 @@
     "description": "",
     "slug": "ipc-renderer-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/ipc-renderer-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/ipc-renderer-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/ipc-renderer-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "sender",
@@ -29580,8 +29580,8 @@
     "description": "**Note:** If a `JumpListCategory` object has neither the `type` nor the `name` property set then its `type` is assumed to be `tasks`. If the `name` property is set but the `type` property is omitted then the `type` is assumed to be `custom`.",
     "slug": "jump-list-category",
     "websiteUrl": "http://electronjs.org/docs/api/structures/jump-list-category",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/jump-list-category.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/jump-list-category.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -29634,8 +29634,8 @@
     "description": "",
     "slug": "jump-list-item",
     "websiteUrl": "http://electronjs.org/docs/api/structures/jump-list-item",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/jump-list-item.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/jump-list-item.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -29739,8 +29739,8 @@
     "description": "",
     "slug": "keyboard-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/keyboard-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/keyboard-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/keyboard-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "ctrlKey",
@@ -29791,8 +29791,8 @@
     "description": "",
     "slug": "keyboard-input-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/keyboard-input-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/keyboard-input-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/keyboard-input-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -29833,8 +29833,8 @@
     "description": "Note that all statistics are reported in Kilobytes.",
     "slug": "memory-info",
     "websiteUrl": "http://electronjs.org/docs/api/structures/memory-info",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/memory-info.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/memory-info.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "workingSetSize",
@@ -29870,8 +29870,8 @@
     "description": "",
     "slug": "memory-usage-details",
     "websiteUrl": "http://electronjs.org/docs/api/structures/memory-usage-details",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/memory-usage-details.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/memory-usage-details.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "count",
@@ -29905,8 +29905,8 @@
     "description": "",
     "slug": "mime-typed-buffer",
     "websiteUrl": "http://electronjs.org/docs/api/structures/mime-typed-buffer",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/mime-typed-buffer.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/mime-typed-buffer.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "mimeType",
@@ -29934,8 +29934,8 @@
     "description": "",
     "slug": "mouse-input-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/mouse-input-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/mouse-input-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/mouse-input-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -30062,8 +30062,8 @@
     "description": "",
     "slug": "mouse-wheel-input-event",
     "websiteUrl": "http://electronjs.org/docs/api/structures/mouse-wheel-input-event",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/mouse-wheel-input-event.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/mouse-wheel-input-event.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -30151,8 +30151,8 @@
     "description": "",
     "slug": "notification-action",
     "websiteUrl": "http://electronjs.org/docs/api/structures/notification-action",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/notification-action.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/notification-action.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -30185,8 +30185,8 @@
     "description": "**Note:** Both `x` and `y` must be whole integers, when providing a point object as input to an Electron API we will automatically round your `x` and `y` values to the nearest whole integer.",
     "slug": "point",
     "websiteUrl": "http://electronjs.org/docs/api/structures/point",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/point.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/point.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "x",
@@ -30212,8 +30212,8 @@
     "description": "",
     "slug": "printer-info",
     "websiteUrl": "http://electronjs.org/docs/api/structures/printer-info",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/printer-info.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/printer-info.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "name",
@@ -30257,8 +30257,8 @@
     "description": "",
     "slug": "process-memory-info",
     "websiteUrl": "http://electronjs.org/docs/api/structures/process-memory-info",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/process-memory-info.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/process-memory-info.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "residentSet",
@@ -30295,8 +30295,8 @@
     "description": "",
     "slug": "process-metric",
     "websiteUrl": "http://electronjs.org/docs/api/structures/process-metric",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/process-metric.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/process-metric.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "pid",
@@ -30427,8 +30427,8 @@
     "description": "",
     "slug": "product",
     "websiteUrl": "http://electronjs.org/docs/api/structures/product",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/product.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/product.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "productIdentifier",
@@ -30507,8 +30507,8 @@
     "description": "",
     "slug": "protocol-request",
     "websiteUrl": "http://electronjs.org/docs/api/structures/protocol-request",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/protocol-request.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/protocol-request.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "url",
@@ -30553,8 +30553,8 @@
     "description": "",
     "slug": "protocol-response-upload-data",
     "websiteUrl": "http://electronjs.org/docs/api/structures/protocol-response-upload-data",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/protocol-response-upload-data.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/protocol-response-upload-data.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "contentType",
@@ -30591,8 +30591,8 @@
     "description": "",
     "slug": "protocol-response",
     "websiteUrl": "http://electronjs.org/docs/api/structures/protocol-response",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/protocol-response.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/protocol-response.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "error",
@@ -30737,8 +30737,8 @@
     "description": "",
     "slug": "rectangle",
     "websiteUrl": "http://electronjs.org/docs/api/structures/rectangle",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/rectangle.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/rectangle.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "x",
@@ -30780,8 +30780,8 @@
     "description": "",
     "slug": "referrer",
     "websiteUrl": "http://electronjs.org/docs/api/structures/referrer",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/referrer.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/referrer.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "url",
@@ -30842,8 +30842,8 @@
     "description": "",
     "slug": "remove-client-certificate",
     "websiteUrl": "http://electronjs.org/docs/api/structures/remove-client-certificate",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/remove-client-certificate.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/remove-client-certificate.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -30871,8 +30871,8 @@
     "description": "",
     "slug": "remove-password",
     "websiteUrl": "http://electronjs.org/docs/api/structures/remove-password",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/remove-password.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/remove-password.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -30953,8 +30953,8 @@
     "description": "",
     "slug": "scrubber-item",
     "websiteUrl": "http://electronjs.org/docs/api/structures/scrubber-item",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/scrubber-item.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/scrubber-item.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "label",
@@ -30981,8 +30981,8 @@
     "description": "",
     "slug": "segmented-control-segment",
     "websiteUrl": "http://electronjs.org/docs/api/structures/segmented-control-segment",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/segmented-control-segment.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/segmented-control-segment.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "label",
@@ -31017,8 +31017,8 @@
     "description": "",
     "slug": "shortcut-details",
     "websiteUrl": "http://electronjs.org/docs/api/structures/shortcut-details",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/shortcut-details.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/shortcut-details.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "target",
@@ -31090,8 +31090,8 @@
     "description": "",
     "slug": "size",
     "websiteUrl": "http://electronjs.org/docs/api/structures/size",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/size.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/size.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "width",
@@ -31117,8 +31117,8 @@
     "description": "",
     "slug": "stream-protocol-response",
     "websiteUrl": "http://electronjs.org/docs/api/structures/stream-protocol-response",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/stream-protocol-response.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/stream-protocol-response.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "statusCode",
@@ -31183,8 +31183,8 @@
     "description": "",
     "slug": "string-protocol-response",
     "websiteUrl": "http://electronjs.org/docs/api/structures/string-protocol-response",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/string-protocol-response.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/string-protocol-response.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "mimeType",
@@ -31230,8 +31230,8 @@
     "description": "",
     "slug": "task",
     "websiteUrl": "http://electronjs.org/docs/api/structures/task",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/task.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/task.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "program",
@@ -31303,8 +31303,8 @@
     "description": "The `flags` is an array that can include following `String`s:\n\n* `enabled` - The button is active and available to the user.\n* `disabled` - The button is disabled. It is present, but has a visual state indicating it will not respond to user action.\n* `dismissonclick` - When the button is clicked, the thumbnail window closes immediately.\n* `nobackground` - Do not draw a button border, use only the image.\n* `hidden` - The button is not shown to the user.\n* `noninteractive` - The button is enabled but not interactive; no pressed button state is drawn. This value is intended for instances where the button is used in a notification.",
     "slug": "thumbar-button",
     "websiteUrl": "http://electronjs.org/docs/api/structures/thumbar-button",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/thumbar-button.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/thumbar-button.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "icon",
@@ -31350,8 +31350,8 @@
     "description": "",
     "slug": "trace-categories-and-options",
     "websiteUrl": "http://electronjs.org/docs/api/structures/trace-categories-and-options",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/trace-categories-and-options.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/trace-categories-and-options.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "categoryFilter",
@@ -31379,8 +31379,8 @@
     "description": "An example TraceConfig that roughly matches what Chrome DevTools records:",
     "slug": "trace-config",
     "websiteUrl": "http://electronjs.org/docs/api/structures/trace-config",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/trace-config.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/trace-config.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "recording_mode",
@@ -31494,8 +31494,8 @@
     "description": "",
     "slug": "transaction",
     "websiteUrl": "http://electronjs.org/docs/api/structures/transaction",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/transaction.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/transaction.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "transactionIdentifier",
@@ -31606,8 +31606,8 @@
     "description": "",
     "slug": "upload-blob",
     "websiteUrl": "http://electronjs.org/docs/api/structures/upload-blob",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/upload-blob.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/upload-blob.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -31635,8 +31635,8 @@
     "description": "",
     "slug": "upload-data",
     "websiteUrl": "http://electronjs.org/docs/api/structures/upload-data",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/upload-data.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/upload-data.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "bytes",
@@ -31672,8 +31672,8 @@
     "description": "",
     "slug": "upload-file",
     "websiteUrl": "http://electronjs.org/docs/api/structures/upload-file",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/upload-file.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/upload-file.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -31725,8 +31725,8 @@
     "description": "",
     "slug": "upload-raw-data",
     "websiteUrl": "http://electronjs.org/docs/api/structures/upload-raw-data",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/upload-raw-data.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/upload-raw-data.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "type",
@@ -31753,8 +31753,8 @@
     "description": "",
     "slug": "web-source",
     "websiteUrl": "http://electronjs.org/docs/api/structures/web-source",
-    "repoUrl": "https://github.com/electron/electron/blob/7.1.7/docs/api/docs/api/structures/web-source.md",
-    "version": "7.1.7",
+    "repoUrl": "https://github.com/electron/electron/blob/7.1.8/docs/api/docs/api/structures/web-source.md",
+    "version": "7.1.8",
     "properties": [
       {
         "name": "code",
