@@ -324,7 +324,7 @@ package electron.main;
 	**/
 	@:optional
 	var preload : String; /**
-		If set, this will sandbox the renderer associated with the window, making it compatible with the Chromium OS-level sandbox and disabling the Node.js engine. This is not the same as the `nodeIntegration` option and the APIs available to the preload script are more limited. Read more about the option here. **Note:** This option is currently experimental and may change or be removed in future Electron releases.
+		If set, this will sandbox the renderer associated with the window, making it compatible with the Chromium OS-level sandbox and disabling the Node.js engine. This is not the same as the `nodeIntegration` option and the APIs available to the preload script are more limited. Read more about the option here.
 	**/
 	@:optional
 	var sandbox : Bool; /**

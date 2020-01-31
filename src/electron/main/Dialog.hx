@@ -39,7 +39,7 @@ package electron.main;
 		
 		* `canceled` Boolean - whether or not the dialog was canceled.
 		* `filePaths` String[] - An array of file paths chosen by the user. If the dialog is cancelled this will be an empty array.
-		* `bookmarks` String[] (optional) _macOS_ _mas_ - An array matching the `filePaths` array of base64 encoded strings which contains security scoped bookmark data. `securityScopedBookmarks` must be enabled for this to be populated.
+		* `bookmarks` String[] (optional) _macOS_ _mas_ - An array matching the `filePaths` array of base64 encoded strings which contains security scoped bookmark data. `securityScopedBookmarks` must be enabled for this to be populated. (For return values, see table here.)
 		
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
 		
@@ -108,7 +108,7 @@ package electron.main;
 		
 		* `canceled` Boolean - whether or not the dialog was canceled.
 		* `filePath` String (optional) - If the dialog is canceled, this will be `undefined`.
-		* `bookmark` String (optional) _macOS_ _mas_ - Base64 encoded string which contains the security scoped bookmark data for the saved file. `securityScopedBookmarks` must be enabled for this to be present.
+		* `bookmark` String (optional) _macOS_ _mas_ - Base64 encoded string which contains the security scoped bookmark data for the saved file. `securityScopedBookmarks` must be enabled for this to be present. (For return values, see table here.)
 		
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
 		

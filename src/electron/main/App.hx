@@ -410,6 +410,8 @@ package electron.main;
 	static function showAboutPanel():Void;
 	/**
 		Set the about panel options. This will override the values defined in the app's `.plist` file on MacOS. See the Apple docs for more details. On Linux, values must be set in order to be shown; there are no defaults.
+		
+		If you do not set `credits` but still wish to surface them in your app, AppKit will look for a file named "Credits.html", "Credits.rtf", and "Credits.rtfd", in that order, in the bundle returned by the NSBundle class method main. The first file found is used, and if none is found, the info area is left blank. See Apple documentation for more information.
 	**/
 	static function setAboutPanelOptions(options:{ /**
 		The app's name.
