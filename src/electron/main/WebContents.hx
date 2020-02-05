@@ -229,6 +229,12 @@ package electron.main;
 	**/
 	function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Any>;
 	/**
+		A promise that resolves with the result of the executed code or is rejected if the result of the code is a rejected promise.
+		
+		Works like `executeJavaScript` but evaluates `scripts` in an isolated context.
+	**/
+	function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool):js.lib.Promise<Any>;
+	/**
 		Ignore application menu shortcuts while this web contents is focused.
 	**/
 	function setIgnoreMenuShortcuts(ignore:Bool):Void;
@@ -280,6 +286,8 @@ package electron.main;
 	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
 		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
+		
+		**Deprecated:** This API is no longer supported by Chromium.
 	**/
 	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
@@ -371,6 +379,20 @@ package electron.main;
 	**/
 	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
 	/**
+		Whether this page is being captured. It returns true when the capturer count is large then 0.
+	**/
+	function isBeingCaptured():Bool;
+	/**
+		Increase the capturer count by one. The page is considered visible when its browser window is hidden and the capturer count is non-zero. If you would like the page to stay hidden, you should ensure that `stayHidden` is set to true.
+		
+		This also affects the Page Visibility API.
+	**/
+	function incrementCapturerCount(?size:electron.Size, ?stayHidden:Bool):Void;
+	/**
+		Decrease the capturer count by one. The page will be set to hidden or occluded state when its browser window is hidden or occluded and the capturer count reaches zero. If you want to decrease the hidden capturer count instead you should set `stayHidden` to true.
+	**/
+	function decrementCapturerCount(?stayHidden:Bool):Void;
+	/**
 		Get the system printer list.
 	**/
 	function getPrinters():Array<electron.PrinterInfo>;
@@ -390,7 +412,7 @@ package electron.main;
 	**/
 	@:optional
 	var printBackground : Bool; /**
-		Set the printer device name to use. Default is `''`.
+		Set the printer device name to use. Must be the system-defined name and not the 'friendly' name, e.g 'Brother_QL_820NWB' and not 'Brother QL-820NWB'.
 	**/
 	@:optional
 	var deviceName : String; /**
@@ -455,7 +477,15 @@ package electron.main;
 		The vertical dpi.
 	**/
 	@:optional
-	var vertical : Float; }; }, ?callback:haxe.Constraints.Function):Void;
+	var vertical : Float; }; /**
+		String to be printed as page header.
+	**/
+	@:optional
+	var header : String; /**
+		String to be printed as page footer.
+	**/
+	@:optional
+	var footer : String; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Resolves with the generated PDF data.
 		
@@ -550,11 +580,21 @@ package electron.main;
 	**/
 	function inspectSharedWorker():Void;
 	/**
+		Inspects the shared worker based on its ID.
+	**/
+	function inspectSharedWorkerById(workerId:String):Void;
+	/**
+		Information about all Shared Workers.
+	**/
+	function getAllSharedWorkers():Array<electron.SharedWorkerInfo>;
+	/**
 		Opens the developer tools for the service worker context.
 	**/
 	function inspectServiceWorker():Void;
 	/**
-		Send an asynchronous message to renderer process via `channel`, you can also send arbitrary arguments. Arguments will be serialized in JSON internally and hence no functions or prototype chain will be included.
+		Send an asynchronous message to the renderer process via `channel`, along with arguments. Arguments will be serialized with the Structured Clone Algorithm, just like `postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
+		
+		> **NOTE**: Sending non-standard JavaScript types such as DOM objects or special Electron objects is deprecated, and will begin throwing an exception starting with Electron 9.
 		
 		The renderer process can handle the message by listening to `channel` with the `ipcRenderer` module.
 		
@@ -562,7 +602,9 @@ package electron.main;
 	**/
 	function send(channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
-		Send an asynchronous message to a specific frame in a renderer process via `channel`. Arguments will be serialized as JSON internally and as such no functions or prototype chains will be included.
+		Send an asynchronous message to a specific frame in a renderer process via `channel`, along with arguments. Arguments will be serialized with the Structured Clone Algorithm, just like `postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
+		
+		> **NOTE**: Sending non-standard JavaScript types such as DOM objects or special Electron objects is deprecated, and will begin throwing an exception starting with Electron 9.
 		
 		The renderer process can handle the message by listening to `channel` with the `ipcRenderer` module.
 		
@@ -622,7 +664,7 @@ package electron.main;
 	var file : haxe.extern.EitherType<Array<Dynamic>, Dynamic>; /**
 		The image must be non-empty on macOS.
 	**/
-	var icon : electron.NativeImage; }):Void;
+	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; }):Void;
 	/**
 		resolves if the page is saved.
 	**/
@@ -916,7 +958,7 @@ package electron.main;
 	**/
 	var did_attach_webview : electron.main.WebContentsEvent<Void -> Void> = "did-attach-webview";
 	/**
-		Emitted when the associated window logs a console message. Will not be emitted for windows with *offscreen rendering* enabled.
+		Emitted when the associated window logs a console message.
 	**/
 	var console_message : electron.main.WebContentsEvent<Void -> Void> = "console-message";
 	/**

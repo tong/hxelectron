@@ -42,7 +42,7 @@ package electron;
 	/**
 		Creates a new `NativeImage` instance from the NSImage that maps to the given image name. See `System Icons` for a list of possible values.
 		
-		The `hslShift` is applied to the image with the following rules
+		The `hslShift` is applied to the image with the following rules:
 		
 		* `hsl_shift[0]` (hue): The absolute hue value for the image - 0 and 1 map to 0 and 360 on the hue color wheel (red).
 		* `hsl_shift[1]` (saturation): A saturation shift for the image, with the following key values: 0 = remove all color. 0.5 = leave unchanged. 1 = fully saturate the image.
@@ -94,7 +94,7 @@ package electron;
 	/**
 		A Buffer that contains the image's raw bitmap pixel data.
 		
-		The difference between `getBitmap()` and `toBitmap()` is, `getBitmap()` does not copy the bitmap data, so you have to use the returned Buffer immediately in current event loop tick, otherwise the data might be changed or destroyed.
+		The difference between `getBitmap()` and `toBitmap()` is that `getBitmap()` does not copy the bitmap data, so you have to use the returned Buffer immediately in current event loop tick; otherwise the data might be changed or destroyed.
 	**/
 	function getBitmap(?options:{ /**
 		Defaults to 1.0.
@@ -142,7 +142,7 @@ package electron;
 	**/
 	@:optional
 	var height : Int; /**
-		The desired quality of the resize image. Possible values are `good`, `better` or `best`. The default is `best`. These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
+		The desired quality of the resize image. Possible values are `good`, `better`, or `best`. The default is `best`. These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
 	**/
 	@:optional
 	var quality : String; }):electron.NativeImage;

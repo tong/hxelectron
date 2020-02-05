@@ -27,7 +27,7 @@ package electron.main;
 		An array of segments to place in this control.
 	**/
 	var segments : Array<electron.SegmentedControlSegment>; /**
-		The index of the currently selected segment, will update automatically with user interaction. When the mode is multiple it will be the last selected item.
+		The index of the currently selected segment, will update automatically with user interaction. When the mode is `multiple` it will be the last selected item.
 	**/
 	@:optional
 	var selectedIndex : Int; /**

@@ -324,6 +324,8 @@ package electron.renderer;
 	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
 		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
+		
+		**Deprecated:** This API is no longer supported by Chromium.
 	**/
 	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**

@@ -12,7 +12,7 @@ package electron.main;
 		
 		* `background` - Maps to `[NSScrubberSelectionStyle roundedBackgroundStyle]`.
 		* `outline` - Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
-		* `null` - Actually null, not a string, removes all styles.
+		* `none` - Removes all styles.
 	**/
 	var selectedStyle : String;
 	/**
@@ -20,7 +20,7 @@ package electron.main;
 		
 		* `background` - Maps to `[NSScrubberSelectionStyle roundedBackgroundStyle]`.
 		* `outline` - Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
-		* `null` - Actually null, not a string, removes all styles.
+		* `none` - Removes all styles.
 	**/
 	var overlayStyle : String;
 	/**
@@ -50,11 +50,11 @@ package electron.main;
 	**/
 	@:optional
 	var highlight : haxe.Constraints.Function; /**
-		Selected item style. Defaults to `null`.
+		Selected item style. Can be `background`, `outline` or `none`. Defaults to `none`.
 	**/
 	@:optional
 	var selectedStyle : String; /**
-		Selected overlay item style. Defaults to `null`.
+		Selected overlay item style. Can be `background`, `outline` or `none`. Defaults to `none`.
 	**/
 	@:optional
 	var overlayStyle : String; /**
@@ -62,7 +62,7 @@ package electron.main;
 	**/
 	@:optional
 	var showArrowButtons : Bool; /**
-		Defaults to `free`.
+		Can be `fixed` or `free`. The default is `free`.
 	**/
 	@:optional
 	var mode : String; /**

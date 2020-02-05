@@ -19,6 +19,10 @@ package electron.main;
 	**/
 	var cache : Bool; }):electron.main.Session;
 	/**
+		A `String[]` array which consists of all the known available spell checker languages.  Providing a language code to the `setSpellCheckerLanaguages` API that isn't in this array will result in an error.
+	**/
+	var availableSpellCheckerLanguages : Array<String>;
+	/**
 		A `Cookies` object for this session.
 	**/
 	var cookies : electron.main.Cookies;
@@ -112,12 +116,15 @@ package electron.main;
 	function setProxy(config:{ /**
 		The URL associated with the PAC file.
 	**/
+	@:optional
 	var pacScript : String; /**
 		Rules indicating which proxies to use.
 	**/
+	@:optional
 	var proxyRules : String; /**
 		Rules indicating which URLs should bypass the proxy settings.
 	**/
+	@:optional
 	var proxyBypassRules : String; }):js.lib.Promise<Any>;
 	/**
 		Resolves with the proxy information for `url`.
@@ -167,7 +174,7 @@ package electron.main;
 		
 		Calling `setCertificateVerifyProc(null)` will revert back to default certificate verify proc.
 	**/
-	function setCertificateVerifyProc(proc:haxe.Constraints.Function):Void;
+	function setCertificateVerifyProc(proc:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
 		Sets the handler which can be used to respond to permission requests for the `session`. Calling `callback(true)` will allow the permission and `callback(false)` will reject it. To clear the handler, call `setPermissionRequestHandler(null)`.
 	**/
@@ -203,6 +210,12 @@ package electron.main;
 	**/
 	function getBlobData(identifier:String):js.lib.Promise<Any>;
 	/**
+		Initiates a download of the resource at `url`. The API will generate a DownloadItem that can be accessed with the will-download event.
+		
+		**Note:** This does not perform any security checks that relate to a page's origin, unlike `webContents.downloadURL`.
+	**/
+	function downloadURL(url:String):Void;
+	/**
 		Allows resuming `cancelled` or `interrupted` downloads from previous `Session`. The API will generate a DownloadItem that can be accessed with the will-download event. The DownloadItem will not have any `WebContents` associated with it and the initial state will be `interrupted`. The download will start only when the `resume` API is called on the DownloadItem.
 	**/
 	function createInterruptedDownload(options:{ /**
@@ -221,9 +234,11 @@ package electron.main;
 	var length : Int; /**
 		Last-Modified header value.
 	**/
+	@:optional
 	var lastModified : String; /**
 		ETag header value.
 	**/
+	@:optional
 	var eTag : String; /**
 		Time when download was started in number of seconds since UNIX epoch.
 	**/
@@ -241,6 +256,30 @@ package electron.main;
 		an array of paths to preload scripts that have been registered.
 	**/
 	function getPreloads():Array<String>;
+	/**
+		The built in spellchecker does not automatically detect what language a user is typing in.  In order for the spell checker to correctly check their words you must call this API with an array of language codes.  You can get the list of supported language codes with the `ses.availableSpellCheckerLanguages` property.
+		
+		**Note:** On macOS the OS spellchecker is used and will detect your language automatically.  This API is a no-op on macOS.
+	**/
+	function setSpellCheckerLanguages(languages:Array<String>):Void;
+	/**
+		An array of language codes the spellchecker is enabled for.  If this list is empty the spellchecker will fallback to using `en-US`.  By default on launch if this setting is an empty list Electron will try to populate this setting with the current OS locale.  This setting is persisted across restarts.
+		
+		**Note:** On macOS the OS spellchecker is used and has it's own list of languages.  This API is a no-op on macOS.
+	**/
+	function getSpellCheckerLanguages():Array<String>;
+	/**
+		By default Electron will download hunspell dictionaries from the Chromium CDN.  If you want to override this behavior you can use this API to point the dictionary downloader at your own hosted version of the hunspell dictionaries.  We publish a `hunspell_dictionaries.zip` file with each release which contains the files you need to host here.
+		
+		**Note:** On macOS the OS spellchecker is used and therefore we do not download any dictionary files.  This API is a no-op on macOS.
+	**/
+	function setSpellCheckerDictionaryDownloadURL(url:String):Void;
+	/**
+		Whether the word was successfully written to the custom dictionary.
+		
+		**Note:** On macOS and Windows 10 this word will be written to the OS custom dictionary as well
+	**/
+	function addWordToSpellCheckerDictionary(word:String):Bool;
 }
 @:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

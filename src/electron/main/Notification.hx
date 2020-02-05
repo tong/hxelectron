@@ -40,6 +40,18 @@ package electron.main;
 	**/
 	var hasReply : Bool;
 	/**
+		A `String` property representing the urgency level of the notification. Can be 'normal', 'critical', or 'low'.
+		
+		Default is 'low' - see NotifyUrgency for more information.
+	**/
+	var urgency : String;
+	/**
+		A `String` property representing the type of timeout duration for the notification. Can be 'default' or 'never'.
+		
+		If `timeoutType` is set to 'never', the notification never expires. It stays open until closed by the calling API or the user.
+	**/
+	var timeoutType : String;
+	/**
 		A `NotificationAction[]` property representing the actions of the notification.
 	**/
 	var actions : Array<electron.NotificationAction>;
@@ -66,6 +78,10 @@ package electron.main;
 	**/
 	@:optional
 	var hasReply : Bool; /**
+		The timeout duration of the notification. Can be 'default' or 'never'.
+	**/
+	@:optional
+	var timeoutType : String; /**
 		The placeholder to write in the inline reply input field.
 	**/
 	@:optional
@@ -74,6 +90,10 @@ package electron.main;
 	**/
 	@:optional
 	var sound : String; /**
+		The urgency level of the notification. Can be 'normal', 'critical', or 'low'.
+	**/
+	@:optional
+	var urgency : String; /**
 		Actions to add to the notification. Please read the available actions and limitations in the `NotificationAction` documentation.
 	**/
 	@:optional

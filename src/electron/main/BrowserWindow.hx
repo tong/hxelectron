@@ -12,9 +12,9 @@ package electron.main;
 	**/
 	static function getFocusedWindow():haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
-		The window that owns the given `webContents`.
+		The window that owns the given `webContents` or `null` if the contents are not owned by a window.
 	**/
-	static function fromWebContents(webContents:electron.main.WebContents):electron.main.BrowserWindow;
+	static function fromWebContents(webContents:electron.main.WebContents):haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
 		The window that owns the given `browserView`. If the given view is not attached to any window, returns `null`.
 	**/
@@ -119,6 +119,10 @@ package electron.main;
 		A `Boolean` property that determines whether the window is excluded from the application’s Windows menu. `false` by default.
 	**/
 	var excludedFromShownWindowsMenu : Bool;
+	/**
+		A `String` property that defines an alternative title provided only to accessibility tools such as screen readers. This string is not directly visible to users.
+	**/
+	var accessibleTitle : String;
 	function new(?options:{ /**
 		Window's width in pixels. Default is `800`.
 	**/
@@ -256,7 +260,7 @@ package electron.main;
 	**/
 	@:optional
 	var backgroundColor : String; /**
-		Whether window should have a shadow. This is only implemented on macOS. Default is `true`.
+		Whether window should have a shadow. Default is `true`.
 	**/
 	@:optional
 	var hasShadow : Bool; /**
@@ -280,6 +284,10 @@ package electron.main;
 	**/
 	@:optional
 	var titleBarStyle : String; /**
+		Set a custom position for the traffic light buttons. Can only be used with `titleBarStyle` set to `hidden`
+	**/
+	@:optional
+	var trafficLightPosition : electron.Point; /**
 		Shows the title in the title bar in full screen mode on macOS for all `titleBarStyle` options. Default is `false`.
 	**/
 	@:optional
@@ -479,7 +487,15 @@ package electron.main;
 		Whether to prevent the window from resizing when entering HTML Fullscreen. Default is `false`.
 	**/
 	@:optional
-	var disableHtmlFullscreenWindowResize : Bool; }; }):Void;
+	var disableHtmlFullscreenWindowResize : Bool; /**
+		An alternative title string provided only to accessibility tools such as screen readers. This string is not directly visible to users.
+	**/
+	@:optional
+	var accessibleTitle : String; /**
+		Whether to enable the builtin spellchecker. Default is `false`.
+	**/
+	@:optional
+	var spellcheck : Bool; }; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
@@ -741,6 +757,10 @@ package electron.main;
 	**/
 	function isAlwaysOnTop():Bool;
 	/**
+		Moves window above the source window in the sense of z-order. If the `mediaSourceId` is not of type window or if the window does not exist then this method throws an error.
+	**/
+	function moveAbove(mediaSourceId:String):Void;
+	/**
 		Moves window to top(z-order) regardless of focus
 	**/
 	function moveTop():Void;
@@ -786,6 +806,12 @@ package electron.main;
 		Whether the window is in kiosk mode.
 	**/
 	function isKiosk():Bool;
+	/**
+		Window id in the format of DesktopCapturerSource's id. For example "window:1234:0".
+		
+		More precisely the format is `window:id:other_id` where `id` is `HWND` on Windows, `CGWindowID` (`uint64_t`) on macOS and `Window` (`unsigned long`) on Linux. `other_id` is used to identify web contents (tabs) so within the same top level window.
+	**/
+	function getMediaSourceId():String;
 	/**
 		The platform-specific handle of the window.
 		
@@ -1029,7 +1055,7 @@ package electron.main;
 		**Note:** This API does nothing on Windows.
 	**/
 	function setVisibleOnAllWorkspaces(visible:Bool, ?options:{ /**
-		Sets whether the window should be visible above fullscreen windows
+		Sets whether the window should be visible above fullscreen windows _deprecated_
 	**/
 	@:optional
 	var visibleOnFullScreen : Bool; }):Void;
@@ -1115,7 +1141,7 @@ package electron.main;
 	function setTouchBar(touchBar:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	function setBrowserView(browserView:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
-		an BrowserView what is attached. Returns `null` if none is attached. Throw error if multiple BrowserViews is attached.
+		The `BrowserView` attached to `win`. Returns `null` if one is not attached. Throws an error if multiple `BrowserView`s are attached.
 	**/
 	function getBrowserView():haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
@@ -1208,7 +1234,7 @@ package electron.main;
 	**/
 	var resize : electron.main.BrowserWindowEvent<Void -> Void> = "resize";
 	/**
-		Emitted before the window is moved. Calling `event.preventDefault()` will prevent the window from being moved.
+		Emitted before the window is moved. On Windows, calling `event.preventDefault()` will prevent the window from being moved.
 		
 		Note that this is only emitted when the window is being resized manually. Resizing the window with `setBounds`/`setSize` will not emit this event.
 	**/

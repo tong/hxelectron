@@ -8,6 +8,10 @@ package electron.main;
 	**/
 	var label : String;
 	/**
+		A `String` representing the description of the label to be read by a screen reader.
+	**/
+	var accessibilityLabel : String;
+	/**
 		A `String` hex code representing the label's current text color. Changing this value immediately updates the label in the touch bar.
 	**/
 	var textColor : String;
@@ -16,6 +20,10 @@ package electron.main;
 	**/
 	@:optional
 	var label : String; /**
+		A short description of the button for use by screenreaders like VoiceOver.
+	**/
+	@:optional
+	var accessibilityLabel : String; /**
 		Hex color of text, i.e `#ABCDEF`.
 	**/
 	@:optional

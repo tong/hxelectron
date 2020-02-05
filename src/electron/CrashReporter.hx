@@ -68,6 +68,10 @@ package electron;
 		See all of the current parameters being passed to the crash reporter.
 	**/
 	static function getParameters():Void;
+	/**
+		The directory where crashes are temporarily stored before being uploaded.
+	**/
+	static function getCrashesDirectory():String;
 }
 @:enum abstract CrashReporterEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 

@@ -22,7 +22,6 @@ package electron.main;
 	var icon : electron.NativeImage; /**
 		Items to display in the popover.
 	**/
-	@:optional
 	var items : electron.main.TouchBar; /**
 		`true` to display a close button on the left of the popover, `false` to not show it. Default is `true`.
 	**/

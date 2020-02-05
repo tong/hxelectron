@@ -4,6 +4,10 @@ package electron.main;
 **/
 @:jsRequire("electron", "TouchBarButton") extern class TouchBarButton extends js.node.events.EventEmitter<electron.main.TouchBarButton> {
 	/**
+		A `String` representing the description of the button to be read by a screen reader. Will only be read by screen readers if no label is set.
+	**/
+	var accessibilityLabel : String;
+	/**
 		A `String` representing the button's current text. Changing this value immediately updates the button in the touch bar.
 	**/
 	var label : String;
@@ -20,6 +24,10 @@ package electron.main;
 	**/
 	@:optional
 	var label : String; /**
+		A short description of the button for use by screenreaders like VoiceOver.
+	**/
+	@:optional
+	var accessibilityLabel : String; /**
 		Button background color in hex format, i.e `#ABCDEF`.
 	**/
 	@:optional
@@ -28,7 +36,7 @@ package electron.main;
 	**/
 	@:optional
 	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
-		Can be `left`, `right` or `overlay`.
+		Can be `left`, `right` or `overlay`. Defaults to `overlay`.
 	**/
 	@:optional
 	var iconPosition : String; /**

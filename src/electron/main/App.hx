@@ -153,6 +153,8 @@ package electron.main;
 	/**
 		Overrides the current application's name.
 		
+		**Note:** This function overrides the name used internally by Electron; it does not affect the name that the OS uses.
+		
 		**Deprecated**
 	**/
 	static function setName(name:String):Void;
@@ -210,6 +212,12 @@ package electron.main;
 		The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
 	**/
 	static function isDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
+	/**
+		Name of the application handling the protocol, or an empty string if there is no handler. For instance, if Electron is the default handler of the URL, this could be `Electron` on Windows and Mac. However, don't rely on the precise format which is not guaranteed to remain unchanged. Expect a different format on Linux, possibly with a `.desktop` suffix.
+		
+		This method returns the application name of the default handler for the protocol (aka URI scheme) of a URL.
+	**/
+	static function getApplicationNameForProtocol(url:String):String;
 	/**
 		Adds `tasks` to the Tasks category of the Jump List on Windows.
 		
@@ -442,7 +450,7 @@ package electron.main;
 	**/
 	@:optional
 	var website : String; /**
-		Path to the app's icon. Will be shown as 64x64 pixels while retaining aspect ratio.
+		Path to the app's icon. On Linux, will be shown as 64x64 pixels while retaining aspect ratio.
 	**/
 	@:optional
 	var iconPath : String; }):Void;

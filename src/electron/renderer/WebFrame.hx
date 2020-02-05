@@ -51,10 +51,14 @@ package electron.renderer;
 	static function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
 		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
+		
+		**Deprecated:** This API is no longer supported by Chromium.
 	**/
 	static function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
 		Sets a provider for spell checking in input fields and text areas.
+		
+		If you want to use this method you must disable the builtin spellchecker when you construct the window.
 		
 		The `provider` must be an object that has a `spellCheck` method that accepts an array of individual words for spellchecking. The `spellCheck` function runs asynchronously and calls the `callback` function with an array of misspelt words when complete.
 		

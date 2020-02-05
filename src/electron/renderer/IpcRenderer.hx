@@ -20,7 +20,9 @@ package electron.renderer;
 	**/
 	static function removeAllListeners(channel:String):Void;
 	/**
-		Send a message to the main process asynchronously via `channel`, you can also send arbitrary arguments. Arguments will be serialized as JSON internally and hence no functions or prototype chain will be included.
+		Send an asynchronous message to the main process via `channel`, along with arguments. Arguments will be serialized with the Structured Clone Algorithm, just like `postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
+		
+		> **NOTE**: Sending non-standard JavaScript types such as DOM objects or special Electron objects is deprecated, and will begin throwing an exception starting with Electron 9.
 		
 		The main process handles it by listening for `channel` with the `ipcMain` module.
 	**/
@@ -28,7 +30,9 @@ package electron.renderer;
 	/**
 		Resolves with the response from the main process.
 		
-		Send a message to the main process asynchronously via `channel` and expect an asynchronous result. Arguments will be serialized as JSON internally and hence no functions or prototype chain will be included.
+		Send a message to the main process via `channel` and expect a result asynchronously. Arguments will be serialized with the Structured Clone Algorithm, just like `postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
+		
+		> **NOTE**: Sending non-standard JavaScript types such as DOM objects or special Electron objects is deprecated, and will begin throwing an exception starting with Electron 9.
 		
 		The main process should listen for `channel` with `ipcMain.handle()`.
 		
@@ -38,11 +42,13 @@ package electron.renderer;
 	/**
 		The value sent back by the `ipcMain` handler.
 		
-		Send a message to the main process synchronously via `channel`, you can also send arbitrary arguments. Arguments will be serialized in JSON internally and hence no functions or prototype chain will be included.
+		Send a message to the main process via `channel` and expect a result synchronously. Arguments will be serialized with the Structured Clone Algorithm, just like `postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
+		
+		> **NOTE**: Sending non-standard JavaScript types such as DOM objects or special Electron objects is deprecated, and will begin throwing an exception starting with Electron 9.
 		
 		The main process handles it by listening for `channel` with `ipcMain` module, and replies by setting `event.returnValue`.
 		
-		**Note:** Sending a synchronous message will block the whole renderer process, unless you know what you are doing you should never use it.
+		> :warning: **WARNING**: Sending a synchronous message will block the whole renderer process until the reply is received, so use this method only as a last resort. It's much better to use the asynchronous version, `invoke()`.
 	**/
 	static function sendSync(channel:String, args:haxe.extern.Rest<Any>):Any;
 	/**

@@ -5,6 +5,8 @@ package electron.renderer;
 @:jsRequire("electron", "desktopCapturer") extern class DesktopCapturer extends js.node.events.EventEmitter<electron.renderer.DesktopCapturer> {
 	/**
 		Resolves with an array of `DesktopCapturerSource` objects, each `DesktopCapturerSource` represents a screen or an individual window that can be captured.
+		
+		**Note** Capturing the screen contents requires user consent on macOS 10.15 Catalina or higher, which can detected by `systemPreferences.getMediaAccessStatus`.
 	**/
 	static function getSources(options:{ /**
 		An array of Strings that lists the types of desktop sources to be captured, available types are `screen` and `window`.

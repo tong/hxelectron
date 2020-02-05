@@ -126,6 +126,8 @@ package electron.main;
 	static function getAccentColor():String;
 	/**
 		The system color setting in RGB hexadecimal form (`#ABCDEF`). See the Windows docs and the MacOS docs for more details.
+		
+		The following colors are only available on macOS 10.14: `find-highlight`, `selected-content-background`, `separator`, `unemphasized-selected-content-background`, `unemphasized-selected-text-background`, and `unemphasized-selected-text`.
 	**/
 	static function getColor(color:String):String;
 	/**
@@ -193,7 +195,7 @@ package electron.main;
 	/**
 		Can be `not-determined`, `granted`, `denied`, `restricted` or `unknown`.
 		
-		This user consent was not required until macOS 10.14 Mojave, so this method will always return `granted` if your system is running 10.13 High Sierra or lower.
+		This user consent was not required on macOS 10.13 High Sierra or lower so this method will always return `granted`. macOS 10.14 Mojave or higher requires consent for `microphone` and `camera` access. macOS 10.15 Catalina or higher requires consent for `screen` access.
 	**/
 	static function getMediaAccessStatus(mediaType:String):String;
 	/**

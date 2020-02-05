@@ -41,8 +41,35 @@ package electron.main;
 	/**
 		Displays a tray balloon.
 	**/
-	function displayBalloon(options:{ @:optional
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; var title : String; var content : String; }):Void;
+	function displayBalloon(options:{ /**
+		Icon to use when `iconType` is `custom`.
+	**/
+	@:optional
+	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+		Can be `none`, `info`, `warning`, `error` or `custom`. Default is `custom`.
+	**/
+	@:optional
+	var iconType : String; var title : String; var content : String; /**
+		The large version of the icon should be used. Default is `true`. Maps to `NIIF_LARGE_ICON`.
+	**/
+	@:optional
+	var largeIcon : Bool; /**
+		Do not play the associated sound. Default is `false`. Maps to `NIIF_NOSOUND`.
+	**/
+	@:optional
+	var noSound : Bool; /**
+		Do not display the balloon notification if the current user is in "quiet time". Default is `false`. Maps to `NIIF_RESPECT_QUIET_TIME`.
+	**/
+	@:optional
+	var respectQuietTime : Bool; }):Void;
+	/**
+		Removes a tray balloon.
+	**/
+	function removeBalloon():Void;
+	/**
+		Returns focus to the taskbar notification area. Notification area icons should use this message when they have completed their UI operation. For example, if the icon displays a shortcut menu, but the user presses ESC to cancel it, use `tray.focus()` to return focus to the notification area.
+	**/
+	function focus():Void;
 	/**
 		Pops up the context menu of the tray icon. When `menu` is passed, the `menu` will be shown instead of the tray icon's context menu.
 		

@@ -26,11 +26,11 @@ package electron;
 	@:optional
 	var workingDirectory : String; }):js.lib.Promise<Any>;
 	/**
-		Whether the item was successfully moved to the trash.
+		Whether the item was successfully moved to the trash or otherwise deleted.
 		
 		Move the given file to trash and returns a boolean status for the operation.
 	**/
-	static function moveItemToTrash(fullPath:String):Bool;
+	static function moveItemToTrash(fullPath:String, ?deleteOnFail:Bool):Bool;
 	/**
 		Play the beep sound.
 	**/

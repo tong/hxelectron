@@ -98,7 +98,8 @@ package electron.main;
 		Show the tags input box, defaults to `true`.
 	**/
 	@:optional
-	var showsTagField : Bool; /**
+	var showsTagField : Bool; @:optional
+	var properties : Array<String>; /**
 		Create a security scoped bookmark when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.
 	**/
 	@:optional
@@ -138,7 +139,8 @@ package electron.main;
 		Show the tags input box, defaults to `true`.
 	**/
 	@:optional
-	var showsTagField : Bool; /**
+	var showsTagField : Bool; @:optional
+	var properties : Array<String>; /**
 		Create a security scoped bookmark when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.
 	**/
 	@:optional
