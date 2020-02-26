@@ -187,15 +187,13 @@ package electron.main;
 	/**
 		Whether the call succeeded.
 		
-		This method sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with `your-protocol://` will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter.
+		Sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with `your-protocol://` will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter.
 		
-		On Windows, you can provide optional parameters path, the path to your executable, and args, an array of arguments to be passed to your executable when it launches.
-		
-		**Note:** On macOS, you can only register protocols that have been added to your app's `info.plist`, which can not be modified at runtime. You can however change the file with a simple text editor or script during build time. Please refer to Apple's documentation for details.
+		**Note:** On macOS, you can only register protocols that have been added to your app's `info.plist`, which cannot be modified at runtime. However, you can change the file during build time via Electron Forge, Electron Packager, or by editing `info.plist` with a text editor. Please refer to Apple's documentation for details.
 		
 		**Note:** In a Windows Store environment (when packaged as an `appx`) this API will return `true` for all calls but the registry key it sets won't be accessible by other applications.  In order to register your Windows Store application as a default protocol handler you must declare the protocol in your manifest.
 		
-		The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
+		The API uses the Windows Registry and `LSSetDefaultHandlerForURLScheme` internally.
 	**/
 	static function setAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
@@ -205,11 +203,11 @@ package electron.main;
 	**/
 	static function removeAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
-		This method checks if the current executable is the default handler for a protocol (aka URI scheme). If so, it will return true. Otherwise, it will return false.
+		Whether the current executable is the default handler for a protocol (aka URI scheme).
 		
 		**Note:** On macOS, you can use this method to check if the app has been registered as the default protocol handler for a protocol. You can also verify this by checking `~/Library/Preferences/com.apple.LaunchServices.plist` on the macOS machine. Please refer to Apple's documentation for details.
 		
-		The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
+		The API uses the Windows Registry and `LSCopyDefaultHandlerForURLScheme` internally.
 	**/
 	static function isDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
