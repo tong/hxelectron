@@ -15,8 +15,6 @@ package electron.main;
 		A `String` property that can be `dark`, `light` or `unknown`.
 		
 		Returns the macOS appearance setting that is currently applied to your application, maps to NSApplication.effectiveAppearance
-		
-		Please note that until Electron is built targeting the 10.14 SDK, your application's `effectiveAppearance` will default to 'light' and won't inherit the OS preference. In the interim in order for your application to inherit the OS preference you must set the `NSRequiresAquaSystemAppearance` key in your apps `Info.plist` to `false`.  If you are using `electron-packager` or `electron-forge` just set the `enableDarwinDarkMode` packager option to `true`.  See the Electron Packager API for more details.
 	**/
 	static var effectiveAppearance : String;
 	/**
@@ -152,8 +150,6 @@ package electron.main;
 		Can be `dark`, `light` or `unknown`.
 		
 		Gets the macOS appearance setting that is currently applied to your application, maps to NSApplication.effectiveAppearance
-		
-		Please note that until Electron is built targeting the 10.14 SDK, your application's `effectiveAppearance` will default to 'light' and won't inherit the OS preference. In the interim in order for your application to inherit the OS preference you must set the `NSRequiresAquaSystemAppearance` key in your apps `Info.plist` to `false`.  If you are using `electron-packager` or `electron-forge` just set the `enableDarwinDarkMode` packager option to `true`.  See the Electron Packager API for more details.
 		
 		**Deprecated**
 	**/

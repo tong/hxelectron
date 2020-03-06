@@ -1134,6 +1134,14 @@ package electron.main;
 	**/
 	function setVibrancy(type:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
+		Set a custom position for the traffic light buttons. Can only be used with `titleBarStyle` set to `hidden`.
+	**/
+	function setTrafficLightPosition(position:electron.Point):Void;
+	/**
+		The current position for the traffic light buttons. Can only be used with `titleBarStyle` set to `hidden`.
+	**/
+	function getTrafficLightPosition():electron.Point;
+	/**
 		Sets the touchBar layout for the current window. Specifying `null` or `undefined` clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+.
 		
 		**Note:** The TouchBar API is currently experimental and may change or be removed in future Electron releases.

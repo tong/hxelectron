@@ -269,7 +269,7 @@ package electron.main;
 	**/
 	function getSpellCheckerLanguages():Array<String>;
 	/**
-		By default Electron will download hunspell dictionaries from the Chromium CDN.  If you want to override this behavior you can use this API to point the dictionary downloader at your own hosted version of the hunspell dictionaries.  We publish a `hunspell_dictionaries.zip` file with each release which contains the files you need to host here.
+		By default Electron will download hunspell dictionaries from the Chromium CDN.  If you want to override this behavior you can use this API to point the dictionary downloader at your own hosted version of the hunspell dictionaries.  We publish a `hunspell_dictionaries.zip` file with each release which contains the files you need to host here, the file server must be **case insensitive** you must upload each file twice, once with the case it has in the ZIP file and once with the filename as all lower case.
 		
 		If the files present in `hunspell_dictionaries.zip` are available at `https://example.com/dictionaries/language-code.bdic` then you should call this api with `ses.setSpellCheckerDictionaryDownloadURL('https://example.com/dictionaries/')`.  Please note the trailing slash.  The URL to the dictionaries is formed as `${url}${filename}`.
 		
@@ -294,4 +294,20 @@ package electron.main;
 		Emitted when a render process requests preconnection to a URL, generally due to a resource hint.
 	**/
 	var preconnect : electron.main.SessionEvent<Void -> Void> = "preconnect";
+	/**
+		Emitted when a hunspell dictionary file has been successfully initialized. This occurs after the file has been downloaded.
+	**/
+	var spellcheck_dictionary_initialized : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-initialized";
+	/**
+		Emitted when a hunspell dictionary file starts downloading
+	**/
+	var spellcheck_dictionary_download_begin : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-begin";
+	/**
+		Emitted when a hunspell dictionary file has been successfully downloaded
+	**/
+	var spellcheck_dictionary_download_success : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-success";
+	/**
+		Emitted when a hunspell dictionary file download fails.  For details on the failure you should collect a netlog and inspect the download request.
+	**/
+	var spellcheck_dictionary_download_failure : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-failure";
 }
