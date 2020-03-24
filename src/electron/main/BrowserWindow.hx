@@ -476,6 +476,10 @@ package electron.main;
 	**/
 	@:optional
 	var safeDialogsMessage : String; /**
+		Whether to disable dialogs completely. Overrides `safeDialogs`. Default is `false`.
+	**/
+	@:optional
+	var disableDialogs : Bool; /**
 		Whether dragging and dropping a file or link onto the page causes a navigation. Default is `false`.
 	**/
 	@:optional
