@@ -1306,6 +1306,8 @@ package electron.main;
 	var scroll_touch_edge : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-edge";
 	/**
 		Emitted on 3-finger swipe. Possible directions are `up`, `right`, `down`, `left`.
+		
+		The method underlying this event is built to handle older macOS-style trackpad swiping, where the content on the screen doesn't move with the swipe. Most macOS trackpads are not configured to allow this kind of swiping anymore, so in order for it to emit properly the 'Swipe between pages' preference in `System Preferences > Trackpad > More Gestures` must be set to 'Swipe with two or three fingers'.
 	**/
 	var swipe : electron.main.BrowserWindowEvent<Void -> Void> = "swipe";
 	/**
