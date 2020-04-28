@@ -54,11 +54,11 @@ package electron.main;
 	**/
 	var hostWebContents : electron.main.WebContents;
 	/**
-		A `WebContents` of DevTools for this `WebContents`.
+		A `WebContents | null` property that represents the of DevTools `WebContents` associated with a given `WebContents`.
 		
 		**Note:** Users should never store this object because it may become `null` when the DevTools has been closed.
 	**/
-	var devToolsWebContents : electron.main.WebContents;
+	var devToolsWebContents : haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
 		A `Debugger` instance for this webContents.
 	**/
