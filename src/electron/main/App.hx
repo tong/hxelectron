@@ -91,8 +91,13 @@ package electron.main;
 	static function whenReady():js.lib.Promise<Any>;
 	/**
 		On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses on the application's first window.
+		
+		You should seek to use the `steal` option as sparingly as possible.
 	**/
-	static function focus():Void;
+	static function focus(?options:{ /**
+		Make the receiver the active app even if another app is currently active.
+	**/
+	var steal : Bool; }):Void;
 	/**
 		Hides all application windows without minimizing them.
 	**/
