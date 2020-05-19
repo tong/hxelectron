@@ -19,6 +19,10 @@ package electron.main;
 		A `NativeImage` representing the button's current icon. Changing this value immediately updates the button in the touch bar.
 	**/
 	var icon : electron.NativeImage;
+	/**
+		A `Boolean` representing whether the button is in an enabled state.
+	**/
+	var enabled : Bool;
 	function new(options:{ /**
 		Button text.
 	**/
@@ -43,7 +47,11 @@ package electron.main;
 		Function to call when the button is clicked.
 	**/
 	@:optional
-	var click : haxe.Constraints.Function; }):Void;
+	var click : haxe.Constraints.Function; /**
+		Whether the button is in an enabled state.  Default is `true`.
+	**/
+	@:optional
+	var enabled : Bool; }):Void;
 }
 @:enum abstract TouchBarButtonEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 

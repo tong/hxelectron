@@ -52,12 +52,6 @@ package electron.renderer;
 	**/
 	static function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
-		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
-		
-		**Deprecated:** This API is no longer supported by Chromium.
-	**/
-	static function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
-	/**
 		Sets a provider for spell checking in input fields and text areas.
 		
 		If you want to use this method you must disable the builtin spellchecker when you construct the window.
@@ -82,19 +76,19 @@ package electron.renderer;
 	**/
 	static function insertText(text:String):Void;
 	/**
-		A promise that resolves with the result of the executed code or is rejected if the result of the code is a rejected promise.
+		A promise that resolves with the result of the executed code or is rejected if execution throws or results in a rejected promise.
 		
 		Evaluates `code` in page.
 		
 		In the browser window some HTML APIs like `requestFullScreen` can only be invoked by a gesture from the user. Setting `userGesture` to `true` will remove this limitation.
 	**/
-	static function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Any>;
+	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
 	/**
-		A promise that resolves with the result of the executed code or is rejected if the result of the code is a rejected promise.
+		A promise that resolves with the result of the executed code or is rejected if execution throws or results in a rejected promise.
 		
 		Works like `executeJavaScript` but evaluates `scripts` in an isolated context.
 	**/
-	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool):js.lib.Promise<Any>;
+	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
 	/**
 		Set the security origin, content security policy and name of the isolated world. Note: If the `csp` is specified, then the `securityOrigin` also has to be specified.
 	**/

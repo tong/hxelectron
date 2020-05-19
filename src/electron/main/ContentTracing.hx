@@ -7,6 +7,8 @@ package electron.main;
 		resolves with an array of category groups once all child processes have acknowledged the `getCategories` request
 		
 		Get a set of category groups. The category groups can change as new code paths are reached. See also the list of built-in tracing categories.
+		
+		> **NOTE:** Electron adds a non-default tracing category called `"electron"`. This category can be used to capture Electron-specific tracing events.
 	**/
 	static function getCategories():js.lib.Promise<Any>;
 	/**

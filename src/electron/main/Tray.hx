@@ -3,7 +3,7 @@ package electron.main;
 	@see http://electronjs.org/docs/api/tray
 **/
 @:jsRequire("electron", "Tray") extern class Tray extends js.node.events.EventEmitter<electron.main.Tray> {
-	function new(image:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function new(image:haxe.extern.EitherType<Dynamic, Dynamic>, ?guid:String):Void;
 	/**
 		Destroys the tray icon immediately.
 	**/
@@ -77,6 +77,10 @@ package electron.main;
 	**/
 	function popUpContextMenu(?menu:electron.main.Menu, ?position:electron.Point):Void;
 	/**
+		Closes an open context menu, as set by `tray.setContextMenu()`.
+	**/
+	function closeContextMenu():Void;
+	/**
 		Sets the context menu for this icon.
 	**/
 	function setContextMenu(menu:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
@@ -138,6 +142,16 @@ package electron.main;
 		Emitted when a drag operation ends on the tray or ends at another location.
 	**/
 	var drag_end : electron.main.TrayEvent<Void -> Void> = "drag-end";
+	/**
+		Emitted when the mouse is released from clicking the tray icon.
+		
+		Note: This will not be emitted if you have set a context menu for your Tray using `tray.setContextMenu`, as a result of macOS-level constraints.
+	**/
+	var mouse_up : electron.main.TrayEvent<Void -> Void> = "mouse-up";
+	/**
+		Emitted when the mouse clicks the tray icon.
+	**/
+	var mouse_down : electron.main.TrayEvent<Void -> Void> = "mouse-down";
 	/**
 		Emitted when the mouse enters the tray icon.
 	**/

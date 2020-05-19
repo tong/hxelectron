@@ -42,7 +42,7 @@ package electron.main;
 	**/
 	var frameRate : Int;
 	/**
-		A `Integer` representing the unique ID of this WebContents.
+		A `Integer` representing the unique ID of this WebContents. Each ID is unique among all `WebContents` instances of the entire Electron application.
 	**/
 	var id : Int;
 	/**
@@ -192,14 +192,10 @@ package electron.main;
 	function isCrashed():Bool;
 	/**
 		Overrides the user agent for this web page.
-		
-		**Deprecated**
 	**/
 	function setUserAgent(userAgent:String):Void;
 	/**
 		The user agent for this web page.
-		
-		**Deprecated**
 	**/
 	function getUserAgent():String;
 	/**
@@ -240,14 +236,10 @@ package electron.main;
 	function setIgnoreMenuShortcuts(ignore:Bool):Void;
 	/**
 		Mute the audio on the current web page.
-		
-		**Deprecated**
 	**/
 	function setAudioMuted(muted:Bool):Void;
 	/**
 		Whether this page has been muted.
-		
-		**Deprecated**
 	**/
 	function isAudioMuted():Bool;
 	/**
@@ -258,26 +250,18 @@ package electron.main;
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 		
 		The factor must be greater than 0.0.
-		
-		**Deprecated**
 	**/
 	function setZoomFactor(factor:Float):Void;
 	/**
 		the current zoom factor.
-		
-		**Deprecated**
 	**/
 	function getZoomFactor():Float;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is `scale := 1.2 ^ level`.
-		
-		**Deprecated**
 	**/
 	function setZoomLevel(level:Float):Void;
 	/**
 		the current zoom level.
-		
-		**Deprecated**
 	**/
 	function getZoomLevel():Float;
 	/**
@@ -286,12 +270,6 @@ package electron.main;
 		> **NOTE**: Visual zoom is disabled by default in Electron. To re-enable it, call:
 	**/
 	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
-	/**
-		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
-		
-		**Deprecated:** This API is no longer supported by Chromium.
-	**/
-	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
 		Executes the editing command `undo` in web page.
 	**/
@@ -463,7 +441,7 @@ package electron.main;
 	**/
 	@:optional
 	var copies : Float; /**
-		The page range to print. Should have two keys: `from` and `to`.
+		The page range to print.
 	**/
 	@:optional
 	var pageRanges : Record; /**
@@ -471,15 +449,7 @@ package electron.main;
 	**/
 	@:optional
 	var duplexMode : String; @:optional
-	var dpi : { /**
-		The horizontal dpi.
-	**/
-	@:optional
-	var horizontal : Float; /**
-		The vertical dpi.
-	**/
-	@:optional
-	var vertical : Float; }; /**
+	var dpi : Record; /**
 		String to be printed as page header.
 	**/
 	@:optional
@@ -487,7 +457,11 @@ package electron.main;
 		String to be printed as page footer.
 	**/
 	@:optional
-	var footer : String; }, ?callback:haxe.Constraints.Function):Void;
+	var footer : String; /**
+		Specify page size of the printed document. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`.
+	**/
+	@:optional
+	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Resolves with the generated PDF data.
 		
@@ -502,11 +476,27 @@ package electron.main;
 		An example of `webContents.printToPDF`:
 	**/
 	function printToPDF(options:{ /**
-		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+		the header and footer for the PDF.
+	**/
+	@:optional
+	var headerFooter : Record; /**
+		`true` for landscape, `false` for portrait.
+	**/
+	@:optional
+	var landscape : Bool; /**
+		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin. and `width` in microns.
 	**/
 	@:optional
 	var marginsType : Int; /**
-		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width` in microns.
+		The scale factor of the web page. Can range from 0 to 100.
+	**/
+	@:optional
+	var scaleFactor : Float; /**
+		The page range to print.
+	**/
+	@:optional
+	var pageRanges : Record; /**
+		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`
 	**/
 	@:optional
 	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; /**
@@ -517,11 +507,7 @@ package electron.main;
 		Whether to print selection only.
 	**/
 	@:optional
-	var printSelectionOnly : Bool; /**
-		`true` for landscape, `false` for portrait.
-	**/
-	@:optional
-	var landscape : Bool; }):js.lib.Promise<Any>;
+	var printSelectionOnly : Bool; }):js.lib.Promise<Any>;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
@@ -693,14 +679,10 @@ package electron.main;
 	function isPainting():Bool;
 	/**
 		If *offscreen rendering* is enabled sets the frame rate to the specified number. Only values between 1 and 60 are accepted.
-		
-		**Deprecated**
 	**/
 	function setFrameRate(fps:Int):Void;
 	/**
 		If *offscreen rendering* is enabled returns the current frame rate.
-		
-		**Deprecated**
 	**/
 	function getFrameRate():Int;
 	/**
@@ -999,8 +981,4 @@ package electron.main;
 		Emitted when `remote.getCurrentWebContents()` is called in the renderer process. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
 	var remote_get_current_web_contents : electron.main.WebContentsEvent<Void -> Void> = "remote-get-current-web-contents";
-	/**
-		Emitted when `<webview>.getWebContents()` is called in the renderer process. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_guest_web_contents : electron.main.WebContentsEvent<Void -> Void> = "remote-get-guest-web-contents";
 }

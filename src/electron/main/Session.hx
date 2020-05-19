@@ -27,6 +27,10 @@ package electron.main;
 	**/
 	var cookies : electron.main.Cookies;
 	/**
+		A `ServiceWorkers` object for this session.
+	**/
+	var serviceWorkers : electron.main.ServiceWorkers;
+	/**
 		A `WebRequest` object for this session.
 	**/
 	var webRequest : electron.main.WebRequest;
@@ -56,11 +60,11 @@ package electron.main;
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can contain: `appcache`, `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `websql`, `serviceworkers`, `cachestorage`.
+		The types of storages to clear, can contain: `appcache`, `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `websql`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
 	**/
 	@:optional
 	var storages : Array<String>; /**
-		The types of quotas to clear, can contain: `temporary`, `persistent`, `syncable`.
+		The types of quotas to clear, can contain: `temporary`, `persistent`, `syncable`. If not specified, clear all quotas.
 	**/
 	@:optional
 	var quotas : Array<String>; }):js.lib.Promise<Any>;
@@ -277,11 +281,53 @@ package electron.main;
 	**/
 	function setSpellCheckerDictionaryDownloadURL(url:String):Void;
 	/**
-		Whether the word was successfully written to the custom dictionary.
+		An array of all words in app's custom dictionary. Resolves when the full dictionary is loaded from disk.
+	**/
+	function listWordsInSpellCheckerDictionary():js.lib.Promise<Any>;
+	/**
+		Whether the word was successfully written to the custom dictionary. This API will not work on non-persistent (in-memory) sessions.
 		
 		**Note:** On macOS and Windows 10 this word will be written to the OS custom dictionary as well
 	**/
 	function addWordToSpellCheckerDictionary(word:String):Bool;
+	/**
+		Whether the word was successfully removed from the custom dictionary. This API will not work on non-persistent (in-memory) sessions.
+		
+		**Note:** On macOS and Windows 10 this word will be removed from the OS custom dictionary as well
+	**/
+	function removeWordFromSpellCheckerDictionary(word:String):Bool;
+	/**
+		resolves when the extension is loaded.
+		
+		This method will raise an exception if the extension could not be loaded. If there are warnings when installing the extension (e.g. if the extension requests an API that Electron does not support) then they will be logged to the console.
+		
+		Note that Electron does not support the full range of Chrome extensions APIs.
+		
+		Note that in previous versions of Electron, extensions that were loaded would be remembered for future runs of the application. This is no longer the case: `loadExtension` must be called on every boot of your app if you want the extension to be loaded.
+		
+		This API does not support loading packed (.crx) extensions.
+		
+		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+	**/
+	function loadExtension(path:String):js.lib.Promise<Any>;
+	/**
+		Unloads an extension.
+		
+		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+	**/
+	function removeExtension(extensionId:String):Void;
+	/**
+		| `null` - The loaded extension with the given ID.
+		
+		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+	**/
+	function getExtension(extensionId:String):electron.Extension;
+	/**
+		A list of all loaded extensions.
+		
+		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+	**/
+	function getAllExtensions():Array<electron.Extension>;
 }
 @:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

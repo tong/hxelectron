@@ -114,14 +114,10 @@ package electron;
 	function getSize():electron.Size;
 	/**
 		Marks the image as a template image.
-		
-		**Deprecated**
 	**/
 	function setTemplateImage(option:Bool):Void;
 	/**
 		Whether the image is a template image.
-		
-		**Deprecated**
 	**/
 	function isTemplateImage():Bool;
 	/**

@@ -29,18 +29,24 @@ package electron.main;
 		The method will also not return if the extension's manifest is missing or incomplete.
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Note:** This method is deprecated. Instead, use `ses.loadExtension(path)`.
 	**/
 	static function addExtension(path:String):Void;
 	/**
 		Remove a Chrome extension by name.
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Note:** This method is deprecated. Instead, use `ses.removeExtension(extension_id)`.
 	**/
 	static function removeExtension(name:String):Void;
 	/**
 		The keys are the extension names and each value is an Object containing `name` and `version` properties.
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Note:** This method is deprecated. Instead, use `ses.getAllExtensions()`.
 	**/
 	static function getExtensions():Record;
 	/**
@@ -51,12 +57,16 @@ package electron.main;
 		The method will also not return if the extension's manifest is missing or incomplete.
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Note:** This method is deprecated. Instead, use `ses.loadExtension(path)`.
 	**/
 	static function addDevToolsExtension(path:String):Void;
 	/**
 		Remove a DevTools extension by name.
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Note:** This method is deprecated. Instead, use `ses.removeExtension(extension_id)`.
 	**/
 	static function removeDevToolsExtension(name:String):Void;
 	/**
@@ -65,6 +75,8 @@ package electron.main;
 		To check if a DevTools extension is installed you can run the following:
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Note:** This method is deprecated. Instead, use `ses.getAllExtensions()`.
 	**/
 	static function getDevToolsExtensions():Record;
 	/**
@@ -74,7 +86,7 @@ package electron.main;
 	**/
 	var webContents : electron.main.WebContents;
 	/**
-		A `Integer` property representing the unique ID of the window.
+		A `Integer` property representing the unique ID of the window. Each ID is unique among all `BrowserWindow` instances of the entire Electron application.
 	**/
 	var id : Int;
 	/**
@@ -83,6 +95,50 @@ package electron.main;
 		If the menu bar is already visible, setting this property to `true` won't hide it immediately.
 	**/
 	var autoHideMenuBar : Bool;
+	/**
+		A `Boolean` property that determines whether the window is in simple (pre-Lion) fullscreen mode.
+	**/
+	var simpleFullScreen : Bool;
+	/**
+		A `Boolean` property that determines whether the window is in fullscreen mode.
+	**/
+	var fullScreen : Bool;
+	/**
+		A `Boolean` property that determines whether the window is visible on all workspaces.
+		
+		**Note:** Always returns false on Windows.
+	**/
+	var visibleOnAllWorkspaces : Bool;
+	/**
+		A `Boolean` property that determines whether the window has a shadow.
+	**/
+	var shadow : Bool;
+	/**
+		A `Boolean` property that determines whether the menu bar should be visible.
+		
+		**Note:** If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single `Alt` key.
+	**/
+	var menuBarVisible : Bool;
+	/**
+		A `Boolean` property that determines whether the window is in kiosk mode.
+	**/
+	var kiosk : Bool;
+	/**
+		A `Boolean` property that specifies whether the window’s document has been edited.
+		
+		The icon in title bar will become gray when set to `true`.
+	**/
+	var documentEdited : Bool;
+	/**
+		A `String` property that determines the pathname of the file the window represents, and the icon of the file will show in window's title bar.
+	**/
+	var representedFilename : String;
+	/**
+		A `String` property that determines the title of the native window.
+		
+		**Note:** The title of the web page can be different from the title of the native window.
+	**/
+	var title : String;
 	/**
 		A `Boolean` property that determines whether the window can be manually minimized by user.
 		
@@ -208,7 +264,7 @@ package electron.main;
 	**/
 	@:optional
 	var skipTaskbar : Bool; /**
-		The kiosk mode. Default is `false`.
+		Whether the window is in kiosk mode. Default is `false`.
 	**/
 	@:optional
 	var kiosk : Bool; /**
@@ -268,7 +324,7 @@ package electron.main;
 	**/
 	@:optional
 	var opacity : Float; /**
-		Forces using dark theme for the window, only works on some GTK+3 desktop environments. Default is `false`.
+		Forces using dark theme for the window, only works on some GTK desktop environments. Default is `false`.
 	**/
 	@:optional
 	var darkTheme : Bool; /**
@@ -348,7 +404,7 @@ package electron.main;
 	**/
 	@:optional
 	var partition : String; /**
-		When specified, web pages with the same `affinity` will run in the same renderer process. Note that due to reusing the renderer process, certain `webPreferences` options will also be shared between the web pages even when you specified different values for them, including but not limited to `preload`, `sandbox` and `nodeIntegration`. So it is suggested to use exact same `webPreferences` for web pages with the same `affinity`. _This property is experimental_
+		When specified, web pages with the same `affinity` will run in the same renderer process. Note that due to reusing the renderer process, certain `webPreferences` options will also be shared between the web pages even when you specified different values for them, including but not limited to `preload`, `sandbox` and `nodeIntegration`. So it is suggested to use exact same `webPreferences` for web pages with the same `affinity`. _Deprecated_
 	**/
 	@:optional
 	var affinity : String; /**
@@ -496,14 +552,10 @@ package electron.main;
 	**/
 	@:optional
 	var accessibleTitle : String; /**
-		Whether to enable the builtin spellchecker. Default is `false`.
+		Whether to enable the builtin spellchecker. Default is `true`.
 	**/
 	@:optional
-	var spellcheck : Bool; /**
-		Whether to enable the WebSQL api. Default is `true`.
-	**/
-	@:optional
-	var enableWebSQL : Bool; }; }):Void;
+	var spellcheck : Bool; }; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
@@ -583,7 +635,7 @@ package electron.main;
 	/**
 		Enters or leaves simple fullscreen mode.
 		
-		Simple fullscreen mode emulates the native fullscreen behavior found in versions of Mac OS X prior to Lion (10.7).
+		Simple fullscreen mode emulates the native fullscreen behavior found in versions of macOS prior to Lion (10.7).
 	**/
 	function setSimpleFullScreen(flag:Bool):Void;
 	/**
@@ -597,9 +649,7 @@ package electron.main;
 	/**
 		This will make a window maintain an aspect ratio. The extra size allows a developer to have space, specified in pixels, not included within the aspect ratio calculations. This API already takes into account the difference between a window's size and its content size.
 		
-		Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and [ 40, 50 ]. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Sum any extra width and height areas you have within the overall content view.
-		
-		Calling this function with a value of `0` will remove any previously set aspect ratios.
+		Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and { width: 40, height: 50 }. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Sum any extra width and height areas you have within the overall content view.
 	**/
 	function setAspectRatio(aspectRatio:Float, ?extraSize:electron.Size):Void;
 	/**
@@ -622,6 +672,10 @@ package electron.main;
 		The `bounds` of the window as `Object`.
 	**/
 	function getBounds():electron.Rectangle;
+	/**
+		Gets the background color of the window. See Setting `backgroundColor`.
+	**/
+	function getBackgroundColor():String;
 	/**
 		Resizes and moves the window's client area (e.g. the web page) to the supplied bounds.
 	**/
@@ -677,83 +731,59 @@ package electron.main;
 	**/
 	function getMaximumSize():Array<Int>;
 	/**
-		Sets whether the window can be manually resized by user.
-		
-		**Deprecated**
+		Sets whether the window can be manually resized by the user.
 	**/
 	function setResizable(resizable:Bool):Void;
 	/**
-		Whether the window can be manually resized by user.
-		
-		**Deprecated**
+		Whether the window can be manually resized by the user.
 	**/
 	function isResizable():Bool;
 	/**
 		Sets whether the window can be moved by user. On Linux does nothing.
-		
-		**Deprecated**
 	**/
 	function setMovable(movable:Bool):Void;
 	/**
 		Whether the window can be moved by user.
 		
 		On Linux always returns `true`.
-		
-		**Deprecated**
 	**/
 	function isMovable():Bool;
 	/**
 		Sets whether the window can be manually minimized by user. On Linux does nothing.
-		
-		**Deprecated**
 	**/
 	function setMinimizable(minimizable:Bool):Void;
 	/**
-		Whether the window can be manually minimized by user
+		Whether the window can be manually minimized by the user.
 		
 		On Linux always returns `true`.
-		
-		**Deprecated**
 	**/
 	function isMinimizable():Bool;
 	/**
 		Sets whether the window can be manually maximized by user. On Linux does nothing.
-		
-		**Deprecated**
 	**/
 	function setMaximizable(maximizable:Bool):Void;
 	/**
 		Whether the window can be manually maximized by user.
 		
 		On Linux always returns `true`.
-		
-		**Deprecated**
 	**/
 	function isMaximizable():Bool;
 	/**
 		Sets whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
-		
-		**Deprecated**
 	**/
 	function setFullScreenable(fullscreenable:Bool):Void;
 	/**
 		Whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
-		
-		**Deprecated**
 	**/
 	function isFullScreenable():Bool;
 	/**
 		Sets whether the window can be manually closed by user. On Linux does nothing.
-		
-		**Deprecated**
 	**/
 	function setClosable(closable:Bool):Void;
 	/**
 		Whether the window can be manually closed by user.
 		
 		On Linux always returns `true`.
-		
-		**Deprecated**
 	**/
 	function isClosable():Bool;
 	/**
@@ -807,7 +837,7 @@ package electron.main;
 	**/
 	function setSkipTaskbar(skip:Bool):Void;
 	/**
-		Enters or leaves the kiosk mode.
+		Enters or leaves kiosk mode.
 	**/
 	function setKiosk(flag:Bool):Void;
 	/**
@@ -1039,14 +1069,10 @@ package electron.main;
 		Sets whether the window menu bar should hide itself automatically. Once set the menu bar will only show when users press the single `Alt` key.
 		
 		If the menu bar is already visible, calling `setAutoHideMenuBar(true)` won't hide it immediately.
-		
-		**Deprecated**
 	**/
 	function setAutoHideMenuBar(hide:Bool):Void;
 	/**
 		Whether menu bar automatically hides itself.
-		
-		**Deprecated**
 	**/
 	function isMenuBarAutoHide():Bool;
 	/**
@@ -1062,11 +1088,7 @@ package electron.main;
 		
 		**Note:** This API does nothing on Windows.
 	**/
-	function setVisibleOnAllWorkspaces(visible:Bool, ?options:{ /**
-		Sets whether the window should be visible above fullscreen windows _deprecated_
-	**/
-	@:optional
-	var visibleOnFullScreen : Bool; }):Void;
+	function setVisibleOnAllWorkspaces(visible:Bool):Void;
 	/**
 		Whether the window is visible on all workspaces.
 		

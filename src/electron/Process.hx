@@ -24,10 +24,6 @@ package electron;
 	**/
 	static var noDeprecation : Bool;
 	/**
-		A `Boolean` that controls whether or not deprecation warnings are printed to `stderr` when formerly callback-based APIs converted to Promises are invoked using callbacks. Setting this to `true` will enable deprecation warnings.
-	**/
-	static var enablePromiseAPIs : Bool;
-	/**
 		A `String` representing the path to the resources directory.
 	**/
 	static var resourcesPath : String;

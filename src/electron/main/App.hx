@@ -30,7 +30,7 @@ package electron.main;
 	**/
 	static var commandLine : electron.main.CommandLine;
 	/**
-		A `Dock` object that allows you to perform actions on your app icon in the user's dock on macOS.
+		A `Dock` `| undefined` object that allows you to perform actions on your app icon in the user's dock on macOS.
 	**/
 	static var dock : electron.main.Dock;
 	/**
@@ -82,7 +82,7 @@ package electron.main;
 	var args : Array<String>; @:optional
 	var execPath : String; }):Void;
 	/**
-		`true` if Electron has finished initializing, `false` otherwise.
+		`true` if Electron has finished initializing, `false` otherwise. See also `app.whenReady()`.
 	**/
 	static function isReady():Bool;
 	/**
@@ -151,16 +151,12 @@ package electron.main;
 		The current application's name, which is the name in the application's `package.json` file.
 		
 		Usually the `name` field of `package.json` is a short lowercase name, according to the npm modules spec. You should usually also specify a `productName` field, which is your application's full capitalized name, and which will be preferred over `name` by Electron.
-		
-		**Deprecated**
 	**/
 	static function getName():String;
 	/**
 		Overrides the current application's name.
 		
 		**Note:** This function overrides the name used internally by Electron; it does not affect the name that the OS uses.
-		
-		**Deprecated**
 	**/
 	static function setName(name:String):Void;
 	/**
@@ -297,6 +293,16 @@ package electron.main;
 	**/
 	static function setAppUserModelId(id:String):Void;
 	/**
+		Sets the activation policy for a given app.
+		
+		Activation policy types:
+		
+		* 'regular' - The application is an ordinary app that appears in the Dock and may have a user interface.
+		* 'accessory' - The application doesn’t appear in the Dock and doesn’t have a menu bar, but it may be activated programmatically or by clicking on one of its windows.
+		* 'prohibited' - The application doesn’t appear in the Dock and may not create windows or be activated.
+	**/
+	static function setActivationPolicy(policy:String):Void;
+	/**
 		Imports the certificate in pkcs12 format into the platform certificate store. `callback` is called with the `result` of import operation, a value of `0` indicates success while any other value indicates failure according to Chromium net_error_list.
 	**/
 	static function importCertificate(options:{ /**
@@ -313,7 +319,7 @@ package electron.main;
 	**/
 	static function disableHardwareAcceleration():Void;
 	/**
-		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behaviour.
+		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behavior.
 		
 		This method can only be called before app is ready.
 	**/
@@ -344,14 +350,10 @@ package electron.main;
 		On macOS, it shows on the dock icon. On Linux, it only works for Unity launcher.
 		
 		**Note:** Unity launcher requires the existence of a `.desktop` file to work, for more information please read Desktop Environment Integration.
-		
-		**Deprecated**
 	**/
 	static function setBadgeCount(count:Int):Bool;
 	/**
 		The current value displayed in the counter badge.
-		
-		**Deprecated**
 	**/
 	static function getBadgeCount():Int;
 	/**
@@ -401,8 +403,6 @@ package electron.main;
 	var args : Array<String>; }):Void;
 	/**
 		`true` if Chrome's accessibility support is enabled, `false` otherwise. This API will return `true` if the use of assistive technologies, such as screen readers, has been detected. See https://www.chromium.org/developers/design-documents/accessibility for more details.
-		
-		**Deprecated**
 	**/
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
@@ -411,8 +411,6 @@ package electron.main;
 		This API must be called after the `ready` event is emitted.
 		
 		**Note:** Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
-		
-		**Deprecated**
 	**/
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
 	/**
@@ -420,7 +418,7 @@ package electron.main;
 	**/
 	static function showAboutPanel():Void;
 	/**
-		Set the about panel options. This will override the values defined in the app's `.plist` file on MacOS. See the Apple docs for more details. On Linux, values must be set in order to be shown; there are no defaults.
+		Set the about panel options. This will override the values defined in the app's `.plist` file on macOS. See the Apple docs for more details. On Linux, values must be set in order to be shown; there are no defaults.
 		
 		If you do not set `credits` but still wish to surface them in your app, AppKit will look for a file named "Credits.html", "Credits.rtf", and "Credits.rtfd", in that order, in the bundle returned by the NSBundle class method main. The first file found is used, and if none is found, the info area is left blank. See Apple documentation for more information.
 	**/
@@ -509,7 +507,7 @@ package electron.main;
 	**/
 	var will_finish_launching : electron.main.AppEvent<Void -> Void> = "will-finish-launching";
 	/**
-		Emitted when Electron has finished initializing. On macOS, `launchInfo` holds the `userInfo` of the `NSUserNotification` that was used to open the application, if it was launched from Notification Center. You can call `app.isReady()` to check if this event has already fired.
+		Emitted once, when Electron has finished initializing. On macOS, `launchInfo` holds the `userInfo` of the `NSUserNotification` that was used to open the application, if it was launched from Notification Center. You can also call `app.isReady()` to check if this event has already fired and `app.whenReady()` to get a Promise that is fulfilled when Electron is initialized.
 	**/
 	var ready : electron.main.AppEvent<Void -> Void> = "ready";
 	/**
@@ -527,7 +525,7 @@ package electron.main;
 	**/
 	var before_quit : electron.main.AppEvent<Void -> Void> = "before-quit";
 	/**
-		Emitted when all windows have been closed and the application will quit. Calling `event.preventDefault()` will prevent the default behaviour, which is terminating the application.
+		Emitted when all windows have been closed and the application will quit. Calling `event.preventDefault()` will prevent the default behavior, which is terminating the application.
 		
 		See the description of the `window-all-closed` event for the differences between the `will-quit` and `window-all-closed` events.
 		
@@ -577,7 +575,7 @@ package electron.main;
 	**/
 	var activity_was_continued : electron.main.AppEvent<Void -> Void> = "activity-was-continued";
 	/**
-		Emitted when Handoff is about to be resumed on another device. If you need to update the state to be transferred, you should call `event.preventDefault()` immediately, construct a new `userInfo` dictionary and call `app.updateCurrentActiviy()` in a timely manner. Otherwise, the operation will fail and `continue-activity-error` will be called.
+		Emitted when Handoff is about to be resumed on another device. If you need to update the state to be transferred, you should call `event.preventDefault()` immediately, construct a new `userInfo` dictionary and call `app.updateCurrentActivity()` in a timely manner. Otherwise, the operation will fail and `continue-activity-error` will be called.
 	**/
 	var update_activity_state : electron.main.AppEvent<Void -> Void> = "update-activity-state";
 	/**
@@ -672,8 +670,4 @@ package electron.main;
 		Emitted when `remote.getCurrentWebContents()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
 	var remote_get_current_web_contents : electron.main.AppEvent<Void -> Void> = "remote-get-current-web-contents";
-	/**
-		Emitted when `<webview>.getWebContents()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_guest_web_contents : electron.main.AppEvent<Void -> Void> = "remote-get-guest-web-contents";
 }

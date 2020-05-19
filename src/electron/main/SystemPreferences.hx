@@ -123,7 +123,7 @@ package electron.main;
 	**/
 	static function getAccentColor():String;
 	/**
-		The system color setting in RGB hexadecimal form (`#ABCDEF`). See the Windows docs and the MacOS docs for more details.
+		The system color setting in RGB hexadecimal form (`#ABCDEF`). See the Windows docs and the macOS docs for more details.
 		
 		The following colors are only available on macOS 10.14: `find-highlight`, `selected-content-background`, `separator`, `unemphasized-selected-content-background`, `unemphasized-selected-text-background`, and `unemphasized-selected-text`.
 	**/
@@ -143,29 +143,23 @@ package electron.main;
 	/**
 		`true` if a high contrast theme is active, `false` otherwise.
 		
-		**Depreacted:** Should use the new `nativeTheme.shouldUseHighContrastColors` API.
+		**Deprecated:** Should use the new `nativeTheme.shouldUseHighContrastColors` API.
 	**/
 	static function isHighContrastColorScheme():Bool;
 	/**
 		Can be `dark`, `light` or `unknown`.
 		
 		Gets the macOS appearance setting that is currently applied to your application, maps to NSApplication.effectiveAppearance
-		
-		**Deprecated**
 	**/
 	static function getEffectiveAppearance():String;
 	/**
 		| `null` - Can be `dark`, `light` or `unknown`.
 		
 		Gets the macOS appearance setting that you have declared you want for your application, maps to NSApplication.appearance. You can use the `setAppLevelAppearance` API to set this value.
-		
-		**Deprecated**
 	**/
 	static function getAppLevelAppearance():String;
 	/**
 		Sets the appearance setting for your application, this should override the system default and override the value of `getEffectiveAppearance`.
-		
-		**Deprecated**
 	**/
 	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**

@@ -8,11 +8,11 @@ package electron;
 	**/
 	static function showItemInFolder(fullPath:String):Void;
 	/**
-		Whether the item was successfully opened.
+		Resolves with an string containing the error message corresponding to the failure if a failure occurred, otherwise "".
 		
 		Open the given file in the desktop's default manner.
 	**/
-	static function openItem(fullPath:String):Bool;
+	static function openPath(path:String):js.lib.Promise<Any>;
 	/**
 		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent).
 	**/

@@ -20,6 +20,12 @@ package electron.main;
 	**/
 	static function canMakePayments():Bool;
 	/**
+		Restores finished transactions. This method can be called either to install purchases on additional devices, or to restore purchases for an application that the user deleted and reinstalled.
+		
+		The payment queue delivers a new transaction for each previously completed transaction that can be restored. Each transaction includes a copy of the original transaction.
+	**/
+	static function restoreCompletedTransactions():Void;
+	/**
 		the path to the receipt.
 	**/
 	static function getReceiptURL():String;

@@ -250,25 +250,107 @@ package electron.renderer;
 	**/
 	@:optional
 	var silent : Bool; /**
-		Also prints the background color and image of the web page. Default is `false`.
+		Prints the background color and image of the web page. Default is `false`.
 	**/
 	@:optional
 	var printBackground : Bool; /**
-		Set the printer device name to use. Default is `''`.
+		Set the printer device name to use. Must be the system-defined name and not the 'friendly' name, e.g 'Brother_QL_820NWB' and not 'Brother QL-820NWB'.
 	**/
 	@:optional
-	var deviceName : String; }):js.lib.Promise<Any>;
+	var deviceName : String; /**
+		Set whether the printed web page will be in color or grayscale. Default is `true`.
+	**/
+	@:optional
+	var color : Bool; @:optional
+	var margins : { /**
+		Can be `default`, `none`, `printableArea`, or `custom`. If `custom` is chosen, you will also need to specify `top`, `bottom`, `left`, and `right`.
+	**/
+	@:optional
+	var marginType : String; /**
+		The top margin of the printed web page, in pixels.
+	**/
+	@:optional
+	var top : Float; /**
+		The bottom margin of the printed web page, in pixels.
+	**/
+	@:optional
+	var bottom : Float; /**
+		The left margin of the printed web page, in pixels.
+	**/
+	@:optional
+	var left : Float; /**
+		The right margin of the printed web page, in pixels.
+	**/
+	@:optional
+	var right : Float; }; /**
+		Whether the web page should be printed in landscape mode. Default is `false`.
+	**/
+	@:optional
+	var landscape : Bool; /**
+		The scale factor of the web page.
+	**/
+	@:optional
+	var scaleFactor : Float; /**
+		The number of pages to print per page sheet.
+	**/
+	@:optional
+	var pagesPerSheet : Float; /**
+		Whether the web page should be collated.
+	**/
+	@:optional
+	var collate : Bool; /**
+		The number of copies of the web page to print.
+	**/
+	@:optional
+	var copies : Float; /**
+		The page range to print.
+	**/
+	@:optional
+	var pageRanges : Record; /**
+		Set the duplex mode of the printed web page. Can be `simplex`, `shortEdge`, or `longEdge`.
+	**/
+	@:optional
+	var duplexMode : String; @:optional
+	var dpi : Record; /**
+		String to be printed as page header.
+	**/
+	@:optional
+	var header : String; /**
+		String to be printed as page footer.
+	**/
+	@:optional
+	var footer : String; /**
+		Specify page size of the printed document. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`.
+	**/
+	@:optional
+	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; }):js.lib.Promise<Any>;
 	/**
 		Resolves with the generated PDF data.
 		
 		Prints `webview`'s web page as PDF, Same as `webContents.printToPDF(options)`.
 	**/
 	function printToPDF(options:{ /**
-		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+		the header and footer for the PDF.
+	**/
+	@:optional
+	var headerFooter : Record; /**
+		`true` for landscape, `false` for portrait.
+	**/
+	@:optional
+	var landscape : Bool; /**
+		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin. and `width` in microns.
 	**/
 	@:optional
 	var marginsType : Int; /**
-		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width` in microns.
+		The scale factor of the web page. Can range from 0 to 100.
+	**/
+	@:optional
+	var scaleFactor : Float; /**
+		The page range to print.
+	**/
+	@:optional
+	var pageRanges : Record; /**
+		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`
 	**/
 	@:optional
 	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; /**
@@ -279,11 +361,7 @@ package electron.renderer;
 		Whether to print selection only.
 	**/
 	@:optional
-	var printSelectionOnly : Bool; /**
-		`true` for landscape, `false` for portrait.
-	**/
-	@:optional
-	var landscape : Bool; }):js.lib.Promise<Any>;
+	var printSelectionOnly : Bool; }):js.lib.Promise<Any>;
 	/**
 		Resolves with a NativeImage
 		
@@ -323,21 +401,9 @@ package electron.renderer;
 	**/
 	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
-		Sets the maximum and minimum layout-based (i.e. non-visual) zoom level.
-		
-		**Deprecated:** This API is no longer supported by Chromium.
-	**/
-	function setLayoutZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
-	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
 	function showDefinitionForSelection():Void;
-	/**
-		The web contents associated with this `webview`.
-		
-		It depends on the `remote` module, it is therefore not available when this module is disabled.
-	**/
-	function getWebContents():electron.main.WebContents;
 	/**
 		The WebContents ID of this `webview`.
 	**/

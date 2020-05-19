@@ -11,14 +11,10 @@ package electron.main;
 	var savePath : String;
 	/**
 		The API is only available in session's `will-download` callback function. If user doesn't set the save path via the API, Electron will use the original routine to determine the save path; this usually prompts a save dialog.
-		
-		**Deprecated: use the `savePath` property instead.**
 	**/
 	function setSavePath(path:String):Void;
 	/**
 		The save path of the download item. This will be either the path set via `downloadItem.setSavePath(path)` or the path selected from the shown save dialog.
-		
-		**Deprecated: use the `savePath` property instead.**
 	**/
 	function getSavePath():String;
 	/**
