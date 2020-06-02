@@ -555,7 +555,11 @@ package electron.main;
 		Whether to enable the builtin spellchecker. Default is `true`.
 	**/
 	@:optional
-	var spellcheck : Bool; }; }):Void;
+	var spellcheck : Bool; /**
+		Whether to enable the WebSQL api. Default is `true`.
+	**/
+	@:optional
+	var enableWebSQL : Bool; }; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/

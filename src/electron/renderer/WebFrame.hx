@@ -84,9 +84,11 @@ package electron.renderer;
 	**/
 	static function executeJavaScript(code:String, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
 	/**
-		A promise that resolves with the result of the executed code or is rejected if execution throws or results in a rejected promise.
+		A promise that resolves with the result of the executed code or is rejected if execution could not start.
 		
 		Works like `executeJavaScript` but evaluates `scripts` in an isolated context.
+		
+		Note that when the execution of script fails, the returned promise will not reject and the `result` would be `undefined`. This is because Chromium does not dispatch errors of isolated worlds to foreign worlds.
 	**/
 	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
 	/**
