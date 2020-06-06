@@ -559,7 +559,11 @@ package electron.main;
 		Whether to enable the WebSQL api. Default is `true`.
 	**/
 	@:optional
-	var enableWebSQL : Bool; }; }):Void;
+	var enableWebSQL : Bool; /**
+		Enforces the v8 code caching policy used by blink. Accepted values are
+	**/
+	@:optional
+	var v8CacheOptions : String; }; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
