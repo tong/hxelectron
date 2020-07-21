@@ -703,9 +703,9 @@ package electron.main;
 	**/
 	function setEnabled(enable:Bool):Void;
 	/**
-		Returns Boolean - whether the window is enabled.
+		whether the window is enabled.
 	**/
-	function isEnabled():Void;
+	function isEnabled():Bool;
 	/**
 		Resizes the window to `width` and `height`. If `width` or `height` are below any set minimum size constraints the window will snap to its minimum size.
 	**/

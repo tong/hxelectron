@@ -20,7 +20,7 @@ package electron.main;
 		
 		Send given command to the debugging target.
 	**/
-	function sendCommand(method:String, ?commandParams:Any):js.lib.Promise<Any>;
+	function sendCommand(method:String, ?commandParams:Any, ?sessionId:String):js.lib.Promise<Any>;
 }
 @:enum abstract DebuggerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

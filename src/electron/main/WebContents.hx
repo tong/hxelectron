@@ -377,6 +377,8 @@ package electron.main;
 	**/
 	function getPrinters():Array<electron.PrinterInfo>;
 	/**
+		When a custom `pageSize` is passed, Chromium attempts to validate platform specific minumum values for `width_microns` and `height_microns`. Width and height must both be minimum 353 microns but may be higher on some operating systems.
+		
 		Prints window's web page. When `silent` is set to `true`, Electron will pick the system's default printer if `deviceName` is empty and the default settings for printing.
 		
 		Use `page-break-before: always;` CSS style to force to print to a new page.
@@ -484,7 +486,7 @@ package electron.main;
 	**/
 	@:optional
 	var landscape : Bool; /**
-		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin. and `width` in microns.
+		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
 	**/
 	@:optional
 	var marginsType : Int; /**
@@ -496,7 +498,7 @@ package electron.main;
 	**/
 	@:optional
 	var pageRanges : Record; /**
-		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`
+		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width` in microns.
 	**/
 	@:optional
 	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; /**
@@ -601,6 +603,14 @@ package electron.main;
 		You can also read `frameId` from all incoming IPC messages in the main process.
 	**/
 	function sendToFrame(frameId:Int, channel:String, args:haxe.extern.Rest<Any>):Void;
+	/**
+		Send a message to the renderer process, optionally transferring ownership of zero or more [`MessagePortMain`][] objects.
+		
+		The transferred `MessagePortMain` objects will be available in the renderer process by accessing the `ports` property of the emitted event. When they arrive in the renderer, they will be native DOM `MessagePort` objects.
+		
+		For example:
+	**/
+	function postMessage(channel:String, message:Any, ?transfer:Array<electron.MessagePortMain>):Void;
 	/**
 		Enable device emulation with the given parameters.
 	**/
@@ -821,8 +831,14 @@ package electron.main;
 	var will_prevent_unload : electron.main.WebContentsEvent<Void -> Void> = "will-prevent-unload";
 	/**
 		Emitted when the renderer process crashes or is killed.
+		
+		**Deprecated:** This event is superceded by the `render-process-gone` event which contains more information about why the render process dissapeared. It isn't always because it crashed.  The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
 	**/
 	var crashed : electron.main.WebContentsEvent<Void -> Void> = "crashed";
+	/**
+		Emitted when the renderer process unexpectedly dissapears.  This is normally because it was crashed or killed.
+	**/
+	var render_process_gone : electron.main.WebContentsEvent<Void -> Void> = "render-process-gone";
 	/**
 		Emitted when the web page becomes unresponsive.
 	**/

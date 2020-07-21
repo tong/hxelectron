@@ -624,10 +624,11 @@ package electron.main;
 		Emitted when the GPU process crashes or is killed.
 	**/
 	var gpu_process_crashed : electron.main.AppEvent<Void -> Void> = "gpu-process-crashed";
-	/**
-		Emitted when the renderer process of `webContents` crashes or is killed.
-	**/
 	var renderer_process_crashed : electron.main.AppEvent<Void -> Void> = "renderer-process-crashed";
+	/**
+		Emitted when the renderer process unexpectedly dissapears.  This is normally because it was crashed or killed.
+	**/
+	var render_process_gone : electron.main.AppEvent<Void -> Void> = "render-process-gone";
 	/**
 		Emitted when Chrome's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
