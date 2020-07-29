@@ -68,7 +68,7 @@ package electron.renderer;
 		
 		For more information on using `MessagePort` and `MessageChannel`, see the MDN documentation.
 	**/
-	static function postMessage(channel:String, message:Any, ?transfer:Array<MessagePortMain>):Void;
+	static function postMessage(channel:String, message:Any, ?transfer:Array<MessagePort>):Void;
 	/**
 		Sends a message to a window with `webContentsId` via `channel`.
 	**/
