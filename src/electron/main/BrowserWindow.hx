@@ -512,6 +512,10 @@ package electron.main;
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
+		If true, values returned from `webFrame.executeJavaScript` will be sanitized to ensure JS values can't unsafely cross between worlds when using `contextIsolation`.  The default is `false`. In Electron 12, the default will be changed to `true`. _Deprecated_
+	**/
+	@:optional
+	var worldSafeExecuteJavaScript : Bool; /**
 		Whether to use native `window.open()`. Defaults to `false`. Child windows will always have node integration disabled unless `nodeIntegrationInSubFrames` is true. **Note:** This option is currently experimental.
 	**/
 	@:optional

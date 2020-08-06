@@ -610,7 +610,7 @@ package electron.main;
 		
 		For example:
 	**/
-	function postMessage(channel:String, message:Any, ?transfer:Array<electron.MessagePortMain>):Void;
+	function postMessage(channel:String, message:Any, ?transfer:Array<electron.MessagePort>):Void;
 	/**
 		Enable device emulation with the given parameters.
 	**/

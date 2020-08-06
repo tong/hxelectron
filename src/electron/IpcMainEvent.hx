@@ -18,7 +18,7 @@ typedef IpcMainEvent = {
 	/**
 		A list of MessagePorts that were transferred with this message
 	**/
-	var ports : Array<electron.MessagePortMain>;
+	var ports : Array<electron.MessagePort>;
 	/**
 		A function that will send an IPC message to the renderer frame that sent the original message that you are currently handling.  You should use this method to "reply" to the sent message in order to guarantee the reply will go to the correct process and frame.
 	**/
