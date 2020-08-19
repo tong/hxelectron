@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/ipc-main-event
+	@see http://electronjs.org/docs/api/structures/ipc--event
 **/
 typedef IpcMainEvent = {
 	/**

@@ -18,7 +18,7 @@ package electron;
 }
 @:enum abstract MessagePortEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
-		Emitted when a MessagePortMain object receives a message.
+		Emitted when a MessagePort object receives a message.
 	**/
 	var message : electron.MessagePortEvent<Void -> Void> = "message";
 }
