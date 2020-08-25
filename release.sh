@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ## Generate clean type definitions
-#haxe --macro 'ElectronAPI.generate("electron-api.json","src",true)'
+haxe --macro 'ElectronAPI.generate("electron-api.json","src",true)'
 
 ## Build haxedoc.xml
 haxe haxedoc.hxml
