@@ -1,5 +1,10 @@
 package electron.main;
 /**
+	> Control your application's event lifecycle.
+	
+	Process: Main
+	
+	The following example shows how to quit the application when the last window is closed:
 	@see http://electronjs.org/docs/api/app
 **/
 @:jsRequire("electron", "app") extern class App extends js.node.events.EventEmitter<electron.main.App> {
@@ -23,6 +28,8 @@ package electron.main;
 		On macOS, setting this with any nonzero integer shows on the dock icon. On Linux, this property only works for Unity launcher.
 		
 		**Note:** Unity launcher requires the existence of a `.desktop` file to work, for more information please read Desktop Environment Integration.
+		
+		**Note:** On macOS, you need to ensure that your application has the permission to display notifications for this property to take effect.
 	**/
 	static var badgeCount : Int;
 	/**
@@ -470,7 +477,7 @@ package electron.main;
 	**/
 	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
 	/**
-		Enables full sandbox mode on the app.
+		Enables full sandbox mode on the app. This means that all renderers will be launched sandboxed, regardless of the value of the `sandbox` flag in WebPreferences.
 		
 		This method can only be called before app is ready.
 	**/
@@ -497,6 +504,22 @@ package electron.main;
 	**/
 	@:optional
 	var conflictHandler : haxe.Constraints.Function; }):Bool;
+	/**
+		whether `Secure Keyboard Entry` is enabled.
+		
+		By default this API will return `false`.
+	**/
+	static function isSecureKeyboardEntryEnabled():Bool;
+	/**
+		Set the `Secure Keyboard Entry` is enabled in your application.
+		
+		By using this API, important information such as password and other sensitive information can be prevented from being intercepted by other processes.
+		
+		See Apple's documentation for more details.
+		
+		**Note:** Enable `Secure Keyboard Entry` only when it is needed and disable it when it is no longer needed.
+	**/
+	static function setSecureKeyboardEntryEnabled(enabled:Bool):Void;
 	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
 }
 @:enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
@@ -641,6 +664,8 @@ package electron.main;
 		This event will be emitted inside the primary instance of your application when a second instance has been executed and calls `app.requestSingleInstanceLock()`.
 		
 		`argv` is an Array of the second instance's command line arguments, and `workingDirectory` is its current working directory. Usually applications respond to this by making their primary window focused and non-minimized.
+		
+		**Note:** If the second instance is started by a different user than the first, the `argv` array will not include the arguments.
 		
 		This event is guaranteed to be emitted after the `ready` event of `app` gets emitted.
 		

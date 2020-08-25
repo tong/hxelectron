@@ -7,4 +7,5 @@ typedef ProtocolRequest = {
 	var referrer : String;
 	var method : String;
 	var uploadData : Array<electron.UploadData>;
+	var headers : Record;
 }

@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/ipc--event
+	@see http://electronjs.org/docs/api/structures/ipc-main-event
 **/
 typedef IpcMainEvent = {
 	/**
@@ -18,7 +18,7 @@ typedef IpcMainEvent = {
 	/**
 		A list of MessagePorts that were transferred with this message
 	**/
-	var ports : Array<electron.MessagePort>;
+	var ports : Array<electron.main.MessagePortMain>;
 	/**
 		A function that will send an IPC message to the renderer frame that sent the original message that you are currently handling.  You should use this method to "reply" to the sent message in order to guarantee the reply will go to the correct process and frame.
 	**/

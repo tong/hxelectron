@@ -1,5 +1,102 @@
 package electron.main;
 /**
+	> Create and control browser windows.
+	
+	Process: Main
+	
+	### Frameless window
+	
+	To create a window without chrome, or a transparent window in arbitrary shape, you can use the Frameless Window API.
+	
+	### Showing window gracefully
+	
+	When loading a page in the window directly, users may see the page load incrementally, which is not a good experience for a native app. To make the window display without visual flash, there are two solutions for different situations.
+	
+	### Using `ready-to-show` event
+	
+	While loading the page, the `ready-to-show` event will be emitted when the renderer process has rendered the page for the first time if the window has not been shown yet. Showing the window after this event will have no visual flash:
+	
+	```
+	const { BrowserWindow } = require('electron')
+	let win = new BrowserWindow({ show: false })
+	win.once('ready-to-show', () => {
+	  win.show()
+	})
+	```
+	
+	This event is usually emitted after the `did-finish-load` event, but for pages with many remote resources, it may be emitted before the `did-finish-load` event.
+	
+	Please note that using this event implies that the renderer will be considered "visible" and paint even though `show` is false.  This event will never fire if you use `paintWhenInitiallyHidden: false`
+	
+	### Setting `backgroundColor`
+	
+	For a complex app, the `ready-to-show` event could be emitted too late, making the app feel slow. In this case, it is recommended to show the window immediately, and use a `backgroundColor` close to your app's background:
+	
+	```
+	const { BrowserWindow } = require('electron')
+	
+	let win = new BrowserWindow({ backgroundColor: '#2e2c29' })
+	win.loadURL('https://github.com')
+	```
+	
+	Note that even for apps that use `ready-to-show` event, it is still recommended to set `backgroundColor` to make app feel more native.
+	
+	### Parent and child windows
+	
+	By using `parent` option, you can create child windows:
+	
+	```
+	const { BrowserWindow } = require('electron')
+	
+	let top = new BrowserWindow()
+	let child = new BrowserWindow({ parent: top })
+	child.show()
+	top.show()
+	```
+	
+	The `child` window will always show on top of the `top` window.
+	
+	### Modal windows
+	
+	A modal window is a child window that disables parent window, to create a modal window, you have to set both `parent` and `modal` options:
+	
+	```
+	const { BrowserWindow } = require('electron')
+	
+	let child = new BrowserWindow({ parent: top, modal: true, show: false })
+	child.loadURL('https://github.com')
+	child.once('ready-to-show', () => {
+	  child.show()
+	})
+	```
+	
+	### Page visibility
+	
+	The Page Visibility API works as follows:
+	
+	* On all platforms, the visibility state tracks whether the window is hidden/minimized or not.
+	* Additionally, on macOS, the visibility state also tracks the window occlusion state. If the window is occluded (i.e. fully covered) by another window, the visibility state will be `hidden`. On other platforms, the visibility state will be `hidden` only when the window is minimized or explicitly hidden with `win.hide()`.
+	* If a `BrowserWindow` is created with `show: false`, the initial visibility state will be `visible` despite the window actually being hidden.
+	* If `backgroundThrottling` is disabled, the visibility state will remain `visible` even if the window is minimized, occluded, or hidden.
+	
+	It is recommended that you pause expensive operations when the visibility state is `hidden` in order to minimize power consumption.
+	
+	### Platform notices
+	
+	* On macOS modal windows will be displayed as sheets attached to the parent window.
+	* On macOS the child windows will keep the relative position to parent window when parent window moves, while on Windows and Linux child windows will not move.
+	* On Linux the type of modal windows will be changed to `dialog`.
+	* On Linux many desktop environments do not support hiding a modal window.
+	
+	### Class: BrowserWindow
+	
+	> Create and control browser windows.
+	
+	Process: Main
+	
+	`BrowserWindow` is an EventEmitter.
+	
+	It creates a new `BrowserWindow` with native properties as set by the `options`.
 	@see http://electronjs.org/docs/api/browser-window
 **/
 @:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
@@ -324,7 +421,7 @@ package electron.main;
 	**/
 	@:optional
 	var opacity : Float; /**
-		Forces using dark theme for the window, only works on some GTK desktop environments. Default is `false`.
+		Forces using dark theme for the window, only works on some GTK+3 desktop environments. Default is `false`.
 	**/
 	@:optional
 	var darkTheme : Bool; /**
@@ -392,7 +489,7 @@ package electron.main;
 	**/
 	@:optional
 	var sandbox : Bool; /**
-		Whether to enable the `remote` module. Default is `true`.
+		Whether to enable the `remote` module. Default is `false`.
 	**/
 	@:optional
 	var enableRemoteModule : Bool; /**

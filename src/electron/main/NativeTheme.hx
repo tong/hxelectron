@@ -1,5 +1,8 @@
 package electron.main;
 /**
+	> Read and respond to changes in Chromium's native color theme.
+	
+	Process: Main
 	@see http://electronjs.org/docs/api/native-theme
 **/
 @:jsRequire("electron", "nativeTheme") extern class NativeTheme extends js.node.events.EventEmitter<electron.main.NativeTheme> {

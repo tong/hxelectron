@@ -1,5 +1,10 @@
 package electron.main;
 /**
+	> Make HTTP/HTTPS requests.
+	
+	Process: Main
+	
+	`ClientRequest` implements the Writable Stream interface and is therefore an EventEmitter.
 	@see http://electronjs.org/docs/api/client-request
 **/
 @:jsRequire("electron", "ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {

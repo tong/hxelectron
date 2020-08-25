@@ -1,5 +1,8 @@
 package electron.main;
 /**
+	> Create a segmented control (a button group) where one button has a selected state
+	
+	Process: Main
 	@see http://electronjs.org/docs/api/touch-bar-segmented-control
 **/
 @:jsRequire("electron", "TouchBarSegmentedControl") extern class TouchBarSegmentedControl extends js.node.events.EventEmitter<electron.main.TouchBarSegmentedControl> {

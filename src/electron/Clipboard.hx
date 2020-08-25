@@ -1,5 +1,10 @@
 package electron;
 /**
+	> Perform copy and paste operations on the system clipboard.
+	
+	Process: Main, Renderer
+	
+	On Linux, there is also a `selection` clipboard. To manipulate it you need to pass `selection` to each method:
 	@see http://electronjs.org/docs/api/clipboard
 **/
 @:jsRequire("electron", "clipboard") extern class Clipboard extends js.node.events.EventEmitter<electron.Clipboard> {

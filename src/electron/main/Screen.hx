@@ -1,5 +1,29 @@
 package electron.main;
 /**
+	> Retrieve information about screen size, displays, cursor position, etc.
+	
+	Process: Main
+	
+	This module cannot be used until the `ready` event of the `app` module is emitted.
+	
+	`screen` is an EventEmitter.
+	
+	**Note:** In the renderer / DevTools, `window.screen` is a reserved DOM property, so writing `let { screen } = require('electron')` will not work.
+	
+	An example of creating a window that fills the whole screen:
+	
+	```
+	const { app, BrowserWindow, screen } = require('electron')
+	
+	let win
+	app.whenReady().then(() => {
+	  const { width, height } = screen.getPrimaryDisplay().workAreaSize
+	  win = new BrowserWindow({ width, height })
+	  win.loadURL('https://github.com')
+	})
+	```
+	
+	Another example of creating a window in the external display:
 	@see http://electronjs.org/docs/api/screen
 **/
 @:native('require(\"electron\").screen') extern class Screen extends js.node.events.EventEmitter<electron.main.Screen> {

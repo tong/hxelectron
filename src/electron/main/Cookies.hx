@@ -69,7 +69,11 @@ package electron.main;
 		The expiration date of the cookie as the number of seconds since the UNIX epoch. If omitted then the cookie becomes a session cookie and will not be retained between sessions.
 	**/
 	@:optional
-	var expirationDate : Float; }):js.lib.Promise<Any>;
+	var expirationDate : Float; /**
+		The Same Site policy to apply to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.  Default is `no_restriction`.
+	**/
+	@:optional
+	var sameSite : String; }):js.lib.Promise<Any>;
 	/**
 		A promise which resolves when the cookie has been removed
 		

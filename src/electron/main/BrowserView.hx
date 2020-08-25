@@ -1,5 +1,24 @@
 package electron.main;
 /**
+	> Create and control views.
+	
+	Process: Main
+	
+	A `BrowserView` can be used to embed additional web content into a `BrowserWindow`. It is like a child window, except that it is positioned relative to its owning window. It is meant to be an alternative to the `webview` tag.
+	
+	### Example
+	
+	```
+	// In the main process.
+	const { BrowserView, BrowserWindow } = require('electron')
+	
+	const win = new BrowserWindow({ width: 800, height: 600 })
+	
+	const view = new BrowserView()
+	win.setBrowserView(view)
+	view.setBounds({ x: 0, y: 0, width: 300, height: 300 })
+	view.webContents.loadURL('https://electronjs.org')
+	```
 	@see http://electronjs.org/docs/api/browser-view
 **/
 @:jsRequire("electron", "BrowserView") extern class BrowserView extends js.node.events.EventEmitter<electron.main.BrowserView> {

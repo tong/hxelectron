@@ -1,5 +1,8 @@
 package electron.main;
 /**
+	> Create a slider in the touch bar for native macOS applications
+	
+	Process: Main
 	@see http://electronjs.org/docs/api/touch-bar-slider
 **/
 @:jsRequire("electron", "TouchBarSlider") extern class TouchBarSlider extends js.node.events.EventEmitter<electron.main.TouchBarSlider> {

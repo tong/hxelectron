@@ -4,9 +4,13 @@ package electron;
 **/
 typedef MimeTypedBuffer = {
 	/**
-		The mimeType of the Buffer that you are sending.
+		MIME type of the buffer.
 	**/
 	var mimeType : String;
+	/**
+		Charset of the buffer.
+	**/
+	var charset : String;
 	/**
 		The actual Buffer content.
 	**/

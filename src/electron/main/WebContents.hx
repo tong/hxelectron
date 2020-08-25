@@ -64,6 +64,10 @@ package electron.main;
 	**/
 	var debugger : electron.main.Debugger;
 	/**
+		A `Boolean` property that determines whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
+	**/
+	var backgroundThrottling : Bool;
+	/**
 		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`). A noop rejection handler is already attached, which avoids unhandled rejection errors.
 		
 		Loads the `url` in the window. The `url` must contain the protocol prefix, e.g. the `http://` or `file://`. If the load should bypass http cache then use the `pragma` header to achieve it.
@@ -610,7 +614,7 @@ package electron.main;
 		
 		For example:
 	**/
-	function postMessage(channel:String, message:Any, ?transfer:Array<electron.MessagePort>):Void;
+	function postMessage(channel:String, message:Any, ?transfer:Array<electron.main.MessagePortMain>):Void;
 	/**
 		Enable device emulation with the given parameters.
 	**/
@@ -723,6 +727,10 @@ package electron.main;
 		Takes a V8 heap snapshot and saves it to `filePath`.
 	**/
 	function takeHeapSnapshot(filePath:String):js.lib.Promise<Any>;
+	/**
+		whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
+	**/
+	function getBackgroundThrottling():Bool;
 	/**
 		Controls whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
 	**/

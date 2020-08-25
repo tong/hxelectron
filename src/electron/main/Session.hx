@@ -206,6 +206,10 @@ package electron.main;
 	**/
 	function setUserAgent(userAgent:String, ?acceptLanguages:String):Void;
 	/**
+		Whether or not this session is a persistent one. The default `webContents` session of a `BrowserWindow` is persistent. When creating a session from a partition, session prefixed with `persist:` will be persistent, while others will be temporary.
+	**/
+	function isPersistent():Bool;
+	/**
 		The user agent for this session.
 	**/
 	function getUserAgent():String;
@@ -251,7 +255,7 @@ package electron.main;
 	/**
 		resolves when the session’s HTTP authentication cache has been cleared.
 	**/
-	function clearAuthCache(options:haxe.extern.EitherType<Dynamic, Dynamic>):js.lib.Promise<Any>;
+	function clearAuthCache():js.lib.Promise<Any>;
 	/**
 		Adds scripts that will be executed on ALL web contents that are associated with this session just before normal `preload` scripts run.
 	**/
@@ -301,13 +305,15 @@ package electron.main;
 		
 		This method will raise an exception if the extension could not be loaded. If there are warnings when installing the extension (e.g. if the extension requests an API that Electron does not support) then they will be logged to the console.
 		
-		Note that Electron does not support the full range of Chrome extensions APIs.
+		Note that Electron does not support the full range of Chrome extensions APIs. See Supported Extensions APIs for more details on what is supported.
 		
 		Note that in previous versions of Electron, extensions that were loaded would be remembered for future runs of the application. This is no longer the case: `loadExtension` must be called on every boot of your app if you want the extension to be loaded.
 		
 		This API does not support loading packed (.crx) extensions.
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Note:** Loading extensions into in-memory (non-persistent) sessions is not supported and will throw an error.
 	**/
 	function loadExtension(path:String):js.lib.Promise<Any>;
 	/**

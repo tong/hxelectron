@@ -1,5 +1,17 @@
 package electron.main;
 /**
+	> Display native system dialogs for opening and saving files, alerting, etc.
+	
+	Process: Main
+	
+	An example of showing a dialog to select multiple files:
+	
+	```
+	const { dialog } = require('electron')
+	console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
+	```
+	
+	The Dialog is opened from Electron's main thread. If you want to use the dialog object from a renderer process, remember to access it using the remote:
 	@see http://electronjs.org/docs/api/dialog
 **/
 @:jsRequire("electron", "dialog") extern class Dialog extends js.node.events.EventEmitter<electron.main.Dialog> {

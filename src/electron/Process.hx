@@ -1,5 +1,37 @@
 package electron;
 /**
+	> Extensions to process object.
+	
+	Process: Main, Renderer
+	
+	Electron's `process` object is extended from the Node.js `process` object. It adds the following events, properties, and methods:
+	
+	### Sandbox
+	
+	In sandboxed renderers the `process` object contains only a subset of the APIs:
+	
+	* `crash()`
+	* `hang()`
+	* `getCreationTime()`
+	* `getHeapStatistics()`
+	* `getBlinkMemoryInfo()`
+	* `getProcessMemoryInfo()`
+	* `getSystemMemoryInfo()`
+	* `getSystemVersion()`
+	* `getCPUUsage()`
+	* `getIOCounters()`
+	* `argv`
+	* `execPath`
+	* `env`
+	* `pid`
+	* `arch`
+	* `platform`
+	* `sandboxed`
+	* `type`
+	* `version`
+	* `versions`
+	* `mas`
+	* `windowsStore`
 	@see http://electronjs.org/docs/api/process
 **/
 @:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
@@ -44,7 +76,11 @@ package electron;
 	**/
 	static var traceProcessWarnings : Bool;
 	/**
-		A `String` representing the current process's type, can be `"browser"` (i.e. main process), `"renderer"`, or `"worker"` (i.e. web worker).
+		A `String` representing the current process's type, can be:
+		
+		* `browser` - The main process
+		* `renderer` - A renderer process
+		* `worker` - In a web worker
 	**/
 	static var type : String;
 	/**

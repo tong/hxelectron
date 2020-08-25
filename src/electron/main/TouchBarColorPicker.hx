@@ -1,5 +1,8 @@
 package electron.main;
 /**
+	> Create a color picker in the touch bar for native macOS applications
+	
+	Process: Main
 	@see http://electronjs.org/docs/api/touch-bar-color-picker
 **/
 @:jsRequire("electron", "TouchBarColorPicker") extern class TouchBarColorPicker extends js.node.events.EventEmitter<electron.main.TouchBarColorPicker> {

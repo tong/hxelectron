@@ -1,5 +1,30 @@
 package electron.main;
 /**
+	> Create OS desktop notifications
+	
+	Process: Main
+	
+	### Using in the renderer process
+	
+	If you want to show Notifications from a renderer process you should use the HTML5 Notification API
+	
+	### Class: Notification
+	
+	> Create OS desktop notifications
+	
+	Process: Main
+	
+	`Notification` is an EventEmitter.
+	
+	It creates a new `Notification` with native properties as set by the `options`.
+	
+	### Static Methods
+	
+	The `Notification` class has the following static methods:
+	
+	### `Notification.isSupported()`
+	
+	Returns `Boolean` - Whether or not desktop notifications are supported on the current system
 	@see http://electronjs.org/docs/api/notification
 **/
 @:jsRequire("electron", "Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {

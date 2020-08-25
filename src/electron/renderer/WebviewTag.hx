@@ -1,5 +1,197 @@
 package electron.renderer;
 /**
+	
+	
+	### Warning
+	
+	Electron's `webview` tag is based on Chromium's `webview`, which is undergoing dramatic architectural changes. This impacts the stability of `webviews`, including rendering, navigation, and event routing. We currently recommend to not use the `webview` tag and to consider alternatives, like `iframe`, Electron's `BrowserView`, or an architecture that avoids embedded content altogether.
+	
+	### Enabling
+	
+	By default the `webview` tag is disabled in Electron >= 5.  You need to enable the tag by setting the `webviewTag` webPreferences option when constructing your `BrowserWindow`. For more information see the BrowserWindow constructor docs.
+	
+	### Overview
+	
+	> Display external web content in an isolated frame and process.
+	
+	Process: Renderer
+	
+	Use the `webview` tag to embed 'guest' content (such as web pages) in your Electron app. The guest content is contained within the `webview` container. An embedded page within your app controls how the guest content is laid out and rendered.
+	
+	Unlike an `iframe`, the `webview` runs in a separate process than your app. It doesn't have the same permissions as your web page and all interactions between your app and embedded content will be asynchronous. This keeps your app safe from the embedded content. **Note:** Most methods called on the webview from the host page require a synchronous call to the main process.
+	
+	### Example
+	
+	To embed a web page in your app, add the `webview` tag to your app's embedder page (this is the app page that will display the guest content). In its simplest form, the `webview` tag includes the `src` of the web page and css styles that control the appearance of the `webview` container:
+	
+	```
+	<webview id="foo" src="https://www.github.com/" style="display:inline-flex; width:640px; height:480px"></webview>
+	```
+	
+	If you want to control the guest content in any way, you can write JavaScript that listens for `webview` events and responds to those events using the `webview` methods. Here's sample code with two event listeners: one that listens for the web page to start loading, the other for the web page to stop loading, and displays a "loading..." message during the load time:
+	
+	```
+	<script>
+	  onload = () => {
+	    const webview = document.querySelector('webview')
+	    const indicator = document.querySelector('.indicator')
+	
+	    const loadstart = () => {
+	      indicator.innerText = 'loading...'
+	    }
+	
+	    const loadstop = () => {
+	      indicator.innerText = ''
+	    }
+	
+	    webview.addEventListener('did-start-loading', loadstart)
+	    webview.addEventListener('did-stop-loading', loadstop)
+	  }
+	</script>
+	```
+	
+	### Internal implementation
+	
+	Under the hood `webview` is implemented with Out-of-Process iframes (OOPIFs). The `webview` tag is essentially a custom element using shadow DOM to wrap an `iframe` element inside it.
+	
+	So the behavior of `webview` is very similar to a cross-domain `iframe`, as examples:
+	
+	* When clicking into a `webview`, the page focus will move from the embedder frame to `webview`.
+	* You can not add keyboard, mouse, and scroll event listeners to `webview`.
+	* All reactions between the embedder frame and `webview` are asynchronous.
+	
+	### CSS Styling Notes
+	
+	Please note that the `webview` tag's style uses `display:flex;` internally to ensure the child `iframe` element fills the full height and width of its `webview` container when used with traditional and flexbox layouts. Please do not overwrite the default `display:flex;` CSS property, unless specifying `display:inline-flex;` for inline layout.
+	
+	### Tag Attributes
+	
+	The `webview` tag has the following attributes:
+	
+	### `src`
+	
+	```
+	<webview src="https://www.github.com/"></webview>
+	```
+	
+	A `String` representing the visible URL. Writing to this attribute initiates top-level navigation.
+	
+	Assigning `src` its own value will reload the current page.
+	
+	The `src` attribute can also accept data URLs, such as `data:text/plain,Hello, world!`.
+	
+	### `nodeintegration`
+	
+	```
+	<webview src="http://www.google.com/" nodeintegration></webview>
+	```
+	
+	A `Boolean`. When this attribute is present the guest page in `webview` will have node integration and can use node APIs like `require` and `process` to access low level system resources. Node integration is disabled by default in the guest page.
+	
+	### `nodeintegrationinsubframes`
+	
+	```
+	<webview src="http://www.google.com/" nodeintegrationinsubframes></webview>
+	```
+	
+	A `Boolean` for the experimental option for enabling NodeJS support in sub-frames such as iframes inside the `webview`. All your preloads will load for every iframe, you can use `process.isMainFrame` to determine if you are in the main frame or not. This option is disabled by default in the guest page.
+	
+	### `enableremotemodule`
+	
+	```
+	<webview src="http://www.google.com/" enableremotemodule="false"></webview>
+	```
+	
+	A `Boolean`. When this attribute is `false` the guest page in `webview` will not have access to the `remote` module. The remote module is available by default.
+	
+	### `plugins`
+	
+	```
+	<webview src="https://www.github.com/" plugins></webview>
+	```
+	
+	A `Boolean`. When this attribute is present the guest page in `webview` will be able to use browser plugins. Plugins are disabled by default.
+	
+	### `preload`
+	
+	```
+	<webview src="https://www.github.com/" preload="./test.js"></webview>
+	```
+	
+	A `String` that specifies a script that will be loaded before other scripts run in the guest page. The protocol of script's URL must be either `file:` or `asar:`, because it will be loaded by `require` in guest page under the hood.
+	
+	When the guest page doesn't have node integration this script will still have access to all Node APIs, but global objects injected by Node will be deleted after this script has finished executing.
+	
+	**Note:** This option will appear as `preloadURL` (not `preload`) in the `webPreferences` specified to the `will-attach-webview` event.
+	
+	### `httpreferrer`
+	
+	```
+	<webview src="https://www.github.com/" httpreferrer="http://cheng.guru"></webview>
+	```
+	
+	A `String` that sets the referrer URL for the guest page.
+	
+	### `useragent`
+	
+	```
+	<webview src="https://www.github.com/" useragent="Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko"></webview>
+	```
+	
+	A `String` that sets the user agent for the guest page before the page is navigated to. Once the page is loaded, use the `setUserAgent` method to change the user agent.
+	
+	### `disablewebsecurity`
+	
+	```
+	<webview src="https://www.github.com/" disablewebsecurity></webview>
+	```
+	
+	A `Boolean`. When this attribute is present the guest page will have web security disabled. Web security is enabled by default.
+	
+	### `partition`
+	
+	```
+	<webview src="https://github.com" partition="persist:github"></webview>
+	<webview src="https://electronjs.org" partition="electron"></webview>
+	```
+	
+	A `String` that sets the session used by the page. If `partition` starts with `persist:`, the page will use a persistent session available to all pages in the app with the same `partition`. if there is no `persist:` prefix, the page will use an in-memory session. By assigning the same `partition`, multiple pages can share the same session. If the `partition` is unset then default session of the app will be used.
+	
+	This value can only be modified before the first navigation, since the session of an active renderer process cannot change. Subsequent attempts to modify the value will fail with a DOM exception.
+	
+	### `allowpopups`
+	
+	```
+	<webview src="https://www.github.com/" allowpopups></webview>
+	```
+	
+	A `Boolean`. When this attribute is present the guest page will be allowed to open new windows. Popups are disabled by default.
+	
+	### `webpreferences`
+	
+	```
+	<webview src="https://github.com" webpreferences="allowRunningInsecureContent, javascript=no"></webview>
+	```
+	
+	A `String` which is a comma separated list of strings which specifies the web preferences to be set on the webview. The full list of supported preference strings can be found in BrowserWindow.
+	
+	The string follows the same format as the features string in `window.open`. A name by itself is given a `true` boolean value. A preference can be set to another value by including an `=`, followed by the value. Special values `yes` and `1` are interpreted as `true`, while `no` and `0` are interpreted as `false`.
+	
+	### `enableblinkfeatures`
+	
+	```
+	<webview src="https://www.github.com/" enableblinkfeatures="PreciseMemoryInfo, CSSVariables"></webview>
+	```
+	
+	A `String` which is a list of strings which specifies the blink features to be enabled separated by `,`. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
+	
+	### `disableblinkfeatures`
+	
+	```
+	<webview src="https://www.github.com/" disableblinkfeatures="PreciseMemoryInfo, CSSVariables"></webview>
+	```
+	
+	A `String` which is a list of strings which specifies the blink features to be disabled separated by `,`. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
 	@see http://electronjs.org/docs/api/webview-tag
 **/
 @:native("webviewTag") extern class WebviewTag extends js.html.Element {

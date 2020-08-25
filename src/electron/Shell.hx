@@ -1,5 +1,20 @@
 package electron;
 /**
+	> Manage files and URLs using their default applications.
+	
+	Process: Main, Renderer (non-sandboxed only)
+	
+	The `shell` module provides functions related to desktop integration.
+	
+	An example of opening a URL in the user's default browser:
+	
+	```
+	const { shell } = require('electron')
+	
+	shell.openExternal('https://github.com')
+	```
+	
+	**Note:** While the `shell` module can be used in the renderer process, it will not function in a sandboxed renderer.
 	@see http://electronjs.org/docs/api/shell
 **/
 @:jsRequire("electron", "shell") extern class Shell extends js.node.events.EventEmitter<electron.Shell> {

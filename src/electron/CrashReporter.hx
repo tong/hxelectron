@@ -1,5 +1,31 @@
 package electron;
 /**
+	> Submit crash reports to a remote server.
+	
+	Process: Main, Renderer
+	
+	The following is an example of setting up Electron to automatically submit crash reports to a remote server:
+	
+	```
+	const { crashReporter } = require('electron')
+	
+	crashReporter.start({ submitURL: 'https://your-domain.com/url-to-submit' })
+	```
+	
+	For setting up a server to accept and process crash reports, you can use following projects:
+	
+	* socorro
+	* mini-breakpad-server
+	
+	Or use a 3rd party hosted solution:
+	
+	* Backtrace
+	* Sentry
+	* BugSplat
+	
+	Crash reports are stored temporarily before being uploaded in a directory underneath the app's user data directory (called 'Crashpad' on Windows and Mac, or 'Crash Reports' on Linux). You can override this directory by calling `app.setPath('crashDumps', '/path/to/crashes')` before starting the crash reporter.
+	
+	On Windows and macOS, Electron uses crashpad to monitor and report crashes. On Linux, Electron uses breakpad. This is an implementation detail driven by Chromium, and it may change in future. In particular, crashpad is newer and will likely eventually replace breakpad on all platforms.
 	@see http://electronjs.org/docs/api/crash-reporter
 **/
 @:jsRequire("electron", "crashReporter") extern class CrashReporter extends js.node.events.EventEmitter<electron.CrashReporter> {
@@ -40,7 +66,7 @@ package electron;
 	**/
 	@:optional
 	var rateLimit : Bool; /**
-		If true, crash reports will be compressed and uploaded with `Content-Encoding: gzip`. Not all collection servers support compressed payloads. Default is `false`.
+		If true, crash reports will be compressed and uploaded with `Content-Encoding: gzip`. Default is `false`.
 	**/
 	@:optional
 	var compress : Bool; /**

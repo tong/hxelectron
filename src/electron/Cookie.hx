@@ -39,4 +39,8 @@ typedef Cookie = {
 		The expiration date of the cookie as the number of seconds since the UNIX epoch. Not provided for session cookies.
 	**/
 	var expirationDate : Float;
+	/**
+		The Same Site policy applied to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.
+	**/
+	var sameSite : String;
 }

@@ -111,7 +111,10 @@ package electron;
 		Whether the image is empty.
 	**/
 	function isEmpty():Bool;
-	function getSize():electron.Size;
+	/**
+		If `scaleFactor` is passed, this will return the size corresponding to the image representation most closely matching the passed value.
+	**/
+	function getSize(?scaleFactor:Float):electron.Size;
 	/**
 		Marks the image as a template image.
 	**/
@@ -144,8 +147,14 @@ package electron;
 	var quality : String; }):electron.NativeImage;
 	/**
 		The image's aspect ratio.
+		
+		If `scaleFactor` is passed, this will return the aspect ratio corresponding to the image representation most closely matching the passed value.
 	**/
-	function getAspectRatio():Float;
+	function getAspectRatio(?scaleFactor:Float):Float;
+	/**
+		An array of all scale factors corresponding to representations for a given nativeImage.
+	**/
+	function getScaleFactors():Array<Float>;
 	/**
 		Add an image representation for a specific scale factor. This can be used to explicitly add different scale factor representations to an image. This can be called on empty images.
 	**/

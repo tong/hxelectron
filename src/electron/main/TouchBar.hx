@@ -1,5 +1,8 @@
 package electron.main;
 /**
+	> Create TouchBar layouts for native macOS applications
+	
+	Process: Main
 	@see http://electronjs.org/docs/api/touch-bar
 **/
 @:jsRequire("electron", "TouchBar") extern class TouchBar extends js.node.events.EventEmitter<electron.main.TouchBar> {

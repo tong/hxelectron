@@ -1,5 +1,8 @@
 package electron.main;
 /**
+	> Create a popover in the touch bar for native macOS applications
+	
+	Process: Main
 	@see http://electronjs.org/docs/api/touch-bar-popover
 **/
 @:jsRequire("electron", "TouchBarPopover") extern class TouchBarPopover extends js.node.events.EventEmitter<electron.main.TouchBarPopover> {
