@@ -433,6 +433,10 @@ package electron.main;
 	**/
 	@:optional
 	var type : String; /**
+		Specify how the material appearance should reflect window activity state on macOS. Must be used with the `vibrancy` property. Possible values are:
+	**/
+	@:optional
+	var visualEffectState : String; /**
 		The style of window title bar. Default is `default`. Possible values are:
 	**/
 	@:optional
@@ -1197,7 +1201,11 @@ package electron.main;
 		
 		**Note:** This API does nothing on Windows.
 	**/
-	function setVisibleOnAllWorkspaces(visible:Bool):Void;
+	function setVisibleOnAllWorkspaces(visible:Bool, ?options:{ /**
+		Sets whether the window should be visible above fullscreen windows
+	**/
+	@:optional
+	var visibleOnFullScreen : Bool; }):Void;
 	/**
 		Whether the window is visible on all workspaces.
 		
