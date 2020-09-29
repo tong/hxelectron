@@ -3,7 +3,8 @@ HXElectron
 ==========
 Haxe type definitions for [electron](https://electronjs.org/), a framework for building cross-platform desktop applications with JavaScript, HTML, and CSS.
 
-[![Build Status](https://img.shields.io/travis/tong/hxelectron/master.svg?style=flat-square)](https://travis-ci.org/tong/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/tong/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
+[![Actions Status](https://github.com/tong/hxelectron/workflows/CI/badge.svg)](https://github.com/tong/hxelectron) [![Haxelib Version](https://img.shields.io/github/tag/tong/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
+
 
 
 ## Install
