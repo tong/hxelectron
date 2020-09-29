@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup haxe
+        run: |
+          sudo add-apt-repository ppa:haxe/releases -y
+          sudo apt-get update
+          sudo apt-get install haxe -y
+          mkdir ~/haxelib && haxelib setup ~/haxelib
+          haxelib dev electron .
+          haxelib install hxnodejs
+      - name: Build electron api
+        run: |
+          haxe api.hxml
+      - name: Build haxedocs
+        run: |
+          haxe docs.hxml
+      - name: Build demo application
+        run: |
+          haxe --cwd demo build.hxml
+
