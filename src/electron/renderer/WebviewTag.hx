@@ -495,10 +495,16 @@ package electron.renderer;
 	**/
 	@:optional
 	var copies : Float; /**
-		The page range to print.
+		The page range to print. On macOS, only the first range is honored.
 	**/
 	@:optional
-	var pageRanges : Record; /**
+	var pageRanges : Array<{ /**
+	Index of the first page to print (0-based).
+**/
+var from : Float; /**
+	Index of the last page to print (inclusive) (0-based).
+**/
+var to : Float; }>; /**
 		Set the duplex mode of the printed web page. Can be `simplex`, `shortEdge`, or `longEdge`.
 	**/
 	@:optional

@@ -132,7 +132,7 @@ private class Gen {
 	}
 
 	function processItem( item : Item, ?module : String ) : TypeDefinition {
-		
+
 		var type : TypeDefinition = {
 			pack: getItemPack( item ),
 			name: item.name,
@@ -378,7 +378,7 @@ private class Gen {
 				default:
 					args.push( {
 						name: escapeArgument( p.name ),
-						type: getComplexType( p.type, p.collection, p.properties ),
+						type: getComplexType( p.type, p.collection, p.properties, null, p.possibleValues ),
 						opt: (p.required == null) ? true : !p.required
 					} );
 				}
@@ -420,7 +420,7 @@ private class Gen {
 		return createEitherType( types );
 	}
 
-	function getComplexType( name, collection = false, ?properties : Array<Dynamic>, optional = false ) : ComplexType {
+	function getComplexType( name, collection = false, ?properties : Array<Dynamic>, optional = false, ?possibleValues : Array<PossibleValue> ) : ComplexType {
 		var t : ComplexType = switch name {
 		case 'undefined': macro : Dynamic;
 		case null,'null': macro : Dynamic;
@@ -469,7 +469,11 @@ private class Gen {
 			#else
 			macro : js.Promise<Any>;
 			#end
-		case 'String','string': macro: String;
+		case 'String','string':
+			if( possibleValues != null ) {
+				//TODO create abstract @:enum
+			}
+			macro: String;
 		case 'ReadableStream':
 			//TODO: type param
 			macro : js.node.stream.Readable<Dynamic>; //macro : js.node.stream.Readable.IReadable;
@@ -560,6 +564,9 @@ typedef Property = {
 	collection: Bool,
 	?description : String,
 	?properties : Array<Property>
+	// TODO: ?required
+	// TODO: ?possibleValues
+	// TODO: ?additionalTags : Array<String>
 }
 
 typedef Event = {
@@ -576,6 +583,12 @@ typedef MethodParameter = {
 	collection: Bool,
 	properties : Array<Property>,
 	required: Null<Bool>,
+	?possibleValues : Array<PossibleValue>
+}
+
+typedef PossibleValue = {
+	value : String,
+	description : String,
 }
 
 typedef Return = {
@@ -585,6 +598,7 @@ typedef Return = {
 	collection: Bool,
 	?properties : Array<Property>,
 	required: Null<Bool>,
+	?possibleValues : Array<PossibleValue>
 }
 
 typedef Method = {
