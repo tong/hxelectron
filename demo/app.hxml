@@ -1,0 +1,5 @@
+-js app.js
+-main App
+-lib electron
+-dce full
+-debug
