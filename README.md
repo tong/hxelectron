@@ -49,10 +49,15 @@ cd hxelectron/
 ## Set the haxelib development directory
 haxelib dev electron .
 
-## Install electron, build and run the application
 cd demo/
-haxe build.hxml
+
+## Install electron
 npm install
+
+## Build main.js, app.js
+npm run build
+
+# Run the application
 npm run start
 ```
 
