@@ -110,6 +110,7 @@ private class Gen {
 		addAlias( 'Partial' );
 		addAlias( 'Record' );
 		addAlias( 'SaveDialogOptions' );
+		addAlias( 'MessagePort' );
 		this.types.set( 'Accelerator', {
 			pack: root.copy(),
 			name: 'Accelerator',
@@ -270,8 +271,14 @@ private class Gen {
 					break;
 				}
 			}
+		case 'PostBody': // TODO: https://github.com/tong/hxelectron/issues/51
+			for( f in type.fields ) {
+				if( f.name == "data" ) {
+					f.kind = FVar( TPath( { name : "Array<PostData>", pack : [], params : [] } ), null );
+					break;
+				}
+			}
 		}
-
 		return type;
 	}
 

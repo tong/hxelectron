@@ -1,3 +1,2 @@
 package electron;
-
-typedef MessagePort = Dynamic; //TODO
+typedef MessagePort = Dynamic;

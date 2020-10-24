@@ -7,7 +7,7 @@ typedef PostBody = {
 	/**
 		The post data to be sent to the new window.
 	**/
-	var data : Array<Dynamic>;
+	var data : Array<PostData>;
 	/**
 		The `content-type` header used for the data. One of `application/x-www-form-urlencoded` or `multipart/form-data`. Corresponds to the `enctype` attribute of the submitted HTML form.
 	**/
