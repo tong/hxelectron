@@ -243,18 +243,18 @@ private class Gen {
 		}
 
 		// Post patch
-		switch type.name {
-		case 'App':
-			//TODO:
+
+		function patchEventListenerMethods() {
+			//var eType = extraTypes.get( type.name );
 			type.fields.push( {
 				name: 'on',
 				access: [AStatic],
 				kind: FFun( {
 					params: [
 						{ name: 'T', constraints: [macro:haxe.Constraints.Function] },
-					],
+					], 
 					args: [
-						{ name: 'eventType', type: macro : Dynamic },
+						{ name: 'eventType', type: macro : Dynamic }, //TODO
 						{ name: 'callback', type: macro:T }
 					],
 					ret: macro : Void,
@@ -262,6 +262,11 @@ private class Gen {
 				} ),
 				pos: null
 			} );
+		}
+
+		switch type.name {
+		case 'App','InAppPurchase':
+			patchEventListenerMethods();
 		case 'Screen':
 			// TODO: https://github.com/fponticelli/hxelectron/issues/29
 			for( i in 0...type.meta.length ) {
