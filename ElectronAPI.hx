@@ -220,7 +220,7 @@ private class Gen {
 							var b = type.fields[j];
 							if( a.name == b.name ) {
 								type.fields.splice( i, 1 );
-								var expr : Expr;
+								var expr : Expr = null;
 								switch a.kind {
 								case FFun(f):
 									f.expr = { expr: EBlock([]), pos: Context.currentPos() };
@@ -308,7 +308,7 @@ private class Gen {
 
 	function createEventEnumAbstract( name : String, pack : Array<String>, events : Array<Event> ) {
 		var _name = name+'Event';
-		var type : TypeDefinition;
+		var type : TypeDefinition = null;
 		if( extraTypes.exists( name ) ) {
 			for( et in extraTypes.get( name ) ) {
 				if( et.name == _name ) {
