@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/extension
+	@see https://electronjs.org/docs/api/structures/extension
 **/
 typedef Extension = {
 	var id : String;

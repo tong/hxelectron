@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/incoming-message
+	@see https://electronjs.org/docs/api/incoming-message
 **/
 @:jsRequire("electron", "IncomingMessage") extern class IncomingMessage extends js.node.events.EventEmitter<electron.main.IncomingMessage> {
 	/**

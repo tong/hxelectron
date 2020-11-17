@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/extension-info
+	@see https://electronjs.org/docs/api/structures/extension-info
 **/
 typedef ExtensionInfo = {
 	var name : String;

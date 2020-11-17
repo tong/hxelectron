@@ -5,7 +5,7 @@ package electron.main;
 	Process: Main
 	
 	For example:
-	@see http://electronjs.org/docs/api/power-save-blocker
+	@see https://electronjs.org/docs/api/power-save-blocker
 **/
 @:jsRequire("electron", "powerSaveBlocker") extern class PowerSaveBlocker extends js.node.events.EventEmitter<electron.main.PowerSaveBlocker> {
 	/**

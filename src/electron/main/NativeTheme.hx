@@ -3,7 +3,7 @@ package electron.main;
 	> Read and respond to changes in Chromium's native color theme.
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/native-theme
+	@see https://electronjs.org/docs/api/native-theme
 **/
 @:jsRequire("electron", "nativeTheme") extern class NativeTheme extends js.node.events.EventEmitter<electron.main.NativeTheme> {
 	/**
@@ -41,7 +41,7 @@ package electron.main;
 	**/
 	static var themeSource : String;
 	/**
-		A `Boolean` for if the OS / Chromium currently has high-contrast mode enabled or is being instructed to show a high-constrast UI.
+		A `Boolean` for if the OS / Chromium currently has high-contrast mode enabled or is being instructed to show a high-contrast UI.
 	**/
 	static var shouldUseHighContrastColors : Bool;
 	/**

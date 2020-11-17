@@ -24,7 +24,7 @@ package electron.main;
 	```
 	
 	Another example of creating a window in the external display:
-	@see http://electronjs.org/docs/api/screen
+	@see https://electronjs.org/docs/api/screen
 **/
 @:native('require(\"electron\").screen') extern class Screen extends js.node.events.EventEmitter<electron.main.Screen> {
 	/**

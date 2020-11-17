@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/trace-categories-and-options
+	@see https://electronjs.org/docs/api/structures/trace-categories-and-options
 **/
 typedef TraceCategoriesAndOptions = {
 	/**

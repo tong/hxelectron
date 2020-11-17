@@ -3,7 +3,7 @@ package electron.main;
 	> Get system preferences.
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/system-preferences
+	@see https://electronjs.org/docs/api/system-preferences
 **/
 @:jsRequire("electron", "systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.main.SystemPreferences> {
 	/**
@@ -174,7 +174,7 @@ package electron.main;
 	/**
 		resolves if the user has successfully authenticated with Touch ID.
 		
-		This API itself will not protect your user data; rather, it is a mechanism to allow you to do so. Native apps will need to set Access Control Constants like `kSecAccessControlUserPresence` on the their keychain entry so that reading it would auto-prompt for Touch ID biometric consent. This could be done with `node-keytar`, such that one would store an encryption key with `node-keytar` and only fetch it if `promptTouchID()` resolves.
+		This API itself will not protect your user data; rather, it is a mechanism to allow you to do so. Native apps will need to set Access Control Constants like `kSecAccessControlUserPresence` on their keychain entry so that reading it would auto-prompt for Touch ID biometric consent. This could be done with `node-keytar`, such that one would store an encryption key with `node-keytar` and only fetch it if `promptTouchID()` resolves.
 		
 		**NOTE:** This API will return a rejected Promise on macOS systems older than Sierra 10.12.2.
 	**/

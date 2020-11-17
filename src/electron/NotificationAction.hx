@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/notification-action
+	@see https://electronjs.org/docs/api/structures/notification-action
 **/
 typedef NotificationAction = {
 	/**

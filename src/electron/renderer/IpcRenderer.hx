@@ -7,7 +7,7 @@ package electron.renderer;
 	The `ipcRenderer` module is an  EventEmitter. It provides a few methods so you can send synchronous and asynchronous messages from the render process (web page) to the main process. You can also receive replies from the main process.
 	
 	See ipcMain for code examples.
-	@see http://electronjs.org/docs/api/ipc-renderer
+	@see https://electronjs.org/docs/api/ipc-renderer
 **/
 @:jsRequire("electron", "ipcRenderer") extern class IpcRenderer extends js.node.events.EventEmitter<electron.renderer.IpcRenderer> {
 	/**
@@ -51,7 +51,7 @@ package electron.renderer;
 		
 		If you need to transfer a `MessagePort` to the main process, use `ipcRenderer.postMessage`.
 		
-		If you do not need a respons to the message, consider using `ipcRenderer.send`.
+		If you do not need a response to the message, consider using `ipcRenderer.send`.
 	**/
 	static function invoke(channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Any>;
 	/**

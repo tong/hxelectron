@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/message-port-main
+	@see https://electronjs.org/docs/api/message-port-main
 **/
 @:jsRequire("electron", "MessagePortMain") extern class MessagePortMain extends js.node.events.EventEmitter<electron.main.MessagePortMain> {
 	/**

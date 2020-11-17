@@ -37,7 +37,7 @@ package electron.main;
 	```
 	
 	The `net` API can be used only after the application emits the `ready` event. Trying to use the module before the `ready` event will throw an error.
-	@see http://electronjs.org/docs/api/net
+	@see https://electronjs.org/docs/api/net
 **/
 @:jsRequire("electron", "net") extern class Net extends js.node.events.EventEmitter<electron.main.Net> {
 	/**

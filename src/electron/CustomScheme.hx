@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/custom-scheme
+	@see https://electronjs.org/docs/api/structures/custom-scheme
 **/
 typedef CustomScheme = {
 	/**
@@ -31,5 +31,9 @@ typedef CustomScheme = {
 		Default false.
 	**/
 	@:optional
-	var corsEnabled : Bool; };
+	var corsEnabled : Bool; /**
+		Default false.
+	**/
+	@:optional
+	var stream : Bool; };
 }

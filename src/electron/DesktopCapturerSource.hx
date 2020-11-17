@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/desktop-capturer-source
+	@see https://electronjs.org/docs/api/structures/desktop-capturer-source
 **/
 typedef DesktopCapturerSource = {
 	/**
@@ -20,7 +20,7 @@ typedef DesktopCapturerSource = {
 	**/
 	var display_id : String;
 	/**
-		An icon image of the application that owns the window or null if the source has a type screen. The size of the icon is not known in advance and depends on what the the application provides.
+		An icon image of the application that owns the window or null if the source has a type screen. The size of the icon is not known in advance and depends on what the application provides.
 	**/
 	var appIcon : electron.NativeImage;
 }

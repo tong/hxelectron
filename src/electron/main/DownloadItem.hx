@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/download-item
+	@see https://electronjs.org/docs/api/download-item
 **/
 @:jsRequire("electron", "DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
 	/**

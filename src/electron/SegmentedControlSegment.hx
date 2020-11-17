@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/segmented-control-segment
+	@see https://electronjs.org/docs/api/structures/segmented-control-segment
 **/
 typedef SegmentedControlSegment = {
 	/**

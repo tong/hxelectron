@@ -26,7 +26,7 @@ package electron;
 	Crash reports are stored temporarily before being uploaded in a directory underneath the app's user data directory (called 'Crashpad' on Windows and Mac, or 'Crash Reports' on Linux). You can override this directory by calling `app.setPath('crashDumps', '/path/to/crashes')` before starting the crash reporter.
 	
 	On Windows and macOS, Electron uses crashpad to monitor and report crashes. On Linux, Electron uses breakpad. This is an implementation detail driven by Chromium, and it may change in future. In particular, crashpad is newer and will likely eventually replace breakpad on all platforms.
-	@see http://electronjs.org/docs/api/crash-reporter
+	@see https://electronjs.org/docs/api/crash-reporter
 **/
 @:jsRequire("electron", "crashReporter") extern class CrashReporter extends js.node.events.EventEmitter<electron.CrashReporter> {
 	/**
@@ -119,7 +119,7 @@ package electron;
 	**/
 	static function addExtraParameter(key:String, value:String):Void;
 	/**
-		Remove a extra parameter from the current set of parameters. Future crashes will not include this parameter.
+		Remove an extra parameter from the current set of parameters. Future crashes will not include this parameter.
 	**/
 	static function removeExtraParameter(key:String):Void;
 	/**

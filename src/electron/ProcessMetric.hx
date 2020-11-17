@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/process-metric
+	@see https://electronjs.org/docs/api/structures/process-metric
 **/
 typedef ProcessMetric = {
 	/**
@@ -11,6 +11,10 @@ typedef ProcessMetric = {
 		Process type. One of the following values:
 	**/
 	var type : String;
+	/**
+		The name of the process. i.e. for plugins it might be Flash. Examples for utility: `Audio Service`, `Content Decryption Module Service`, `Network Service`, `Video Capture`, etc.
+	**/
+	var name : String;
 	/**
 		CPU usage of the process.
 	**/

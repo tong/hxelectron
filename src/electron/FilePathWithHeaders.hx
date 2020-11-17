@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/file-path-with-headers
+	@see https://electronjs.org/docs/api/structures/file-path-with-headers
 **/
 typedef FilePathWithHeaders = {
 	/**

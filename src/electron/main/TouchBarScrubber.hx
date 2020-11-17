@@ -3,7 +3,7 @@ package electron.main;
 	> Create a scrubber (a scrollable selector)
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/touch-bar-scrubber
+	@see https://electronjs.org/docs/api/touch-bar-scrubber
 **/
 @:jsRequire("electron", "TouchBarScrubber") extern class TouchBarScrubber extends js.node.events.EventEmitter<electron.main.TouchBarScrubber> {
 	/**

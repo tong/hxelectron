@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/bluetooth-device
+	@see https://electronjs.org/docs/api/structures/bluetooth-device
 **/
 typedef BluetoothDevice = {
 	var deviceName : String;

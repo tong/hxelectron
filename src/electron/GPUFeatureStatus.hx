@@ -13,7 +13,7 @@ package electron;
 	* `enabled` - Hardware accelerated (green)
 	* `enabled_on` - Enabled (green)
 	* `enabled_force_on` - Force enabled (green)
-	@see http://electronjs.org/docs/api/structures/gpu-feature-status
+	@see https://electronjs.org/docs/api/structures/gpu-feature-status
 **/
 typedef GPUFeatureStatus = {
 	/**

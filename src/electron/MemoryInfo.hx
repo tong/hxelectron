@@ -1,7 +1,7 @@
 package electron;
 /**
 	Note that all statistics are reported in Kilobytes.
-	@see http://electronjs.org/docs/api/structures/memory-info
+	@see https://electronjs.org/docs/api/structures/memory-info
 **/
 typedef MemoryInfo = {
 	/**

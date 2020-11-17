@@ -5,7 +5,7 @@ package electron.main;
 	Note: Only one instance of this class can be added per TouchBar.
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/touch-bar-other-items-proxy
+	@see https://electronjs.org/docs/api/touch-bar-other-items-proxy
 **/
 @:jsRequire("electron", "TouchBarOtherItemsProxy") extern class TouchBarOtherItemsProxy extends js.node.events.EventEmitter<electron.main.TouchBarOtherItemsProxy> {
 	function new():Void;

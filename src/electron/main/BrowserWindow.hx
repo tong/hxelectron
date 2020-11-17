@@ -18,7 +18,7 @@ package electron.main;
 	
 	```
 	const { BrowserWindow } = require('electron')
-	let win = new BrowserWindow({ show: false })
+	const win = new BrowserWindow({ show: false })
 	win.once('ready-to-show', () => {
 	  win.show()
 	})
@@ -35,7 +35,7 @@ package electron.main;
 	```
 	const { BrowserWindow } = require('electron')
 	
-	let win = new BrowserWindow({ backgroundColor: '#2e2c29' })
+	const win = new BrowserWindow({ backgroundColor: '#2e2c29' })
 	win.loadURL('https://github.com')
 	```
 	
@@ -48,8 +48,8 @@ package electron.main;
 	```
 	const { BrowserWindow } = require('electron')
 	
-	let top = new BrowserWindow()
-	let child = new BrowserWindow({ parent: top })
+	const top = new BrowserWindow()
+	const child = new BrowserWindow({ parent: top })
 	child.show()
 	top.show()
 	```
@@ -63,7 +63,7 @@ package electron.main;
 	```
 	const { BrowserWindow } = require('electron')
 	
-	let child = new BrowserWindow({ parent: top, modal: true, show: false })
+	const child = new BrowserWindow({ parent: top, modal: true, show: false })
 	child.loadURL('https://github.com')
 	child.once('ready-to-show', () => {
 	  child.show()
@@ -97,7 +97,7 @@ package electron.main;
 	`BrowserWindow` is an EventEmitter.
 	
 	It creates a new `BrowserWindow` with native properties as set by the `options`.
-	@see http://electronjs.org/docs/api/browser-window
+	@see https://electronjs.org/docs/api/browser-window
 **/
 @:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
 	/**
@@ -119,7 +119,7 @@ package electron.main;
 	/**
 		The window with the given `id`.
 	**/
-	static function fromId(id:Int):electron.main.BrowserWindow;
+	static function fromId(id:Int):haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
 		Adds Chrome extension located at `path`, and returns extension's name.
 		
@@ -1389,6 +1389,12 @@ package electron.main;
 	**/
 	var resize : electron.main.BrowserWindowEvent<Void -> Void> = "resize";
 	/**
+		Emitted once when the window has finished being resized.
+		
+		This is usually emitted when the window has been resized manually. On macOS, resizing the window with `setBounds`/`setSize` and setting the `animate` parameter to `true` will also emit this event once resizing has finished.
+	**/
+	var resized : electron.main.BrowserWindowEvent<Void -> Void> = "resized";
+	/**
 		Emitted before the window is moved. On Windows, calling `event.preventDefault()` will prevent the window from being moved.
 		
 		Note that this is only emitted when the window is being resized manually. Resizing the window with `setBounds`/`setSize` will not emit this event.
@@ -1396,12 +1402,12 @@ package electron.main;
 	var will_move : electron.main.BrowserWindowEvent<Void -> Void> = "will-move";
 	/**
 		Emitted when the window is being moved to a new position.
-		
-		__Note__: On macOS this event is an alias of `moved`.
 	**/
 	var move : electron.main.BrowserWindowEvent<Void -> Void> = "move";
 	/**
 		Emitted once when the window is moved to a new position.
+		
+		__Note__: On macOS this event is an alias of `move`.
 	**/
 	var moved : electron.main.BrowserWindowEvent<Void -> Void> = "moved";
 	/**
@@ -1469,4 +1475,10 @@ package electron.main;
 		Emitted when the native new tab button is clicked.
 	**/
 	var new_window_for_tab : electron.main.BrowserWindowEvent<Void -> Void> = "new-window-for-tab";
+	/**
+		Emitted when the system context menu is triggered on the window, this is normally only triggered when the user right clicks on the non-client area of your window.  This is the window titlebar or any area you have declared as `-webkit-app-region: drag` in a frameless window.
+		
+		Calling `event.preventDefault()` will prevent the menu from being displayed.
+	**/
+	var system_context_menu : electron.main.BrowserWindowEvent<Void -> Void> = "system-context-menu";
 }

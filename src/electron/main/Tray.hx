@@ -53,7 +53,7 @@ package electron.main;
 	* On Windows it is recommended to use `ICO` icons to get best visual effects.
 	
 	If you want to keep exact same behaviors on all platforms, you should not rely on the `click` event and always attach a context menu to the tray icon.
-	@see http://electronjs.org/docs/api/tray
+	@see https://electronjs.org/docs/api/tray
 **/
 @:jsRequire("electron", "Tray") extern class Tray extends js.node.events.EventEmitter<electron.main.Tray> {
 	function new(image:haxe.extern.EitherType<Dynamic, Dynamic>, ?guid:String):Void;
@@ -76,7 +76,11 @@ package electron.main;
 	/**
 		Sets the title displayed next to the tray icon in the status bar (Support ANSI colors).
 	**/
-	function setTitle(title:String):Void;
+	function setTitle(title:String, ?options:{ /**
+		The font family variant to display, can be `monospaced` or `monospacedDigit`. `monospaced` is available in macOS 10.15+ and `monospacedDigit` is available in macOS 10.11+.  When left blank, the title uses the default system font.
+	**/
+	@:optional
+	var fontType : String; }):Void;
 	/**
 		the title displayed next to the tray icon in the status bar
 	**/

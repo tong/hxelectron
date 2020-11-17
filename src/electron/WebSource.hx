@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/web-source
+	@see https://electronjs.org/docs/api/structures/web-source
 **/
 typedef WebSource = {
 	var code : String;

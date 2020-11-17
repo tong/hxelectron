@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/crash-report
+	@see https://electronjs.org/docs/api/structures/crash-report
 **/
 typedef CrashReport = {
 	var date : Date;

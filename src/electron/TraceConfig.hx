@@ -1,7 +1,7 @@
 package electron;
 /**
 	An example TraceConfig that roughly matches what Chrome DevTools records:
-	@see http://electronjs.org/docs/api/structures/trace-config
+	@see https://electronjs.org/docs/api/structures/trace-config
 **/
 typedef TraceConfig = {
 	/**
@@ -17,7 +17,7 @@ typedef TraceConfig = {
 	**/
 	var trace_buffer_size_in_events : Float;
 	/**
-		if true, filter event data according to a whitelist of events that have been manually vetted to not include any PII. See the implementation in Chromium for specifics.
+		if true, filter event data according to a specific list of events that have been manually vetted to not include any PII. See the implementation in Chromium for specifics.
 	**/
 	var enable_argument_filter : Bool;
 	/**

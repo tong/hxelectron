@@ -29,7 +29,7 @@ package electron.main;
 	The installer generated with Squirrel will create a shortcut icon with an Application User Model ID in the format of `com.squirrel.PACKAGE_ID.YOUR_EXE_WITHOUT_DOT_EXE`, examples are `com.squirrel.slack.Slack` and `com.squirrel.code.Code`. You have to use the same ID for your app with `app.setAppUserModelId` API, otherwise Windows will not be able to pin your app properly in task bar.
 	
 	Unlike Squirrel.Mac, Windows can host updates on S3 or any other static file host. You can read the documents of Squirrel.Windows to get more details about how Squirrel.Windows works.
-	@see http://electronjs.org/docs/api/auto-updater
+	@see https://electronjs.org/docs/api/auto-updater
 **/
 @:jsRequire("electron", "autoUpdater") extern class AutoUpdater extends js.node.events.EventEmitter<electron.main.AutoUpdater> {
 	/**
@@ -40,7 +40,7 @@ package electron.main;
 	**/
 	@:optional
 	var headers : Record; /**
-		Either `json` or `default`, see the Squirrel.Mac README for more information.
+		Can be `json` or `default`, see the Squirrel.Mac README for more information.
 	**/
 	@:optional
 	var serverType : String; }):Void;

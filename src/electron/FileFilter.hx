@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/file-filter
+	@see https://electronjs.org/docs/api/structures/file-filter
 **/
 typedef FileFilter = {
 	var name : String;

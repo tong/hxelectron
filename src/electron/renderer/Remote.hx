@@ -10,7 +10,7 @@ package electron.renderer;
 	
 	```
 	const { BrowserWindow } = require('electron').remote
-	let win = new BrowserWindow({ width: 800, height: 600 })
+	const win = new BrowserWindow({ width: 800, height: 600 })
 	win.loadURL('https://github.com')
 	```
 	
@@ -94,7 +94,7 @@ package electron.renderer;
 	const app = require('electron').remote.app
 	console.log(app)
 	```
-	@see http://electronjs.org/docs/api/remote
+	@see https://electronjs.org/docs/api/remote
 **/
 @:jsRequire("electron", "remote") extern class Remote extends js.node.events.EventEmitter<electron.renderer.Remote> {
 	/**

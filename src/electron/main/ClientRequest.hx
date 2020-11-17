@@ -5,7 +5,7 @@ package electron.main;
 	Process: Main
 	
 	`ClientRequest` implements the Writable Stream interface and is therefore an EventEmitter.
-	@see http://electronjs.org/docs/api/client-request
+	@see https://electronjs.org/docs/api/client-request
 **/
 @:jsRequire("electron", "ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {
 	/**
@@ -17,6 +17,18 @@ package electron.main;
 	function new(options:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
 		Adds an extra HTTP header. The header name will be issued as-is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a `String`, its `toString()` method will be called to obtain the final value.
+		
+		Certain headers are restricted from being set by apps. These headers are listed below. More information on restricted headers can be found in Chromium's header utils.
+		
+		* `Content-Length`
+		* `Host`
+		* `Trailer` or `Te`
+		* `Upgrade`
+		* `Cookie2`
+		* `Keep-Alive`
+		* `Transfer-Encoding`
+		
+		Additionally, setting the `Connection` header to the value `upgrade` is also disallowed.
 	**/
 	function setHeader(name:String, value:String):Void;
 	/**

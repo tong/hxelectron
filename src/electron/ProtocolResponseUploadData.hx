@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/protocol-response-upload-data
+	@see https://electronjs.org/docs/api/structures/protocol-response-upload-data
 **/
 typedef ProtocolResponseUploadData = {
 	/**

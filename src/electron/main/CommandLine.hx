@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/command-line
+	@see https://electronjs.org/docs/api/command-line
 **/
 @:jsRequire("electron", "CommandLine") extern class CommandLine extends js.node.events.EventEmitter<electron.main.CommandLine> {
 	/**

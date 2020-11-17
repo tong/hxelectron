@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/ipc-renderer-event
+	@see https://electronjs.org/docs/api/structures/ipc-renderer-event
 **/
 typedef IpcRendererEvent = {
 	/**

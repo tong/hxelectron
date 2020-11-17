@@ -3,7 +3,7 @@ package electron.main;
 	> Monitor power state changes.
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/power-monitor
+	@see https://electronjs.org/docs/api/power-monitor
 **/
 @:jsRequire("electron", "powerMonitor") extern class PowerMonitor extends js.node.events.EventEmitter<electron.main.PowerMonitor> {
 	/**

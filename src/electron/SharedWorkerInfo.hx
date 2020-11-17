@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/shared-worker-info
+	@see https://electronjs.org/docs/api/structures/shared-worker-info
 **/
 typedef SharedWorkerInfo = {
 	/**

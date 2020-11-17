@@ -18,7 +18,7 @@ package electron.main;
 	See `--log-net-log` to log network events throughout the app's lifecycle.
 	
 	**Note:** All methods unless specified can only be used after the `ready` event of the `app` module gets emitted.
-	@see http://electronjs.org/docs/api/net-log
+	@see https://electronjs.org/docs/api/net-log
 **/
 @:jsRequire("electron", "netLog") extern class NetLog extends js.node.events.EventEmitter<electron.main.NetLog> {
 	/**

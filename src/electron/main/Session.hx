@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/session
+	@see https://electronjs.org/docs/api/session
 **/
 @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
 	/**
@@ -273,7 +273,7 @@ package electron.main;
 	/**
 		An array of language codes the spellchecker is enabled for.  If this list is empty the spellchecker will fallback to using `en-US`.  By default on launch if this setting is an empty list Electron will try to populate this setting with the current OS locale.  This setting is persisted across restarts.
 		
-		**Note:** On macOS the OS spellchecker is used and has it's own list of languages.  This API is a no-op on macOS.
+		**Note:** On macOS the OS spellchecker is used and has its own list of languages.  This API is a no-op on macOS.
 	**/
 	function getSpellCheckerLanguages():Array<String>;
 	/**

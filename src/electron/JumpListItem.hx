@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/jump-list-item
+	@see https://electronjs.org/docs/api/structures/jump-list-item
 **/
 typedef JumpListItem = {
 	/**

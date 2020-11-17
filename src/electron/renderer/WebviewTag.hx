@@ -192,7 +192,7 @@ package electron.renderer;
 	```
 	
 	A `String` which is a list of strings which specifies the blink features to be disabled separated by `,`. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
-	@see http://electronjs.org/docs/api/webview-tag
+	@see https://electronjs.org/docs/api/webview-tag
 **/
 @:native("webviewTag") extern class WebviewTag extends js.html.Element {
 	/**
@@ -495,7 +495,7 @@ package electron.renderer;
 	**/
 	@:optional
 	var copies : Float; /**
-		The page range to print. On macOS, only the first range is honored.
+		The page range to print.
 	**/
 	@:optional
 	var pageRanges : Array<{ /**

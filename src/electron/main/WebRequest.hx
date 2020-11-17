@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/web-request
+	@see https://electronjs.org/docs/api/web-request
 **/
 @:jsRequire("electron", "WebRequest") extern class WebRequest extends js.node.events.EventEmitter<electron.main.WebRequest> {
 	/**

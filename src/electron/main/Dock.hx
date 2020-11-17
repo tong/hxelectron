@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/dock
+	@see https://electronjs.org/docs/api/dock
 **/
 @:jsRequire("electron", "Dock") extern class Dock extends js.node.events.EventEmitter<electron.main.Dock> {
 	/**

@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/transaction
+	@see https://electronjs.org/docs/api/structures/transaction
 **/
 typedef Transaction = {
 	/**

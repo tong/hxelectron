@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/input-event
+	@see https://electronjs.org/docs/api/structures/input-event
 **/
 typedef InputEvent = {
 	/**

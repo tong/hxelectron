@@ -3,7 +3,7 @@ package electron.main;
 	> Create a button in the touch bar for native macOS applications
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/touch-bar-button
+	@see https://electronjs.org/docs/api/touch-bar-button
 **/
 @:jsRequire("electron", "TouchBarButton") extern class TouchBarButton extends js.node.events.EventEmitter<electron.main.TouchBarButton> {
 	/**
@@ -22,6 +22,10 @@ package electron.main;
 		A `NativeImage` representing the button's current icon. Changing this value immediately updates the button in the touch bar.
 	**/
 	var icon : electron.NativeImage;
+	/**
+		A `String` - Can be `left`, `right` or `overlay`.  Defaults to `overlay`.
+	**/
+	var iconPosition : String;
 	/**
 		A `Boolean` representing whether the button is in an enabled state.
 	**/

@@ -3,7 +3,7 @@ package electron.main;
 	> Create native application menus and context menus.
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/menu
+	@see https://electronjs.org/docs/api/menu
 **/
 @:jsRequire("electron", "Menu") extern class Menu extends js.node.events.EventEmitter<electron.main.Menu> {
 	/**
@@ -76,7 +76,7 @@ package electron.main;
 	/**
 		the item with the specified `id`
 	**/
-	function getMenuItemById(id:String):electron.main.MenuItem;
+	function getMenuItemById(id:String):haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
 		Inserts the `menuItem` to the `pos` position of the menu.
 	**/

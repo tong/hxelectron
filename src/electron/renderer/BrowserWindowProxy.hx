@@ -1,6 +1,6 @@
 package electron.renderer;
 /**
-	@see http://electronjs.org/docs/api/browser-window-proxy
+	@see https://electronjs.org/docs/api/browser-window-proxy
 **/
 @:jsRequire("electron", "BrowserWindowProxy") extern class BrowserWindowProxy extends js.node.events.EventEmitter<electron.renderer.BrowserWindowProxy> {
 	/**

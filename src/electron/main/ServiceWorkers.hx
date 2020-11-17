@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/service-workers
+	@see https://electronjs.org/docs/api/service-workers
 **/
 @:jsRequire("electron", "ServiceWorkers") extern class ServiceWorkers extends js.node.events.EventEmitter<electron.main.ServiceWorkers> {
 	/**

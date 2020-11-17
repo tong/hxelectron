@@ -7,7 +7,7 @@ package electron.renderer;
 	`webFrame` export of the Electron module is an instance of the `WebFrame` class representing the top frame of the current `BrowserWindow`. Sub-frames can be retrieved by certain properties and methods (e.g. `webFrame.firstChild`).
 	
 	An example of zooming current page to 200%.
-	@see http://electronjs.org/docs/api/web-frame
+	@see https://electronjs.org/docs/api/web-frame
 **/
 @:jsRequire("electron", "webFrame") extern class WebFrame extends js.node.events.EventEmitter<electron.renderer.WebFrame> {
 	/**

@@ -50,7 +50,7 @@ package electron;
 	To capture video from a source provided by `desktopCapturer` the constraints passed to `navigator.mediaDevices.getUserMedia` must include `chromeMediaSource: 'desktop'`, and `audio: false`.
 	
 	To capture both audio and video from the entire desktop the constraints passed to `navigator.mediaDevices.getUserMedia` must include `chromeMediaSource: 'desktop'`, for both `audio` and `video`, but should not include a `chromeMediaSourceId` constraint.
-	@see http://electronjs.org/docs/api/desktop-capturer
+	@see https://electronjs.org/docs/api/desktop-capturer
 **/
 @:jsRequire("electron", "desktopCapturer") extern class DesktopCapturer extends js.node.events.EventEmitter<electron.DesktopCapturer> {
 	/**

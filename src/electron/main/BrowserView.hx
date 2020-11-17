@@ -19,42 +19,18 @@ package electron.main;
 	view.setBounds({ x: 0, y: 0, width: 300, height: 300 })
 	view.webContents.loadURL('https://electronjs.org')
 	```
-	@see http://electronjs.org/docs/api/browser-view
+	@see https://electronjs.org/docs/api/browser-view
 **/
 @:jsRequire("electron", "BrowserView") extern class BrowserView extends js.node.events.EventEmitter<electron.main.BrowserView> {
-	/**
-		An array of all opened BrowserViews.
-	**/
-	static function getAllViews():Array<electron.main.BrowserView>;
-	/**
-		The BrowserView that owns the given `webContents` or `null` if the contents are not owned by a BrowserView.
-	**/
-	static function fromWebContents(webContents:electron.main.WebContents):haxe.extern.EitherType<Dynamic, Dynamic>;
-	/**
-		The view with the given `id`.
-	**/
-	static function fromId(id:Int):electron.main.BrowserView;
 	/**
 		A `WebContents` object owned by this view.
 	**/
 	var webContents : electron.main.WebContents;
-	/**
-		A `Integer` representing the unique ID of the view.
-	**/
-	var id : Int;
 	function new(?options:{ /**
 		See BrowserWindow.
 	**/
 	@:optional
 	var webPreferences : Any; }):Void;
-	/**
-		Force closing the view, the `unload` and `beforeunload` events won't be emitted for the web page. After you're done with a view, call this function in order to free memory and other resources as soon as possible.
-	**/
-	function destroy():Void;
-	/**
-		Whether the view is destroyed.
-	**/
-	function isDestroyed():Bool;
 	function setAutoResize(options:{ /**
 		If `true`, the view's width will grow and shrink together with the window. `false` by default.
 	**/

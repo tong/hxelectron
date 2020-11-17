@@ -3,7 +3,7 @@ package electron.main;
 	> Create a label in the touch bar for native macOS applications
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/touch-bar-label
+	@see https://electronjs.org/docs/api/touch-bar-label
 **/
 @:jsRequire("electron", "TouchBarLabel") extern class TouchBarLabel extends js.node.events.EventEmitter<electron.main.TouchBarLabel> {
 	/**

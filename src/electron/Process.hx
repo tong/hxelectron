@@ -32,7 +32,7 @@ package electron;
 	* `versions`
 	* `mas`
 	* `windowsStore`
-	@see http://electronjs.org/docs/api/process
+	@see https://electronjs.org/docs/api/process
 **/
 @:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**

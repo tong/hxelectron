@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/service-worker-info
+	@see https://electronjs.org/docs/api/structures/service-worker-info
 **/
 typedef ServiceWorkerInfo = {
 	/**

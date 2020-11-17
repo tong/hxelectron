@@ -5,7 +5,7 @@ package electron.main;
 	Process: Main
 	
 	The following example shows how to quit the application when the last window is closed:
-	@see http://electronjs.org/docs/api/app
+	@see https://electronjs.org/docs/api/app
 **/
 @:jsRequire("electron", "app") extern class App extends js.node.events.EventEmitter<electron.main.App> {
 	/**
@@ -62,6 +62,12 @@ package electron.main;
 		The intention is for these overrides to become disabled by default and then at some point in the future this property will be removed.  This property impacts which native modules you can use in the renderer process.  For more information on the direction Electron is going with renderer process restarts and usage of native modules in the renderer process please check out this Tracking Issue.
 	**/
 	static var allowRendererProcessReuse : Bool;
+	/**
+		A `Boolean` which when `true` indicates that the app is currently running under the Rosetta Translator Environment.
+		
+		You can use this property to prompt users to download the arm64 version of your application when they are running the x64 version under Rosetta incorrectly.
+	**/
+	static var runningUnderRosettaTranslation : Bool;
 	/**
 		Try to close all windows. The `before-quit` event will be emitted first. If all windows are successfully closed, the `will-quit` event will be emitted and by default the application will terminate.
 		
@@ -225,6 +231,16 @@ package electron.main;
 	**/
 	static function getApplicationNameForProtocol(url:String):String;
 	/**
+		Resolve with an object containing the following:
+		
+		* `icon` NativeImage - the display icon of the app handling the protocol.
+		* `path` String  - installation path of the app handling the protocol.
+		* `name` String - display name of the app handling the protocol.
+		
+		This method returns a promise that contains the application name, icon and path of the default handler for the protocol (aka URI scheme) of a URL.
+	**/
+	static function getApplicationInfoForProtocol(url:String):js.lib.Promise<Any>;
+	/**
 		Adds `tasks` to the Tasks category of the Jump List on Windows.
 		
 		`tasks` is an array of `Task` objects.
@@ -376,6 +392,13 @@ package electron.main;
 		* `wasOpenedAtLogin` Boolean _macOS_ - `true` if the app was opened at login automatically. This setting is not available on MAS builds.
 		* `wasOpenedAsHidden` Boolean _macOS_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds.
 		* `restoreState` Boolean _macOS_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds.
+		* `executableWillLaunchAtLogin` Boolean _Windows_ - `true` if app is set to open at login and its run key is not deactivated. This differs from `openAtLogin` as it ignores the `args` option, this property will be true if the given executable would be launched at login with **any** arguments.
+		* `launchItems` Object[] _Windows_
+		  * `name` String _Windows_ - name value of a registry entry.
+		  * `path` String _Windows_ - The executable to an app that corresponds to a registry entry.
+		  * `args` String[] _Windows_ - the command-line arguments to pass to the executable.
+		  * `scope` String _Windows_ - one of `user` or `machine`. Indicates whether the registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
+		  * `enabled` Boolean _Windows_ - `true` if the app registry key is startup approved and therefore shows as `enabled` in Task Manager and Windows settings.
 	**/
 	static function getLoginItemSettings(?options:{ /**
 		The executable path to compare against. Defaults to `process.execPath`.
@@ -387,8 +410,6 @@ package electron.main;
 	@:optional
 	var args : Array<String>; }):Any;
 	/**
-		Set the app's login item settings.
-		
 		To work with Electron's `autoUpdater` on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example:
 	**/
 	static function setLoginItemSettings(settings:{ /**
@@ -407,7 +428,15 @@ package electron.main;
 		The command-line arguments to pass to the executable. Defaults to an empty array. Take care to wrap paths in quotes.
 	**/
 	@:optional
-	var args : Array<String>; }):Void;
+	var args : Array<String>; /**
+		`true` will change the startup approved registry key and `enable / disable` the App in Task Manager and Windows Settings. Defaults to `true`.
+	**/
+	@:optional
+	var enabled : Bool; /**
+		value name to write into registry. Defaults to the app's AppUserModelId(). Set the app's login item settings.
+	**/
+	@:optional
+	var name : String; }):Void;
 	/**
 		`true` if Chrome's accessibility support is enabled, `false` otherwise. This API will return `true` if the use of assistive technologies, such as screen readers, has been detected. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
@@ -458,7 +487,7 @@ package electron.main;
 	**/
 	@:optional
 	var website : String; /**
-		Path to the app's icon. On Linux, will be shown as 64x64 pixels while retaining aspect ratio.
+		Path to the app's icon in a JPEG or PNG file format. On Linux, will be shown as 64x64 pixels while retaining aspect ratio.
 	**/
 	@:optional
 	var iconPath : String; }):Void;
@@ -493,7 +522,7 @@ package electron.main;
 		
 		**NOTE:** This method throws errors if anything other than the user causes the move to fail. For instance if the user cancels the authorization dialog, this method returns false. If we fail to perform the copy, then this method will throw an error. The message in the error should be informative and tell you exactly what went wrong.
 		
-		By default, if an app of the same name as the one being moved exists in the Applications directory and is _not_ running, the existing app will be trashed and the active app moved into its place. If it _is_ running, the pre-existing running app will assume focus and the the previously active app will quit itself. This behavior can be changed by providing the optional conflict handler, where the boolean returned by the handler determines whether or not the move conflict is resolved with default behavior.  i.e. returning `false` will ensure no further action is taken, returning `true` will result in the default behavior and the method continuing.
+		By default, if an app of the same name as the one being moved exists in the Applications directory and is _not_ running, the existing app will be trashed and the active app moved into its place. If it _is_ running, the pre-existing running app will assume focus and the previously active app will quit itself. This behavior can be changed by providing the optional conflict handler, where the boolean returned by the handler determines whether or not the move conflict is resolved with default behavior.  i.e. returning `false` will ensure no further action is taken, returning `true` will result in the default behavior and the method continuing.
 		
 		For example:
 		
@@ -580,6 +609,10 @@ package electron.main;
 	**/
 	var activate : electron.main.AppEvent<Void -> Void> = "activate";
 	/**
+		Emitted when mac application become active. Difference from `activate` event is that `did-become-active` is emitted every time the app becomes active, not only when Dock icon is clicked or application is re-launched.
+	**/
+	var did_become_active : electron.main.AppEvent<Void -> Void> = "did-become-active";
+	/**
 		Emitted during Handoff when an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
 		
 		A user activity can be continued only in an app that has the same developer Team ID as the activity's source app and that supports the activity's type. Supported activity types are specified in the app's `Info.plist` under the `NSUserActivityTypes` key.
@@ -645,13 +678,19 @@ package electron.main;
 	var gpu_info_update : electron.main.AppEvent<Void -> Void> = "gpu-info-update";
 	/**
 		Emitted when the GPU process crashes or is killed.
+		
+		**Deprecated:** This event is superceded by the `child-process-gone` event which contains more information about why the child process disappeared. It isn't always because it crashed. The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
 	**/
 	var gpu_process_crashed : electron.main.AppEvent<Void -> Void> = "gpu-process-crashed";
 	var renderer_process_crashed : electron.main.AppEvent<Void -> Void> = "renderer-process-crashed";
 	/**
-		Emitted when the renderer process unexpectedly dissapears.  This is normally because it was crashed or killed.
+		Emitted when the renderer process unexpectedly disappears.  This is normally because it was crashed or killed.
 	**/
 	var render_process_gone : electron.main.AppEvent<Void -> Void> = "render-process-gone";
+	/**
+		Emitted when the child process unexpectedly disappears. This is normally because it was crashed or killed. It does not include renderer processes.
+	**/
+	var child_process_gone : electron.main.AppEvent<Void -> Void> = "child-process-gone";
 	/**
 		Emitted when Chrome's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/

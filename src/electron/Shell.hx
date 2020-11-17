@@ -15,7 +15,7 @@ package electron;
 	```
 	
 	**Note:** While the `shell` module can be used in the renderer process, it will not function in a sandboxed renderer.
-	@see http://electronjs.org/docs/api/shell
+	@see https://electronjs.org/docs/api/shell
 **/
 @:jsRequire("electron", "shell") extern class Shell extends js.node.events.EventEmitter<electron.Shell> {
 	/**
@@ -23,7 +23,7 @@ package electron;
 	**/
 	static function showItemInFolder(fullPath:String):Void;
 	/**
-		Resolves with an string containing the error message corresponding to the failure if a failure occurred, otherwise "".
+		Resolves with a string containing the error message corresponding to the failure if a failure occurred, otherwise "".
 		
 		Open the given file in the desktop's default manner.
 	**/

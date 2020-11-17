@@ -8,7 +8,7 @@ package electron;
 	* `nobackground` - Do not draw a button border, use only the image.
 	* `hidden` - The button is not shown to the user.
 	* `noninteractive` - The button is enabled but not interactive; no pressed button state is drawn. This value is intended for instances where the button is used in a notification.
-	@see http://electronjs.org/docs/api/structures/thumbar-button
+	@see https://electronjs.org/docs/api/structures/thumbar-button
 **/
 typedef ThumbarButton = {
 	/**

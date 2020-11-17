@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/keyboard-input-event
+	@see https://electronjs.org/docs/api/structures/keyboard-input-event
 **/
 typedef KeyboardInputEvent = {
 	/**

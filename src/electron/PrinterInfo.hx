@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/printer-info
+	@see https://electronjs.org/docs/api/structures/printer-info
 **/
 typedef PrinterInfo = {
 	/**

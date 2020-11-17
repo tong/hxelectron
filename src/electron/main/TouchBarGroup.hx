@@ -3,7 +3,7 @@ package electron.main;
 	> Create a group in the touch bar for native macOS applications
 	
 	Process: Main
-	@see http://electronjs.org/docs/api/touch-bar-group
+	@see https://electronjs.org/docs/api/touch-bar-group
 **/
 @:jsRequire("electron", "TouchBarGroup") extern class TouchBarGroup extends js.node.events.EventEmitter<electron.main.TouchBarGroup> {
 	function new(options:{ /**

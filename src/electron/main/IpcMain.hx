@@ -40,7 +40,7 @@ package electron.main;
 	})
 	ipcRenderer.send('asynchronous-message', 'ping')
 	```
-	@see http://electronjs.org/docs/api/ipc-main
+	@see https://electronjs.org/docs/api/ipc-main
 **/
 @:jsRequire("electron", "ipcMain") extern class IpcMain extends js.node.events.EventEmitter<electron.main.IpcMain> {
 	/**

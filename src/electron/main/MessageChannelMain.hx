@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/message-channel-main
+	@see https://electronjs.org/docs/api/message-channel-main
 **/
 @:jsRequire("electron", "MessageChannelMain") extern class MessageChannelMain extends js.node.events.EventEmitter<electron.main.MessageChannelMain> {
 	/**

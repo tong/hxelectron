@@ -12,7 +12,7 @@ package electron.main;
 	```
 	
 	The Dialog is opened from Electron's main thread. If you want to use the dialog object from a renderer process, remember to access it using the remote:
-	@see http://electronjs.org/docs/api/dialog
+	@see https://electronjs.org/docs/api/dialog
 **/
 @:jsRequire("electron", "dialog") extern class Dialog extends js.node.events.EventEmitter<electron.main.Dialog> {
 	/**
@@ -162,7 +162,7 @@ package electron.main;
 		
 		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button.
 		
-		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal. If `browserWindow` is not shown dialog will not be attached to it. In such case It will be displayed as independed window.
+		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal. If `browserWindow` is not shown dialog will not be attached to it. In such case it will be displayed as an independent window.
 	**/
 	static function showMessageBoxSync(?browserWindow:electron.main.BrowserWindow, options:{ /**
 		Can be `"none"`, `"info"`, `"error"`, `"question"` or `"warning"`. On Windows, `"question"` displays the same icon as `"info"`, unless you set an icon using the `"icon"` option. On macOS, both `"warning"` and `"error"` display the same warning icon.

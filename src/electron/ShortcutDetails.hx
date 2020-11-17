@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/structures/shortcut-details
+	@see https://electronjs.org/docs/api/structures/shortcut-details
 **/
 typedef ShortcutDetails = {
 	/**

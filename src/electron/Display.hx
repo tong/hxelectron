@@ -1,7 +1,7 @@
 package electron;
 /**
 	The `Display` object represents a physical display connected to the system. A fake `Display` may exist on a headless system, or a `Display` may correspond to a remote, virtual display.
-	@see http://electronjs.org/docs/api/structures/display
+	@see https://electronjs.org/docs/api/structures/display
 **/
 typedef Display = {
 	/**

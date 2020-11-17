@@ -5,7 +5,7 @@ package electron;
 	Process: Main, Renderer
 	
 	On Linux, there is also a `selection` clipboard. To manipulate it you need to pass `selection` to each method:
-	@see http://electronjs.org/docs/api/clipboard
+	@see https://electronjs.org/docs/api/clipboard
 **/
 @:jsRequire("electron", "clipboard") extern class Clipboard extends js.node.events.EventEmitter<electron.Clipboard> {
 	/**

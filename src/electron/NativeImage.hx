@@ -1,6 +1,6 @@
 package electron;
 /**
-	@see http://electronjs.org/docs/api/native-image
+	@see https://electronjs.org/docs/api/native-image
 **/
 @:jsRequire("electron", "NativeImage") extern class NativeImage extends js.node.events.EventEmitter<electron.NativeImage> {
 	/**

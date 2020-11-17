@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	@see http://electronjs.org/docs/api/web-contents
+	@see https://electronjs.org/docs/api/web-contents
 **/
 @:jsRequire("electron", "WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
 	/**
@@ -195,6 +195,12 @@ package electron.main;
 	**/
 	function isCrashed():Bool;
 	/**
+		Forcefully terminates the renderer process that is currently hosting this `webContents`. This will cause the `render-process-gone` event to be emitted with the `reason=killed || reason=crashed`. Please note that some webContents share renderer processes and therefore calling this method may also crash the host process for other webContents as well.
+		
+		Calling `reload()` immediately after calling this method will force the reload to occur in a new process. This should be used when this process is unstable or unusable, for instance in order to recover from the `unresponsive` event.
+	**/
+	function forcefullyCrashRenderer():Void;
+	/**
 		Overrides the user agent for this web page.
 	**/
 	function setUserAgent(userAgent:String):Void;
@@ -381,7 +387,7 @@ package electron.main;
 	**/
 	function getPrinters():Array<electron.PrinterInfo>;
 	/**
-		When a custom `pageSize` is passed, Chromium attempts to validate platform specific minumum values for `width_microns` and `height_microns`. Width and height must both be minimum 353 microns but may be higher on some operating systems.
+		When a custom `pageSize` is passed, Chromium attempts to validate platform specific minimum values for `width_microns` and `height_microns`. Width and height must both be minimum 353 microns but may be higher on some operating systems.
 		
 		Prints window's web page. When `silent` is set to `true`, Electron will pick the system's default printer if `deviceName` is empty and the default settings for printing.
 		
@@ -816,7 +822,7 @@ var to : Float; }>; /**
 	/**
 		Emitted after a server side redirect occurs during navigation.  For example a 302 redirect.
 		
-		This event can not be prevented, if you want to prevent redirects you should checkout out the `will-redirect` event above.
+		This event cannot be prevented, if you want to prevent redirects you should checkout out the `will-redirect` event above.
 	**/
 	var did_redirect_navigation : electron.main.WebContentsEvent<Void -> Void> = "did-redirect-navigation";
 	/**
@@ -846,11 +852,11 @@ var to : Float; }>; /**
 	/**
 		Emitted when the renderer process crashes or is killed.
 		
-		**Deprecated:** This event is superceded by the `render-process-gone` event which contains more information about why the render process dissapeared. It isn't always because it crashed.  The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
+		**Deprecated:** This event is superceded by the `render-process-gone` event which contains more information about why the render process disappeared. It isn't always because it crashed.  The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
 	**/
 	var crashed : electron.main.WebContentsEvent<Void -> Void> = "crashed";
 	/**
-		Emitted when the renderer process unexpectedly dissapears.  This is normally because it was crashed or killed.
+		Emitted when the renderer process unexpectedly disappears.  This is normally because it was crashed or killed.
 	**/
 	var render_process_gone : electron.main.WebContentsEvent<Void -> Void> = "render-process-gone";
 	/**
@@ -964,7 +970,7 @@ var to : Float; }>; /**
 		
 		This event can be used to configure `webPreferences` for the `webContents` of a `<webview>` before it's loaded, and provides the ability to set settings that can't be set via `<webview>` attributes.
 		
-		**Note:** The specified `preload` script option will be appear as `preloadURL` (not `preload`) in the `webPreferences` object emitted with this event.
+		**Note:** The specified `preload` script option will appear as `preloadURL` (not `preload`) in the `webPreferences` object emitted with this event.
 	**/
 	var will_attach_webview : electron.main.WebContentsEvent<Void -> Void> = "will-attach-webview";
 	/**

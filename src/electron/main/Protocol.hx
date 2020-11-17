@@ -42,13 +42,13 @@ package electron.main;
 	  mainWindow = new BrowserWindow({ webPreferences: { partition } })
 	})
 	```
-	@see http://electronjs.org/docs/api/protocol
+	@see https://electronjs.org/docs/api/protocol
 **/
 @:jsRequire("electron", "protocol") extern class Protocol extends js.node.events.EventEmitter<electron.main.Protocol> {
 	/**
 		**Note:** This method can only be used before the `ready` event of the `app` module gets emitted and can be called only once.
 		
-		Registers the `scheme` as standard, secure, bypasses content security policy for resources, allows registering ServiceWorker and supports fetch API. Specify a privilege with the value of `true` to enable the capability.
+		Registers the `scheme` as standard, secure, bypasses content security policy for resources, allows registering ServiceWorker, supports fetch API, and streaming video/audio. Specify a privilege with the value of `true` to enable the capability.
 		
 		An example of registering a privileged scheme, that bypasses Content Security Policy:
 		
@@ -61,6 +61,8 @@ package electron.main;
 		Registering a scheme as standard will allow access to files through the FileSystem API. Otherwise the renderer will throw a security error for the scheme.
 		
 		By default web storage apis (localStorage, sessionStorage, webSQL, indexedDB, cookies) are disabled for non standard schemes. So in general if you want to register a custom protocol to replace the `http` protocol, you have to register it as a standard scheme.
+		
+		Protocols that use streams (http and stream protocols) should set `stream: true`. The `<video>` and `<audio>` HTML elements expect protocols to buffer their responses by default. The `stream` flag configures those elements to correctly expect streaming responses.
 	**/
 	static function registerSchemesAsPrivileged(customSchemes:Array<electron.CustomScheme>):Void;
 	/**
