@@ -11,7 +11,7 @@ haxe --cwd demo build.hxml
 
 ## Create zip
 rm -f electron.zip
-zip -r electron.zip src/ api.hxml ElectronAPI.hx electron-api.json haxelib.json LICENSE README.md -x "*/\.*"
+zip -r electron.zip src/ api.hxml ElectronAPI.hx haxelib.json LICENSE README.md -x "*/\.*"
 
 ## Release haxelib
 haxelib submit electron.zip
