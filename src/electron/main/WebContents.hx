@@ -12,7 +12,7 @@ package electron.main;
 	**/
 	static function getFocusedWebContents():electron.main.WebContents;
 	/**
-		A WebContents instance with the given ID.
+		| undefined - A WebContents instance with the given ID, or `undefined` if there is no WebContents associated with the given ID.
 	**/
 	static function fromId(id:Int):electron.main.WebContents;
 	/**
