@@ -618,7 +618,7 @@ var to : Float; }>; /**
 		
 		You can also read `frameId` from all incoming IPC messages in the main process.
 	**/
-	function sendToFrame(frameId:Int, channel:String, args:haxe.extern.Rest<Any>):Void;
+	function sendToFrame(frameId:haxe.extern.EitherType<Dynamic, Dynamic>, channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
 		Send a message to the renderer process, optionally transferring ownership of zero or more [`MessagePortMain`][] objects.
 		
