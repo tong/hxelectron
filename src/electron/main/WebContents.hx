@@ -36,7 +36,7 @@ package electron.main;
 	**/
 	var zoomFactor : Float;
 	/**
-		An `Integer` property that sets the frame rate of the web contents to the specified number. Only values between 1 and 60 are accepted.
+		An `Integer` property that sets the frame rate of the web contents to the specified number. Only values between 1 and 240 are accepted.
 		
 		Only applicable if *offscreen rendering* is enabled.
 	**/
@@ -704,7 +704,7 @@ var to : Float; }>; /**
 	**/
 	function isPainting():Bool;
 	/**
-		If *offscreen rendering* is enabled sets the frame rate to the specified number. Only values between 1 and 60 are accepted.
+		If *offscreen rendering* is enabled sets the frame rate to the specified number. Only values between 1 and 240 are accepted.
 	**/
 	function setFrameRate(fps:Int):Void;
 	/**
