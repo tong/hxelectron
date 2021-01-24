@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup haxe
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.1.5
+      - name: Setup
         run: |
-          sudo add-apt-repository ppa:haxe/releases -y
-          sudo apt-get update
-          sudo apt-get install haxe -y
-          mkdir ~/haxelib && haxelib setup ~/haxelib
+          haxe --version
           haxelib dev electron .
           haxelib install hxnodejs
       - name: Build electron api
@@ -27,4 +27,3 @@ jobs:
         run: |
           haxe --cwd demo main.hxml
           haxe --cwd demo app.hxml
-
