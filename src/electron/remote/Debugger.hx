@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/debugger
 **/
-@:jsRequire("electron", "remote.Debugger") extern class Debugger extends js.node.events.EventEmitter<electron.main.Debugger> {
+@:jsRequire("electron", "remote.Debugger") extern class Debugger extends js.node.events.EventEmitter<electron.remote.Debugger> {
 	/**
 		Attaches the debugger to the `webContents`.
 	**/
@@ -26,9 +26,9 @@ package electron.remote;
 	/**
 		Emitted when the debugging session is terminated. This happens either when `webContents` is closed or devtools is invoked for the attached `webContents`.
 	**/
-	var detach : electron.main.DebuggerEvent<Void -> Void> = "detach";
+	var detach : electron.remote.DebuggerEvent<Void -> Void> = "detach";
 	/**
 		Emitted whenever the debugging target issues an instrumentation event.
 	**/
-	var message : electron.main.DebuggerEvent<Void -> Void> = "message";
+	var message : electron.remote.DebuggerEvent<Void -> Void> = "message";
 }

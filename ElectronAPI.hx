@@ -59,7 +59,7 @@ class ElectronAPI {
 				try {
 					var name = Gen.capitalize( item.name );
 					var content = File.getContent( '$main/$name.hx' );
-					var patched = regex.replace( content.replace( 'package electron.main;', 'package electron.remote;' ), '@:jsRequire("electron", "remote.$1")' );
+					var patched = regex.replace( content.replace( 'electron.main', 'electron.remote' ), '@:jsRequire("electron", "remote.$1")' );
 					if( item.name == 'screen' ) {
 						// TODO: https://github.com/fponticelli/hxelectron/issues/29
 						patched = patched.replace("@:native('require(\\\"electron\\\").screen')", "@:native('require(\\\"electron\\\").remote.screen')");

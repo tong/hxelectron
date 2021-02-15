@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/menu
 **/
-@:jsRequire("electron", "remote.Menu") extern class Menu extends js.node.events.EventEmitter<electron.main.Menu> {
+@:jsRequire("electron", "remote.Menu") extern class Menu extends js.node.events.EventEmitter<electron.remote.Menu> {
 	/**
 		Sets `menu` as the application menu on macOS. On Windows and Linux, the `menu` will be set as each window's top menu.
 		
@@ -33,13 +33,13 @@ package electron.remote;
 		
 		You can also attach other fields to the element of the `template` and they will become properties of the constructed menu items.
 	**/
-	static function buildFromTemplate(template:Array<haxe.extern.EitherType<Dynamic, Dynamic>>):electron.main.Menu;
+	static function buildFromTemplate(template:Array<haxe.extern.EitherType<Dynamic, Dynamic>>):electron.remote.Menu;
 	/**
 		A `MenuItem[]` array containing the menu's items.
 		
 		Each `Menu` consists of multiple `MenuItem`s and each `MenuItem` can have a submenu.
 	**/
-	var items : Array<electron.main.MenuItem>;
+	var items : Array<electron.remote.MenuItem>;
 	function new():Void;
 	/**
 		Pops up this menu as a context menu in the `BrowserWindow`.
@@ -48,7 +48,7 @@ package electron.remote;
 		Default is the focused window.
 	**/
 	@:optional
-	var window : electron.main.BrowserWindow; /**
+	var window : electron.remote.BrowserWindow; /**
 		Default is the current mouse cursor position. Must be declared if `y` is declared.
 	**/
 	@:optional
@@ -68,11 +68,11 @@ package electron.remote;
 	/**
 		Closes the context menu in the `browserWindow`.
 	**/
-	function closePopup(?browserWindow:electron.main.BrowserWindow):Void;
+	function closePopup(?browserWindow:electron.remote.BrowserWindow):Void;
 	/**
 		Appends the `menuItem` to the menu.
 	**/
-	function append(menuItem:electron.main.MenuItem):Void;
+	function append(menuItem:electron.remote.MenuItem):Void;
 	/**
 		the item with the specified `id`
 	**/
@@ -80,15 +80,15 @@ package electron.remote;
 	/**
 		Inserts the `menuItem` to the `pos` position of the menu.
 	**/
-	function insert(pos:Int, menuItem:electron.main.MenuItem):Void;
+	function insert(pos:Int, menuItem:electron.remote.MenuItem):Void;
 }
 @:enum abstract MenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when `menu.popup()` is called.
 	**/
-	var menu_will_show : electron.main.MenuEvent<Void -> Void> = "menu-will-show";
+	var menu_will_show : electron.remote.MenuEvent<Void -> Void> = "menu-will-show";
 	/**
 		Emitted when a popup is closed either manually or with `menu.closePopup()`.
 	**/
-	var menu_will_close : electron.main.MenuEvent<Void -> Void> = "menu-will-close";
+	var menu_will_close : electron.remote.MenuEvent<Void -> Void> = "menu-will-close";
 }

@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/web-request
 **/
-@:jsRequire("electron", "remote.WebRequest") extern class WebRequest extends js.node.events.EventEmitter<electron.main.WebRequest> {
+@:jsRequire("electron", "remote.WebRequest") extern class WebRequest extends js.node.events.EventEmitter<electron.remote.WebRequest> {
 	/**
 		The `listener` will be called with `listener(details, callback)` when a request is about to occur.
 		

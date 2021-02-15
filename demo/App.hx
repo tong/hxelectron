@@ -13,7 +13,7 @@ class App {
 
     static function main() {
 
-        window.onload = function() {
+        js.Browser.window.onload = function() {
 
             document.getElementById( 'logo-haxe' ).style.opacity = '1';
 
@@ -25,6 +25,23 @@ class App {
 				var version = buf.toString();
                 setText( 'haxe-version', 'haxe $version' );
             });
+
+            //electron.remote.Dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] });
+            //trace(electron.remote.Dialog);
+            //trace(js.Lib.require("electron"));
+            trace(electron.renderer.Remote);
+            //trace(electron.remote.Menu);
+
+            var menu = new electron.remote.Menu();
+			menu.append(new electron.remote.MenuItem({ label: 'MenuItem11111111'} ) );
+			electron.remote.Menu.setApplicationMenu(menu);
+
+
+            /* var menu = new electron.remote.Menu();
+			menu.append(new electron.remote.MenuItem({ label: 'MenuItem1'} ) );
+			electron.remote.Menu.setApplicationMenu(menu);
+            //menu.popup({ window: electron.renderer.Remote.getCurrentWindow() });
+            js.Lib.require("electron.remote.menu"); */
         }
     }
 

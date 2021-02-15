@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/command-line
 **/
-@:jsRequire("electron", "remote.CommandLine") extern class CommandLine extends js.node.events.EventEmitter<electron.main.CommandLine> {
+@:jsRequire("electron", "remote.CommandLine") extern class CommandLine extends js.node.events.EventEmitter<electron.remote.CommandLine> {
 	/**
 		Append a switch (with optional `value`) to Chromium's command line.
 		

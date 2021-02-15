@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/touch-bar-segmented-control
 **/
-@:jsRequire("electron", "remote.TouchBarSegmentedControl") extern class TouchBarSegmentedControl extends js.node.events.EventEmitter<electron.main.TouchBarSegmentedControl> {
+@:jsRequire("electron", "remote.TouchBarSegmentedControl") extern class TouchBarSegmentedControl extends js.node.events.EventEmitter<electron.remote.TouchBarSegmentedControl> {
 	/**
 		A `String` representing the controls current segment style. Updating this value immediately updates the control in the touch bar.
 	**/

@@ -2,11 +2,11 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/session
 **/
-@:jsRequire("electron", "remote.Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
+@:jsRequire("electron", "remote.Session") extern class Session extends js.node.events.EventEmitter<electron.remote.Session> {
 	/**
 		A `Session` object, the default session object of the app.
 	**/
-	static var defaultSession : electron.main.Session;
+	static var defaultSession : electron.remote.Session;
 	/**
 		A session instance from `partition` string. When there is an existing `Session` with the same `partition`, it will be returned; otherwise a new `Session` instance will be created with `options`.
 		
@@ -17,7 +17,7 @@ package electron.remote;
 	static function fromPartition(partition:String, ?options:{ /**
 		Whether to enable cache.
 	**/
-	var cache : Bool; }):electron.main.Session;
+	var cache : Bool; }):electron.remote.Session;
 	/**
 		A `String[]` array which consists of all the known available spell checker languages.  Providing a language code to the `setSpellCheckerLanaguages` API that isn't in this array will result in an error.
 	**/
@@ -25,23 +25,23 @@ package electron.remote;
 	/**
 		A `Cookies` object for this session.
 	**/
-	var cookies : electron.main.Cookies;
+	var cookies : electron.remote.Cookies;
 	/**
 		A `ServiceWorkers` object for this session.
 	**/
-	var serviceWorkers : electron.main.ServiceWorkers;
+	var serviceWorkers : electron.remote.ServiceWorkers;
 	/**
 		A `WebRequest` object for this session.
 	**/
-	var webRequest : electron.main.WebRequest;
+	var webRequest : electron.remote.WebRequest;
 	/**
 		A `Protocol` object for this session.
 	**/
-	var protocol : electron.main.Protocol;
+	var protocol : electron.remote.Protocol;
 	/**
 		A `NetLog` object for this session.
 	**/
-	var netLog : electron.main.NetLog;
+	var netLog : electron.remote.NetLog;
 	/**
 		the session's current cache size, in bytes.
 	**/
@@ -341,25 +341,25 @@ package electron.remote;
 		
 		Calling `event.preventDefault()` will cancel the download and `item` will not be available from next tick of the process.
 	**/
-	var will_download : electron.main.SessionEvent<Void -> Void> = "will-download";
+	var will_download : electron.remote.SessionEvent<Void -> Void> = "will-download";
 	/**
 		Emitted when a render process requests preconnection to a URL, generally due to a resource hint.
 	**/
-	var preconnect : electron.main.SessionEvent<Void -> Void> = "preconnect";
+	var preconnect : electron.remote.SessionEvent<Void -> Void> = "preconnect";
 	/**
 		Emitted when a hunspell dictionary file has been successfully initialized. This occurs after the file has been downloaded.
 	**/
-	var spellcheck_dictionary_initialized : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-initialized";
+	var spellcheck_dictionary_initialized : electron.remote.SessionEvent<Void -> Void> = "spellcheck-dictionary-initialized";
 	/**
 		Emitted when a hunspell dictionary file starts downloading
 	**/
-	var spellcheck_dictionary_download_begin : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-begin";
+	var spellcheck_dictionary_download_begin : electron.remote.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-begin";
 	/**
 		Emitted when a hunspell dictionary file has been successfully downloaded
 	**/
-	var spellcheck_dictionary_download_success : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-success";
+	var spellcheck_dictionary_download_success : electron.remote.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-success";
 	/**
 		Emitted when a hunspell dictionary file download fails.  For details on the failure you should collect a netlog and inspect the download request.
 	**/
-	var spellcheck_dictionary_download_failure : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-failure";
+	var spellcheck_dictionary_download_failure : electron.remote.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-failure";
 }

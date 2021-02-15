@@ -42,7 +42,7 @@ package electron.remote;
 	```
 	@see https://electronjs.org/docs/api/ipc-main
 **/
-@:jsRequire("electron", "remote.ipcMain") extern class IpcMain extends js.node.events.EventEmitter<electron.main.IpcMain> {
+@:jsRequire("electron", "remote.ipcMain") extern class IpcMain extends js.node.events.EventEmitter<electron.remote.IpcMain> {
 	/**
 		Listens to `channel`, when a new message arrives `listener` would be called with `listener(event, args...)`.
 	**/

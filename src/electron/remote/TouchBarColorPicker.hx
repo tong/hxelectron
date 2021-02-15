@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/touch-bar-color-picker
 **/
-@:jsRequire("electron", "remote.TouchBarColorPicker") extern class TouchBarColorPicker extends js.node.events.EventEmitter<electron.main.TouchBarColorPicker> {
+@:jsRequire("electron", "remote.TouchBarColorPicker") extern class TouchBarColorPicker extends js.node.events.EventEmitter<electron.remote.TouchBarColorPicker> {
 	/**
 		A `String[]` array representing the color picker's available colors to select. Changing this value immediately updates the color picker in the touch bar.
 	**/

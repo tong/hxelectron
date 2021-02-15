@@ -9,7 +9,7 @@ package electron.remote;
 	**Note:** You should not use this module until the `ready` event of the app module is emitted.
 	@see https://electronjs.org/docs/api/content-tracing
 **/
-@:jsRequire("electron", "remote.contentTracing") extern class ContentTracing extends js.node.events.EventEmitter<electron.main.ContentTracing> {
+@:jsRequire("electron", "remote.contentTracing") extern class ContentTracing extends js.node.events.EventEmitter<electron.remote.ContentTracing> {
 	/**
 		resolves with an array of category groups once all child processes have acknowledged the `getCategories` request
 		

@@ -2,11 +2,11 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/message-port-main
 **/
-@:jsRequire("electron", "remote.MessagePortMain") extern class MessagePortMain extends js.node.events.EventEmitter<electron.main.MessagePortMain> {
+@:jsRequire("electron", "remote.MessagePortMain") extern class MessagePortMain extends js.node.events.EventEmitter<electron.remote.MessagePortMain> {
 	/**
 		Sends a message from the port, and optionally, transfers ownership of objects to other browsing contexts.
 	**/
-	function postMessage(message:Any, ?transfer:Array<electron.main.MessagePortMain>):Void;
+	function postMessage(message:Any, ?transfer:Array<electron.remote.MessagePortMain>):Void;
 	/**
 		Starts the sending of messages queued on the port. Messages will be queued until this method is called.
 	**/
@@ -20,9 +20,9 @@ package electron.remote;
 	/**
 		Emitted when a MessagePortMain object receives a message.
 	**/
-	var message : electron.main.MessagePortMainEvent<Void -> Void> = "message";
+	var message : electron.remote.MessagePortMainEvent<Void -> Void> = "message";
 	/**
 		Emitted when the remote end of a MessagePortMain object becomes disconnected.
 	**/
-	var close : electron.main.MessagePortMainEvent<Void -> Void> = "close";
+	var close : electron.remote.MessagePortMainEvent<Void -> Void> = "close";
 }

@@ -44,7 +44,7 @@ package electron.remote;
 	```
 	@see https://electronjs.org/docs/api/protocol
 **/
-@:jsRequire("electron", "remote.protocol") extern class Protocol extends js.node.events.EventEmitter<electron.main.Protocol> {
+@:jsRequire("electron", "remote.protocol") extern class Protocol extends js.node.events.EventEmitter<electron.remote.Protocol> {
 	/**
 		**Note:** This method can only be used before the `ready` event of the `app` module gets emitted and can be called only once.
 		

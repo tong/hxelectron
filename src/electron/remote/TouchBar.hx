@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/touch-bar
 **/
-@:jsRequire("electron", "remote.TouchBar") extern class TouchBar extends js.node.events.EventEmitter<electron.main.TouchBar> {
+@:jsRequire("electron", "remote.TouchBar") extern class TouchBar extends js.node.events.EventEmitter<electron.remote.TouchBar> {
 	/**
 		A `TouchBarItem` that will replace the "esc" button on the touch bar when set. Setting to `null` restores the default "esc" button. Changing this value immediately updates the escape item in the touch bar.
 	**/

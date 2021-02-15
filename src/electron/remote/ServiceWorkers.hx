@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/service-workers
 **/
-@:jsRequire("electron", "remote.ServiceWorkers") extern class ServiceWorkers extends js.node.events.EventEmitter<electron.main.ServiceWorkers> {
+@:jsRequire("electron", "remote.ServiceWorkers") extern class ServiceWorkers extends js.node.events.EventEmitter<electron.remote.ServiceWorkers> {
 	/**
 		A ServiceWorkerInfo object where the keys are the service worker version ID and the values are the information about that service worker.
 	**/
@@ -18,5 +18,5 @@ package electron.remote;
 	/**
 		Emitted when a service worker logs something to the console.
 	**/
-	var console_message : electron.main.ServiceWorkersEvent<Void -> Void> = "console-message";
+	var console_message : electron.remote.ServiceWorkersEvent<Void -> Void> = "console-message";
 }

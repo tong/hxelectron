@@ -2,19 +2,19 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/web-contents
 **/
-@:jsRequire("electron", "remote.WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
+@:jsRequire("electron", "remote.WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.remote.WebContents> {
 	/**
 		An array of all `WebContents` instances. This will contain web contents for all windows, webviews, opened devtools, and devtools extension background pages.
 	**/
-	static function getAllWebContents():Array<electron.main.WebContents>;
+	static function getAllWebContents():Array<electron.remote.WebContents>;
 	/**
 		The web contents that is focused in this application, otherwise returns `null`.
 	**/
-	static function getFocusedWebContents():electron.main.WebContents;
+	static function getFocusedWebContents():electron.remote.WebContents;
 	/**
 		| undefined - A WebContents instance with the given ID, or `undefined` if there is no WebContents associated with the given ID.
 	**/
-	static function fromId(id:Int):electron.main.WebContents;
+	static function fromId(id:Int):electron.remote.WebContents;
 	/**
 		A `Boolean` property that determines whether this page is muted.
 	**/
@@ -48,11 +48,11 @@ package electron.remote;
 	/**
 		A `Session` used by this webContents.
 	**/
-	var session : electron.main.Session;
+	var session : electron.remote.Session;
 	/**
 		A `WebContents` instance that might own this `WebContents`.
 	**/
-	var hostWebContents : electron.main.WebContents;
+	var hostWebContents : electron.remote.WebContents;
 	/**
 		A `WebContents | null` property that represents the of DevTools `WebContents` associated with a given `WebContents`.
 		
@@ -62,7 +62,7 @@ package electron.remote;
 	/**
 		A `Debugger` instance for this webContents.
 	**/
-	var debugger : electron.main.Debugger;
+	var debugger : electron.remote.Debugger;
 	/**
 		A `Boolean` property that determines whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
 	**/
@@ -547,7 +547,7 @@ var to : Float; }>; /**
 		
 		An example of showing devtools in a `BrowserWindow`:
 	**/
-	function setDevToolsWebContents(devToolsWebContents:electron.main.WebContents):Void;
+	function setDevToolsWebContents(devToolsWebContents:electron.remote.WebContents):Void;
 	/**
 		Opens the devtools.
 		
@@ -626,7 +626,7 @@ var to : Float; }>; /**
 		
 		For example:
 	**/
-	function postMessage(channel:String, message:Any, ?transfer:Array<electron.main.MessagePortMain>):Void;
+	function postMessage(channel:String, message:Any, ?transfer:Array<electron.remote.MessagePortMain>):Void;
 	/**
 		Enable device emulation with the given parameters.
 	**/
@@ -756,39 +756,39 @@ var to : Float; }>; /**
 	/**
 		Emitted when the navigation is done, i.e. the spinner of the tab has stopped spinning, and the `onload` event was dispatched.
 	**/
-	var did_finish_load : electron.main.WebContentsEvent<Void -> Void> = "did-finish-load";
+	var did_finish_load : electron.remote.WebContentsEvent<Void -> Void> = "did-finish-load";
 	/**
 		This event is like `did-finish-load` but emitted when the load failed. The full list of error codes and their meaning is available here.
 	**/
-	var did_fail_load : electron.main.WebContentsEvent<Void -> Void> = "did-fail-load";
+	var did_fail_load : electron.remote.WebContentsEvent<Void -> Void> = "did-fail-load";
 	/**
 		This event is like `did-fail-load` but emitted when the load was cancelled (e.g. `window.stop()` was invoked).
 	**/
-	var did_fail_provisional_load : electron.main.WebContentsEvent<Void -> Void> = "did-fail-provisional-load";
+	var did_fail_provisional_load : electron.remote.WebContentsEvent<Void -> Void> = "did-fail-provisional-load";
 	/**
 		Emitted when a frame has done navigation.
 	**/
-	var did_frame_finish_load : electron.main.WebContentsEvent<Void -> Void> = "did-frame-finish-load";
+	var did_frame_finish_load : electron.remote.WebContentsEvent<Void -> Void> = "did-frame-finish-load";
 	/**
 		Corresponds to the points in time when the spinner of the tab started spinning.
 	**/
-	var did_start_loading : electron.main.WebContentsEvent<Void -> Void> = "did-start-loading";
+	var did_start_loading : electron.remote.WebContentsEvent<Void -> Void> = "did-start-loading";
 	/**
 		Corresponds to the points in time when the spinner of the tab stopped spinning.
 	**/
-	var did_stop_loading : electron.main.WebContentsEvent<Void -> Void> = "did-stop-loading";
+	var did_stop_loading : electron.remote.WebContentsEvent<Void -> Void> = "did-stop-loading";
 	/**
 		Emitted when the document in the given frame is loaded.
 	**/
-	var dom_ready : electron.main.WebContentsEvent<Void -> Void> = "dom-ready";
+	var dom_ready : electron.remote.WebContentsEvent<Void -> Void> = "dom-ready";
 	/**
 		Fired when page title is set during navigation. `explicitSet` is false when title is synthesized from file url.
 	**/
-	var page_title_updated : electron.main.WebContentsEvent<Void -> Void> = "page-title-updated";
+	var page_title_updated : electron.remote.WebContentsEvent<Void -> Void> = "page-title-updated";
 	/**
 		Emitted when page receives favicon urls.
 	**/
-	var page_favicon_updated : electron.main.WebContentsEvent<Void -> Void> = "page-favicon-updated";
+	var page_favicon_updated : electron.remote.WebContentsEvent<Void -> Void> = "page-favicon-updated";
 	/**
 		Emitted when the page requests to open a new window for a `url`. It could be requested by `window.open` or an external link like `<a target='_blank'>`.
 		
@@ -796,7 +796,7 @@ var to : Float; }>; /**
 		
 		Calling `event.preventDefault()` will prevent Electron from automatically creating a new `BrowserWindow`. If you call `event.preventDefault()` and manually create a new `BrowserWindow` then you must set `event.newGuest` to reference the new `BrowserWindow` instance, failing to do so may result in unexpected behavior. For example:
 	**/
-	var new_window : electron.main.WebContentsEvent<Void -> Void> = "new-window";
+	var new_window : electron.remote.WebContentsEvent<Void -> Void> = "new-window";
 	/**
 		Emitted when a user or the page wants to start navigation. It can happen when the `window.location` object is changed or a user clicks a link in the page.
 		
@@ -806,11 +806,11 @@ var to : Float; }>; /**
 		
 		Calling `event.preventDefault()` will prevent the navigation.
 	**/
-	var will_navigate : electron.main.WebContentsEvent<Void -> Void> = "will-navigate";
+	var will_navigate : electron.remote.WebContentsEvent<Void -> Void> = "will-navigate";
 	/**
 		Emitted when any frame (including main) starts navigating. `isInplace` will be `true` for in-page navigations.
 	**/
-	var did_start_navigation : electron.main.WebContentsEvent<Void -> Void> = "did-start-navigation";
+	var did_start_navigation : electron.remote.WebContentsEvent<Void -> Void> = "did-start-navigation";
 	/**
 		Emitted as a server side redirect occurs during navigation.  For example a 302 redirect.
 		
@@ -818,153 +818,153 @@ var to : Float; }>; /**
 		
 		Calling `event.preventDefault()` will prevent the navigation (not just the redirect).
 	**/
-	var will_redirect : electron.main.WebContentsEvent<Void -> Void> = "will-redirect";
+	var will_redirect : electron.remote.WebContentsEvent<Void -> Void> = "will-redirect";
 	/**
 		Emitted after a server side redirect occurs during navigation.  For example a 302 redirect.
 		
 		This event cannot be prevented, if you want to prevent redirects you should checkout out the `will-redirect` event above.
 	**/
-	var did_redirect_navigation : electron.main.WebContentsEvent<Void -> Void> = "did-redirect-navigation";
+	var did_redirect_navigation : electron.remote.WebContentsEvent<Void -> Void> = "did-redirect-navigation";
 	/**
 		Emitted when a main frame navigation is done.
 		
 		This event is not emitted for in-page navigations, such as clicking anchor links or updating the `window.location.hash`. Use `did-navigate-in-page` event for this purpose.
 	**/
-	var did_navigate : electron.main.WebContentsEvent<Void -> Void> = "did-navigate";
+	var did_navigate : electron.remote.WebContentsEvent<Void -> Void> = "did-navigate";
 	/**
 		Emitted when any frame navigation is done.
 		
 		This event is not emitted for in-page navigations, such as clicking anchor links or updating the `window.location.hash`. Use `did-navigate-in-page` event for this purpose.
 	**/
-	var did_frame_navigate : electron.main.WebContentsEvent<Void -> Void> = "did-frame-navigate";
+	var did_frame_navigate : electron.remote.WebContentsEvent<Void -> Void> = "did-frame-navigate";
 	/**
 		Emitted when an in-page navigation happened in any frame.
 		
 		When in-page navigation happens, the page URL changes but does not cause navigation outside of the page. Examples of this occurring are when anchor links are clicked or when the DOM `hashchange` event is triggered.
 	**/
-	var did_navigate_in_page : electron.main.WebContentsEvent<Void -> Void> = "did-navigate-in-page";
+	var did_navigate_in_page : electron.remote.WebContentsEvent<Void -> Void> = "did-navigate-in-page";
 	/**
 		Emitted when a `beforeunload` event handler is attempting to cancel a page unload.
 		
 		Calling `event.preventDefault()` will ignore the `beforeunload` event handler and allow the page to be unloaded.
 	**/
-	var will_prevent_unload : electron.main.WebContentsEvent<Void -> Void> = "will-prevent-unload";
+	var will_prevent_unload : electron.remote.WebContentsEvent<Void -> Void> = "will-prevent-unload";
 	/**
 		Emitted when the renderer process crashes or is killed.
 		
 		**Deprecated:** This event is superceded by the `render-process-gone` event which contains more information about why the render process disappeared. It isn't always because it crashed.  The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
 	**/
-	var crashed : electron.main.WebContentsEvent<Void -> Void> = "crashed";
+	var crashed : electron.remote.WebContentsEvent<Void -> Void> = "crashed";
 	/**
 		Emitted when the renderer process unexpectedly disappears.  This is normally because it was crashed or killed.
 	**/
-	var render_process_gone : electron.main.WebContentsEvent<Void -> Void> = "render-process-gone";
+	var render_process_gone : electron.remote.WebContentsEvent<Void -> Void> = "render-process-gone";
 	/**
 		Emitted when the web page becomes unresponsive.
 	**/
-	var unresponsive : electron.main.WebContentsEvent<Void -> Void> = "unresponsive";
+	var unresponsive : electron.remote.WebContentsEvent<Void -> Void> = "unresponsive";
 	/**
 		Emitted when the unresponsive web page becomes responsive again.
 	**/
-	var responsive : electron.main.WebContentsEvent<Void -> Void> = "responsive";
+	var responsive : electron.remote.WebContentsEvent<Void -> Void> = "responsive";
 	/**
 		Emitted when a plugin process has crashed.
 	**/
-	var plugin_crashed : electron.main.WebContentsEvent<Void -> Void> = "plugin-crashed";
+	var plugin_crashed : electron.remote.WebContentsEvent<Void -> Void> = "plugin-crashed";
 	/**
 		Emitted when `webContents` is destroyed.
 	**/
-	var destroyed : electron.main.WebContentsEvent<Void -> Void> = "destroyed";
+	var destroyed : electron.remote.WebContentsEvent<Void -> Void> = "destroyed";
 	/**
 		Emitted before dispatching the `keydown` and `keyup` events in the page. Calling `event.preventDefault` will prevent the page `keydown`/`keyup` events and the menu shortcuts.
 		
 		To only prevent the menu shortcuts, use `setIgnoreMenuShortcuts`:
 	**/
-	var before_input_event : electron.main.WebContentsEvent<Void -> Void> = "before-input-event";
+	var before_input_event : electron.remote.WebContentsEvent<Void -> Void> = "before-input-event";
 	/**
 		Emitted when the window enters a full-screen state triggered by HTML API.
 	**/
-	var enter_html_full_screen : electron.main.WebContentsEvent<Void -> Void> = "enter-html-full-screen";
+	var enter_html_full_screen : electron.remote.WebContentsEvent<Void -> Void> = "enter-html-full-screen";
 	/**
 		Emitted when the window leaves a full-screen state triggered by HTML API.
 	**/
-	var leave_html_full_screen : electron.main.WebContentsEvent<Void -> Void> = "leave-html-full-screen";
+	var leave_html_full_screen : electron.remote.WebContentsEvent<Void -> Void> = "leave-html-full-screen";
 	/**
 		Emitted when the user is requesting to change the zoom level using the mouse wheel.
 	**/
-	var zoom_changed : electron.main.WebContentsEvent<Void -> Void> = "zoom-changed";
+	var zoom_changed : electron.remote.WebContentsEvent<Void -> Void> = "zoom-changed";
 	/**
 		Emitted when DevTools is opened.
 	**/
-	var devtools_opened : electron.main.WebContentsEvent<Void -> Void> = "devtools-opened";
+	var devtools_opened : electron.remote.WebContentsEvent<Void -> Void> = "devtools-opened";
 	/**
 		Emitted when DevTools is closed.
 	**/
-	var devtools_closed : electron.main.WebContentsEvent<Void -> Void> = "devtools-closed";
+	var devtools_closed : electron.remote.WebContentsEvent<Void -> Void> = "devtools-closed";
 	/**
 		Emitted when DevTools is focused / opened.
 	**/
-	var devtools_focused : electron.main.WebContentsEvent<Void -> Void> = "devtools-focused";
+	var devtools_focused : electron.remote.WebContentsEvent<Void -> Void> = "devtools-focused";
 	/**
 		Emitted when failed to verify the `certificate` for `url`.
 		
 		The usage is the same with the `certificate-error` event of `app`.
 	**/
-	var certificate_error : electron.main.WebContentsEvent<Void -> Void> = "certificate-error";
+	var certificate_error : electron.remote.WebContentsEvent<Void -> Void> = "certificate-error";
 	/**
 		Emitted when a client certificate is requested.
 		
 		The usage is the same with the `select-client-certificate` event of `app`.
 	**/
-	var select_client_certificate : electron.main.WebContentsEvent<Void -> Void> = "select-client-certificate";
+	var select_client_certificate : electron.remote.WebContentsEvent<Void -> Void> = "select-client-certificate";
 	/**
 		Emitted when `webContents` wants to do basic auth.
 		
 		The usage is the same with the `login` event of `app`.
 	**/
-	var login : electron.main.WebContentsEvent<Void -> Void> = "login";
+	var login : electron.remote.WebContentsEvent<Void -> Void> = "login";
 	/**
 		Emitted when a result is available for [`webContents.findInPage`] request.
 	**/
-	var found_in_page : electron.main.WebContentsEvent<Void -> Void> = "found-in-page";
+	var found_in_page : electron.remote.WebContentsEvent<Void -> Void> = "found-in-page";
 	/**
 		Emitted when media starts playing.
 	**/
-	var media_started_playing : electron.main.WebContentsEvent<Void -> Void> = "media-started-playing";
+	var media_started_playing : electron.remote.WebContentsEvent<Void -> Void> = "media-started-playing";
 	/**
 		Emitted when media is paused or done playing.
 	**/
-	var media_paused : electron.main.WebContentsEvent<Void -> Void> = "media-paused";
+	var media_paused : electron.remote.WebContentsEvent<Void -> Void> = "media-paused";
 	/**
 		Emitted when a page's theme color changes. This is usually due to encountering a meta tag:
 	**/
-	var did_change_theme_color : electron.main.WebContentsEvent<Void -> Void> = "did-change-theme-color";
+	var did_change_theme_color : electron.remote.WebContentsEvent<Void -> Void> = "did-change-theme-color";
 	/**
 		Emitted when mouse moves over a link or the keyboard moves the focus to a link.
 	**/
-	var update_target_url : electron.main.WebContentsEvent<Void -> Void> = "update-target-url";
+	var update_target_url : electron.remote.WebContentsEvent<Void -> Void> = "update-target-url";
 	/**
 		Emitted when the cursor's type changes. The `type` parameter can be `default`, `crosshair`, `pointer`, `text`, `wait`, `help`, `e-resize`, `n-resize`, `ne-resize`, `nw-resize`, `s-resize`, `se-resize`, `sw-resize`, `w-resize`, `ns-resize`, `ew-resize`, `nesw-resize`, `nwse-resize`, `col-resize`, `row-resize`, `m-panning`, `e-panning`, `n-panning`, `ne-panning`, `nw-panning`, `s-panning`, `se-panning`, `sw-panning`, `w-panning`, `move`, `vertical-text`, `cell`, `context-menu`, `alias`, `progress`, `nodrop`, `copy`, `none`, `not-allowed`, `zoom-in`, `zoom-out`, `grab`, `grabbing` or `custom`.
 		
 		If the `type` parameter is `custom`, the `image` parameter will hold the custom cursor image in a `NativeImage`, and `scale`, `size` and `hotspot` will hold additional information about the custom cursor.
 	**/
-	var cursor_changed : electron.main.WebContentsEvent<Void -> Void> = "cursor-changed";
+	var cursor_changed : electron.remote.WebContentsEvent<Void -> Void> = "cursor-changed";
 	/**
 		Emitted when there is a new context menu that needs to be handled.
 	**/
-	var context_menu : electron.main.WebContentsEvent<Void -> Void> = "context-menu";
+	var context_menu : electron.remote.WebContentsEvent<Void -> Void> = "context-menu";
 	/**
 		Emitted when bluetooth device needs to be selected on call to `navigator.bluetooth.requestDevice`. To use `navigator.bluetooth` api `webBluetooth` should be enabled. If `event.preventDefault` is not called, first available device will be selected. `callback` should be called with `deviceId` to be selected, passing empty string to `callback` will cancel the request.
 	**/
-	var select_bluetooth_device : electron.main.WebContentsEvent<Void -> Void> = "select-bluetooth-device";
+	var select_bluetooth_device : electron.remote.WebContentsEvent<Void -> Void> = "select-bluetooth-device";
 	/**
 		Emitted when a new frame is generated. Only the dirty area is passed in the buffer.
 	**/
-	var paint : electron.main.WebContentsEvent<Void -> Void> = "paint";
+	var paint : electron.remote.WebContentsEvent<Void -> Void> = "paint";
 	/**
 		Emitted when the devtools window instructs the webContents to reload
 	**/
-	var devtools_reload_page : electron.main.WebContentsEvent<Void -> Void> = "devtools-reload-page";
+	var devtools_reload_page : electron.remote.WebContentsEvent<Void -> Void> = "devtools-reload-page";
 	/**
 		Emitted when a `<webview>`'s web contents is being attached to this web contents. Calling `event.preventDefault()` will destroy the guest page.
 		
@@ -972,49 +972,49 @@ var to : Float; }>; /**
 		
 		**Note:** The specified `preload` script option will appear as `preloadURL` (not `preload`) in the `webPreferences` object emitted with this event.
 	**/
-	var will_attach_webview : electron.main.WebContentsEvent<Void -> Void> = "will-attach-webview";
+	var will_attach_webview : electron.remote.WebContentsEvent<Void -> Void> = "will-attach-webview";
 	/**
 		Emitted when a `<webview>` has been attached to this web contents.
 	**/
-	var did_attach_webview : electron.main.WebContentsEvent<Void -> Void> = "did-attach-webview";
+	var did_attach_webview : electron.remote.WebContentsEvent<Void -> Void> = "did-attach-webview";
 	/**
 		Emitted when the associated window logs a console message.
 	**/
-	var console_message : electron.main.WebContentsEvent<Void -> Void> = "console-message";
+	var console_message : electron.remote.WebContentsEvent<Void -> Void> = "console-message";
 	/**
 		Emitted when the preload script `preloadPath` throws an unhandled exception `error`.
 	**/
-	var preload_error : electron.main.WebContentsEvent<Void -> Void> = "preload-error";
+	var preload_error : electron.remote.WebContentsEvent<Void -> Void> = "preload-error";
 	/**
 		Emitted when the renderer process sends an asynchronous message via `ipcRenderer.send()`.
 	**/
-	var ipc_message : electron.main.WebContentsEvent<Void -> Void> = "ipc-message";
+	var ipc_message : electron.remote.WebContentsEvent<Void -> Void> = "ipc-message";
 	/**
 		Emitted when the renderer process sends a synchronous message via `ipcRenderer.sendSync()`.
 	**/
-	var ipc_message_sync : electron.main.WebContentsEvent<Void -> Void> = "ipc-message-sync";
+	var ipc_message_sync : electron.remote.WebContentsEvent<Void -> Void> = "ipc-message-sync";
 	/**
 		Emitted when `desktopCapturer.getSources()` is called in the renderer process. Calling `event.preventDefault()` will make it return empty sources.
 	**/
-	var desktop_capturer_get_sources : electron.main.WebContentsEvent<Void -> Void> = "desktop-capturer-get-sources";
+	var desktop_capturer_get_sources : electron.remote.WebContentsEvent<Void -> Void> = "desktop-capturer-get-sources";
 	/**
 		Emitted when `remote.require()` is called in the renderer process. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_require : electron.main.WebContentsEvent<Void -> Void> = "remote-require";
+	var remote_require : electron.remote.WebContentsEvent<Void -> Void> = "remote-require";
 	/**
 		Emitted when `remote.getGlobal()` is called in the renderer process. Calling `event.preventDefault()` will prevent the global from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_global : electron.main.WebContentsEvent<Void -> Void> = "remote-get-global";
+	var remote_get_global : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-global";
 	/**
 		Emitted when `remote.getBuiltin()` is called in the renderer process. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_builtin : electron.main.WebContentsEvent<Void -> Void> = "remote-get-builtin";
+	var remote_get_builtin : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-builtin";
 	/**
 		Emitted when `remote.getCurrentWindow()` is called in the renderer process. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_current_window : electron.main.WebContentsEvent<Void -> Void> = "remote-get-current-window";
+	var remote_get_current_window : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-current-window";
 	/**
 		Emitted when `remote.getCurrentWebContents()` is called in the renderer process. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
-	var remote_get_current_web_contents : electron.main.WebContentsEvent<Void -> Void> = "remote-get-current-web-contents";
+	var remote_get_current_web_contents : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-current-web-contents";
 }

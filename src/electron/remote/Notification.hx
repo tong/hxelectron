@@ -27,7 +27,7 @@ package electron.remote;
 	Returns `Boolean` - Whether or not desktop notifications are supported on the current system
 	@see https://electronjs.org/docs/api/notification
 **/
-@:jsRequire("electron", "remote.Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
+@:jsRequire("electron", "remote.Notification") extern class Notification extends js.node.events.EventEmitter<electron.remote.Notification> {
 	/**
 		Whether or not desktop notifications are supported on the current system
 	**/
@@ -142,20 +142,20 @@ package electron.remote;
 	/**
 		Emitted when the notification is shown to the user, note this could be fired multiple times as a notification can be shown multiple times through the `show()` method.
 	**/
-	var show : electron.main.NotificationEvent<Void -> Void> = "show";
+	var show : electron.remote.NotificationEvent<Void -> Void> = "show";
 	/**
 		Emitted when the notification is clicked by the user.
 	**/
-	var click : electron.main.NotificationEvent<Void -> Void> = "click";
+	var click : electron.remote.NotificationEvent<Void -> Void> = "click";
 	/**
 		Emitted when the notification is closed by manual intervention from the user.
 		
 		This event is not guaranteed to be emitted in all cases where the notification is closed.
 	**/
-	var close : electron.main.NotificationEvent<Void -> Void> = "close";
+	var close : electron.remote.NotificationEvent<Void -> Void> = "close";
 	/**
 		Emitted when the user clicks the "Reply" button on a notification with `hasReply: true`.
 	**/
-	var reply : electron.main.NotificationEvent<Void -> Void> = "reply";
-	var action : electron.main.NotificationEvent<Void -> Void> = "action";
+	var reply : electron.remote.NotificationEvent<Void -> Void> = "reply";
+	var action : electron.remote.NotificationEvent<Void -> Void> = "action";
 }

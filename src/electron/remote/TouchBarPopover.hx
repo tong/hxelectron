@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/touch-bar-popover
 **/
-@:jsRequire("electron", "remote.TouchBarPopover") extern class TouchBarPopover extends js.node.events.EventEmitter<electron.main.TouchBarPopover> {
+@:jsRequire("electron", "remote.TouchBarPopover") extern class TouchBarPopover extends js.node.events.EventEmitter<electron.remote.TouchBarPopover> {
 	/**
 		A `String` representing the popover's current button text. Changing this value immediately updates the popover in the touch bar.
 	**/
@@ -25,7 +25,7 @@ package electron.remote;
 	var icon : electron.NativeImage; /**
 		Items to display in the popover.
 	**/
-	var items : electron.main.TouchBar; /**
+	var items : electron.remote.TouchBar; /**
 		`true` to display a close button on the left of the popover, `false` to not show it. Default is `true`.
 	**/
 	@:optional

@@ -9,7 +9,7 @@ package electron.remote;
 	**Note:** The shortcut is global; it will work even if the app does not have the keyboard focus. This module cannot be used before the `ready` event of the app module is emitted.
 	@see https://electronjs.org/docs/api/global-shortcut
 **/
-@:jsRequire("electron", "remote.globalShortcut") extern class GlobalShortcut extends js.node.events.EventEmitter<electron.main.GlobalShortcut> {
+@:jsRequire("electron", "remote.globalShortcut") extern class GlobalShortcut extends js.node.events.EventEmitter<electron.remote.GlobalShortcut> {
 	/**
 		Whether or not the shortcut was registered successfully.
 		

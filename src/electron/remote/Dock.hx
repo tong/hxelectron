@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/dock
 **/
-@:jsRequire("electron", "remote.Dock") extern class Dock extends js.node.events.EventEmitter<electron.main.Dock> {
+@:jsRequire("electron", "remote.Dock") extern class Dock extends js.node.events.EventEmitter<electron.remote.Dock> {
 	/**
 		an ID representing the request.
 		
@@ -44,7 +44,7 @@ package electron.remote;
 	/**
 		Sets the application's [dock menu][dock-menu].
 	**/
-	function setMenu(menu:electron.main.Menu):Void;
+	function setMenu(menu:electron.remote.Menu):Void;
 	/**
 		The application's [dock menu][dock-menu].
 	**/

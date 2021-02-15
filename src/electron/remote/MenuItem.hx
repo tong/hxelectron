@@ -7,7 +7,7 @@ package electron.remote;
 	See `Menu` for examples.
 	@see https://electronjs.org/docs/api/menu-item
 **/
-@:jsRequire("electron", "remote.MenuItem") extern class MenuItem extends js.node.events.EventEmitter<electron.main.MenuItem> {
+@:jsRequire("electron", "remote.MenuItem") extern class MenuItem extends js.node.events.EventEmitter<electron.remote.MenuItem> {
 	/**
 		A `String` indicating the item's unique id, this property can be dynamically changed.
 	**/
@@ -27,7 +27,7 @@ package electron.remote;
 	/**
 		A `Menu` (optional) containing the menu item's submenu, if present.
 	**/
-	var submenu : electron.main.Menu;
+	var submenu : electron.remote.Menu;
 	/**
 		A `String` indicating the type of the item. Can be `normal`, `separator`, `submenu`, `checkbox` or `radio`.
 	**/
@@ -83,7 +83,7 @@ package electron.remote;
 	/**
 		A `Menu` that the item is a part of.
 	**/
-	var menu : electron.main.Menu;
+	var menu : electron.remote.Menu;
 	function new(options:{ /**
 		Will be called with `click(menuItem, browserWindow, event)` when the menu item is clicked.
 	**/

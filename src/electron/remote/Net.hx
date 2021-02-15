@@ -39,11 +39,11 @@ package electron.remote;
 	The `net` API can be used only after the application emits the `ready` event. Trying to use the module before the `ready` event will throw an error.
 	@see https://electronjs.org/docs/api/net
 **/
-@:jsRequire("electron", "remote.net") extern class Net extends js.node.events.EventEmitter<electron.main.Net> {
+@:jsRequire("electron", "remote.net") extern class Net extends js.node.events.EventEmitter<electron.remote.Net> {
 	/**
 		Creates a `ClientRequest` instance using the provided `options` which are directly forwarded to the `ClientRequest` constructor. The `net.request` method would be used to issue both secure and insecure HTTP requests according to the specified protocol scheme in the `options` object.
 	**/
-	static function request(options:haxe.extern.EitherType<Dynamic, Dynamic>):electron.main.ClientRequest;
+	static function request(options:haxe.extern.EitherType<Dynamic, Dynamic>):electron.remote.ClientRequest;
 }
 @:enum abstract NetEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 

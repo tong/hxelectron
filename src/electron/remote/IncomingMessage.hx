@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/incoming-message
 **/
-@:jsRequire("electron", "remote.IncomingMessage") extern class IncomingMessage extends js.node.events.EventEmitter<electron.main.IncomingMessage> {
+@:jsRequire("electron", "remote.IncomingMessage") extern class IncomingMessage extends js.node.events.EventEmitter<electron.remote.IncomingMessage> {
 	/**
 		An `Integer` indicating the HTTP response status code.
 	**/
@@ -38,15 +38,15 @@ package electron.remote;
 	/**
 		The `data` event is the usual method of transferring response data into applicative code.
 	**/
-	var data : electron.main.IncomingMessageEvent<Void -> Void> = "data";
+	var data : electron.remote.IncomingMessageEvent<Void -> Void> = "data";
 	/**
 		Indicates that response body has ended.
 	**/
-	var end : electron.main.IncomingMessageEvent<Void -> Void> = "end";
+	var end : electron.remote.IncomingMessageEvent<Void -> Void> = "end";
 	/**
 		Emitted when a request has been canceled during an ongoing HTTP transaction.
 	**/
-	var aborted : electron.main.IncomingMessageEvent<Void -> Void> = "aborted";
+	var aborted : electron.remote.IncomingMessageEvent<Void -> Void> = "aborted";
 	/**
 		Returns:
 		
@@ -54,5 +54,5 @@ package electron.remote;
 		
 		Emitted when an error was encountered while streaming response data events. For instance, if the server closes the underlying while the response is still streaming, an `error` event will be emitted on the response object and a `close` event will subsequently follow on the request object.
 	**/
-	var error : electron.main.IncomingMessageEvent<Void -> Void> = "error";
+	var error : electron.remote.IncomingMessageEvent<Void -> Void> = "error";
 }

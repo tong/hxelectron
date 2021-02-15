@@ -20,7 +20,7 @@ package electron.remote;
 	**Note:** All methods unless specified can only be used after the `ready` event of the `app` module gets emitted.
 	@see https://electronjs.org/docs/api/net-log
 **/
-@:jsRequire("electron", "remote.netLog") extern class NetLog extends js.node.events.EventEmitter<electron.main.NetLog> {
+@:jsRequire("electron", "remote.netLog") extern class NetLog extends js.node.events.EventEmitter<electron.remote.NetLog> {
 	/**
 		A `Boolean` property that indicates whether network logs are currently being recorded.
 	**/

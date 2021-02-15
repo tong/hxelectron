@@ -26,7 +26,7 @@ package electron.remote;
 	Another example of creating a window in the external display:
 	@see https://electronjs.org/docs/api/screen
 **/
-@:native('require(\"electron\").remote.screen') extern class Screen extends js.node.events.EventEmitter<electron.main.Screen> {
+@:native('require(\"electron\").remote.screen') extern class Screen extends js.node.events.EventEmitter<electron.remote.Screen> {
 	/**
 		The current absolute position of the mouse pointer.
 	**/
@@ -68,13 +68,13 @@ package electron.remote;
 	/**
 		Emitted when `newDisplay` has been added.
 	**/
-	var display_added : electron.main.ScreenEvent<Void -> Void> = "display-added";
+	var display_added : electron.remote.ScreenEvent<Void -> Void> = "display-added";
 	/**
 		Emitted when `oldDisplay` has been removed.
 	**/
-	var display_removed : electron.main.ScreenEvent<Void -> Void> = "display-removed";
+	var display_removed : electron.remote.ScreenEvent<Void -> Void> = "display-removed";
 	/**
 		Emitted when one or more metrics change in a `display`. The `changedMetrics` is an array of strings that describe the changes. Possible changes are `bounds`, `workArea`, `scaleFactor` and `rotation`.
 	**/
-	var display_metrics_changed : electron.main.ScreenEvent<Void -> Void> = "display-metrics-changed";
+	var display_metrics_changed : electron.remote.ScreenEvent<Void -> Void> = "display-metrics-changed";
 }

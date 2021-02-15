@@ -7,7 +7,7 @@ package electron.remote;
 	For example:
 	@see https://electronjs.org/docs/api/power-save-blocker
 **/
-@:jsRequire("electron", "remote.powerSaveBlocker") extern class PowerSaveBlocker extends js.node.events.EventEmitter<electron.main.PowerSaveBlocker> {
+@:jsRequire("electron", "remote.powerSaveBlocker") extern class PowerSaveBlocker extends js.node.events.EventEmitter<electron.remote.PowerSaveBlocker> {
 	/**
 		The blocker ID that is assigned to this power blocker.
 		

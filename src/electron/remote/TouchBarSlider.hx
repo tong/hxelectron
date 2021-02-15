@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/touch-bar-slider
 **/
-@:jsRequire("electron", "remote.TouchBarSlider") extern class TouchBarSlider extends js.node.events.EventEmitter<electron.main.TouchBarSlider> {
+@:jsRequire("electron", "remote.TouchBarSlider") extern class TouchBarSlider extends js.node.events.EventEmitter<electron.remote.TouchBarSlider> {
 	/**
 		A `String` representing the slider's current text. Changing this value immediately updates the slider in the touch bar.
 	**/

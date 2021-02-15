@@ -31,7 +31,7 @@ package electron.remote;
 	Unlike Squirrel.Mac, Windows can host updates on S3 or any other static file host. You can read the documents of Squirrel.Windows to get more details about how Squirrel.Windows works.
 	@see https://electronjs.org/docs/api/auto-updater
 **/
-@:jsRequire("electron", "remote.autoUpdater") extern class AutoUpdater extends js.node.events.EventEmitter<electron.main.AutoUpdater> {
+@:jsRequire("electron", "remote.autoUpdater") extern class AutoUpdater extends js.node.events.EventEmitter<electron.remote.AutoUpdater> {
 	/**
 		Sets the `url` and initialize the auto updater.
 	**/
@@ -65,19 +65,19 @@ package electron.remote;
 	/**
 		Emitted when there is an error while updating.
 	**/
-	var error : electron.main.AutoUpdaterEvent<Void -> Void> = "error";
+	var error : electron.remote.AutoUpdaterEvent<Void -> Void> = "error";
 	/**
 		Emitted when checking if an update has started.
 	**/
-	var checking_for_update : electron.main.AutoUpdaterEvent<Void -> Void> = "checking-for-update";
+	var checking_for_update : electron.remote.AutoUpdaterEvent<Void -> Void> = "checking-for-update";
 	/**
 		Emitted when there is an available update. The update is downloaded automatically.
 	**/
-	var update_available : electron.main.AutoUpdaterEvent<Void -> Void> = "update-available";
+	var update_available : electron.remote.AutoUpdaterEvent<Void -> Void> = "update-available";
 	/**
 		Emitted when there is no available update.
 	**/
-	var update_not_available : electron.main.AutoUpdaterEvent<Void -> Void> = "update-not-available";
+	var update_not_available : electron.remote.AutoUpdaterEvent<Void -> Void> = "update-not-available";
 	/**
 		Emitted when an update has been downloaded.
 		
@@ -85,11 +85,11 @@ package electron.remote;
 		
 		**Note:** It is not strictly necessary to handle this event. A successfully downloaded update will still be applied the next time the application starts.
 	**/
-	var update_downloaded : electron.main.AutoUpdaterEvent<Void -> Void> = "update-downloaded";
+	var update_downloaded : electron.remote.AutoUpdaterEvent<Void -> Void> = "update-downloaded";
 	/**
 		This event is emitted after a user calls `quitAndInstall()`.
 		
 		When this API is called, the `before-quit` event is not emitted before all windows are closed. As a result you should listen to this event if you wish to perform actions before the windows are closed while a process is quitting, as well as listening to `before-quit`.
 	**/
-	var before_quit_for_update : electron.main.AutoUpdaterEvent<Void -> Void> = "before-quit-for-update";
+	var before_quit_for_update : electron.remote.AutoUpdaterEvent<Void -> Void> = "before-quit-for-update";
 }

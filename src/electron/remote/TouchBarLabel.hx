@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/touch-bar-label
 **/
-@:jsRequire("electron", "remote.TouchBarLabel") extern class TouchBarLabel extends js.node.events.EventEmitter<electron.main.TouchBarLabel> {
+@:jsRequire("electron", "remote.TouchBarLabel") extern class TouchBarLabel extends js.node.events.EventEmitter<electron.remote.TouchBarLabel> {
 	/**
 		A `String` representing the label's current text. Changing this value immediately updates the label in the touch bar.
 	**/

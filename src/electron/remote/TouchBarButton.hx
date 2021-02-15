@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/touch-bar-button
 **/
-@:jsRequire("electron", "remote.TouchBarButton") extern class TouchBarButton extends js.node.events.EventEmitter<electron.main.TouchBarButton> {
+@:jsRequire("electron", "remote.TouchBarButton") extern class TouchBarButton extends js.node.events.EventEmitter<electron.remote.TouchBarButton> {
 	/**
 		A `String` representing the description of the button to be read by a screen reader. Will only be read by screen readers if no label is set.
 	**/

@@ -5,7 +5,7 @@ package electron.remote;
 	Process: Main
 	@see https://electronjs.org/docs/api/in-app-purchase
 **/
-@:jsRequire("electron", "remote.inAppPurchase") extern class InAppPurchase extends js.node.events.EventEmitter<electron.main.InAppPurchase> {
+@:jsRequire("electron", "remote.inAppPurchase") extern class InAppPurchase extends js.node.events.EventEmitter<electron.remote.InAppPurchase> {
 	/**
 		Returns `true` if the product is valid and added to the payment queue.
 		
@@ -43,5 +43,5 @@ package electron.remote;
 	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
 }
 @:enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
-	var transactions_updated : electron.main.InAppPurchaseEvent<Void -> Void> = "transactions-updated";
+	var transactions_updated : electron.remote.InAppPurchaseEvent<Void -> Void> = "transactions-updated";
 }

@@ -99,11 +99,11 @@ package electron.remote;
 	It creates a new `BrowserWindow` with native properties as set by the `options`.
 	@see https://electronjs.org/docs/api/browser-window
 **/
-@:jsRequire("electron", "remote.BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
+@:jsRequire("electron", "remote.BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.remote.BrowserWindow> {
 	/**
 		An array of all opened browser windows.
 	**/
-	static function getAllWindows():Array<electron.main.BrowserWindow>;
+	static function getAllWindows():Array<electron.remote.BrowserWindow>;
 	/**
 		The window that is focused in this application, otherwise returns `null`.
 	**/
@@ -111,11 +111,11 @@ package electron.remote;
 	/**
 		The window that owns the given `webContents` or `null` if the contents are not owned by a window.
 	**/
-	static function fromWebContents(webContents:electron.main.WebContents):haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function fromWebContents(webContents:electron.remote.WebContents):haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
 		The window that owns the given `browserView`. If the given view is not attached to any window, returns `null`.
 	**/
-	static function fromBrowserView(browserView:electron.main.BrowserView):haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function fromBrowserView(browserView:electron.remote.BrowserView):haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
 		The window with the given `id`.
 	**/
@@ -181,7 +181,7 @@ package electron.remote;
 		
 		See the `webContents` documentation for its methods and events.
 	**/
-	var webContents : electron.main.WebContents;
+	var webContents : electron.remote.WebContents;
 	/**
 		A `Integer` property representing the unique ID of the window. Each ID is unique among all `BrowserWindow` instances of the entire Electron application.
 	**/
@@ -388,7 +388,7 @@ package electron.remote;
 		Specify parent window. Default is `null`.
 	**/
 	@:optional
-	var parent : electron.main.BrowserWindow; /**
+	var parent : electron.remote.BrowserWindow; /**
 		Whether this is a modal window. This only works when the window is a child window. Default is `false`.
 	**/
 	@:optional
@@ -500,7 +500,7 @@ package electron.remote;
 		Sets the session used by the page. Instead of passing the Session object directly, you can also choose to use the `partition` option instead, which accepts a partition string. When both `session` and `partition` are provided, `session` will be preferred. Default is the default session.
 	**/
 	@:optional
-	var session : electron.main.Session; /**
+	var session : electron.remote.Session; /**
 		Sets the session used by the page according to the session's partition string. If `partition` starts with `persist:`, the page will use a persistent session available to all pages in the app with the same `partition`. If there is no `persist:` prefix, the page will use an in-memory session. By assigning the same `partition`, multiple pages can share the same session. Default is the default session.
 	**/
 	@:optional
@@ -1243,11 +1243,11 @@ package electron.remote;
 	/**
 		The parent window.
 	**/
-	function getParentWindow():electron.main.BrowserWindow;
+	function getParentWindow():electron.remote.BrowserWindow;
 	/**
 		All child windows.
 	**/
-	function getChildWindows():Array<electron.main.BrowserWindow>;
+	function getChildWindows():Array<electron.remote.BrowserWindow>;
 	/**
 		Controls whether to hide cursor when typing.
 	**/
@@ -1275,7 +1275,7 @@ package electron.remote;
 	/**
 		Adds a window as a tab on this window, after the tab for the window instance.
 	**/
-	function addTabbedWindow(browserWindow:electron.main.BrowserWindow):Void;
+	function addTabbedWindow(browserWindow:electron.remote.BrowserWindow):Void;
 	/**
 		Adds a vibrancy effect to the browser window. Passing `null` or an empty string will remove the vibrancy effect on the window.
 		
@@ -1304,20 +1304,20 @@ package electron.remote;
 	/**
 		Replacement API for setBrowserView supporting work with multi browser views.
 	**/
-	function addBrowserView(browserView:electron.main.BrowserView):Void;
-	function removeBrowserView(browserView:electron.main.BrowserView):Void;
+	function addBrowserView(browserView:electron.remote.BrowserView):Void;
+	function removeBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
 		an array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`.
 		
 		**Note:** The BrowserView API is currently experimental and may change or be removed in future Electron releases.
 	**/
-	function getBrowserViews():Array<electron.main.BrowserView>;
+	function getBrowserViews():Array<electron.remote.BrowserView>;
 }
 @:enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the document changed its title, calling `event.preventDefault()` will prevent the native window's title from changing. `explicitSet` is false when title is synthesized from file URL.
 	**/
-	var page_title_updated : electron.main.BrowserWindowEvent<Void -> Void> = "page-title-updated";
+	var page_title_updated : electron.remote.BrowserWindowEvent<Void -> Void> = "page-title-updated";
 	/**
 		Emitted when the window is going to be closed. It's emitted before the `beforeunload` and `unload` event of the DOM. Calling `event.preventDefault()` will cancel the close.
 		
@@ -1325,113 +1325,113 @@ package electron.remote;
 		
 		_**Note**: There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and `window.addEventListener('beforeunload', handler)`. It is recommended to always set the `event.returnValue` explicitly, instead of only returning a value, as the former works more consistently within Electron._
 	**/
-	var close : electron.main.BrowserWindowEvent<Void -> Void> = "close";
+	var close : electron.remote.BrowserWindowEvent<Void -> Void> = "close";
 	/**
 		Emitted when the window is closed. After you have received this event you should remove the reference to the window and avoid using it any more.
 	**/
-	var closed : electron.main.BrowserWindowEvent<Void -> Void> = "closed";
+	var closed : electron.remote.BrowserWindowEvent<Void -> Void> = "closed";
 	/**
 		Emitted when window session is going to end due to force shutdown or machine restart or session log off.
 	**/
-	var session_end : electron.main.BrowserWindowEvent<Void -> Void> = "session-end";
+	var session_end : electron.remote.BrowserWindowEvent<Void -> Void> = "session-end";
 	/**
 		Emitted when the web page becomes unresponsive.
 	**/
-	var unresponsive : electron.main.BrowserWindowEvent<Void -> Void> = "unresponsive";
+	var unresponsive : electron.remote.BrowserWindowEvent<Void -> Void> = "unresponsive";
 	/**
 		Emitted when the unresponsive web page becomes responsive again.
 	**/
-	var responsive : electron.main.BrowserWindowEvent<Void -> Void> = "responsive";
+	var responsive : electron.remote.BrowserWindowEvent<Void -> Void> = "responsive";
 	/**
 		Emitted when the window loses focus.
 	**/
-	var blur : electron.main.BrowserWindowEvent<Void -> Void> = "blur";
+	var blur : electron.remote.BrowserWindowEvent<Void -> Void> = "blur";
 	/**
 		Emitted when the window gains focus.
 	**/
-	var focus : electron.main.BrowserWindowEvent<Void -> Void> = "focus";
+	var focus : electron.remote.BrowserWindowEvent<Void -> Void> = "focus";
 	/**
 		Emitted when the window is shown.
 	**/
-	var show : electron.main.BrowserWindowEvent<Void -> Void> = "show";
+	var show : electron.remote.BrowserWindowEvent<Void -> Void> = "show";
 	/**
 		Emitted when the window is hidden.
 	**/
-	var hide : electron.main.BrowserWindowEvent<Void -> Void> = "hide";
+	var hide : electron.remote.BrowserWindowEvent<Void -> Void> = "hide";
 	/**
 		Emitted when the web page has been rendered (while not being shown) and window can be displayed without a visual flash.
 		
 		Please note that using this event implies that the renderer will be considered "visible" and paint even though `show` is false.  This event will never fire if you use `paintWhenInitiallyHidden: false`
 	**/
-	var ready_to_show : electron.main.BrowserWindowEvent<Void -> Void> = "ready-to-show";
+	var ready_to_show : electron.remote.BrowserWindowEvent<Void -> Void> = "ready-to-show";
 	/**
 		Emitted when window is maximized.
 	**/
-	var maximize : electron.main.BrowserWindowEvent<Void -> Void> = "maximize";
+	var maximize : electron.remote.BrowserWindowEvent<Void -> Void> = "maximize";
 	/**
 		Emitted when the window exits from a maximized state.
 	**/
-	var unmaximize : electron.main.BrowserWindowEvent<Void -> Void> = "unmaximize";
+	var unmaximize : electron.remote.BrowserWindowEvent<Void -> Void> = "unmaximize";
 	/**
 		Emitted when the window is minimized.
 	**/
-	var minimize : electron.main.BrowserWindowEvent<Void -> Void> = "minimize";
+	var minimize : electron.remote.BrowserWindowEvent<Void -> Void> = "minimize";
 	/**
 		Emitted when the window is restored from a minimized state.
 	**/
-	var restore : electron.main.BrowserWindowEvent<Void -> Void> = "restore";
+	var restore : electron.remote.BrowserWindowEvent<Void -> Void> = "restore";
 	/**
 		Emitted before the window is resized. Calling `event.preventDefault()` will prevent the window from being resized.
 		
 		Note that this is only emitted when the window is being resized manually. Resizing the window with `setBounds`/`setSize` will not emit this event.
 	**/
-	var will_resize : electron.main.BrowserWindowEvent<Void -> Void> = "will-resize";
+	var will_resize : electron.remote.BrowserWindowEvent<Void -> Void> = "will-resize";
 	/**
 		Emitted after the window has been resized.
 	**/
-	var resize : electron.main.BrowserWindowEvent<Void -> Void> = "resize";
+	var resize : electron.remote.BrowserWindowEvent<Void -> Void> = "resize";
 	/**
 		Emitted once when the window has finished being resized.
 		
 		This is usually emitted when the window has been resized manually. On macOS, resizing the window with `setBounds`/`setSize` and setting the `animate` parameter to `true` will also emit this event once resizing has finished.
 	**/
-	var resized : electron.main.BrowserWindowEvent<Void -> Void> = "resized";
+	var resized : electron.remote.BrowserWindowEvent<Void -> Void> = "resized";
 	/**
 		Emitted before the window is moved. On Windows, calling `event.preventDefault()` will prevent the window from being moved.
 		
 		Note that this is only emitted when the window is being resized manually. Resizing the window with `setBounds`/`setSize` will not emit this event.
 	**/
-	var will_move : electron.main.BrowserWindowEvent<Void -> Void> = "will-move";
+	var will_move : electron.remote.BrowserWindowEvent<Void -> Void> = "will-move";
 	/**
 		Emitted when the window is being moved to a new position.
 	**/
-	var move : electron.main.BrowserWindowEvent<Void -> Void> = "move";
+	var move : electron.remote.BrowserWindowEvent<Void -> Void> = "move";
 	/**
 		Emitted once when the window is moved to a new position.
 		
 		__Note__: On macOS this event is an alias of `move`.
 	**/
-	var moved : electron.main.BrowserWindowEvent<Void -> Void> = "moved";
+	var moved : electron.remote.BrowserWindowEvent<Void -> Void> = "moved";
 	/**
 		Emitted when the window enters a full-screen state.
 	**/
-	var enter_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "enter-full-screen";
+	var enter_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "enter-full-screen";
 	/**
 		Emitted when the window leaves a full-screen state.
 	**/
-	var leave_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "leave-full-screen";
+	var leave_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "leave-full-screen";
 	/**
 		Emitted when the window enters a full-screen state triggered by HTML API.
 	**/
-	var enter_html_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "enter-html-full-screen";
+	var enter_html_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "enter-html-full-screen";
 	/**
 		Emitted when the window leaves a full-screen state triggered by HTML API.
 	**/
-	var leave_html_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "leave-html-full-screen";
+	var leave_html_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "leave-html-full-screen";
 	/**
 		Emitted when the window is set or unset to show always on top of other windows.
 	**/
-	var always_on_top_changed : electron.main.BrowserWindowEvent<Void -> Void> = "always-on-top-changed";
+	var always_on_top_changed : electron.remote.BrowserWindowEvent<Void -> Void> = "always-on-top-changed";
 	/**
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows.
 		
@@ -1442,45 +1442,45 @@ package electron.remote;
 		* `browser-backward`
 		* `browser-forward`
 	**/
-	var app_command : electron.main.BrowserWindowEvent<Void -> Void> = "app-command";
+	var app_command : electron.remote.BrowserWindowEvent<Void -> Void> = "app-command";
 	/**
 		Emitted when scroll wheel event phase has begun.
 	**/
-	var scroll_touch_begin : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-begin";
+	var scroll_touch_begin : electron.remote.BrowserWindowEvent<Void -> Void> = "scroll-touch-begin";
 	/**
 		Emitted when scroll wheel event phase has ended.
 	**/
-	var scroll_touch_end : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-end";
+	var scroll_touch_end : electron.remote.BrowserWindowEvent<Void -> Void> = "scroll-touch-end";
 	/**
 		Emitted when scroll wheel event phase filed upon reaching the edge of element.
 	**/
-	var scroll_touch_edge : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-edge";
+	var scroll_touch_edge : electron.remote.BrowserWindowEvent<Void -> Void> = "scroll-touch-edge";
 	/**
 		Emitted on 3-finger swipe. Possible directions are `up`, `right`, `down`, `left`.
 		
 		The method underlying this event is built to handle older macOS-style trackpad swiping, where the content on the screen doesn't move with the swipe. Most macOS trackpads are not configured to allow this kind of swiping anymore, so in order for it to emit properly the 'Swipe between pages' preference in `System Preferences > Trackpad > More Gestures` must be set to 'Swipe with two or three fingers'.
 	**/
-	var swipe : electron.main.BrowserWindowEvent<Void -> Void> = "swipe";
+	var swipe : electron.remote.BrowserWindowEvent<Void -> Void> = "swipe";
 	/**
 		Emitted on trackpad rotation gesture. Continually emitted until rotation gesture is ended. The `rotation` value on each emission is the angle in degrees rotated since the last emission. The last emitted event upon a rotation gesture will always be of value `0`. Counter-clockwise rotation values are positive, while clockwise ones are negative.
 	**/
-	var rotate_gesture : electron.main.BrowserWindowEvent<Void -> Void> = "rotate-gesture";
+	var rotate_gesture : electron.remote.BrowserWindowEvent<Void -> Void> = "rotate-gesture";
 	/**
 		Emitted when the window opens a sheet.
 	**/
-	var sheet_begin : electron.main.BrowserWindowEvent<Void -> Void> = "sheet-begin";
+	var sheet_begin : electron.remote.BrowserWindowEvent<Void -> Void> = "sheet-begin";
 	/**
 		Emitted when the window has closed a sheet.
 	**/
-	var sheet_end : electron.main.BrowserWindowEvent<Void -> Void> = "sheet-end";
+	var sheet_end : electron.remote.BrowserWindowEvent<Void -> Void> = "sheet-end";
 	/**
 		Emitted when the native new tab button is clicked.
 	**/
-	var new_window_for_tab : electron.main.BrowserWindowEvent<Void -> Void> = "new-window-for-tab";
+	var new_window_for_tab : electron.remote.BrowserWindowEvent<Void -> Void> = "new-window-for-tab";
 	/**
 		Emitted when the system context menu is triggered on the window, this is normally only triggered when the user right clicks on the non-client area of your window.  This is the window titlebar or any area you have declared as `-webkit-app-region: drag` in a frameless window.
 		
 		Calling `event.preventDefault()` will prevent the menu from being displayed.
 	**/
-	var system_context_menu : electron.main.BrowserWindowEvent<Void -> Void> = "system-context-menu";
+	var system_context_menu : electron.remote.BrowserWindowEvent<Void -> Void> = "system-context-menu";
 }

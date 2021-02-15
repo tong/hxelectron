@@ -13,7 +13,8 @@ class Main {
 			var win = new BrowserWindow( {
 				width: 720, height: 480,
 				webPreferences: {
-					nodeIntegration: true
+					nodeIntegration: true,
+					enableRemoteModule: true
 				}
 			} );
 			win.on( closed, function() {
@@ -23,6 +24,13 @@ class Main {
 			//win.webContents.openDevTools();
 
 			var tray = new electron.main.Tray( '${__dirname}/icon-192.png' );
+
+			//var dialog = new electron.main.Dialog();
+			//electron.main.Dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] });
+
+			// var menu = new electron.main.Menu();
+			// menu.append(new electron.main.MenuItem({ label: 'MenuItem1'} ) );
+			// electron.main.Menu.setApplicationMenu(menu);
 		});
 
 		electron.main.App.on( window_all_closed, function(e) {

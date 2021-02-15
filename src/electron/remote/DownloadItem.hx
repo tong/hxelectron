@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	@see https://electronjs.org/docs/api/download-item
 **/
-@:jsRequire("electron", "remote.DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.main.DownloadItem> {
+@:jsRequire("electron", "remote.DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.remote.DownloadItem> {
 	/**
 		A `String` property that determines the save file path of the download item.
 		
@@ -111,7 +111,7 @@ package electron.remote;
 		* `progressing` - The download is in-progress.
 		* `interrupted` - The download has interrupted and can be resumed.
 	**/
-	var updated : electron.main.DownloadItemEvent<Void -> Void> = "updated";
+	var updated : electron.remote.DownloadItemEvent<Void -> Void> = "updated";
 	/**
 		Emitted when the download is in a terminal state. This includes a completed download, a cancelled download (via `downloadItem.cancel()`), and interrupted download that can't be resumed.
 		
@@ -121,5 +121,5 @@ package electron.remote;
 		* `cancelled` - The download has been cancelled.
 		* `interrupted` - The download has interrupted and can not resume.
 	**/
-	var done : electron.main.DownloadItemEvent<Void -> Void> = "done";
+	var done : electron.remote.DownloadItemEvent<Void -> Void> = "done";
 }

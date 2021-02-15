@@ -14,7 +14,7 @@ package electron.remote;
 	The Dialog is opened from Electron's main thread. If you want to use the dialog object from a renderer process, remember to access it using the remote:
 	@see https://electronjs.org/docs/api/dialog
 **/
-@:jsRequire("electron", "remote.dialog") extern class Dialog extends js.node.events.EventEmitter<electron.main.Dialog> {
+@:jsRequire("electron", "remote.dialog") extern class Dialog extends js.node.events.EventEmitter<electron.remote.Dialog> {
 	/**
 		the file paths chosen by the user; if the dialog is cancelled it returns `undefined`.
 		
@@ -26,7 +26,7 @@ package electron.remote;
 		
 		**Note:** On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
 	**/
-	static function showOpenDialogSync(?browserWindow:electron.main.BrowserWindow, options:{ @:optional
+	static function showOpenDialogSync(?browserWindow:electron.remote.BrowserWindow, options:{ @:optional
 	var title : String; @:optional
 	var defaultPath : String; /**
 		Custom label for the confirmation button, when left empty the default label will be used.
@@ -61,7 +61,7 @@ package electron.remote;
 		
 		**Note:** On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
 	**/
-	static function showOpenDialog(?browserWindow:electron.main.BrowserWindow, options:{ @:optional
+	static function showOpenDialog(?browserWindow:electron.remote.BrowserWindow, options:{ @:optional
 	var title : String; @:optional
 	var defaultPath : String; /**
 		Custom label for the confirmation button, when left empty the default label will be used.
@@ -88,7 +88,7 @@ package electron.remote;
 		
 		The `filters` specifies an array of file types that can be displayed, see `dialog.showOpenDialog` for an example.
 	**/
-	static function showSaveDialogSync(?browserWindow:electron.main.BrowserWindow, options:{ @:optional
+	static function showSaveDialogSync(?browserWindow:electron.remote.BrowserWindow, options:{ @:optional
 	var title : String; /**
 		Absolute directory path, absolute file path, or file name to use by default.
 	**/
@@ -129,7 +129,7 @@ package electron.remote;
 		
 		**Note:** On macOS, using the asynchronous version is recommended to avoid issues when expanding and collapsing the dialog.
 	**/
-	static function showSaveDialog(?browserWindow:electron.main.BrowserWindow, options:{ @:optional
+	static function showSaveDialog(?browserWindow:electron.remote.BrowserWindow, options:{ @:optional
 	var title : String; /**
 		Absolute directory path, absolute file path, or file name to use by default.
 	**/
@@ -164,7 +164,7 @@ package electron.remote;
 		
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal. If `browserWindow` is not shown dialog will not be attached to it. In such case it will be displayed as an independent window.
 	**/
-	static function showMessageBoxSync(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showMessageBoxSync(?browserWindow:electron.remote.BrowserWindow, options:{ /**
 		Can be `"none"`, `"info"`, `"error"`, `"question"` or `"warning"`. On Windows, `"question"` displays the same icon as `"info"`, unless you set an icon using the `"icon"` option. On macOS, both `"warning"` and `"error"` display the same warning icon.
 	**/
 	@:optional
@@ -219,7 +219,7 @@ package electron.remote;
 		
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
 	**/
-	static function showMessageBox(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showMessageBox(?browserWindow:electron.remote.BrowserWindow, options:{ /**
 		Can be `"none"`, `"info"`, `"error"`, `"question"` or `"warning"`. On Windows, `"question"` displays the same icon as `"info"`, unless you set an icon using the `"icon"` option. On macOS, both `"warning"` and `"error"` display the same warning icon.
 	**/
 	@:optional
@@ -280,7 +280,7 @@ package electron.remote;
 		* The `message` argument is not used, as the OS provides its own confirmation dialog.
 		* The `browserWindow` argument is ignored since it is not possible to make this confirmation dialog modal.
 	**/
-	static function showCertificateTrustDialog(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showCertificateTrustDialog(?browserWindow:electron.remote.BrowserWindow, options:{ /**
 		The certificate to trust/import.
 	**/
 	var certificate : electron.Certificate; /**

@@ -7,7 +7,7 @@ package electron.remote;
 	`ClientRequest` implements the Writable Stream interface and is therefore an EventEmitter.
 	@see https://electronjs.org/docs/api/client-request
 **/
-@:jsRequire("electron", "remote.ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {
+@:jsRequire("electron", "remote.ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.remote.ClientRequest> {
 	/**
 		A `Boolean` specifying whether the request will use HTTP chunked transfer encoding or not. Defaults to false. The property is readable and writable, however it can be set only before the first write operation as the HTTP headers are not yet put on the wire. Trying to set the `chunkedEncoding` property after the first write will throw an error.
 		
@@ -68,7 +68,7 @@ package electron.remote;
 	function getUploadProgress():Any;
 }
 @:enum abstract ClientRequestEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
-	var response : electron.main.ClientRequestEvent<Void -> Void> = "response";
+	var response : electron.remote.ClientRequestEvent<Void -> Void> = "response";
 	/**
 		Emitted when an authenticating proxy is asking for user credentials.
 		
@@ -79,25 +79,25 @@ package electron.remote;
 		
 		Providing empty credentials will cancel the request and report an authentication error on the response object:
 	**/
-	var login : electron.main.ClientRequestEvent<Void -> Void> = "login";
+	var login : electron.remote.ClientRequestEvent<Void -> Void> = "login";
 	/**
 		Emitted just after the last chunk of the `request`'s data has been written into the `request` object.
 	**/
-	var finish : electron.main.ClientRequestEvent<Void -> Void> = "finish";
+	var finish : electron.remote.ClientRequestEvent<Void -> Void> = "finish";
 	/**
 		Emitted when the `request` is aborted. The `abort` event will not be fired if the `request` is already closed.
 	**/
-	var abort : electron.main.ClientRequestEvent<Void -> Void> = "abort";
+	var abort : electron.remote.ClientRequestEvent<Void -> Void> = "abort";
 	/**
 		Emitted when the `net` module fails to issue a network request. Typically when the `request` object emits an `error` event, a `close` event will subsequently follow and no response object will be provided.
 	**/
-	var error : electron.main.ClientRequestEvent<Void -> Void> = "error";
+	var error : electron.remote.ClientRequestEvent<Void -> Void> = "error";
 	/**
 		Emitted as the last event in the HTTP request-response transaction. The `close` event indicates that no more events will be emitted on either the `request` or `response` objects.
 	**/
-	var close : electron.main.ClientRequestEvent<Void -> Void> = "close";
+	var close : electron.remote.ClientRequestEvent<Void -> Void> = "close";
 	/**
 		Emitted when the server returns a redirect response (e.g. 301 Moved Permanently). Calling `request.followRedirect` will continue with the redirection.  If this event is handled, `request.followRedirect` must be called **synchronously**, otherwise the request will be cancelled.
 	**/
-	var redirect : electron.main.ClientRequestEvent<Void -> Void> = "redirect";
+	var redirect : electron.remote.ClientRequestEvent<Void -> Void> = "redirect";
 }
