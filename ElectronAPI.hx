@@ -48,6 +48,29 @@ class ElectronAPI {
 			if( !FileSystem.exists( dir ) ) FileSystem.createDirectory( dir );
 			File.saveContent( '$dir/${type.name}.hx', '$code\n' );
 		}
+		
+		// postprocess: make remote modules
+		var main = 'src/electron/main';
+		var remote = 'src/electron/remote';
+		var regex = ~/@:jsRequire\("electron", "(\w*)"\)/;
+		if( !FileSystem.exists( remote ) ) FileSystem.createDirectory( remote );
+		for(item in items) {
+			if( ( item.type == Module || item.type == Class_ ) && item.process != null && item.process.main ) {
+				try {
+					var name = Gen.capitalize( item.name );
+					var content = File.getContent( '$main/$name.hx' );
+					var patched = regex.replace( content.replace( 'package electron.main;', 'package electron.remote;' ), '@:jsRequire("electron", "remote.$1")' );
+					if( item.name == 'screen' ) {
+						// TODO: https://github.com/fponticelli/hxelectron/issues/29
+						patched = patched.replace("@:native('require(\\\"electron\\\").screen')", "@:native('require(\\\"electron\\\").remote.screen')");
+					}
+					File.saveContent( '$remote/$name.hx', patched );
+				} catch( e:Dynamic ) {
+					// trace( e ); 
+				}
+			}
+		}
+		
 	}
 
 	static function rmdir( path : String ) {
@@ -546,10 +569,10 @@ private class Gen {
 		return name;
 	}
 	
-	static inline function capitalize( s : String ) : String
+	public static inline function capitalize( s : String ) : String
 		return s.charAt( 0 ).toUpperCase() + s.substr( 1 );
 
-	static inline function uncapitalize( s : String ) : String
+	public static inline function uncapitalize( s : String ) : String
 		return s.charAt( 0 ).toLowerCase() + s.substr( 1 );
 }
 
