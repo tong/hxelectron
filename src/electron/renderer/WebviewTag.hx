@@ -102,7 +102,7 @@ package electron.renderer;
 	<webview src="http://www.google.com/" enableremotemodule="false"></webview>
 	```
 	
-	A `Boolean`. When this attribute is `false` the guest page in `webview` will not have access to the `remote` module. The remote module is available by default.
+	A `Boolean`. When this attribute is `false` the guest page in `webview` will not have access to the `remote` module. The remote module is unavailable by default.
 	
 	### `plugins`
 	

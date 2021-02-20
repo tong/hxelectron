@@ -1307,6 +1307,10 @@ package electron.remote;
 	function addBrowserView(browserView:electron.remote.BrowserView):Void;
 	function removeBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
+		Raises `browserView` above other `BrowserView`s attached to `win`. Throws an error if `browserView` is not attached to `win`.
+	**/
+	function setTopBrowserView(browserView:electron.remote.BrowserView):Void;
+	/**
 		an array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`.
 		
 		**Note:** The BrowserView API is currently experimental and may change or be removed in future Electron releases.
