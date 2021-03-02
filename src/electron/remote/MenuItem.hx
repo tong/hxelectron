@@ -77,6 +77,12 @@ package electron.remote;
 	**/
 	var registerAccelerator : Bool;
 	/**
+		A `SharingItem` indicating the item to share when the `role` is `shareMenu`.
+		
+		This property can be dynamically changed.
+	**/
+	var sharingItem : electron.SharingItem;
+	/**
 		A `Number` indicating an item's sequential unique id.
 	**/
 	var commandId : Float;
@@ -89,7 +95,7 @@ package electron.remote;
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
-		Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu` - Define the action of the menu item, when specified the `click` property will be ignored. See roles.
+		Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu` - Define the action of the menu item, when specified the `click` property will be ignored. See roles.
 	**/
 	@:optional
 	var role : String; /**
@@ -125,6 +131,10 @@ package electron.remote;
 	**/
 	@:optional
 	var registerAccelerator : Bool; /**
+		The item to share when the `role` is `shareMenu`.
+	**/
+	@:optional
+	var sharingItem : electron.SharingItem; /**
 		Should be specified for `submenu` type menu items. If `submenu` is specified, the `type: 'submenu'` can be omitted. If the value is not a `Menu` then it will be automatically converted to one using `Menu.buildFromTemplate`.
 	**/
 	@:optional

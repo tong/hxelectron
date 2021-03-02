@@ -46,6 +46,8 @@ package electron.renderer;
 	static function getZoomFactor():Float;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively.
+		
+		> **NOTE**: The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
 	**/
 	static function setZoomLevel(level:Float):Void;
 	/**
@@ -145,6 +147,14 @@ package electron.renderer;
 		that has the supplied `routingId`, `null` if not found.
 	**/
 	static function findFrameByRoutingId(routingId:Int):electron.renderer.WebFrame;
+	/**
+		True if the word is misspelled according to the built in spellchecker, false otherwise. If no dictionary is loaded, always return false.
+	**/
+	static function isWordMisspelled(word:String):Bool;
+	/**
+		A list of suggested words for a given word. If the word is spelled correctly, the result will be empty.
+	**/
+	static function getWordSuggestions(word:String):Array<String>;
 }
 @:enum abstract WebFrameEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 

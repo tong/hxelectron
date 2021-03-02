@@ -15,4 +15,8 @@ typedef IpcMainInvokeEvent = {
 		Returns the `webContents` that sent the message
 	**/
 	var sender : electron.main.WebContents;
+	/**
+		The frame that sent this message
+	**/
+	var senderFrame : electron.main.WebFrameMain;
 }

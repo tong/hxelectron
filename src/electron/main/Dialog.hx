@@ -158,6 +158,9 @@ package electron.main;
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal. If `browserWindow` is not shown dialog will not be attached to it. In such case it will be displayed as an independent window.
 	**/
 	static function showMessageBoxSync(?browserWindow:electron.main.BrowserWindow, options:{ /**
+		Content of the message box.
+	**/
+	var message : String; /**
 		Can be `"none"`, `"info"`, `"error"`, `"question"` or `"warning"`. On Windows, `"question"` displays the same icon as `"info"`, unless you set an icon using the `"icon"` option. On macOS, both `"warning"` and `"error"` display the same warning icon.
 	**/
 	@:optional
@@ -174,9 +177,6 @@ package electron.main;
 	**/
 	@:optional
 	var title : String; /**
-		Content of the message box.
-	**/
-	var message : String; /**
 		Extra information of the message.
 	**/
 	@:optional
@@ -208,11 +208,14 @@ package electron.main;
 		* `response` Number - The index of the clicked button.
 		* `checkboxChecked` Boolean - The checked state of the checkbox if `checkboxLabel` was set. Otherwise `false`.
 		
-		Shows a message box, it will block the process until the message box is closed.
+		Shows a message box.
 		
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
 	**/
 	static function showMessageBox(?browserWindow:electron.main.BrowserWindow, options:{ /**
+		Content of the message box.
+	**/
+	var message : String; /**
 		Can be `"none"`, `"info"`, `"error"`, `"question"` or `"warning"`. On Windows, `"question"` displays the same icon as `"info"`, unless you set an icon using the `"icon"` option. On macOS, both `"warning"` and `"error"` display the same warning icon.
 	**/
 	@:optional
@@ -229,9 +232,6 @@ package electron.main;
 	**/
 	@:optional
 	var title : String; /**
-		Content of the message box.
-	**/
-	var message : String; /**
 		Extra information of the message.
 	**/
 	@:optional

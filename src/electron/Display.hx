@@ -40,6 +40,10 @@ typedef Display = {
 		The number of bits per color component.
 	**/
 	var depthPerComponent : Float;
+	/**
+		The display refresh rate.
+	**/
+	var displayFrequency : Float;
 	var bounds : electron.Rectangle;
 	var size : electron.Size;
 	var workArea : electron.Rectangle;

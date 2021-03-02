@@ -68,6 +68,10 @@ package electron.remote;
 	**/
 	var backgroundThrottling : Bool;
 	/**
+		A `WebFrameMain` property that represents the top frame of the page's frame hierarchy.
+	**/
+	var mainFrame : electron.remote.WebFrameMain;
+	/**
 		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`). A noop rejection handler is already attached, which avoids unhandled rejection errors.
 		
 		Loads the `url` in the window. The `url` must contain the protocol prefix, e.g. the `http://` or `file://`. If the load should bypass http cache then use the `pragma` header to achieve it.
@@ -85,7 +89,7 @@ package electron.remote;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<Dynamic>, haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>>; /**
+	var postData : haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
@@ -245,6 +249,10 @@ package electron.remote;
 	**/
 	function setIgnoreMenuShortcuts(ignore:Bool):Void;
 	/**
+		Called before creating a window when `window.open()` is called from the renderer. See `window.open()` for more details and how to use this in conjunction with `did-create-window`.
+	**/
+	function setWindowOpenHandler(handler:haxe.Constraints.Function):Void;
+	/**
 		Mute the audio on the current web page.
 	**/
 	function setAudioMuted(muted:Bool):Void;
@@ -268,6 +276,8 @@ package electron.remote;
 	function getZoomFactor():Float;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is `scale := 1.2 ^ level`.
+		
+		> **NOTE**: The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
 	**/
 	function setZoomLevel(level:Float):Void;
 	/**
@@ -349,15 +359,7 @@ package electron.remote;
 		Whether search should be case-sensitive, defaults to `false`.
 	**/
 	@:optional
-	var matchCase : Bool; /**
-		Whether to look only at the start of words. defaults to `false`.
-	**/
-	@:optional
-	var wordStart : Bool; /**
-		When combined with `wordStart`, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to `false`.
-	**/
-	@:optional
-	var medialCapitalAsWordStart : Bool; }):Int;
+	var matchCase : Bool; }):Int;
 	/**
 		Stops any `findInPage` request for the `webContents` with the provided `action`.
 	**/
@@ -790,6 +792,8 @@ var to : Float; }>; /**
 	**/
 	var page_favicon_updated : electron.remote.WebContentsEvent<Void -> Void> = "page-favicon-updated";
 	/**
+		Deprecated in favor of `webContents.setWindowOpenHandler`.
+		
 		Emitted when the page requests to open a new window for a `url`. It could be requested by `window.open` or an external link like `<a target='_blank'>`.
 		
 		By default a new `BrowserWindow` will be created for the `url`.
@@ -797,6 +801,12 @@ var to : Float; }>; /**
 		Calling `event.preventDefault()` will prevent Electron from automatically creating a new `BrowserWindow`. If you call `event.preventDefault()` and manually create a new `BrowserWindow` then you must set `event.newGuest` to reference the new `BrowserWindow` instance, failing to do so may result in unexpected behavior. For example:
 	**/
 	var new_window : electron.remote.WebContentsEvent<Void -> Void> = "new-window";
+	/**
+		Emitted _after_ successful creation of a window via `window.open` in the renderer. Not emitted if the creation of the window is canceled from `webContents.setWindowOpenHandler`.
+		
+		See `window.open()` for more details and how to use this in conjunction with `webContents.setWindowOpenHandler`.
+	**/
+	var did_create_window : electron.remote.WebContentsEvent<Void -> Void> = "did-create-window";
 	/**
 		Emitted when a user or the page wants to start navigation. It can happen when the `window.location` object is changed or a user clicks a link in the page.
 		
@@ -808,7 +818,7 @@ var to : Float; }>; /**
 	**/
 	var will_navigate : electron.remote.WebContentsEvent<Void -> Void> = "will-navigate";
 	/**
-		Emitted when any frame (including main) starts navigating. `isInplace` will be `true` for in-page navigations.
+		Emitted when any frame (including main) starts navigating. `isInPlace` will be `true` for in-page navigations.
 	**/
 	var did_start_navigation : electron.remote.WebContentsEvent<Void -> Void> = "did-start-navigation";
 	/**
@@ -1017,4 +1027,10 @@ var to : Float; }>; /**
 		Emitted when `remote.getCurrentWebContents()` is called in the renderer process. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
 	**/
 	var remote_get_current_web_contents : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-current-web-contents";
+	/**
+		Emitted when the `WebContents` preferred size has changed.
+		
+		This event will only be emitted when `enablePreferredSizeMode` is set to `true` in `webPreferences`.
+	**/
+	var preferred_size_changed : electron.remote.WebContentsEvent<Void -> Void> = "preferred-size-changed";
 }

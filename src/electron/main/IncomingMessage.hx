@@ -40,7 +40,7 @@ package electron.main;
 	**/
 	var data : electron.main.IncomingMessageEvent<Void -> Void> = "data";
 	/**
-		Indicates that response body has ended.
+		Indicates that response body has ended. Must be placed before 'data' event.
 	**/
 	var end : electron.main.IncomingMessageEvent<Void -> Void> = "end";
 	/**

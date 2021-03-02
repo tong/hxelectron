@@ -19,9 +19,13 @@ package electron.remote;
 	**/
 	var cache : Bool; }):electron.remote.Session;
 	/**
-		A `String[]` array which consists of all the known available spell checker languages.  Providing a language code to the `setSpellCheckerLanaguages` API that isn't in this array will result in an error.
+		A `String[]` array which consists of all the known available spell checker languages.  Providing a language code to the `setSpellCheckerLanguages` API that isn't in this array will result in an error.
 	**/
 	var availableSpellCheckerLanguages : Array<String>;
+	/**
+		A `Boolean` indicating whether builtin spell checker is enabled.
+	**/
+	var spellCheckerEnabled : Bool;
 	/**
 		A `Cookies` object for this session.
 	**/
@@ -77,7 +81,9 @@ package electron.remote;
 		
 		Sets the proxy settings.
 		
-		When `pacScript` and `proxyRules` are provided together, the `proxyRules` option is ignored and `pacScript` configuration is applied.
+		When `mode` is unspecified, `pacScript` and `proxyRules` are provided together, the `proxyRules` option is ignored and `pacScript` configuration is applied.
+		
+		You may need `ses.closeAllConnections` to close currently in flight connections to prevent pooled sockets using previous proxy from being reused by future requests.
 		
 		The `proxyRules` has to follow the rules below:
 		
@@ -118,6 +124,10 @@ package electron.remote;
 		Match local addresses. The meaning of `<local>` is whether the host matches one of: "127.0.0.1", "::1", "localhost".
 	**/
 	function setProxy(config:{ /**
+		The proxy mode. Should be one of `direct`, `auto_detect`, `pac_script`, `fixed_servers` or `system`. If it's unspecified, it will be automatically determined based on other specified options.
+	**/
+	@:optional
+	var mode : String; /**
 		The URL associated with the PAC file.
 	**/
 	@:optional
@@ -134,6 +144,10 @@ package electron.remote;
 		Resolves with the proxy information for `url`.
 	**/
 	function resolveProxy(url:String):js.lib.Promise<Any>;
+	/**
+		Resolves when the all internal states of proxy service is reset and the latest proxy configuration is reapplied if it's already available. The pac script will be fetched from `pacScript` again if the proxy mode is `pac_script`.
+	**/
+	function forceReloadProxyConfig():js.lib.Promise<Any>;
 	/**
 		Sets download saving directory. By default, the download directory will be the `Downloads` under the respective app folder.
 	**/
@@ -170,6 +184,12 @@ package electron.remote;
 	@:optional
 	var numSockets : Float; }):Void;
 	/**
+		Resolves when all connections are closed.
+		
+		**Note:** It will terminate / fail all requests currently in flight.
+	**/
+	function closeAllConnections():js.lib.Promise<Any>;
+	/**
 		Disables any network emulation already active for the `session`. Resets to the original network configuration.
 	**/
 	function disableNetworkEmulation():Void;
@@ -177,6 +197,8 @@ package electron.remote;
 		Sets the certificate verify proc for `session`, the `proc` will be called with `proc(request, callback)` whenever a server certificate verification is requested. Calling `callback(0)` accepts the certificate, calling `callback(-2)` rejects it.
 		
 		Calling `setCertificateVerifyProc(null)` will revert back to default certificate verify proc.
+		
+		> **NOTE:** The result of this procedure is cached by the network service.
 	**/
 	function setCertificateVerifyProc(proc:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
@@ -213,6 +235,22 @@ package electron.remote;
 		The user agent for this session.
 	**/
 	function getUserAgent():String;
+	/**
+		Sets the SSL configuration for the session. All subsequent network requests will use the new configuration. Existing network connections (such as WebSocket connections) will not be terminated, but old sockets in the pool will not be reused for new connections.
+	**/
+	function setSSLConfig(config:{ /**
+		Can be `tls1`, `tls1.1`, `tls1.2` or `tls1.3`. The minimum SSL version to allow when connecting to remote servers. Defaults to `tls1`.
+	**/
+	@:optional
+	var minVersion : String; /**
+		Can be `tls1.2` or `tls1.3`. The maximum SSL version to allow when connecting to remote servers. Defaults to `tls1.3`.
+	**/
+	@:optional
+	var maxVersion : String; /**
+		List of cipher suites which should be explicitly prevented from being used in addition to those disabled by the net built-in policy. Supported literal forms: 0xAABB, where AA is `cipher_suite[0]` and BB is `cipher_suite[1]`, as defined in RFC 2246, Section 7.4.1.2. Unrecognized but parsable cipher suites in this form will not return an error. Ex: To disable TLS_RSA_WITH_RC4_128_MD5, specify 0x0004, while to disable TLS_ECDH_ECDSA_WITH_RC4_128_SHA, specify 0xC002. Note that TLSv1.3 ciphers cannot be disabled using this mechanism.
+	**/
+	@:optional
+	var disabledCipherSuites : Array<Int>; }):Void;
 	/**
 		resolves with blob data.
 	**/
@@ -264,6 +302,14 @@ package electron.remote;
 		an array of paths to preload scripts that have been registered.
 	**/
 	function getPreloads():Array<String>;
+	/**
+		Sets whether to enable the builtin spell checker.
+	**/
+	function setSpellCheckerEnabled(enable:Bool):Void;
+	/**
+		Whether the builtin spell checker is enabled.
+	**/
+	function isSpellCheckerEnabled():Bool;
 	/**
 		The built in spellchecker does not automatically detect what language a user is typing in.  In order for the spell checker to correctly check their words you must call this API with an array of language codes.  You can get the list of supported language codes with the `ses.availableSpellCheckerLanguages` property.
 		
@@ -346,6 +392,23 @@ package electron.remote;
 	**/
 	var will_download : electron.remote.SessionEvent<Void -> Void> = "will-download";
 	/**
+		Emitted after an extension is loaded. This occurs whenever an extension is added to the "enabled" set of extensions. This includes:
+		
+		* Extensions being loaded from `Session.loadExtension`.
+		* Extensions being reloaded:
+		  * from a crash.
+		  * if the extension requested it (`chrome.runtime.reload()`).
+	**/
+	var extension_loaded : electron.remote.SessionEvent<Void -> Void> = "extension-loaded";
+	/**
+		Emitted after an extension is unloaded. This occurs when `Session.removeExtension` is called.
+	**/
+	var extension_unloaded : electron.remote.SessionEvent<Void -> Void> = "extension-unloaded";
+	/**
+		Emitted after an extension is loaded and all necessary browser state is initialized to support the start of the extension's background page.
+	**/
+	var extension_ready : electron.remote.SessionEvent<Void -> Void> = "extension-ready";
+	/**
 		Emitted when a render process requests preconnection to a URL, generally due to a resource hint.
 	**/
 	var preconnect : electron.remote.SessionEvent<Void -> Void> = "preconnect";
@@ -365,4 +428,18 @@ package electron.remote;
 		Emitted when a hunspell dictionary file download fails.  For details on the failure you should collect a netlog and inspect the download request.
 	**/
 	var spellcheck_dictionary_download_failure : electron.remote.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-failure";
+	/**
+		Emitted when a serial port needs to be selected when a call to `navigator.serial.requestPort` is made. `callback` should be called with `portId` to be selected, passing an empty string to `callback` will cancel the request.  Additionally, permissioning on `navigator.serial` can be managed by using ses.setPermissionCheckHandler(handler) with the `serial` permission.
+		
+		Because this is an experimental feature it is disabled by default.  To enable this feature, you will need to use the `--enable-features=ElectronSerialChooser` command line switch.  Additionally because this is an experimental Chromium feature you will need to set `enableBlinkFeatures: 'Serial'` on the `webPreferences` property when opening a BrowserWindow.
+	**/
+	var select_serial_port : electron.remote.SessionEvent<Void -> Void> = "select-serial-port";
+	/**
+		Emitted after `navigator.serial.requestPort` has been called and `select-serial-port` has fired if a new serial port becomes available.  For example, this event will fire when a new USB device is plugged in.
+	**/
+	var serial_port_added : electron.remote.SessionEvent<Void -> Void> = "serial-port-added";
+	/**
+		Emitted after `navigator.serial.requestPort` has been called and `select-serial-port` has fired if a serial port has been removed.  For example, this event will fire when a USB device is unplugged.
+	**/
+	var serial_port_removed : electron.remote.SessionEvent<Void -> Void> = "serial-port-removed";
 }

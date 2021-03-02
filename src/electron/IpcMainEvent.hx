@@ -20,6 +20,10 @@ typedef IpcMainEvent = {
 	**/
 	var sender : electron.main.WebContents;
 	/**
+		The frame that sent this message
+	**/
+	var senderFrame : electron.main.WebFrameMain;
+	/**
 		A list of MessagePorts that were transferred with this message
 	**/
 	var ports : Array<electron.main.MessagePortMain>;

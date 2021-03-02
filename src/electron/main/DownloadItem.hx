@@ -10,7 +10,7 @@ package electron.main;
 	**/
 	var savePath : String;
 	/**
-		The API is only available in session's `will-download` callback function. If user doesn't set the save path via the API, Electron will use the original routine to determine the save path; this usually prompts a save dialog.
+		The API is only available in session's `will-download` callback function. If `path` doesn't exist, Electron will try to make the directory recursively. If user doesn't set the save path via the API, Electron will use the original routine to determine the save path; this usually prompts a save dialog.
 	**/
 	function setSavePath(path:String):Void;
 	/**

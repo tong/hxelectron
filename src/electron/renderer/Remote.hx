@@ -4,6 +4,12 @@ package electron.renderer;
 	
 	Process: Renderer
 	
+	> ⚠️ WARNING ⚠️ The `remote` module is deprecated. Instead of `remote`, use `ipcRenderer` and `ipcMain`.
+	
+	Read more about why the `remote` module is deprecated here.
+	
+	If you still want to use `remote` despite the performance and security concerns, see @electron/remote.
+	
 	The `remote` module provides a simple way to do inter-process communication (IPC) between the renderer process (web page) and the main process.
 	
 	In Electron, GUI-related modules (such as `dialog`, `menu` etc.) are only available in the main process, not in the renderer process. In order to use them from the renderer process, the `ipc` module is necessary to send inter-process messages to the main process. With the `remote` module, you can invoke methods of the main process object without explicitly sending inter-process messages, similar to Java's RMI. An example of creating a browser window from a renderer process:
@@ -98,15 +104,15 @@ package electron.renderer;
 **/
 @:jsRequire("electron", "remote") extern class Remote extends js.node.events.EventEmitter<electron.renderer.Remote> {
 	/**
-		A `NodeJS.Process` object.  The `process` object in the main process. This is the same as `remote.getGlobal('process')` but is cached.
-	**/
-	static var process : js.node.Process;
-	/**
-		The object returned by `require(module)` in the main process. Modules specified by their relative path will resolve relative to the entrypoint of the main process.
+		A `NodeJS.Require` function equivalent to `require(module)` in the main process. Modules specified by their relative path will resolve relative to the entrypoint of the main process.
 		
 		e.g.
 	**/
-	static function require(module:String):Any;
+	static var require : NodeJS.Require;
+	/**
+		A `NodeJS.Process` object.  The `process` object in the main process. This is the same as `remote.getGlobal('process')` but is cached.
+	**/
+	static var process : js.node.Process;
 	/**
 		The window to which this web page belongs.
 		

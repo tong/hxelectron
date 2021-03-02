@@ -4,7 +4,7 @@ package electron.remote;
 	
 	Process: Main
 	
-	The `net` module is a client-side API for issuing HTTP(S) requests. It is similar to the HTTP and HTTPS modules of Node.js but uses Chromium's native networking library instead of the Node.js implementation, offering better support for web proxies.
+	The `net` module is a client-side API for issuing HTTP(S) requests. It is similar to the HTTP and HTTPS modules of Node.js but uses Chromium's native networking library instead of the Node.js implementation, offering better support for web proxies. It also supports checking network status.
 	
 	The following is a non-exhaustive list of why you may consider using the `net` module instead of the native Node.js modules:
 	
@@ -41,9 +41,21 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.net") extern class Net extends js.node.events.EventEmitter<electron.remote.Net> {
 	/**
+		A `Boolean` property. Whether there is currently internet connection.
+		
+		A return value of `false` is a pretty strong indicator that the user won't be able to connect to remote sites. However, a return value of `true` is inconclusive; even if some link is up, it is uncertain whether a particular connection attempt to a particular remote site will be successful.
+	**/
+	static var online : Bool;
+	/**
 		Creates a `ClientRequest` instance using the provided `options` which are directly forwarded to the `ClientRequest` constructor. The `net.request` method would be used to issue both secure and insecure HTTP requests according to the specified protocol scheme in the `options` object.
 	**/
 	static function request(options:haxe.extern.EitherType<Dynamic, Dynamic>):electron.remote.ClientRequest;
+	/**
+		Whether there is currently internet connection.
+		
+		A return value of `false` is a pretty strong indicator that the user won't be able to connect to remote sites. However, a return value of `true` is inconclusive; even if some link is up, it is uncertain whether a particular connection attempt to a particular remote site will be successful.
+	**/
+	static function isOnline():Bool;
 }
 @:enum abstract NetEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 

@@ -12,7 +12,11 @@ typedef ProcessMetric = {
 	**/
 	var type : String;
 	/**
-		The name of the process. i.e. for plugins it might be Flash. Examples for utility: `Audio Service`, `Content Decryption Module Service`, `Network Service`, `Video Capture`, etc.
+		The non-localized name of the process.
+	**/
+	var serviceName : String;
+	/**
+		The name of the process. Examples for utility: `Audio Service`, `Content Decryption Module Service`, `Network Service`, `Video Capture`, etc.
 	**/
 	var name : String;
 	/**

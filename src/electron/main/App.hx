@@ -374,7 +374,7 @@ package electron.main;
 		
 		**Note:** Unity launcher requires the existence of a `.desktop` file to work, for more information please read Desktop Environment Integration.
 	**/
-	static function setBadgeCount(count:Int):Bool;
+	static function setBadgeCount(?count:Int):Bool;
 	/**
 		The current value displayed in the counter badge.
 	**/
@@ -559,7 +559,7 @@ package electron.main;
 	**/
 	var will_finish_launching : electron.main.AppEvent<Void -> Void> = "will-finish-launching";
 	/**
-		Emitted once, when Electron has finished initializing. On macOS, `launchInfo` holds the `userInfo` of the `NSUserNotification` that was used to open the application, if it was launched from Notification Center. You can also call `app.isReady()` to check if this event has already fired and `app.whenReady()` to get a Promise that is fulfilled when Electron is initialized.
+		Emitted once, when Electron has finished initializing. On macOS, `launchInfo` holds the `userInfo` of the `NSUserNotification` or information from `UNNotificationResponse` that was used to open the application, if it was launched from Notification Center. You can also call `app.isReady()` to check if this event has already fired and `app.whenReady()` to get a Promise that is fulfilled when Electron is initialized.
 	**/
 	var ready : electron.main.AppEvent<Void -> Void> = "ready";
 	/**
@@ -682,6 +682,11 @@ package electron.main;
 		**Deprecated:** This event is superceded by the `child-process-gone` event which contains more information about why the child process disappeared. It isn't always because it crashed. The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
 	**/
 	var gpu_process_crashed : electron.main.AppEvent<Void -> Void> = "gpu-process-crashed";
+	/**
+		Emitted when the renderer process of `webContents` crashes or is killed.
+		
+		**Deprecated:** This event is superceded by the `render-process-gone` event which contains more information about why the render process disappeared. It isn't always because it crashed.  The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
+	**/
 	var renderer_process_crashed : electron.main.AppEvent<Void -> Void> = "renderer-process-crashed";
 	/**
 		Emitted when the renderer process unexpectedly disappears.  This is normally because it was crashed or killed.

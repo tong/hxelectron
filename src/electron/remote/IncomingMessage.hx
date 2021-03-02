@@ -40,7 +40,7 @@ package electron.remote;
 	**/
 	var data : electron.remote.IncomingMessageEvent<Void -> Void> = "data";
 	/**
-		Indicates that response body has ended.
+		Indicates that response body has ended. Must be placed before 'data' event.
 	**/
 	var end : electron.remote.IncomingMessageEvent<Void -> Void> = "end";
 	/**

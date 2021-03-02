@@ -609,7 +609,7 @@ package electron.main;
 	**/
 	@:optional
 	var offscreen : Bool; /**
-		Whether to run Electron APIs and the specified `preload` script in a separate JavaScript context. Defaults to `false`. The context that the `preload` script runs in will still have full access to the `document` and `window` globals but it will use its own set of JavaScript builtins (`Array`, `Object`, `JSON`, etc.) and will be isolated from any changes made to the global environment by the loaded page. The Electron API will only be available in the `preload` script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the `preload` script and any Electron APIs being used. This option uses the same technique used by Chrome Content Scripts. You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab.
+		Whether to run Electron APIs and the specified `preload` script in a separate JavaScript context. Defaults to `false`. The context that the `preload` script runs in will only have access to its own dedicated `document` and `window` globals, as well as its own set of JavaScript builtins (`Array`, `Object`, `JSON`, etc.), which are all invisible to the loaded content. The Electron API will only be available in the `preload` script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the `preload` script and any Electron APIs being used.  This option uses the same technique used by Chrome Content Scripts.  You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab.
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
@@ -668,7 +668,11 @@ package electron.main;
 		Enforces the v8 code caching policy used by blink. Accepted values are
 	**/
 	@:optional
-	var v8CacheOptions : String; }; }):Void;
+	var v8CacheOptions : String; /**
+		Whether to enable preferred size mode. The preferred size is the minimum size needed to contain the layout of the document—without requiring scrolling. Enabling this will cause the `preferred-size-changed` event to be emitted on the `WebContents` when the preferred size changes. Default is `false`.
+	**/
+	@:optional
+	var enablePreferredSizeMode : Bool; }; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
@@ -960,6 +964,14 @@ package electron.main;
 	**/
 	function isKiosk():Bool;
 	/**
+		Whether the window is in Windows 10 tablet mode.
+		
+		Since Windows 10 users can use their PC as tablet, under this mode apps can choose to optimize their UI for tablets, such as enlarging the titlebar and hiding titlebar buttons.
+		
+		This API returns whether the window is in tablet mode, and the `resize` event can be be used to listen to changes to tablet mode.
+	**/
+	function isTabletMode():Bool;
+	/**
 		Window id in the format of DesktopCapturerSource's id. For example "window:1234:0".
 		
 		More precisely the format is `window:id:other_id` where `id` is `HWND` on Windows, `CGWindowID` (`uint64_t`) on macOS and `Window` (`unsigned long`) on Linux. `other_id` is used to identify web contents (tabs) so within the same top level window.
@@ -1035,7 +1047,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<Dynamic>, haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>>; /**
+	var postData : haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>; /**
 		Base URL (with trailing path separator) for files to be loaded by the data URL. This is needed only if the specified `url` is a data URL and needs to load other files.
 	**/
 	@:optional
@@ -1227,7 +1239,7 @@ package electron.main;
 	/**
 		Prevents the window contents from being captured by other apps.
 		
-		On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with `WDA_MONITOR`.
+		On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
 	**/
 	function setContentProtection(enable:Bool):Void;
 	/**

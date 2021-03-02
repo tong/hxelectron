@@ -31,4 +31,8 @@ typedef ShortcutDetails = {
 		The Application User Model ID. Default is empty.
 	**/
 	var appUserModelId : String;
+	/**
+		The Application Toast Activator CLSID. Needed for participating in Action Center.
+	**/
+	var toastActivatorClsid : String;
 }

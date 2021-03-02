@@ -80,9 +80,14 @@ package electron.main;
 		A `NotificationAction[]` property representing the actions of the notification.
 	**/
 	var actions : Array<electron.NotificationAction>;
+	/**
+		A `String` property representing the custom Toast XML of the notification.
+	**/
+	var toastXml : String;
 	function new(?options:{ /**
 		A title for the notification, which will be shown at the top of the notification window when it is shown.
 	**/
+	@:optional
 	var title : String; /**
 		A subtitle for the notification, which will be displayed below the title.
 	**/
@@ -90,6 +95,7 @@ package electron.main;
 	var subtitle : String; /**
 		The body text of the notification, which will be displayed below the title or subtitle.
 	**/
+	@:optional
 	var body : String; /**
 		Whether or not to emit an OS notification noise when showing the notification.
 	**/
@@ -126,7 +132,11 @@ package electron.main;
 		A custom title for the close button of an alert. An empty string will cause the default localized text to be used.
 	**/
 	@:optional
-	var closeButtonText : String; }):Void;
+	var closeButtonText : String; /**
+		A custom description of the Notification on Windows superseding all properties above. Provides full customization of design and behavior of the notification.
+	**/
+	@:optional
+	var toastXml : String; }):Void;
 	/**
 		Immediately shows the notification to the user, please note this means unlike the HTML5 Notification implementation, instantiating a `new Notification` does not immediately show it to the user, you need to call this method before the OS will display it.
 		
@@ -158,4 +168,8 @@ package electron.main;
 	**/
 	var reply : electron.main.NotificationEvent<Void -> Void> = "reply";
 	var action : electron.main.NotificationEvent<Void -> Void> = "action";
+	/**
+		Emitted when an error is encountered while creating and showing the native notification.
+	**/
+	var failed : electron.main.NotificationEvent<Void -> Void> = "failed";
 }

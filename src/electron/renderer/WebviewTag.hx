@@ -213,7 +213,7 @@ package electron.renderer;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<Dynamic>, haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>>; /**
+	var postData : haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
@@ -421,15 +421,7 @@ package electron.renderer;
 		Whether search should be case-sensitive, defaults to `false`.
 	**/
 	@:optional
-	var matchCase : Bool; /**
-		Whether to look only at the start of words. defaults to `false`.
-	**/
-	@:optional
-	var wordStart : Bool; /**
-		When combined with `wordStart`, accepts a match in the middle of a word if the match begins with an uppercase letter followed by a lowercase or non-letter. Accepts several other intra-word matches, defaults to `false`.
-	**/
-	@:optional
-	var medialCapitalAsWordStart : Bool; }):Int;
+	var matchCase : Bool; }):Int;
 	/**
 		Stops any `findInPage` request for the `webview` with the provided `action`.
 	**/
@@ -544,7 +536,7 @@ var to : Float; }>; /**
 	**/
 	@:optional
 	var scaleFactor : Float; /**
-		The page range to print.
+		The page range to print. On macOS, only the first range is honored.
 	**/
 	@:optional
 	var pageRanges : Record; /**
@@ -584,6 +576,8 @@ var to : Float; }>; /**
 	function setZoomFactor(factor:Float):Void;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is `scale := 1.2 ^ level`.
+		
+		> **NOTE**: The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
 	**/
 	function setZoomLevel(level:Float):Void;
 	/**

@@ -7,6 +7,12 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.powerMonitor") extern class PowerMonitor extends js.node.events.EventEmitter<electron.remote.PowerMonitor> {
 	/**
+		A `Boolean` property. True if the system is on battery power.
+		
+		See `powerMonitor.isOnBatteryPower()`.
+	**/
+	static var onBatteryPower : Bool;
+	/**
 		The system's current state. Can be `active`, `idle`, `locked` or `unknown`.
 		
 		Calculate the system idle state. `idleThreshold` is the amount of time (in seconds) before considered idle.  `locked` is available on supported systems only.
@@ -18,6 +24,12 @@ package electron.remote;
 		Calculate system idle time in seconds.
 	**/
 	static function getSystemIdleTime():Int;
+	/**
+		Whether the system is on battery power.
+		
+		To monitor for changes in this property, use the `on-battery` and `on-ac` events.
+	**/
+	static function isOnBatteryPower():Bool;
 }
 @:enum abstract PowerMonitorEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
@@ -48,4 +60,12 @@ package electron.remote;
 		Emitted as soon as the systems screen is unlocked.
 	**/
 	var unlock_screen : electron.remote.PowerMonitorEvent<Void -> Void> = "unlock-screen";
+	/**
+		Emitted when a login session is activated. See documentation for more information.
+	**/
+	var user_did_become_active : electron.remote.PowerMonitorEvent<Void -> Void> = "user-did-become-active";
+	/**
+		Emitted when a login session is deactivated. See documentation for more information.
+	**/
+	var user_did_resign_active : electron.remote.PowerMonitorEvent<Void -> Void> = "user-did-resign-active";
 }

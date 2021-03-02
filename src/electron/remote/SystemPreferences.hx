@@ -23,8 +23,6 @@ package electron.remote;
 	/**
 		Whether the system is in Dark Mode.
 		
-		**Note:** On macOS 10.15 Catalina in order for this API to return the correct value when in the "automatic" dark mode setting you must either have `NSRequiresAquaSystemAppearance=false` in your `Info.plist` or be on Electron `>=7.0.0`.  See the dark mode guide for more information.
-		
 		**Deprecated:** Should use the new `nativeTheme.shouldUseDarkColors` API.
 	**/
 	static function isDarkMode():Bool;

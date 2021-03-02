@@ -26,6 +26,28 @@ package electron;
 	Crash reports are stored temporarily before being uploaded in a directory underneath the app's user data directory (called 'Crashpad' on Windows and Mac, or 'Crash Reports' on Linux). You can override this directory by calling `app.setPath('crashDumps', '/path/to/crashes')` before starting the crash reporter.
 	
 	On Windows and macOS, Electron uses crashpad to monitor and report crashes. On Linux, Electron uses breakpad. This is an implementation detail driven by Chromium, and it may change in future. In particular, crashpad is newer and will likely eventually replace breakpad on all platforms.
+	
+	### Note about Node child processes on Linux
+	
+	If you are using the Node.js `child_process` module and want to report crashes from those processes on Linux, there is an extra step you will need to take to properly initialize the crash reporter in the child process. This is not necessary on Mac or Windows, as those platforms use Crashpad, which automatically monitors child processes.
+	
+	Since `require('electron')` is not available in Node child processes, the following APIs are available on the `process` object in Node child processes. Note that, on Linux, each Node child process has its own separate instance of the breakpad crash reporter. This is dissimilar to renderer child processes, which have a "stub" breakpad reporter which returns information to the main process for reporting.
+	
+	### `process.crashReporter.start(options)`
+	
+	See `crashReporter.start()`.
+	
+	### `process.crashReporter.getParameters()`
+	
+	See `crashReporter.getParameters()`.
+	
+	### `process.crashReporter.addExtraParameter(key, value)`
+	
+	See `crashReporter.addExtraParameter(key, value)`.
+	
+	### `process.crashReporter.removeExtraParameter(key)`
+	
+	See `crashReporter.removeExtraParameter(key)`.
 	@see https://electronjs.org/docs/api/crash-reporter
 **/
 @:jsRequire("electron", "crashReporter") extern class CrashReporter extends js.node.events.EventEmitter<electron.CrashReporter> {
@@ -40,7 +62,7 @@ package electron;
 		
 		**Note:** Parameters passed in `extra`, `globalExtra` or set with `addExtraParameter` have limits on the length of the keys and values. Key names must be at most 39 bytes long, and values must be no longer than 127 bytes. Keys with names longer than the maximum will be silently ignored. Key values longer than the maximum length will be truncated.
 		
-		**Note:** Calling this method from the renderer process is deprecated.
+		**Note:** This method is only available in the main process.
 	**/
 	static function start(options:{ /**
 		URL that crash reports will be sent to as POST.
@@ -66,7 +88,7 @@ package electron;
 	**/
 	@:optional
 	var rateLimit : Bool; /**
-		If true, crash reports will be compressed and uploaded with `Content-Encoding: gzip`. Default is `false`.
+		If true, crash reports will be compressed and uploaded with `Content-Encoding: gzip`. Default is `true`.
 	**/
 	@:optional
 	var compress : Bool; /**
@@ -81,33 +103,27 @@ package electron;
 	/**
 		The date and ID of the last crash report. Only crash reports that have been uploaded will be returned; even if a crash report is present on disk it will not be returned until it is uploaded. In the case that there are no uploaded reports, `null` is returned.
 		
-		**Note:** Calling this method from the renderer process is deprecated.
+		**Note:** This method is only available in the main process.
 	**/
 	static function getLastCrashReport():electron.CrashReport;
 	/**
 		Returns all uploaded crash reports. Each report contains the date and uploaded ID.
 		
-		**Note:** Calling this method from the renderer process is deprecated.
+		**Note:** This method is only available in the main process.
 	**/
 	static function getUploadedReports():Array<electron.CrashReport>;
 	/**
 		Whether reports should be submitted to the server. Set through the `start` method or `setUploadToServer`.
 		
-		**Note:** Calling this method from the renderer process is deprecated.
+		**Note:** This method is only available in the main process.
 	**/
 	static function getUploadToServer():Bool;
 	/**
 		This would normally be controlled by user preferences. This has no effect if called before `start` is called.
 		
-		**Note:** Calling this method from the renderer process is deprecated.
+		**Note:** This method is only available in the main process.
 	**/
 	static function setUploadToServer(uploadToServer:Bool):Void;
-	/**
-		The directory where crashes are temporarily stored before being uploaded.
-		
-		**Note:** This method is deprecated, use `app.getPath('crashDumps')` instead.
-	**/
-	static function getCrashesDirectory():String;
 	/**
 		Set an extra parameter to be sent with the crash report. The values specified here will be sent in addition to any values set via the `extra` option when `start` was called.
 		
