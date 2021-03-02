@@ -134,6 +134,7 @@ private class Gen {
 		addAlias( 'Record' );
 		addAlias( 'SaveDialogOptions' );
 		addAlias( 'MessagePort' );
+		addAlias( 'PopupOptions' );
 		this.types.set( 'Accelerator', {
 			pack: root.copy(),
 			name: 'Accelerator',
