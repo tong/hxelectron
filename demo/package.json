@@ -13,6 +13,6 @@
         "build": "npm run build-main && npm run build-app"
     },
     "dependencies": {
-        "electron": "^12.0.0"
+        "electron": "^12.0.1"
     }
 }
