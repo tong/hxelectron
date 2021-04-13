@@ -270,6 +270,8 @@ package electron.main;
 		
 		**Note:** Users can remove items from custom categories, and Windows will not allow a removed item to be added back into a custom category until **after** the next successful call to `app.setJumpList(categories)`. Any attempt to re-add a removed item to a custom category earlier than that will result in the entire custom category being omitted from the Jump List. The list of removed items can be obtained using `app.getJumpListSettings()`.
 		
+		**Note:** The maximum length of a Jump List item's `description` property is 260 characters. Beyond this limit, the item will not be added to the Jump List, nor will it be displayed.
+		
 		Here's a very simple example of creating a custom Jump List:
 	**/
 	static function setJumpList(categories:haxe.extern.EitherType<Array<Dynamic>, Dynamic>):Void;

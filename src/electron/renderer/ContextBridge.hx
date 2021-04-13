@@ -28,7 +28,7 @@ package electron.renderer;
 	
 	### Isolated World
 	
-	When `contextIsolation` is enabled in your `webPreferences`, your `preload` scripts run in an "Isolated World".  You can read more about context isolation and what it affects in the security docs.
+	When `contextIsolation` is enabled in your `webPreferences` (this is the default behavior since Electron 12.0.0), your `preload` scripts run in an "Isolated World".  You can read more about context isolation and what it affects in the security docs.
 	@see https://electronjs.org/docs/api/context-bridge
 **/
 @:jsRequire("electron", "contextBridge") extern class ContextBridge extends js.node.events.EventEmitter<electron.renderer.ContextBridge> {

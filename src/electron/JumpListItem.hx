@@ -24,7 +24,7 @@ typedef JumpListItem = {
 	**/
 	var title : String;
 	/**
-		Description of the task (displayed in a tooltip). Should only be set if `type` is `task`.
+		Description of the task (displayed in a tooltip). Should only be set if `type` is `task`. Maximum length 260 characters.
 	**/
 	var description : String;
 	/**

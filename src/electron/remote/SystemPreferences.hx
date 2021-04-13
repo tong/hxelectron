@@ -64,9 +64,11 @@ package electron.remote;
 	**/
 	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Float;
 	/**
+		The ID of this subscription
+		
 		Same as `subscribeNotification`, but uses `NSWorkspace.sharedWorkspace.notificationCenter`. This is necessary for events such as `NSWorkspaceDidActivateApplicationNotification`.
 	**/
-	static function subscribeWorkspaceNotification(event:String, callback:haxe.Constraints.Function):Void;
+	static function subscribeWorkspaceNotification(event:String, callback:haxe.Constraints.Function):Float;
 	/**
 		Removes the subscriber with `id`.
 	**/

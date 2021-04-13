@@ -6,7 +6,7 @@ typedef UploadRawData = {
 	/**
 		`rawData`.
 	**/
-	var type : String;
+	var type : js.node.Buffer;
 	/**
 		Data to be uploaded.
 	**/

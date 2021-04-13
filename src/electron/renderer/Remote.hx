@@ -108,7 +108,7 @@ package electron.renderer;
 		
 		e.g.
 	**/
-	static var require : NodeJS.Require;
+	static var require : Dynamic;
 	/**
 		A `NodeJS.Process` object.  The `process` object in the main process. This is the same as `remote.getGlobal('process')` but is cached.
 	**/
