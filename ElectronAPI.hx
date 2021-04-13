@@ -467,7 +467,8 @@ private class Gen {
 		case 'Bool','Boolean','boolean': macro : Bool;
 		case 'Buffer': macro : js.node.Buffer;
 		case 'Date': macro : Date;
-		case 'NodeJS.Process': macro : js.node.Process;
+		case 'NodeJS.Process': macro : js.node.Process; // HACK
+		case 'NodeJS.Require': macro : Dynamic; // HACK TODO
 		case 'Double','Float','Number','number': macro : Float;
 		case 'Dynamic': macro : Dynamic; // Allows to explicit set type to Dynamic
 		case 'Error':
@@ -518,6 +519,10 @@ private class Gen {
 		case 'URL': macro: String; // TODO: macro: js.html.URL;
 		case _ if( Std.is( name, Array ) ):
 			createMultiType( cast name );
+		case "'rawData'": // HACK
+			macro : js.node.Buffer; 
+		case "'file'": // HACK
+			macro : String; 
 		default:
 			var pack = [];
 			for( item in this.items ) {
