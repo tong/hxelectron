@@ -58,7 +58,7 @@ npm install
 npm run build
 
 # Run the application
-npm run start
+npm start
 ```
 
 ### Metadata
