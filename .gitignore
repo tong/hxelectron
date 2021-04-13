@@ -8,5 +8,4 @@ docs/
 atom/*
 all.hxml
 haxedoc.xml
-package-lock.json
 ISSUES.md
