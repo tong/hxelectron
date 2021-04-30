@@ -1,5 +1,9 @@
 package electron.main;
 /**
+	
+	
+	### Class: TouchBar
+	
 	> Create TouchBar layouts for native macOS applications
 	
 	Process: Main

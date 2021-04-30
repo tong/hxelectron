@@ -1,5 +1,9 @@
 package electron.remote;
 /**
+	
+	
+	### Class: TouchBar
+	
 	> Create TouchBar layouts for native macOS applications
 	
 	Process: Main

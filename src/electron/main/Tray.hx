@@ -1,5 +1,9 @@
 package electron.main;
 /**
+	
+	
+	### Class: Tray
+	
 	> Add icons and context menus to the system's notification area.
 	
 	Process: Main

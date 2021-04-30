@@ -1,5 +1,9 @@
 package electron.remote;
 /**
+	
+	
+	### Class: Tray
+	
 	> Add icons and context menus to the system's notification area.
 	
 	Process: Main

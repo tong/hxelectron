@@ -173,7 +173,7 @@ package electron.remote;
 	**/
 	static function setName(name:String):Void;
 	/**
-		The current application locale. Possible return values are documented here.
+		The current application locale, fetched using Chromium's `l10n_util` library. Possible return values are documented here.
 		
 		To set the locale, you'll want to use a command line switch at app startup, which may be found here.
 		

@@ -1,10 +1,12 @@
 package electron.remote;
 /**
+	A `BrowserView` can be used to embed additional web content into a `BrowserWindow`. It is like a child window, except that it is positioned relative to its owning window. It is meant to be an alternative to the `webview` tag.
+	
+	### Class: BrowserView
+	
 	> Create and control views.
 	
 	Process: Main
-	
-	A `BrowserView` can be used to embed additional web content into a `BrowserWindow`. It is like a child window, except that it is positioned relative to its owning window. It is meant to be an alternative to the `webview` tag.
 	
 	### Example
 	

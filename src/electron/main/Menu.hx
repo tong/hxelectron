@@ -1,5 +1,9 @@
 package electron.main;
 /**
+	
+	
+	### Class: Menu
+	
 	> Create native application menus and context menus.
 	
 	Process: Main
