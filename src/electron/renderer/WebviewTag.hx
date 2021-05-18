@@ -414,7 +414,7 @@ package electron.renderer;
 	**/
 	@:optional
 	var forward : Bool; /**
-		Whether the operation is first request or a follow up, defaults to `false`.
+		Whether to begin a new text finding session with this request. Should be `true` for initial requests, and `false` for follow-up requests. Defaults to `false`.
 	**/
 	@:optional
 	var findNext : Bool; /**
