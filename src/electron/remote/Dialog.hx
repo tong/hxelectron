@@ -81,7 +81,10 @@ package electron.remote;
 		
 		The `filters` specifies an array of file types that can be displayed, see `dialog.showOpenDialog` for an example.
 	**/
-	static function showSaveDialogSync(?browserWindow:electron.remote.BrowserWindow, options:{ @:optional
+	static function showSaveDialogSync(?browserWindow:electron.remote.BrowserWindow, options:{ /**
+		The dialog title. Cannot be displayed on some _Linux_ desktop environments.
+	**/
+	@:optional
 	var title : String; /**
 		Absolute directory path, absolute file path, or file name to use by default.
 	**/
@@ -122,7 +125,10 @@ package electron.remote;
 		
 		**Note:** On macOS, using the asynchronous version is recommended to avoid issues when expanding and collapsing the dialog.
 	**/
-	static function showSaveDialog(?browserWindow:electron.remote.BrowserWindow, options:{ @:optional
+	static function showSaveDialog(?browserWindow:electron.remote.BrowserWindow, options:{ /**
+		The dialog title. Cannot be displayed on some _Linux_ desktop environments.
+	**/
+	@:optional
 	var title : String; /**
 		Absolute directory path, absolute file path, or file name to use by default.
 	**/
