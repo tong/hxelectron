@@ -300,13 +300,14 @@ private class Gen {
 					break;
 				}
 			}
-		case 'PostBody': // TODO: https://github.com/tong/hxelectron/issues/51
+	/* 	case 'PostBody': // TODO: https://github.com/tong/hxelectron/issues/51
 			for( f in type.fields ) {
 				if( f.name == "data" ) {
 					f.kind = FVar( TPath( { name : "Array<PostData>", pack : [], params : [] } ), null );
 					break;
 				}
 			}
+			*/
 		}
 		return type;
 	}
