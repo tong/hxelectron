@@ -27,6 +27,10 @@ package electron.main;
 	**/
 	var spellCheckerEnabled : Bool;
 	/**
+		A `String | null` indicating the absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
+	**/
+	var storagePath : haxe.extern.EitherType<Dynamic, Dynamic>;
+	/**
 		A `Cookies` object for this session.
 	**/
 	var cookies : electron.main.Cookies;
@@ -202,11 +206,11 @@ package electron.main;
 	**/
 	function setCertificateVerifyProc(proc:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
-		Sets the handler which can be used to respond to permission requests for the `session`. Calling `callback(true)` will allow the permission and `callback(false)` will reject it. To clear the handler, call `setPermissionRequestHandler(null)`.
+		Sets the handler which can be used to respond to permission requests for the `session`. Calling `callback(true)` will allow the permission and `callback(false)` will reject it. To clear the handler, call `setPermissionRequestHandler(null)`.  Please note that you must also implement `setPermissionCheckHandler` to get complete permission handling. Most web APIs do a permission check and then make a permission request if the check is denied.
 	**/
 	function setPermissionRequestHandler(handler:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
-		Sets the handler which can be used to respond to permission checks for the `session`. Returning `true` will allow the permission and `false` will reject it. To clear the handler, call `setPermissionCheckHandler(null)`.
+		Sets the handler which can be used to respond to permission checks for the `session`. Returning `true` will allow the permission and `false` will reject it.  Please note that you must also implement `setPermissionRequestHandler` to get complete permission handling. Most web APIs do a permission check and then make a permission request if the check is denied. To clear the handler, call `setPermissionCheckHandler(null)`.
 	**/
 	function setPermissionCheckHandler(handler:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
@@ -383,6 +387,10 @@ package electron.main;
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
 	**/
 	function getAllExtensions():Array<electron.Extension>;
+	/**
+		A `String | null` indicating the absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
+	**/
+	function getStoragePath():Void;
 }
 @:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

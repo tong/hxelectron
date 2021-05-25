@@ -65,8 +65,9 @@ package electron;
 		**Note:** This method is only available in the main process.
 	**/
 	static function start(options:{ /**
-		URL that crash reports will be sent to as POST.
+		URL that crash reports will be sent to as POST. Required unless `uploadToServer` is `false`.
 	**/
+	@:optional
 	var submitURL : String; /**
 		Defaults to `app.name`.
 	**/

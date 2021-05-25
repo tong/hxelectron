@@ -44,8 +44,14 @@ typedef Display = {
 		The display refresh rate.
 	**/
 	var displayFrequency : Float;
+	/**
+		the bounds of the display in DIP points.
+	**/
 	var bounds : electron.Rectangle;
 	var size : electron.Size;
+	/**
+		the work area of the display in DIP points.
+	**/
 	var workArea : electron.Rectangle;
 	var workAreaSize : electron.Size;
 	/**

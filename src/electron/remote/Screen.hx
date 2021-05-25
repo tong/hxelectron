@@ -29,6 +29,8 @@ package electron.remote;
 @:native('require(\"electron\").remote.screen') extern class Screen extends js.node.events.EventEmitter<electron.remote.Screen> {
 	/**
 		The current absolute position of the mouse pointer.
+		
+		**Note:** The return value is a DIP point, not a screen physical point.
 	**/
 	static function getCursorScreenPoint():electron.Point;
 	/**

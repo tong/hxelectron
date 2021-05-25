@@ -20,6 +20,7 @@ package electron;
 	* `getSystemVersion()`
 	* `getCPUUsage()`
 	* `getIOCounters()`
+	* `uptime()`
 	* `argv`
 	* `execPath`
 	* `env`
@@ -27,11 +28,13 @@ package electron;
 	* `arch`
 	* `platform`
 	* `sandboxed`
+	* `contextIsolated`
 	* `type`
 	* `version`
 	* `versions`
 	* `mas`
 	* `windowsStore`
+	* `contextId`
 	@see https://electronjs.org/docs/api/process
 **/
 @:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
@@ -64,6 +67,10 @@ package electron;
 	**/
 	static var sandboxed : Bool;
 	/**
+		A `Boolean` that indicates whether the current renderer context has `contextIsolation` enabled. It is `undefined` in the main process.
+	**/
+	static var contextIsolated : Bool;
+	/**
 		A `Boolean` that controls whether or not deprecation warnings will be thrown as exceptions. Setting this to `true` will throw errors for deprecations. This property is used instead of the `--throw-deprecation` command line flag.
 	**/
 	static var throwDeprecation : Bool;
@@ -95,6 +102,10 @@ package electron;
 		A `Boolean`. If the app is running as a Windows Store app (appx), this property is `true`, for otherwise it is `undefined`.
 	**/
 	static var windowsStore : Bool;
+	/**
+		A `String` (optional) representing a globally unique ID of the current JavaScript context. Each frame has its own JavaScript context. When contextIsolation is enabled, the isolated world also has a separate JavaScript context. This property is only available in the renderer process.
+	**/
+	static var contextId : String;
 	/**
 		Causes the main thread of the current process crash.
 	**/

@@ -89,7 +89,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>; /**
+	var postData : Array<haxe.extern.EitherType<Dynamic, Dynamic>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
@@ -379,11 +379,11 @@ package electron.main;
 		
 		This also affects the Page Visibility API.
 	**/
-	function incrementCapturerCount(?size:electron.Size, ?stayHidden:Bool):Void;
+	function incrementCapturerCount(?size:electron.Size, ?stayHidden:Bool, ?stayAwake:Bool):Void;
 	/**
 		Decrease the capturer count by one. The page will be set to hidden or occluded state when its browser window is hidden or occluded and the capturer count reaches zero. If you want to decrease the hidden capturer count instead you should set `stayHidden` to true.
 	**/
-	function decrementCapturerCount(?stayHidden:Bool):Void;
+	function decrementCapturerCount(?stayHidden:Bool, ?stayAwake:Bool):Void;
 	/**
 		Get the system printer list.
 	**/
@@ -491,7 +491,7 @@ var to : Float; }>; /**
 		
 		By default, an empty `options` will be regarded as:
 		
-		Use `page-break-before: always; ` CSS style to force to print to a new page.
+		Use `page-break-before: always;` CSS style to force to print to a new page.
 		
 		An example of `webContents.printToPDF`:
 	**/

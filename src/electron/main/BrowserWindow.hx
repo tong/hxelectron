@@ -121,62 +121,6 @@ package electron.main;
 	**/
 	static function fromId(id:Int):haxe.extern.EitherType<Dynamic, Dynamic>;
 	/**
-		Adds Chrome extension located at `path`, and returns extension's name.
-		
-		The method will also not return if the extension's manifest is missing or incomplete.
-		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
-		
-		**Note:** This method is deprecated. Instead, use `ses.loadExtension(path)`.
-	**/
-	static function addExtension(path:String):Void;
-	/**
-		Remove a Chrome extension by name.
-		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
-		
-		**Note:** This method is deprecated. Instead, use `ses.removeExtension(extension_id)`.
-	**/
-	static function removeExtension(name:String):Void;
-	/**
-		The keys are the extension names and each value is an Object containing `name` and `version` properties.
-		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
-		
-		**Note:** This method is deprecated. Instead, use `ses.getAllExtensions()`.
-	**/
-	static function getExtensions():Record;
-	/**
-		Adds DevTools extension located at `path`, and returns extension's name.
-		
-		The extension will be remembered so you only need to call this API once, this API is not for programming use. If you try to add an extension that has already been loaded, this method will not return and instead log a warning to the console.
-		
-		The method will also not return if the extension's manifest is missing or incomplete.
-		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
-		
-		**Note:** This method is deprecated. Instead, use `ses.loadExtension(path)`.
-	**/
-	static function addDevToolsExtension(path:String):Void;
-	/**
-		Remove a DevTools extension by name.
-		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
-		
-		**Note:** This method is deprecated. Instead, use `ses.removeExtension(extension_id)`.
-	**/
-	static function removeDevToolsExtension(name:String):Void;
-	/**
-		The keys are the extension names and each value is an Object containing `name` and `version` properties.
-		
-		To check if a DevTools extension is installed you can run the following:
-		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
-		
-		**Note:** This method is deprecated. Instead, use `ses.getAllExtensions()`.
-	**/
-	static function getDevToolsExtensions():Record;
-	/**
 		A `WebContents` object this window owns. All web page related events and operations will be done via it.
 		
 		See the `webContents` documentation for its methods and events.
@@ -441,11 +385,15 @@ package electron.main;
 	**/
 	@:optional
 	var titleBarStyle : String; /**
-		Set a custom position for the traffic light buttons. Can only be used with `titleBarStyle` set to `hidden`
+		Set a custom position for the traffic light buttons in frameless windows.
 	**/
 	@:optional
 	var trafficLightPosition : electron.Point; /**
-		Shows the title in the title bar in full screen mode on macOS for all `titleBarStyle` options. Default is `false`.
+		Whether frameless window should have rounded corners on macOS. Default is `true`.
+	**/
+	@:optional
+	var roundedCorners : Bool; /**
+		Shows the title in the title bar in full screen mode on macOS for `hiddenInset` titleBarStyle. Default is `false`.
 	**/
 	@:optional
 	var fullscreenWindowTitle : Bool; /**
@@ -453,7 +401,7 @@ package electron.main;
 	**/
 	@:optional
 	var thickFrame : Bool; /**
-		Add a type of vibrancy effect to the window, only on macOS. Can be `appearance-based`, `light`, `dark`, `titlebar`, `selection`, `menu`, `popover`, `sidebar`, `medium-light`, `ultra-dark`, `header`, `sheet`, `window`, `hud`, `fullscreen-ui`, `tooltip`, `content`, `under-window`, or `under-page`.  Please note that using `frame: false` in combination with a vibrancy value requires that you use a non-default `titleBarStyle` as well. Also note that `appearance-based`, `light`, `dark`, `medium-light`, and `ultra-dark` have been deprecated and will be removed in an upcoming version of macOS.
+		Add a type of vibrancy effect to the window, only on macOS. Can be `appearance-based`, `light`, `dark`, `titlebar`, `selection`, `menu`, `popover`, `sidebar`, `medium-light`, `ultra-dark`, `header`, `sheet`, `window`, `hud`, `fullscreen-ui`, `tooltip`, `content`, `under-window`, or `under-page`. Please note that `appearance-based`, `light`, `dark`, `medium-light`, and `ultra-dark` are deprecated and have been removed in macOS Catalina (10.15).
 	**/
 	@:optional
 	var vibrancy : String; /**
@@ -609,11 +557,11 @@ package electron.main;
 	**/
 	@:optional
 	var offscreen : Bool; /**
-		Whether to run Electron APIs and the specified `preload` script in a separate JavaScript context. Defaults to `true`. The context that the `preload` script runs in will only have access to its own dedicated `document` and `window` globals, as well as its own set of JavaScript builtins (`Array`, `Object`, `JSON`, etc.), which are all invisible to the loaded content. The Electron API will only be available in the `preload` script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the `preload` script and any Electron APIs being used.  This option uses the same technique used by Chrome Content Scripts.  You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab.
+		Whether to run Electron APIs and the specified `preload` script in a separate JavaScript context. Defaults to `false`. The context that the `preload` script runs in will only have access to its own dedicated `document` and `window` globals, as well as its own set of JavaScript builtins (`Array`, `Object`, `JSON`, etc.), which are all invisible to the loaded content. The Electron API will only be available in the `preload` script and not the loaded page. This option should be used when loading potentially untrusted remote content to ensure the loaded content cannot tamper with the `preload` script and any Electron APIs being used.  This option uses the same technique used by Chrome Content Scripts.  You can access this context in the dev tools by selecting the 'Electron Isolated Context' entry in the combo box at the top of the Console tab.
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
-		If true, values returned from `webFrame.executeJavaScript` will be sanitized to ensure JS values can't unsafely cross between worlds when using `contextIsolation`. Defaults to `true`. _Deprecated_
+		If true, values returned from `webFrame.executeJavaScript` will be sanitized to ensure JS values can't unsafely cross between worlds when using `contextIsolation`.  The default is `false`. In Electron 12, the default will be changed to `true`. _Deprecated_
 	**/
 	@:optional
 	var worldSafeExecuteJavaScript : Bool; /**
@@ -1047,7 +995,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>; /**
+	var postData : Array<haxe.extern.EitherType<Dynamic, Dynamic>>; /**
 		Base URL (with trailing path separator) for files to be loaded by the data URL. This is needed only if the specified `url` is a data URL and needs to load other files.
 	**/
 	@:optional
@@ -1188,8 +1136,6 @@ package electron.main;
 	function setIcon(icon:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
 		Sets whether the window traffic light buttons should be visible.
-		
-		This cannot be called when `titleBarStyle` is set to `customButtonsOnHover`.
 	**/
 	function setWindowButtonVisibility(visible:Bool):Void;
 	/**
@@ -1216,10 +1162,14 @@ package electron.main;
 		**Note:** This API does nothing on Windows.
 	**/
 	function setVisibleOnAllWorkspaces(visible:Bool, ?options:{ /**
-		Sets whether the window should be visible above fullscreen windows
+		Sets whether the window should be visible above fullscreen windows.
 	**/
 	@:optional
-	var visibleOnFullScreen : Bool; }):Void;
+	var visibleOnFullScreen : Bool; /**
+		Calling setVisibleOnAllWorkspaces will by default transform the process type between UIElementApplication and ForegroundApplication to ensure the correct behavior. However, this will hide the window and dock for a short time every time it is called. If your window is already of type UIElementApplication, you can bypass this transformation by passing true to skipTransformProcessType.
+	**/
+	@:optional
+	var skipTransformProcessType : Bool; }):Void;
 	/**
 		Whether the window is visible on all workspaces.
 		
@@ -1295,11 +1245,11 @@ package electron.main;
 	**/
 	function setVibrancy(type:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
 	/**
-		Set a custom position for the traffic light buttons. Can only be used with `titleBarStyle` set to `hidden`.
+		Set a custom position for the traffic light buttons in frameless window.
 	**/
 	function setTrafficLightPosition(position:electron.Point):Void;
 	/**
-		The current position for the traffic light buttons. Can only be used with `titleBarStyle` set to `hidden`.
+		The custom position for the traffic light buttons in frameless window.
 	**/
 	function getTrafficLightPosition():electron.Point;
 	/**

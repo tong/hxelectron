@@ -65,6 +65,8 @@ package electron.remote;
 		If `listener` returns a Promise, the eventual result of the promise will be returned as a reply to the remote caller. Otherwise, the return value of the listener will be used as the value of the reply.
 		
 		The `event` that is passed as the first argument to the handler is the same as that passed to a regular event listener. It includes information about which WebContents is the source of the invoke request.
+		
+		Errors thrown through `handle` in the main process are not transparent as they are serialized and only the `message` property from the original error is provided to the renderer process. Please refer to #24427 for details.
 	**/
 	static function handle(channel:String, listener:haxe.Constraints.Function):Void;
 	/**

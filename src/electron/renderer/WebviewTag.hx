@@ -213,7 +213,7 @@ package electron.renderer;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : haxe.extern.EitherType<Array<Dynamic>, Array<Dynamic>>; /**
+	var postData : Array<haxe.extern.EitherType<Dynamic, Dynamic>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional

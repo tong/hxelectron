@@ -19,4 +19,8 @@ package electron.main;
 		Emitted when a service worker logs something to the console.
 	**/
 	var console_message : electron.main.ServiceWorkersEvent<Void -> Void> = "console-message";
+	/**
+		Emitted when a service worker has been registered. Can occur after a call to `navigator.serviceWorker.register('/sw.js')` successfully resolves or when a Chrome extension is loaded.
+	**/
+	var registration_completed : electron.main.ServiceWorkersEvent<Void -> Void> = "registration-completed";
 }

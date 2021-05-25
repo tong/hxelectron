@@ -41,14 +41,6 @@ package electron;
 	@:optional
 	var workingDirectory : String; }):js.lib.Promise<Any>;
 	/**
-		Whether the item was successfully moved to the trash or otherwise deleted.
-		
-		> NOTE: This method is deprecated. Use `shell.trashItem` instead.
-		
-		Move the given file to trash and returns a boolean status for the operation.
-	**/
-	static function moveItemToTrash(fullPath:String, ?deleteOnFail:Bool):Bool;
-	/**
 		Resolves when the operation has been completed. Rejects if there was an error while deleting the requested item.
 		
 		This moves a path to the OS-specific trash location (Trash on macOS, Recycle Bin on Windows, and a desktop-environment-specific location on Linux).
