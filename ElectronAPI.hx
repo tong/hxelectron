@@ -518,7 +518,7 @@ private class Gen {
 		case 'MenuItemConstructorOptions','TouchBarItem': // TODO: HACK
 			macro : Dynamic;
 		case 'URL': macro: String; // TODO: macro: js.html.URL;
-		case _ if( Std.is( name, Array ) ):
+		case _ if( Std.isOfType( name, Array ) ):
 			createMultiType( cast name );
 		case "'rawData'": // HACK
 			macro : js.node.Buffer; 
