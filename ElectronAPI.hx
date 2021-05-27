@@ -1,5 +1,5 @@
 
-#if macro
+#if eval
 
 import haxe.Json;
 import haxe.macro.Context;
