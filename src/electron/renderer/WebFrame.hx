@@ -58,6 +58,8 @@ package electron.renderer;
 		Sets the maximum and minimum pinch-to-zoom level.
 		
 		> **NOTE**: Visual zoom is disabled by default in Electron. To re-enable it, call:
+		
+		> **NOTE**: Visual zoom only applies to pinch-to-zoom behavior. Cmd+/-/0 zoom shortcuts are controlled by the 'zoomIn', 'zoomOut', and 'resetZoom' MenuItem roles in the application Menu. To disable shortcuts, manually define the Menu and omit zoom roles from the definition.
 	**/
 	static function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
