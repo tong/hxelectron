@@ -337,7 +337,7 @@ package electron.remote;
 	**/
 	@:optional
 	var modal : Bool; /**
-		Whether the web view accepts a single mouse-down event that simultaneously activates the window. Default is `false`.
+		Whether clicking an inactive window will also click through to the web contents. Default is `false` on macOS. This option is not configurable on other platforms.
 	**/
 	@:optional
 	var acceptFirstMouse : Bool; /**
