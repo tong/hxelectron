@@ -27,7 +27,7 @@ package electron.remote;
 		
 		On macOS, setting this with any nonzero integer shows on the dock icon. On Linux, this property only works for Unity launcher.
 		
-		**Note:** Unity launcher requires the existence of a `.desktop` file to work, for more information please read Desktop Environment Integration.
+		**Note:** Unity launcher requires a `.desktop` file to work. For more information, please read the Unity integration documentation.
 		
 		**Note:** On macOS, you need to ensure that your application has the permission to display notifications for this property to take effect.
 	**/
@@ -374,7 +374,7 @@ package electron.remote;
 		
 		On macOS, it shows on the dock icon. On Linux, it only works for Unity launcher.
 		
-		**Note:** Unity launcher requires the existence of a `.desktop` file to work, for more information please read Desktop Environment Integration.
+		**Note:** Unity launcher requires a `.desktop` file to work. For more information, please read the Unity integration documentation.
 	**/
 	static function setBadgeCount(?count:Int):Bool;
 	/**
