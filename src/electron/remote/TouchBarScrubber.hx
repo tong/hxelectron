@@ -61,7 +61,7 @@ package electron.remote;
 	**/
 	@:optional
 	var overlayStyle : String; /**
-		Defaults to `false`.
+		Whether to show arrow buttons. Defaults to `false` and is only shown if `items` is non-empty.
 	**/
 	@:optional
 	var showArrowButtons : Bool; /**
