@@ -464,6 +464,8 @@ private class Gen {
 		case 'Accelerator': // TODO: HACK
 			TPath( { name: name, pack: root.copy() } );
 		case 'Any','any': macro : Any;
+		case 'Array': macro : Array<Dynamic>; // TODO HACK for fields with Array type without type param
+		case 'UserDefaultTypes[Type]': macro : Dynamic; // TODO HACK for invalid description
 		case 'Blob': macro : js.html.Blob;
 		case 'Bool','Boolean','boolean': macro : Bool;
 		case 'Buffer': macro : js.node.Buffer;
@@ -660,6 +662,7 @@ typedef Process = {
 typedef Item = {
 	name : String,
 	description : String,
+	?rawGenerics : String,
 	?process : Process,
 	version : String,
 	type : ItemType,

@@ -98,7 +98,7 @@ package electron.main;
 		* `NSPreferredWebServices`: `dictionary`
 		* `NSUserDictionaryReplacementItems`: `array`
 	**/
-	static function getUserDefault(key:String, type:Type):UserDefaultTypes[Type];
+	static function getUserDefault(key:String, type:Type):Dynamic;
 	/**
 		Set the value of `key` in `NSUserDefaults`.
 		
