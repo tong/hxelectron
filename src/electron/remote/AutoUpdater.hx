@@ -50,6 +50,8 @@ package electron.remote;
 	static function getFeedURL():String;
 	/**
 		Asks the server whether there is an update. You must call `setFeedURL` before using this API.
+		
+		**Note:** If an update is available it will be downloaded automatically. Calling `autoUpdater.checkForUpdates()` twice will download the update two times.
 	**/
 	static function checkForUpdates():Void;
 	/**

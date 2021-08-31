@@ -16,6 +16,12 @@ package electron.remote;
 	**/
 	static function fromId(id:Int):electron.remote.WebContents;
 	/**
+		| undefined - A WebContents instance with the given TargetID, or `undefined` if there is no WebContents associated with the given TargetID.
+		
+		When communicating with the Chrome DevTools Protocol, it can be useful to lookup a WebContents instance based on its assigned TargetID.
+	**/
+	static function fromDevToolsTargetId(targetId:String):electron.remote.WebContents;
+	/**
 		A `Boolean` property that determines whether this page is muted.
 	**/
 	var audioMuted : Bool;
@@ -249,7 +255,7 @@ package electron.remote;
 	**/
 	function setIgnoreMenuShortcuts(ignore:Bool):Void;
 	/**
-		Called before creating a window when `window.open()` is called from the renderer. See `window.open()` for more details and how to use this in conjunction with `did-create-window`.
+		Called before creating a window a new window is requested by the renderer, e.g. by `window.open()`, a link with `target="_blank"`, shift+clicking on a link, or submitting a form with `<form target="_blank">`. See `window.open()` for more details and how to use this in conjunction with `did-create-window`.
 	**/
 	function setWindowOpenHandler(handler:haxe.Constraints.Function):Void;
 	/**
@@ -857,6 +863,8 @@ var to : Float; }>; /**
 		Emitted when a `beforeunload` event handler is attempting to cancel a page unload.
 		
 		Calling `event.preventDefault()` will ignore the `beforeunload` event handler and allow the page to be unloaded.
+		
+		**Note:** This will be emitted for `BrowserViews` but will _not_ be respected - this is because we have chosen not to tie the `BrowserView` lifecycle to its owning BrowserWindow should one exist per the specification.
 	**/
 	var will_prevent_unload : electron.remote.WebContentsEvent<Void -> Void> = "will-prevent-unload";
 	/**
@@ -1007,26 +1015,6 @@ var to : Float; }>; /**
 		Emitted when `desktopCapturer.getSources()` is called in the renderer process. Calling `event.preventDefault()` will make it return empty sources.
 	**/
 	var desktop_capturer_get_sources : electron.remote.WebContentsEvent<Void -> Void> = "desktop-capturer-get-sources";
-	/**
-		Emitted when `remote.require()` is called in the renderer process. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_require : electron.remote.WebContentsEvent<Void -> Void> = "remote-require";
-	/**
-		Emitted when `remote.getGlobal()` is called in the renderer process. Calling `event.preventDefault()` will prevent the global from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_global : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-global";
-	/**
-		Emitted when `remote.getBuiltin()` is called in the renderer process. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_builtin : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-builtin";
-	/**
-		Emitted when `remote.getCurrentWindow()` is called in the renderer process. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_current_window : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-current-window";
-	/**
-		Emitted when `remote.getCurrentWebContents()` is called in the renderer process. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_current_web_contents : electron.remote.WebContentsEvent<Void -> Void> = "remote-get-current-web-contents";
 	/**
 		Emitted when the `WebContents` preferred size has changed.
 		

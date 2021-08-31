@@ -77,6 +77,8 @@ package electron;
 	static function has(format:String, ?type:String):Bool;
 	/**
 		Reads `format` type from the clipboard.
+		
+		`format` should contain valid ASCII characters and have `/` separator. `a/c`, `a/bc` are valid formats while `/abc`, `abc/`, `a/`, `/a`, `a` are not valid.
 	**/
 	static function read(format:String):String;
 	/**

@@ -48,6 +48,12 @@ package electron.main;
 	**/
 	var routingId : Int;
 	/**
+		A `string` representing the visibility state of the frame.
+		
+		See also how the Page Visibility API is affected by other Electron APIs.
+	**/
+	var visibilityState : String;
+	/**
 		A promise that resolves with the result of the executed code or is rejected if execution throws or results in a rejected promise.
 		
 		Evaluates `code` in page.

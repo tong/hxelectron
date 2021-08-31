@@ -18,8 +18,7 @@ class Main {
 				width: 720, height: 480,
 				webPreferences: {
 					nodeIntegration: true,
-					contextIsolation: false,
-					enableRemoteModule: true
+					contextIsolation: false
 				}
 			} );
 			win.on( closed, function() {

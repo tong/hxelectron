@@ -186,15 +186,7 @@ package electron.main;
 		Extra information of the message.
 	**/
 	@:optional
-	var detail : String; /**
-		If provided, the message box will include a checkbox with the given label.
-	**/
-	@:optional
-	var checkboxLabel : String; /**
-		Initial checked state of the checkbox. `false` by default.
-	**/
-	@:optional
-	var checkboxChecked : Bool; @:optional
+	var detail : String; @:optional
 	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
 		The index of the button to be used to cancel the dialog, via the `Esc` key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, `0` will be used as the return value.
 	**/

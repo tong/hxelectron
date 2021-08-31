@@ -96,14 +96,6 @@ package electron.renderer;
 	
 	A `Boolean` for the experimental option for enabling NodeJS support in sub-frames such as iframes inside the `webview`. All your preloads will load for every iframe, you can use `process.isMainFrame` to determine if you are in the main frame or not. This option is disabled by default in the guest page.
 	
-	### `enableremotemodule`
-	
-	```
-	<webview src="http://www.google.com/" enableremotemodule="false"></webview>
-	```
-	
-	A `Boolean`. When this attribute is `false` the guest page in `webview` will not have access to the `remote` module. The remote module is unavailable by default.
-	
 	### `plugins`
 	
 	```

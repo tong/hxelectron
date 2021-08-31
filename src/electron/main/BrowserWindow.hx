@@ -145,6 +145,10 @@ package electron.main;
 	**/
 	var fullScreen : Bool;
 	/**
+		A `Boolean` property that determines whether the window is focusable.
+	**/
+	var focusable : Bool;
+	/**
 		A `Boolean` property that determines whether the window is visible on all workspaces.
 		
 		**Note:** Always returns false on Windows.
@@ -441,10 +445,6 @@ package electron.main;
 	**/
 	@:optional
 	var sandbox : Bool; /**
-		Whether to enable the `remote` module. Default is `false`.
-	**/
-	@:optional
-	var enableRemoteModule : Bool; /**
 		Sets the session used by the page. Instead of passing the Session object directly, you can also choose to use the `partition` option instead, which accepts a partition string. When both `session` and `partition` are provided, `session` will be preferred. Default is the default session.
 	**/
 	@:optional
@@ -453,10 +453,6 @@ package electron.main;
 	**/
 	@:optional
 	var partition : String; /**
-		When specified, web pages with the same `affinity` will run in the same renderer process. Note that due to reusing the renderer process, certain `webPreferences` options will also be shared between the web pages even when you specified different values for them, including but not limited to `preload`, `sandbox` and `nodeIntegration`. So it is suggested to use exact same `webPreferences` for web pages with the same `affinity`. _Deprecated_
-	**/
-	@:optional
-	var affinity : String; /**
 		The default zoom factor of the page, `3.0` represents `300%`. Default is `1.0`.
 	**/
 	@:optional
@@ -561,11 +557,7 @@ package electron.main;
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
-		If true, values returned from `webFrame.executeJavaScript` will be sanitized to ensure JS values can't unsafely cross between worlds when using `contextIsolation`. Defaults to `true`. _Deprecated_
-	**/
-	@:optional
-	var worldSafeExecuteJavaScript : Bool; /**
-		Whether to use native `window.open()`. Defaults to `false`. Child windows will always have node integration disabled unless `nodeIntegrationInSubFrames` is true. **Note:** This option is currently experimental.
+		Whether to use native `window.open()`. Defaults to `false`. Child windows will always have node integration disabled unless `nodeIntegrationInSubFrames` is true. **Note:** The default value will be changing to `true` in Electron 15.
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
@@ -620,7 +612,11 @@ package electron.main;
 		Whether to enable preferred size mode. The preferred size is the minimum size needed to contain the layout of the document—without requiring scrolling. Enabling this will cause the `preferred-size-changed` event to be emitted on the `WebContents` when the preferred size changes. Default is `false`.
 	**/
 	@:optional
-	var enablePreferredSizeMode : Bool; }; }):Void;
+	var enablePreferredSizeMode : Bool; }; /**
+		When using a frameless window in conjuction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.  On Windows, the OverlayOptions can be used instead of a boolean to specify colors for the overlay.
+	**/
+	@:optional
+	var titleBarOverlay : haxe.extern.EitherType<Dynamic, Dynamic>; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
@@ -1198,6 +1194,10 @@ package electron.main;
 		On macOS it does not remove the focus from the window.
 	**/
 	function setFocusable(focusable:Bool):Void;
+	/**
+		Returns whether the window can be focused.
+	**/
+	function isFocusable():Void;
 	/**
 		Sets `parent` as current window's parent window, passing `null` will turn current window into a top-level window.
 	**/

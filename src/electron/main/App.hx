@@ -57,12 +57,6 @@ package electron.main;
 	**/
 	static var userAgentFallback : String;
 	/**
-		A `Boolean` which when `true` disables the overrides that Electron has in place to ensure renderer processes are restarted on every navigation.  The current default value for this property is `true`.
-		
-		The intention is for these overrides to become disabled by default and then at some point in the future this property will be removed.  This property impacts which native modules you can use in the renderer process.  For more information on the direction Electron is going with renderer process restarts and usage of native modules in the renderer process please check out this Tracking Issue.
-	**/
-	static var allowRendererProcessReuse : Bool;
-	/**
 		A `Boolean` which when `true` indicates that the app is currently running under the Rosetta Translator Environment.
 		
 		You can use this property to prompt users to download the arm64 version of your application when they are running the x64 version under Rosetta incorrectly.
@@ -722,24 +716,4 @@ package electron.main;
 		Emitted when `desktopCapturer.getSources()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will make it return empty sources.
 	**/
 	var desktop_capturer_get_sources : electron.main.AppEvent<Void -> Void> = "desktop-capturer-get-sources";
-	/**
-		Emitted when `remote.require()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_require : electron.main.AppEvent<Void -> Void> = "remote-require";
-	/**
-		Emitted when `remote.getGlobal()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the global from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_global : electron.main.AppEvent<Void -> Void> = "remote-get-global";
-	/**
-		Emitted when `remote.getBuiltin()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the module from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_builtin : electron.main.AppEvent<Void -> Void> = "remote-get-builtin";
-	/**
-		Emitted when `remote.getCurrentWindow()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_current_window : electron.main.AppEvent<Void -> Void> = "remote-get-current-window";
-	/**
-		Emitted when `remote.getCurrentWebContents()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will prevent the object from being returned. Custom value can be returned by setting `event.returnValue`.
-	**/
-	var remote_get_current_web_contents : electron.main.AppEvent<Void -> Void> = "remote-get-current-web-contents";
 }
