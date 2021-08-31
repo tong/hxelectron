@@ -17,6 +17,7 @@ haxelib install electron
 haxelib git electron https://github.com/tong/hxelectron.git
 ```
 
+---
 
 ## Generate Type Definitions
 
@@ -33,31 +34,24 @@ haxe haxedoc.hxml
 
 By default `hxelectron/electron-api.json` is used if you ommit the path argument to your custom description file.
 
-
+---
 
 ## Usage
 
 ### Demo Application
 
-Spin up the included demo application to see electron in action:
+- #### Clone this repository and setup
+```sh
+git clone https://github.com/tong/hxelectron && cd hxelectron/
+haxelib dev electron .
+```
+
+#### Build and run the demo application
 
 ```sh
-## Clone this repository
-git clone https://github.com/tong/hxelectron
-cd hxelectron/
-
-## Set the haxelib development directory
-haxelib dev electron .
-
 cd demo/
-
-## Install electron
-npm install
-
-## Build main.js, app.js
-npm run build
-
-# Run the application
+npm install # Install electron
+npm run build # Build main.js & app.js
 npm start
 ```
 
