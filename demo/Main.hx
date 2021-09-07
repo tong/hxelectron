@@ -12,7 +12,7 @@ class Main {
 		Sys.println( 'node '+process.version );
 		Sys.println( 'electron '+process.versions['electron'] );
 
-		electron.main.App.on( ready, e -> {
+		electron.main.App.whenReady().then(_ -> {
 
 			var win = new BrowserWindow( {
 				width: 720, height: 480,
@@ -29,12 +29,12 @@ class Main {
 
 			var tray = new electron.main.Tray( '${__dirname}/icon-192.png' );
 
-			//var dialog = new electron.main.Dialog();
-			//electron.main.Dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] });
+			// var dialog = new electron.main.Dialog();
+			// electron.main.Dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] });
 
-			// var menu = new electron.main.Menu();
-			// menu.append(new electron.main.MenuItem({ label: 'MenuItem1'} ) );
-			// electron.main.Menu.setApplicationMenu(menu);
+			var menu : electron.main.Menu = electron.main.Menu.getApplicationMenu();
+			menu.append(new electron.main.MenuItem({ label: 'HAXE'} ) );
+			electron.main.Menu.setApplicationMenu(menu);
 		});
 
 		electron.main.App.on( window_all_closed, e -> {

@@ -13,23 +13,23 @@ package electron.renderer;
 	/**
 		A `WebFrame | null` representing top frame in frame hierarchy to which `webFrame` belongs, the property would be `null` if top frame is not in the current renderer process.
 	**/
-	static var top : haxe.extern.EitherType<Dynamic, Dynamic>;
+	static var top : haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		A `WebFrame | null` representing the frame which opened `webFrame`, the property would be `null` if there's no opener or opener is not in the current renderer process.
 	**/
-	static var opener : haxe.extern.EitherType<Dynamic, Dynamic>;
+	static var opener : haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		A `WebFrame | null` representing parent frame of `webFrame`, the property would be `null` if `webFrame` is top or parent is not in the current renderer process.
 	**/
-	static var parent : haxe.extern.EitherType<Dynamic, Dynamic>;
+	static var parent : haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		A `WebFrame | null` representing the first child frame of `webFrame`, the property would be `null` if `webFrame` has no children or if first child is not in the current renderer process.
 	**/
-	static var firstChild : haxe.extern.EitherType<Dynamic, Dynamic>;
+	static var firstChild : haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		A `WebFrame | null` representing next sibling frame, the property would be `null` if `webFrame` is the last frame in its parent or if the next sibling is not in the current renderer process.
 	**/
-	static var nextSibling : haxe.extern.EitherType<Dynamic, Dynamic>;
+	static var nextSibling : haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		An `Integer` representing the unique frame id in the current renderer process. Distinct WebFrame instances that refer to the same underlying frame will have the same `routingId`.
 	**/

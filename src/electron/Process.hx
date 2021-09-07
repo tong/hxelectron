@@ -115,7 +115,7 @@ package electron;
 		
 		Indicates the creation time of the application. The time is represented as number of milliseconds since epoch. It returns null if it is unable to get the process creation time.
 	**/
-	static function getCreationTime():haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function getCreationTime():haxe.extern.EitherType<Float, Dynamic>;
 	static function getCPUUsage():electron.CPUUsage;
 	static function getIOCounters():electron.IOCounters;
 	/**

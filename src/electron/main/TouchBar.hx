@@ -15,8 +15,8 @@ package electron.main;
 	**/
 	var escapeItem : Dynamic;
 	function new(options:{ @:optional
-	var items : Array<haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>>>>>>>>; @:optional
-	var escapeItem : haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>>>>>>>>; }):Void;
+	var items : Array<haxe.extern.EitherType<electron.main.TouchBarButton, haxe.extern.EitherType<electron.main.TouchBarColorPicker, haxe.extern.EitherType<electron.main.TouchBarGroup, haxe.extern.EitherType<electron.main.TouchBarLabel, haxe.extern.EitherType<electron.main.TouchBarPopover, haxe.extern.EitherType<electron.main.TouchBarScrubber, haxe.extern.EitherType<electron.main.TouchBarSegmentedControl, haxe.extern.EitherType<electron.main.TouchBarSlider, electron.main.TouchBarSpacer>>>>>>>>>; @:optional
+	var escapeItem : haxe.extern.EitherType<electron.main.TouchBarButton, haxe.extern.EitherType<electron.main.TouchBarColorPicker, haxe.extern.EitherType<electron.main.TouchBarGroup, haxe.extern.EitherType<electron.main.TouchBarLabel, haxe.extern.EitherType<electron.main.TouchBarPopover, haxe.extern.EitherType<electron.main.TouchBarScrubber, haxe.extern.EitherType<electron.main.TouchBarSegmentedControl, haxe.extern.EitherType<electron.main.TouchBarSlider, haxe.extern.EitherType<electron.main.TouchBarSpacer, Dynamic>>>>>>>>>; }):Void;
 }
 @:enum abstract TouchBarEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 

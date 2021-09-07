@@ -43,7 +43,7 @@ package electron.remote;
 	/**
 		A `NativeImage | String` (optional) indicating the item's icon, if set.
 	**/
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>;
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>;
 	/**
 		A `String` indicating the item's sublabel.
 	**/
@@ -110,7 +110,7 @@ package electron.remote;
 	@:optional
 	var toolTip : String; @:optional
 	var accelerator : electron.Accelerator; @:optional
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		If false, the menu item will be greyed out and unclickable.
 	**/
 	@:optional
@@ -138,7 +138,7 @@ package electron.remote;
 		Should be specified for `submenu` type menu items. If `submenu` is specified, the `type: 'submenu'` can be omitted. If the value is not a `Menu` then it will be automatically converted to one using `Menu.buildFromTemplate`.
 	**/
 	@:optional
-	var submenu : haxe.extern.EitherType<Array<Dynamic>, Dynamic>; /**
+	var submenu : haxe.extern.EitherType<Array<Dynamic>, electron.remote.Menu>; /**
 		Unique within a single menu. If defined then it can be used as a reference to this item by the position attribute.
 	**/
 	@:optional

@@ -60,7 +60,7 @@ package electron.main;
 	@see https://electronjs.org/docs/api/tray
 **/
 @:jsRequire("electron", "Tray") extern class Tray extends js.node.events.EventEmitter<electron.main.Tray> {
-	function new(image:haxe.extern.EitherType<Dynamic, Dynamic>, ?guid:String):Void;
+	function new(image:haxe.extern.EitherType<electron.NativeImage, String>, ?guid:String):Void;
 	/**
 		Destroys the tray icon immediately.
 	**/
@@ -68,11 +68,11 @@ package electron.main;
 	/**
 		Sets the `image` associated with this tray icon.
 	**/
-	function setImage(image:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setImage(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;
 	/**
 		Sets the `image` associated with this tray icon when pressed on macOS.
 	**/
-	function setPressedImage(image:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setPressedImage(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;
 	/**
 		Sets the hover text for this tray icon.
 	**/
@@ -106,7 +106,7 @@ package electron.main;
 		Icon to use when `iconType` is `custom`.
 	**/
 	@:optional
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		Can be `none`, `info`, `warning`, `error` or `custom`. Default is `custom`.
 	**/
 	@:optional
@@ -144,7 +144,7 @@ package electron.main;
 	/**
 		Sets the context menu for this icon.
 	**/
-	function setContextMenu(menu:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setContextMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
 	/**
 		The `bounds` of this tray icon as `Object`.
 	**/

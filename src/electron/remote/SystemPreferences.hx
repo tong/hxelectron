@@ -164,7 +164,7 @@ package electron.remote;
 	/**
 		Sets the appearance setting for your application, this should override the system default and override the value of `getEffectiveAppearance`.
 	**/
-	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<String, Dynamic>):Void;
 	/**
 		whether or not this device has the ability to use Touch ID.
 		

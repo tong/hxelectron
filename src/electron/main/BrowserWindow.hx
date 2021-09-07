@@ -107,19 +107,19 @@ package electron.main;
 	/**
 		The window that is focused in this application, otherwise returns `null`.
 	**/
-	static function getFocusedWindow():haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function getFocusedWindow():haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
 	/**
 		The window that owns the given `webContents` or `null` if the contents are not owned by a window.
 	**/
-	static function fromWebContents(webContents:electron.main.WebContents):haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function fromWebContents(webContents:electron.main.WebContents):haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
 	/**
 		The window that owns the given `browserView`. If the given view is not attached to any window, returns `null`.
 	**/
-	static function fromBrowserView(browserView:electron.main.BrowserView):haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function fromBrowserView(browserView:electron.main.BrowserView):haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
 	/**
 		The window with the given `id`.
 	**/
-	static function fromId(id:Int):haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function fromId(id:Int):haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
 	/**
 		A `WebContents` object this window owns. All web page related events and operations will be done via it.
 		
@@ -320,7 +320,7 @@ package electron.main;
 		The window icon. On Windows it is recommended to use `ICO` icons to get best visual effects, you can also leave it undefined so the executable's icon will be used.
 	**/
 	@:optional
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		Whether window should be shown when created. Default is `true`.
 	**/
 	@:optional
@@ -616,7 +616,7 @@ package electron.main;
 		When using a frameless window in conjuction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.  On Windows, the OverlayOptions can be used instead of a boolean to specify colors for the overlay.
 	**/
 	@:optional
-	var titleBarOverlay : haxe.extern.EitherType<Dynamic, Dynamic>; }):Void;
+	var titleBarOverlay : haxe.extern.EitherType<electron.OverlayOptions, Bool>; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
@@ -982,7 +982,7 @@ package electron.main;
 		An HTTP Referrer URL.
 	**/
 	@:optional
-	var httpReferrer : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -991,7 +991,7 @@ package electron.main;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : Array<haxe.extern.EitherType<Dynamic, Dynamic>>; /**
+	var postData : Array<haxe.extern.EitherType<electron.UploadRawData, electron.UploadFile>>; /**
 		Base URL (with trailing path separator) for files to be loaded by the data URL. This is needed only if the specified `url` is a data URL and needs to load other files.
 	**/
 	@:optional
@@ -1021,7 +1021,7 @@ package electron.main;
 	/**
 		Sets the `menu` as the window's menu bar.
 	**/
-	function setMenu(menu:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
 	/**
 		Remove the window's menu bar.
 	**/
@@ -1042,7 +1042,7 @@ package electron.main;
 	/**
 		Sets a 16 x 16 pixel overlay onto the current taskbar icon, usually used to convey some sort of application status or to passively notify the user.
 	**/
-	function setOverlayIcon(overlay:haxe.extern.EitherType<Dynamic, Dynamic>, description:String):Void;
+	function setOverlayIcon(overlay:haxe.extern.EitherType<electron.NativeImage, Dynamic>, description:String):Void;
 	/**
 		Sets whether the window should have a shadow.
 	**/
@@ -1129,7 +1129,7 @@ package electron.main;
 	/**
 		Changes window icon.
 	**/
-	function setIcon(icon:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setIcon(icon:haxe.extern.EitherType<electron.NativeImage, String>):Void;
 	/**
 		Sets whether the window traffic light buttons should be visible.
 	**/
@@ -1201,7 +1201,7 @@ package electron.main;
 	/**
 		Sets `parent` as current window's parent window, passing `null` will turn current window into a top-level window.
 	**/
-	function setParentWindow(parent:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setParentWindow(parent:haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>):Void;
 	/**
 		The parent window.
 	**/
@@ -1243,7 +1243,7 @@ package electron.main;
 		
 		Note that `appearance-based`, `light`, `dark`, `medium-light`, and `ultra-dark` have been deprecated and will be removed in an upcoming version of macOS.
 	**/
-	function setVibrancy(type:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setVibrancy(type:haxe.extern.EitherType<String, Dynamic>):Void;
 	/**
 		Set a custom position for the traffic light buttons in frameless window.
 	**/
@@ -1257,12 +1257,12 @@ package electron.main;
 		
 		**Note:** The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
-	function setTouchBar(touchBar:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
-	function setBrowserView(browserView:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setTouchBar(touchBar:haxe.extern.EitherType<electron.main.TouchBar, Dynamic>):Void;
+	function setBrowserView(browserView:haxe.extern.EitherType<electron.main.BrowserView, Dynamic>):Void;
 	/**
 		The `BrowserView` attached to `win`. Returns `null` if one is not attached. Throws an error if multiple `BrowserView`s are attached.
 	**/
-	function getBrowserView():haxe.extern.EitherType<Dynamic, Dynamic>;
+	function getBrowserView():haxe.extern.EitherType<electron.main.BrowserView, Dynamic>;
 	/**
 		Replacement API for setBrowserView supporting work with multi browser views.
 	**/

@@ -21,13 +21,13 @@ package electron.main;
 		
 		**Note:** The default menu will be created automatically if the app does not set one. It contains standard items such as `File`, `Edit`, `View`, `Window` and `Help`.
 	**/
-	static function setApplicationMenu(menu:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	static function setApplicationMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
 	/**
 		The application menu, if set, or `null`, if not set.
 		
 		**Note:** The returned `Menu` instance doesn't support dynamic addition or removal of menu items. Instance properties can still be dynamically modified.
 	**/
-	static function getApplicationMenu():haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function getApplicationMenu():haxe.extern.EitherType<electron.main.Menu, Dynamic>;
 	/**
 		Sends the `action` to the first responder of application. This is used for emulating default macOS menu behaviors. Usually you would use the `role` property of a `MenuItem`.
 		
@@ -39,7 +39,7 @@ package electron.main;
 		
 		You can also attach other fields to the element of the `template` and they will become properties of the constructed menu items.
 	**/
-	static function buildFromTemplate(template:Array<haxe.extern.EitherType<Dynamic, Dynamic>>):electron.main.Menu;
+	static function buildFromTemplate(template:Array<haxe.extern.EitherType<Dynamic, electron.main.MenuItem>>):electron.main.Menu;
 	/**
 		A `MenuItem[]` array containing the menu's items.
 		
@@ -82,7 +82,7 @@ package electron.main;
 	/**
 		the item with the specified `id`
 	**/
-	function getMenuItemById(id:String):haxe.extern.EitherType<Dynamic, Dynamic>;
+	function getMenuItemById(id:String):haxe.extern.EitherType<electron.main.MenuItem, Dynamic>;
 	/**
 		Inserts the `menuItem` to the `pos` position of the menu.
 	**/

@@ -46,7 +46,7 @@ package electron.main;
 		Button icon.
 	**/
 	@:optional
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		Can be `left`, `right` or `overlay`. Defaults to `overlay`.
 	**/
 	@:optional

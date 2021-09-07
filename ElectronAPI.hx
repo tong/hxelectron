@@ -130,6 +130,7 @@ private class Gen {
 				pos: null
 			} );
 		}
+		addAlias( 'ClientRequestConstructorOptions' );
 		addAlias( 'Partial' );
 		addAlias( 'Record' );
 		addAlias( 'SaveDialogOptions' );
@@ -144,7 +145,7 @@ private class Gen {
 		} );
 
 		for( item in items ) {
-			//if( item.name != 'WebContents' ) continue;
+			// if( item.name != 'ProtocolResponseUploadData' ) continue;
 			this.types.set( item.name, processItem( item ) );
 		}
 
@@ -443,16 +444,33 @@ private class Gen {
 		return { name: name, access: access, kind: kind, meta: meta, doc: getDoc( doc ), pos: null }
 	}
 
-	function createMultiType( types : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) : ComplexType {
-		function createEitherType( remain : Array<{typeName:String,collection:Bool,?properties:Array<Dynamic>}> ) {
+	function createMultiType( types : Array<{?typeName:String,?type:String,collection:Bool,?properties:Array<Dynamic>}> ) : ComplexType {
+		function createEitherType( remain : Array<{?typeName:String,?type:String,collection:Bool,?properties:Array<Dynamic>}> ) {
 			var params = new Array<TypeParam>();
 			var t1 = remain.shift();
+			function getTypeName(t: {?typeName:String,?type:String}) {
+				return (t.typeName != null) ? t.typeName : t.type; 
+			}
+			var t1Name = getTypeName( t1 );
+			if( t1Name == null ) throw 'cannot resolve type name';
+			params.push( TPType( getComplexType( t1Name, t1.collection, t1.properties ) ) );
+			if( remain.length > 1) {
+				params.push(TPType( createEitherType( remain ) ));
+			} else {
+				var t2Name = getTypeName( remain[0] );
+				if( t2Name == null ) throw 'cannot resolve type name';
+				params.push(TPType( getComplexType( t2Name, remain[0].collection, remain[0].properties ) ) );
+			}
+			return TPath( { pack: ['haxe','extern'], name: 'EitherType', params: params } );
+			/*
 			params.push( TPType( getComplexType( t1.typeName, t1.collection, t1.properties ) ) );
 			params.push( (remain.length > 1)
 				? TPType( createEitherType( remain ) )
 				: TPType( getComplexType( remain[0].typeName, remain[0].collection, remain[0].properties ) )
 			);
+			trace(params);
 			return TPath( { pack: ['haxe','extern'], name: 'EitherType', params: params } );
+			*/
 		}
 		return createEitherType( types );
 	}
@@ -470,6 +488,7 @@ private class Gen {
 		case 'Bool','Boolean','boolean': macro : Bool;
 		case 'Buffer': macro : js.node.Buffer;
 		case 'Date': macro : Date;
+		case '[number, number]': macro : Array<Float>; // HACK
 		case 'NodeJS.Process': macro : js.node.Process; // HACK
 		case 'NodeJS.Require': macro : Dynamic; // HACK TODO
 		case 'Double','Float','Number','number': macro : Float;

@@ -48,11 +48,11 @@ package electron.main;
 	/**
 		The application's [dock menu][dock-menu].
 	**/
-	function getMenu():haxe.extern.EitherType<Dynamic, Dynamic>;
+	function getMenu():haxe.extern.EitherType<electron.main.Menu, Dynamic>;
 	/**
 		Sets the `image` associated with this dock icon.
 	**/
-	function setIcon(image:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function setIcon(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;
 }
 @:enum abstract DockEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 

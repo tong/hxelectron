@@ -38,7 +38,7 @@ package electron.remote;
 		Create security scoped bookmarks when packaged for the Mac App Store.
 	**/
 	@:optional
-	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<Array<Dynamic>, Dynamic>;
+	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<Array<String>, Dynamic>;
 	/**
 		Resolve with an object containing the following:
 		
@@ -111,7 +111,7 @@ package electron.remote;
 		Create a security scoped bookmark when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.
 	**/
 	@:optional
-	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<Dynamic, Dynamic>;
+	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<String, Dynamic>;
 	/**
 		Resolve with an object containing the following:
 		
@@ -187,7 +187,7 @@ package electron.remote;
 	**/
 	@:optional
 	var detail : String; @:optional
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		The index of the button to be used to cancel the dialog, via the `Esc` key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, `0` will be used as the return value.
 	**/
 	@:optional

@@ -27,7 +27,7 @@ package electron.main;
 		
 		If a recording is already running, the promise will be immediately resolved, as only one trace operation can be in progress at a time.
 	**/
-	static function startRecording(options:haxe.extern.EitherType<Dynamic, Dynamic>):js.lib.Promise<Any>;
+	static function startRecording(options:haxe.extern.EitherType<electron.TraceConfig, electron.TraceCategoriesAndOptions>):js.lib.Promise<Any>;
 	/**
 		resolves with a path to a file that contains the traced data once all child processes have acknowledged the `stopRecording` request
 		

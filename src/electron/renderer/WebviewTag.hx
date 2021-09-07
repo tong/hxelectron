@@ -196,7 +196,7 @@ package electron.renderer;
 		An HTTP Referrer url.
 	**/
 	@:optional
-	var httpReferrer : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -205,7 +205,7 @@ package electron.renderer;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : Array<haxe.extern.EitherType<Dynamic, Dynamic>>; /**
+	var postData : Array<haxe.extern.EitherType<electron.UploadRawData, electron.UploadFile>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
@@ -505,7 +505,7 @@ var to : Float; }>; /**
 		Specify page size of the printed document. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`.
 	**/
 	@:optional
-	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; }):js.lib.Promise<Any>;
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; }):js.lib.Promise<Any>;
 	/**
 		Resolves with the generated PDF data.
 		
@@ -535,7 +535,7 @@ var to : Float; }>; /**
 		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`
 	**/
 	@:optional
-	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
 		Whether to print CSS backgrounds.
 	**/
 	@:optional
@@ -561,7 +561,7 @@ var to : Float; }>; /**
 		
 		See webContents.sendInputEvent for detailed description of `event` object.
 	**/
-	function sendInputEvent(event:haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>):js.lib.Promise<Any>;
+	function sendInputEvent(event:haxe.extern.EitherType<electron.MouseInputEvent, haxe.extern.EitherType<electron.MouseWheelInputEvent, electron.KeyboardInputEvent>>):js.lib.Promise<Any>;
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/

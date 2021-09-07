@@ -64,7 +64,7 @@ package electron.remote;
 		
 		**Note:** Users should never store this object because it may become `null` when the DevTools has been closed.
 	**/
-	var devToolsWebContents : haxe.extern.EitherType<Dynamic, Dynamic>;
+	var devToolsWebContents : haxe.extern.EitherType<electron.remote.WebContents, Dynamic>;
 	/**
 		A `Debugger` instance for this webContents.
 	**/
@@ -86,7 +86,7 @@ package electron.remote;
 		An HTTP Referrer url.
 	**/
 	@:optional
-	var httpReferrer : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
 		A user agent originating the request.
 	**/
 	@:optional
@@ -95,7 +95,7 @@ package electron.remote;
 	**/
 	@:optional
 	var extraHeaders : String; @:optional
-	var postData : Array<haxe.extern.EitherType<Dynamic, Dynamic>>; /**
+	var postData : Array<haxe.extern.EitherType<electron.UploadRawData, electron.UploadFile>>; /**
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
@@ -487,7 +487,7 @@ var to : Float; }>; /**
 		Specify page size of the printed document. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`.
 	**/
 	@:optional
-	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; }, ?callback:haxe.Constraints.Function):Void;
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Resolves with the generated PDF data.
 		
@@ -525,7 +525,7 @@ var to : Float; }>; /**
 		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width` in microns.
 	**/
 	@:optional
-	var pageSize : haxe.extern.EitherType<Dynamic, Dynamic>; /**
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
 		Whether to print CSS backgrounds.
 	**/
 	@:optional
@@ -626,7 +626,7 @@ var to : Float; }>; /**
 		
 		You can also read `frameId` from all incoming IPC messages in the main process.
 	**/
-	function sendToFrame(frameId:haxe.extern.EitherType<Dynamic, Dynamic>, channel:String, args:haxe.extern.Rest<Any>):Void;
+	function sendToFrame(frameId:haxe.extern.EitherType<Int, Array<Float>>, channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
 		Send a message to the renderer process, optionally transferring ownership of zero or more [`MessagePortMain`][] objects.
 		
@@ -664,7 +664,7 @@ var to : Float; }>; /**
 	/**
 		Sends an input `event` to the page. **Note:** The `BrowserWindow` containing the contents needs to be focused for `sendInputEvent()` to work.
 	**/
-	function sendInputEvent(inputEvent:haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>):Void;
+	function sendInputEvent(inputEvent:haxe.extern.EitherType<electron.MouseInputEvent, haxe.extern.EitherType<electron.MouseWheelInputEvent, electron.KeyboardInputEvent>>):Void;
 	/**
 		Begin subscribing for presentation events and captured frames, the `callback` will be called with `callback(image, dirtyRect)` when there is a presentation event.
 		
@@ -683,10 +683,10 @@ var to : Float; }>; /**
 	function startDrag(item:{ /**
 		The path(s) to the file(s) being dragged.
 	**/
-	var file : haxe.extern.EitherType<Array<Dynamic>, Dynamic>; /**
+	var file : haxe.extern.EitherType<Array<String>, String>; /**
 		The image must be non-empty on macOS.
 	**/
-	var icon : haxe.extern.EitherType<Dynamic, Dynamic>; }):Void;
+	var icon : haxe.extern.EitherType<electron.NativeImage, String>; }):Void;
 	/**
 		resolves if the page is saved.
 	**/

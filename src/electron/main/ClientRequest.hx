@@ -14,7 +14,59 @@ package electron.main;
 		Using chunked encoding is strongly recommended if you need to send a large request body as data will be streamed in small chunks instead of being internally buffered inside Electron process memory.
 	**/
 	var chunkedEncoding : Bool;
-	function new(options:haxe.extern.EitherType<Dynamic, Dynamic>):Void;
+	function new(options:haxe.extern.EitherType<{ /**
+		The HTTP request method. Defaults to the GET method.
+	**/
+	@:optional
+	var method : String; /**
+		The request URL. Must be provided in the absolute form with the protocol scheme specified as http or https.
+	**/
+	@:optional
+	var url : String; /**
+		The `Session` instance with which the request is associated.
+	**/
+	@:optional
+	var session : electron.main.Session; /**
+		The name of the `partition` with which the request is associated. Defaults to the empty string. The `session` option supersedes `partition`. Thus if a `session` is explicitly specified, `partition` is ignored.
+	**/
+	@:optional
+	var partition : String; /**
+		Can be `include` or `omit`. Whether to send credentials with this request. If set to `include`, credentials from the session associated with the request will be used. If set to `omit`, credentials will not be sent with the request (and the `'login'` event will not be triggered in the event of a 401). This matches the behavior of the fetch option of the same name. If this option is not specified, authentication data from the session will be sent, and cookies will not be sent (unless `useSessionCookies` is set).
+	**/
+	@:optional
+	var credentials : String; /**
+		Whether to send cookies with this request from the provided session. If `credentials` is specified, this option has no effect. Default is `false`.
+	**/
+	@:optional
+	var useSessionCookies : Bool; /**
+		Can be `http:` or `https:`. The protocol scheme in the form 'scheme:'. Defaults to 'http:'.
+	**/
+	@:optional
+	var protocol : String; /**
+		The server host provided as a concatenation of the hostname and the port number 'hostname:port'.
+	**/
+	@:optional
+	var host : String; /**
+		The server host name.
+	**/
+	@:optional
+	var hostname : String; /**
+		The server's listening port number.
+	**/
+	@:optional
+	var port : Int; /**
+		The path part of the request URL.
+	**/
+	@:optional
+	var path : String; /**
+		Can be `follow`, `error` or `manual`. The redirect mode for this request. When mode is `error`, any redirection will be aborted. When mode is `manual` the redirection will be cancelled unless `request.followRedirect` is invoked synchronously during the `redirect` event.  Defaults to `follow`.
+	**/
+	@:optional
+	var redirect : String; /**
+		The origin URL of the request.
+	**/
+	@:optional
+	var origin : String; }, String>):Void;
 	/**
 		Adds an extra HTTP header. The header name will be issued as-is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a `String`, its `toString()` method will be called to obtain the final value.
 		
@@ -44,11 +96,11 @@ package electron.main;
 		
 		Adds a chunk of data to the request body. The first write operation may cause the request headers to be issued on the wire. After the first write operation, it is not allowed to add or remove a custom header.
 	**/
-	function write(chunk:haxe.extern.EitherType<Dynamic, Dynamic>, ?encoding:String, ?callback:haxe.Constraints.Function):Void;
+	function write(chunk:haxe.extern.EitherType<String, js.node.Buffer>, ?encoding:String, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Sends the last chunk of the request data. Subsequent write or end operations will not be allowed. The `finish` event is emitted just after the end operation.
 	**/
-	function end(?chunk:haxe.extern.EitherType<Dynamic, Dynamic>, ?encoding:String, ?callback:haxe.Constraints.Function):Void;
+	function end(?chunk:haxe.extern.EitherType<String, js.node.Buffer>, ?encoding:String, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Cancels an ongoing HTTP transaction. If the request has already emitted the `close` event, the abort operation will have no effect. Otherwise an ongoing event will emit `abort` and `close` events. Additionally, if there is an ongoing response object,it will emit the `aborted` event.
 	**/

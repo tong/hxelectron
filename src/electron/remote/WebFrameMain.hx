@@ -6,7 +6,7 @@ package electron.remote;
 	/**
 		A frame with the given process and routing IDs, or `undefined` if there is no WebFrameMain associated with the given IDs.
 	**/
-	static function fromId(processId:Int, routingId:Int):haxe.extern.EitherType<Dynamic, Dynamic>;
+	static function fromId(processId:Int, routingId:Int):haxe.extern.EitherType<electron.remote.WebFrameMain, Dynamic>;
 	/**
 		A `string` representing the current URL of the frame.
 	**/
@@ -14,11 +14,11 @@ package electron.remote;
 	/**
 		A `WebFrameMain | null` representing top frame in the frame hierarchy to which `frame` belongs.
 	**/
-	var top : haxe.extern.EitherType<Dynamic, Dynamic>;
+	var top : haxe.extern.EitherType<electron.remote.WebFrameMain, Dynamic>;
 	/**
 		A `WebFrameMain | null` representing parent frame of `frame`, the property would be `null` if `frame` is the top frame in the frame hierarchy.
 	**/
-	var parent : haxe.extern.EitherType<Dynamic, Dynamic>;
+	var parent : haxe.extern.EitherType<electron.remote.WebFrameMain, Dynamic>;
 	/**
 		A `WebFrameMain[]` collection containing the direct descendents of `frame`.
 	**/

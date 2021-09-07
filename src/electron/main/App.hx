@@ -21,7 +21,7 @@ package electron.main;
 	/**
 		A `Menu | null` property that returns `Menu` if one has been set and `null` otherwise. Users can pass a Menu to set this property.
 	**/
-	static var applicationMenu : haxe.extern.EitherType<Dynamic, Dynamic>;
+	static var applicationMenu : haxe.extern.EitherType<electron.main.Menu, Dynamic>;
 	/**
 		An `Integer` property that returns the badge count for current app. Setting the count to `0` will hide the badge.
 		
@@ -268,7 +268,7 @@ package electron.main;
 		
 		Here's a very simple example of creating a custom Jump List:
 	**/
-	static function setJumpList(categories:haxe.extern.EitherType<Array<Dynamic>, Dynamic>):Void;
+	static function setJumpList(categories:haxe.extern.EitherType<Array<electron.JumpListCategory>, Dynamic>):Void;
 	/**
 		The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately.
 		

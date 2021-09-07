@@ -7,7 +7,7 @@ typedef PostBody = {
 	/**
 		The post data to be sent to the new window.
 	**/
-	var data : Array<haxe.extern.EitherType<Dynamic, Dynamic>>;
+	var data : Array<haxe.extern.EitherType<electron.UploadRawData, electron.UploadFile>>;
 	/**
 		The `content-type` header used for the data. One of `application/x-www-form-urlencoded` or `multipart/form-data`. Corresponds to the `enctype` attribute of the submitted HTML form.
 	**/

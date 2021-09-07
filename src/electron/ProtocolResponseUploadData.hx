@@ -10,5 +10,5 @@ typedef ProtocolResponseUploadData = {
 	/**
 		Content to be sent.
 	**/
-	var data : haxe.extern.EitherType<Dynamic, Dynamic>;
+	var data : haxe.extern.EitherType<String, js.node.Buffer>;
 }

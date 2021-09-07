@@ -60,11 +60,11 @@ package electron.remote;
 	/**
 		Converts a screen physical rect to a screen DIP rect. The DPI scale is performed relative to the display nearest to `window`. If `window` is null, scaling will be performed to the display nearest to `rect`.
 	**/
-	static function screenToDipRect(window:haxe.extern.EitherType<Dynamic, Dynamic>, rect:electron.Rectangle):electron.Rectangle;
+	static function screenToDipRect(window:haxe.extern.EitherType<electron.remote.BrowserWindow, Dynamic>, rect:electron.Rectangle):electron.Rectangle;
 	/**
 		Converts a screen DIP rect to a screen physical rect. The DPI scale is performed relative to the display nearest to `window`. If `window` is null, scaling will be performed to the display nearest to `rect`.
 	**/
-	static function dipToScreenRect(window:haxe.extern.EitherType<Dynamic, Dynamic>, rect:electron.Rectangle):electron.Rectangle;
+	static function dipToScreenRect(window:haxe.extern.EitherType<electron.remote.BrowserWindow, Dynamic>, rect:electron.Rectangle):electron.Rectangle;
 }
 @:enum abstract ScreenEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

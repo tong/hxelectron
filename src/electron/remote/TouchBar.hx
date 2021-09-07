@@ -15,8 +15,8 @@ package electron.remote;
 	**/
 	var escapeItem : Dynamic;
 	function new(options:{ @:optional
-	var items : Array<haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>>>>>>>>; @:optional
-	var escapeItem : haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, haxe.extern.EitherType<Dynamic, Dynamic>>>>>>>>>; }):Void;
+	var items : Array<haxe.extern.EitherType<electron.remote.TouchBarButton, haxe.extern.EitherType<electron.remote.TouchBarColorPicker, haxe.extern.EitherType<electron.remote.TouchBarGroup, haxe.extern.EitherType<electron.remote.TouchBarLabel, haxe.extern.EitherType<electron.remote.TouchBarPopover, haxe.extern.EitherType<electron.remote.TouchBarScrubber, haxe.extern.EitherType<electron.remote.TouchBarSegmentedControl, haxe.extern.EitherType<electron.remote.TouchBarSlider, electron.remote.TouchBarSpacer>>>>>>>>>; @:optional
+	var escapeItem : haxe.extern.EitherType<electron.remote.TouchBarButton, haxe.extern.EitherType<electron.remote.TouchBarColorPicker, haxe.extern.EitherType<electron.remote.TouchBarGroup, haxe.extern.EitherType<electron.remote.TouchBarLabel, haxe.extern.EitherType<electron.remote.TouchBarPopover, haxe.extern.EitherType<electron.remote.TouchBarScrubber, haxe.extern.EitherType<electron.remote.TouchBarSegmentedControl, haxe.extern.EitherType<electron.remote.TouchBarSlider, haxe.extern.EitherType<electron.remote.TouchBarSpacer, Dynamic>>>>>>>>>; }):Void;
 }
 @:enum abstract TouchBarEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 
