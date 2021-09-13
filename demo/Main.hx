@@ -21,19 +21,28 @@ class Main {
 					contextIsolation: false
 				}
 			} );
-			win.on( closed, function() {
+			win.on( closed, () -> {
 				win = null;
 			});
 			win.loadFile( 'app.html' );
 			//win.webContents.openDevTools();
 
 			var tray = new electron.main.Tray( '${__dirname}/icon-192.png' );
+			tray.setToolTip('Haxelectron');
 
 			// var dialog = new electron.main.Dialog();
 			// electron.main.Dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] });
 
 			var menu : electron.main.Menu = electron.main.Menu.getApplicationMenu();
-			menu.append(new electron.main.MenuItem({ label: 'HAXE'} ) );
+			menu.append(new electron.main.MenuItem(
+				{
+					label: 'Haxe',
+					submenu: [
+						{ label: 'Website', click: e -> win.loadURL('https://haxe.org') },
+						{ label: 'Github', click: e -> win.loadURL('https://github.com/HaxeFoundation') }
+					]
+				}
+			));
 			electron.main.Menu.setApplicationMenu(menu);
 		});
 
