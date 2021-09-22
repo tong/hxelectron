@@ -130,6 +130,7 @@ private class Gen {
 				pos: null
 			} );
 		}
+		addAlias( 'AbortSignal' );
 		addAlias( 'ClientRequestConstructorOptions' );
 		addAlias( 'Partial' );
 		addAlias( 'Record' );
