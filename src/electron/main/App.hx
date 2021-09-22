@@ -60,8 +60,16 @@ package electron.main;
 		A `Boolean` which when `true` indicates that the app is currently running under the Rosetta Translator Environment.
 		
 		You can use this property to prompt users to download the arm64 version of your application when they are running the x64 version under Rosetta incorrectly.
+		
+		**Deprecated:** This property is superceded by the `runningUnderARM64Translation` property which detects when the app is being translated to ARM64 in both macOS and Windows.
 	**/
 	static var runningUnderRosettaTranslation : Bool;
+	/**
+		A `Boolean` which when `true` indicates that the app is currently running under an ARM64 translator (like the macOS Rosetta Translator Environment or Windows WOW).
+		
+		You can use this property to prompt users to download the arm64 version of your application when they are running the x64 version under Rosetta incorrectly.
+	**/
+	static var runningUnderARM64Translation : Bool;
 	/**
 		Try to close all windows. The `before-quit` event will be emitted first. If all windows are successfully closed, the `will-quit` event will be emitted and by default the application will terminate.
 		
@@ -331,6 +339,36 @@ package electron.main;
 		Passphrase for the certificate.
 	**/
 	var password : String; }, callback:haxe.Constraints.Function):Void;
+	/**
+		Configures host resolution (DNS and DNS-over-HTTPS). By default, the following resolvers will be used, in order:
+		
+		* DNS-over-HTTPS, if the DNS provider supports it, then
+		* the built-in resolver (enabled on macOS only by default), then
+		* the system's resolver (e.g. `getaddrinfo`).
+		
+		This can be configured to either restrict usage of non-encrypted DNS (`secureDnsMode: "secure"`), or disable DNS-over-HTTPS (`secureDnsMode: "off"`). It is also possible to enable or disable the built-in resolver.
+		
+		To disable insecure DNS, you can specify a `secureDnsMode` of `"secure"`. If you do so, you should make sure to provide a list of DNS-over-HTTPS servers to use, in case the user's DNS configuration does not include a provider that supports DoH.
+		
+		This API must be called after the `ready` event is emitted.
+	**/
+	static function configureHostResolver(options:{ /**
+		Whether the built-in host resolver is used in preference to getaddrinfo. When enabled, the built-in resolver will attempt to use the system's DNS settings to do DNS lookups itself. Enabled by default on macOS, disabled by default on Windows and Linux.
+	**/
+	@:optional
+	var enableBuiltInResolver : Bool; /**
+		Can be "off", "automatic" or "secure". Configures the DNS-over-HTTP mode. When "off", no DoH lookups will be performed. When "automatic", DoH lookups will be peformed first if DoH is available, and insecure DNS lookups will be performed as a fallback. When "secure", only DoH lookups will be performed. Defaults to "automatic".
+	**/
+	@:optional
+	var secureDnsMode : String; /**
+		A list of DNS-over-HTTP server templates. See RFC8484 § 3 for details on the template format. Most servers support the POST method; the template for such servers is simply a URI. Note that for some DNS providers, the resolver will automatically upgrade to DoH unless DoH is explicitly disabled, even if there are no DoH servers provided in this list.
+	**/
+	@:optional
+	var secureDnsServers : Array<String>; /**
+		Controls whether additional DNS query types, e.g. HTTPS (DNS type 65) will be allowed besides the traditional A and AAAA queries when a request is being made via insecure DNS. Has no effect on Secure DNS which always allows additional types. Defaults to true.
+	**/
+	@:optional
+	var enableAdditionalDnsQueryTypes : Bool; }):Void;
 	/**
 		Disables hardware acceleration for current app.
 		

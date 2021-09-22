@@ -4,7 +4,7 @@ package electron.remote;
 	
 	Note: Only one instance of this class can be added per TouchBar.
 	
-	Process: Main
+	Process: Main<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
 	@see https://electronjs.org/docs/api/touch-bar-other-items-proxy
 **/
 @:jsRequire("electron", "remote.TouchBarOtherItemsProxy") extern class TouchBarOtherItemsProxy extends js.node.events.EventEmitter<electron.remote.TouchBarOtherItemsProxy> {

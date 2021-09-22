@@ -81,5 +81,8 @@ package electron.remote;
 	function postMessage(channel:String, message:Any, ?transfer:Array<electron.remote.MessagePortMain>):Void;
 }
 @:enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
-
+	/**
+		Emitted when the document is loaded.
+	**/
+	var dom_ready : electron.remote.WebFrameMainEvent<Void -> Void> = "dom-ready";
 }

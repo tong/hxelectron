@@ -58,7 +58,7 @@ package electron.remote;
 	**/
 	@:optional
 	var path : String; /**
-		Whether the cookie should be marked as Secure. Defaults to false.
+		Whether the cookie should be marked as Secure. Defaults to false unless Same Site=None attribute is used.
 	**/
 	@:optional
 	var secure : Bool; /**

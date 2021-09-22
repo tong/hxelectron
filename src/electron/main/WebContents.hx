@@ -759,6 +759,12 @@ var to : Float; }>; /**
 		the type of the webContent. Can be `backgroundPage`, `window`, `browserView`, `remote`, `webview` or `offscreen`.
 	**/
 	function getType():String;
+	/**
+		Sets the image animation policy for this webContents.  The policy only affects _new_ images, existing images that are currently being animated are unaffected. This is a known limitation in Chromium, you can force image animation to be recalculated with `img.src = img.src` which will result in no network traffic but will update the animation policy.
+		
+		This corresponds to the animationPolicy accessibility feature in Chromium.
+	**/
+	function setImageAnimationPolicy(policy:String):Void;
 }
 @:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
@@ -786,7 +792,7 @@ var to : Float; }>; /**
 	**/
 	var did_stop_loading : electron.main.WebContentsEvent<Void -> Void> = "did-stop-loading";
 	/**
-		Emitted when the document in the given frame is loaded.
+		Emitted when the document in the top-level frame is loaded.
 	**/
 	var dom_ready : electron.main.WebContentsEvent<Void -> Void> = "dom-ready";
 	/**
@@ -1021,4 +1027,8 @@ var to : Float; }>; /**
 		This event will only be emitted when `enablePreferredSizeMode` is set to `true` in `webPreferences`.
 	**/
 	var preferred_size_changed : electron.main.WebContentsEvent<Void -> Void> = "preferred-size-changed";
+	/**
+		Emitted when the mainFrame, an `<iframe>`, or a nested `<iframe>` is loaded within the page.
+	**/
+	var frame_created : electron.main.WebContentsEvent<Void -> Void> = "frame-created";
 }

@@ -8,11 +8,11 @@ package electron.remote;
 	
 	To create a window without chrome, or a transparent window in arbitrary shape, you can use the Frameless Window API.
 	
-	### Showing window gracefully
+	### Showing the window gracefully
 	
-	When loading a page in the window directly, users may see the page load incrementally, which is not a good experience for a native app. To make the window display without visual flash, there are two solutions for different situations.
+	When loading a page in the window directly, users may see the page load incrementally, which is not a good experience for a native app. To make the window display without a visual flash, there are two solutions for different situations.
 	
-	### Using `ready-to-show` event
+	### Using the `ready-to-show` event
 	
 	While loading the page, the `ready-to-show` event will be emitted when the renderer process has rendered the page for the first time if the window has not been shown yet. Showing the window after this event will have no visual flash:
 	
@@ -28,7 +28,7 @@ package electron.remote;
 	
 	Please note that using this event implies that the renderer will be considered "visible" and paint even though `show` is false.  This event will never fire if you use `paintWhenInitiallyHidden: false`
 	
-	### Setting `backgroundColor`
+	### Setting the `backgroundColor` property
 	
 	For a complex app, the `ready-to-show` event could be emitted too late, making the app feel slow. In this case, it is recommended to show the window immediately, and use a `backgroundColor` close to your app's background:
 	
@@ -473,6 +473,10 @@ package electron.remote;
 	**/
 	@:optional
 	var images : Bool; /**
+		Specifies how to run image animations (E.g. GIFs).  Can be `animate`, `animateOnce` or `noAnimation`.  Default is `animate`.
+	**/
+	@:optional
+	var imageAnimationPolicy : String; /**
 		Make TextArea elements resizable. Default is `true`.
 	**/
 	@:optional
@@ -557,7 +561,7 @@ package electron.remote;
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
-		Whether to use native `window.open()`. Defaults to `false`. Child windows will always have node integration disabled unless `nodeIntegrationInSubFrames` is true. **Note:** The default value will be changing to `true` in Electron 15.
+		Whether to use native `window.open()`. Defaults to `true`. Child windows will always have node integration disabled unless `nodeIntegrationInSubFrames` is true.
 	**/
 	@:optional
 	var nativeWindowOpen : Bool; /**
@@ -613,10 +617,18 @@ package electron.remote;
 	**/
 	@:optional
 	var enablePreferredSizeMode : Bool; }; /**
-		When using a frameless window in conjuction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.  On Windows, the OverlayOptions can be used instead of a boolean to specify colors for the overlay.
+		When using a frameless window in conjuction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
 	**/
 	@:optional
-	var titleBarOverlay : haxe.extern.EitherType<electron.OverlayOptions, Bool>; }):Void;
+	var titleBarOverlay : haxe.extern.EitherType<{ /**
+		The CSS color of the Window Controls Overlay when enabled. Default is the system color.
+	**/
+	@:optional
+	var color : String; /**
+		The CSS color of the symbols on the Window Controls Overlay when enabled. Default is the system color.
+	**/
+	@:optional
+	var symbolColor : String; }, Bool>; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
@@ -1350,6 +1362,13 @@ package electron.remote;
 		Emitted before the window is resized. Calling `event.preventDefault()` will prevent the window from being resized.
 		
 		Note that this is only emitted when the window is being resized manually. Resizing the window with `setBounds`/`setSize` will not emit this event.
+		
+		The possible values and behaviors of the `edge` option are platform dependent. Possible values are:
+		
+		* On Windows, possible values are `bottom`, `top`, `left`, `right`, `top-left`, `top-right`, `bottom-left`, `bottom-right`.
+		* On macOS, possible values are `bottom` and `right`.
+		  * The value `bottom` is used to denote vertical resizing.
+		  * The value `right` is used to denote horizontal resizing.
 	**/
 	var will_resize : electron.remote.BrowserWindowEvent<Void -> Void> = "will-resize";
 	/**

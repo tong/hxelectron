@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	> Create a group in the touch bar for native macOS applications
 	
-	Process: Main
+	Process: Main<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
 	@see https://electronjs.org/docs/api/touch-bar-group
 **/
 @:jsRequire("electron", "remote.TouchBarGroup") extern class TouchBarGroup extends js.node.events.EventEmitter<electron.remote.TouchBarGroup> {

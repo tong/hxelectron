@@ -226,6 +226,10 @@ package electron.remote;
 	**/
 	@:optional
 	var defaultId : Int; /**
+		Pass an instance of AbortSignal to optionally close the message box, the message box will behave as if it was cancelled by the user. On macOS, `signal` does not work with message boxes that do not have a parent window, since those message boxes run synchronously due to platform limitations.
+	**/
+	@:optional
+	var signal : AbortSignal; /**
 		Title of the message box, some platforms will not show it.
 	**/
 	@:optional

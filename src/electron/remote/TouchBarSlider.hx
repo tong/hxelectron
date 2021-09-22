@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	> Create a slider in the touch bar for native macOS applications
 	
-	Process: Main
+	Process: Main<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
 	@see https://electronjs.org/docs/api/touch-bar-slider
 **/
 @:jsRequire("electron", "remote.TouchBarSlider") extern class TouchBarSlider extends js.node.events.EventEmitter<electron.remote.TouchBarSlider> {
