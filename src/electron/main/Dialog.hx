@@ -188,6 +188,10 @@ package electron.main;
 	@:optional
 	var detail : String; @:optional
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
+		Custom width of the text in the message box.
+	**/
+	@:optional
+	var textWidth : Int; /**
 		The index of the button to be used to cancel the dialog, via the `Esc` key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, `0` will be used as the return value.
 	**/
 	@:optional
@@ -247,6 +251,10 @@ package electron.main;
 	@:optional
 	var checkboxChecked : Bool; @:optional
 	var icon : electron.NativeImage; /**
+		Custom width of the text in the message box.
+	**/
+	@:optional
+	var textWidth : Int; /**
 		The index of the button to be used to cancel the dialog, via the `Esc` key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, `0` will be used as the return value.
 	**/
 	@:optional

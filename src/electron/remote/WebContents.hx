@@ -681,9 +681,13 @@ var to : Float; }>; /**
 		Sets the `item` as dragging item for current drag-drop operation, `file` is the absolute path of the file to be dragged, and `icon` is the image showing under the cursor when dragging.
 	**/
 	function startDrag(item:{ /**
-		The path(s) to the file(s) being dragged.
+		The path to the file being dragged.
 	**/
-	var file : haxe.extern.EitherType<Array<String>, String>; /**
+	var file : String; /**
+		The paths to the files being dragged. (`files` will override `file` field)
+	**/
+	@:optional
+	var files : Array<String>; /**
 		The image must be non-empty on macOS.
 	**/
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>; }):Void;

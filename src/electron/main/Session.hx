@@ -214,6 +214,10 @@ package electron.main;
 	**/
 	function setPermissionCheckHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
+		Sets the handler which can be used to respond to device permission checks for the `session`. Returning `true` will allow the device to be permitted and `false` will reject it. To clear the handler, call `setDevicePermissionHandler(null)`. This handler can be used to provide default permissioning to devices without first calling for permission to devices (eg via `navigator.hid.requestDevice`).  If this handler is not defined, the default device permissions as granted through device selection (eg via `navigator.hid.requestDevice`) will be used. Additionally, the default behavior of Electron is to store granted device permision through the lifetime of the corresponding WebContents.  If longer term storage is needed, a developer can store granted device permissions (eg when handling the `select-hid-device` event) and then read from that storage with `setDevicePermissionHandler`.
+	**/
+	function setDevicePermissionHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
+	/**
 		Resolves when the operation is complete.
 		
 		Clears the host resolver cache.
@@ -436,6 +440,22 @@ package electron.main;
 		Emitted when a hunspell dictionary file download fails.  For details on the failure you should collect a netlog and inspect the download request.
 	**/
 	var spellcheck_dictionary_download_failure : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-failure";
+	/**
+		Emitted when a HID device needs to be selected when a call to `navigator.hid.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.hid` can be further managed by using ses.setPermissionCheckHandler(handler) and ses.setDevicePermissionHandler(handler)`.
+	**/
+	var select_hid_device : electron.main.SessionEvent<Void -> Void> = "select-hid-device";
+	/**
+		Emitted when a new HID device becomes available. For example, when a new USB device is plugged in.
+		
+		This event will only be emitted after `navigator.hid.requestDevice` has been called and `select-hid-device` has fired.
+	**/
+	var hid_device_added : electron.main.SessionEvent<Void -> Void> = "hid-device-added";
+	/**
+		Emitted when a HID device has been removed.  For example, this event will fire when a USB device is unplugged.
+		
+		This event will only be emitted after `navigator.hid.requestDevice` has been called and `select-hid-device` has fired.
+	**/
+	var hid_device_removed : electron.main.SessionEvent<Void -> Void> = "hid-device-removed";
 	/**
 		Emitted when a serial port needs to be selected when a call to `navigator.serial.requestPort` is made. `callback` should be called with `portId` to be selected, passing an empty string to `callback` will cancel the request.  Additionally, permissioning on `navigator.serial` can be managed by using ses.setPermissionCheckHandler(handler) with the `serial` permission.
 	**/
