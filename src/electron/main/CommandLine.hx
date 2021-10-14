@@ -27,6 +27,12 @@ package electron.main;
 		**Note:** When the switch is not present or has no value, it returns empty string.
 	**/
 	function getSwitchValue(switch_:String):String;
+	/**
+		Removes the specified switch from Chromium's command line.
+		
+		**Note:** This will not affect `process.argv`. The intended usage of this function is to control Chromium's behavior.
+	**/
+	function removeSwitch(switch_:String):Void;
 }
 @:enum abstract CommandLineEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 
