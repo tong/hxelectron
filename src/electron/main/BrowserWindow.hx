@@ -4,9 +4,9 @@ package electron.main;
 	
 	Process: Main
 	
-	### Frameless window
+	### Window customization
 	
-	To create a window without chrome, or a transparent window in arbitrary shape, you can use the Frameless Window API.
+	The `BrowserWindow` class exposes various ways to modify the look and behavior of your app's windows. For more details, see the Window Customization tutorial.
 	
 	### Showing the window gracefully
 	
@@ -329,7 +329,7 @@ package electron.main;
 	**/
 	@:optional
 	var paintWhenInitiallyHidden : Bool; /**
-		Specify `false` to create a Frameless Window. Default is `true`.
+		Specify `false` to create a frameless window. Default is `true`.
 	**/
 	@:optional
 	var frame : Bool; /**
@@ -1215,9 +1215,9 @@ package electron.main;
 	**/
 	function setParentWindow(parent:haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>):Void;
 	/**
-		The parent window.
+		The parent window or `null` if there is no parent.
 	**/
-	function getParentWindow():electron.main.BrowserWindow;
+	function getParentWindow():haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
 	/**
 		All child windows.
 	**/
