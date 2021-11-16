@@ -278,6 +278,9 @@ package electron.main;
 	**/
 	static function setJumpList(categories:haxe.extern.EitherType<Array<electron.JumpListCategory>, Dynamic>):Void;
 	/**
+		* `additionalData` unknown (optional) - A JSON object containing additional data to send to the first instance.
+		
+		
 		The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately.
 		
 		I.e. This method returns `true` if your process is the primary instance of your application and your app should continue loading.  It returns `false` if your process should immediately quit as it has sent its parameters to another instance that has already acquired the lock.

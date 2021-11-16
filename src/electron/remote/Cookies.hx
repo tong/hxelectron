@@ -70,7 +70,7 @@ package electron.remote;
 	**/
 	@:optional
 	var expirationDate : Float; /**
-		The Same Site policy to apply to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.  Default is `no_restriction`.
+		The Same Site policy to apply to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.  Default is `lax`.
 	**/
 	@:optional
 	var sameSite : String; }):js.lib.Promise<Any>;

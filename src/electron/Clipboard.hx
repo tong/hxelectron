@@ -44,11 +44,11 @@ package electron;
 		* `title` String
 		* `url` String
 		
-		Returns an Object containing `title` and `url` keys representing the bookmark in the clipboard. The `title` and `url` values will be empty strings when the bookmark is unavailable.
+		Returns an Object containing `title` and `url` keys representing the bookmark in the clipboard. The `title` and `url` values will be empty strings when the bookmark is unavailable.  The `title` value will always be empty on Windows.
 	**/
 	static function readBookmark():Any;
 	/**
-		Writes the `title` and `url` into the clipboard as a bookmark.
+		Writes the `title` (macOS only) and `url` into the clipboard as a bookmark.
 		
 		**Note:** Most apps on Windows don't support pasting bookmarks into them so you can use `clipboard.write` to write both a bookmark and fallback text to the clipboard.
 	**/

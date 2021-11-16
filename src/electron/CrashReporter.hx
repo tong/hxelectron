@@ -17,37 +17,17 @@ package electron;
 	* socorro
 	* mini-breakpad-server
 	
+	> **Note:** Electron uses Crashpad, not Breakpad, to collect and upload crashes, but for the time being, the upload protocol is the same.
+	
 	Or use a 3rd party hosted solution:
 	
 	* Backtrace
 	* Sentry
 	* BugSplat
 	
-	Crash reports are stored temporarily before being uploaded in a directory underneath the app's user data directory (called 'Crashpad' on Windows and Mac, or 'Crash Reports' on Linux). You can override this directory by calling `app.setPath('crashDumps', '/path/to/crashes')` before starting the crash reporter.
+	Crash reports are stored temporarily before being uploaded in a directory underneath the app's user data directory, called 'Crashpad'. You can override this directory by calling `app.setPath('crashDumps', '/path/to/crashes')` before starting the crash reporter.
 	
-	On Windows and macOS, Electron uses crashpad to monitor and report crashes. On Linux, Electron uses breakpad. This is an implementation detail driven by Chromium, and it may change in future. In particular, crashpad is newer and will likely eventually replace breakpad on all platforms.
-	
-	### Note about Node child processes on Linux
-	
-	If you are using the Node.js `child_process` module and want to report crashes from those processes on Linux, there is an extra step you will need to take to properly initialize the crash reporter in the child process. This is not necessary on Mac or Windows, as those platforms use Crashpad, which automatically monitors child processes.
-	
-	Since `require('electron')` is not available in Node child processes, the following APIs are available on the `process` object in Node child processes. Note that, on Linux, each Node child process has its own separate instance of the breakpad crash reporter. This is dissimilar to renderer child processes, which have a "stub" breakpad reporter which returns information to the main process for reporting.
-	
-	### `process.crashReporter.start(options)`
-	
-	See `crashReporter.start()`.
-	
-	### `process.crashReporter.getParameters()`
-	
-	See `crashReporter.getParameters()`.
-	
-	### `process.crashReporter.addExtraParameter(key, value)`
-	
-	See `crashReporter.addExtraParameter(key, value)`.
-	
-	### `process.crashReporter.removeExtraParameter(key)`
-	
-	See `crashReporter.removeExtraParameter(key)`.
+	Electron uses crashpad to monitor and report crashes.
 	@see https://electronjs.org/docs/api/crash-reporter
 **/
 @:jsRequire("electron", "crashReporter") extern class CrashReporter extends js.node.events.EventEmitter<electron.CrashReporter> {
@@ -131,8 +111,6 @@ package electron;
 		Parameters added in this fashion (or via the `extra` parameter to `crashReporter.start`) are specific to the calling process. Adding extra parameters in the main process will not cause those parameters to be sent along with crashes from renderer or other child processes. Similarly, adding extra parameters in a renderer process will not result in those parameters being sent with crashes that occur in other renderer processes or in the main process.
 		
 		**Note:** Parameters have limits on the length of the keys and values. Key names must be no longer than 39 bytes, and values must be no longer than 20320 bytes. Keys with names longer than the maximum will be silently ignored. Key values longer than the maximum length will be truncated.
-		
-		**Note:** On linux values that are longer than 127 bytes will be chunked into multiple keys, each 127 bytes in length.  E.g. `addExtraParameter('foo', 'a'.repeat(130))` will result in two chunked keys `foo__1` and `foo__2`, the first will contain the first 127 bytes and the second will contain the remaining 3 bytes.  On your crash reporting backend you should stitch together keys in this format.
 	**/
 	static function addExtraParameter(key:String, value:String):Void;
 	/**
