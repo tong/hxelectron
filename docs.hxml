@@ -1,3 +1,3 @@
 haxedoc.hxml
 --next
--cmd haxelib run dox -i ./ -o docs/ --title HXElectron -D version 6.0.8 -D source-path https://github.com/tong/hxelectron/blob/master/src -D description 'Type definitions for the electron framework'
+-cmd haxelib run dox -i ./ -o docs/ --title Electron -D version 16.0.0 -D source-path https://github.com/tong/hxelectron/blob/master/src -D description 'Type definitions for the electron framework' -D website https://github.com/tong/hxelectron -D source-path https://github.com/tong/hxelectron/blob/master/src/ -D themeColor 0x2b2e3b -D textColor 0xff0000
