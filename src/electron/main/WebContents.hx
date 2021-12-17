@@ -983,6 +983,8 @@ var to : Float; }>; /**
 	var context_menu : electron.main.WebContentsEvent<Void -> Void> = "context-menu";
 	/**
 		Emitted when bluetooth device needs to be selected on call to `navigator.bluetooth.requestDevice`. To use `navigator.bluetooth` api `webBluetooth` should be enabled. If `event.preventDefault` is not called, first available device will be selected. `callback` should be called with `deviceId` to be selected, passing empty string to `callback` will cancel the request.
+		
+		If no event listener is added for this event, all bluetooth requests will be cancelled.
 	**/
 	var select_bluetooth_device : electron.main.WebContentsEvent<Void -> Void> = "select-bluetooth-device";
 	/**
