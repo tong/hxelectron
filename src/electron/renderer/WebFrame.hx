@@ -4,7 +4,7 @@ package electron.renderer;
 	
 	Process: Renderer
 	
-	`webFrame` export of the Electron module is an instance of the `WebFrame` class representing the top frame of the current `BrowserWindow`. Sub-frames can be retrieved by certain properties and methods (e.g. `webFrame.firstChild`).
+	`webFrame` export of the Electron module is an instance of the `WebFrame` class representing the current frame. Sub-frames can be retrieved by certain properties and methods (e.g. `webFrame.firstChild`).
 	
 	An example of zooming current page to 200%.
 	@see https://electronjs.org/docs/api/web-frame
