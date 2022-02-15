@@ -131,97 +131,97 @@ package electron.remote;
 	**/
 	var id : Int;
 	/**
-		A `Boolean` property that determines whether the window menu bar should hide itself automatically. Once set, the menu bar will only show when users press the single `Alt` key.
+		A `boolean` property that determines whether the window menu bar should hide itself automatically. Once set, the menu bar will only show when users press the single `Alt` key.
 		
 		If the menu bar is already visible, setting this property to `true` won't hide it immediately.
 	**/
 	var autoHideMenuBar : Bool;
 	/**
-		A `Boolean` property that determines whether the window is in simple (pre-Lion) fullscreen mode.
+		A `boolean` property that determines whether the window is in simple (pre-Lion) fullscreen mode.
 	**/
 	var simpleFullScreen : Bool;
 	/**
-		A `Boolean` property that determines whether the window is in fullscreen mode.
+		A `boolean` property that determines whether the window is in fullscreen mode.
 	**/
 	var fullScreen : Bool;
 	/**
-		A `Boolean` property that determines whether the window is focusable.
+		A `boolean` property that determines whether the window is focusable.
 	**/
 	var focusable : Bool;
 	/**
-		A `Boolean` property that determines whether the window is visible on all workspaces.
+		A `boolean` property that determines whether the window is visible on all workspaces.
 		
 		**Note:** Always returns false on Windows.
 	**/
 	var visibleOnAllWorkspaces : Bool;
 	/**
-		A `Boolean` property that determines whether the window has a shadow.
+		A `boolean` property that determines whether the window has a shadow.
 	**/
 	var shadow : Bool;
 	/**
-		A `Boolean` property that determines whether the menu bar should be visible.
+		A `boolean` property that determines whether the menu bar should be visible.
 		
 		**Note:** If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single `Alt` key.
 	**/
 	var menuBarVisible : Bool;
 	/**
-		A `Boolean` property that determines whether the window is in kiosk mode.
+		A `boolean` property that determines whether the window is in kiosk mode.
 	**/
 	var kiosk : Bool;
 	/**
-		A `Boolean` property that specifies whether the window’s document has been edited.
+		A `boolean` property that specifies whether the window’s document has been edited.
 		
 		The icon in title bar will become gray when set to `true`.
 	**/
 	var documentEdited : Bool;
 	/**
-		A `String` property that determines the pathname of the file the window represents, and the icon of the file will show in window's title bar.
+		A `string` property that determines the pathname of the file the window represents, and the icon of the file will show in window's title bar.
 	**/
 	var representedFilename : String;
 	/**
-		A `String` property that determines the title of the native window.
+		A `string` property that determines the title of the native window.
 		
 		**Note:** The title of the web page can be different from the title of the native window.
 	**/
 	var title : String;
 	/**
-		A `Boolean` property that determines whether the window can be manually minimized by user.
+		A `boolean` property that determines whether the window can be manually minimized by user.
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
 	var minimizable : Bool;
 	/**
-		A `Boolean` property that determines whether the window can be manually maximized by user.
+		A `boolean` property that determines whether the window can be manually maximized by user.
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
 	var maximizable : Bool;
 	/**
-		A `Boolean` property that determines whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
+		A `boolean` property that determines whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
 	**/
 	var fullScreenable : Bool;
 	/**
-		A `Boolean` property that determines whether the window can be manually resized by user.
+		A `boolean` property that determines whether the window can be manually resized by user.
 	**/
 	var resizable : Bool;
 	/**
-		A `Boolean` property that determines whether the window can be manually closed by user.
+		A `boolean` property that determines whether the window can be manually closed by user.
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
 	var closable : Bool;
 	/**
-		A `Boolean` property that determines Whether the window can be moved by user.
+		A `boolean` property that determines Whether the window can be moved by user.
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
 	var movable : Bool;
 	/**
-		A `Boolean` property that determines whether the window is excluded from the application’s Windows menu. `false` by default.
+		A `boolean` property that determines whether the window is excluded from the application’s Windows menu. `false` by default.
 	**/
 	var excludedFromShownWindowsMenu : Bool;
 	/**
-		A `String` property that defines an alternative title provided only to accessibility tools such as screen readers. This string is not directly visible to users.
+		A `string` property that defines an alternative title provided only to accessibility tools such as screen readers. This string is not directly visible to users.
 	**/
 	var accessibleTitle : String;
 	function new(?options:{ /**
@@ -617,7 +617,7 @@ package electron.remote;
 	**/
 	@:optional
 	var enablePreferredSizeMode : Bool; }; /**
-		When using a frameless window in conjunction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
+		When using a frameless window in conjuction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
 	**/
 	@:optional
 	var titleBarOverlay : haxe.extern.EitherType<{ /**
@@ -1078,7 +1078,7 @@ package electron.remote;
 	/**
 		Whether the buttons were added successfully
 		
-		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a `Boolean` object indicates whether the thumbnail has been added successfully.
+		Add a thumbnail toolbar with a specified set of buttons to the thumbnail image of a window in a taskbar button layout. Returns a `boolean` object indicates whether the thumbnail has been added successfully.
 		
 		The number of buttons in thumbnail toolbar should be no greater than 7 due to the limited room. Once you setup the thumbnail toolbar, the toolbar cannot be removed due to the platform's limitation. But you can call the API with an empty array to clean the buttons.
 		
@@ -1087,10 +1087,10 @@ package electron.remote;
 		* `Button` Object
 		  * `icon` NativeImage - The icon showing in thumbnail toolbar.
 		  * `click` Function
-		  * `tooltip` String (optional) - The text of the button's tooltip.
-		  * `flags` String[] (optional) - Control specific states and behaviors of the button. By default, it is `['enabled']`.
+		  * `tooltip` string (optional) - The text of the button's tooltip.
+		  * `flags` string[] (optional) - Control specific states and behaviors of the button. By default, it is `['enabled']`.
 		
-		The `flags` is an array that can include following `String`s:
+		The `flags` is an array that can include following `string`s:
 		
 		* `enabled` - The button is active and available to the user.
 		* `disabled` - The button is disabled. It is present, but has a visual state indicating it will not respond to user action.

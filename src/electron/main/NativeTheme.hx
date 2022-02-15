@@ -7,11 +7,11 @@ package electron.main;
 **/
 @:jsRequire("electron", "nativeTheme") extern class NativeTheme extends js.node.events.EventEmitter<electron.main.NativeTheme> {
 	/**
-		A `Boolean` for if the OS / Chromium currently has a dark mode enabled or is being instructed to show a dark-style UI.  If you want to modify this value you should use `themeSource` below.
+		A `boolean` for if the OS / Chromium currently has a dark mode enabled or is being instructed to show a dark-style UI.  If you want to modify this value you should use `themeSource` below.
 	**/
 	static var shouldUseDarkColors : Bool;
 	/**
-		A `String` property that can be `system`, `light` or `dark`.  It is used to override and supersede the value that Chromium has chosen to use internally.
+		A `string` property that can be `system`, `light` or `dark`.  It is used to override and supersede the value that Chromium has chosen to use internally.
 		
 		Setting this property to `system` will remove the override and everything will be reset to the OS default.  By default `themeSource` is `system`.
 		
@@ -41,11 +41,11 @@ package electron.main;
 	**/
 	static var themeSource : String;
 	/**
-		A `Boolean` for if the OS / Chromium currently has high-contrast mode enabled or is being instructed to show a high-contrast UI.
+		A `boolean` for if the OS / Chromium currently has high-contrast mode enabled or is being instructed to show a high-contrast UI.
 	**/
 	static var shouldUseHighContrastColors : Bool;
 	/**
-		A `Boolean` for if the OS / Chromium currently has an inverted color scheme or is being instructed to use an inverted color scheme.
+		A `boolean` for if the OS / Chromium currently has an inverted color scheme or is being instructed to use an inverted color scheme.
 	**/
 	static var shouldUseInvertedColorScheme : Bool;
 }

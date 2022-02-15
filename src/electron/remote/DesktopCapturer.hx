@@ -1,38 +1,47 @@
-package electron;
+package electron.remote;
 /**
 	> Access information about media sources that can be used to capture audio and video from the desktop using the `navigator.mediaDevices.getUserMedia` API.
 	
-	Process: Main, Renderer
+	Process: Main
 	
 	The following example shows how to capture video from a desktop window whose title is `Electron`:
 	
 	```
-	// In the renderer process.
+	// In the main process.
 	const { desktopCapturer } = require('electron')
 	
 	desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
 	  for (const source of sources) {
 	    if (source.name === 'Electron') {
-	      try {
-	        const stream = await navigator.mediaDevices.getUserMedia({
-	          audio: false,
-	          video: {
-	            mandatory: {
-	              chromeMediaSource: 'desktop',
-	              chromeMediaSourceId: source.id,
-	              minWidth: 1280,
-	              maxWidth: 1280,
-	              minHeight: 720,
-	              maxHeight: 720
-	            }
-	          }
-	        })
-	        handleStream(stream)
-	      } catch (e) {
-	        handleError(e)
-	      }
+	      mainWindow.webContents.send('SET_SOURCE', source.id)
 	      return
 	    }
+	  }
+	})
+	```
+	
+	```
+	// In the preload script.
+	const { ipcRenderer } = require('electron')
+	
+	ipcRenderer.on('SET_SOURCE', async (event, sourceId) => {
+	  try {
+	    const stream = await navigator.mediaDevices.getUserMedia({
+	      audio: false,
+	      video: {
+	        mandatory: {
+	          chromeMediaSource: 'desktop',
+	          chromeMediaSourceId: sourceId,
+	          minWidth: 1280,
+	          maxWidth: 1280,
+	          minHeight: 720,
+	          maxHeight: 720
+	        }
+	      }
+	    })
+	    handleStream(stream)
+	  } catch (e) {
+	    handleError(e)
 	  }
 	})
 	
@@ -52,14 +61,14 @@ package electron;
 	To capture both audio and video from the entire desktop the constraints passed to `navigator.mediaDevices.getUserMedia` must include `chromeMediaSource: 'desktop'`, for both `audio` and `video`, but should not include a `chromeMediaSourceId` constraint.
 	@see https://electronjs.org/docs/api/desktop-capturer
 **/
-@:jsRequire("electron", "desktopCapturer") extern class DesktopCapturer extends js.node.events.EventEmitter<electron.DesktopCapturer> {
+@:jsRequire("electron", "remote.desktopCapturer") extern class DesktopCapturer extends js.node.events.EventEmitter<electron.remote.DesktopCapturer> {
 	/**
 		Resolves with an array of `DesktopCapturerSource` objects, each `DesktopCapturerSource` represents a screen or an individual window that can be captured.
 		
 		**Note** Capturing the screen contents requires user consent on macOS 10.15 Catalina or higher, which can detected by `systemPreferences.getMediaAccessStatus`.
 	**/
 	static function getSources(options:{ /**
-		An array of Strings that lists the types of desktop sources to be captured, available types are `screen` and `window`.
+		An array of strings that lists the types of desktop sources to be captured, available types are `screen` and `window`.
 	**/
 	var types : Array<String>; /**
 		The size that the media source thumbnail should be scaled to. Default is `150` x `150`. Set width or height to 0 when you do not need the thumbnails. This will save the processing time required for capturing the content of each window and screen.

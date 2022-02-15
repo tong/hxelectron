@@ -32,7 +32,7 @@ package electron.remote;
 	**/
 	var frameTreeNodeId : Int;
 	/**
-		A `String` representing the frame name.
+		A `string` representing the frame name.
 	**/
 	var name : String;
 	/**

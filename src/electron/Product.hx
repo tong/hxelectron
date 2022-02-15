@@ -36,7 +36,31 @@ typedef Product = {
 	**/
 	var currencyCode : String;
 	/**
-		A Boolean value that indicates whether the App Store has downloadable content for this product. `true` if at least one file has been associated with the product.
+		The object containing introductory price information for the product. available for the product.
+	**/
+	var introductoryPrice : electron.ProductDiscount;
+	/**
+		An array of discount offers
+	**/
+	var discounts : Array<electron.ProductDiscount>;
+	/**
+		The identifier of the subscription group to which the subscription belongs.
+	**/
+	var subscriptionGroupIdentifier : String;
+	/**
+		The period details for products that are subscriptions.
+	**/
+	var subscriptionPeriod : electron.ProductSubscriptionPeriod;
+	/**
+		A boolean value that indicates whether the App Store has downloadable content for this product. `true` if at least one file has been associated with the product.
 	**/
 	var isDownloadable : Bool;
+	/**
+		A string that identifies the version of the content.
+	**/
+	var downloadContentVersion : String;
+	/**
+		The total size of the content, in bytes.
+	**/
+	var downloadContentLengths : Array<Float>;
 }

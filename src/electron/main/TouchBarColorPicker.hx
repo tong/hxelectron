@@ -7,11 +7,11 @@ package electron.main;
 **/
 @:jsRequire("electron", "TouchBarColorPicker") extern class TouchBarColorPicker extends js.node.events.EventEmitter<electron.main.TouchBarColorPicker> {
 	/**
-		A `String[]` array representing the color picker's available colors to select. Changing this value immediately updates the color picker in the touch bar.
+		A `string[]` array representing the color picker's available colors to select. Changing this value immediately updates the color picker in the touch bar.
 	**/
 	var availableColors : Array<String>;
 	/**
-		A `String` hex code representing the color picker's currently selected color. Changing this value immediately updates the color picker in the touch bar.
+		A `string` hex code representing the color picker's currently selected color. Changing this value immediately updates the color picker in the touch bar.
 	**/
 	var selectedColor : String;
 	function new(options:{ /**

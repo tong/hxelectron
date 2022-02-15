@@ -5,8 +5,4 @@ package electron;
 typedef WebSource = {
 	var code : String;
 	var url : String;
-	/**
-		Default is 1.
-	**/
-	var startLine : Int;
 }

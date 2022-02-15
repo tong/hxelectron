@@ -1,6 +1,6 @@
 package electron;
 /**
-	The `flags` is an array that can include following `String`s:
+	The `flags` is an array that can include following `string`s:
 	
 	* `enabled` - The button is active and available to the user.
 	* `disabled` - The button is disabled. It is present, but has a visual state indicating it will not respond to user action.

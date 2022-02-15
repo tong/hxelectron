@@ -7,7 +7,7 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.powerMonitor") extern class PowerMonitor extends js.node.events.EventEmitter<electron.remote.PowerMonitor> {
 	/**
-		A `Boolean` property. True if the system is on battery power.
+		A `boolean` property. True if the system is on battery power.
 		
 		See `powerMonitor.isOnBatteryPower()`.
 	**/

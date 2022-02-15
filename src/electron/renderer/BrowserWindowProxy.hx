@@ -4,7 +4,7 @@ package electron.renderer;
 **/
 @:jsRequire("electron", "BrowserWindowProxy") extern class BrowserWindowProxy extends js.node.events.EventEmitter<electron.renderer.BrowserWindowProxy> {
 	/**
-		A `Boolean` that is set to true after the child window gets closed.
+		A `boolean` that is set to true after the child window gets closed.
 	**/
 	var closed : Bool;
 	/**

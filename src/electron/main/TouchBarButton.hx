@@ -7,15 +7,15 @@ package electron.main;
 **/
 @:jsRequire("electron", "TouchBarButton") extern class TouchBarButton extends js.node.events.EventEmitter<electron.main.TouchBarButton> {
 	/**
-		A `String` representing the description of the button to be read by a screen reader. Will only be read by screen readers if no label is set.
+		A `string` representing the description of the button to be read by a screen reader. Will only be read by screen readers if no label is set.
 	**/
 	var accessibilityLabel : String;
 	/**
-		A `String` representing the button's current text. Changing this value immediately updates the button in the touch bar.
+		A `string` representing the button's current text. Changing this value immediately updates the button in the touch bar.
 	**/
 	var label : String;
 	/**
-		A `String` hex code representing the button's current background color. Changing this value immediately updates the button in the touch bar.
+		A `string` hex code representing the button's current background color. Changing this value immediately updates the button in the touch bar.
 	**/
 	var backgroundColor : String;
 	/**
@@ -23,11 +23,11 @@ package electron.main;
 	**/
 	var icon : electron.NativeImage;
 	/**
-		A `String` - Can be `left`, `right` or `overlay`.  Defaults to `overlay`.
+		A `string` - Can be `left`, `right` or `overlay`.  Defaults to `overlay`.
 	**/
 	var iconPosition : String;
 	/**
-		A `Boolean` representing whether the button is in an enabled state.
+		A `boolean` representing whether the button is in an enabled state.
 	**/
 	var enabled : Bool;
 	function new(options:{ /**

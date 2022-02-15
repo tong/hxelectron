@@ -20,11 +20,11 @@ typedef ProtocolResponse = {
 	**/
 	var mimeType : String;
 	/**
-		An object containing the response headers. The keys must be String, and values must be either String or Array of String.
+		An object containing the response headers. The keys must be string, and values must be either string or Array of string.
 	**/
 	var headers : Record;
 	/**
-		The response body. When returning stream as response, this is a Node.js readable stream representing the response body. When returning `Buffer` as response, this is a `Buffer`. When returning `String` as response, this is a `String`. This is ignored for other types of responses.
+		The response body. When returning stream as response, this is a Node.js readable stream representing the response body. When returning `Buffer` as response, this is a `Buffer`. When returning `string` as response, this is a `string`. This is ignored for other types of responses.
 	**/
 	var data : haxe.extern.EitherType<js.node.Buffer, haxe.extern.EitherType<String, js.node.stream.Readable<Dynamic>>>;
 	/**

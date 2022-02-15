@@ -22,21 +22,21 @@ package electron.main;
 	**/
 	static function fromDevToolsTargetId(targetId:String):electron.main.WebContents;
 	/**
-		A `Boolean` property that determines whether this page is muted.
+		A `boolean` property that determines whether this page is muted.
 	**/
 	var audioMuted : Bool;
 	/**
-		A `String` property that determines the user agent for this web page.
+		A `string` property that determines the user agent for this web page.
 	**/
 	var userAgent : String;
 	/**
-		A `Number` property that determines the zoom level for this web contents.
+		A `number` property that determines the zoom level for this web contents.
 		
 		The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is `scale := 1.2 ^ level`.
 	**/
 	var zoomLevel : Float;
 	/**
-		A `Number` property that determines the zoom factor for this web contents.
+		A `number` property that determines the zoom factor for this web contents.
 		
 		The zoom factor is the zoom percent divided by 100, so 300% = 3.0.
 	**/
@@ -70,7 +70,7 @@ package electron.main;
 	**/
 	var debugger : electron.main.Debugger;
 	/**
-		A `Boolean` property that determines whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
+		A `boolean` property that determines whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
 	**/
 	var backgroundThrottling : Bool;
 	/**
@@ -224,7 +224,7 @@ package electron.main;
 		Injects CSS into the current web page and returns a unique key for the inserted stylesheet.
 	**/
 	function insertCSS(css:String, ?options:{ /**
-		Can be either 'user' or 'author'; Specifying 'user' enables you to prevent websites from overriding the CSS you insert. Default is 'author'.
+		Can be either 'user' or 'author'. Sets the cascade origin of the inserted stylesheet. Default is 'author'.
 	**/
 	@:optional
 	var cssOrigin : String; }):js.lib.Promise<Any>;
@@ -392,8 +392,17 @@ package electron.main;
 	function decrementCapturerCount(?stayHidden:Bool, ?stayAwake:Bool):Void;
 	/**
 		Get the system printer list.
+		
+		
+		**Deprecated:** Should use the new `contents.getPrintersAsync` API.
 	**/
 	function getPrinters():Array<electron.PrinterInfo>;
+	/**
+		Get the system printer list.
+		
+		Resolves with a `PrinterInfo[]`
+	**/
+	function getPrintersAsync():js.lib.Promise<Any>;
 	/**
 		When a custom `pageSize` is passed, Chromium attempts to validate platform specific minimum values for `width_microns` and `height_microns`. Width and height must both be minimum 353 microns but may be higher on some operating systems.
 		
@@ -476,11 +485,11 @@ var to : Float; }>; /**
 	@:optional
 	var duplexMode : String; @:optional
 	var dpi : Record; /**
-		String to be printed as page header.
+		string to be printed as page header.
 	**/
 	@:optional
 	var header : String; /**
-		String to be printed as page footer.
+		string to be printed as page footer.
 	**/
 	@:optional
 	var footer : String; /**
@@ -737,6 +746,10 @@ var to : Float; }>; /**
 		Setting the WebRTC IP handling policy allows you to control which IPs are exposed via WebRTC. See BrowserLeaks for more details.
 	**/
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
+	/**
+		The identifier of a WebContents stream. This identifier can be used with `navigator.mediaDevices.getUserMedia` using a `chromeMediaSource` of `tab`. The identifier is restricted to the web contents that it is registered to and is only valid for 10 seconds.
+	**/
+	function getMediaSourceId(requestWebContents:electron.main.WebContents):String;
 	/**
 		The operating system `pid` of the associated renderer process.
 	**/
@@ -1023,10 +1036,6 @@ var to : Float; }>; /**
 		Emitted when the renderer process sends a synchronous message via `ipcRenderer.sendSync()`.
 	**/
 	var ipc_message_sync : electron.main.WebContentsEvent<Void -> Void> = "ipc-message-sync";
-	/**
-		Emitted when `desktopCapturer.getSources()` is called in the renderer process. Calling `event.preventDefault()` will make it return empty sources.
-	**/
-	var desktop_capturer_get_sources : electron.main.WebContentsEvent<Void -> Void> = "desktop-capturer-get-sources";
 	/**
 		Emitted when the `WebContents` preferred size has changed.
 		

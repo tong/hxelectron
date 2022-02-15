@@ -7,7 +7,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "TouchBarSpacer") extern class TouchBarSpacer extends js.node.events.EventEmitter<electron.main.TouchBarSpacer> {
 	/**
-		A `String` representing the size of the spacer.  Can be `small`, `large` or `flexible`.
+		A `string` representing the size of the spacer.  Can be `small`, `large` or `flexible`.
 	**/
 	var size : String;
 	function new(options:{ /**

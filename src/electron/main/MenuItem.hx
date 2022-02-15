@@ -9,11 +9,11 @@ package electron.main;
 **/
 @:jsRequire("electron", "MenuItem") extern class MenuItem extends js.node.events.EventEmitter<electron.main.MenuItem> {
 	/**
-		A `String` indicating the item's unique id, this property can be dynamically changed.
+		A `string` indicating the item's unique id, this property can be dynamically changed.
 	**/
 	var id : String;
 	/**
-		A `String` indicating the item's visible label.
+		A `string` indicating the item's visible label.
 	**/
 	var label : String;
 	/**
@@ -29,11 +29,11 @@ package electron.main;
 	**/
 	var submenu : electron.main.Menu;
 	/**
-		A `String` indicating the type of the item. Can be `normal`, `separator`, `submenu`, `checkbox` or `radio`.
+		A `string` indicating the type of the item. Can be `normal`, `separator`, `submenu`, `checkbox` or `radio`.
 	**/
 	var type : String;
 	/**
-		A `String` (optional) indicating the item's role, if set. Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `toggleSpellChecker`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu`
+		A `string` (optional) indicating the item's role, if set. Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `toggleSpellChecker`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu`
 	**/
 	var role : String;
 	/**
@@ -47,27 +47,27 @@ package electron.main;
 	**/
 	var userAccelerator : haxe.extern.EitherType<electron.Accelerator, Dynamic>;
 	/**
-		A `NativeImage | String` (optional) indicating the item's icon, if set.
+		A `NativeImage | string` (optional) indicating the item's icon, if set.
 	**/
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>;
 	/**
-		A `String` indicating the item's sublabel.
+		A `string` indicating the item's sublabel.
 	**/
 	var sublabel : String;
 	/**
-		A `String` indicating the item's hover text.
+		A `string` indicating the item's hover text.
 	**/
 	var toolTip : String;
 	/**
-		A `Boolean` indicating whether the item is enabled, this property can be dynamically changed.
+		A `boolean` indicating whether the item is enabled, this property can be dynamically changed.
 	**/
 	var enabled : Bool;
 	/**
-		A `Boolean` indicating whether the item is visible, this property can be dynamically changed.
+		A `boolean` indicating whether the item is visible, this property can be dynamically changed.
 	**/
 	var visible : Bool;
 	/**
-		A `Boolean` indicating whether the item is checked, this property can be dynamically changed.
+		A `boolean` indicating whether the item is checked, this property can be dynamically changed.
 		
 		A `checkbox` menu item will toggle the `checked` property on and off when selected.
 		
@@ -77,7 +77,7 @@ package electron.main;
 	**/
 	var checked : Bool;
 	/**
-		A `Boolean` indicating if the accelerator should be registered with the system or just displayed.
+		A `boolean` indicating if the accelerator should be registered with the system or just displayed.
 		
 		This property can be dynamically changed.
 	**/
@@ -89,7 +89,7 @@ package electron.main;
 	**/
 	var sharingItem : electron.SharingItem;
 	/**
-		A `Number` indicating an item's sequential unique id.
+		A `number` indicating an item's sequential unique id.
 	**/
 	var commandId : Float;
 	/**

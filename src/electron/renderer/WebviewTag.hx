@@ -74,7 +74,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/"></webview>
 	```
 	
-	A `String` representing the visible URL. Writing to this attribute initiates top-level navigation.
+	A `string` representing the visible URL. Writing to this attribute initiates top-level navigation.
 	
 	Assigning `src` its own value will reload the current page.
 	
@@ -86,7 +86,7 @@ package electron.renderer;
 	<webview src="http://www.google.com/" nodeintegration></webview>
 	```
 	
-	A `Boolean`. When this attribute is present the guest page in `webview` will have node integration and can use node APIs like `require` and `process` to access low level system resources. Node integration is disabled by default in the guest page.
+	A `boolean`. When this attribute is present the guest page in `webview` will have node integration and can use node APIs like `require` and `process` to access low level system resources. Node integration is disabled by default in the guest page.
 	
 	### `nodeintegrationinsubframes`
 	
@@ -94,7 +94,7 @@ package electron.renderer;
 	<webview src="http://www.google.com/" nodeintegrationinsubframes></webview>
 	```
 	
-	A `Boolean` for the experimental option for enabling NodeJS support in sub-frames such as iframes inside the `webview`. All your preloads will load for every iframe, you can use `process.isMainFrame` to determine if you are in the main frame or not. This option is disabled by default in the guest page.
+	A `boolean` for the experimental option for enabling NodeJS support in sub-frames such as iframes inside the `webview`. All your preloads will load for every iframe, you can use `process.isMainFrame` to determine if you are in the main frame or not. This option is disabled by default in the guest page.
 	
 	### `plugins`
 	
@@ -102,7 +102,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" plugins></webview>
 	```
 	
-	A `Boolean`. When this attribute is present the guest page in `webview` will be able to use browser plugins. Plugins are disabled by default.
+	A `boolean`. When this attribute is present the guest page in `webview` will be able to use browser plugins. Plugins are disabled by default.
 	
 	### `preload`
 	
@@ -113,7 +113,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" preload="./app.asar/test.js"></webview>
 	```
 	
-	A `String` that specifies a script that will be loaded before other scripts run in the guest page. The protocol of script's URL must be `file:` (even when using `asar:` archives) because it will be loaded by Node's `require` under the hood, which treats `asar:` archives as virtual directories.
+	A `string` that specifies a script that will be loaded before other scripts run in the guest page. The protocol of script's URL must be `file:` (even when using `asar:` archives) because it will be loaded by Node's `require` under the hood, which treats `asar:` archives as virtual directories.
 	
 	When the guest page doesn't have node integration this script will still have access to all Node APIs, but global objects injected by Node will be deleted after this script has finished executing.
 	
@@ -125,7 +125,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" httpreferrer="http://cheng.guru"></webview>
 	```
 	
-	A `String` that sets the referrer URL for the guest page.
+	A `string` that sets the referrer URL for the guest page.
 	
 	### `useragent`
 	
@@ -133,7 +133,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" useragent="Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko"></webview>
 	```
 	
-	A `String` that sets the user agent for the guest page before the page is navigated to. Once the page is loaded, use the `setUserAgent` method to change the user agent.
+	A `string` that sets the user agent for the guest page before the page is navigated to. Once the page is loaded, use the `setUserAgent` method to change the user agent.
 	
 	### `disablewebsecurity`
 	
@@ -141,7 +141,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" disablewebsecurity></webview>
 	```
 	
-	A `Boolean`. When this attribute is present the guest page will have web security disabled. Web security is enabled by default.
+	A `boolean`. When this attribute is present the guest page will have web security disabled. Web security is enabled by default.
 	
 	### `partition`
 	
@@ -150,7 +150,7 @@ package electron.renderer;
 	<webview src="https://electronjs.org" partition="electron"></webview>
 	```
 	
-	A `String` that sets the session used by the page. If `partition` starts with `persist:`, the page will use a persistent session available to all pages in the app with the same `partition`. if there is no `persist:` prefix, the page will use an in-memory session. By assigning the same `partition`, multiple pages can share the same session. If the `partition` is unset then default session of the app will be used.
+	A `string` that sets the session used by the page. If `partition` starts with `persist:`, the page will use a persistent session available to all pages in the app with the same `partition`. if there is no `persist:` prefix, the page will use an in-memory session. By assigning the same `partition`, multiple pages can share the same session. If the `partition` is unset then default session of the app will be used.
 	
 	This value can only be modified before the first navigation, since the session of an active renderer process cannot change. Subsequent attempts to modify the value will fail with a DOM exception.
 	
@@ -160,7 +160,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" allowpopups></webview>
 	```
 	
-	A `Boolean`. When this attribute is present the guest page will be allowed to open new windows. Popups are disabled by default.
+	A `boolean`. When this attribute is present the guest page will be allowed to open new windows. Popups are disabled by default.
 	
 	### `webpreferences`
 	
@@ -168,7 +168,7 @@ package electron.renderer;
 	<webview src="https://github.com" webpreferences="allowRunningInsecureContent, javascript=no"></webview>
 	```
 	
-	A `String` which is a comma separated list of strings which specifies the web preferences to be set on the webview. The full list of supported preference strings can be found in BrowserWindow.
+	A `string` which is a comma separated list of strings which specifies the web preferences to be set on the webview. The full list of supported preference strings can be found in BrowserWindow.
 	
 	The string follows the same format as the features string in `window.open`. A name by itself is given a `true` boolean value. A preference can be set to another value by including an `=`, followed by the value. Special values `yes` and `1` are interpreted as `true`, while `no` and `0` are interpreted as `false`.
 	
@@ -178,7 +178,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" enableblinkfeatures="PreciseMemoryInfo, CSSVariables"></webview>
 	```
 	
-	A `String` which is a list of strings which specifies the blink features to be enabled separated by `,`. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
+	A `string` which is a list of strings which specifies the blink features to be enabled separated by `,`. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
 	
 	### `disableblinkfeatures`
 	
@@ -186,7 +186,7 @@ package electron.renderer;
 	<webview src="https://www.github.com/" disableblinkfeatures="PreciseMemoryInfo, CSSVariables"></webview>
 	```
 	
-	A `String` which is a list of strings which specifies the blink features to be disabled separated by `,`. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
+	A `string` which is a list of strings which specifies the blink features to be disabled separated by `,`. The full list of supported feature strings can be found in the RuntimeEnabledFeatures.json5 file.
 	@see https://electronjs.org/docs/api/webview-tag
 **/
 @:native("webviewTag") extern class WebviewTag extends js.html.Element {
@@ -497,11 +497,11 @@ var to : Float; }>; /**
 	@:optional
 	var duplexMode : String; @:optional
 	var dpi : Record; /**
-		String to be printed as page header.
+		string to be printed as page header.
 	**/
 	@:optional
 	var header : String; /**
-		String to be printed as page footer.
+		string to be printed as page footer.
 	**/
 	@:optional
 	var footer : String; /**

@@ -62,7 +62,7 @@ package electron;
 	**/
 	static function createFromNamedImage(imageName:String, ?hslShift:Array<Float>):electron.NativeImage;
 	/**
-		A `Boolean` property that determines whether the image is considered a template image.
+		A `boolean` property that determines whether the image is considered a template image.
 		
 		Please note that this property only has an effect on macOS.
 	**/

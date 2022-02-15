@@ -19,15 +19,15 @@ package electron.main;
 	**/
 	var cache : Bool; }):electron.main.Session;
 	/**
-		A `String[]` array which consists of all the known available spell checker languages.  Providing a language code to the `setSpellCheckerLanguages` API that isn't in this array will result in an error.
+		A `string[]` array which consists of all the known available spell checker languages.  Providing a language code to the `setSpellCheckerLanguages` API that isn't in this array will result in an error.
 	**/
 	var availableSpellCheckerLanguages : Array<String>;
 	/**
-		A `Boolean` indicating whether builtin spell checker is enabled.
+		A `boolean` indicating whether builtin spell checker is enabled.
 	**/
 	var spellCheckerEnabled : Bool;
 	/**
-		A `String | null` indicating the absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
+		A `string | null` indicating the absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
 	**/
 	var storagePath : haxe.extern.EitherType<String, Dynamic>;
 	/**
@@ -394,7 +394,7 @@ package electron.main;
 	**/
 	function getAllExtensions():Array<electron.Extension>;
 	/**
-		A `String | null` indicating the absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
+		A `string | null` indicating the absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
 	**/
 	function getStoragePath():Void;
 }

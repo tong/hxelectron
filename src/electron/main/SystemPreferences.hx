@@ -7,7 +7,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.main.SystemPreferences> {
 	/**
-		A `String` property that can be `dark`, `light` or `unknown`. It determines the macOS appearance setting for your application. This maps to values in: NSApplication.appearance. Setting this will override the system default as well as the value of `getEffectiveAppearance`.
+		A `string` property that can be `dark`, `light` or `unknown`. It determines the macOS appearance setting for your application. This maps to values in: NSApplication.appearance. Setting this will override the system default as well as the value of `getEffectiveAppearance`.
 		
 		Possible values that can be set are `dark` and `light`, and possible return values are `dark`, `light`, and `unknown`.
 		
@@ -15,7 +15,7 @@ package electron.main;
 	**/
 	static var appLevelAppearance : String;
 	/**
-		A `String` property that can be `dark`, `light` or `unknown`.
+		A `string` property that can be `dark`, `light` or `unknown`.
 		
 		Returns the macOS appearance setting that is currently applied to your application, maps to NSApplication.effectiveAppearance
 	**/
@@ -200,9 +200,9 @@ package electron.main;
 	**/
 	static function askForMediaAccess(mediaType:String):js.lib.Promise<Any>;
 	/**
-		* `shouldRenderRichAnimation` Boolean - Returns true if rich animations should be rendered. Looks at session type (e.g. remote desktop) and accessibility settings to give guidance for heavy animations.
-		* `scrollAnimationsEnabledBySystem` Boolean - Determines on a per-platform basis whether scroll animations (e.g. produced by home/end key) should be enabled.
-		* `prefersReducedMotion` Boolean - Determines whether the user desires reduced motion based on platform APIs.
+		* `shouldRenderRichAnimation` boolean - Returns true if rich animations should be rendered. Looks at session type (e.g. remote desktop) and accessibility settings to give guidance for heavy animations.
+		* `scrollAnimationsEnabledBySystem` boolean - Determines on a per-platform basis whether scroll animations (e.g. produced by home/end key) should be enabled.
+		* `prefersReducedMotion` boolean - Determines whether the user desires reduced motion based on platform APIs.
 		
 		Returns an object with system animation settings.
 	**/

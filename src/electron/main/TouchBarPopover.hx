@@ -7,7 +7,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "TouchBarPopover") extern class TouchBarPopover extends js.node.events.EventEmitter<electron.main.TouchBarPopover> {
 	/**
-		A `String` representing the popover's current button text. Changing this value immediately updates the popover in the touch bar.
+		A `string` representing the popover's current button text. Changing this value immediately updates the popover in the touch bar.
 	**/
 	var label : String;
 	/**

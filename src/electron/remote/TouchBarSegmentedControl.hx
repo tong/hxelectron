@@ -7,7 +7,7 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.TouchBarSegmentedControl") extern class TouchBarSegmentedControl extends js.node.events.EventEmitter<electron.remote.TouchBarSegmentedControl> {
 	/**
-		A `String` representing the controls current segment style. Updating this value immediately updates the control in the touch bar.
+		A `string` representing the controls current segment style. Updating this value immediately updates the control in the touch bar.
 	**/
 	var segmentStyle : String;
 	/**
@@ -19,7 +19,7 @@ package electron.remote;
 	**/
 	var selectedIndex : Int;
 	/**
-		A `String` representing the current selection mode of the control.  Can be `single`, `multiple` or `buttons`.
+		A `string` representing the current selection mode of the control.  Can be `single`, `multiple` or `buttons`.
 	**/
 	var mode : String;
 	function new(options:{ /**

@@ -7,15 +7,15 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.TouchBarLabel") extern class TouchBarLabel extends js.node.events.EventEmitter<electron.remote.TouchBarLabel> {
 	/**
-		A `String` representing the label's current text. Changing this value immediately updates the label in the touch bar.
+		A `string` representing the label's current text. Changing this value immediately updates the label in the touch bar.
 	**/
 	var label : String;
 	/**
-		A `String` representing the description of the label to be read by a screen reader.
+		A `string` representing the description of the label to be read by a screen reader.
 	**/
 	var accessibilityLabel : String;
 	/**
-		A `String` hex code representing the label's current text color. Changing this value immediately updates the label in the touch bar.
+		A `string` hex code representing the label's current text color. Changing this value immediately updates the label in the touch bar.
 	**/
 	var textColor : String;
 	function new(options:{ /**

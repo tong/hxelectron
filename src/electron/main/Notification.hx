@@ -24,7 +24,7 @@ package electron.main;
 	
 	### `Notification.isSupported()`
 	
-	Returns `Boolean` - Whether or not desktop notifications are supported on the current system
+	Returns `boolean` - Whether or not desktop notifications are supported on the current system
 	@see https://electronjs.org/docs/api/notification
 **/
 @:jsRequire("electron", "Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
@@ -33,45 +33,45 @@ package electron.main;
 	**/
 	static function isSupported():Bool;
 	/**
-		A `String` property representing the title of the notification.
+		A `string` property representing the title of the notification.
 	**/
 	var title : String;
 	/**
-		A `String` property representing the subtitle of the notification.
+		A `string` property representing the subtitle of the notification.
 	**/
 	var subtitle : String;
 	/**
-		A `String` property representing the body of the notification.
+		A `string` property representing the body of the notification.
 	**/
 	var body : String;
 	/**
-		A `String` property representing the reply placeholder of the notification.
+		A `string` property representing the reply placeholder of the notification.
 	**/
 	var replyPlaceholder : String;
 	/**
-		A `String` property representing the sound of the notification.
+		A `string` property representing the sound of the notification.
 	**/
 	var sound : String;
 	/**
-		A `String` property representing the close button text of the notification.
+		A `string` property representing the close button text of the notification.
 	**/
 	var closeButtonText : String;
 	/**
-		A `Boolean` property representing whether the notification is silent.
+		A `boolean` property representing whether the notification is silent.
 	**/
 	var silent : Bool;
 	/**
-		A `Boolean` property representing whether the notification has a reply action.
+		A `boolean` property representing whether the notification has a reply action.
 	**/
 	var hasReply : Bool;
 	/**
-		A `String` property representing the urgency level of the notification. Can be 'normal', 'critical', or 'low'.
+		A `string` property representing the urgency level of the notification. Can be 'normal', 'critical', or 'low'.
 		
 		Default is 'low' - see NotifyUrgency for more information.
 	**/
 	var urgency : String;
 	/**
-		A `String` property representing the type of timeout duration for the notification. Can be 'default' or 'never'.
+		A `string` property representing the type of timeout duration for the notification. Can be 'default' or 'never'.
 		
 		If `timeoutType` is set to 'never', the notification never expires. It stays open until closed by the calling API or the user.
 	**/
@@ -81,7 +81,7 @@ package electron.main;
 	**/
 	var actions : Array<electron.NotificationAction>;
 	/**
-		A `String` property representing the custom Toast XML of the notification.
+		A `string` property representing the custom Toast XML of the notification.
 	**/
 	var toastXml : String;
 	function new(?options:{ /**

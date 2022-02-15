@@ -11,7 +11,7 @@ package electron.main;
 	**/
 	var items : Array<electron.ScrubberItem>;
 	/**
-		A `String` representing the style that selected items in the scrubber should have. Updating this value immediately updates the control in the touch bar. Possible values:
+		A `string` representing the style that selected items in the scrubber should have. Updating this value immediately updates the control in the touch bar. Possible values:
 		
 		* `background` - Maps to `[NSScrubberSelectionStyle roundedBackgroundStyle]`.
 		* `outline` - Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
@@ -19,7 +19,7 @@ package electron.main;
 	**/
 	var selectedStyle : String;
 	/**
-		A `String` representing the style that selected items in the scrubber should have. This style is overlayed on top of the scrubber item instead of being placed behind it. Updating this value immediately updates the control in the touch bar. Possible values:
+		A `string` representing the style that selected items in the scrubber should have. This style is overlayed on top of the scrubber item instead of being placed behind it. Updating this value immediately updates the control in the touch bar. Possible values:
 		
 		* `background` - Maps to `[NSScrubberSelectionStyle roundedBackgroundStyle]`.
 		* `outline` - Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
@@ -27,18 +27,18 @@ package electron.main;
 	**/
 	var overlayStyle : String;
 	/**
-		A `Boolean` representing whether to show the left / right selection arrows in this scrubber. Updating this value immediately updates the control in the touch bar.
+		A `boolean` representing whether to show the left / right selection arrows in this scrubber. Updating this value immediately updates the control in the touch bar.
 	**/
 	var showArrowButtons : Bool;
 	/**
-		A `String` representing the mode of this scrubber. Updating this value immediately updates the control in the touch bar. Possible values:
+		A `string` representing the mode of this scrubber. Updating this value immediately updates the control in the touch bar. Possible values:
 		
 		* `fixed` - Maps to `NSScrubberModeFixed`.
 		* `free` - Maps to `NSScrubberModeFree`.
 	**/
 	var mode : String;
 	/**
-		A `Boolean` representing whether this scrubber is continuous or not. Updating this value immediately updates the control in the touch bar.
+		A `boolean` representing whether this scrubber is continuous or not. Updating this value immediately updates the control in the touch bar.
 	**/
 	var continuous : Bool;
 	function new(options:{ /**

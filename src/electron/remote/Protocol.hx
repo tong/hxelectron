@@ -88,9 +88,9 @@ package electron.remote;
 	/**
 		Whether the protocol was successfully registered
 		
-		Registers a protocol of `scheme` that will send a `String` as a response.
+		Registers a protocol of `scheme` that will send a `string` as a response.
 		
-		The usage is the same with `registerFileProtocol`, except that the `callback` should be called with either a `String` or an object that has the `data` property.
+		The usage is the same with `registerFileProtocol`, except that the `callback` should be called with either a `string` or an object that has the `data` property.
 	**/
 	static function registerStringProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
@@ -132,7 +132,7 @@ package electron.remote;
 	/**
 		Whether the protocol was successfully intercepted
 		
-		Intercepts `scheme` protocol and uses `handler` as the protocol's new handler which sends a `String` as a response.
+		Intercepts `scheme` protocol and uses `handler` as the protocol's new handler which sends a `string` as a response.
 	**/
 	static function interceptStringProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**

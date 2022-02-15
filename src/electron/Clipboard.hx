@@ -41,8 +41,8 @@ package electron;
 	**/
 	static function writeRTF(text:String, ?type:String):Void;
 	/**
-		* `title` String
-		* `url` String
+		* `title` string
+		* `url` string
 		
 		Returns an Object containing `title` and `url` keys representing the bookmark in the clipboard. The `title` and `url` values will be empty strings when the bookmark is unavailable.  The `title` value will always be empty on Windows.
 	**/

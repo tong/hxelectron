@@ -33,5 +33,12 @@ typedef Transaction = {
 	var productIdentifier : String; /**
 		The quantity purchased.
 	**/
-	var quantity : Int; };
+	var quantity : Int; /**
+		An opaque identifier for the user’s account on your system.
+	**/
+	var applicationUsername : String; /**
+		The details of the discount offer to apply to the payment.
+	**/
+	@:optional
+	var paymentDiscount : electron.PaymentDiscount; };
 }

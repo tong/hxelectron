@@ -4,7 +4,7 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.DownloadItem") extern class DownloadItem extends js.node.events.EventEmitter<electron.remote.DownloadItem> {
 	/**
-		A `String` property that determines the save file path of the download item.
+		A `string` property that determines the save file path of the download item.
 		
 		The property is only available in session's `will-download` callback function. If user doesn't set the save path via the property, Electron will use the original routine to determine the save path; this usually prompts a save dialog.
 	**/

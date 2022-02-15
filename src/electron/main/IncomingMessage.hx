@@ -8,7 +8,7 @@ package electron.main;
 	**/
 	var statusCode : Int;
 	/**
-		A `String` representing the HTTP status message.
+		A `string` representing the HTTP status message.
 	**/
 	var statusMessage : String;
 	/**
@@ -22,7 +22,7 @@ package electron.main;
 	**/
 	var headers : Record;
 	/**
-		A `String` indicating the HTTP protocol version number. Typical values are '1.0' or '1.1'. Additionally `httpVersionMajor` and `httpVersionMinor` are two Integer-valued readable properties that return respectively the HTTP major and minor version numbers.
+		A `string` indicating the HTTP protocol version number. Typical values are '1.0' or '1.1'. Additionally `httpVersionMajor` and `httpVersionMinor` are two Integer-valued readable properties that return respectively the HTTP major and minor version numbers.
 	**/
 	var httpVersion : String;
 	/**

@@ -22,7 +22,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "netLog") extern class NetLog extends js.node.events.EventEmitter<electron.main.NetLog> {
 	/**
-		A `Boolean` property that indicates whether network logs are currently being recorded.
+		A `boolean` property that indicates whether network logs are currently being recorded.
 	**/
 	static var currentlyLogging : Bool;
 	/**

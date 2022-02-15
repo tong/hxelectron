@@ -7,19 +7,19 @@ package electron.main;
 **/
 @:jsRequire("electron", "TouchBarSlider") extern class TouchBarSlider extends js.node.events.EventEmitter<electron.main.TouchBarSlider> {
 	/**
-		A `String` representing the slider's current text. Changing this value immediately updates the slider in the touch bar.
+		A `string` representing the slider's current text. Changing this value immediately updates the slider in the touch bar.
 	**/
 	var label : String;
 	/**
-		A `Number` representing the slider's current value. Changing this value immediately updates the slider in the touch bar.
+		A `number` representing the slider's current value. Changing this value immediately updates the slider in the touch bar.
 	**/
 	var value : Float;
 	/**
-		A `Number` representing the slider's current minimum value. Changing this value immediately updates the slider in the touch bar.
+		A `number` representing the slider's current minimum value. Changing this value immediately updates the slider in the touch bar.
 	**/
 	var minValue : Float;
 	/**
-		A `Number` representing the slider's current maximum value. Changing this value immediately updates the slider in the touch bar.
+		A `number` representing the slider's current maximum value. Changing this value immediately updates the slider in the touch bar.
 	**/
 	var maxValue : Float;
 	function new(options:{ /**

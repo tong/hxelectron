@@ -9,7 +9,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "app") extern class App extends js.node.events.EventEmitter<electron.main.App> {
 	/**
-		A `Boolean` property that's `true` if Chrome's accessibility support is enabled, `false` otherwise. This property will be `true` if the use of assistive technologies, such as screen readers, has been detected. Setting this property to `true` manually enables Chrome's accessibility support, allowing developers to expose accessibility switch to users in application settings.
+		A `boolean` property that's `true` if Chrome's accessibility support is enabled, `false` otherwise. This property will be `true` if the use of assistive technologies, such as screen readers, has been detected. Setting this property to `true` manually enables Chrome's accessibility support, allowing developers to expose accessibility switch to users in application settings.
 		
 		See Chromium's accessibility docs for more details. Disabled by default.
 		
@@ -41,23 +41,23 @@ package electron.main;
 	**/
 	static var dock : electron.main.Dock;
 	/**
-		A `Boolean` property that returns  `true` if the app is packaged, `false` otherwise. For many apps, this property can be used to distinguish development and production environments.
+		A `boolean` property that returns  `true` if the app is packaged, `false` otherwise. For many apps, this property can be used to distinguish development and production environments.
 	**/
 	static var isPackaged : Bool;
 	/**
-		A `String` property that indicates the current application's name, which is the name in the application's `package.json` file.
+		A `string` property that indicates the current application's name, which is the name in the application's `package.json` file.
 		
 		Usually the `name` field of `package.json` is a short lowercase name, according to the npm modules spec. You should usually also specify a `productName` field, which is your application's full capitalized name, and which will be preferred over `name` by Electron.
 	**/
 	static var name : String;
 	/**
-		A `String` which is the user agent string Electron will use as a global fallback.
+		A `string` which is the user agent string Electron will use as a global fallback.
 		
 		This is the user agent that will be used when no user agent is set at the `webContents` or `session` level.  It is useful for ensuring that your entire app has the same user agent.  Set to a custom value as early as possible in your app's initialization to ensure that your overridden value is used.
 	**/
 	static var userAgentFallback : String;
 	/**
-		A `Boolean` which when `true` indicates that the app is currently running under the Rosetta Translator Environment.
+		A `boolean` which when `true` indicates that the app is currently running under the Rosetta Translator Environment.
 		
 		You can use this property to prompt users to download the arm64 version of your application when they are running the x64 version under Rosetta incorrectly.
 		
@@ -65,7 +65,7 @@ package electron.main;
 	**/
 	static var runningUnderRosettaTranslation : Bool;
 	/**
-		A `Boolean` which when `true` indicates that the app is currently running under an ARM64 translator (like the macOS Rosetta Translator Environment or Windows WOW).
+		A `boolean` which when `true` indicates that the app is currently running under an ARM64 translator (like the macOS Rosetta Translator Environment or Windows WOW).
 		
 		You can use this property to prompt users to download the arm64 version of your application when they are running the x64 version under Rosetta incorrectly.
 	**/
@@ -236,8 +236,8 @@ package electron.main;
 		Resolve with an object containing the following:
 		
 		* `icon` NativeImage - the display icon of the app handling the protocol.
-		* `path` String  - installation path of the app handling the protocol.
-		* `name` String - display name of the app handling the protocol.
+		* `path` string  - installation path of the app handling the protocol.
+		* `name` string - display name of the app handling the protocol.
 		
 		This method returns a promise that contains the application name, icon and path of the default handler for the protocol (aka URI scheme) of a URL.
 	**/
@@ -421,18 +421,18 @@ package electron.main;
 		If you provided `path` and `args` options to `app.setLoginItemSettings`, then you need to pass the same arguments here for `openAtLogin` to be set correctly.
 		
 		
-		* `openAtLogin` Boolean - `true` if the app is set to open at login.
-		* `openAsHidden` Boolean _macOS_ - `true` if the app is set to open as hidden at login. This setting is not available on MAS builds.
-		* `wasOpenedAtLogin` Boolean _macOS_ - `true` if the app was opened at login automatically. This setting is not available on MAS builds.
-		* `wasOpenedAsHidden` Boolean _macOS_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds.
-		* `restoreState` Boolean _macOS_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds.
-		* `executableWillLaunchAtLogin` Boolean _Windows_ - `true` if app is set to open at login and its run key is not deactivated. This differs from `openAtLogin` as it ignores the `args` option, this property will be true if the given executable would be launched at login with **any** arguments.
+		* `openAtLogin` boolean - `true` if the app is set to open at login.
+		* `openAsHidden` boolean _macOS_ - `true` if the app is set to open as hidden at login. This setting is not available on MAS builds.
+		* `wasOpenedAtLogin` boolean _macOS_ - `true` if the app was opened at login automatically. This setting is not available on MAS builds.
+		* `wasOpenedAsHidden` boolean _macOS_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds.
+		* `restoreState` boolean _macOS_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds.
+		* `executableWillLaunchAtLogin` boolean _Windows_ - `true` if app is set to open at login and its run key is not deactivated. This differs from `openAtLogin` as it ignores the `args` option, this property will be true if the given executable would be launched at login with **any** arguments.
 		* `launchItems` Object[] _Windows_
-		  * `name` String _Windows_ - name value of a registry entry.
-		  * `path` String _Windows_ - The executable to an app that corresponds to a registry entry.
-		  * `args` String[] _Windows_ - the command-line arguments to pass to the executable.
-		  * `scope` String _Windows_ - one of `user` or `machine`. Indicates whether the registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
-		  * `enabled` Boolean _Windows_ - `true` if the app registry key is startup approved and therefore shows as `enabled` in Task Manager and Windows settings.
+		  * `name` string _Windows_ - name value of a registry entry.
+		  * `path` string _Windows_ - The executable to an app that corresponds to a registry entry.
+		  * `args` string[] _Windows_ - the command-line arguments to pass to the executable.
+		  * `scope` string _Windows_ - one of `user` or `machine`. Indicates whether the registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
+		  * `enabled` boolean _Windows_ - `true` if the app registry key is startup approved and therefore shows as `enabled` in Task Manager and Windows settings.
 	**/
 	static function getLoginItemSettings(?options:{ /**
 		The executable path to compare against. Defaults to `process.execPath`.
@@ -750,8 +750,4 @@ package electron.main;
 		**Note:** Extra command line arguments might be added by Chromium, such as `--original-process-start-time`.
 	**/
 	var second_instance : electron.main.AppEvent<Void -> Void> = "second-instance";
-	/**
-		Emitted when `desktopCapturer.getSources()` is called in the renderer process of `webContents`. Calling `event.preventDefault()` will make it return empty sources.
-	**/
-	var desktop_capturer_get_sources : electron.main.AppEvent<Void -> Void> = "desktop-capturer-get-sources";
 }

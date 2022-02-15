@@ -9,7 +9,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "ClientRequest") extern class ClientRequest extends js.node.events.EventEmitter<electron.main.ClientRequest> {
 	/**
-		A `Boolean` specifying whether the request will use HTTP chunked transfer encoding or not. Defaults to false. The property is readable and writable, however it can be set only before the first write operation as the HTTP headers are not yet put on the wire. Trying to set the `chunkedEncoding` property after the first write will throw an error.
+		A `boolean` specifying whether the request will use HTTP chunked transfer encoding or not. Defaults to false. The property is readable and writable, however it can be set only before the first write operation as the HTTP headers are not yet put on the wire. Trying to set the `chunkedEncoding` property after the first write will throw an error.
 		
 		Using chunked encoding is strongly recommended if you need to send a large request body as data will be streamed in small chunks instead of being internally buffered inside Electron process memory.
 	**/
@@ -68,7 +68,7 @@ package electron.main;
 	@:optional
 	var origin : String; }, String>):Void;
 	/**
-		Adds an extra HTTP header. The header name will be issued as-is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a `String`, its `toString()` method will be called to obtain the final value.
+		Adds an extra HTTP header. The header name will be issued as-is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a `string`, its `toString()` method will be called to obtain the final value.
 		
 		Certain headers are restricted from being set by apps. These headers are listed below. More information on restricted headers can be found in Chromium's header utils.
 		
@@ -110,8 +110,8 @@ package electron.main;
 	**/
 	function followRedirect():Void;
 	/**
-		* `active` Boolean - Whether the request is currently active. If this is false no other properties will be set
-		* `started` Boolean - Whether the upload has started. If this is false both `current` and `total` will be set to 0.
+		* `active` boolean - Whether the request is currently active. If this is false no other properties will be set
+		* `started` boolean - Whether the upload has started. If this is false both `current` and `total` will be set to 0.
 		* `current` Integer - The number of bytes that have been uploaded so far
 		* `total` Integer - The number of bytes that will be uploaded this request
 		
@@ -126,8 +126,8 @@ package electron.main;
 		
 		The `callback` function is expected to be called back with user credentials:
 		
-		* `username` String
-		* `password` String
+		* `username` string
+		* `password` string
 		
 		Providing empty credentials will cancel the request and report an authentication error on the response object:
 	**/
