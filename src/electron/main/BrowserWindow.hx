@@ -617,7 +617,7 @@ package electron.main;
 	**/
 	@:optional
 	var enablePreferredSizeMode : Bool; }; /**
-		When using a frameless window in conjuction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
+		When using a frameless window in conjunction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
 	**/
 	@:optional
 	var titleBarOverlay : haxe.extern.EitherType<{ /**
