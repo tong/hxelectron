@@ -628,7 +628,11 @@ package electron.main;
 		The CSS color of the symbols on the Window Controls Overlay when enabled. Default is the system color.
 	**/
 	@:optional
-	var symbolColor : String; }, Bool>; }):Void;
+	var symbolColor : String; /**
+		The height of the title bar and Window Controls Overlay in pixels. Default is system height.
+	**/
+	@:optional
+	var height : Int; }, Bool>; }):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
