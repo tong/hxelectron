@@ -134,7 +134,6 @@ package electron;
 	static function getHeapStatistics():Any;
 	/**
 		* `allocated` Integer - Size of all allocated objects in Kilobytes.
-		* `marked` Integer - Size of all marked objects in Kilobytes.
 		* `total` Integer - Total allocated space in Kilobytes.
 		
 		Returns an object with Blink memory information. It can be useful for debugging rendering / DOM related memory issues. Note that all values are reported in Kilobytes.

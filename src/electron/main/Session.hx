@@ -311,6 +311,18 @@ package electron.main;
 	**/
 	function getPreloads():Array<String>;
 	/**
+		Sets the directory to store the generated JS code cache for this session. The directory is not required to be created by the user before this call, the runtime will create if it does not exist otherwise will use the existing directory. If directory cannot be created, then code cache will not be used and all operations related to code cache will fail silently inside the runtime. By default, the directory will be `Code Cache` under the respective user data folder.
+	**/
+	function setCodeCachePath(path:String):Void;
+	/**
+		resolves when the code cache clear operation is complete.
+	**/
+	function clearCodeCaches(options:{ /**
+		An array of url corresponding to the resource whose generated code cache needs to be removed. If the list is empty then all entries in the cache directory will be removed.
+	**/
+	@:optional
+	var urls : Array<String>; }):js.lib.Promise<Any>;
+	/**
 		Sets whether to enable the builtin spell checker.
 	**/
 	function setSpellCheckerEnabled(enable:Bool):Void;

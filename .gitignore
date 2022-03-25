@@ -2,6 +2,7 @@ _*
 *.zip
 api/
 data/
+demo/node_modules/
 demo/*.js
 demo/*.js.map
 docs/
