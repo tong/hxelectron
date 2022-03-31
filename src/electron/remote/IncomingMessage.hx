@@ -33,6 +33,10 @@ package electron.remote;
 		An `Integer` indicating the HTTP protocol minor version number.
 	**/
 	var httpVersionMinor : Int;
+	/**
+		A `string[]` containing the raw HTTP response headers exactly as they were received. The keys and values are in the same list. It is not a list of tuples. So, the even-numbered offsets are key values, and the odd-numbered offsets are the associated values. Header names are not lowercased, and duplicates are not merged.
+	**/
+	var rawHeaders : Array<String>;
 }
 @:enum abstract IncomingMessageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

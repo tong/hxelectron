@@ -1,6 +1,5 @@
 package electron;
 /**
-	Note that keys starting with `--` are not currently supported. For example, this will errantly submit as `multipart/form-data` when `nativeWindowOpen` is set to `false` in webPreferences:
 	@see https://electronjs.org/docs/api/structures/post-body
 **/
 typedef PostBody = {

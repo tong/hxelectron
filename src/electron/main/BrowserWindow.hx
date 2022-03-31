@@ -41,6 +41,18 @@ package electron.main;
 	
 	Note that even for apps that use `ready-to-show` event, it is still recommended to set `backgroundColor` to make app feel more native.
 	
+	Some examples of valid `backgroundColor` values include:
+	
+	```
+	const win = new BrowserWindow()
+	win.setBackgroundColor('hsl(230, 100%, 50%)')
+	win.setBackgroundColor('rgb(255, 145, 145)')
+	win.setBackgroundColor('#ff00a3')
+	win.setBackgroundColor('blueviolet')
+	```
+	
+	For more information about these color types see valid options in win.setBackgroundColor.
+	
 	### Parent and child windows
 	
 	By using `parent` option, you can create child windows:
@@ -357,7 +369,7 @@ package electron.main;
 	**/
 	@:optional
 	var enableLargerThanScreen : Bool; /**
-		Window's background color as a hexadecimal value, like `#66CD00` or `#FFF` or `#80FFFFFF` (alpha in #AARRGGBB format is supported if `transparent` is set to `true`). Default is `#FFF` (white).
+		The window's background color in Hex, RGB, RGBA, HSL, HSLA or named CSS color format. Alpha in #AARRGGBB format is supported if `transparent` is set to `true`. Default is `#FFF` (white). See win.setBackgroundColor for more information.
 	**/
 	@:optional
 	var backgroundColor : String; /**
@@ -561,10 +573,6 @@ package electron.main;
 	**/
 	@:optional
 	var contextIsolation : Bool; /**
-		Whether to use native `window.open()`. Defaults to `true`. Child windows will always have node integration disabled unless `nodeIntegrationInSubFrames` is true.
-	**/
-	@:optional
-	var nativeWindowOpen : Bool; /**
 		Whether to enable the `<webview>` tag. Defaults to `false`. **Note:** The `preload` script configured for the `<webview>` will have node integration enabled when it is executed so you should ensure remote/untrusted content is not able to create a `<webview>` tag with a possibly malicious `preload` script. You can use the `will-attach-webview` event on webContents to strip away the `preload` script and to validate or alter the `<webview>`'s initial settings.
 	**/
 	@:optional
@@ -617,7 +625,7 @@ package electron.main;
 	**/
 	@:optional
 	var enablePreferredSizeMode : Bool; }; /**
-		When using a frameless window in conjuction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
+		When using a frameless window in conjunction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
 	**/
 	@:optional
 	var titleBarOverlay : haxe.extern.EitherType<{ /**
@@ -732,6 +740,30 @@ package electron.main;
 	**/
 	function setAspectRatio(aspectRatio:Float, ?extraSize:electron.Size):Void;
 	/**
+		Examples of valid `backgroundColor` values:
+		
+		* Hex
+		  * #fff (shorthand RGB)
+		  * #ffff (shorthand ARGB)
+		  * #ffffff (RGB)
+		  * #ffffffff (ARGB)
+		* RGB
+		  * rgb(([\d]+),\s*([\d]+),\s*([\d]+))
+		    * e.g. rgb(255, 255, 255)
+		* RGBA
+		  * rgba(([\d]+),\s*([\d]+),\s*([\d]+),\s*([\d.]+))
+		    * e.g. rgba(255, 255, 255, 1.0)
+		* HSL
+		  * hsl((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%)
+		    * e.g. hsl(200, 20%, 50%)
+		* HSLA
+		  * hsla((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+))
+		    * e.g. hsla(200, 20%, 50%, 0.5)
+		* Color name
+		  * Options are listed in SkParseColor.cpp
+		  * Similar to CSS Color Module Level 3 keywords, but case-sensitive.
+		    * e.g. `blueviolet` or `red`
+		
 		Sets the background color of the window. See Setting `backgroundColor`.
 	**/
 	function setBackgroundColor(backgroundColor:String):Void;
@@ -752,7 +784,11 @@ package electron.main;
 	**/
 	function getBounds():electron.Rectangle;
 	/**
-		Gets the background color of the window. See Setting `backgroundColor`.
+		Gets the background color of the window in Hex (`#RRGGBB`) format.
+		
+		See Setting `backgroundColor`.
+		
+		**Note:** The alpha value is _not_ returned alongside the red, green, and blue values.
 	**/
 	function getBackgroundColor():String;
 	/**
@@ -1294,6 +1330,22 @@ package electron.main;
 		**Note:** The BrowserView API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	function getBrowserViews():Array<electron.main.BrowserView>;
+	/**
+		On a Window with Window Controls Overlay already enabled, this method updates the style of the title bar overlay.
+	**/
+	function setTitleBarOverlay(options:{ /**
+		The CSS color of the Window Controls Overlay when enabled.
+	**/
+	@:optional
+	var color : String; /**
+		The CSS color of the symbols on the Window Controls Overlay when enabled.
+	**/
+	@:optional
+	var symbolColor : String; /**
+		The height of the title bar and Window Controls Overlay in pixels.
+	**/
+	@:optional
+	var height : Int; }):Void;
 }
 @:enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

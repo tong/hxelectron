@@ -24,6 +24,7 @@ package electron;
 	* Backtrace
 	* Sentry
 	* BugSplat
+	* Bugsnag
 	
 	Crash reports are stored temporarily before being uploaded in a directory underneath the app's user data directory, called 'Crashpad'. You can override this directory by calling `app.setPath('crashDumps', '/path/to/crashes')` before starting the crash reporter.
 	

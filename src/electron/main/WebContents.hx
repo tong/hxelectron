@@ -851,7 +851,7 @@ var to : Float; }>; /**
 	**/
 	var did_start_navigation : electron.main.WebContentsEvent<Void -> Void> = "did-start-navigation";
 	/**
-		Emitted as a server side redirect occurs during navigation.  For example a 302 redirect.
+		Emitted when a server side redirect occurs during navigation.  For example a 302 redirect.
 		
 		This event will be emitted after `did-start-navigation` and always before the `did-redirect-navigation` event for the same navigation.
 		
@@ -934,6 +934,18 @@ var to : Float; }>; /**
 		Emitted when the user is requesting to change the zoom level using the mouse wheel.
 	**/
 	var zoom_changed : electron.main.WebContentsEvent<Void -> Void> = "zoom-changed";
+	/**
+		Emitted when the `WebContents` loses focus.
+	**/
+	var blur : electron.main.WebContentsEvent<Void -> Void> = "blur";
+	/**
+		Emitted when the `WebContents` gains focus.
+		
+		Note that on macOS, having focus means the `WebContents` is the first responder of window, so switching focus between windows would not trigger the `focus` and `blur` events of `WebContents`, as the first responder of each window is not changed.
+		
+		The `focus` and `blur` events of `WebContents` should only be used to detect focus change between different `WebContents` and `BrowserView` in the same window.
+	**/
+	var focus : electron.main.WebContentsEvent<Void -> Void> = "focus";
 	/**
 		Emitted when DevTools is opened.
 	**/

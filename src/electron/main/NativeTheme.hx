@@ -48,6 +48,10 @@ package electron.main;
 		A `boolean` for if the OS / Chromium currently has an inverted color scheme or is being instructed to use an inverted color scheme.
 	**/
 	static var shouldUseInvertedColorScheme : Bool;
+	/**
+		A `boolean` indicating whether Chromium is in forced colors mode, controlled by system accessibility settings. Currently, Windows high contrast is the only system setting that triggers forced colors mode.
+	**/
+	static var inForcedColorsMode : Bool;
 }
 @:enum abstract NativeThemeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**

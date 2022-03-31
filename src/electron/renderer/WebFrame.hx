@@ -62,22 +62,17 @@ package electron.renderer;
 		> **NOTE**: Visual zoom only applies to pinch-to-zoom behavior. Cmd+/-/0 zoom shortcuts are controlled by the 'zoomIn', 'zoomOut', and 'resetZoom' MenuItem roles in the application Menu. To disable shortcuts, manually define the Menu and omit zoom roles from the definition.
 	**/
 	static function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
-	/**
-		Sets a provider for spell checking in input fields and text areas.
-		
-		If you want to use this method you must disable the builtin spellchecker when you construct the window.
-		
-		The `provider` must be an object that has a `spellCheck` method that accepts an array of individual words for spellchecking. The `spellCheck` function runs asynchronously and calls the `callback` function with an array of misspelt words when complete.
-		
-		An example of using node-spellchecker as provider:
-	**/
 	static function setSpellCheckProvider(language:String, provider:{ var spellCheck : haxe.Constraints.Function; }):Void;
 	/**
 		A key for the inserted CSS that can later be used to remove the CSS via `webFrame.removeInsertedCSS(key)`.
 		
 		Injects CSS into the current web page and returns a unique key for the inserted stylesheet.
 	**/
-	static function insertCSS(css:String):String;
+	static function insertCSS(css:String, ?options:{ /**
+		Can be either 'user' or 'author'. Sets the cascade origin of the inserted stylesheet. Default is 'author'.
+	**/
+	@:optional
+	var cssOrigin : String; }):String;
 	/**
 		Removes the inserted CSS from the current web page. The stylesheet is identified by its key, which is returned from `webFrame.insertCSS(css)`.
 	**/
