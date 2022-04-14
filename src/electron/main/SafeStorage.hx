@@ -13,7 +13,7 @@ package electron.main;
 	/**
 		Whether encryption is available.
 		
-		On Linux, returns true if the secret key is available. On MacOS, returns true if Keychain is available. On Windows, returns true with no other preconditions.
+		On Linux, returns true if the secret key is available. On MacOS, returns true if Keychain is available. On Windows, returns true once the app has emitted the `ready` event.
 	**/
 	static function isEncryptionAvailable():Bool;
 	/**
