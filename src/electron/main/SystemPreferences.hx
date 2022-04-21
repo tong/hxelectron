@@ -55,20 +55,26 @@ package electron.main;
 		* `AppleAquaColorVariantChanged`
 		* `AppleColorPreferencesChangedNotification`
 		* `AppleShowScrollBarsSettingChanged`
+		
+		If `event` is null, the `NSDistributedNotificationCenter` doesn’t use it as criteria for delivery to the observer. See docs  for more information.
 	**/
-	static function subscribeNotification(event:String, callback:haxe.Constraints.Function):Float;
+	static function subscribeNotification(event:haxe.extern.EitherType<String, Dynamic>, callback:haxe.Constraints.Function):Float;
 	/**
 		The ID of this subscription
 		
 		Same as `subscribeNotification`, but uses `NSNotificationCenter` for local defaults. This is necessary for events such as `NSUserDefaultsDidChangeNotification`.
+		
+		If `event` is null, the `NSNotificationCenter` doesn’t use it as criteria for delivery to the observer. See docs for more information.
 	**/
-	static function subscribeLocalNotification(event:String, callback:haxe.Constraints.Function):Float;
+	static function subscribeLocalNotification(event:haxe.extern.EitherType<String, Dynamic>, callback:haxe.Constraints.Function):Float;
 	/**
 		The ID of this subscription
 		
 		Same as `subscribeNotification`, but uses `NSWorkspace.sharedWorkspace.notificationCenter`. This is necessary for events such as `NSWorkspaceDidActivateApplicationNotification`.
+		
+		If `event` is null, the `NSWorkspaceNotificationCenter` doesn’t use it as criteria for delivery to the observer. See docs for more information.
 	**/
-	static function subscribeWorkspaceNotification(event:String, callback:haxe.Constraints.Function):Float;
+	static function subscribeWorkspaceNotification(event:haxe.extern.EitherType<String, Dynamic>, callback:haxe.Constraints.Function):Float;
 	/**
 		Removes the subscriber with `id`.
 	**/
