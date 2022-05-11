@@ -276,7 +276,7 @@ package electron.main;
 		
 		Here's a very simple example of creating a custom Jump List:
 	**/
-	static function setJumpList(categories:haxe.extern.EitherType<Array<electron.JumpListCategory>, Dynamic>):Void;
+	static function setJumpList(categories:haxe.extern.EitherType<Array<electron.JumpListCategory>, Dynamic>):String;
 	/**
 		The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately.
 		
