@@ -745,19 +745,9 @@ package electron.remote;
 		
 		**Note:** If the second instance is started by a different user than the first, the `argv` array will not include the arguments.
 		
-		**Note:** `ackCallback` allows the user to send data back to the second instance during the `app.requestSingleInstanceLock()` flow. This callback can be used for cases where the second instance needs to obtain additional information from the first instance before quitting.
-		
-		Currently, the limit on the message size is kMaxMessageLength, or around 32kB. To be safe, keep the amount of data passed to 31kB at most.
-		
-		In order to call the callback, `event.preventDefault()` must be called, first. If the callback is not called in either case, `null` will be sent back. If `event.preventDefault()` is not called, but `ackCallback` is called by the user in the event, then the behaviour is undefined.
-		
 		This event is guaranteed to be emitted after the `ready` event of `app` gets emitted.
 		
 		**Note:** Extra command line arguments might be added by Chromium, such as `--original-process-start-time`.
 	**/
 	var second_instance : electron.remote.AppEvent<Void -> Void> = "second-instance";
-	/**
-		This event will be emitted within the second instance during the call to `app.requestSingleInstanceLock()`, when the first instance calls the `ackCallback` provided by the `second-instance` event handler.
-	**/
-	var first_instance_ack : electron.remote.AppEvent<Void -> Void> = "first-instance-ack";
 }
