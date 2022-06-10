@@ -8,7 +8,7 @@ package electron.remote;
 	**/
 	static function getAllWebContents():Array<electron.remote.WebContents>;
 	/**
-		The web contents that is focused in this application, otherwise returns `null`.
+		| null - The web contents that is focused in this application, otherwise returns `null`.
 	**/
 	static function getFocusedWebContents():electron.remote.WebContents;
 	/**
@@ -1024,8 +1024,6 @@ var to : Float; }>; /**
 		Emitted when a `<webview>`'s web contents is being attached to this web contents. Calling `event.preventDefault()` will destroy the guest page.
 		
 		This event can be used to configure `webPreferences` for the `webContents` of a `<webview>` before it's loaded, and provides the ability to set settings that can't be set via `<webview>` attributes.
-		
-		**Note:** The specified `preload` script option will appear as `preloadURL` (not `preload`) in the `webPreferences` object emitted with this event.
 	**/
 	var will_attach_webview : electron.remote.WebContentsEvent<Void -> Void> = "will-attach-webview";
 	/**

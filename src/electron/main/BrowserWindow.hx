@@ -39,7 +39,7 @@ package electron.main;
 	win.loadURL('https://github.com')
 	```
 	
-	Note that even for apps that use `ready-to-show` event, it is still recommended to set `backgroundColor` to make app feel more native.
+	Note that even for apps that use `ready-to-show` event, it is still recommended to set `backgroundColor` to make the app feel more native.
 	
 	Some examples of valid `backgroundColor` values include:
 	
@@ -257,7 +257,7 @@ package electron.main;
 	**/
 	@:optional
 	var useContentSize : Bool; /**
-		Show window in the center of the screen.
+		Show window in the center of the screen. Default is `false`.
 	**/
 	@:optional
 	var center : Bool; /**

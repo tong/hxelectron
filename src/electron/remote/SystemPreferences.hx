@@ -114,7 +114,7 @@ package electron.remote;
 		
 		* `ApplePressAndHoldEnabled`: `boolean`
 	**/
-	static function setUserDefault(key:String, type:String, value:String):Void;
+	static function setUserDefault(key:String, type:Type, value:Dynamic):Void;
 	/**
 		Removes the `key` in `NSUserDefaults`. This can be used to restore the default or global value of a `key` previously set with `setUserDefault`.
 	**/
