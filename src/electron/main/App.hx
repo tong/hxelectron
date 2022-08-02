@@ -118,6 +118,10 @@ package electron.main;
 	**/
 	static function hide():Void;
 	/**
+		`true` if the application—including all of its windows—is hidden (e.g. with `Command-H`), `false` otherwise.
+	**/
+	static function isHidden():Bool;
+	/**
 		Shows application windows after they were hidden. Does not automatically focus them.
 	**/
 	static function show():Void;
@@ -155,7 +159,7 @@ package electron.main;
 		
 		You can only override paths of a `name` defined in `app.getPath`.
 		
-		By default, web pages' cookies and caches will be stored under the `userData` directory. If you want to change this location, you have to override the `userData` path before the `ready` event of the `app` module is emitted.
+		By default, web pages' cookies and caches will be stored under the `sessionData` directory. If you want to change this location, you have to override the `sessionData` path before the `ready` event of the `app` module is emitted.
 	**/
 	static function setPath(name:String, path:String):Void;
 	/**

@@ -4,6 +4,8 @@ package electron.remote;
 	
 	Process: Main
 	
+	This module cannot be used until the `ready` event of the `app` module is emitted.
+	
 	### Window customization
 	
 	The `BrowserWindow` class exposes various ways to modify the look and behavior of your app's windows. For more details, see the Window Customization tutorial.

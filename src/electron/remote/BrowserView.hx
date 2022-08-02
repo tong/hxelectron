@@ -8,6 +8,8 @@ package electron.remote;
 	
 	Process: Main
 	
+	This module cannot be used until the `ready` event of the `app` module is emitted.
+	
 	### Example
 	
 	```
