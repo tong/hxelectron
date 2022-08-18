@@ -406,9 +406,9 @@ package electron.remote;
 	**/
 	function getAllExtensions():Array<electron.Extension>;
 	/**
-		A `string | null` indicating the absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
+		The absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
 	**/
-	function getStoragePath():Void;
+	function getStoragePath():haxe.extern.EitherType<String, Dynamic>;
 }
 @:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
