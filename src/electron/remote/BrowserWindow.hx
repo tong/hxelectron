@@ -407,7 +407,7 @@ package electron.remote;
 	**/
 	@:optional
 	var trafficLightPosition : electron.Point; /**
-		Whether frameless window should have rounded corners on macOS. Default is `true`.
+		Whether frameless window should have rounded corners on macOS. Default is `true`. Setting this property to `false` will prevent the window from being fullscreenable.
 	**/
 	@:optional
 	var roundedCorners : Bool; /**
