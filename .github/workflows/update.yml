@@ -7,6 +7,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.2.5
       - run: |
           ./update.sh
           if [[ $? != 0 ]]; then
