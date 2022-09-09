@@ -5,8 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          sh update.sh
+          ./update.sh
           if [[ $? != 0 ]]; then
             git add -A
             git commit -m "Upgrade to electron $latest"
