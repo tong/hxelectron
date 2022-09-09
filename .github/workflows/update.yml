@@ -16,7 +16,7 @@ jobs:
           haxelib install electron
           ./update.sh
           if [[ $? == 0 ]]; then
-            git add -A
+            git add src/ electron-api.json haxelib.json demo/package*.json
             git commit -m "Upgrade to electron $latest"
             git tag $latest
             git push
