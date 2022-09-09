@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-current=$(git describe --tags --abbrev=0)
+#current=$(git describe --tags --abbrev=0)
+current=$(jq  -r '.version' haxelib.json)
 latest=$(gh release list --repo electron/electron --limit 1 --exclude-drafts | awk '{print $2}')
 
 echo "Current: $current"
