@@ -1,12 +1,12 @@
 on:
   workflow_dispatch:
+env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.2.5
