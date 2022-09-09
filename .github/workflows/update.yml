@@ -6,19 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Update api
       - uses: actions/checkout@v3
       - uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.2.5
-        run: |
+      - run: |
           sudo apt install jq
           git config user.name github-actions
           git config user.email github-actions@github.com
           haxelib install electron
           ./update.sh
-      - name: Commit updates
-        run: |
           if [[ $? == 0 ]]; then
             git status
             git add src/ electron-api.json haxelib.json demo/package*.json
