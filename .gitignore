@@ -6,7 +6,8 @@ demo/node_modules/
 demo/*.js
 demo/*.js.map
 docs/
-atom/*
+haxe-*
+neko-*
 all.hxml
 haxedoc.xml
 ISSUES.md
