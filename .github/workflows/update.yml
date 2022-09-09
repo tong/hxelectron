@@ -1,0 +1,18 @@
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          sh update.sh
+          if [[ $? != 0 ]]; then
+            git add -A
+            git commit -m "Upgrade to electron $latest"
+            git tag $latest
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git push
+            git push --tags
+          fi
