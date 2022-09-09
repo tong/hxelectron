@@ -11,14 +11,14 @@ jobs:
         with:
           haxe-version: 4.2.5
       - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           haxelib install electron
           ./update.sh
           if [[ $? == 0 ]]; then
             git add -A
             git commit -m "Upgrade to electron $latest"
             git tag $latest
-            git config user.name github-actions
-            git config user.email github-actions@github.com
             git push
             git push --tags
           fi
