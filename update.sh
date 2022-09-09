@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 current=$(git describe --tags --abbrev=0)
 latest=$(gh release list --repo electron/electron --limit 1 --exclude-drafts | awk '{print $2}')
@@ -8,7 +8,7 @@ echo "Latest: $latest"
 
 if [ ! "$current" = "$latest" ]; then
     echo "Download electron-api.json"
-    gh release download "$latest" -R electron/electron -p electron-api.json --clobber
+    gh release download "$latest" -R electron/electron -p electron-api.json
     echo "Building api"
     haxe api.hxml
     echo "Building haxedoc.xml"
