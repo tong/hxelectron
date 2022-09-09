@@ -6,9 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Update api
-        uses: krdlab/setup-haxe@v1
+      - uses: actions/checkout@v3
+      - uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.2.5
         run: |
