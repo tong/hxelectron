@@ -13,6 +13,6 @@
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "v20.1.3"
+    "electron": "v19.0.17"
   }
 }
