@@ -15,10 +15,10 @@ if [ ! "$current" = "$latest" ]; then
     echo "Building haxedoc.xml"
     haxe haxedoc.hxml
     echo "Updating haxelib.json"
-    cat <<< "$(jq --arg var "$latest" '.version = $var' haxelib.json)" > haxelib.json
+    cat <<< "$(jq --arg var "$latest" '.version = $var' haxelib.json)" > tmpfile && mv tmpfile haxelib.json
     echo "Updating demo/package.json"
     cd demo || exit 1
-    cat <<< "$(jq --arg var "$latest" '.devDependencies.electron = $var' package.json)" > package.json
+    cat <<< "$(jq --arg var "$latest" '.devDependencies.electron = $var' package.json)" > tmpfile && mv tmpfile package.json
     npm install
     cd - || exit 1
     exit 0
