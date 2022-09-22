@@ -9,7 +9,7 @@ echo "Latest: $latest"
 
 if [ ! "$current" = "$latest" ]; then
     echo "Download electron-api.json"
-    gh release download "$latest" -R electron/electron -p electron-api.json
+    gh release download "$latest" --clobber -R electron/electron -p electron-api.json
     echo "Building api"
     haxe api.hxml
     echo "Building haxedoc.xml"
