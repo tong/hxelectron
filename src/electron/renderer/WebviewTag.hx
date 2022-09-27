@@ -513,38 +513,59 @@ var to : Float; }>; /**
 		Prints `webview`'s web page as PDF, Same as `webContents.printToPDF(options)`.
 	**/
 	function printToPDF(options:{ /**
-		the header and footer for the PDF.
-	**/
-	@:optional
-	var headerFooter : Record; /**
-		`true` for landscape, `false` for portrait.
+		Paper orientation.`true` for landscape, `false` for portrait. Defaults to false.
 	**/
 	@:optional
 	var landscape : Bool; /**
-		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin. and `width` in microns.
+		Whether to display header and footer. Defaults to false.
 	**/
 	@:optional
-	var marginsType : Int; /**
-		The scale factor of the web page. Can range from 0 to 100.
-	**/
-	@:optional
-	var scaleFactor : Float; /**
-		The page range to print. On macOS, only the first range is honored.
-	**/
-	@:optional
-	var pageRanges : Record; /**
-		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`
-	**/
-	@:optional
-	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
-		Whether to print CSS backgrounds.
+	var displayHeaderFooter : Bool; /**
+		Whether to print background graphics. Defaults to false.
 	**/
 	@:optional
 	var printBackground : Bool; /**
-		Whether to print selection only.
+		Scale of the webpage rendering. Defaults to 1.
 	**/
 	@:optional
-	var printSelectionOnly : Bool; }):js.lib.Promise<Any>;
+	var scale : Float; /**
+		Specify page size of the generated PDF. Can be `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `Legal`, `Letter`, `Tabloid`, `Ledger`, or an Object containing `height` and `width` in inches. Defaults to `Letter`.
+	**/
+	@:optional
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; @:optional
+	var margins : { /**
+		Top margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var top : Float; /**
+		Bottom margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var bottom : Float; /**
+		Left margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var left : Float; /**
+		Right margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var right : Float; }; /**
+		Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
+	**/
+	@:optional
+	var pageRanges : String; /**
+		HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: `date` (formatted print date), `title` (document title), `url` (document location), `pageNumber` (current page number) and `totalPages` (total pages in the document). For example, `<span class=title></span>` would generate span containing the title.
+	**/
+	@:optional
+	var headerTemplate : String; /**
+		HTML template for the print footer. Should use the same format as the `headerTemplate`.
+	**/
+	@:optional
+	var footerTemplate : String; /**
+		Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
+	**/
+	@:optional
+	var preferCSSPageSize : Bool; }):js.lib.Promise<Any>;
 	/**
 		Resolves with a NativeImage
 		

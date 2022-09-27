@@ -165,6 +165,7 @@ package electron;
 	function addRepresentation(options:{ /**
 		The scale factor to add the image representation for.
 	**/
+	@:optional
 	var scaleFactor : Float; /**
 		Defaults to 0. Required if a bitmap buffer is specified as `buffer`.
 	**/

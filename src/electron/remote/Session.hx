@@ -218,6 +218,10 @@ package electron.remote;
 	**/
 	function setDevicePermissionHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
+		Sets a handler to respond to Bluetooth pairing requests. This handler allows developers to handle devices that require additional validation before pairing.  When a handler is not defined, any pairing on Linux or Windows that requires additional validation will be automatically cancelled. macOS does not require a handler because macOS handles the pairing automatically.  To clear the handler, call `setBluetoothPairingHandler(null)`.
+	**/
+	function setBluetoothPairingHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
+	/**
 		Resolves when the operation is complete.
 		
 		Clears the host resolver cache.
@@ -339,7 +343,7 @@ package electron.remote;
 	/**
 		An array of language codes the spellchecker is enabled for.  If this list is empty the spellchecker will fallback to using `en-US`.  By default on launch if this setting is an empty list Electron will try to populate this setting with the current OS locale.  This setting is persisted across restarts.
 		
-		**Note:** On macOS the OS spellchecker is used and has its own list of languages.  This API is a no-op on macOS.
+		**Note:** On macOS the OS spellchecker is used and has its own list of languages. On macOS, this API will return whichever languages have been configured by the OS.
 	**/
 	function getSpellCheckerLanguages():Array<String>;
 	/**

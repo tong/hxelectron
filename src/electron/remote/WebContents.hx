@@ -22,6 +22,25 @@ package electron.remote;
 	**/
 	static function fromDevToolsTargetId(targetId:String):electron.remote.WebContents;
 	/**
+		An `IpcMain` scoped to just IPC messages sent from this WebContents.
+		
+		IPC messages sent with `ipcRenderer.send`, `ipcRenderer.sendSync` or `ipcRenderer.postMessage` will be delivered in the following order:
+		
+		* `contents.on('ipc-message')`
+		* `contents.mainFrame.on(channel)`
+		* `contents.ipc.on(channel)`
+		* `ipcMain.on(channel)`
+		
+		Handlers registered with `invoke` will be checked in the following order. The first one that is defined will be called, the rest will be ignored.
+		
+		* `contents.mainFrame.handle(channel)`
+		* `contents.handle(channel)`
+		* `ipcMain.handle(channel)`
+		
+		A handler or event listener registered on the WebContents will receive IPC messages sent from any frame, including child frames. In most cases, only the main frame can send IPC messages. However, if the `nodeIntegrationInSubFrames` option is enabled, it is possible for child frames to send IPC messages also. In that case, handlers should check the `senderFrame` property of the IPC event to ensure that the message is coming from the expected frame. Alternatively, register handlers on the appropriate frame directly using the `WebFrameMain.ipc` interface.
+	**/
+	var ipc : electron.remote.IpcMain;
+	/**
 		A `boolean` property that determines whether this page is muted.
 	**/
 	var audioMuted : Bool;
@@ -493,56 +512,75 @@ var to : Float; }>; /**
 	**/
 	@:optional
 	var footer : String; /**
-		Specify page size of the printed document. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height`.
+		Specify page size of the printed document. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width`.
 	**/
 	@:optional
 	var pageSize : haxe.extern.EitherType<String, electron.Size>; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Resolves with the generated PDF data.
 		
-		Prints window's web page as PDF with Chromium's preview printing custom settings.
+		Prints the window's web page as PDF.
 		
 		The `landscape` will be ignored if `@page` CSS at-rule is used in the web page.
 		
-		By default, an empty `options` will be regarded as:
-		
-		Use `page-break-before: always;` CSS style to force to print to a new page.
-		
 		An example of `webContents.printToPDF`:
+		
+		See Page.printToPdf for more information.
 	**/
 	function printToPDF(options:{ /**
-		the header and footer for the PDF.
-	**/
-	@:optional
-	var headerFooter : Record; /**
-		`true` for landscape, `false` for portrait.
+		Paper orientation.`true` for landscape, `false` for portrait. Defaults to false.
 	**/
 	@:optional
 	var landscape : Bool; /**
-		Specifies the type of margins to use. Uses 0 for default margin, 1 for no margin, and 2 for minimum margin.
+		Whether to display header and footer. Defaults to false.
 	**/
 	@:optional
-	var marginsType : Int; /**
-		The scale factor of the web page. Can range from 0 to 100.
-	**/
-	@:optional
-	var scaleFactor : Float; /**
-		The page range to print.
-	**/
-	@:optional
-	var pageRanges : Record; /**
-		Specify page size of the generated PDF. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width` in microns.
-	**/
-	@:optional
-	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
-		Whether to print CSS backgrounds.
+	var displayHeaderFooter : Bool; /**
+		Whether to print background graphics. Defaults to false.
 	**/
 	@:optional
 	var printBackground : Bool; /**
-		Whether to print selection only.
+		Scale of the webpage rendering. Defaults to 1.
 	**/
 	@:optional
-	var printSelectionOnly : Bool; }):js.lib.Promise<Any>;
+	var scale : Float; /**
+		Specify page size of the generated PDF. Can be `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `Legal`, `Letter`, `Tabloid`, `Ledger`, or an Object containing `height` and `width` in inches. Defaults to `Letter`.
+	**/
+	@:optional
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; @:optional
+	var margins : { /**
+		Top margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var top : Float; /**
+		Bottom margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var bottom : Float; /**
+		Left margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var left : Float; /**
+		Right margin in inches. Defaults to 1cm (~0.4 inches).
+	**/
+	@:optional
+	var right : Float; }; /**
+		Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
+	**/
+	@:optional
+	var pageRanges : String; /**
+		HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: `date` (formatted print date), `title` (document title), `url` (document location), `pageNumber` (current page number) and `totalPages` (total pages in the document). For example, `<span class=title></span>` would generate span containing the title.
+	**/
+	@:optional
+	var headerTemplate : String; /**
+		HTML template for the print footer. Should use the same format as the `headerTemplate`.
+	**/
+	@:optional
+	var footerTemplate : String; /**
+		Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
+	**/
+	@:optional
+	var preferCSSPageSize : Bool; }):js.lib.Promise<Any>;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
@@ -1042,10 +1080,14 @@ var to : Float; }>; /**
 	var preload_error : electron.remote.WebContentsEvent<Void -> Void> = "preload-error";
 	/**
 		Emitted when the renderer process sends an asynchronous message via `ipcRenderer.send()`.
+		
+		See also `webContents.ipc`, which provides an `IpcMain`-like interface for responding to IPC messages specifically from this WebContents.
 	**/
 	var ipc_message : electron.remote.WebContentsEvent<Void -> Void> = "ipc-message";
 	/**
 		Emitted when the renderer process sends a synchronous message via `ipcRenderer.sendSync()`.
+		
+		See also `webContents.ipc`, which provides an `IpcMain`-like interface for responding to IPC messages specifically from this WebContents.
 	**/
 	var ipc_message_sync : electron.remote.WebContentsEvent<Void -> Void> = "ipc-message-sync";
 	/**
