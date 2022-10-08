@@ -16,6 +16,10 @@ package electron.remote;
 	**/
 	static function fromId(id:Int):electron.remote.WebContents;
 	/**
+		| undefined - A WebContents instance with the given WebFrameMain, or `undefined` if there is no WebContents associated with the given WebFrameMain.
+	**/
+	static function fromFrame(frame:electron.remote.WebFrameMain):electron.remote.WebContents;
+	/**
 		| undefined - A WebContents instance with the given TargetID, or `undefined` if there is no WebContents associated with the given TargetID.
 		
 		When communicating with the Chrome DevTools Protocol, it can be useful to lookup a WebContents instance based on its assigned TargetID.
@@ -96,6 +100,10 @@ package electron.remote;
 		A `WebFrameMain` property that represents the top frame of the page's frame hierarchy.
 	**/
 	var mainFrame : electron.remote.WebFrameMain;
+	/**
+		A `WebFrameMain` property that represents the frame that opened this WebContents, either with open(), or by navigating a link with a target attribute.
+	**/
+	var opener : electron.remote.WebFrameMain;
 	/**
 		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`). A noop rejection handler is already attached, which avoids unhandled rejection errors.
 		
