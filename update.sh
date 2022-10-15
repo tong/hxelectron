@@ -3,9 +3,14 @@
 #current=$(git describe --tags --abbrev=0)
 current=$(jq  -r '.version' haxelib.json)
 latest=$(gh release list --repo electron/electron --limit 1 --exclude-drafts | awk '{print $2}')
+prerelease_version=$(echo $latest | awk -F'-' '{print $2}')
 
-echo "Current: $current"
-echo "Latest: $latest"
+if [[ -n "$prerelease_version" ]]; then
+    echo "Aborting update since latest version is a pre-release ($latest)"
+    exit 1
+fi
+
+echo "Updating from $current -> $latest"
 
 if [ ! "$current" = "$latest" ]; then
     echo "Download electron-api.json"
