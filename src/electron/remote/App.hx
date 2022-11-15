@@ -406,7 +406,7 @@ package electron.remote;
 		
 		For `infoType` equal to `basic`: Promise is fulfilled with `Object` containing fewer attributes than when requested with `complete`. Here's an example of basic response:
 		
-		Using `basic` should be preferred if only basic information like `vendorId` or `driverId` is needed.
+		Using `basic` should be preferred if only basic information like `vendorId` or `deviceId` is needed.
 	**/
 	static function getGPUInfo(infoType:String):js.lib.Promise<Any>;
 	/**

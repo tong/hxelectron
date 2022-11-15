@@ -49,10 +49,6 @@ package electron.renderer;
 		
 		Send a message to the main process via `channel` and expect a result asynchronously. Arguments will be serialized with the Structured Clone Algorithm, just like `window.postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
 		
-		> **NOTE:** Sending non-standard JavaScript types such as DOM objects or special Electron objects will throw an exception.
-		
-		Since the main process does not have support for DOM objects such as `ImageBitmap`, `File`, `DOMMatrix` and so on, such objects cannot be sent over Electron's IPC to the main process, as the main process would have no way to decode them. Attempting to send such objects over IPC will result in an error.
-		
 		The main process should listen for `channel` with `ipcMain.handle()`.
 		
 		For example:
@@ -60,6 +56,12 @@ package electron.renderer;
 		If you need to transfer a `MessagePort` to the main process, use `ipcRenderer.postMessage`.
 		
 		If you do not need a response to the message, consider using `ipcRenderer.send`.
+		
+		> **Note** Sending non-standard JavaScript types such as DOM objects or special Electron objects will throw an exception.
+		
+		Since the main process does not have support for DOM objects such as `ImageBitmap`, `File`, `DOMMatrix` and so on, such objects cannot be sent over Electron's IPC to the main process, as the main process would have no way to decode them. Attempting to send such objects over IPC will result in an error.
+		
+		> **Note** If the handler in the main process throws an error, the promise returned by `invoke` will reject. However, the `Error` object in the renderer process will not be the same as the one thrown in the main process.
 	**/
 	static function invoke(channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Any>;
 	/**
