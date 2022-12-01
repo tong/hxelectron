@@ -26,6 +26,24 @@ class ElectronAPI {
 		var printer = new haxe.macro.Printer();
 		for( tds in types ) {
 			var type = tds[0];
+            // --- patch
+            if(type.name=="UtilityProcess") {
+                for( f in type.fields) {
+                    if(f.name=="fork") {
+                        switch f.kind {
+                        case FFun(f):
+                            switch f.ret {
+                            case TPath(p):
+                                p.pack = ['electron'];
+                                trace(f.ret);
+                            case _:
+                            }
+                        case _:
+                        }
+                    }
+                }
+            }
+            // --- /patch
 			var code = printer.printTypeDefinition( type );
 			if( tds.length > 1 ) {
 				for( i in 1...tds.length ) {
@@ -486,6 +504,7 @@ private class Gen {
 		case 'NodeJS.Require': macro : Dynamic; // HACK TODO
 		case 'Double','Float','Number','number': macro : Float;
 		case 'Dynamic': macro : Dynamic; // Allows to explicit set type to Dynamic
+		case 'Electron.ParentPort': return macro : electron.ParentPort;
 		case 'Error':
 			#if (haxe_ver>=4)
 			macro : js.lib.Error;
@@ -526,7 +545,7 @@ private class Gen {
 				//TODO create abstract @:enum
 			}
 			macro: String;
-		case 'ReadableStream':
+		case 'ReadableStream', 'NodeJS.ReadableStream':
 			//TODO: type param
 			macro : js.node.stream.Readable<Dynamic>; //macro : js.node.stream.Readable.IReadable;
 		case 'MenuItemConstructorOptions','TouchBarItem': // TODO: HACK
