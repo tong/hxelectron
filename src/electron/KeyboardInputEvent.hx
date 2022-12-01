@@ -4,7 +4,7 @@ package electron;
 **/
 typedef KeyboardInputEvent = {
 	/**
-		The type of the event, can be `keyDown`, `keyUp` or `char`.
+		The type of the event, can be `rawKeyDown`, `keyDown`, `keyUp` or `char`.
 	**/
 	var type : String;
 	/**

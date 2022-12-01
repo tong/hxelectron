@@ -1488,14 +1488,20 @@ package electron.remote;
 	var app_command : electron.remote.BrowserWindowEvent<Void -> Void> = "app-command";
 	/**
 		Emitted when scroll wheel event phase has begun.
+		
+		> **Note** This event is deprecated beginning in Electron 22.0.0. See Breaking Changes for details of how to migrate to using the WebContents `input-event` event.
 	**/
 	var scroll_touch_begin : electron.remote.BrowserWindowEvent<Void -> Void> = "scroll-touch-begin";
 	/**
 		Emitted when scroll wheel event phase has ended.
+		
+		> **Note** This event is deprecated beginning in Electron 22.0.0. See Breaking Changes for details of how to migrate to using the WebContents `input-event` event.
 	**/
 	var scroll_touch_end : electron.remote.BrowserWindowEvent<Void -> Void> = "scroll-touch-end";
 	/**
 		Emitted when scroll wheel event phase filed upon reaching the edge of element.
+		
+		> **Note** This event is deprecated beginning in Electron 22.0.0. See Breaking Changes for details of how to migrate to using the WebContents `input-event` event.
 	**/
 	var scroll_touch_edge : electron.remote.BrowserWindowEvent<Void -> Void> = "scroll-touch-edge";
 	/**

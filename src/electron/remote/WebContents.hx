@@ -164,6 +164,15 @@ package electron.remote;
 	**/
 	function isDestroyed():Bool;
 	/**
+		Closes the page, as if the web content had called `window.close()`.
+		
+		If the page is successfully closed (i.e. the unload is not prevented by the page, or `waitForBeforeUnload` is false or unspecified), the WebContents will be destroyed and no longer usable. The `destroyed` event will be emitted.
+	**/
+	function close(?opts:{ /**
+		if true, fire the `beforeunload` event before closing the page. If the page prevents the unload, the WebContents will not be closed. The `will-prevent-unload` will be fired if the page requests prevention of unload.
+	**/
+	var waitForBeforeUnload : Bool; }):Void;
+	/**
 		Focuses the web page.
 	**/
 	function focus():Void;
@@ -869,15 +878,11 @@ var to : Float; }>; /**
 	**/
 	var page_favicon_updated : electron.remote.WebContentsEvent<Void -> Void> = "page-favicon-updated";
 	/**
-		Deprecated in favor of `webContents.setWindowOpenHandler`.
+		Emitted when the page calls `window.moveTo`, `window.resizeTo` or related APIs.
 		
-		Emitted when the page requests to open a new window for a `url`. It could be requested by `window.open` or an external link like `<a target='_blank'>`.
-		
-		By default a new `BrowserWindow` will be created for the `url`.
-		
-		Calling `event.preventDefault()` will prevent Electron from automatically creating a new `BrowserWindow`. If you call `event.preventDefault()` and manually create a new `BrowserWindow` then you must set `event.newGuest` to reference the new `BrowserWindow` instance, failing to do so may result in unexpected behavior. For example:
+		By default, this will move the window. To prevent that behavior, call `event.preventDefault()`.
 	**/
-	var new_window : electron.remote.WebContentsEvent<Void -> Void> = "new-window";
+	var content_bounds_updated : electron.remote.WebContentsEvent<Void -> Void> = "content-bounds-updated";
 	/**
 		Emitted _after_ successful creation of a window via `window.open` in the renderer. Not emitted if the creation of the window is canceled from `webContents.setWindowOpenHandler`.
 		
@@ -964,6 +969,10 @@ var to : Float; }>; /**
 		Emitted when `webContents` is destroyed.
 	**/
 	var destroyed : electron.remote.WebContentsEvent<Void -> Void> = "destroyed";
+	/**
+		Emitted when an input event is sent to the WebContents. See InputEvent for details.
+	**/
+	var input_event : electron.remote.WebContentsEvent<Void -> Void> = "input-event";
 	/**
 		Emitted before dispatching the `keydown` and `keyup` events in the page. Calling `event.preventDefault` will prevent the page `keydown`/`keyup` events and the menu shortcuts.
 		

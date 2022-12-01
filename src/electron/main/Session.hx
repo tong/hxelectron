@@ -214,6 +214,14 @@ package electron.main;
 	**/
 	function setPermissionCheckHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
+		This handler will be called when web content requests access to display media via the `navigator.mediaDevices.getDisplayMedia` API. Use the desktopCapturer API to choose which stream(s) to grant access to.
+		
+		Passing a WebFrameMain object as a video or audio stream will capture the video or audio stream from that frame.
+		
+		Passing `null` instead of a function resets the handler to its default state.
+	**/
+	function setDisplayMediaRequestHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
+	/**
 		Sets the handler which can be used to respond to device permission checks for the `session`. Returning `true` will allow the device to be permitted and `false` will reject it. To clear the handler, call `setDevicePermissionHandler(null)`. This handler can be used to provide default permissioning to devices without first calling for permission to devices (eg via `navigator.hid.requestDevice`).  If this handler is not defined, the default device permissions as granted through device selection (eg via `navigator.hid.requestDevice`) will be used. Additionally, the default behavior of Electron is to store granted device permision in memory. If longer term storage is needed, a developer can store granted device permissions (eg when handling the `select-hid-device` event) and then read from that storage with `setDevicePermissionHandler`.
 	**/
 	function setDevicePermissionHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
@@ -486,4 +494,8 @@ package electron.main;
 		Emitted after `navigator.serial.requestPort` has been called and `select-serial-port` has fired if a serial port has been removed before the callback from `select-serial-port` is called.  This event is intended for use when using a UI to ask users to pick a port so that the UI can be updated to remove the specified port.
 	**/
 	var serial_port_removed : electron.main.SessionEvent<Void -> Void> = "serial-port-removed";
+	/**
+		Emitted after `SerialPort.forget()` has been called.  This event can be used to help maintain persistent storage of permissions when `setDevicePermissionHandler` is used.
+	**/
+	var serial_port_revoked : electron.main.SessionEvent<Void -> Void> = "serial-port-revoked";
 }
