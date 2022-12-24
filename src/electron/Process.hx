@@ -37,7 +37,7 @@ package electron;
 	* `contextId`
 	@see https://electronjs.org/docs/api/process
 **/
-@:jsRequire("electron", "process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
+@:jsRequire("process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
 		A `boolean`. When app is started by being passed as parameter to the default app, this property is `true` in the main process, otherwise it is `undefined`.
 	**/

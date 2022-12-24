@@ -35,7 +35,6 @@ class ElectronAPI {
                             switch f.ret {
                             case TPath(p):
                                 p.pack = ['electron'];
-                                trace(f.ret);
                             case _:
                             }
                         case _:
@@ -311,6 +310,13 @@ private class Gen {
 		switch type.name {
 		case 'App','InAppPurchase':
 			patchEventListenerMethods();
+        case 'Process':
+			for( i in 0...type.meta.length ) {
+				if( type.meta[i].name == ':jsRequire' ) {
+                    type.meta[i].params.shift();
+					break;
+				}
+            }
 		case 'Screen':
 			// TODO: https://github.com/fponticelli/hxelectron/issues/29
 			for( i in 0...type.meta.length ) {
