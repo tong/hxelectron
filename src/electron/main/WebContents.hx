@@ -694,7 +694,7 @@ var to : Float; }>; /**
 	**/
 	function sendToFrame(frameId:haxe.extern.EitherType<Int, Array<Float>>, channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
-		Send a message to the renderer process, optionally transferring ownership of zero or more [`MessagePortMain`][] objects.
+		Send a message to the renderer process, optionally transferring ownership of zero or more `MessagePortMain` objects.
 		
 		The transferred `MessagePortMain` objects will be available in the renderer process by accessing the `ports` property of the emitted event. When they arrive in the renderer, they will be native DOM `MessagePort` objects.
 		

@@ -41,7 +41,7 @@ package electron;
 	**/
 	var stderr : haxe.extern.EitherType<js.node.stream.Readable<Dynamic>, Dynamic>;
 	/**
-		Send a message to the child process, optionally transferring ownership of zero or more [`MessagePortMain`][] objects.
+		Send a message to the child process, optionally transferring ownership of zero or more `MessagePortMain` objects.
 		
 		For example:
 	**/

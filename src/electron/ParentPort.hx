@@ -4,7 +4,7 @@ package electron;
 	
 	Process: Utility
 	
-	`parentPort` is an [EventEmitter][event-emitter]. _This object is not exported from the `'electron'` module. It is only available as a property of the process object in the Electron API._
+	`parentPort` is an EventEmitter. _This object is not exported from the `'electron'` module. It is only available as a property of the process object in the Electron API._
 	@see https://electronjs.org/docs/api/parent-port
 **/
 @:jsRequire("electron", "parentPort") extern class ParentPort extends js.node.events.EventEmitter<electron.ParentPort> {

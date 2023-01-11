@@ -42,11 +42,11 @@ package electron.remote;
 	**/
 	function isVisible():Bool;
 	/**
-		Sets the application's [dock menu][dock-menu].
+		Sets the application's dock menu.
 	**/
 	function setMenu(menu:electron.remote.Menu):Void;
 	/**
-		The application's [dock menu][dock-menu].
+		The application's dock menu.
 	**/
 	function getMenu():haxe.extern.EitherType<electron.remote.Menu, Dynamic>;
 	/**
