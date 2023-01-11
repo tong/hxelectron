@@ -29,7 +29,7 @@ haxe api.hxml
 echo "Building haxedoc.xml"
 haxe haxedoc.hxml
 echo "Updating haxelib.json"
-cat <<< "$(jq --arg var "$next" '.version = $var' haxelib.json)" > tmpfile && mv tmpfile haxelib.json
+cat <<< "$(jq --arg var "$(echo "$next" | cut -c2-)" '.version = $var' haxelib.json)" > tmpfile && mv tmpfile haxelib.json
 echo "Updating demo/package.json"
 cd demo || exit 1
 cat <<< "$(jq --arg var "$next" '.devDependencies.electron = $var' package.json)" > tmpfile && mv tmpfile package.json
