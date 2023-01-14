@@ -4,9 +4,18 @@ import electron.main.BrowserWindow;
 import js.Node.__dirname;
 import js.Node.process;
 
+using StringTools;
+
 class Main {
 
 	static function main() {
+
+        var timeout = -1;
+        var args = process.argv;
+        var lastArg = args[args.length-1];
+        if(lastArg.startsWith("--timeout=")) {
+            timeout = Std.parseInt(lastArg.split("=")[1]);
+        }
 
 		Sys.println( process.platform +' '+ process.arch );
 		Sys.println( 'node '+process.version );
@@ -24,7 +33,13 @@ class Main {
 			win.on( closed, () -> {
 				win = null;
 			});
-			win.loadFile( 'app.html' );
+            win.on( move, () -> {
+                trace('Window move');
+            });
+			win.on( resize, () -> {
+                trace('Window resize');
+            });
+            win.loadFile( 'app.html' );
 			//win.webContents.openDevTools();
 
 			var tray = new electron.main.Tray( '${__dirname}/icon-192.png' );
@@ -44,6 +59,13 @@ class Main {
 				}
 			));
 			electron.main.Menu.setApplicationMenu(menu);
+
+            if(timeout > 0) {
+                trace('Auto closing application in $timeout seconds ...');
+                haxe.Timer.delay( () -> {
+                    win.close();
+                }, timeout*1000 );
+            }
 		});
 
 		electron.main.App.on( window_all_closed, e -> {

@@ -1,0 +1,35 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.2.5
+      - name: Setup
+        run: |
+          haxe --version
+          haxelib dev electron .
+          haxelib install hxnodejs
+      - name: Build electron api
+        run: haxe api.hxml
+      - name: Build haxedoc.xml
+        run: haxe haxedoc.hxml
+      - name: Install demo application dependencies
+        run: cd demo && npm install
+      - name: Build demo application
+        run: |
+          haxe --cwd demo main.hxml
+          haxe --cwd demo app.hxml
+      - name: Setup virtual display
+        run: sudo apt install -y xvfb
+      - name: Run demo application
+        run: |
+          cd demo && xvfb-run npm start -- --timeout=5
+          exit $?
