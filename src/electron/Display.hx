@@ -9,6 +9,10 @@ typedef Display = {
 	**/
 	var id : Float;
 	/**
+		User-friendly label, determined by the platform.
+	**/
+	var label : String;
+	/**
 		Can be 0, 90, 180, 270, represents screen rotation in clock-wise degrees.
 	**/
 	var rotation : Float;
