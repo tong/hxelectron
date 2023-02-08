@@ -72,7 +72,7 @@ package electron.remote;
 	**/
 	@:optional
 	var storages : Array<String>; /**
-		The types of quotas to clear, can contain: `temporary`, `persistent`, `syncable`. If not specified, clear all quotas.
+		The types of quotas to clear, can contain: `temporary`, `syncable`. If not specified, clear all quotas.
 	**/
 	@:optional
 	var quotas : Array<String>; }):js.lib.Promise<Any>;
@@ -498,4 +498,20 @@ package electron.remote;
 		Emitted after `SerialPort.forget()` has been called.  This event can be used to help maintain persistent storage of permissions when `setDevicePermissionHandler` is used.
 	**/
 	var serial_port_revoked : electron.remote.SessionEvent<Void -> Void> = "serial-port-revoked";
+	/**
+		Emitted when a USB device needs to be selected when a call to `navigator.usb.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.usb` can be further managed by using ses.setPermissionCheckHandler(handler) and ses.setDevicePermissionHandler(handler)`.
+	**/
+	var select_usb_device : electron.remote.SessionEvent<Void -> Void> = "select-usb-device";
+	/**
+		Emitted after `navigator.usb.requestDevice` has been called and `select-usb-device` has fired if a new device becomes available before the callback from `select-usb-device` is called.  This event is intended for use when using a UI to ask users to pick a device so that the UI can be updated with the newly added device.
+	**/
+	var usb_device_added : electron.remote.SessionEvent<Void -> Void> = "usb-device-added";
+	/**
+		Emitted after `navigator.usb.requestDevice` has been called and `select-usb-device` has fired if a device has been removed before the callback from `select-usb-device` is called.  This event is intended for use when using a UI to ask users to pick a device so that the UI can be updated to remove the specified device.
+	**/
+	var usb_device_removed : electron.remote.SessionEvent<Void -> Void> = "usb-device-removed";
+	/**
+		Emitted after `USBDevice.forget()` has been called.  This event can be used to help maintain persistent storage of permissions when `setDevicePermissionHandler` is used.
+	**/
+	var usb_device_revoked : electron.remote.SessionEvent<Void -> Void> = "usb-device-revoked";
 }

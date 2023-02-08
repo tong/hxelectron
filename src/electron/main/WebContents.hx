@@ -409,23 +409,21 @@ package electron.main;
 	/**
 		Resolves with a NativeImage
 		
-		Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page.
+		Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page. The page is considered visible when its browser window is hidden and the capturer count is non-zero. If you would like the page to stay hidden, you should ensure that `stayHidden` is set to true.
 	**/
-	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
+	function capturePage(?rect:electron.Rectangle, ?opts:{ /**
+		Keep the page hidden instead of visible. Default is `false`.
+	**/
+	@:optional
+	var stayHidden : Bool; /**
+		Keep the system awake instead of allowing it to sleep. Default is `false`.
+	**/
+	@:optional
+	var stayAwake : Bool; }):js.lib.Promise<Any>;
 	/**
 		Whether this page is being captured. It returns true when the capturer count is large then 0.
 	**/
 	function isBeingCaptured():Bool;
-	/**
-		Increase the capturer count by one. The page is considered visible when its browser window is hidden and the capturer count is non-zero. If you would like the page to stay hidden, you should ensure that `stayHidden` is set to true.
-		
-		This also affects the Page Visibility API.
-	**/
-	function incrementCapturerCount(?size:electron.Size, ?stayHidden:Bool, ?stayAwake:Bool):Void;
-	/**
-		Decrease the capturer count by one. The page will be set to hidden or occluded state when its browser window is hidden or occluded and the capturer count reaches zero. If you want to decrease the hidden capturer count instead you should set `stayHidden` to true.
-	**/
-	function decrementCapturerCount(?stayHidden:Bool, ?stayAwake:Bool):Void;
 	/**
 		Get the system printer list.
 		

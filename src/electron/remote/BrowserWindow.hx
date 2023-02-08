@@ -323,6 +323,10 @@ package electron.remote;
 	**/
 	@:optional
 	var skipTaskbar : Bool; /**
+		Whether window should be hidden when the user toggles into mission control.
+	**/
+	@:optional
+	var hiddenInMissionControl : Bool; /**
 		Whether the window is in kiosk mode. Default is `false`.
 	**/
 	@:optional
@@ -739,6 +743,8 @@ package electron.remote;
 		Consider a normal window with an HD video player and associated controls. Perhaps there are 15 pixels of controls on the left edge, 25 pixels of controls on the right edge and 50 pixels of controls below the player. In order to maintain a 16:9 aspect ratio (standard aspect ratio for HD @1920x1080) within the player itself we would call this function with arguments of 16/9 and { width: 40, height: 50 }. The second argument doesn't care where the extra width and height are within the content view--only that they exist. Sum any extra width and height areas you have within the overall content view.
 		
 		The aspect ratio is not respected when window is resized programmatically with APIs like `win.setSize`.
+		
+		To reset an aspect ratio, pass 0 as the `aspectRatio` value: `win.setAspectRatio(0)`.
 	**/
 	function setAspectRatio(aspectRatio:Float, ?extraSize:electron.Size):Void;
 	/**
@@ -904,6 +910,14 @@ package electron.remote;
 	**/
 	function isClosable():Bool;
 	/**
+		Sets whether the window will be hidden when the user toggles into mission control.
+	**/
+	function setHiddenInMissionControl(hidden:Bool):Void;
+	/**
+		Whether the window will be hidden when the user toggles into mission control.
+	**/
+	function isHiddenInMissionControl():Bool;
+	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
 	**/
 	function setAlwaysOnTop(flag:Bool, ?level:String, ?relativeLevel:Int):Void;
@@ -1018,9 +1032,17 @@ package electron.remote;
 	/**
 		Resolves with a NativeImage
 		
-		Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page. If the page is not visible, `rect` may be empty.
+		Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page. If the page is not visible, `rect` may be empty. The page is considered visible when its browser window is hidden and the capturer count is non-zero. If you would like the page to stay hidden, you should ensure that `stayHidden` is set to true.
 	**/
-	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
+	function capturePage(?rect:electron.Rectangle, ?opts:{ /**
+		Keep the page hidden instead of visible. Default is `false`.
+	**/
+	@:optional
+	var stayHidden : Bool; /**
+		Keep the system awake instead of allowing it to sleep. Default is `false`.
+	**/
+	@:optional
+	var stayAwake : Bool; }):js.lib.Promise<Any>;
 	/**
 		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
 		

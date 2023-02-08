@@ -31,7 +31,7 @@ package electron.main;
 	
 	__Linux__
 	
-	* Tray icon requires support of StatusNotifierItem in user's desktop environment.
+	* Tray icon uses StatusNotifierItem by default, when it is not available in user's desktop environment the `GtkStatusIcon` will be used instead.
 	* The `click` event is emitted when the tray icon receives activation from user, however the StatusNotifierItem spec does not specify which action would cause an activation, for some environments it is left mouse click, but for some it might be double left mouse click.
 	* In order for changes made to individual `MenuItem`s to take effect, you have to call `setContextMenu` again. For example:
 	
