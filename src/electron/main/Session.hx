@@ -68,7 +68,7 @@ package electron.main;
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can contain: `appcache`, `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `websql`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
+		The types of storages to clear, can contain: `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `websql`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
 	**/
 	@:optional
 	var storages : Array<String>; /**

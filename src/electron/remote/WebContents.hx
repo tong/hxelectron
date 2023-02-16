@@ -527,7 +527,7 @@ var to : Float; }>; /**
 	**/
 	@:optional
 	var footer : String; /**
-		Specify page size of the printed document. Can be `A3`, `A4`, `A5`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width`.
+		Specify page size of the printed document. Can be `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width`.
 	**/
 	@:optional
 	var pageSize : haxe.extern.EitherType<String, electron.Size>; }, ?callback:haxe.Constraints.Function):Void;
