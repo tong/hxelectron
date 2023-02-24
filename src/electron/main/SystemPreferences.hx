@@ -173,16 +173,12 @@ package electron.main;
 	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<String, Dynamic>):Void;
 	/**
 		whether or not this device has the ability to use Touch ID.
-		
-		**NOTE:** This API will return `false` on macOS systems older than Sierra 10.12.2.
 	**/
 	static function canPromptTouchID():Bool;
 	/**
 		resolves if the user has successfully authenticated with Touch ID.
 		
 		This API itself will not protect your user data; rather, it is a mechanism to allow you to do so. Native apps will need to set Access Control Constants like `kSecAccessControlUserPresence` on their keychain entry so that reading it would auto-prompt for Touch ID biometric consent. This could be done with `node-keytar`, such that one would store an encryption key with `node-keytar` and only fetch it if `promptTouchID()` resolves.
-		
-		**NOTE:** This API will return a rejected Promise on macOS systems older than Sierra 10.12.2.
 	**/
 	static function promptTouchID(reason:String):js.lib.Promise<Any>;
 	/**
@@ -192,7 +188,7 @@ package electron.main;
 	/**
 		Can be `not-determined`, `granted`, `denied`, `restricted` or `unknown`.
 		
-		This user consent was not required on macOS 10.13 High Sierra or lower so this method will always return `granted`. macOS 10.14 Mojave or higher requires consent for `microphone` and `camera` access. macOS 10.15 Catalina or higher requires consent for `screen` access.
+		This user consent was not required on macOS 10.13 High Sierra so this method will always return `granted`. macOS 10.14 Mojave or higher requires consent for `microphone` and `camera` access. macOS 10.15 Catalina or higher requires consent for `screen` access.
 		
 		Windows 10 has a global setting controlling `microphone` and `camera` access for all win32 applications. It will always return `granted` for `screen` and for all media types on older versions of Windows.
 	**/
@@ -202,7 +198,7 @@ package electron.main;
 		
 		**Important:** In order to properly leverage this API, you must set the `NSMicrophoneUsageDescription` and `NSCameraUsageDescription` strings in your app's `Info.plist` file. The values for these keys will be used to populate the permission dialogs so that the user will be properly informed as to the purpose of the permission request. See Electron Application Distribution for more information about how to set these in the context of Electron.
 		
-		This user consent was not required until macOS 10.14 Mojave, so this method will always return `true` if your system is running 10.13 High Sierra or lower.
+		This user consent was not required until macOS 10.14 Mojave, so this method will always return `true` if your system is running 10.13 High Sierra.
 	**/
 	static function askForMediaAccess(mediaType:String):js.lib.Promise<Any>;
 	/**

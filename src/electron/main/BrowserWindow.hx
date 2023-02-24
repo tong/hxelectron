@@ -431,7 +431,7 @@ package electron.main;
 	**/
 	@:optional
 	var zoomToPageWidth : Bool; /**
-		Tab group name, allows opening the window as a native tab on macOS 10.12+. Windows with the same tabbing identifier will be grouped together. This also adds a native new tab button to your window's tab bar and allows your `app` and window to receive the `new-window-for-tab` event.
+		Tab group name, allows opening the window as a native tab. Windows with the same tabbing identifier will be grouped together. This also adds a native new tab button to your window's tab bar and allows your `app` and window to receive the `new-window-for-tab` event.
 	**/
 	@:optional
 	var tabbingIdentifier : String; /**
@@ -1271,9 +1271,9 @@ package electron.main;
 	**/
 	function setFocusable(focusable:Bool):Void;
 	/**
-		Returns whether the window can be focused.
+		Whether the window can be focused.
 	**/
-	function isFocusable():Void;
+	function isFocusable():Bool;
 	/**
 		Sets `parent` as current window's parent window, passing `null` will turn current window into a top-level window.
 	**/
@@ -1329,7 +1329,7 @@ package electron.main;
 	**/
 	function getTrafficLightPosition():electron.Point;
 	/**
-		Sets the touchBar layout for the current window. Specifying `null` or `undefined` clears the touch bar. This method only has an effect if the machine has a touch bar and is running on macOS 10.12.1+.
+		Sets the touchBar layout for the current window. Specifying `null` or `undefined` clears the touch bar. This method only has an effect if the machine has a touch bar.
 		
 		**Note:** The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
