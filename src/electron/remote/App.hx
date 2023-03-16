@@ -679,8 +679,6 @@ package electron.remote;
 	/**
 		Emitted when the user wants to open a URL with the application. Your application's `Info.plist` file must define the URL scheme within the `CFBundleURLTypes` key, and set `NSPrincipalClass` to `AtomApplication`.
 		
-		You should call `event.preventDefault()` if you want to handle this event.
-		
 		As with the `open-file` event, be sure to register a listener for the `open-url` event early in your application startup to detect if the the application being is being opened to handle a URL. If you register the listener in response to a `ready` event, you'll miss URLs that trigger the launch of your application.
 	**/
 	var open_url : electron.remote.AppEvent<Void -> Void> = "open-url";
