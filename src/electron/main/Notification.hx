@@ -4,9 +4,11 @@ package electron.main;
 	
 	Process: Main
 	
-	### Using in the renderer process
+	:::info Renderer process notifications
 	
-	If you want to show Notifications from a renderer process you should use the HTML5 Notification API
+	If you want to show notifications from a renderer process you should use the web Notifications API
+	
+	:::
 	
 	### Class: Notification
 	
@@ -85,7 +87,7 @@ package electron.main;
 	**/
 	var toastXml : String;
 	function new(?options:{ /**
-		A title for the notification, which will be shown at the top of the notification window when it is shown.
+		A title for the notification, which will be displayed at the top of the notification window when it is shown.
 	**/
 	@:optional
 	var title : String; /**
@@ -97,7 +99,7 @@ package electron.main;
 	**/
 	@:optional
 	var body : String; /**
-		Whether or not to emit an OS notification noise when showing the notification.
+		Whether or not to suppress the OS notification noise when showing the notification.
 	**/
 	@:optional
 	var silent : Bool; /**
@@ -138,7 +140,7 @@ package electron.main;
 	@:optional
 	var toastXml : String; }):Void;
 	/**
-		Immediately shows the notification to the user, please note this means unlike the HTML5 Notification implementation, instantiating a `new Notification` does not immediately show it to the user, you need to call this method before the OS will display it.
+		Immediately shows the notification to the user. Unlike the web notification API, instantiating a `new Notification()` does not immediately show it to the user. Instead, you need to call this method before the OS will display it.
 		
 		If the notification has been shown before, this method will dismiss the previously shown notification and create a new one with identical properties.
 	**/
@@ -150,7 +152,7 @@ package electron.main;
 }
 @:enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 	/**
-		Emitted when the notification is shown to the user, note this could be fired multiple times as a notification can be shown multiple times through the `show()` method.
+		Emitted when the notification is shown to the user. Note that this event can be fired multiple times as a notification can be shown multiple times through the `show()` method.
 	**/
 	var show : electron.main.NotificationEvent<Void -> Void> = "show";
 	/**
