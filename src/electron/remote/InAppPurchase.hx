@@ -11,7 +11,15 @@ package electron.remote;
 		
 		You should listen for the `transactions-updated` event as soon as possible and certainly before you call `purchaseProduct`.
 	**/
-	static function purchaseProduct(productID:String, ?quantity:Int):js.lib.Promise<Any>;
+	static function purchaseProduct(productID:String, ?opts:haxe.extern.EitherType<Int, { /**
+		The number of items the user wants to purchase.
+	**/
+	@:optional
+	var quantity : Int; /**
+		The string that associates the transaction with a user account on your service (applicationUsername).
+	**/
+	@:optional
+	var username : String; }>):js.lib.Promise<Any>;
 	/**
 		Resolves with an array of `Product` objects.
 		

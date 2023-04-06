@@ -1120,6 +1120,12 @@ package electron.main;
 	**/
 	function setOverlayIcon(overlay:haxe.extern.EitherType<electron.NativeImage, Dynamic>, description:String):Void;
 	/**
+		Invalidates the window shadow so that it is recomputed based on the current window shape.
+		
+		`BrowserWindows` that are transparent can sometimes leave behind visual artifacts on macOS. This method can be used to clear these artifacts when, for example, performing an animation.
+	**/
+	function invalidateShadow():Void;
+	/**
 		Sets whether the window should have a shadow.
 	**/
 	function setHasShadow(hasShadow:Bool):Void;

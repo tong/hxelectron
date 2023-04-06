@@ -9,8 +9,10 @@ package electron;
 	static function createEmpty():electron.NativeImage;
 	/**
 		fulfilled with the file's thumbnail preview image, which is a NativeImage.
+		
+		Note: The Windows implementation will ignore `size.height` and scale the height according to `size.width`.
 	**/
-	static function createThumbnailFromPath(path:String, maxSize:electron.Size):js.lib.Promise<Any>;
+	static function createThumbnailFromPath(path:String, size:electron.Size):js.lib.Promise<Any>;
 	/**
 		Creates a new `NativeImage` instance from a file located at `path`. This method returns an empty image if the `path` does not exist, cannot be read, or is not a valid image.
 	**/

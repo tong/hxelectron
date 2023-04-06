@@ -467,7 +467,7 @@ package electron.remote;
 	**/
 	var spellcheck_dictionary_download_failure : electron.remote.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-failure";
 	/**
-		Emitted when a HID device needs to be selected when a call to `navigator.hid.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.hid` can be further managed by using ses.setPermissionCheckHandler(handler) and ses.setDevicePermissionHandler(handler)`.
+		Emitted when a HID device needs to be selected when a call to `navigator.hid.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.hid` can be further managed by using `ses.setPermissionCheckHandler(handler)` and `ses.setDevicePermissionHandler(handler)`.
 	**/
 	var select_hid_device : electron.remote.SessionEvent<Void -> Void> = "select-hid-device";
 	/**
@@ -499,7 +499,7 @@ package electron.remote;
 	**/
 	var serial_port_revoked : electron.remote.SessionEvent<Void -> Void> = "serial-port-revoked";
 	/**
-		Emitted when a USB device needs to be selected when a call to `navigator.usb.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.usb` can be further managed by using ses.setPermissionCheckHandler(handler) and ses.setDevicePermissionHandler(handler)`.
+		Emitted when a USB device needs to be selected when a call to `navigator.usb.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.usb` can be further managed by using `ses.setPermissionCheckHandler(handler)` and `ses.setDevicePermissionHandler(handler)`.
 	**/
 	var select_usb_device : electron.remote.SessionEvent<Void -> Void> = "select-usb-device";
 	/**

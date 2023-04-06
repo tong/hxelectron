@@ -32,7 +32,11 @@ package electron.main;
 		Filters out session or persistent cookies.
 	**/
 	@:optional
-	var session : Bool; }):js.lib.Promise<Any>;
+	var session : Bool; /**
+		Filters cookies by httpOnly.
+	**/
+	@:optional
+	var httpOnly : Bool; }):js.lib.Promise<Any>;
 	/**
 		A promise which resolves when the cookie has been set
 		

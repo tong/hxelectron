@@ -528,7 +528,7 @@ package electron.remote;
 	**/
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
 	/**
-		Show the app's about panel options. These options can be overridden with `app.setAboutPanelOptions(options)`.
+		Show the app's about panel options. These options can be overridden with `app.setAboutPanelOptions(options)`. This function runs asynchronously.
 	**/
 	static function showAboutPanel():Void;
 	/**

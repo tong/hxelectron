@@ -1004,6 +1004,10 @@ var to : Float; }>; /**
 	**/
 	var focus : electron.remote.WebContentsEvent<Void -> Void> = "focus";
 	/**
+		Emitted when a link is clicked in DevTools or 'Open in new tab' is selected for a link in its context menu.
+	**/
+	var devtools_open_url : electron.remote.WebContentsEvent<Void -> Void> = "devtools-open-url";
+	/**
 		Emitted when DevTools is opened.
 	**/
 	var devtools_opened : electron.remote.WebContentsEvent<Void -> Void> = "devtools-opened";
@@ -1034,7 +1038,7 @@ var to : Float; }>; /**
 	**/
 	var login : electron.remote.WebContentsEvent<Void -> Void> = "login";
 	/**
-		Emitted when a result is available for [`webContents.findInPage`] request.
+		Emitted when a result is available for `webContents.findInPage` request.
 	**/
 	var found_in_page : electron.remote.WebContentsEvent<Void -> Void> = "found-in-page";
 	/**

@@ -121,7 +121,7 @@ package electron.main;
 	**/
 	@:optional
 	var enabled : Bool; /**
-		default is `true`, and when `false` will prevent the accelerator from triggering the item if the item is not visible`.
+		default is `true`, and when `false` will prevent the accelerator from triggering the item if the item is not visible.
 	**/
 	@:optional
 	var acceleratorWorksWhenHidden : Bool; /**

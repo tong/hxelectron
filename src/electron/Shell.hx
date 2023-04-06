@@ -39,7 +39,11 @@ package electron;
 		The working directory.
 	**/
 	@:optional
-	var workingDirectory : String; }):js.lib.Promise<Any>;
+	var workingDirectory : String; /**
+		Indicates a user initiated launch that enables tracking of frequently used programs and other behaviors. The default is `false`.
+	**/
+	@:optional
+	var logUsage : Bool; }):js.lib.Promise<Any>;
 	/**
 		Resolves when the operation has been completed. Rejects if there was an error while deleting the requested item.
 		

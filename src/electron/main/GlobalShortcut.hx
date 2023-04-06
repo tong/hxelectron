@@ -37,7 +37,7 @@ package electron.main;
 		* "Media Previous Track"
 		* "Media Stop"
 	**/
-	static function registerAll(accelerators:Array<String>, callback:haxe.Constraints.Function):Void;
+	static function registerAll(accelerators:Array<electron.Accelerator>, callback:haxe.Constraints.Function):Void;
 	/**
 		Whether this application has registered `accelerator`.
 		
