@@ -27,9 +27,9 @@ package electron.remote;
 	})
 	```
 	
-	__Platform Considerations__
+	**Platform Considerations**
 	
-	__Linux__
+	**Linux**
 	
 	* Tray icon uses StatusNotifierItem by default, when it is not available in user's desktop environment the `GtkStatusIcon` will be used instead.
 	* The `click` event is emitted when the tray icon receives activation from user, however the StatusNotifierItem spec does not specify which action would cause an activation, for some environments it is left mouse click, but for some it might be double left mouse click.
@@ -54,14 +54,14 @@ package electron.remote;
 	})
 	```
 	
-	__MacOS__
+	**MacOS**
 	
 	* Icons passed to the Tray constructor should be Template Images.
 	* To make sure your icon isn't grainy on retina monitors, be sure your `@2x` image is 144dpi.
 	* If you are bundling your application (e.g., with webpack for development), be sure that the file names are not being mangled or hashed. The filename needs to end in Template, and the `@2x` image needs to have the same filename as the standard image, or MacOS will not magically invert your image's colors or use the high density image.
 	* 16x16 (72dpi) and 32x32@2x (144dpi) work well for most icons.
 	
-	__Windows__
+	**Windows**
 	
 	* It is recommended to use `ICO` icons to get best visual effects.
 	@see https://electronjs.org/docs/api/tray

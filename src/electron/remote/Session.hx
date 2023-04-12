@@ -145,6 +145,26 @@ package electron.remote;
 	@:optional
 	var proxyBypassRules : String; }):js.lib.Promise<Any>;
 	/**
+		Resolves with the resolved IP addresses for the `host`.
+	**/
+	function resolveHost(host:String, ?options:{ /**
+		Requested DNS query type. If unspecified, resolver will pick A or AAAA (or both) based on IPv4/IPv6 settings:
+	**/
+	@:optional
+	var queryType : String; /**
+		The source to use for resolved addresses. Default allows the resolver to pick an appropriate source. Only affects use of big external sources (e.g. calling the system for resolution or using DNS). Even if a source is specified, results can still come from cache, resolving "localhost" or IP literals, etc. One of the following values:
+	**/
+	@:optional
+	var source : String; /**
+		Indicates what DNS cache entries, if any, can be used to provide a response. One of the following values:
+	**/
+	@:optional
+	var cacheUsage : String; /**
+		Controls the resolver's Secure DNS behavior for this request. One of the following values:
+	**/
+	@:optional
+	var secureDnsPolicy : String; }):js.lib.Promise<Any>;
+	/**
 		Resolves with the proxy information for `url`.
 	**/
 	function resolveProxy(url:String):js.lib.Promise<Any>;

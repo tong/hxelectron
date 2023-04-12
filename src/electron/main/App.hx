@@ -220,14 +220,9 @@ package electron.main;
 		
 		Here are some examples of return values of the various language and locale APIs with different configurations:
 		
-		* For Windows, where the application locale is German, the regional format is Finnish (Finland), and the preferred system languages from most to least preferred are French (Canada), English (US), Simplified Chinese (China), Finnish, and Spanish (Latin America):
-		  * `app.getLocale()` returns `'de'`
-		  * `app.getSystemLocale()` returns `'fi-FI'`
-		  * `app.getPreferredSystemLanguages()` returns `['fr-CA', 'en-US', 'zh-Hans-CN', 'fi', 'es-419']`
-		* On macOS, where the application locale is German, the region is Finland, and the preferred system languages from most to least preferred are French (Canada), English (US), Simplified Chinese, and Spanish (Latin America):
-		  * `app.getLocale()` returns `'de'`
-		  * `app.getSystemLocale()` returns `'fr-FI'`
-		  * `app.getPreferredSystemLanguages()` returns `['fr-CA', 'en-US', 'zh-Hans-FI', 'es-419']`
+		On Windows, given application locale is German, the regional format is Finnish (Finland), and the preferred system languages from most to least preferred are French (Canada), English (US), Simplified Chinese (China), Finnish, and Spanish (Latin America):
+		
+		On macOS, given the application locale is German, the region is Finland, and the preferred system languages from most to least preferred are French (Canada), English (US), Simplified Chinese, and Spanish (Latin America):
 		
 		Both the available languages and regions and the possible return values differ between the two operating systems.
 		
@@ -649,7 +644,7 @@ package electron.main;
 	/**
 		Emitted before the application starts closing its windows. Calling `event.preventDefault()` will prevent the default behavior, which is terminating the application.
 		
-		**Note:** If application quit was initiated by `autoUpdater.quitAndInstall()`, then `before-quit` is emitted *after* emitting `close` event on all windows and closing them.
+		**Note:** If application quit was initiated by `autoUpdater.quitAndInstall()`, then `before-quit` is emitted _after_ emitting `close` event on all windows and closing them.
 		
 		**Note:** On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
 	**/

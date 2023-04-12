@@ -1480,7 +1480,7 @@ package electron.main;
 	/**
 		Emitted once when the window is moved to a new position.
 		
-		__Note__: On macOS this event is an alias of `move`.
+		**Note**: On macOS this event is an alias of `move`.
 	**/
 	var moved : electron.main.BrowserWindowEvent<Void -> Void> = "moved";
 	/**

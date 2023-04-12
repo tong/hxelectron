@@ -67,7 +67,7 @@ package electron.main;
 	/**
 		An `Integer` property that sets the frame rate of the web contents to the specified number. Only values between 1 and 240 are accepted.
 		
-		Only applicable if *offscreen rendering* is enabled.
+		Only applicable if _offscreen rendering_ is enabled.
 	**/
 	var frameRate : Int;
 	/**
@@ -766,33 +766,33 @@ var to : Float; }>; /**
 	**/
 	function showDefinitionForSelection():Void;
 	/**
-		Indicates whether *offscreen rendering* is enabled.
+		Indicates whether _offscreen rendering_ is enabled.
 	**/
 	function isOffscreen():Bool;
 	/**
-		If *offscreen rendering* is enabled and not painting, start painting.
+		If _offscreen rendering_ is enabled and not painting, start painting.
 	**/
 	function startPainting():Void;
 	/**
-		If *offscreen rendering* is enabled and painting, stop painting.
+		If _offscreen rendering_ is enabled and painting, stop painting.
 	**/
 	function stopPainting():Void;
 	/**
-		If *offscreen rendering* is enabled returns whether it is currently painting.
+		If _offscreen rendering_ is enabled returns whether it is currently painting.
 	**/
 	function isPainting():Bool;
 	/**
-		If *offscreen rendering* is enabled sets the frame rate to the specified number. Only values between 1 and 240 are accepted.
+		If _offscreen rendering_ is enabled sets the frame rate to the specified number. Only values between 1 and 240 are accepted.
 	**/
 	function setFrameRate(fps:Int):Void;
 	/**
-		If *offscreen rendering* is enabled returns the current frame rate.
+		If _offscreen rendering_ is enabled returns the current frame rate.
 	**/
 	function getFrameRate():Int;
 	/**
 		Schedules a full repaint of the window this web contents is in.
 		
-		If *offscreen rendering* is enabled invalidates the frame and generates a new one through the `'paint'` event.
+		If _offscreen rendering_ is enabled invalidates the frame and generates a new one through the `'paint'` event.
 	**/
 	function invalidate():Void;
 	/**
