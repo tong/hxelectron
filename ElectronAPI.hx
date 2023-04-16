@@ -624,14 +624,14 @@ private class Gen {
 
 #end
 
-@:enum abstract ItemType(String) from String to String {
+enum abstract ItemType(String) from String to String {
 	var Module = "Module";
 	var Class_ = "Class";
 	var Structure = "Structure";
 	var Element = "Element";
 }
 
-@:enum abstract Platform(String) from String to String {
+enum abstract Platform(String) from String to String {
 	var MacOS = "macOS";
 	var Windows = "Windows";
 	var Linux = "Linux";
