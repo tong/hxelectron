@@ -717,6 +717,8 @@ package electron.remote;
 	function isMinimized():Bool;
 	/**
 		Sets whether the window should be in fullscreen mode.
+		
+		**Note:** On macOS, fullscreen transitions take place asynchronously. If further actions depend on the fullscreen state, use the 'enter-full-screen' or 'leave-full-screen' events.
 	**/
 	function setFullScreen(flag:Bool):Void;
 	/**

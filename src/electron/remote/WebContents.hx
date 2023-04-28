@@ -8,23 +8,23 @@ package electron.remote;
 	**/
 	static function getAllWebContents():Array<electron.remote.WebContents>;
 	/**
-		| null - The web contents that is focused in this application, otherwise returns `null`.
+		The web contents that is focused in this application, otherwise returns `null`.
 	**/
-	static function getFocusedWebContents():electron.remote.WebContents;
+	static function getFocusedWebContents():haxe.extern.EitherType<electron.remote.WebContents, Dynamic>;
 	/**
-		| undefined - A WebContents instance with the given ID, or `undefined` if there is no WebContents associated with the given ID.
+		A WebContents instance with the given ID, or `undefined` if there is no WebContents associated with the given ID.
 	**/
-	static function fromId(id:Int):electron.remote.WebContents;
+	static function fromId(id:Int):haxe.extern.EitherType<electron.remote.WebContents, Dynamic>;
 	/**
-		| undefined - A WebContents instance with the given WebFrameMain, or `undefined` if there is no WebContents associated with the given WebFrameMain.
+		A WebContents instance with the given WebFrameMain, or `undefined` if there is no WebContents associated with the given WebFrameMain.
 	**/
-	static function fromFrame(frame:electron.remote.WebFrameMain):electron.remote.WebContents;
+	static function fromFrame(frame:electron.remote.WebFrameMain):haxe.extern.EitherType<electron.remote.WebContents, Dynamic>;
 	/**
-		| undefined - A WebContents instance with the given TargetID, or `undefined` if there is no WebContents associated with the given TargetID.
+		A WebContents instance with the given TargetID, or `undefined` if there is no WebContents associated with the given TargetID.
 		
 		When communicating with the Chrome DevTools Protocol, it can be useful to lookup a WebContents instance based on its assigned TargetID.
 	**/
-	static function fromDevToolsTargetId(targetId:String):electron.remote.WebContents;
+	static function fromDevToolsTargetId(targetId:String):haxe.extern.EitherType<electron.remote.WebContents, Dynamic>;
 	/**
 		An `IpcMain` scoped to just IPC messages sent from this WebContents.
 		
