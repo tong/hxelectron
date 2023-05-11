@@ -1,2 +1,4 @@
 --macro ElectronAPI.generate("electron-api.json","src",true,true)
 -D eval-stack
+#-D no-deprecation-warnings
+-D message.log-format=pretty

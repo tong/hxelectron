@@ -56,6 +56,28 @@ package electron.remote;
 		A return value of `false` is a pretty strong indicator that the user won't be able to connect to remote sites. However, a return value of `true` is inconclusive; even if some link is up, it is uncertain whether a particular connection attempt to a particular remote site will be successful.
 	**/
 	static function isOnline():Bool;
+	/**
+		Resolves with the resolved IP addresses for the `host`.
+		
+		This method will resolve hosts from the default session. To resolve a host from another session, use ses.resolveHost().
+	**/
+	static function resolveHost(host:String, ?options:{ /**
+		Requested DNS query type. If unspecified, resolver will pick A or AAAA (or both) based on IPv4/IPv6 settings:
+	**/
+	@:optional
+	var queryType : String; /**
+		The source to use for resolved addresses. Default allows the resolver to pick an appropriate source. Only affects use of big external sources (e.g. calling the system for resolution or using DNS). Even if a source is specified, results can still come from cache, resolving "localhost" or IP literals, etc. One of the following values:
+	**/
+	@:optional
+	var source : String; /**
+		Indicates what DNS cache entries, if any, can be used to provide a response. One of the following values:
+	**/
+	@:optional
+	var cacheUsage : String; /**
+		Controls the resolver's Secure DNS behavior for this request. One of the following values:
+	**/
+	@:optional
+	var secureDnsPolicy : String; }):js.lib.Promise<Any>;
 }
 @:enum abstract NetEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
 
