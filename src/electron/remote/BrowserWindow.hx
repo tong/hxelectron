@@ -684,7 +684,7 @@ package electron.remote;
 	**/
 	function hide():Void;
 	/**
-		Whether the window is visible to the user.
+		Whether the window is visible to the user in the foreground of the app.
 	**/
 	function isVisible():Bool;
 	/**
