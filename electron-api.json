@@ -8622,7 +8622,7 @@
         ],
         "returns": {
           "collection": false,
-          "type": "this"
+          "type": null
         },
         "additionalTags": [],
         "urlFragment": "#requestendchunk-encoding-callback"
