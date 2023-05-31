@@ -7,15 +7,11 @@ package electron.main;
 	An example of implementing a protocol that has the same effect as the `file://` protocol:
 	
 	```
-	const { app, protocol } = require('electron')
-	const path = require('path')
-	const url = require('url')
+	const { app, protocol, net } = require('electron')
 	
 	app.whenReady().then(() => {
-	  protocol.registerFileProtocol('atom', (request, callback) => {
-	    const filePath = url.fileURLToPath('file://' + request.url.slice('atom://'.length))
-	    callback(filePath)
-	  })
+	  protocol.handle('atom', (request) =>
+	    net.fetch('file://' + request.url.slice('atom://'.length)))
 	})
 	```
 	
@@ -30,14 +26,15 @@ package electron.main;
 	```
 	const { session, app, protocol } = require('electron')
 	const path = require('path')
+	const url = require('url')
 	
 	app.whenReady().then(() => {
 	  const partition = 'persist:example'
 	  const ses = session.fromPartition(partition)
 	
-	  ses.protocol.registerFileProtocol('atom', (request, callback) => {
-	    const url = request.url.substr(7)
-	    callback({ path: path.normalize(`${__dirname}/${url}`) })
+	  ses.protocol.handle('atom', (request) => {
+	    const path = request.url.slice('atom://'.length)
+	    return net.fetch(url.pathToFileURL(path.join(__dirname, path)))
 	  })
 	
 	  mainWindow = new BrowserWindow({ webPreferences: { partition } })
@@ -66,6 +63,24 @@ package electron.main;
 		Protocols that use streams (http and stream protocols) should set `stream: true`. The `<video>` and `<audio>` HTML elements expect protocols to buffer their responses by default. The `stream` flag configures those elements to correctly expect streaming responses.
 	**/
 	static function registerSchemesAsPrivileged(customSchemes:Array<electron.CustomScheme>):Void;
+	/**
+		Register a protocol handler for `scheme`. Requests made to URLs with this scheme will delegate to this handler to determine what response should be sent.
+		
+		Either a `Response` or a `Promise<Response>` can be returned.
+		
+		Example:
+		
+		See the MDN docs for `Request` and `Response` for more details.
+	**/
+	static function handle(scheme:String, handler:haxe.Constraints.Function):Void;
+	/**
+		Removes a protocol handler registered with `protocol.handle`.
+	**/
+	static function unhandle(scheme:String):Void;
+	/**
+		Whether `scheme` is already handled.
+	**/
+	static function isProtocolHandled(scheme:String):Bool;
 	/**
 		Whether the protocol was successfully registered
 		

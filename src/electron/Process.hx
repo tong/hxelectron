@@ -39,7 +39,7 @@ package electron;
 **/
 @:jsRequire("process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
-		A `boolean`. When app is started by being passed as parameter to the default app, this property is `true` in the main process, otherwise it is `undefined`.
+		A `boolean`. When the app is started by being passed as parameter to the default Electron executable, this property is `true` in the main process, otherwise it is `undefined`. For example when running the app with `electron .`, it is `true`, even if the app is packaged (`isPackaged`) is `true`. This can be useful to determine how many arguments will need to be sliced off from `process.argv`.
 	**/
 	static var defaultApp : Bool;
 	/**

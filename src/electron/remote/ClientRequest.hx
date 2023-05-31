@@ -31,7 +31,7 @@ package electron.remote;
 	**/
 	@:optional
 	var partition : String; /**
-		Can be `include` or `omit`. Whether to send credentials with this request. If set to `include`, credentials from the session associated with the request will be used. If set to `omit`, credentials will not be sent with the request (and the `'login'` event will not be triggered in the event of a 401). This matches the behavior of the fetch option of the same name. If this option is not specified, authentication data from the session will be sent, and cookies will not be sent (unless `useSessionCookies` is set).
+		Can be `include`, `omit` or `same-origin`. Whether to send credentials with this request. If set to `include`, credentials from the session associated with the request will be used. If set to `omit`, credentials will not be sent with the request (and the `'login'` event will not be triggered in the event of a 401). If set to `same-origin`, `origin` must also be specified. This matches the behavior of the fetch option of the same name. If this option is not specified, authentication data from the session will be sent, and cookies will not be sent (unless `useSessionCookies` is set).
 	**/
 	@:optional
 	var credentials : String; /**
@@ -66,7 +66,15 @@ package electron.remote;
 		The origin URL of the request.
 	**/
 	@:optional
-	var origin : String; }, String>):Void;
+	var origin : String; /**
+		can be `""`, `no-referrer`, `no-referrer-when-downgrade`, `origin`, `origin-when-cross-origin`, `unsafe-url`, `same-origin`, `strict-origin`, or `strict-origin-when-cross-origin`. Defaults to `strict-origin-when-cross-origin`.
+	**/
+	@:optional
+	var referrerPolicy : String; /**
+		can be `default`, `no-store`, `reload`, `no-cache`, `force-cache` or `only-if-cached`.
+	**/
+	@:optional
+	var cache : String; }, String>):Void;
 	/**
 		Adds an extra HTTP header. The header name will be issued as-is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a `string`, its `toString()` method will be called to obtain the final value.
 		
@@ -100,7 +108,7 @@ package electron.remote;
 	/**
 		Sends the last chunk of the request data. Subsequent write or end operations will not be allowed. The `finish` event is emitted just after the end operation.
 	**/
-	function end(?chunk:haxe.extern.EitherType<String, js.node.Buffer>, ?encoding:String, ?callback:haxe.Constraints.Function):Void;
+	function end(?chunk:haxe.extern.EitherType<String, js.node.Buffer>, ?encoding:String, ?callback:haxe.Constraints.Function):this;
 	/**
 		Cancels an ongoing HTTP transaction. If the request has already emitted the `close` event, the abort operation will have no effect. Otherwise an ongoing event will emit `abort` and `close` events. Additionally, if there is an ongoing response object,it will emit the `aborted` event.
 	**/

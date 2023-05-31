@@ -141,6 +141,8 @@ package electron.renderer;
 	
 	A `boolean`. When this attribute is present the guest page will have web security disabled. Web security is enabled by default.
 	
+	This value can only be modified before the first navigation.
+	
 	### `partition`
 	
 	```
@@ -366,6 +368,10 @@ package electron.renderer;
 	**/
 	function copy():Void;
 	/**
+		Centers the current text selection in page.
+	**/
+	function centerSelection():Void;
+	/**
 		Executes editing command `paste` in page.
 	**/
 	function paste():Void;
@@ -385,6 +391,28 @@ package electron.renderer;
 		Executes editing command `unselect` in page.
 	**/
 	function unselect():Void;
+	/**
+		Scrolls to the top of the current `<webview>`.
+	**/
+	function scrollToTop():Void;
+	/**
+		Scrolls to the bottom of the current `<webview>`.
+	**/
+	function scrollToBottom():Void;
+	/**
+		Adjusts the current text selection starting and ending points in the focused frame by the given amounts. A negative amount moves the selection towards the beginning of the document, and a positive amount moves the selection towards the end of the document.
+		
+		See `webContents.adjustSelection` for examples.
+	**/
+	function adjustSelection(options:{ /**
+		Amount to shift the start index of the current selection.
+	**/
+	@:optional
+	var start : Float; /**
+		Amount to shift the end index of the current selection.
+	**/
+	@:optional
+	var end : Float; }):Void;
 	/**
 		Executes editing command `replace` in page.
 	**/

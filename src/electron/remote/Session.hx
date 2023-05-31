@@ -19,6 +19,15 @@ package electron.remote;
 	**/
 	var cache : Bool; }):electron.remote.Session;
 	/**
+		A session instance from the absolute path as specified by the `path` string. When there is an existing `Session` with the same absolute path, it will be returned; otherwise a new `Session` instance will be created with `options`. The call will throw an error if the path is not an absolute path. Additionally, an error will be thrown if an empty string is provided.
+		
+		To create a `Session` with `options`, you have to ensure the `Session` with the `path` has never been used before. There is no way to change the `options` of an existing `Session` object.
+	**/
+	static function fromPath(path:String, ?options:{ /**
+		Whether to enable cache.
+	**/
+	var cache : Bool; }):electron.remote.Session;
+	/**
 		A `string[]` array which consists of all the known available spell checker languages.  Providing a language code to the `setSpellCheckerLanguages` API that isn't in this array will result in an error.
 	**/
 	var availableSpellCheckerLanguages : Array<String>;
@@ -213,6 +222,26 @@ package electron.remote;
 		**Note:** It will terminate / fail all requests currently in flight.
 	**/
 	function closeAllConnections():js.lib.Promise<Any>;
+	/**
+		see Response.
+		
+		Sends a request, similarly to how `fetch()` works in the renderer, using Chrome's network stack. This differs from Node's `fetch()`, which uses Node.js's HTTP stack.
+		
+		Example:
+		
+		See also `net.fetch()`, a convenience method which issues requests from the default session.
+		
+		See the MDN documentation for `fetch()` for more details.
+		
+		Limitations:
+		
+		* `net.fetch()` does not support the `data:` or `blob:` schemes.
+		* The value of the `integrity` option is ignored.
+		* The `.type` and `.url` values of the returned `Response` object are incorrect.
+		
+		By default, requests made with `net.fetch` can be made to custom protocols as well as `file:`, and will trigger webRequest handlers if present. When the non-standard `bypassCustomProtocolHandlers` option is set in RequestInit, custom protocol handlers will not be called for this request. This allows forwarding an intercepted request to the built-in handler. webRequest handlers will still be triggered when bypassing custom protocols.
+	**/
+	function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:RequestInit):js.lib.Promise<Any>;
 	/**
 		Disables any network emulation already active for the `session`. Resets to the original network configuration.
 	**/

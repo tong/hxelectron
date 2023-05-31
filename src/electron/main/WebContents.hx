@@ -349,6 +349,10 @@ package electron.main;
 	**/
 	function copy():Void;
 	/**
+		Centers the current text selection in web page.
+	**/
+	function centerSelection():Void;
+	/**
 		Copy the image at the given position to the clipboard.
 	**/
 	function copyImageAt(x:Int, y:Int):Void;
@@ -372,6 +376,38 @@ package electron.main;
 		Executes the editing command `unselect` in web page.
 	**/
 	function unselect():Void;
+	/**
+		Scrolls to the top of the current `webContents`.
+	**/
+	function scrollToTop():Void;
+	/**
+		Scrolls to the bottom of the current `webContents`.
+	**/
+	function scrollToBottom():Void;
+	/**
+		Adjusts the current text selection starting and ending points in the focused frame by the given amounts. A negative amount moves the selection towards the beginning of the document, and a positive amount moves the selection towards the end of the document.
+		
+		Example:
+		
+		For a call of `win.webContents.adjustSelection({ start: 1, end: 5 })`
+		
+		Before:
+		
+		<img width="487" alt="Image Before Text Selection Adjustment" src="https://user-images.githubusercontent.com/2036040/231761306-cd4e7b15-c2ed-46cf-8e80-10811f6de83e.png">
+		
+		After:
+		
+		<img width="487" alt="Image After Text Selection Adjustment" src="https://user-images.githubusercontent.com/2036040/231761169-887eb8ef-06fb-46e4-9efa-898bcb0d6a2b.png">
+	**/
+	function adjustSelection(options:{ /**
+		Amount to shift the start index of the current selection.
+	**/
+	@:optional
+	var start : Float; /**
+		Amount to shift the end index of the current selection.
+	**/
+	@:optional
+	var end : Float; }):Void;
 	/**
 		Executes the editing command `replace` in web page.
 	**/
@@ -890,7 +926,7 @@ var to : Float; }>; /**
 	**/
 	var did_create_window : electron.main.WebContentsEvent<Void -> Void> = "did-create-window";
 	/**
-		Emitted when a user or the page wants to start navigation. It can happen when the `window.location` object is changed or a user clicks a link in the page.
+		Emitted when a user or the page wants to start navigation on the main frame. It can happen when the `window.location` object is changed or a user clicks a link in the page.
 		
 		This event will not emit when the navigation is started programmatically with APIs like `webContents.loadURL` and `webContents.back`.
 		
@@ -900,7 +936,19 @@ var to : Float; }>; /**
 	**/
 	var will_navigate : electron.main.WebContentsEvent<Void -> Void> = "will-navigate";
 	/**
-		Emitted when any frame (including main) starts navigating. `isInPlace` will be `true` for in-page navigations.
+		Emitted when a user or the page wants to start navigation in any frame. It can happen when the `window.location` object is changed or a user clicks a link in the page.
+		
+		Unlike `will-navigate`, `will-frame-navigate` is fired when the main frame or any of its subframes attempts to navigate. When the navigation event comes from the main frame, `isMainFrame` will be `true`.
+		
+		This event will not emit when the navigation is started programmatically with APIs like `webContents.loadURL` and `webContents.back`.
+		
+		It is also not emitted for in-page navigations, such as clicking anchor links or updating the `window.location.hash`. Use `did-navigate-in-page` event for this purpose.
+		
+		Calling `event.preventDefault()` will prevent the navigation.
+	**/
+	var will_frame_navigate : electron.main.WebContentsEvent<Void -> Void> = "will-frame-navigate";
+	/**
+		Emitted when any frame (including main) starts navigating.
 	**/
 	var did_start_navigation : electron.main.WebContentsEvent<Void -> Void> = "did-start-navigation";
 	/**
@@ -1050,6 +1098,10 @@ var to : Float; }>; /**
 	**/
 	var media_paused : electron.main.WebContentsEvent<Void -> Void> = "media-paused";
 	/**
+		Emitted when media becomes audible or inaudible.
+	**/
+	var audio_state_changed : electron.main.WebContentsEvent<Void -> Void> = "audio-state-changed";
+	/**
 		Emitted when a page's theme color changes. This is usually due to encountering a meta tag:
 	**/
 	var did_change_theme_color : electron.main.WebContentsEvent<Void -> Void> = "did-change-theme-color";
@@ -1058,7 +1110,7 @@ var to : Float; }>; /**
 	**/
 	var update_target_url : electron.main.WebContentsEvent<Void -> Void> = "update-target-url";
 	/**
-		Emitted when the cursor's type changes. The `type` parameter can be `default`, `crosshair`, `pointer`, `text`, `wait`, `help`, `e-resize`, `n-resize`, `ne-resize`, `nw-resize`, `s-resize`, `se-resize`, `sw-resize`, `w-resize`, `ns-resize`, `ew-resize`, `nesw-resize`, `nwse-resize`, `col-resize`, `row-resize`, `m-panning`, `e-panning`, `n-panning`, `ne-panning`, `nw-panning`, `s-panning`, `se-panning`, `sw-panning`, `w-panning`, `move`, `vertical-text`, `cell`, `context-menu`, `alias`, `progress`, `nodrop`, `copy`, `none`, `not-allowed`, `zoom-in`, `zoom-out`, `grab`, `grabbing` or `custom`.
+		Emitted when the cursor's type changes. The `type` parameter can be `pointer`, `crosshair`, `hand`, `text`, `wait`, `help`, `e-resize`, `n-resize`, `ne-resize`, `nw-resize`, `s-resize`, `se-resize`, `sw-resize`, `w-resize`, `ns-resize`, `ew-resize`, `nesw-resize`, `nwse-resize`, `col-resize`, `row-resize`, `m-panning`, `m-panning-vertical`, `m-panning-horizontal`, `e-panning`, `n-panning`, `ne-panning`, `nw-panning`, `s-panning`, `se-panning`, `sw-panning`, `w-panning`, `move`, `vertical-text`, `cell`, `context-menu`, `alias`, `progress`, `nodrop`, `copy`, `none`, `not-allowed`, `zoom-in`, `zoom-out`, `grab`, `grabbing`, `custom`, `null`, `drag-drop-none`, `drag-drop-move`, `drag-drop-copy`, `drag-drop-link`, `ns-no-resize`, `ew-no-resize`, `nesw-no-resize`, `nwse-no-resize`, or `default`.
 		
 		If the `type` parameter is `custom`, the `image` parameter will hold the custom cursor image in a `NativeImage`, and `scale`, `size` and `hotspot` will hold additional information about the custom cursor.
 	**/
