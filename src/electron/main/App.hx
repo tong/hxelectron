@@ -682,9 +682,13 @@ package electron.main;
 	**/
 	var activate : electron.main.AppEvent<Void -> Void> = "activate";
 	/**
-		Emitted when mac application become active. Difference from `activate` event is that `did-become-active` is emitted every time the app becomes active, not only when Dock icon is clicked or application is re-launched.
+		Emitted when the application becomes active. This differs from the `activate` event in that `did-become-active` is emitted every time the app becomes active, not only when Dock icon is clicked or application is re-launched. It is also emitted when a user switches to the app via the macOS App Switcher.
 	**/
 	var did_become_active : electron.main.AppEvent<Void -> Void> = "did-become-active";
+	/**
+		Emitted when the app is no longer active and doesn’t have focus. This can be triggered, for example, by clicking on another application or by using the macOS App Switcher to switch to another application.
+	**/
+	var did_resign_active : electron.main.AppEvent<Void -> Void> = "did-resign-active";
 	/**
 		Emitted during Handoff when an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
 		

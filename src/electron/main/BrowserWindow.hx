@@ -427,6 +427,10 @@ package electron.main;
 	**/
 	@:optional
 	var vibrancy : String; /**
+		Set the window's system-drawn background material, including behind the non-client area. Can be `auto`, `none`, `mica`, `acrylic` or `tabbed`. See win.setBackgroundMaterial for more information.
+	**/
+	@:optional
+	var backgroundMaterial : String; /**
 		Controls the behavior on macOS when option-clicking the green stoplight button on the toolbar or by clicking the Window > Zoom menu item. If `true`, the window will grow to the preferred width of the web page when zoomed, `false` will cause it to zoom to the width of the screen. This will also affect the behavior when calling `maximize()` directly. Default is `false`.
 	**/
 	@:optional
@@ -1329,11 +1333,31 @@ package electron.main;
 	**/
 	function setVibrancy(type:haxe.extern.EitherType<String, Dynamic>):Void;
 	/**
-		Set a custom position for the traffic light buttons in frameless window.
+		This method sets the browser window's system-drawn background material, including behind the non-client area.
+		
+		See the Windows documentation for more details.
+		
+		**Note:** This method is only supported on Windows 11 22H2 and up.
+	**/
+	function setBackgroundMaterial(material:String):Void;
+	/**
+		Set a custom position for the traffic light buttons in frameless window. Passing `null` will reset the position to default.
+	**/
+	function setWindowButtonPosition(position:haxe.extern.EitherType<electron.Point, Dynamic>):Void;
+	/**
+		The custom position for the traffic light buttons in frameless window, `null` will be returned when there is no custom position.
+	**/
+	function getWindowButtonPosition():haxe.extern.EitherType<electron.Point, Dynamic>;
+	/**
+		Set a custom position for the traffic light buttons in frameless window. Passing `{ x: 0, y: 0 }` will reset the position to default.
+		
+		> **Note** This function is deprecated. Use setWindowButtonPosition instead.
 	**/
 	function setTrafficLightPosition(position:electron.Point):Void;
 	/**
-		The custom position for the traffic light buttons in frameless window.
+		The custom position for the traffic light buttons in frameless window, `{ x: 0, y: 0 }` will be returned when there is no custom position.
+		
+		> **Note** This function is deprecated. Use getWindowButtonPosition instead.
 	**/
 	function getTrafficLightPosition():electron.Point;
 	/**

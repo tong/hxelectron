@@ -51,6 +51,26 @@ package electron.main;
 	**/
 	static function request(options:haxe.extern.EitherType<ClientRequestConstructorOptions, String>):electron.main.ClientRequest;
 	/**
+		see Response.
+		
+		Sends a request, similarly to how `fetch()` works in the renderer, using Chrome's network stack. This differs from Node's `fetch()`, which uses Node.js's HTTP stack.
+		
+		Example:
+		
+		This method will issue requests from the default session. To send a `fetch` request from another session, use ses.fetch().
+		
+		See the MDN documentation for `fetch()` for more details.
+		
+		Limitations:
+		
+		* `net.fetch()` does not support the `data:` or `blob:` schemes.
+		* The value of the `integrity` option is ignored.
+		* The `.type` and `.url` values of the returned `Response` object are incorrect.
+		
+		By default, requests made with `net.fetch` can be made to custom protocols as well as `file:`, and will trigger webRequest handlers if present. When the non-standard `bypassCustomProtocolHandlers` option is set in RequestInit, custom protocol handlers will not be called for this request. This allows forwarding an intercepted request to the built-in handler. webRequest handlers will still be triggered when bypassing custom protocols.
+	**/
+	static function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:RequestInit):js.lib.Promise<Any>;
+	/**
 		Whether there is currently internet connection.
 		
 		A return value of `false` is a pretty strong indicator that the user won't be able to connect to remote sites. However, a return value of `true` is inconclusive; even if some link is up, it is uncertain whether a particular connection attempt to a particular remote site will be successful.

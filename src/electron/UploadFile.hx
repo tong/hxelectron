@@ -20,7 +20,7 @@ typedef UploadFile = {
 	**/
 	var length : Int;
 	/**
-		Last Modification time in number of seconds since the UNIX epoch.
+		Last Modification time in number of seconds since the UNIX epoch. Defaults to `0`.
 	**/
 	var modificationTime : Float;
 }

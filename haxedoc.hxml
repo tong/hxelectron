@@ -3,3 +3,4 @@
 -xml haxedoc.xml
 -lib electron
 --macro include('electron')
+-D no-deprecation-warnings
