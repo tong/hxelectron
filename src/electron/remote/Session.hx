@@ -275,6 +275,20 @@ package electron.remote;
 	**/
 	function setDevicePermissionHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
+		Sets the handler which can be used to override which USB classes are protected. The return value for the handler is a string array of USB classes which should be considered protected (eg not available in the renderer).  Valid values for the array are:
+		
+		* `audio`
+		* `audio-video`
+		* `hid`
+		* `mass-storage`
+		* `smart-card`
+		* `video`
+		* `wireless`
+		
+		Returning an empty string array from the handler will allow all USB classes; returning the passed in array will maintain the default list of protected USB classes (this is also the default behavior if a handler is not defined). To clear the handler, call `setUSBProtectedClassesHandler(null)`.
+	**/
+	function setUSBProtectedClassesHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
+	/**
 		Sets a handler to respond to Bluetooth pairing requests. This handler allows developers to handle devices that require additional validation before pairing.  When a handler is not defined, any pairing on Linux or Windows that requires additional validation will be automatically cancelled. macOS does not require a handler because macOS handles the pairing automatically.  To clear the handler, call `setBluetoothPairingHandler(null)`.
 	**/
 	function setBluetoothPairingHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;

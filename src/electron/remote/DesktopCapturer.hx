@@ -8,7 +8,9 @@ package electron.remote;
 	
 	```
 	// In the main process.
-	const { desktopCapturer } = require('electron')
+	const { BrowserWindow, desktopCapturer } = require('electron')
+	
+	const mainWindow = new BrowserWindow()
 	
 	desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
 	  for (const source of sources) {

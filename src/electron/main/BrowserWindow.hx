@@ -77,6 +77,7 @@ package electron.main;
 	```
 	const { BrowserWindow } = require('electron')
 	
+	const top = new BrowserWindow()
 	const child = new BrowserWindow({ parent: top, modal: true, show: false })
 	child.loadURL('https://github.com')
 	child.once('ready-to-show', () => {

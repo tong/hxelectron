@@ -5,7 +5,7 @@ package electron.main;
 	Process: Main
 	
 	```
-	const { netLog } = require('electron')
+	const { app, netLog } = require('electron')
 	
 	app.whenReady().then(async () => {
 	  await netLog.startLogging('/path/to/net-log')

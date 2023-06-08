@@ -24,7 +24,7 @@ package electron.main;
 	To have your custom protocol work in combination with a custom session, you need to register it to that session explicitly.
 	
 	```
-	const { session, app, protocol } = require('electron')
+	const { app, BrowserWindow, net, protocol, session } = require('electron')
 	const path = require('path')
 	const url = require('url')
 	
@@ -33,11 +33,11 @@ package electron.main;
 	  const ses = session.fromPartition(partition)
 	
 	  ses.protocol.handle('atom', (request) => {
-	    const path = request.url.slice('atom://'.length)
-	    return net.fetch(url.pathToFileURL(path.join(__dirname, path)))
+	    const filePath = request.url.slice('atom://'.length)
+	    return net.fetch(url.pathToFileURL(path.join(__dirname, filePath)).toString())
 	  })
 	
-	  mainWindow = new BrowserWindow({ webPreferences: { partition } })
+	  const mainWindow = new BrowserWindow({ webPreferences: { partition } })
 	})
 	```
 	@see https://electronjs.org/docs/api/protocol

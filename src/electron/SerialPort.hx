@@ -16,11 +16,11 @@ typedef SerialPort = {
 	**/
 	var displayName : String;
 	/**
-		Optional USB vendor ID.
+		The USB vendor ID.
 	**/
 	var vendorId : String;
 	/**
-		Optional USB product ID.
+		The USB product ID.
 	**/
 	var productId : String;
 	/**
