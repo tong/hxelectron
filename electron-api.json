@@ -8620,10 +8620,7 @@
             "returns": null
           }
         ],
-        "returns": {
-          "collection": false,
-          "type": "this"
-        },
+        "returns": null,
         "additionalTags": [],
         "urlFragment": "#requestendchunk-encoding-callback"
       },
@@ -15845,7 +15842,7 @@
             "description": "",
             "required": false,
             "collection": false,
-            "type": "RequestInit & { bypassCustomProtocolHandlers?: boolean }"
+            "type": "RequestInit"
           }
         ],
         "returns": {
