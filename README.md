@@ -1,4 +1,3 @@
-
 HXElectron
 ==========
 Haxe type definitions for [electron](https://electronjs.org/), a framework for building cross-platform desktop applications with JavaScript, HTML, and CSS.
@@ -8,11 +7,13 @@ Haxe type definitions for [electron](https://electronjs.org/), a framework for b
 
 ## Install
 
+Release version
 ```sh
-# Release version
 haxelib install electron
+```
 
-# Development version
+Development version
+```sh
 haxelib git electron https://github.com/tong/hxelectron.git
 ```
 
@@ -22,12 +23,12 @@ haxelib git electron https://github.com/tong/hxelectron.git
 
 All type definitions are generated from [electron-api.json](electron-api.json) by [ElectronAPI.hx](ElectronAPI.hx).  
 To (re)generate for another electron version download the description file from https://github.com/electron/electron/releases and run:
-
 ```sh
-## Generate type definitions
 haxe --macro ElectronAPI.generate("optional/path/to/electron-api.json")
+```
 
-## Build haxedoc.xml to insure everything is fine
+Build `haxedoc.xml` to insure everything is fine:
+```sh
 haxe haxedoc.hxml
 ```
 
@@ -46,15 +47,14 @@ The haxe externs are attributed with following metadata:
 
 ### Demo Application
 
-- #### Clone this repository and setup
- 
+Clone this repository and setup: 
 ```sh
-git clone https://github.com/tong/hxelectron && cd hxelectron/
+git clone https://github.com/tong/hxelectron
+cd hxelectron/
 haxelib dev electron .
 ```
 
-#### Build/Run
-
+Build and Run:
 ```sh
 cd demo/
 npm install # Install electron
