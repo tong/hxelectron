@@ -343,7 +343,11 @@ package electron.remote;
 		
 		**Note:** This does not perform any security checks that relate to a page's origin, unlike `webContents.downloadURL`.
 	**/
-	function downloadURL(url:String):Void;
+	function downloadURL(url:String, ?options:{ /**
+		HTTP request headers.
+	**/
+	@:optional
+	var headers : Record; }):Void;
 	/**
 		Allows resuming `cancelled` or `interrupted` downloads from previous `Session`. The API will generate a DownloadItem that can be accessed with the will-download event. The DownloadItem will not have any `WebContents` associated with it and the initial state will be `interrupted`. The download will start only when the `resume` API is called on the DownloadItem.
 	**/
