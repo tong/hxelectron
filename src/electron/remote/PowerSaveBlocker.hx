@@ -20,8 +20,10 @@ package electron.remote;
 	static function start(type:String):Int;
 	/**
 		Stops the specified power save blocker.
+		
+		Whether the specified `powerSaveBlocker` has been stopped.
 	**/
-	static function stop(id:Int):Void;
+	static function stop(id:Int):Bool;
 	/**
 		Whether the corresponding `powerSaveBlocker` has started.
 	**/
