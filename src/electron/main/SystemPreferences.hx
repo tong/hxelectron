@@ -21,12 +21,6 @@ package electron.main;
 	**/
 	static var effectiveAppearance : String;
 	/**
-		Whether the system is in Dark Mode.
-		
-		**Deprecated:** Should use the new `nativeTheme.shouldUseDarkColors` API.
-	**/
-	static function isDarkMode():Bool;
-	/**
 		Whether the Swipe between pages setting is on.
 	**/
 	static function isSwipeTrackingFromScrollEventsEnabled():Bool;
@@ -143,18 +137,6 @@ package electron.main;
 		Returns one of several standard system colors that automatically adapt to vibrancy and changes in accessibility settings like 'Increase contrast' and 'Reduce transparency'. See Apple Documentation for  more details.
 	**/
 	static function getSystemColor(color:String):String;
-	/**
-		`true` if an inverted color scheme (a high contrast color scheme with light text and dark backgrounds) is active, `false` otherwise.
-		
-		**Deprecated:** Should use the new `nativeTheme.shouldUseInvertedColorScheme` API.
-	**/
-	static function isInvertedColorScheme():Bool;
-	/**
-		`true` if a high contrast theme is active, `false` otherwise.
-		
-		**Deprecated:** Should use the new `nativeTheme.shouldUseHighContrastColors` API.
-	**/
-	static function isHighContrastColorScheme():Bool;
 	/**
 		Can be `dark`, `light` or `unknown`.
 		
