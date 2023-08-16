@@ -2,4 +2,6 @@
 -main Main
 -lib electron
 -dce full
--debug
+--debug
+-D no-deprecation-warnings
+-D message.log-format=pretty
