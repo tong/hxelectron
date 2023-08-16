@@ -77,11 +77,11 @@ package electron.remote;
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can contain: `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `websql`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
+		The types of storages to clear, can be `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `websql`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
 	**/
 	@:optional
 	var storages : Array<String>; /**
-		The types of quotas to clear, can contain: `temporary`, `syncable`. If not specified, clear all quotas.
+		The types of quotas to clear, can be `temporary`, `syncable`. If not specified, clear all quotas.
 	**/
 	@:optional
 	var quotas : Array<String>; }):js.lib.Promise<Any>;

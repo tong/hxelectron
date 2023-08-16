@@ -33,10 +33,10 @@ package electron.remote;
 	**/
 	var webContents : electron.remote.WebContents;
 	function new(?options:{ /**
-		See BrowserWindow.
+		Settings of web page's features.
 	**/
 	@:optional
-	var webPreferences : Any; }):Void;
+	var webPreferences : electron.WebPreferences; }):Void;
 	function setAutoResize(options:{ /**
 		If `true`, the view's width will grow and shrink together with the window. `false` by default.
 	**/

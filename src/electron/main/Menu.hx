@@ -67,6 +67,10 @@ package electron.main;
 	**/
 	@:optional
 	var positioningItem : Float; /**
+		This should map to the `menuSourceType` provided by the `context-menu` event. It is not recommended to set this value manually, only provide values you receive from other APIs or leave it `undefined`. Can be `none`, `mouse`, `keyboard`, `touch`, `touchMenu`, `longPress`, `longTap`, `touchHandle`, `stylus`, `adjustSelection`, or `adjustSelectionReset`.
+	**/
+	@:optional
+	var sourceType : String; /**
 		Called when menu is closed.
 	**/
 	@:optional
