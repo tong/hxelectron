@@ -414,7 +414,9 @@ private class Gen {
 	}
 
 	function createVarField( p : Property, ?access : Array<Access> ) : Field {
-		return createField( p.name, FVar( getComplexType( p.type, p.collection, p.properties ), null ), access, null, p.description );
+        var meta = [];
+        if(p.required != null && !p.required) meta.push({name: ':optional', pos: null});
+		return createField( p.name, FVar( getComplexType( p.type, p.collection, p.properties ), null ), access, meta, p.description );
 	}
 
 	function createFunField( m : Method, ?access : Array<Access> ) : Field {
@@ -646,7 +648,8 @@ typedef Property = {
 	type : String,
 	collection: Bool,
 	?description : String,
-	?properties : Array<Property>
+	?properties : Array<Property>,
+      ?required: Bool,
 	// TODO: ?required
 	// TODO: ?possibleValues
 	// TODO: ?additionalTags : Array<String>
