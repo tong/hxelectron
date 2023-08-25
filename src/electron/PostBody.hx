@@ -14,5 +14,6 @@ typedef PostBody = {
 	/**
 		The boundary used to separate multiple parts of the message. Only valid when `contentType` is `multipart/form-data`.
 	**/
+	@:optional
 	var boundary : String;
 }

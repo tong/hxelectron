@@ -27,6 +27,7 @@ package electron.remote;
 	/**
 		A `Menu` (optional) containing the menu item's submenu, if present.
 	**/
+	@:optional
 	var submenu : electron.remote.Menu;
 	/**
 		A `string` indicating the type of the item. Can be `normal`, `separator`, `submenu`, `checkbox` or `radio`.
@@ -35,10 +36,12 @@ package electron.remote;
 	/**
 		A `string` (optional) indicating the item's role, if set. Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `toggleSpellChecker`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu`
 	**/
+	@:optional
 	var role : String;
 	/**
 		An `Accelerator` (optional) indicating the item's accelerator, if set.
 	**/
+	@:optional
 	var accelerator : electron.Accelerator;
 	/**
 		An `Accelerator | null` indicating the item's user-assigned accelerator for the menu item.
@@ -49,6 +52,7 @@ package electron.remote;
 	/**
 		A `NativeImage | string` (optional) indicating the item's icon, if set.
 	**/
+	@:optional
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>;
 	/**
 		A `string` indicating the item's sublabel.

@@ -30,5 +30,6 @@ typedef Task = {
 	/**
 		The working directory. Default is empty.
 	**/
+	@:optional
 	var workingDirectory : String;
 }

@@ -6,10 +6,12 @@ typedef MimeTypedBuffer = {
 	/**
 		MIME type of the buffer.
 	**/
+	@:optional
 	var mimeType : String;
 	/**
 		Charset of the buffer.
 	**/
+	@:optional
 	var charset : String;
 	/**
 		The actual Buffer content.

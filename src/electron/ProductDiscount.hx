@@ -30,5 +30,6 @@ typedef ProductDiscount = {
 	/**
 		An object that defines the period for the product discount.
 	**/
+	@:optional
 	var subscriptionPeriod : electron.ProductSubscriptionPeriod;
 }

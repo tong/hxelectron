@@ -14,13 +14,16 @@ typedef UploadFile = {
 	/**
 		Defaults to `0`.
 	**/
+	@:optional
 	var offset : Int;
 	/**
 		Number of bytes to read from `offset`. Defaults to `0`.
 	**/
+	@:optional
 	var length : Int;
 	/**
 		Last Modification time in number of seconds since the UNIX epoch. Defaults to `0`.
 	**/
+	@:optional
 	var modificationTime : Float;
 }

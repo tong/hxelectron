@@ -7,6 +7,7 @@ typedef CustomScheme = {
 		Custom schemes to be registered with options.
 	**/
 	var scheme : String;
+	@:optional
 	var privileges : { /**
 		Default false.
 	**/

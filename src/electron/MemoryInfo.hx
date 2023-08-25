@@ -15,5 +15,6 @@ typedef MemoryInfo = {
 	/**
 		The amount of memory not shared by other processes, such as JS heap or HTML content.
 	**/
+	@:optional
 	var privateBytes : Int;
 }

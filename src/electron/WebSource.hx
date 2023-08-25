@@ -4,5 +4,6 @@ package electron;
 **/
 typedef WebSource = {
 	var code : String;
+	@:optional
 	var url : String;
 }

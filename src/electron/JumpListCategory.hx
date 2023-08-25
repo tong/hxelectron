@@ -9,13 +9,16 @@ typedef JumpListCategory = {
 	/**
 		One of the following:
 	**/
+	@:optional
 	var type : String;
 	/**
 		Must be set if `type` is `custom`, otherwise it should be omitted.
 	**/
+	@:optional
 	var name : String;
 	/**
 		Array of `JumpListItem` objects if `type` is `tasks` or `custom`, otherwise it should be omitted.
 	**/
+	@:optional
 	var items : Array<electron.JumpListItem>;
 }

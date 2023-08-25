@@ -14,6 +14,7 @@ typedef IpcRendererEvent = {
 	/**
 		Whether the message sent via ipcRenderer.sendTo was sent by the main frame. This is relevant when `nodeIntegrationInSubFrames` is enabled in the originating `webContents`.
 	**/
+	@:optional
 	var senderIsMainFrame : Bool;
 	/**
 		A list of MessagePorts that were transferred with this message

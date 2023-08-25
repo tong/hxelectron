@@ -22,5 +22,6 @@ typedef NotificationResponse = {
 	/**
 		The text entered or chosen by the user.
 	**/
+	@:optional
 	var userText : String;
 }

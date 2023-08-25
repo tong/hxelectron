@@ -10,5 +10,6 @@ typedef FilePathWithHeaders = {
 	/**
 		Additional headers to be sent.
 	**/
+	@:optional
 	var headers : Record;
 }

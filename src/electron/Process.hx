@@ -106,6 +106,7 @@ package electron;
 	/**
 		A `string` (optional) representing a globally unique ID of the current JavaScript context. Each frame has its own JavaScript context. When contextIsolation is enabled, the isolated world also has a separate JavaScript context. This property is only available in the renderer process.
 	**/
+	@:optional
 	static var contextId : String;
 	/**
 		A `Electron.ParentPort` property if this is a `UtilityProcess` (or `null` otherwise) allowing communication with the parent process.

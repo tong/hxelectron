@@ -19,9 +19,11 @@ typedef ThumbarButton = {
 	/**
 		The text of the button's tooltip.
 	**/
+	@:optional
 	var tooltip : String;
 	/**
 		Control specific states and behaviors of the button. By default, it is `['enabled']`.
 	**/
+	@:optional
 	var flags : Array<String>;
 }

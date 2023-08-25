@@ -10,9 +10,11 @@ typedef UploadData = {
 	/**
 		Path of file being uploaded.
 	**/
+	@:optional
 	var file : String;
 	/**
 		UUID of blob data. Use ses.getBlobData method to retrieve the data.
 	**/
+	@:optional
 	var blobUUID : String;
 }

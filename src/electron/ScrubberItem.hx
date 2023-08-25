@@ -6,9 +6,11 @@ typedef ScrubberItem = {
 	/**
 		The text to appear in this item.
 	**/
+	@:optional
 	var label : String;
 	/**
 		The image to appear in this item.
 	**/
+	@:optional
 	var icon : electron.NativeImage;
 }

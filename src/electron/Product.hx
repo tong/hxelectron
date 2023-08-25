@@ -38,6 +38,7 @@ typedef Product = {
 	/**
 		The object containing introductory price information for the product. available for the product.
 	**/
+	@:optional
 	var introductoryPrice : electron.ProductDiscount;
 	/**
 		An array of discount offers
@@ -50,6 +51,7 @@ typedef Product = {
 	/**
 		The period details for products that are subscriptions.
 	**/
+	@:optional
 	var subscriptionPeriod : electron.ProductSubscriptionPeriod;
 	/**
 		A boolean value that indicates whether the App Store has downloadable content for this product. `true` if at least one file has been associated with the product.

@@ -12,10 +12,16 @@ typedef MouseInputEvent = {
 	/**
 		The button pressed, can be `left`, `middle`, `right`.
 	**/
+	@:optional
 	var button : String;
+	@:optional
 	var globalX : Int;
+	@:optional
 	var globalY : Int;
+	@:optional
 	var movementX : Int;
+	@:optional
 	var movementY : Int;
+	@:optional
 	var clickCount : Int;
 }
