@@ -156,6 +156,9 @@ private class Gen {
 		addAlias( 'PopupOptions' );
 		addAlias( 'RequestInit' );
 		addAlias( 'GlobalRequest' );
+		addAlias( 'GlobalRequest' );
+		addAlias( 'Accelerator', macro:String );
+        /*
 		this.types.set( 'Accelerator', {
 			pack: root.copy(),
 			name: 'Accelerator',
@@ -163,6 +166,7 @@ private class Gen {
 			fields: [],
 			pos: null
 		} );
+        */
 
 		for( item in items ) {
 			// if( item.name != 'ProtocolResponseUploadData' ) continue;
