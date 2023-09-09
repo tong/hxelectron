@@ -30,13 +30,13 @@ class Main {
 					contextIsolation: false
 				}
 			} );
-			win.on( closed, () -> {
+			win.on( "closed", () -> {
 				win = null;
 			});
-            win.on( move, () -> {
+            win.on( "move", () -> {
                 trace('Window move');
             });
-			win.on( resize, () -> {
+			win.on( "resize", () -> {
                 trace('Window resize');
             });
             win.loadFile( 'app.html' );
