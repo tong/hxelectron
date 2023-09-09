@@ -97,6 +97,6 @@ package electron.renderer;
 	**/
 	static function sendToHost(channel:String, args:haxe.extern.Rest<Any>):Void;
 }
-@:enum abstract IpcRendererEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract IpcRendererEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

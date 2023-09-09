@@ -25,7 +25,7 @@ package electron.remote;
 	
 	```
 	const { app, BrowserWindow, net, protocol, session } = require('electron')
-	const path = require('path')
+	const path = require('node:path')
 	const url = require('url')
 	
 	app.whenReady().then(() => {
@@ -180,6 +180,6 @@ package electron.remote;
 	**/
 	static function isProtocolIntercepted(scheme:String):Bool;
 }
-@:enum abstract ProtocolEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract ProtocolEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

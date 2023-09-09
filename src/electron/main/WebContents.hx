@@ -150,7 +150,11 @@ package electron.main;
 	/**
 		Initiates a download of the resource at `url` without navigating. The `will-download` event of `session` will be triggered.
 	**/
-	function downloadURL(url:String):Void;
+	function downloadURL(url:String, ?options:{ /**
+		HTTP request headers.
+	**/
+	@:optional
+	var headers : Record; }):Void;
 	/**
 		The URL of the current web page.
 	**/
@@ -876,7 +880,7 @@ var to : Float; }>; /**
 	**/
 	function setImageAnimationPolicy(policy:String):Void;
 }
-@:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the navigation is done, i.e. the spinner of the tab has stopped spinning, and the `onload` event was dispatched.
 	**/

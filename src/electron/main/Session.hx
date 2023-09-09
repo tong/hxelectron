@@ -473,11 +473,11 @@ package electron.main;
 	**/
 	function removeExtension(extensionId:String):Void;
 	/**
-		| `null` - The loaded extension with the given ID.
+		The loaded extension with the given ID.
 		
 		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
 	**/
-	function getExtension(extensionId:String):electron.Extension;
+	function getExtension(extensionId:String):haxe.extern.EitherType<electron.Extension, Dynamic>;
 	/**
 		A list of all loaded extensions.
 		
@@ -489,7 +489,7 @@ package electron.main;
 	**/
 	function getStoragePath():haxe.extern.EitherType<String, Dynamic>;
 }
-@:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) to js.node.events.EventEmitter.Event<T> {
+@:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron is about to download `item` in `webContents`.
 		

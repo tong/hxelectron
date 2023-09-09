@@ -216,7 +216,11 @@ package electron.renderer;
 	/**
 		Initiates a download of the resource at `url` without navigating.
 	**/
-	function downloadURL(url:String):Void;
+	function downloadURL(url:String, ?options:{ /**
+		HTTP request headers.
+	**/
+	@:optional
+	var headers : Record; }):Void;
 	/**
 		The URL of guest page.
 	**/
