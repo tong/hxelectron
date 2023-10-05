@@ -502,6 +502,7 @@ private class Gen {
 
 	function getComplexType( name, collection = false, ?properties : Array<Dynamic>, optional = false, ?possibleValues : Array<PossibleValue> ) : ComplexType {
 		var t : ComplexType = switch name {
+		case 'this': macro : Dynamic;
 		case 'undefined': macro : Dynamic;
 		case null,'null': macro : Dynamic;
 		case 'Accelerator': // TODO: HACK
