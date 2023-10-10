@@ -136,7 +136,11 @@ typedef WebPreferences = {
 		Defaults to `Impact`.
 	**/
 	@:optional
-	var fantasy : String; };
+	var fantasy : String; /**
+		Defaults to `Latin Modern Math`.
+	**/
+	@:optional
+	var math : String; };
 	/**
 		Defaults to `16`.
 	**/

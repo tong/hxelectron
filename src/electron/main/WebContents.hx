@@ -467,13 +467,6 @@ package electron.main;
 	/**
 		Get the system printer list.
 		
-		
-		**Deprecated:** Should use the new `contents.getPrintersAsync` API.
-	**/
-	function getPrinters():Array<electron.PrinterInfo>;
-	/**
-		Get the system printer list.
-		
 		Resolves with a `PrinterInfo[]`
 	**/
 	function getPrintersAsync():js.lib.Promise<Any>;
@@ -620,7 +613,7 @@ var to : Float; }>; /**
 	**/
 	@:optional
 	var right : Float; }; /**
-		Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
+		Page ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
 	**/
 	@:optional
 	var pageRanges : String; /**
@@ -672,7 +665,11 @@ var to : Float; }>; /**
 		Whether to bring the opened devtools window to the foreground. The default is `true`.
 	**/
 	@:optional
-	var activate : Bool; }):Void;
+	var activate : Bool; /**
+		A title for the DevTools window (only in `undocked` or `detach` mode).
+	**/
+	@:optional
+	var title : String; }):Void;
 	/**
 		Closes the devtools.
 	**/
@@ -685,6 +682,14 @@ var to : Float; }>; /**
 		Whether the devtools view is focused .
 	**/
 	function isDevToolsFocused():Bool;
+	/**
+		the current title of the DevTools window. This will only be visible if DevTools is opened in `undocked` or `detach` mode.
+	**/
+	function getDevToolsTitle():String;
+	/**
+		Changes the title of the DevTools window to `title`. This will only be visible if DevTools is opened in `undocked` or `detach` mode.
+	**/
+	function setDevToolsTitle(title:String):Void;
 	/**
 		Toggles the developer tools.
 	**/

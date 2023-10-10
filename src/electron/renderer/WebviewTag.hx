@@ -83,7 +83,7 @@ package electron.renderer;
 	### `nodeintegration`
 	
 	```
-	<webview src="http://www.google.com/" nodeintegration></webview>
+	<webview src="https://www.google.com/" nodeintegration></webview>
 	```
 	
 	A `boolean`. When this attribute is present the guest page in `webview` will have node integration and can use node APIs like `require` and `process` to access low level system resources. Node integration is disabled by default in the guest page.
@@ -91,7 +91,7 @@ package electron.renderer;
 	### `nodeintegrationinsubframes`
 	
 	```
-	<webview src="http://www.google.com/" nodeintegrationinsubframes></webview>
+	<webview src="https://www.google.com/" nodeintegrationinsubframes></webview>
 	```
 	
 	A `boolean` for the experimental option for enabling NodeJS support in sub-frames such as iframes inside the `webview`. All your preloads will load for every iframe, you can use `process.isMainFrame` to determine if you are in the main frame or not. This option is disabled by default in the guest page.
@@ -120,7 +120,7 @@ package electron.renderer;
 	### `httpreferrer`
 	
 	```
-	<webview src="https://www.github.com/" httpreferrer="http://cheng.guru"></webview>
+	<webview src="https://www.github.com/" httpreferrer="https://example.com/"></webview>
 	```
 	
 	A `string` that sets the referrer URL for the guest page.
@@ -582,7 +582,7 @@ var to : Float; }>; /**
 	**/
 	@:optional
 	var right : Float; }; /**
-		Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
+		Page ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
 	**/
 	@:optional
 	var pageRanges : String; /**

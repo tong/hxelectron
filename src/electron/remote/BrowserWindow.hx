@@ -146,6 +146,11 @@ package electron.remote;
 	**/
 	var id : Int;
 	/**
+		A `string` (optional) property that is equal to the `tabbingIdentifier` passed to the `BrowserWindow` constructor or `undefined` if none was set.
+	**/
+	@:optional
+	var tabbingIdentifier : String;
+	/**
 		A `boolean` property that determines whether the window menu bar should hide itself automatically. Once set, the menu bar will only show when users press the single `Alt` key.
 		
 		If the menu bar is already visible, setting this property to `true` won't hide it immediately.
@@ -904,6 +909,10 @@ package electron.remote;
 	**/
 	function selectNextTab():Void;
 	/**
+		Shows or hides the tab overview when native tabs are enabled.
+	**/
+	function showAllTabs():Void;
+	/**
 		Merges all windows into one window with multiple tabs when native tabs are enabled and there is more than one open window.
 	**/
 	function mergeAllWindows():Void;
@@ -921,8 +930,6 @@ package electron.remote;
 	function addTabbedWindow(browserWindow:electron.remote.BrowserWindow):Void;
 	/**
 		Adds a vibrancy effect to the browser window. Passing `null` or an empty string will remove the vibrancy effect on the window.
-		
-		Note that `appearance-based`, `light`, `dark`, `medium-light`, and `ultra-dark` have been deprecated and will be removed in an upcoming version of macOS.
 	**/
 	function setVibrancy(type:haxe.extern.EitherType<String, Dynamic>):Void;
 	/**
@@ -974,7 +981,7 @@ package electron.remote;
 	**/
 	function setTopBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
-		an array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`.
+		a sorted by z-index array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`. The top-most BrowserView is the last element of the array.
 		
 		**Note:** The BrowserView API is currently experimental and may change or be removed in future Electron releases.
 	**/

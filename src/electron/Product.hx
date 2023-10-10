@@ -16,14 +16,6 @@ typedef Product = {
 	**/
 	var localizedTitle : String;
 	/**
-		A string that identifies the version of the content.
-	**/
-	var contentVersion : String;
-	/**
-		The total size of the content, in bytes.
-	**/
-	var contentLengths : Array<Float>;
-	/**
 		The cost of the product in the local currency.
 	**/
 	var price : Float;

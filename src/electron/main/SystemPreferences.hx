@@ -7,13 +7,9 @@ package electron.main;
 **/
 @:jsRequire("electron", "systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.main.SystemPreferences> {
 	/**
-		A `string` property that can be `dark`, `light` or `unknown`. It determines the macOS appearance setting for your application. This maps to values in: NSApplication.appearance. Setting this will override the system default as well as the value of `getEffectiveAppearance`.
-		
-		Possible values that can be set are `dark` and `light`, and possible return values are `dark`, `light`, and `unknown`.
-		
-		This property is only available on macOS 10.14 Mojave or newer.
+		A `boolean` property which determines whether the app avoids using semitransparent backgrounds. This maps to NSWorkspace.accessibilityDisplayShouldReduceTransparency
 	**/
-	static var appLevelAppearance : String;
+	static var accessibilityDisplayShouldReduceTransparency : Bool;
 	/**
 		A `string` property that can be `dark`, `light` or `unknown`.
 		
@@ -144,16 +140,6 @@ package electron.main;
 	**/
 	static function getEffectiveAppearance():String;
 	/**
-		| `null` - Can be `dark`, `light` or `unknown`.
-		
-		Gets the macOS appearance setting that you have declared you want for your application, maps to NSApplication.appearance. You can use the `setAppLevelAppearance` API to set this value.
-	**/
-	static function getAppLevelAppearance():String;
-	/**
-		Sets the appearance setting for your application, this should override the system default and override the value of `getEffectiveAppearance`.
-	**/
-	static function setAppLevelAppearance(appearance:haxe.extern.EitherType<String, Dynamic>):Void;
-	/**
 		whether or not this device has the ability to use Touch ID.
 	**/
 	static function canPromptTouchID():Bool;
@@ -195,12 +181,4 @@ package electron.main;
 @:enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	var accent_color_changed : electron.main.SystemPreferencesEvent<Void -> Void> = "accent-color-changed";
 	var color_changed : electron.main.SystemPreferencesEvent<Void -> Void> = "color-changed";
-	/**
-		**Deprecated:** Should use the new `updated` event on the `nativeTheme` module.
-	**/
-	var inverted_color_scheme_changed : electron.main.SystemPreferencesEvent<Void -> Void> = "inverted-color-scheme-changed";
-	/**
-		**Deprecated:** Should use the new `updated` event on the `nativeTheme` module.
-	**/
-	var high_contrast_color_scheme_changed : electron.main.SystemPreferencesEvent<Void -> Void> = "high-contrast-color-scheme-changed";
 }
