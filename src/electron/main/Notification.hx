@@ -147,6 +147,8 @@ package electron.main;
 	function show():Void;
 	/**
 		Dismisses the notification.
+		
+		On Windows, calling `notification.close()` while the notification is visible on screen will dismiss the notification and remove it from the Action Center. If `notification.close()` is called after the notification is no longer visible on screen, calling `notification.close()` will try remove it from the Action Center.
 	**/
 	function close():Void;
 }
@@ -163,6 +165,8 @@ package electron.main;
 		Emitted when the notification is closed by manual intervention from the user.
 		
 		This event is not guaranteed to be emitted in all cases where the notification is closed.
+		
+		On Windows, the `close` event can be emitted in one of three ways: programmatic dismissal with `notification.close()`, by the user closing the notification, or via system timeout. If a notification is in the Action Center after the initial `close` event is emitted, a call to `notification.close()` will remove the notification from the action center but the `close` event will not be emitted again.
 	**/
 	var close : electron.main.NotificationEvent<Void -> Void> = "close";
 	/**

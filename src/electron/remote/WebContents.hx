@@ -264,7 +264,7 @@ package electron.remote;
 		Injects CSS into the current web page and returns a unique key for the inserted stylesheet.
 	**/
 	function insertCSS(css:String, ?options:{ /**
-		Can be either 'user' or 'author'. Sets the cascade origin of the inserted stylesheet. Default is 'author'.
+		Can be 'user' or 'author'. Sets the cascade origin of the inserted stylesheet. Default is 'author'.
 	**/
 	@:optional
 	var cssOrigin : String; }):js.lib.Promise<Any>;
