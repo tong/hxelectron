@@ -13,13 +13,25 @@ package electron.remote;
 	An example of creating a window that fills the whole screen:
 	
 	```
-	const { app, BrowserWindow, screen } = require('electron')
+	// Retrieve information about screen size, displays, cursor position, etc.
+	//
+	// For more info, see:
+	// https://www.electronjs.org/docs/latest/api/screen
 	
-	let win
+	const { app, BrowserWindow } = require('electron')
+	
+	let mainWindow = null
+	
 	app.whenReady().then(() => {
-	  const { width, height } = screen.getPrimaryDisplay().workAreaSize
-	  win = new BrowserWindow({ width, height })
-	  win.loadURL('https://github.com')
+	  // We cannot require the screen module until the app is ready.
+	  const { screen } = require('electron')
+	
+	  // Create a window that fills the screen's available work area.
+	  const primaryDisplay = screen.getPrimaryDisplay()
+	  const { width, height } = primaryDisplay.workAreaSize
+	
+	  mainWindow = new BrowserWindow({ width, height })
+	  mainWindow.loadURL('https://electronjs.org')
 	})
 	```
 	
