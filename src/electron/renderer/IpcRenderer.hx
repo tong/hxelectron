@@ -19,9 +19,17 @@ package electron.renderer;
 	**/
 	static function on(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
+		Alias for `ipcRenderer.removeListener`.
+	**/
+	static function off(channel:String, listener:haxe.Constraints.Function):Void;
+	/**
 		Adds a one time `listener` function for the event. This `listener` is invoked only the next time a message is sent to `channel`, after which it is removed.
 	**/
 	static function once(channel:String, listener:haxe.Constraints.Function):Void;
+	/**
+		Alias for `ipcRenderer.on`.
+	**/
+	static function addListener(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
 		Removes the specified `listener` from the listener array for the specified `channel`.
 	**/
@@ -88,10 +96,6 @@ package electron.renderer;
 		For more information on using `MessagePort` and `MessageChannel`, see the MDN documentation.
 	**/
 	static function postMessage(channel:String, message:Any, ?transfer:Array<MessagePort>):Void;
-	/**
-		Sends a message to a window with `webContentsId` via `channel`.
-	**/
-	static function sendTo(webContentsId:Float, channel:String, args:haxe.extern.Rest<Any>):Void;
 	/**
 		Like `ipcRenderer.send` but the event will be sent to the `<webview>` element in the host page instead of the main process.
 	**/

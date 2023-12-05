@@ -628,7 +628,11 @@ var to : Float; }>; /**
 		Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
 	**/
 	@:optional
-	var preferCSSPageSize : Bool; }):js.lib.Promise<Any>;
+	var preferCSSPageSize : Bool; /**
+		Whether or not to generate a tagged (accessible) PDF. Defaults to false. As this property is experimental, the generated PDF may not adhere fully to PDF/UA and WCAG standards.
+	**/
+	@:optional
+	var generateTaggedPDF : Bool; }):js.lib.Promise<Any>;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
@@ -848,6 +852,23 @@ var to : Float; }>; /**
 		Setting the WebRTC IP handling policy allows you to control which IPs are exposed via WebRTC. See BrowserLeaks for more details.
 	**/
 	function setWebRTCIPHandlingPolicy(policy:String):Void;
+	/**
+		* `min` Integer - The minimum UDP port number that WebRTC should use.
+		* `max` Integer - The maximum UDP port number that WebRTC should use.
+		
+		By default this value is `{ min: 0, max: 0 }` , which would apply no restriction on the udp port range.
+	**/
+	function getWebRTCUDPPortRange():Any;
+	/**
+		Setting the WebRTC UDP Port Range allows you to restrict the udp port range used by WebRTC. By default the port range is unrestricted. **Note:** To reset to an unrestricted port range this value should be set to `{ min: 0, max: 0 }`.
+	**/
+	function setWebRTCUDPPortRange(udpPortRange:{ /**
+		The minimum UDP port number that WebRTC should use.
+	**/
+	var min : Int; /**
+		The maximum UDP port number that WebRTC should use.
+	**/
+	var max : Int; }):Void;
 	/**
 		The identifier of a WebContents stream. This identifier can be used with `navigator.mediaDevices.getUserMedia` using a `chromeMediaSource` of `tab`. The identifier is restricted to the web contents that it is registered to and is only valid for 10 seconds.
 	**/

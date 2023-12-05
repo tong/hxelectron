@@ -57,14 +57,6 @@ package electron.remote;
 	**/
 	static var userAgentFallback : String;
 	/**
-		A `boolean` which when `true` indicates that the app is currently running under the Rosetta Translator Environment.
-		
-		You can use this property to prompt users to download the arm64 version of your application when they are running the x64 version under Rosetta incorrectly.
-		
-		**Deprecated:** This property is superceded by the `runningUnderARM64Translation` property which detects when the app is being translated to ARM64 in both macOS and Windows.
-	**/
-	static var runningUnderRosettaTranslation : Bool;
-	/**
 		A `boolean` which when `true` indicates that the app is currently running under an ARM64 translator (like the macOS Rosetta Translator Environment or Windows WOW).
 		
 		You can use this property to prompt users to download the arm64 version of your application when they are mistakenly running the x64 version under Rosetta or WOW.

@@ -20,7 +20,7 @@ package electron;
 	**/
 	@:optional
 	var stdio : haxe.extern.EitherType<Array<String>, String>; /**
-		Name of the process that will appear in `name` property of `child-process-gone` event of `app`. Default is `Node Utility Process`.
+		Name of the process that will appear in `name` property of `ProcessMetric` returned by `app.getAppMetrics` and `child-process-gone` event of `app`. Default is `Node Utility Process`.
 	**/
 	@:optional
 	var serviceName : String; /**

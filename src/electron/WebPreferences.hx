@@ -162,7 +162,7 @@ typedef WebPreferences = {
 	@:optional
 	var defaultEncoding : String;
 	/**
-		Whether to throttle animations and timers when the page becomes background. This also affects the Page Visibility API. Defaults to `true`.
+		Whether to throttle animations and timers when the page becomes background. This also affects the Page Visibility API. When at least one webContents displayed in a single browserWindow has disabled `backgroundThrottling` then frames will be drawn and swapped for the whole window and other webContents displayed by it. Defaults to `true`.
 	**/
 	@:optional
 	var backgroundThrottling : Bool;

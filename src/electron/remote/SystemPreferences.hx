@@ -122,7 +122,7 @@ package electron.remote;
 	**/
 	static function getAccentColor():String;
 	/**
-		The system color setting in RGB hexadecimal form (`#ABCDEF`). See the Windows docs and the macOS docs for more details.
+		The system color setting in RGBA hexadecimal form (`#RRGGBBAA`). See the Windows docs and the macOS docs for more details.
 		
 		The following colors are only available on macOS 10.14: `find-highlight`, `selected-content-background`, `separator`, `unemphasized-selected-content-background`, `unemphasized-selected-text-background`, and `unemphasized-selected-text`.
 	**/

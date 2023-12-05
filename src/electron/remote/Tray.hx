@@ -177,6 +177,10 @@ package electron.remote;
 	**/
 	var double_click : electron.remote.TrayEvent<Void -> Void> = "double-click";
 	/**
+		Emitted when the tray icon is middle clicked.
+	**/
+	var middle_click : electron.remote.TrayEvent<Void -> Void> = "middle-click";
+	/**
 		Emitted when the tray balloon shows.
 	**/
 	var balloon_show : electron.remote.TrayEvent<Void -> Void> = "balloon-show";

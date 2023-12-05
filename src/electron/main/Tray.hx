@@ -177,6 +177,10 @@ package electron.main;
 	**/
 	var double_click : electron.main.TrayEvent<Void -> Void> = "double-click";
 	/**
+		Emitted when the tray icon is middle clicked.
+	**/
+	var middle_click : electron.main.TrayEvent<Void -> Void> = "middle-click";
+	/**
 		Emitted when the tray balloon shows.
 	**/
 	var balloon_show : electron.main.TrayEvent<Void -> Void> = "balloon-show";

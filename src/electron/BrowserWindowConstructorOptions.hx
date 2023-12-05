@@ -239,11 +239,6 @@ typedef BrowserWindowConstructorOptions = {
 	@:optional
 	var roundedCorners : Bool;
 	/**
-		Shows the title in the title bar in full screen mode on macOS for `hiddenInset` titleBarStyle. Default is `false`.
-	**/
-	@:optional
-	var fullscreenWindowTitle : Bool;
-	/**
 		Use `WS_THICKFRAME` style for frameless windows on Windows, which adds standard window frame. Setting it to `false` will remove window shadow and window animations. Default is `true`.
 	**/
 	@:optional

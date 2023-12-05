@@ -949,18 +949,6 @@ package electron.main;
 	**/
 	function getWindowButtonPosition():haxe.extern.EitherType<electron.Point, Dynamic>;
 	/**
-		Set a custom position for the traffic light buttons in frameless window. Passing `{ x: 0, y: 0 }` will reset the position to default.
-		
-		> **Note** This function is deprecated. Use setWindowButtonPosition instead.
-	**/
-	function setTrafficLightPosition(position:electron.Point):Void;
-	/**
-		The custom position for the traffic light buttons in frameless window, `{ x: 0, y: 0 }` will be returned when there is no custom position.
-		
-		> **Note** This function is deprecated. Use getWindowButtonPosition instead.
-	**/
-	function getTrafficLightPosition():electron.Point;
-	/**
 		Sets the touchBar layout for the current window. Specifying `null` or `undefined` clears the touch bar. This method only has an effect if the machine has a touch bar.
 		
 		**Note:** The TouchBar API is currently experimental and may change or be removed in future Electron releases.
@@ -1140,24 +1128,6 @@ package electron.main;
 		* `browser-forward`
 	**/
 	var app_command : electron.main.BrowserWindowEvent<Void -> Void> = "app-command";
-	/**
-		Emitted when scroll wheel event phase has begun.
-		
-		> **Note** This event is deprecated beginning in Electron 22.0.0. See Breaking Changes for details of how to migrate to using the WebContents `input-event` event.
-	**/
-	var scroll_touch_begin : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-begin";
-	/**
-		Emitted when scroll wheel event phase has ended.
-		
-		> **Note** This event is deprecated beginning in Electron 22.0.0. See Breaking Changes for details of how to migrate to using the WebContents `input-event` event.
-	**/
-	var scroll_touch_end : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-end";
-	/**
-		Emitted when scroll wheel event phase filed upon reaching the edge of element.
-		
-		> **Note** This event is deprecated beginning in Electron 22.0.0. See Breaking Changes for details of how to migrate to using the WebContents `input-event` event.
-	**/
-	var scroll_touch_edge : electron.main.BrowserWindowEvent<Void -> Void> = "scroll-touch-edge";
 	/**
 		Emitted on 3-finger swipe. Possible directions are `up`, `right`, `down`, `left`.
 		

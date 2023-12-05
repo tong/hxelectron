@@ -597,7 +597,11 @@ var to : Float; }>; /**
 		Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
 	**/
 	@:optional
-	var preferCSSPageSize : Bool; }):js.lib.Promise<Any>;
+	var preferCSSPageSize : Bool; /**
+		Whether or not to generate a tagged (accessible) PDF. Defaults to false. As this property is experimental, the generated PDF may not adhere fully to PDF/UA and WCAG standards.
+	**/
+	@:optional
+	var generateTaggedPDF : Bool; }):js.lib.Promise<Any>;
 	/**
 		Resolves with a NativeImage
 		

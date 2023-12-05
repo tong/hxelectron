@@ -8,15 +8,6 @@ typedef IpcRendererEvent = {
 	**/
 	var sender : electron.renderer.IpcRenderer;
 	/**
-		The `webContents.id` that sent the message, you can call `event.sender.sendTo(event.senderId, ...)` to reply to the message, see ipcRenderer.sendTo for more information. This only applies to messages sent from a different renderer. Messages sent directly from the main process set `event.senderId` to `0`.
-	**/
-	var senderId : Int;
-	/**
-		Whether the message sent via ipcRenderer.sendTo was sent by the main frame. This is relevant when `nodeIntegrationInSubFrames` is enabled in the originating `webContents`.
-	**/
-	@:optional
-	var senderIsMainFrame : Bool;
-	/**
 		A list of MessagePorts that were transferred with this message
 	**/
 	var ports : Array<MessagePort>;
