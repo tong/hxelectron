@@ -36,5 +36,9 @@ typedef CustomScheme = {
 		Default false.
 	**/
 	@:optional
-	var stream : Bool; };
+	var stream : Bool; /**
+		Enable V8 code cache for the scheme, only works when `standard` is also set to true. Default false.
+	**/
+	@:optional
+	var codeCache : Bool; };
 }

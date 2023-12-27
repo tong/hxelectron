@@ -391,6 +391,8 @@ package electron.main;
 	function getPreloads():Array<String>;
 	/**
 		Sets the directory to store the generated JS code cache for this session. The directory is not required to be created by the user before this call, the runtime will create if it does not exist otherwise will use the existing directory. If directory cannot be created, then code cache will not be used and all operations related to code cache will fail silently inside the runtime. By default, the directory will be `Code Cache` under the respective user data folder.
+		
+		Note that by default code cache is only enabled for http(s) URLs, to enable code cache for custom protocols, `codeCache: true` and `standard: true` must be specified when registering the protocol.
 	**/
 	function setCodeCachePath(path:String):Void;
 	/**
