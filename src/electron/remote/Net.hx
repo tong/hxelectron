@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	> Issue HTTP/HTTPS requests using Chromium's native networking library
 	
-	Process: Main
+	Process: Main, Utility
 	
 	The `net` module is a client-side API for issuing HTTP(S) requests. It is similar to the HTTP and HTTPS modules of Node.js but uses Chromium's native networking library instead of the Node.js implementation, offering better support for web proxies. It also supports checking network status.
 	
@@ -68,6 +68,8 @@ package electron.remote;
 		* The `.type` and `.url` values of the returned `Response` object are incorrect.
 		
 		By default, requests made with `net.fetch` can be made to custom protocols as well as `file:`, and will trigger webRequest handlers if present. When the non-standard `bypassCustomProtocolHandlers` option is set in RequestInit, custom protocol handlers will not be called for this request. This allows forwarding an intercepted request to the built-in handler. webRequest handlers will still be triggered when bypassing custom protocols.
+		
+		Note: in the utility process custom protocols are not supported.
 	**/
 	static function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:RequestInit):js.lib.Promise<Any>;
 	/**

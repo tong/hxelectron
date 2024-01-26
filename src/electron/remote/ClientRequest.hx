@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	> Make HTTP/HTTPS requests.
 	
-	Process: Main<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
+	Process: Main, Utility<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
 	
 	`ClientRequest` implements the Writable Stream interface and is therefore an EventEmitter.
 	@see https://electronjs.org/docs/api/client-request
