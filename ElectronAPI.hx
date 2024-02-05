@@ -370,9 +370,8 @@ private class Gen {
 				name: _name,
 				pack: pack,
 				params: [{ name: 'T', constraints: [macro:haxe.Constraints.Function] }],
-				kind: TDAbstract(macro:js.node.events.EventEmitter.Event<T>,[],[macro:js.node.events.EventEmitter.Event<T>]),
+				kind: TDAbstract(macro:js.node.events.EventEmitter.Event<T>,[AbEnum],[macro:js.node.events.EventEmitter.Event<T>]),
 				fields: [],
-				meta: [{ name: ":enum", pos: null }],
 				pos: null
 			};
 			this.extraTypes.set( name, [type] );
