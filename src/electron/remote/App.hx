@@ -455,10 +455,11 @@ package electron.remote;
 		
 		
 		* `openAtLogin` boolean - `true` if the app is set to open at login.
-		* `openAsHidden` boolean _macOS_ - `true` if the app is set to open as hidden at login. This setting is not available on MAS builds.
-		* `wasOpenedAtLogin` boolean _macOS_ - `true` if the app was opened at login automatically. This setting is not available on MAS builds.
-		* `wasOpenedAsHidden` boolean _macOS_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds.
-		* `restoreState` boolean _macOS_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds.
+		* `openAsHidden` boolean _macOS_ _Deprecated_ - `true` if the app is set to open as hidden at login. This does not work on macOS 13 and up.
+		* `wasOpenedAtLogin` boolean _macOS_ _Deprecated_ - `true` if the app was opened at login automatically. This setting is not available on MAS builds or on macOS 13 and up.
+		* `wasOpenedAsHidden` boolean _macOS_ _Deprecated_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds or on macOS 13 and up.
+		* `restoreState` boolean _macOS_ _Deprecated_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds or on macOS 13 and up.
+		* `status` string _macOS_ - can be one of `not-registered`, `enabled`, `requires-approval`, or `not-found`.
 		* `executableWillLaunchAtLogin` boolean _Windows_ - `true` if app is set to open at login and its run key is not deactivated. This differs from `openAtLogin` as it ignores the `args` option, this property will be true if the given executable would be launched at login with **any** arguments.
 		* `launchItems` Object[] _Windows_
 		  * `name` string _Windows_ - name value of a registry entry.
@@ -468,6 +469,14 @@ package electron.remote;
 		  * `enabled` boolean _Windows_ - `true` if the app registry key is startup approved and therefore shows as `enabled` in Task Manager and Windows settings.
 	**/
 	static function getLoginItemSettings(?options:{ /**
+		Can be one of `mainAppService`, `agentService`, `daemonService`, or `loginItemService`. Defaults to `mainAppService`. Only available on macOS 13 and up. See app.setLoginItemSettings for more information about each type.
+	**/
+	@:optional
+	var type : String; /**
+		The name of the service. Required if `type` is non-default. Only available on macOS 13 and up.
+	**/
+	@:optional
+	var serviceName : String; /**
 		The executable path to compare against. Defaults to `process.execPath`.
 	**/
 	@:optional
@@ -477,17 +486,29 @@ package electron.remote;
 	@:optional
 	var args : Array<String>; }):Any;
 	/**
+		Set the app's login item settings.
+		
 		To work with Electron's `autoUpdater` on Windows, which uses Squirrel, you'll want to set the launch path to Update.exe, and pass arguments that specify your application name. For example:
+		
+		For more information about setting different services as login items on macOS 13 and up, see `SMAppService`.
 	**/
 	static function setLoginItemSettings(settings:{ /**
 		`true` to open the app at login, `false` to remove the app as a login item. Defaults to `false`.
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		`true` to open the app as hidden. Defaults to `false`. The user can edit this setting from the System Preferences so `app.getLoginItemSettings().wasOpenedAsHidden` should be checked when the app is opened to know the current value. This setting is not available on MAS builds.
+		`true` to open the app as hidden. Defaults to `false`. The user can edit this setting from the System Preferences so `app.getLoginItemSettings().wasOpenedAsHidden` should be checked when the app is opened to know the current value. This setting is not available on MAS build s or on macOS 13 and up.
 	**/
 	@:optional
 	var openAsHidden : Bool; /**
+		The type of service to add as a login item. Defaults to `mainAppService`. Only available on macOS 13 and up.
+	**/
+	@:optional
+	var type : String; /**
+		The name of the service. Required if `type` is non-default. Only available on macOS 13 and up.
+	**/
+	@:optional
+	var serviceName : String; /**
 		The executable to launch at login. Defaults to `process.execPath`.
 	**/
 	@:optional
@@ -500,7 +521,7 @@ package electron.remote;
 	**/
 	@:optional
 	var enabled : Bool; /**
-		value name to write into registry. Defaults to the app's AppUserModelId(). Set the app's login item settings.
+		value name to write into registry. Defaults to the app's AppUserModelId().
 	**/
 	@:optional
 	var name : String; }):Void;
@@ -747,18 +768,6 @@ package electron.remote;
 		Emitted whenever there is a GPU info update.
 	**/
 	var gpu_info_update : electron.remote.AppEvent<Void -> Void> = "gpu-info-update";
-	/**
-		Emitted when the GPU process crashes or is killed.
-		
-		**Deprecated:** This event is superceded by the `child-process-gone` event which contains more information about why the child process disappeared. It isn't always because it crashed. The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
-	**/
-	var gpu_process_crashed : electron.remote.AppEvent<Void -> Void> = "gpu-process-crashed";
-	/**
-		Emitted when the renderer process of `webContents` crashes or is killed.
-		
-		**Deprecated:** This event is superceded by the `render-process-gone` event which contains more information about why the render process disappeared. It isn't always because it crashed.  The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
-	**/
-	var renderer_process_crashed : electron.remote.AppEvent<Void -> Void> = "renderer-process-crashed";
 	/**
 		Emitted when the renderer process unexpectedly disappears.  This is normally because it was crashed or killed.
 	**/
