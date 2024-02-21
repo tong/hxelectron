@@ -148,16 +148,16 @@ private class Gen {
 			} );
 		}
 		addAlias( 'AbortSignal' );
-		addAlias( 'ClientRequestConstructorOptions' );
-		addAlias( 'Partial' );
-		addAlias( 'Record' );
-		addAlias( 'SaveDialogOptions' );
-		addAlias( 'MessagePort' );
-		addAlias( 'PopupOptions' );
-		addAlias( 'RequestInit' );
-		addAlias( 'GlobalRequest' );
-		addAlias( 'GlobalRequest' );
 		addAlias( 'Accelerator', macro:String );
+		addAlias( 'ClientRequestConstructorOptions' );
+		addAlias( 'File' );
+		addAlias( 'GlobalRequest' );
+		addAlias( 'MessagePort' );
+		addAlias( 'Partial' );
+		addAlias( 'PopupOptions' );
+		addAlias( 'Record' );
+		addAlias( 'RequestInit' );
+		addAlias( 'SaveDialogOptions' );
         /*
 		this.types.set( 'Accelerator', {
 			pack: root.copy(),
