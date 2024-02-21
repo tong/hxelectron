@@ -1,6 +1,6 @@
 package electron;
 /**
-	This type is a helper alias, no object will never exist of this type.
+	This type is a helper alias, no object will ever exist of this type.
 	@see https://electronjs.org/docs/api/structures/user-default-types
 **/
 typedef UserDefaultTypes = {

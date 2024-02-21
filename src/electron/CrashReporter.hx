@@ -87,7 +87,7 @@ package electron;
 		
 		**Note:** This method is only available in the main process.
 	**/
-	static function getLastCrashReport():electron.CrashReport;
+	static function getLastCrashReport():haxe.extern.EitherType<electron.CrashReport, Dynamic>;
 	/**
 		Returns all uploaded crash reports. Each report contains the date and uploaded ID.
 		

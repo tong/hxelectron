@@ -632,7 +632,11 @@ var to : Float; }>; /**
 		Whether or not to generate a tagged (accessible) PDF. Defaults to false. As this property is experimental, the generated PDF may not adhere fully to PDF/UA and WCAG standards.
 	**/
 	@:optional
-	var generateTaggedPDF : Bool; }):js.lib.Promise<Any>;
+	var generateTaggedPDF : Bool; /**
+		Whether or not to generate a PDF document outline from content headers. Defaults to false.
+	**/
+	@:optional
+	var generateDocumentOutline : Bool; }):js.lib.Promise<Any>;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
@@ -1021,12 +1025,6 @@ var to : Float; }>; /**
 		**Note:** This will be emitted for `BrowserViews` but will _not_ be respected - this is because we have chosen not to tie the `BrowserView` lifecycle to its owning BrowserWindow should one exist per the specification.
 	**/
 	var will_prevent_unload : electron.remote.WebContentsEvent<Void -> Void> = "will-prevent-unload";
-	/**
-		Emitted when the renderer process crashes or is killed.
-		
-		**Deprecated:** This event is superceded by the `render-process-gone` event which contains more information about why the render process disappeared. It isn't always because it crashed.  The `killed` boolean can be replaced by checking `reason === 'killed'` when you switch to that event.
-	**/
-	var crashed : electron.remote.WebContentsEvent<Void -> Void> = "crashed";
 	/**
 		Emitted when the renderer process unexpectedly disappears.  This is normally because it was crashed or killed.
 	**/

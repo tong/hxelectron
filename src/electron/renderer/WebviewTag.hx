@@ -601,7 +601,11 @@ var to : Float; }>; /**
 		Whether or not to generate a tagged (accessible) PDF. Defaults to false. As this property is experimental, the generated PDF may not adhere fully to PDF/UA and WCAG standards.
 	**/
 	@:optional
-	var generateTaggedPDF : Bool; }):js.lib.Promise<Any>;
+	var generateTaggedPDF : Bool; /**
+		Whether or not to generate a PDF document outline from content headers. Defaults to false.
+	**/
+	@:optional
+	var generateDocumentOutline : Bool; }):js.lib.Promise<Any>;
 	/**
 		Resolves with a NativeImage
 		
