@@ -82,6 +82,6 @@ package electron.remote;
 	@:optional
 	var fetchWindowIcons : Bool; }):js.lib.Promise<Any>;
 }
-@:enum abstract DesktopCapturerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract DesktopCapturerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

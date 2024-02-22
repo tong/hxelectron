@@ -67,6 +67,6 @@ package electron;
 	**/
 	static function readShortcutLink(shortcutPath:String):electron.ShortcutDetails;
 }
-@:enum abstract ShellEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ShellEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

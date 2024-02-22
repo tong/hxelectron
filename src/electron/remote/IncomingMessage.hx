@@ -38,7 +38,7 @@ package electron.remote;
 	**/
 	var rawHeaders : Array<String>;
 }
-@:enum abstract IncomingMessageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract IncomingMessageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		The `data` event is the usual method of transferring response data into applicative code.
 	**/

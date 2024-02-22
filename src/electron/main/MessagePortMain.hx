@@ -16,7 +16,7 @@ package electron.main;
 	**/
 	function close():Void;
 }
-@:enum abstract MessagePortMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract MessagePortMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when a MessagePortMain object receives a message.
 	**/

@@ -75,7 +75,7 @@ package electron.remote;
 	**/
 	static function dipToScreenRect(window:haxe.extern.EitherType<electron.remote.BrowserWindow, Dynamic>, rect:electron.Rectangle):electron.Rectangle;
 }
-@:enum abstract ScreenEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ScreenEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when `newDisplay` has been added.
 	**/

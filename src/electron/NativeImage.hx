@@ -186,6 +186,6 @@ package electron;
 	@:optional
 	var dataURL : String; }):Void;
 }
-@:enum abstract NativeImageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NativeImageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

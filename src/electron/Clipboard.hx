@@ -102,6 +102,6 @@ package electron;
 	@:optional
 	var bookmark : String; }, ?type:String):Void;
 }
-@:enum abstract ClipboardEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ClipboardEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

@@ -31,6 +31,6 @@ package electron.remote;
 	@:optional
 	var showCloseButton : Bool; }):Void;
 }
-@:enum abstract TouchBarPopoverEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarPopoverEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

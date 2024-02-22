@@ -491,7 +491,7 @@ package electron.main;
 	**/
 	function getStoragePath():haxe.extern.EitherType<String, Dynamic>;
 }
-@:enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron is about to download `item` in `webContents`.
 		

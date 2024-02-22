@@ -13,6 +13,6 @@ package electron.renderer;
 	**/
 	static function getPathForFile(file:File):String;
 }
-@:enum abstract WebUtilsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract WebUtilsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

@@ -46,6 +46,6 @@ package electron.remote;
 	**/
 	static function stopLogging():js.lib.Promise<Any>;
 }
-@:enum abstract NetLogEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NetLogEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

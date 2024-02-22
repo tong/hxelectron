@@ -92,7 +92,7 @@ package electron.main;
 	**/
 	function insert(pos:Int, menuItem:electron.main.MenuItem):Void;
 }
-@:enum abstract MenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract MenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when `menu.popup()` is called.
 	**/

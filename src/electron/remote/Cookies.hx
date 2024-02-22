@@ -95,7 +95,7 @@ package electron.remote;
 	**/
 	function flushStore():js.lib.Promise<Any>;
 }
-@:enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when a cookie is changed because it was added, edited, removed, or expired.
 	**/

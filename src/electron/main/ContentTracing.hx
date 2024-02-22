@@ -48,6 +48,6 @@ package electron.main;
 	**/
 	static function getTraceBufferUsage():js.lib.Promise<Any>;
 }
-@:enum abstract ContentTracingEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ContentTracingEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

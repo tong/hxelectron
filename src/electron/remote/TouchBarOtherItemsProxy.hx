@@ -10,6 +10,6 @@ package electron.remote;
 @:jsRequire("electron", "remote.TouchBarOtherItemsProxy") extern class TouchBarOtherItemsProxy extends js.node.events.EventEmitter<electron.remote.TouchBarOtherItemsProxy> {
 	function new():Void;
 }
-@:enum abstract TouchBarOtherItemsProxyEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarOtherItemsProxyEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

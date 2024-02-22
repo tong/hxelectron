@@ -22,6 +22,6 @@ package electron.main;
 	**/
 	function closePopup(?browserWindow:electron.main.BrowserWindow):Void;
 }
-@:enum abstract ShareMenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ShareMenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

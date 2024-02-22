@@ -44,6 +44,6 @@ package electron.main;
 	@:optional
 	var change : haxe.Constraints.Function; }):Void;
 }
-@:enum abstract TouchBarSliderEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarSliderEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

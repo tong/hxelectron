@@ -53,6 +53,6 @@ package electron.remote;
 	**/
 	static function unregisterAll():Void;
 }
-@:enum abstract GlobalShortcutEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract GlobalShortcutEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

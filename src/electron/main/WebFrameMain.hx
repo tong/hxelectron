@@ -103,7 +103,7 @@ package electron.main;
 	**/
 	function postMessage(channel:String, message:Any, ?transfer:Array<electron.main.MessagePortMain>):Void;
 }
-@:enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the document is loaded.
 	**/

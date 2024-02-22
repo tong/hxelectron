@@ -185,7 +185,7 @@ package electron;
 	**/
 	static function setFdLimit(maxDescriptors:Int):Void;
 }
-@:enum abstract ProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron has loaded its internal initialization script and is beginning to load the web page or the main script.
 	**/

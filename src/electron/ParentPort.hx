@@ -13,7 +13,7 @@ package electron;
 	**/
 	static function postMessage(message:Any):Void;
 }
-@:enum abstract ParentPortEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ParentPortEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the process receives a message. Messages received on this port will be queued up until a handler is registered for this event.
 	**/

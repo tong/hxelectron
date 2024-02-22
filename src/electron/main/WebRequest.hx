@@ -46,6 +46,6 @@ package electron.main;
 	**/
 	function onErrorOccurred(?filter:electron.WebRequestFilter, listener:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 }
-@:enum abstract WebRequestEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract WebRequestEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

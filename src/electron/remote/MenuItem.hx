@@ -170,6 +170,6 @@ package electron.remote;
 	@:optional
 	var afterGroupContaining : Array<String>; }):Void;
 }
-@:enum abstract MenuItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract MenuItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

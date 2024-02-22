@@ -12,6 +12,6 @@ package electron.remote;
 	**/
 	var port2 : electron.remote.MessagePortMain;
 }
-@:enum abstract MessageChannelMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract MessageChannelMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

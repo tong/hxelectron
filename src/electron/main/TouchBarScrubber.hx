@@ -74,6 +74,6 @@ package electron.main;
 	@:optional
 	var continuous : Bool; }):Void;
 }
-@:enum abstract TouchBarScrubberEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarScrubberEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

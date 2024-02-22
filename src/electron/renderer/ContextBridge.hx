@@ -35,6 +35,6 @@ package electron.renderer;
 	static function exposeInMainWorld(apiKey:String, api:Any):Void;
 	static function exposeInIsolatedWorld(worldId:Int, apiKey:String, api:Any):Void;
 }
-@:enum abstract ContextBridgeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ContextBridgeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

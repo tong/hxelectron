@@ -14,7 +14,7 @@ package electron.main;
 	**/
 	function getFromVersionID(versionId:Float):electron.ServiceWorkerInfo;
 }
-@:enum abstract ServiceWorkersEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ServiceWorkersEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when a service worker logs something to the console.
 	**/

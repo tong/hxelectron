@@ -50,6 +50,6 @@ package electron.main;
 	static function finishTransactionByDate(date:String):Void;
 	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
 }
-@:enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	var transactions_updated : electron.main.InAppPurchaseEvent<Void -> Void> = "transactions-updated";
 }

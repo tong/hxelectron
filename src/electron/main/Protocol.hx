@@ -180,6 +180,6 @@ package electron.main;
 	**/
 	static function isProtocolIntercepted(scheme:String):Bool;
 }
-@:enum abstract ProtocolEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ProtocolEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

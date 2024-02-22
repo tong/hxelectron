@@ -178,7 +178,7 @@ package electron.main;
 	**/
 	static function getAnimationSettings():Any;
 }
-@:enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	var accent_color_changed : electron.main.SystemPreferencesEvent<Void -> Void> = "accent-color-changed";
 	var color_changed : electron.main.SystemPreferencesEvent<Void -> Void> = "color-changed";
 }

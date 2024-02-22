@@ -51,7 +51,7 @@ package electron;
 	**/
 	function kill():Bool;
 }
-@:enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted once the child process has spawned successfully.
 	**/

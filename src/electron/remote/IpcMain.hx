@@ -57,6 +57,6 @@ package electron.remote;
 	**/
 	static function removeHandler(channel:String):Void;
 }
-@:enum abstract IpcMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract IpcMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }

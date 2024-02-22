@@ -54,6 +54,6 @@ package electron.remote;
 	**/
 	function setIcon(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;
 }
-@:enum abstract DockEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract DockEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 
 }
