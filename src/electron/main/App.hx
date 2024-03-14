@@ -637,6 +637,11 @@ package electron.main;
 		**Note:** Enable `Secure Keyboard Entry` only when it is needed and disable it when it is no longer needed.
 	**/
 	static function setSecureKeyboardEntryEnabled(enabled:Bool):Void;
+	static function setProxy(config:electron.ProxyConfig):Void;
+	/**
+		Resolves with the proxy information for `url` that will be used when attempting to make requests using Net in the utility process.
+	**/
+	static function resolveProxy(url:String):js.lib.Promise<Any>;
 	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
 }
 enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
