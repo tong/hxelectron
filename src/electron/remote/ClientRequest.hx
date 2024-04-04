@@ -23,6 +23,10 @@ package electron.remote;
 	**/
 	@:optional
 	var url : String; /**
+		Headers to be sent with the request.
+	**/
+	@:optional
+	var headers : Record; /**
 		The `Session` instance with which the request is associated.
 	**/
 	@:optional
