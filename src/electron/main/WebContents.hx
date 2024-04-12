@@ -79,6 +79,10 @@ package electron.main;
 	**/
 	var session : electron.main.Session;
 	/**
+		A `NavigationHistory` used by this webContents.
+	**/
+	var navigationHistory : electron.main.NavigationHistory;
+	/**
 		A `WebContents` instance that might own this `WebContents`.
 	**/
 	var hostWebContents : electron.main.WebContents;

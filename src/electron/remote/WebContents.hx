@@ -79,6 +79,10 @@ package electron.remote;
 	**/
 	var session : electron.remote.Session;
 	/**
+		A `NavigationHistory` used by this webContents.
+	**/
+	var navigationHistory : electron.remote.NavigationHistory;
+	/**
 		A `WebContents` instance that might own this `WebContents`.
 	**/
 	var hostWebContents : electron.remote.WebContents;
