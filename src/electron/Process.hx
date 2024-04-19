@@ -19,7 +19,6 @@ package electron;
 	* `getSystemMemoryInfo()`
 	* `getSystemVersion()`
 	* `getCPUUsage()`
-	* `getIOCounters()`
 	* `uptime()`
 	* `argv`
 	* `execPath`
@@ -123,7 +122,6 @@ package electron;
 	**/
 	static function getCreationTime():haxe.extern.EitherType<Float, Dynamic>;
 	static function getCPUUsage():electron.CPUUsage;
-	static function getIOCounters():electron.IOCounters;
 	/**
 		* `totalHeapSize` Integer
 		* `totalHeapSizeExecutable` Integer

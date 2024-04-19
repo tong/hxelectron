@@ -72,7 +72,7 @@ package electron.remote;
 	
 	### Modal windows
 	
-	A modal window is a child window that disables parent window, to create a modal window, you have to set both `parent` and `modal` options:
+	A modal window is a child window that disables parent window. To create a modal window, you have to set both the `parent` and `modal` options:
 	
 	```
 	const { BrowserWindow } = require('electron')
@@ -103,7 +103,7 @@ package electron.remote;
 	* On Linux the type of modal windows will be changed to `dialog`.
 	* On Linux many desktop environments do not support hiding a modal window.
 	
-	### Class: BrowserWindow
+	### Class: BrowserWindow extends `BaseWindow`
 	
 	> Create and control browser windows.
 	
@@ -128,6 +128,8 @@ package electron.remote;
 	**/
 	static function fromWebContents(webContents:electron.remote.WebContents):haxe.extern.EitherType<electron.remote.BrowserWindow, Dynamic>;
 	/**
+		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		
 		The window that owns the given `browserView`. If the given view is not attached to any window, returns `null`.
 	**/
 	static function fromBrowserView(browserView:electron.remote.BrowserView):haxe.extern.EitherType<electron.remote.BrowserWindow, Dynamic>;
@@ -356,16 +358,16 @@ package electron.remote;
 		  * #ffffff (RGB)
 		  * #ffffffff (ARGB)
 		* RGB
-		  * rgb(([\d]+),\s*([\d]+),\s*([\d]+))
+		  * `rgb\(([\d]+),\s*([\d]+),\s*([\d]+)\)`
 		    * e.g. rgb(255, 255, 255)
 		* RGBA
-		  * rgba(([\d]+),\s*([\d]+),\s*([\d]+),\s*([\d.]+))
+		  * `rgba\(([\d]+),\s*([\d]+),\s*([\d]+),\s*([\d.]+)\)`
 		    * e.g. rgba(255, 255, 255, 1.0)
 		* HSL
-		  * hsl((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%)
+		  * `hsl\((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%\)`
 		    * e.g. hsl(200, 20%, 50%)
 		* HSLA
-		  * hsla((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+))
+		  * `hsla\((-?[\d.]+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)`
 		    * e.g. hsla(200, 20%, 50%, 0.5)
 		* Color name
 		  * Options are listed in SkParseColor.cpp
@@ -954,24 +956,36 @@ package electron.remote;
 		**Note:** The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	function setTouchBar(touchBar:haxe.extern.EitherType<electron.remote.TouchBar, Dynamic>):Void;
+	/**
+		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+	**/
 	function setBrowserView(browserView:haxe.extern.EitherType<electron.remote.BrowserView, Dynamic>):Void;
 	/**
 		The `BrowserView` attached to `win`. Returns `null` if one is not attached. Throws an error if multiple `BrowserView`s are attached.
+		
+		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function getBrowserView():haxe.extern.EitherType<electron.remote.BrowserView, Dynamic>;
 	/**
 		Replacement API for setBrowserView supporting work with multi browser views.
+		
+		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function addBrowserView(browserView:electron.remote.BrowserView):Void;
+	/**
+		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+	**/
 	function removeBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
 		Raises `browserView` above other `BrowserView`s attached to `win`. Throws an error if `browserView` is not attached to `win`.
+		
+		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function setTopBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
 		a sorted by z-index array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`. The top-most BrowserView is the last element of the array.
 		
-		**Note:** The BrowserView API is currently experimental and may change or be removed in future Electron releases.
+		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function getBrowserViews():Array<electron.remote.BrowserView>;
 	/**

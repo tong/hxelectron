@@ -653,6 +653,8 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	var will_finish_launching : electron.main.AppEvent<Void -> Void> = "will-finish-launching";
 	/**
 		Emitted once, when Electron has finished initializing. On macOS, `launchInfo` holds the `userInfo` of the `NSUserNotification` or information from `UNNotificationResponse` that was used to open the application, if it was launched from Notification Center. You can also call `app.isReady()` to check if this event has already fired and `app.whenReady()` to get a Promise that is fulfilled when Electron is initialized.
+		
+		**Note**: The `ready` event is only fired after the main process has finished running the first tick of the event loop. If an Electron API needs to be called before the `ready` event, ensure that it is called synchronously in the top-level context of the main process.
 	**/
 	var ready : electron.main.AppEvent<Void -> Void> = "ready";
 	/**

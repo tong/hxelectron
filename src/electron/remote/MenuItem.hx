@@ -153,19 +153,19 @@ package electron.remote;
 	**/
 	@:optional
 	var id : String; /**
-		Inserts this item before the item with the specified label. If the referenced item doesn't exist the item will be inserted at the end of  the menu. Also implies that the menu item in question should be placed in the same “group” as the item.
+		Inserts this item before the item with the specified id. If the referenced item doesn't exist the item will be inserted at the end of  the menu. Also implies that the menu item in question should be placed in the same “group” as the item.
 	**/
 	@:optional
 	var before : Array<String>; /**
-		Inserts this item after the item with the specified label. If the referenced item doesn't exist the item will be inserted at the end of the menu.
+		Inserts this item after the item with the specified id. If the referenced item doesn't exist the item will be inserted at the end of the menu.
 	**/
 	@:optional
 	var after : Array<String>; /**
-		Provides a means for a single context menu to declare the placement of their containing group before the containing group of the item with the specified label.
+		Provides a means for a single context menu to declare the placement of their containing group before the containing group of the item with the specified id.
 	**/
 	@:optional
 	var beforeGroupContaining : Array<String>; /**
-		Provides a means for a single context menu to declare the placement of their containing group after the containing group of the item with the specified label.
+		Provides a means for a single context menu to declare the placement of their containing group after the containing group of the item with the specified id.
 	**/
 	@:optional
 	var afterGroupContaining : Array<String>; }):Void;

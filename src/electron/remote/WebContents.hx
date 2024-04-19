@@ -1088,6 +1088,10 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	**/
 	var devtools_open_url : electron.remote.WebContentsEvent<Void -> Void> = "devtools-open-url";
 	/**
+		Emitted when 'Search' is selected for text in its context menu.
+	**/
+	var devtools_search_query : electron.remote.WebContentsEvent<Void -> Void> = "devtools-search-query";
+	/**
 		Emitted when DevTools is opened.
 	**/
 	var devtools_opened : electron.remote.WebContentsEvent<Void -> Void> = "devtools-opened";

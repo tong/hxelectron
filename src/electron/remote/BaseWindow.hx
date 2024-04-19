@@ -1,100 +1,36 @@
-package electron.main;
+package electron.remote;
 /**
-	> Create and control browser windows.
+	> Create and control windows.
 	
 	Process: Main
 	
+	> **Note** `BaseWindow` provides a flexible way to compose multiple web views in a single window. For windows with only a single, full-size web view, the `BrowserWindow` class may be a simpler option.
+	
 	This module cannot be used until the `ready` event of the `app` module is emitted.
-	
-	### Window customization
-	
-	The `BrowserWindow` class exposes various ways to modify the look and behavior of your app's windows. For more details, see the Window Customization tutorial.
-	
-	### Showing the window gracefully
-	
-	When loading a page in the window directly, users may see the page load incrementally, which is not a good experience for a native app. To make the window display without a visual flash, there are two solutions for different situations.
-	
-	### Using the `ready-to-show` event
-	
-	While loading the page, the `ready-to-show` event will be emitted when the renderer process has rendered the page for the first time if the window has not been shown yet. Showing the window after this event will have no visual flash:
-	
-	```
-	const { BrowserWindow } = require('electron')
-	const win = new BrowserWindow({ show: false })
-	win.once('ready-to-show', () => {
-	  win.show()
-	})
-	```
-	
-	This event is usually emitted after the `did-finish-load` event, but for pages with many remote resources, it may be emitted before the `did-finish-load` event.
-	
-	Please note that using this event implies that the renderer will be considered "visible" and paint even though `show` is false.  This event will never fire if you use `paintWhenInitiallyHidden: false`
-	
-	### Setting the `backgroundColor` property
-	
-	For a complex app, the `ready-to-show` event could be emitted too late, making the app feel slow. In this case, it is recommended to show the window immediately, and use a `backgroundColor` close to your app's background:
-	
-	```
-	const { BrowserWindow } = require('electron')
-	
-	const win = new BrowserWindow({ backgroundColor: '#2e2c29' })
-	win.loadURL('https://github.com')
-	```
-	
-	Note that even for apps that use `ready-to-show` event, it is still recommended to set `backgroundColor` to make the app feel more native.
-	
-	Some examples of valid `backgroundColor` values include:
-	
-	```
-	const win = new BrowserWindow()
-	win.setBackgroundColor('hsl(230, 100%, 50%)')
-	win.setBackgroundColor('rgb(255, 145, 145)')
-	win.setBackgroundColor('#ff00a3')
-	win.setBackgroundColor('blueviolet')
-	```
-	
-	For more information about these color types see valid options in win.setBackgroundColor.
 	
 	### Parent and child windows
 	
 	By using `parent` option, you can create child windows:
 	
 	```
-	const { BrowserWindow } = require('electron')
+	const { BaseWindow } = require('electron')
 	
-	const top = new BrowserWindow()
-	const child = new BrowserWindow({ parent: top })
-	child.show()
-	top.show()
+	const parent = new BaseWindow()
+	const child = new BaseWindow({ parent })
 	```
 	
-	The `child` window will always show on top of the `top` window.
+	The `child` window will always show on top of the `parent` window.
 	
 	### Modal windows
 	
 	A modal window is a child window that disables parent window. To create a modal window, you have to set both the `parent` and `modal` options:
 	
 	```
-	const { BrowserWindow } = require('electron')
+	const { BaseWindow } = require('electron')
 	
-	const top = new BrowserWindow()
-	const child = new BrowserWindow({ parent: top, modal: true, show: false })
-	child.loadURL('https://github.com')
-	child.once('ready-to-show', () => {
-	  child.show()
-	})
+	const parent = new BaseWindow()
+	const child = new BaseWindow({ parent, modal: true })
 	```
-	
-	### Page visibility
-	
-	The Page Visibility API works as follows:
-	
-	* On all platforms, the visibility state tracks whether the window is hidden/minimized or not.
-	* Additionally, on macOS, the visibility state also tracks the window occlusion state. If the window is occluded (i.e. fully covered) by another window, the visibility state will be `hidden`. On other platforms, the visibility state will be `hidden` only when the window is minimized or explicitly hidden with `win.hide()`.
-	* If a `BrowserWindow` is created with `show: false`, the initial visibility state will be `visible` despite the window actually being hidden.
-	* If `backgroundThrottling` is disabled, the visibility state will remain `visible` even if the window is minimized, occluded, or hidden.
-	
-	It is recommended that you pause expensive operations when the visibility state is `hidden` in order to minimize power consumption.
 	
 	### Platform notices
 	
@@ -103,50 +39,38 @@ package electron.main;
 	* On Linux the type of modal windows will be changed to `dialog`.
 	* On Linux many desktop environments do not support hiding a modal window.
 	
-	### Class: BrowserWindow extends `BaseWindow`
+	### Class: BaseWindow
 	
-	> Create and control browser windows.
+	> Create and control windows.
 	
 	Process: Main
 	
-	`BrowserWindow` is an EventEmitter.
+	`BaseWindow` is an EventEmitter.
 	
-	It creates a new `BrowserWindow` with native properties as set by the `options`.
-	@see https://electronjs.org/docs/api/browser-window
+	It creates a new `BaseWindow` with native properties as set by the `options`.
+	@see https://electronjs.org/docs/api/base-window
 **/
-@:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
+@:jsRequire("electron", "remote.BaseWindow") extern class BaseWindow extends js.node.events.EventEmitter<electron.remote.BaseWindow> {
 	/**
 		An array of all opened browser windows.
 	**/
-	static function getAllWindows():Array<electron.main.BrowserWindow>;
+	static function getAllWindows():Array<electron.remote.BaseWindow>;
 	/**
 		The window that is focused in this application, otherwise returns `null`.
 	**/
-	static function getFocusedWindow():haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
-	/**
-		The window that owns the given `webContents` or `null` if the contents are not owned by a window.
-	**/
-	static function fromWebContents(webContents:electron.main.WebContents):haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
-	/**
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
-		
-		The window that owns the given `browserView`. If the given view is not attached to any window, returns `null`.
-	**/
-	static function fromBrowserView(browserView:electron.main.BrowserView):haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
+	static function getFocusedWindow():haxe.extern.EitherType<electron.remote.BaseWindow, Dynamic>;
 	/**
 		The window with the given `id`.
 	**/
-	static function fromId(id:Int):haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
+	static function fromId(id:Int):haxe.extern.EitherType<electron.remote.BaseWindow, Dynamic>;
 	/**
-		A `WebContents` object this window owns. All web page related events and operations will be done via it.
-		
-		See the `webContents` documentation for its methods and events.
-	**/
-	var webContents : electron.main.WebContents;
-	/**
-		A `Integer` property representing the unique ID of the window. Each ID is unique among all `BrowserWindow` instances of the entire Electron application.
+		A `Integer` property representing the unique ID of the window. Each ID is unique among all `BaseWindow` instances of the entire Electron application.
 	**/
 	var id : Int;
+	/**
+		A `View` property for the content view of the window.
+	**/
+	var contentView : electron.remote.View;
 	/**
 		A `string` (optional) property that is equal to the `tabbingIdentifier` passed to the `BrowserWindow` constructor or `undefined` if none was set.
 	**/
@@ -246,7 +170,15 @@ package electron.main;
 		A `string` property that defines an alternative title provided only to accessibility tools such as screen readers. This string is not directly visible to users.
 	**/
 	var accessibleTitle : String;
-	function new(?options:electron.BrowserWindowConstructorOptions):Void;
+	function new(?options:electron.BaseWindowConstructorOptions):Void;
+	/**
+		Sets the content view of the window.
+	**/
+	function setContentView(view:electron.remote.View):Void;
+	/**
+		Returns View - The content view of the window.
+	**/
+	function getContentView():Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
 	**/
@@ -633,77 +565,10 @@ package electron.main;
 		Whether the window's document has been edited.
 	**/
 	function isDocumentEdited():Bool;
-	function focusOnWebView():Void;
-	function blurWebView():Void;
-	/**
-		Resolves with a NativeImage
-		
-		Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page. If the page is not visible, `rect` may be empty. The page is considered visible when its browser window is hidden and the capturer count is non-zero. If you would like the page to stay hidden, you should ensure that `stayHidden` is set to true.
-	**/
-	function capturePage(?rect:electron.Rectangle, ?opts:{ /**
-		Keep the page hidden instead of visible. Default is `false`.
-	**/
-	@:optional
-	var stayHidden : Bool; /**
-		Keep the system awake instead of allowing it to sleep. Default is `false`.
-	**/
-	@:optional
-	var stayAwake : Bool; }):js.lib.Promise<Any>;
-	/**
-		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
-		
-		Same as `webContents.loadURL(url[, options])`.
-		
-		The `url` can be a remote address (e.g. `http://`) or a path to a local HTML file using the `file://` protocol.
-		
-		To ensure that file URLs are properly formatted, it is recommended to use Node's `url.format` method:
-		
-		You can load a URL using a `POST` request with URL-encoded data by doing the following:
-	**/
-	function loadURL(url:String, ?options:{ /**
-		An HTTP Referrer URL.
-	**/
-	@:optional
-	var httpReferrer : haxe.extern.EitherType<String, electron.Referrer>; /**
-		A user agent originating the request.
-	**/
-	@:optional
-	var userAgent : String; /**
-		Extra headers separated by "\n"
-	**/
-	@:optional
-	var extraHeaders : String; @:optional
-	var postData : Array<haxe.extern.EitherType<electron.UploadRawData, electron.UploadFile>>; /**
-		Base URL (with trailing path separator) for files to be loaded by the data URL. This is needed only if the specified `url` is a data URL and needs to load other files.
-	**/
-	@:optional
-	var baseURLForDataURL : String; }):js.lib.Promise<Any>;
-	/**
-		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
-		
-		Same as `webContents.loadFile`, `filePath` should be a path to an HTML file relative to the root of your application.  See the `webContents` docs for more information.
-	**/
-	function loadFile(filePath:String, ?options:{ /**
-		Passed to `url.format()`.
-	**/
-	@:optional
-	var query : Record; /**
-		Passed to `url.format()`.
-	**/
-	@:optional
-	var search : String; /**
-		Passed to `url.format()`.
-	**/
-	@:optional
-	var hash : String; }):js.lib.Promise<Any>;
-	/**
-		Same as `webContents.reload`.
-	**/
-	function reload():Void;
 	/**
 		Sets the `menu` as the window's menu bar.
 	**/
-	function setMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
+	function setMenu(menu:haxe.extern.EitherType<electron.remote.Menu, Dynamic>):Void;
 	/**
 		Remove the window's menu bar.
 	**/
@@ -728,7 +593,7 @@ package electron.main;
 	/**
 		Invalidates the window shadow so that it is recomputed based on the current window shape.
 		
-		`BrowserWindows` that are transparent can sometimes leave behind visual artifacts on macOS. This method can be used to clear these artifacts when, for example, performing an animation.
+		`BaseWindow`s that are transparent can sometimes leave behind visual artifacts on macOS. This method can be used to clear these artifacts when, for example, performing an animation.
 	**/
 	function invalidateShadow():Void;
 	/**
@@ -811,10 +676,6 @@ package electron.main;
 	@:optional
 	var relaunchDisplayName : String; }):Void;
 	/**
-		Same as `webContents.showDefinitionForSelection()`.
-	**/
-	function showDefinitionForSelection():Void;
-	/**
 		Changes window icon.
 	**/
 	function setIcon(icon:haxe.extern.EitherType<electron.NativeImage, String>):Void;
@@ -889,15 +750,15 @@ package electron.main;
 	/**
 		Sets `parent` as current window's parent window, passing `null` will turn current window into a top-level window.
 	**/
-	function setParentWindow(parent:haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>):Void;
+	function setParentWindow(parent:haxe.extern.EitherType<electron.remote.BaseWindow, Dynamic>):Void;
 	/**
 		The parent window or `null` if there is no parent.
 	**/
-	function getParentWindow():haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>;
+	function getParentWindow():haxe.extern.EitherType<electron.remote.BaseWindow, Dynamic>;
 	/**
 		All child windows.
 	**/
-	function getChildWindows():Array<electron.main.BrowserWindow>;
+	function getChildWindows():Array<electron.remote.BaseWindow>;
 	/**
 		Controls whether to hide cursor when typing.
 	**/
@@ -929,9 +790,9 @@ package electron.main;
 	/**
 		Adds a window as a tab on this window, after the tab for the window instance.
 	**/
-	function addTabbedWindow(browserWindow:electron.main.BrowserWindow):Void;
+	function addTabbedWindow(baseWindow:electron.remote.BaseWindow):Void;
 	/**
-		Adds a vibrancy effect to the browser window. Passing `null` or an empty string will remove the vibrancy effect on the window.
+		Adds a vibrancy effect to the window. Passing `null` or an empty string will remove the vibrancy effect on the window.
 	**/
 	function setVibrancy(type:haxe.extern.EitherType<String, Dynamic>):Void;
 	/**
@@ -955,39 +816,7 @@ package electron.main;
 		
 		**Note:** The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
-	function setTouchBar(touchBar:haxe.extern.EitherType<electron.main.TouchBar, Dynamic>):Void;
-	/**
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
-	**/
-	function setBrowserView(browserView:haxe.extern.EitherType<electron.main.BrowserView, Dynamic>):Void;
-	/**
-		The `BrowserView` attached to `win`. Returns `null` if one is not attached. Throws an error if multiple `BrowserView`s are attached.
-		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
-	**/
-	function getBrowserView():haxe.extern.EitherType<electron.main.BrowserView, Dynamic>;
-	/**
-		Replacement API for setBrowserView supporting work with multi browser views.
-		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
-	**/
-	function addBrowserView(browserView:electron.main.BrowserView):Void;
-	/**
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
-	**/
-	function removeBrowserView(browserView:electron.main.BrowserView):Void;
-	/**
-		Raises `browserView` above other `BrowserView`s attached to `win`. Throws an error if `browserView` is not attached to `win`.
-		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
-	**/
-	function setTopBrowserView(browserView:electron.main.BrowserView):Void;
-	/**
-		a sorted by z-index array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`. The top-most BrowserView is the last element of the array.
-		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
-	**/
-	function getBrowserViews():Array<electron.main.BrowserView>;
+	function setTouchBar(touchBar:haxe.extern.EitherType<electron.remote.TouchBar, Dynamic>):Void;
 	/**
 		On a Window with Window Controls Overlay already enabled, this method updates the style of the title bar overlay.
 	**/
@@ -1005,11 +834,7 @@ package electron.main;
 	@:optional
 	var height : Int; }):Void;
 }
-enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
-	/**
-		Emitted when the document changed its title, calling `event.preventDefault()` will prevent the native window's title from changing. `explicitSet` is false when title is synthesized from file URL.
-	**/
-	var page_title_updated : electron.main.BrowserWindowEvent<Void -> Void> = "page-title-updated";
+enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the window is going to be closed. It's emitted before the `beforeunload` and `unload` event of the DOM. Calling `event.preventDefault()` will cancel the close.
 		
@@ -1017,61 +842,47 @@ enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 		
 		_**Note**: There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and `window.addEventListener('beforeunload', handler)`. It is recommended to always set the `event.returnValue` explicitly, instead of only returning a value, as the former works more consistently within Electron._
 	**/
-	var close : electron.main.BrowserWindowEvent<Void -> Void> = "close";
+	var close : electron.remote.BaseWindowEvent<Void -> Void> = "close";
 	/**
 		Emitted when the window is closed. After you have received this event you should remove the reference to the window and avoid using it any more.
 	**/
-	var closed : electron.main.BrowserWindowEvent<Void -> Void> = "closed";
+	var closed : electron.remote.BaseWindowEvent<Void -> Void> = "closed";
 	/**
 		Emitted when window session is going to end due to force shutdown or machine restart or session log off.
 	**/
-	var session_end : electron.main.BrowserWindowEvent<Void -> Void> = "session-end";
-	/**
-		Emitted when the web page becomes unresponsive.
-	**/
-	var unresponsive : electron.main.BrowserWindowEvent<Void -> Void> = "unresponsive";
-	/**
-		Emitted when the unresponsive web page becomes responsive again.
-	**/
-	var responsive : electron.main.BrowserWindowEvent<Void -> Void> = "responsive";
+	var session_end : electron.remote.BaseWindowEvent<Void -> Void> = "session-end";
 	/**
 		Emitted when the window loses focus.
 	**/
-	var blur : electron.main.BrowserWindowEvent<Void -> Void> = "blur";
+	var blur : electron.remote.BaseWindowEvent<Void -> Void> = "blur";
 	/**
 		Emitted when the window gains focus.
 	**/
-	var focus : electron.main.BrowserWindowEvent<Void -> Void> = "focus";
+	var focus : electron.remote.BaseWindowEvent<Void -> Void> = "focus";
 	/**
 		Emitted when the window is shown.
 	**/
-	var show : electron.main.BrowserWindowEvent<Void -> Void> = "show";
+	var show : electron.remote.BaseWindowEvent<Void -> Void> = "show";
 	/**
 		Emitted when the window is hidden.
 	**/
-	var hide : electron.main.BrowserWindowEvent<Void -> Void> = "hide";
-	/**
-		Emitted when the web page has been rendered (while not being shown) and window can be displayed without a visual flash.
-		
-		Please note that using this event implies that the renderer will be considered "visible" and paint even though `show` is false.  This event will never fire if you use `paintWhenInitiallyHidden: false`
-	**/
-	var ready_to_show : electron.main.BrowserWindowEvent<Void -> Void> = "ready-to-show";
+	var hide : electron.remote.BaseWindowEvent<Void -> Void> = "hide";
 	/**
 		Emitted when window is maximized.
 	**/
-	var maximize : electron.main.BrowserWindowEvent<Void -> Void> = "maximize";
+	var maximize : electron.remote.BaseWindowEvent<Void -> Void> = "maximize";
 	/**
 		Emitted when the window exits from a maximized state.
 	**/
-	var unmaximize : electron.main.BrowserWindowEvent<Void -> Void> = "unmaximize";
+	var unmaximize : electron.remote.BaseWindowEvent<Void -> Void> = "unmaximize";
 	/**
 		Emitted when the window is minimized.
 	**/
-	var minimize : electron.main.BrowserWindowEvent<Void -> Void> = "minimize";
+	var minimize : electron.remote.BaseWindowEvent<Void -> Void> = "minimize";
 	/**
 		Emitted when the window is restored from a minimized state.
 	**/
-	var restore : electron.main.BrowserWindowEvent<Void -> Void> = "restore";
+	var restore : electron.remote.BaseWindowEvent<Void -> Void> = "restore";
 	/**
 		Emitted before the window is resized. Calling `event.preventDefault()` will prevent the window from being resized.
 		
@@ -1084,53 +895,45 @@ enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 		  * The value `bottom` is used to denote vertical resizing.
 		  * The value `right` is used to denote horizontal resizing.
 	**/
-	var will_resize : electron.main.BrowserWindowEvent<Void -> Void> = "will-resize";
+	var will_resize : electron.remote.BaseWindowEvent<Void -> Void> = "will-resize";
 	/**
 		Emitted after the window has been resized.
 	**/
-	var resize : electron.main.BrowserWindowEvent<Void -> Void> = "resize";
+	var resize : electron.remote.BaseWindowEvent<Void -> Void> = "resize";
 	/**
 		Emitted once when the window has finished being resized.
 		
 		This is usually emitted when the window has been resized manually. On macOS, resizing the window with `setBounds`/`setSize` and setting the `animate` parameter to `true` will also emit this event once resizing has finished.
 	**/
-	var resized : electron.main.BrowserWindowEvent<Void -> Void> = "resized";
+	var resized : electron.remote.BaseWindowEvent<Void -> Void> = "resized";
 	/**
 		Emitted before the window is moved. On Windows, calling `event.preventDefault()` will prevent the window from being moved.
 		
 		Note that this is only emitted when the window is being moved manually. Moving the window with `setPosition`/`setBounds`/`center` will not emit this event.
 	**/
-	var will_move : electron.main.BrowserWindowEvent<Void -> Void> = "will-move";
+	var will_move : electron.remote.BaseWindowEvent<Void -> Void> = "will-move";
 	/**
 		Emitted when the window is being moved to a new position.
 	**/
-	var move : electron.main.BrowserWindowEvent<Void -> Void> = "move";
+	var move : electron.remote.BaseWindowEvent<Void -> Void> = "move";
 	/**
 		Emitted once when the window is moved to a new position.
 		
 		**Note**: On macOS this event is an alias of `move`.
 	**/
-	var moved : electron.main.BrowserWindowEvent<Void -> Void> = "moved";
+	var moved : electron.remote.BaseWindowEvent<Void -> Void> = "moved";
 	/**
 		Emitted when the window enters a full-screen state.
 	**/
-	var enter_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "enter-full-screen";
+	var enter_full_screen : electron.remote.BaseWindowEvent<Void -> Void> = "enter-full-screen";
 	/**
 		Emitted when the window leaves a full-screen state.
 	**/
-	var leave_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "leave-full-screen";
-	/**
-		Emitted when the window enters a full-screen state triggered by HTML API.
-	**/
-	var enter_html_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "enter-html-full-screen";
-	/**
-		Emitted when the window leaves a full-screen state triggered by HTML API.
-	**/
-	var leave_html_full_screen : electron.main.BrowserWindowEvent<Void -> Void> = "leave-html-full-screen";
+	var leave_full_screen : electron.remote.BaseWindowEvent<Void -> Void> = "leave-full-screen";
 	/**
 		Emitted when the window is set or unset to show always on top of other windows.
 	**/
-	var always_on_top_changed : electron.main.BrowserWindowEvent<Void -> Void> = "always-on-top-changed";
+	var always_on_top_changed : electron.remote.BaseWindowEvent<Void -> Void> = "always-on-top-changed";
 	/**
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows.
 		
@@ -1141,33 +944,33 @@ enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 		* `browser-backward`
 		* `browser-forward`
 	**/
-	var app_command : electron.main.BrowserWindowEvent<Void -> Void> = "app-command";
+	var app_command : electron.remote.BaseWindowEvent<Void -> Void> = "app-command";
 	/**
 		Emitted on 3-finger swipe. Possible directions are `up`, `right`, `down`, `left`.
 		
 		The method underlying this event is built to handle older macOS-style trackpad swiping, where the content on the screen doesn't move with the swipe. Most macOS trackpads are not configured to allow this kind of swiping anymore, so in order for it to emit properly the 'Swipe between pages' preference in `System Preferences > Trackpad > More Gestures` must be set to 'Swipe with two or three fingers'.
 	**/
-	var swipe : electron.main.BrowserWindowEvent<Void -> Void> = "swipe";
+	var swipe : electron.remote.BaseWindowEvent<Void -> Void> = "swipe";
 	/**
 		Emitted on trackpad rotation gesture. Continually emitted until rotation gesture is ended. The `rotation` value on each emission is the angle in degrees rotated since the last emission. The last emitted event upon a rotation gesture will always be of value `0`. Counter-clockwise rotation values are positive, while clockwise ones are negative.
 	**/
-	var rotate_gesture : electron.main.BrowserWindowEvent<Void -> Void> = "rotate-gesture";
+	var rotate_gesture : electron.remote.BaseWindowEvent<Void -> Void> = "rotate-gesture";
 	/**
 		Emitted when the window opens a sheet.
 	**/
-	var sheet_begin : electron.main.BrowserWindowEvent<Void -> Void> = "sheet-begin";
+	var sheet_begin : electron.remote.BaseWindowEvent<Void -> Void> = "sheet-begin";
 	/**
 		Emitted when the window has closed a sheet.
 	**/
-	var sheet_end : electron.main.BrowserWindowEvent<Void -> Void> = "sheet-end";
+	var sheet_end : electron.remote.BaseWindowEvent<Void -> Void> = "sheet-end";
 	/**
 		Emitted when the native new tab button is clicked.
 	**/
-	var new_window_for_tab : electron.main.BrowserWindowEvent<Void -> Void> = "new-window-for-tab";
+	var new_window_for_tab : electron.remote.BaseWindowEvent<Void -> Void> = "new-window-for-tab";
 	/**
 		Emitted when the system context menu is triggered on the window, this is normally only triggered when the user right clicks on the non-client area of your window.  This is the window titlebar or any area you have declared as `-webkit-app-region: drag` in a frameless window.
 		
 		Calling `event.preventDefault()` will prevent the menu from being displayed.
 	**/
-	var system_context_menu : electron.main.BrowserWindowEvent<Void -> Void> = "system-context-menu";
+	var system_context_menu : electron.remote.BaseWindowEvent<Void -> Void> = "system-context-menu";
 }
