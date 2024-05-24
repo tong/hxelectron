@@ -21,6 +21,9 @@ package electron.main;
 	**/
 	var children : Array<electron.main.View>;
 	function new():Void;
+	/**
+		If the same View is added to a parent which already contains it, it will be reordered such that it becomes the topmost view.
+	**/
 	function addChildView(view:electron.main.View, ?index:Int):Void;
 	function removeChildView(view:electron.main.View):Void;
 	function setBounds(bounds:electron.Rectangle):Void;

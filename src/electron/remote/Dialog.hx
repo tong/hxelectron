@@ -75,7 +75,7 @@ package electron.remote;
 	@:optional
 	var securityScopedBookmarks : Bool; }):js.lib.Promise<Any>;
 	/**
-		the path of the file chosen by the user; if the dialog is cancelled it returns `undefined`.
+		the path of the file chosen by the user; if the dialog is cancelled it returns an empty string.
 		
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
 		
@@ -111,12 +111,12 @@ package electron.remote;
 		Create a security scoped bookmark when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.
 	**/
 	@:optional
-	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<String, Dynamic>;
+	var securityScopedBookmarks : Bool; }):String;
 	/**
 		Resolve with an object containing the following:
 		
 		* `canceled` boolean - whether or not the dialog was canceled.
-		* `filePath` string (optional) - If the dialog is canceled, this will be `undefined`.
+		* `filePath` string - If the dialog is canceled, this will be an empty string.
 		* `bookmark` string (optional) _macOS_ _mas_ - Base64 encoded string which contains the security scoped bookmark data for the saved file. `securityScopedBookmarks` must be enabled for this to be present. (For return values, see table here.)
 		
 		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
