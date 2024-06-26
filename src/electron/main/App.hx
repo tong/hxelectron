@@ -456,7 +456,7 @@ package electron.main;
 		
 		* `openAtLogin` boolean - `true` if the app is set to open at login.
 		* `openAsHidden` boolean _macOS_ _Deprecated_ - `true` if the app is set to open as hidden at login. This does not work on macOS 13 and up.
-		* `wasOpenedAtLogin` boolean _macOS_ _Deprecated_ - `true` if the app was opened at login automatically. This setting is not available on MAS builds or on macOS 13 and up.
+		* `wasOpenedAtLogin` boolean _macOS_ - `true` if the app was opened at login automatically.
 		* `wasOpenedAsHidden` boolean _macOS_ _Deprecated_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds or on macOS 13 and up.
 		* `restoreState` boolean _macOS_ _Deprecated_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds or on macOS 13 and up.
 		* `status` string _macOS_ - can be one of `not-registered`, `enabled`, `requires-approval`, or `not-found`.
@@ -497,7 +497,7 @@ package electron.main;
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		`true` to open the app as hidden. Defaults to `false`. The user can edit this setting from the System Preferences so `app.getLoginItemSettings().wasOpenedAsHidden` should be checked when the app is opened to know the current value. This setting is not available on MAS build s or on macOS 13 and up.
+		`true` to open the app as hidden. Defaults to `false`. The user can edit this setting from the System Preferences so `app.getLoginItemSettings().wasOpenedAsHidden` should be checked when the app is opened to know the current value. This setting is not available on MAS builds or on macOS 13 and up.
 	**/
 	@:optional
 	var openAsHidden : Bool; /**

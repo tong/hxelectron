@@ -2,7 +2,7 @@ package electron.main;
 /**
 	> Get system preferences.
 	
-	Process: Main
+	Process: Main, Utility
 	@see https://electronjs.org/docs/api/system-preferences
 **/
 @:jsRequire("electron", "systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.main.SystemPreferences> {

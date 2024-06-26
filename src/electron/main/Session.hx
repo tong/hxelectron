@@ -434,6 +434,38 @@ package electron.main;
 		The absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
 	**/
 	function getStoragePath():haxe.extern.EitherType<String, Dynamic>;
+	/**
+		resolves when all data has been cleared.
+		
+		Clears various different types of data.
+		
+		This method clears more types of data and is more thourough than the `clearStorageData` method.
+		
+		**Note:** Cookies are stored at a broader scope than origins. When removing cookies and filtering by `origins` (or `excludeOrigins`), the cookies will be removed at the registrable domain level. For example, clearing cookies for the origin `https://really.specific.origin.example.com/` will end up clearing all cookies for `example.com`. Clearing cookies for the origin `https://my.website.example.co.uk/` will end up clearing all cookies for `example.co.uk`.
+		
+		For more information, refer to Chromium's `BrowsingDataRemover` interface.
+	**/
+	function clearData(?options:{ /**
+		The types of data to clear. By default, this will clear all types of data.
+	**/
+	@:optional
+	var dataTypes : Array<String>; /**
+		Clear data for only these origins. Cannot be used with `excludeOrigins`.
+	**/
+	@:optional
+	var origins : Array<String>; /**
+		Clear data for all origins except these ones. Cannot be used with `origins`.
+	**/
+	@:optional
+	var excludeOrigins : Array<String>; /**
+		Skips deleting cookies that would close current network connections. (Default: `false`)
+	**/
+	@:optional
+	var avoidClosingConnections : Bool; /**
+		The behavior for matching data to origins.
+	**/
+	@:optional
+	var originMatchingMode : String; }):js.lib.Promise<Any>;
 }
 enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**

@@ -300,6 +300,8 @@ package electron.main;
 	function setIgnoreMenuShortcuts(ignore:Bool):Void;
 	/**
 		Called before creating a window a new window is requested by the renderer, e.g. by `window.open()`, a link with `target="_blank"`, shift+clicking on a link, or submitting a form with `<form target="_blank">`. See `window.open()` for more details and how to use this in conjunction with `did-create-window`.
+		
+		An example showing how to customize the process of new `BrowserWindow` creation to be `BrowserView` attached to main window instead:
 	**/
 	function setWindowOpenHandler(handler:haxe.Constraints.Function):Void;
 	/**

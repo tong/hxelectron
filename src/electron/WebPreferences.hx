@@ -241,4 +241,9 @@ typedef WebPreferences = {
 	**/
 	@:optional
 	var enablePreferredSizeMode : Bool;
+	/**
+		Whether to enable background transparency for the guest page. Default is `true`. **Note:** The guest page's text and background colors are derived from the color scheme of its root element. When transparency is enabled, the text color will still change accordingly but the background will remain transparent.
+	**/
+	@:optional
+	var transparent : Bool;
 }

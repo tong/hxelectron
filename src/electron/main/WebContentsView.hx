@@ -26,7 +26,11 @@ package electron.main;
 		Settings of web page's features.
 	**/
 	@:optional
-	var webPreferences : electron.WebPreferences; }):Void;
+	var webPreferences : electron.WebPreferences; /**
+		If present, the given WebContents will be adopted by the WebContentsView. A WebContents may only be presented in one WebContentsView at a time.
+	**/
+	@:optional
+	var webContents : electron.main.WebContents; }):Void;
 }
 enum abstract WebContentsViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 

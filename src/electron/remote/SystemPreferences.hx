@@ -2,7 +2,7 @@ package electron.remote;
 /**
 	> Get system preferences.
 	
-	Process: Main
+	Process: Main, Utility
 	@see https://electronjs.org/docs/api/system-preferences
 **/
 @:jsRequire("electron", "remote.systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.remote.SystemPreferences> {
