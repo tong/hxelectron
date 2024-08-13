@@ -323,6 +323,8 @@ package electron.main;
 	function setFullScreen(flag:Bool):Void;
 	/**
 		Whether the window is in fullscreen mode.
+		
+		**Note:** On macOS, fullscreen transitions take place asynchronously. When querying for a BrowserWindow's fullscreen status, you should ensure that either the 'enter-full-screen' or 'leave-full-screen' events have been emitted.
 	**/
 	function isFullScreen():Bool;
 	/**
@@ -989,7 +991,9 @@ package electron.main;
 	**/
 	function getBrowserViews():Array<electron.main.BrowserView>;
 	/**
-		On a Window with Window Controls Overlay already enabled, this method updates the style of the title bar overlay.
+		On a window with Window Controls Overlay already enabled, this method updates the style of the title bar overlay.
+		
+		On Linux, the `symbolColor` is automatically calculated to have minimum accessible contrast to the `color` if not explicitly set.
 	**/
 	function setTitleBarOverlay(options:{ /**
 		The CSS color of the Window Controls Overlay when enabled.

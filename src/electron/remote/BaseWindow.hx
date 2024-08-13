@@ -819,6 +819,8 @@ package electron.remote;
 	function setTouchBar(touchBar:haxe.extern.EitherType<electron.remote.TouchBar, Dynamic>):Void;
 	/**
 		On a Window with Window Controls Overlay already enabled, this method updates the style of the title bar overlay.
+		
+		On Linux, the `symbolColor` is automatically calculated to have minimum accessible contrast to the `color` if not explicitly set.
 	**/
 	function setTitleBarOverlay(options:{ /**
 		The CSS color of the Window Controls Overlay when enabled.

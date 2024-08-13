@@ -66,6 +66,10 @@ package electron.remote;
 	**/
 	function getFilename():String;
 	/**
+		The current download speed in bytes per second.
+	**/
+	function getCurrentBytesPerSecond():Int;
+	/**
 		The total size in bytes of the download item.
 		
 		If the size is unknown, it returns 0.
@@ -75,6 +79,10 @@ package electron.remote;
 		The received bytes of the download item.
 	**/
 	function getReceivedBytes():Int;
+	/**
+		The download completion in percent.
+	**/
+	function getPercentComplete():Int;
 	/**
 		The Content-Disposition field from the response header.
 	**/
@@ -101,6 +109,10 @@ package electron.remote;
 		Number of seconds since the UNIX epoch when the download was started.
 	**/
 	function getStartTime():Float;
+	/**
+		Number of seconds since the UNIX epoch when the download ended.
+	**/
+	function getEndTime():Float;
 }
 enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**

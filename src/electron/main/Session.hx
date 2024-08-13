@@ -491,6 +491,7 @@ enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 		Emitted after an extension is loaded and all necessary browser state is initialized to support the start of the extension's background page.
 	**/
 	var extension_ready : electron.main.SessionEvent<Void -> Void> = "extension-ready";
+	var file_system_access_restricted : electron.main.SessionEvent<Void -> Void> = "file-system-access-restricted";
 	/**
 		Emitted when a render process requests preconnection to a URL, generally due to a resource hint.
 	**/
