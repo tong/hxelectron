@@ -12,7 +12,7 @@ jobs:
       matrix:
         haxe:
           - latest
-          - 4.3.4
+          - 4.3.6
     steps:
       - name: Checkout
         uses: actions/checkout@v4
