@@ -214,34 +214,50 @@ package electron.main;
 	function reloadIgnoringCache():Void;
 	/**
 		Whether the browser can go back to previous web page.
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.canGoBack` API.
 	**/
 	function canGoBack():Bool;
 	/**
 		Whether the browser can go forward to next web page.
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.canGoForward` API.
 	**/
 	function canGoForward():Bool;
 	/**
 		Whether the web page can go to `offset`.
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.canGoToOffset` API.
 	**/
 	function canGoToOffset(offset:Int):Bool;
 	/**
 		Clears the navigation history.
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.clear` API.
 	**/
 	function clearHistory():Void;
 	/**
 		Makes the browser go back a web page.
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.goBack` API.
 	**/
 	function goBack():Void;
 	/**
 		Makes the browser go forward a web page.
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.goForward` API.
 	**/
 	function goForward():Void;
 	/**
 		Navigates browser to the specified absolute web page index.
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.goToIndex` API.
 	**/
 	function goToIndex(index:Int):Void;
 	/**
 		Navigates to the specified offset from the "current entry".
+		
+		**Deprecated:** Should use the new `contents.navigationHistory.goToOffset` API.
 	**/
 	function goToOffset(offset:Int):Void;
 	/**
@@ -403,11 +419,7 @@ package electron.main;
 		
 		Before:
 		
-		<img width="487" alt="Image Before Text Selection Adjustment" src="../images/web-contents-text-selection-before.png"/>
-		
 		After:
-		
-		<img width="487" alt="Image After Text Selection Adjustment" src="../images/web-contents-text-selection-after.png"/>
 	**/
 	function adjustSelection(options:{ /**
 		Amount to shift the start index of the current selection.

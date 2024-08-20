@@ -27,7 +27,11 @@ package electron;
 		With this flag, the utility process will be launched via the `Electron Helper (Plugin).app` helper executable on macOS, which can be codesigned with `com.apple.security.cs.disable-library-validation` and `com.apple.security.cs.allow-unsigned-executable-memory` entitlements. This will allow the utility process to load unsigned libraries. Unless you specifically need this capability, it is best to leave this disabled. Default is `false`.
 	**/
 	@:optional
-	var allowLoadingUnsignedLibraries : Bool; }):electron.UtilityProcess;
+	var allowLoadingUnsignedLibraries : Bool; /**
+		With this flag, all HTTP 401 and 407 network requests created via the net module will allow responding to them via the `app#login` event in the main process instead of the default `login` event on the `ClientRequest` object.
+	**/
+	@:optional
+	var respondToAuthRequestsFromMainProcess : Bool; }):electron.UtilityProcess;
 	/**
 		A `Integer | undefined` representing the process identifier (PID) of the child process. If the child process fails to spawn due to errors, then the value is `undefined`. When the child process exits, then the value is `undefined` after the `exit` event is emitted.
 	**/

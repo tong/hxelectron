@@ -2,7 +2,8 @@ package electron.main;
 /**
 	> Create a button in the touch bar for native macOS applications
 	
-	Process: Main<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
+	Process: Main
+	 _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
 	@see https://electronjs.org/docs/api/touch-bar-button
 **/
 @:jsRequire("electron", "TouchBarButton") extern class TouchBarButton extends js.node.events.EventEmitter<electron.main.TouchBarButton> {

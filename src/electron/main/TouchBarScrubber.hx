@@ -2,7 +2,8 @@ package electron.main;
 /**
 	> Create a scrubber (a scrollable selector)
 	
-	Process: Main<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
+	Process: Main
+	 _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
 	@see https://electronjs.org/docs/api/touch-bar-scrubber
 **/
 @:jsRequire("electron", "TouchBarScrubber") extern class TouchBarScrubber extends js.node.events.EventEmitter<electron.main.TouchBarScrubber> {

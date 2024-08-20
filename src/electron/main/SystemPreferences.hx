@@ -8,6 +8,8 @@ package electron.main;
 @:jsRequire("electron", "systemPreferences") extern class SystemPreferences extends js.node.events.EventEmitter<electron.main.SystemPreferences> {
 	/**
 		A `boolean` property which determines whether the app avoids using semitransparent backgrounds. This maps to NSWorkspace.accessibilityDisplayShouldReduceTransparency
+		
+		**Deprecated:** Use the new `nativeTheme.prefersReducedTransparency` API.
 	**/
 	static var accessibilityDisplayShouldReduceTransparency : Bool;
 	/**

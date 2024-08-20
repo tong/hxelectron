@@ -2,7 +2,8 @@ package electron.remote;
 /**
 	> Create a spacer between two items in the touch bar for native macOS applications
 	
-	Process: Main<br /> _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
+	Process: Main
+	 _This class is not exported from the `'electron'` module. It is only available as a return value of other methods in the Electron API._
 	@see https://electronjs.org/docs/api/touch-bar-spacer
 **/
 @:jsRequire("electron", "remote.TouchBarSpacer") extern class TouchBarSpacer extends js.node.events.EventEmitter<electron.remote.TouchBarSpacer> {

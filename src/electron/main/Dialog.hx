@@ -11,7 +11,7 @@ package electron.main;
 	/**
 		the file paths chosen by the user; if the dialog is cancelled it returns `undefined`.
 		
-		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
+		The `window` argument allows the dialog to attach itself to a parent window, making it modal.
 		
 		The `filters` specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example:
 		
@@ -19,7 +19,7 @@ package electron.main;
 		
 		**Note:** On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
 	**/
-	static function showOpenDialogSync(?browserWindow:electron.main.BrowserWindow, options:{ @:optional
+	static function showOpenDialogSync(?window:electron.main.BaseWindow, options:{ @:optional
 	var title : String; @:optional
 	var defaultPath : String; /**
 		Custom label for the confirmation button, when left empty the default label will be used.
@@ -46,7 +46,7 @@ package electron.main;
 		* `filePaths` string[] - An array of file paths chosen by the user. If the dialog is cancelled this will be an empty array.
 		* `bookmarks` string[] (optional) _macOS_ _mas_ - An array matching the `filePaths` array of base64 encoded strings which contains security scoped bookmark data. `securityScopedBookmarks` must be enabled for this to be populated. (For return values, see table here.)
 		
-		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
+		The `window` argument allows the dialog to attach itself to a parent window, making it modal.
 		
 		The `filters` specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example:
 		
@@ -54,7 +54,7 @@ package electron.main;
 		
 		**Note:** On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
 	**/
-	static function showOpenDialog(?browserWindow:electron.main.BrowserWindow, options:{ @:optional
+	static function showOpenDialog(?window:electron.main.BaseWindow, options:{ @:optional
 	var title : String; @:optional
 	var defaultPath : String; /**
 		Custom label for the confirmation button, when left empty the default label will be used.
@@ -77,11 +77,11 @@ package electron.main;
 	/**
 		the path of the file chosen by the user; if the dialog is cancelled it returns an empty string.
 		
-		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
+		The `window` argument allows the dialog to attach itself to a parent window, making it modal.
 		
 		The `filters` specifies an array of file types that can be displayed, see `dialog.showOpenDialog` for an example.
 	**/
-	static function showSaveDialogSync(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showSaveDialogSync(?window:electron.main.BaseWindow, options:{ /**
 		The dialog title. Cannot be displayed on some _Linux_ desktop environments.
 	**/
 	@:optional
@@ -119,13 +119,13 @@ package electron.main;
 		* `filePath` string - If the dialog is canceled, this will be an empty string.
 		* `bookmark` string (optional) _macOS_ _mas_ - Base64 encoded string which contains the security scoped bookmark data for the saved file. `securityScopedBookmarks` must be enabled for this to be present. (For return values, see table here.)
 		
-		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
+		The `window` argument allows the dialog to attach itself to a parent window, making it modal.
 		
 		The `filters` specifies an array of file types that can be displayed, see `dialog.showOpenDialog` for an example.
 		
 		**Note:** On macOS, using the asynchronous version is recommended to avoid issues when expanding and collapsing the dialog.
 	**/
-	static function showSaveDialog(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showSaveDialog(?window:electron.main.BaseWindow, options:{ /**
 		The dialog title. Cannot be displayed on some _Linux_ desktop environments.
 	**/
 	@:optional
@@ -161,9 +161,9 @@ package electron.main;
 		
 		Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button.
 		
-		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal. If `browserWindow` is not shown dialog will not be attached to it. In such case it will be displayed as an independent window.
+		The `window` argument allows the dialog to attach itself to a parent window, making it modal. If `window` is not shown dialog will not be attached to it. In such case it will be displayed as an independent window.
 	**/
-	static function showMessageBoxSync(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showMessageBoxSync(?window:electron.main.BaseWindow, options:{ /**
 		Content of the message box.
 	**/
 	var message : String; /**
@@ -212,9 +212,9 @@ package electron.main;
 		
 		Shows a message box.
 		
-		The `browserWindow` argument allows the dialog to attach itself to a parent window, making it modal.
+		The `window` argument allows the dialog to attach itself to a parent window, making it modal.
 	**/
-	static function showMessageBox(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showMessageBox(?window:electron.main.BaseWindow, options:{ /**
 		Content of the message box.
 	**/
 	var message : String; /**
@@ -276,14 +276,14 @@ package electron.main;
 	/**
 		resolves when the certificate trust dialog is shown.
 		
-		On macOS, this displays a modal dialog that shows a message and certificate information, and gives the user the option of trusting/importing the certificate. If you provide a `browserWindow` argument the dialog will be attached to the parent window, making it modal.
+		On macOS, this displays a modal dialog that shows a message and certificate information, and gives the user the option of trusting/importing the certificate. If you provide a `window` argument the dialog will be attached to the parent window, making it modal.
 		
 		On Windows the options are more limited, due to the Win32 APIs used:
 		
 		* The `message` argument is not used, as the OS provides its own confirmation dialog.
-		* The `browserWindow` argument is ignored since it is not possible to make this confirmation dialog modal.
+		* The `window` argument is ignored since it is not possible to make this confirmation dialog modal.
 	**/
-	static function showCertificateTrustDialog(?browserWindow:electron.main.BrowserWindow, options:{ /**
+	static function showCertificateTrustDialog(?window:electron.main.BaseWindow, options:{ /**
 		The certificate to trust/import.
 	**/
 	var certificate : electron.Certificate; /**

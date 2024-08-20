@@ -52,6 +52,10 @@ package electron.remote;
 		A `boolean` indicating whether Chromium is in forced colors mode, controlled by system accessibility settings. Currently, Windows high contrast is the only system setting that triggers forced colors mode.
 	**/
 	static var inForcedColorsMode : Bool;
+	/**
+		A `boolean` that indicates the whether the user has chosen via system accessibility settings to reduce transparency at the OS level.
+	**/
+	static var prefersReducedTransparency : Bool;
 }
 enum abstract NativeThemeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**

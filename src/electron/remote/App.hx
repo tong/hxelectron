@@ -575,7 +575,7 @@ package electron.remote;
 	**/
 	@:optional
 	var website : String; /**
-		Path to the app's icon in a JPEG or PNG file format. On Linux, will be shown as 64x64 pixels while retaining aspect ratio.
+		Path to the app's icon in a JPEG or PNG file format. On Linux, will be shown as 64x64 pixels while retaining aspect ratio. On Windows, a 48x48 PNG will result in the best visual quality.
 	**/
 	@:optional
 	var iconPath : String; }):Void;
@@ -764,7 +764,7 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	**/
 	var select_client_certificate : electron.remote.AppEvent<Void -> Void> = "select-client-certificate";
 	/**
-		Emitted when `webContents` wants to do basic auth.
+		Emitted when `webContents` or Utility process wants to do basic auth.
 		
 		The default behavior is to cancel all authentications. To override this you should prevent the default behavior with `event.preventDefault()` and call `callback(username, password)` with the credentials.
 		
