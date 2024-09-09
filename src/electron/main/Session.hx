@@ -439,7 +439,7 @@ package electron.main;
 		
 		Clears various different types of data.
 		
-		This method clears more types of data and is more thourough than the `clearStorageData` method.
+		This method clears more types of data and is more thorough than the `clearStorageData` method.
 		
 		**Note:** Cookies are stored at a broader scope than origins. When removing cookies and filtering by `origins` (or `excludeOrigins`), the cookies will be removed at the registrable domain level. For example, clearing cookies for the origin `https://really.specific.origin.example.com/` will end up clearing all cookies for `example.com`. Clearing cookies for the origin `https://my.website.example.co.uk/` will end up clearing all cookies for `example.co.uk`.
 		

@@ -103,7 +103,7 @@ package electron.remote;
 	**/
 	@:optional
 	var silent : Bool; /**
-		An icon to use in the notification.
+		An icon to use in the notification. If a string is passed, it must be a valid path to a local icon file.
 	**/
 	@:optional
 	var icon : haxe.extern.EitherType<String, electron.NativeImage>; /**

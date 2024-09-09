@@ -20,7 +20,7 @@ package electron.remote;
 		A `Function` that is fired when the MenuItem receives a click event. It can be called with `menuItem.click(event, focusedWindow, focusedWebContents)`.
 		
 		* `event` KeyboardEvent
-		* `focusedWindow` BrowserWindow
+		* `focusedWindow` BaseWindow
 		* `focusedWebContents` WebContents
 	**/
 	var click : haxe.Constraints.Function;
@@ -101,7 +101,7 @@ package electron.remote;
 	**/
 	var menu : electron.remote.Menu;
 	function new(options:{ /**
-		Will be called with `click(menuItem, browserWindow, event)` when the menu item is clicked.
+		Will be called with `click(menuItem, window, event)` when the menu item is clicked.
 	**/
 	@:optional
 	var click : haxe.Constraints.Function; /**
