@@ -27,15 +27,23 @@ package electron.remote;
 	**/
 	static function on(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
+		Removes the specified `listener` from the listener array for the specified `channel`.
+	**/
+	static function off(channel:String, listener:haxe.Constraints.Function):Void;
+	/**
 		Adds a one time `listener` function for the event. This `listener` is invoked only the next time a message is sent to `channel`, after which it is removed.
 	**/
 	static function once(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
-		Removes the specified `listener` from the listener array for the specified `channel`.
+		Alias for `ipcMain.on`.
+	**/
+	static function addListener(channel:String, listener:haxe.Constraints.Function):Void;
+	/**
+		Alias for `ipcMain.off`.
 	**/
 	static function removeListener(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
-		Removes listeners of the specified `channel`.
+		Removes all listeners from the specified `channel`. Removes all listeners from all channels if no channel is specified.
 	**/
 	static function removeAllListeners(?channel:String):Void;
 	/**

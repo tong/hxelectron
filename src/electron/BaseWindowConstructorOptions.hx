@@ -11,7 +11,7 @@ package electron;
 	  * The `splash` type behaves in a specific way. It is not draggable, even if the CSS styling of the window's body contains -webkit-app-region: drag. This type is commonly used for splash screens.
 	  * The `notification` type creates a window that behaves like a system notification.
 	* On macOS, possible types are `desktop`, `textured`, `panel`.
-	  * The `textured` type adds metal gradient appearance (`NSWindowStyleMaskTexturedBackground`).
+	  * The `textured` type adds metal gradient appearance. This option is **deprecated**.
 	  * The `desktop` type places the window at the desktop background window level (`kCGDesktopWindowLevel - 1`). Note that desktop window will not receive focus, keyboard or mouse events, but you can use `globalShortcut` to receive input sparingly.
 	  * The `panel` type enables the window to float on top of full-screened apps by adding the `NSWindowStyleMaskNonactivatingPanel` style mask,normally reserved for NSPanel, at runtime. Also, the window will appear on all spaces (desktops).
 	* On Windows, possible type is `toolbar`.

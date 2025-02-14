@@ -22,13 +22,13 @@ package electron.remote;
 	
 	### Windows
 	
-	On Windows, you have to install your app into a user's machine before you can use the `autoUpdater`, so it is recommended that you use the electron-winstaller, Electron Forge or the grunt-electron-installer package to generate a Windows installer.
+	On Windows, you have to install your app into a user's machine before you can use the `autoUpdater`, so it is recommended that you use electron-winstaller or Electron Forge's Squirrel.Windows maker to generate a Windows installer.
 	
-	When using electron-winstaller or Electron Forge make sure you do not try to update your app the first time it runs (Also see this issue for more info). It's also recommended to use electron-squirrel-startup to get desktop shortcuts for your app.
+	Apps built with Squirrel.Windows will trigger custom launch events that must be handled by your Electron application to ensure proper setup and teardown.
 	
-	The installer generated with Squirrel will create a shortcut icon with an Application User Model ID in the format of `com.squirrel.PACKAGE_ID.YOUR_EXE_WITHOUT_DOT_EXE`, examples are `com.squirrel.slack.Slack` and `com.squirrel.code.Code`. You have to use the same ID for your app with `app.setAppUserModelId` API, otherwise Windows will not be able to pin your app properly in task bar.
+	Squirrel.Windows apps will launch with the `--squirrel-firstrun` argument immediately after installation. During this time, Squirrel.Windows will obtain a file lock on your app, and `autoUpdater` requests will fail until the lock is released. In practice, this means that you won't be able to check for updates on first launch for the first few seconds. You can work around this by not checking for updates when `process.argv` contains the `--squirrel-firstrun` flag or by setting a 10-second timeout on your update checks (see electron/electron#7155 for more information).
 	
-	Like Squirrel.Mac, Windows can host updates on S3 or any other static file host. You can read the documents of Squirrel.Windows to get more details about how Squirrel.Windows works.
+	The installer generated with Squirrel.Windows will create a shortcut icon with an Application User Model ID in the format of `com.squirrel.PACKAGE_ID.YOUR_EXE_WITHOUT_DOT_EXE`, examples are `com.squirrel.slack.Slack` and `com.squirrel.code.Code`. You have to use the same ID for your app with `app.setAppUserModelId` API, otherwise Windows will not be able to pin your app properly in task bar.
 	@see https://electronjs.org/docs/api/auto-updater
 **/
 @:jsRequire("electron", "remote.autoUpdater") extern class AutoUpdater extends js.node.events.EventEmitter<electron.remote.AutoUpdater> {

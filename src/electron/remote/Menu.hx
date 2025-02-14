@@ -48,13 +48,13 @@ package electron.remote;
 	var items : Array<electron.remote.MenuItem>;
 	function new():Void;
 	/**
-		Pops up this menu as a context menu in the `BrowserWindow`.
+		Pops up this menu as a context menu in the `BaseWindow`.
 	**/
 	function popup(?options:{ /**
 		Default is the focused window.
 	**/
 	@:optional
-	var window : electron.remote.BrowserWindow; /**
+	var window : electron.remote.BaseWindow; /**
 		Default is the current mouse cursor position. Must be declared if `y` is declared.
 	**/
 	@:optional
@@ -76,9 +76,9 @@ package electron.remote;
 	@:optional
 	var callback : haxe.Constraints.Function; }):Void;
 	/**
-		Closes the context menu in the `browserWindow`.
+		Closes the context menu in the `window`.
 	**/
-	function closePopup(?browserWindow:electron.remote.BrowserWindow):Void;
+	function closePopup(?window:electron.remote.BaseWindow):Void;
 	/**
 		Appends the `menuItem` to the menu.
 	**/

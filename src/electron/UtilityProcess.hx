@@ -28,12 +28,14 @@ package electron;
 	**/
 	@:optional
 	var allowLoadingUnsignedLibraries : Bool; /**
-		With this flag, all HTTP 401 and 407 network requests created via the net module will allow responding to them via the `app#login` event in the main process instead of the default `login` event on the `ClientRequest` object.
+		With this flag, all HTTP 401 and 407 network requests created via the net module will allow responding to them via the `app#login` event in the main process instead of the default `login` event on the `ClientRequest` object. Default is `false`.
 	**/
 	@:optional
 	var respondToAuthRequestsFromMainProcess : Bool; }):electron.UtilityProcess;
 	/**
-		A `Integer | undefined` representing the process identifier (PID) of the child process. If the child process fails to spawn due to errors, then the value is `undefined`. When the child process exits, then the value is `undefined` after the `exit` event is emitted.
+		A `Integer | undefined` representing the process identifier (PID) of the child process. Until the child process has spawned successfully, the value is `undefined`. When the child process exits, then the value is `undefined` after the `exit` event is emitted.
+		
+		**Note:** You can use the `pid` to determine if the process is currently running.
 	**/
 	var pid : haxe.extern.EitherType<Int, Dynamic>;
 	/**
@@ -60,6 +62,12 @@ enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.
 		Emitted once the child process has spawned successfully.
 	**/
 	var spawn : electron.UtilityProcessEvent<Void -> Void> = "spawn";
+	/**
+		Emitted when the child process needs to terminate due to non continuable error from V8.
+		
+		No matter if you listen to the `error` event, the `exit` event will be emitted after the child process terminates.
+	**/
+	var error : electron.UtilityProcessEvent<Void -> Void> = "error";
 	/**
 		Emitted after the child process ends.
 	**/

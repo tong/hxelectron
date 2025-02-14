@@ -62,7 +62,15 @@ package electron.main;
 		**Note:** Hex format with alpha takes `AARRGGBB` or `ARGB`, _not_ `RRGGBBAA` or `RGB`.
 	**/
 	function setBackgroundColor(color:String):Void;
+	/**
+		**Note:** The area cutout of the view's border still captures clicks.
+	**/
+	function setBorderRadius(radius:Int):Void;
 	function setVisible(visible:Bool):Void;
+	/**
+		Whether the view should be drawn. Note that this is different from whether the view is visible on screen—it may still be obscured or out of view.
+	**/
+	function getVisible():Bool;
 }
 enum abstract ViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**

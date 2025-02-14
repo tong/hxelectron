@@ -16,10 +16,12 @@ package electron.renderer;
 @:jsRequire("electron", "ipcRenderer") extern class IpcRenderer extends js.node.events.EventEmitter<electron.renderer.IpcRenderer> {
 	/**
 		Listens to `channel`, when a new message arrives `listener` would be called with `listener(event, args...)`.
+		
+		:::warning Do not expose the `event` argument to the renderer for security reasons! Wrap any callback that you receive from the renderer in another function like this: `ipcRenderer.on('my-channel', (event, ...args) => callback(...args))`. Not wrapping the callback in such a function would expose dangerous Electron APIs to the renderer process. See the security guide for more info. :::
 	**/
 	static function on(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
-		Alias for `ipcRenderer.removeListener`.
+		Removes the specified `listener` from the listener array for the specified `channel`.
 	**/
 	static function off(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
@@ -31,13 +33,13 @@ package electron.renderer;
 	**/
 	static function addListener(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
-		Removes the specified `listener` from the listener array for the specified `channel`.
+		Alias for `ipcRenderer.off`.
 	**/
 	static function removeListener(channel:String, listener:haxe.Constraints.Function):Void;
 	/**
-		Removes all listeners, or those of the specified `channel`.
+		Removes all listeners from the specified `channel`. Removes all listeners from all channels if no channel is specified.
 	**/
-	static function removeAllListeners(channel:String):Void;
+	static function removeAllListeners(?channel:String):Void;
 	/**
 		Send an asynchronous message to the main process via `channel`, along with arguments. Arguments will be serialized with the Structured Clone Algorithm, just like `window.postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
 		

@@ -15,7 +15,7 @@ package electron.main;
 		To create a `Session` with `options`, you have to ensure the `Session` with the `partition` has never been used before. There is no way to change the `options` of an existing `Session` object.
 	**/
 	static function fromPartition(partition:String, ?options:{ /**
-		Whether to enable cache.
+		Whether to enable cache. Default is `true` unless the `--disable-http-cache` switch is used.
 	**/
 	var cache : Bool; }):electron.main.Session;
 	/**
@@ -24,7 +24,7 @@ package electron.main;
 		To create a `Session` with `options`, you have to ensure the `Session` with the `path` has never been used before. There is no way to change the `options` of an existing `Session` object.
 	**/
 	static function fromPath(path:String, ?options:{ /**
-		Whether to enable cache.
+		Whether to enable cache. Default is `true` unless the `--disable-http-cache` switch is used.
 	**/
 	var cache : Bool; }):electron.main.Session;
 	/**
@@ -353,6 +353,40 @@ package electron.main;
 	@:optional
 	var urls : Array<String>; }):js.lib.Promise<Any>;
 	/**
+		an array of shared dictionary information entries in Chromium's networking service's storage.
+		
+		Shared dictionaries are used to power advanced compression of data sent over the wire, specifically with Brotli and ZStandard. You don't need to call any of the shared dictionary APIs in Electron to make use of this advanced web feature, but if you do, they allow deeper control and inspection of the shared dictionaries used during decompression.
+		
+		To get detailed information about a specific shared dictionary entry, call `getSharedDictionaryInfo(options)`.
+	**/
+	function getSharedDictionaryUsageInfo():js.lib.Promise<Any>;
+	/**
+		an array of shared dictionary information entries in Chromium's networking service's storage.
+		
+		To get information about all present shared dictionaries, call `getSharedDictionaryUsageInfo()`.
+	**/
+	function getSharedDictionaryInfo(options:{ /**
+		The origin of the frame where the request originates. It’s specific to the individual frame making the request and is defined by its scheme, host, and port. In practice, will look like a URL.
+	**/
+	var frameOrigin : String; /**
+		The site of the top-level browsing context (the main frame or tab that contains the request). It’s less granular than `frameOrigin` and focuses on the broader "site" scope. In practice, will look like a URL.
+	**/
+	var topFrameSite : String; }):js.lib.Promise<Any>;
+	/**
+		resolves when the dictionary cache has been cleared, both in memory and on disk.
+	**/
+	function clearSharedDictionaryCache():js.lib.Promise<Any>;
+	/**
+		resolves when the dictionary cache has been cleared for the specified isolation key, both in memory and on disk.
+	**/
+	function clearSharedDictionaryCacheForIsolationKey(options:{ /**
+		The origin of the frame where the request originates. It’s specific to the individual frame making the request and is defined by its scheme, host, and port. In practice, will look like a URL.
+	**/
+	var frameOrigin : String; /**
+		The site of the top-level browsing context (the main frame or tab that contains the request). It’s less granular than `frameOrigin` and focuses on the broader "site" scope. In practice, will look like a URL.
+	**/
+	var topFrameSite : String; }):js.lib.Promise<Any>;
+	/**
 		Sets whether to enable the builtin spell checker.
 	**/
 	function setSpellCheckerEnabled(enable:Bool):Void;
@@ -448,10 +482,12 @@ package electron.main;
 		
 		**Note:** Cookies are stored at a broader scope than origins. When removing cookies and filtering by `origins` (or `excludeOrigins`), the cookies will be removed at the registrable domain level. For example, clearing cookies for the origin `https://really.specific.origin.example.com/` will end up clearing all cookies for `example.com`. Clearing cookies for the origin `https://my.website.example.co.uk/` will end up clearing all cookies for `example.co.uk`.
 		
+		**Note:** Clearing cache data will also clear the shared dictionary cache. This means that any dictionaries used for compression may be reloaded after clearing the cache. If you wish to clear the shared dictionary cache but leave other cached data intact, you may want to use the `clearSharedDictionaryCache` method.
+		
 		For more information, refer to Chromium's `BrowsingDataRemover` interface.
 	**/
 	function clearData(?options:{ /**
-		The types of data to clear. By default, this will clear all types of data.
+		The types of data to clear. By default, this will clear all types of data. This can potentially include data types not explicitly listed here. (See Chromium's `BrowsingDataRemover` for the full list.)
 	**/
 	@:optional
 	var dataTypes : Array<String>; /**

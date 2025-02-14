@@ -48,13 +48,13 @@ package electron.main;
 	var items : Array<electron.main.MenuItem>;
 	function new():Void;
 	/**
-		Pops up this menu as a context menu in the `BrowserWindow`.
+		Pops up this menu as a context menu in the `BaseWindow`.
 	**/
 	function popup(?options:{ /**
 		Default is the focused window.
 	**/
 	@:optional
-	var window : electron.main.BrowserWindow; /**
+	var window : electron.main.BaseWindow; /**
 		Default is the current mouse cursor position. Must be declared if `y` is declared.
 	**/
 	@:optional
@@ -76,9 +76,9 @@ package electron.main;
 	@:optional
 	var callback : haxe.Constraints.Function; }):Void;
 	/**
-		Closes the context menu in the `browserWindow`.
+		Closes the context menu in the `window`.
 	**/
-	function closePopup(?browserWindow:electron.main.BrowserWindow):Void;
+	function closePopup(?window:electron.main.BaseWindow):Void;
 	/**
 		Appends the `menuItem` to the menu.
 	**/

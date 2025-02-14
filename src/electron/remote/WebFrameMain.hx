@@ -77,6 +77,10 @@ package electron.remote;
 	**/
 	var visibilityState : String;
 	/**
+		A `Boolean` representing whether the frame is detached from the frame tree. If a frame is accessed while the corresponding page is running any unload listeners, it may become detached as the newly navigated page replaced it in the frame tree.
+	**/
+	var detached : Bool;
+	/**
 		A promise that resolves with the result of the executed code or is rejected if execution throws or results in a rejected promise.
 		
 		Evaluates `code` in page.
@@ -88,6 +92,10 @@ package electron.remote;
 		Whether the reload was initiated successfully. Only results in `false` when the frame has no history.
 	**/
 	function reload():Bool;
+	/**
+		Whether the frame is destroyed.
+	**/
+	function isDestroyed():Bool;
 	/**
 		Send an asynchronous message to the renderer process via `channel`, along with arguments. Arguments will be serialized with the Structured Clone Algorithm, just like `postMessage`, so prototype chains will not be included. Sending Functions, Promises, Symbols, WeakMaps, or WeakSets will throw an exception.
 		
@@ -102,6 +110,12 @@ package electron.remote;
 		For example:
 	**/
 	function postMessage(channel:String, message:Any, ?transfer:Array<electron.remote.MessagePortMain>):Void;
+	/**
+		A promise that resolves with the currently running JavaScript call stack. If no JavaScript runs in the frame, the promise will never resolve. In cases where the call stack is otherwise unable to be collected, it will return `undefined`.
+		
+		This can be useful to determine why the frame is unresponsive in cases where there's long-running JavaScript. For more information, see the proposed Crash Reporting API.
+	**/
+	function collectJavaScriptCallStack():haxe.extern.EitherType<js.lib.Promise<Any>, js.lib.Promise<Any>>;
 }
 enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**

@@ -75,15 +75,15 @@ package electron.main;
 	**/
 	static function exit(?exitCode:Int):Void;
 	/**
-		Relaunches the app when current instance exits.
+		Relaunches the app when the current instance exits.
 		
-		By default, the new instance will use the same working directory and command line arguments with current instance. When `args` is specified, the `args` will be passed as command line arguments instead. When `execPath` is specified, the `execPath` will be executed for relaunch instead of current app.
+		By default, the new instance will use the same working directory and command line arguments as the current instance. When `args` is specified, the `args` will be passed as the command line arguments instead. When `execPath` is specified, the `execPath` will be executed for the relaunch instead of the current app.
 		
-		Note that this method does not quit the app when executed, you have to call `app.quit` or `app.exit` after calling `app.relaunch` to make the app restart.
+		Note that this method does not quit the app when executed. You have to call `app.quit` or `app.exit` after calling `app.relaunch` to make the app restart.
 		
-		When `app.relaunch` is called for multiple times, multiple instances will be started after current instance exited.
+		When `app.relaunch` is called multiple times, multiple instances will be started after the current instance exits.
 		
-		An example of restarting current instance immediately and adding a new command line argument to the new instance:
+		An example of restarting the current instance immediately and adding a new command line argument to the new instance:
 	**/
 	static function relaunch(?options:{ @:optional
 	var args : Array<String>; @:optional
@@ -642,6 +642,10 @@ package electron.main;
 		Resolves with the proxy information for `url` that will be used when attempting to make requests using Net in the utility process.
 	**/
 	static function resolveProxy(url:String):js.lib.Promise<Any>;
+	/**
+		The handler is called when a password is needed to unlock a client certificate for `hostname`.
+	**/
+	static function setClientCertRequestPasswordHandler(handler:haxe.Constraints.Function):Void;
 	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
 }
 enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {

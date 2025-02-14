@@ -479,7 +479,7 @@ package electron.remote;
 	@:optional
 	var stayAwake : Bool; }):js.lib.Promise<Any>;
 	/**
-		Whether this page is being captured. It returns true when the capturer count is large then 0.
+		Whether this page is being captured. It returns true when the capturer count is greater than 0.
 	**/
 	function isBeingCaptured():Bool;
 	/**
@@ -1179,6 +1179,10 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	var select_bluetooth_device : electron.remote.WebContentsEvent<Void -> Void> = "select-bluetooth-device";
 	/**
 		Emitted when a new frame is generated. Only the dirty area is passed in the buffer.
+		
+		When using shared texture (set `webPreferences.offscreen.useSharedTexture` to `true`) feature, you can pass the texture handle to external rendering pipeline without the overhead of copying data between CPU and GPU memory, with Chromium's hardware acceleration support. This feature is helpful for high-performance rendering scenarios.
+		
+		Only a limited number of textures can exist at the same time, so it's important that you call `texture.release()` as soon as you're done with the texture. By managing the texture lifecycle by yourself, you can safely pass the `texture.textureInfo` to other processes through IPC.
 	**/
 	var paint : electron.remote.WebContentsEvent<Void -> Void> = "paint";
 	/**

@@ -20,9 +20,9 @@ typedef IpcMainEvent = {
 	**/
 	var sender : electron.main.WebContents;
 	/**
-		The frame that sent this message
+		The frame that sent this message. May be `null` if accessed after the frame has either navigated or been destroyed.
 	**/
-	var senderFrame : electron.main.WebFrameMain;
+	var senderFrame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>;
 	/**
 		A list of MessagePorts that were transferred with this message
 	**/
