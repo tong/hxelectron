@@ -67,11 +67,11 @@ package electron.renderer;
 		
 		If you do not need a response to the message, consider using `ipcRenderer.send`.
 		
-		> **Note** Sending non-standard JavaScript types such as DOM objects or special Electron objects will throw an exception.
+		> [!NOTE] Sending non-standard JavaScript types such as DOM objects or special Electron objects will throw an exception.
 		
 		Since the main process does not have support for DOM objects such as `ImageBitmap`, `File`, `DOMMatrix` and so on, such objects cannot be sent over Electron's IPC to the main process, as the main process would have no way to decode them. Attempting to send such objects over IPC will result in an error.
 		
-		> **Note** If the handler in the main process throws an error, the promise returned by `invoke` will reject. However, the `Error` object in the renderer process will not be the same as the one thrown in the main process.
+		> [!NOTE] If the handler in the main process throws an error, the promise returned by `invoke` will reject. However, the `Error` object in the renderer process will not be the same as the one thrown in the main process.
 	**/
 	static function invoke(channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Any>;
 	/**
@@ -85,7 +85,7 @@ package electron.renderer;
 		
 		The main process handles it by listening for `channel` with `ipcMain` module, and replies by setting `event.returnValue`.
 		
-		> :warning: **WARNING**: Sending a synchronous message will block the whole renderer process until the reply is received, so use this method only as a last resort. It's much better to use the asynchronous version, `invoke()`.
+		> [!WARNING] Sending a synchronous message will block the whole renderer process until the reply is received, so use this method only as a last resort. It's much better to use the asynchronous version, `invoke()`.
 	**/
 	static function sendSync(channel:String, args:haxe.extern.Rest<Any>):Any;
 	/**

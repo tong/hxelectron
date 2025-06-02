@@ -13,7 +13,7 @@ package electron;
 	* On macOS, possible types are `desktop`, `textured`, `panel`.
 	  * The `textured` type adds metal gradient appearance. This option is **deprecated**.
 	  * The `desktop` type places the window at the desktop background window level (`kCGDesktopWindowLevel - 1`). Note that desktop window will not receive focus, keyboard or mouse events, but you can use `globalShortcut` to receive input sparingly.
-	  * The `panel` type enables the window to float on top of full-screened apps by adding the `NSWindowStyleMaskNonactivatingPanel` style mask,normally reserved for NSPanel, at runtime. Also, the window will appear on all spaces (desktops).
+	  * The `panel` type enables the window to float on top of full-screened apps by adding the `NSWindowStyleMaskNonactivatingPanel` style mask, normally reserved for NSPanel, at runtime. Also, the window will appear on all spaces (desktops).
 	* On Windows, possible type is `toolbar`.
 	@see https://electronjs.org/docs/api/structures/base-window-options
 **/
@@ -246,7 +246,7 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var trafficLightPosition : electron.Point;
 	/**
-		Whether frameless window should have rounded corners on macOS. Default is `true`. Setting this property to `false` will prevent the window from being fullscreenable.
+		Whether frameless window should have rounded corners. Default is `true`. Setting this property to `false` will prevent the window from being fullscreenable on macOS. On Windows versions older than Windows 11 Build 22000 this property has no effect, and frameless windows will not have rounded corners.
 	**/
 	@:optional
 	var roundedCorners : Bool;

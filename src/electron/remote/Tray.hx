@@ -81,7 +81,7 @@ package electron.remote;
 	**/
 	function setPressedImage(image:haxe.extern.EitherType<electron.NativeImage, String>):Void;
 	/**
-		Sets the hover text for this tray icon.
+		Sets the hover text for this tray icon. Setting the text to an empty string will remove the tooltip.
 	**/
 	function setToolTip(toolTip:String):Void;
 	/**
@@ -219,7 +219,7 @@ enum abstract TrayEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitt
 	/**
 		Emitted when the mouse is released from clicking the tray icon.
 		
-		Note: This will not be emitted if you have set a context menu for your Tray using `tray.setContextMenu`, as a result of macOS-level constraints.
+		> [!NOTE] This will not be emitted if you have set a context menu for your Tray using `tray.setContextMenu`, as a result of macOS-level constraints.
 	**/
 	var mouse_up : electron.remote.TrayEvent<Void -> Void> = "mouse-up";
 	/**

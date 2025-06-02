@@ -16,14 +16,6 @@ typedef PrinterInfo = {
 	**/
 	var description : String;
 	/**
-		the current status of the printer.
-	**/
-	var status : Float;
-	/**
-		whether or not a given printer is set as the default printer on the OS.
-	**/
-	var isDefault : Bool;
-	/**
 		an object containing a variable number of platform-specific printer information.
 	**/
 	var options : Any;

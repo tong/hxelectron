@@ -59,11 +59,11 @@ package electron.remote;
 		  * Similar to CSS Color Module Level 3 keywords, but case-sensitive.
 		    * e.g. `blueviolet` or `red`
 		
-		**Note:** Hex format with alpha takes `AARRGGBB` or `ARGB`, _not_ `RRGGBBAA` or `RGB`.
+		> [!NOTE] Hex format with alpha takes `AARRGGBB` or `ARGB`, _not_ `RRGGBBAA` or `RGB`.
 	**/
 	function setBackgroundColor(color:String):Void;
 	/**
-		**Note:** The area cutout of the view's border still captures clicks.
+		> [!NOTE] The area cutout of the view's border still captures clicks.
 	**/
 	function setBorderRadius(radius:Int):Void;
 	function setVisible(visible:Bool):Void;

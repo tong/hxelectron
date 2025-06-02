@@ -34,6 +34,17 @@ package electron.renderer;
 @:jsRequire("electron", "contextBridge") extern class ContextBridge extends js.node.events.EventEmitter<electron.renderer.ContextBridge> {
 	static function exposeInMainWorld(apiKey:String, api:Any):Void;
 	static function exposeInIsolatedWorld(worldId:Int, apiKey:String, api:Any):Void;
+	/**
+		A copy of the resulting value from executing the function in the main world. Refer to the table on how values are copied between worlds.
+	**/
+	static function executeInMainWorld(executionScript:{ /**
+		A JavaScript function to execute. This function will be serialized which means that any bound parameters and execution context will be lost.
+	**/
+	var func : Any; /**
+		An array of arguments to pass to the provided function. These arguments will be copied between worlds in accordance with the table of supported types.
+	**/
+	@:optional
+	var args : Array<Any>; }):Any;
 }
 enum abstract ContextBridgeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 

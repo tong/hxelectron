@@ -255,4 +255,9 @@ typedef WebPreferences = {
 	**/
 	@:optional
 	var enableDeprecatedPaste : Bool;
+	/**
+		Whether the `-electron-corner-smoothing` CSS rule is enabled. Default is `true`.
+	**/
+	@:optional
+	var enableCornerSmoothingCSS : Bool;
 }

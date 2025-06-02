@@ -47,7 +47,7 @@ package electron.renderer;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively.
 		
-		> **NOTE**: The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
+		> [!NOTE] The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
 	**/
 	static function setZoomLevel(level:Float):Void;
 	/**
@@ -57,9 +57,9 @@ package electron.renderer;
 	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 		
-		> **NOTE**: Visual zoom is disabled by default in Electron. To re-enable it, call:
+		> [!NOTE] Visual zoom is disabled by default in Electron. To re-enable it, call:
 		
-		> **NOTE**: Visual zoom only applies to pinch-to-zoom behavior. Cmd+/-/0 zoom shortcuts are controlled by the 'zoomIn', 'zoomOut', and 'resetZoom' MenuItem roles in the application Menu. To disable shortcuts, manually define the Menu and omit zoom roles from the definition.
+		> [!NOTE] Visual zoom only applies to pinch-to-zoom behavior. Cmd+/-/0 zoom shortcuts are controlled by the 'zoomIn', 'zoomOut', and 'resetZoom' MenuItem roles in the application Menu. To disable shortcuts, manually define the Menu and omit zoom roles from the definition.
 	**/
 	static function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):Void;
 	/**
@@ -107,7 +107,9 @@ package electron.renderer;
 	**/
 	static function executeJavaScriptInIsolatedWorld(worldId:Int, scripts:Array<electron.WebSource>, ?userGesture:Bool, ?callback:haxe.Constraints.Function):js.lib.Promise<Any>;
 	/**
-		Set the security origin, content security policy and name of the isolated world. Note: If the `csp` is specified, then the `securityOrigin` also has to be specified.
+		Set the security origin, content security policy and name of the isolated world.
+		
+		> [!NOTE] If the `csp` is specified, then the `securityOrigin` also has to be specified.
 	**/
 	static function setIsolatedWorldInfo(worldId:Int, info:{ /**
 		Security origin for the isolated world.

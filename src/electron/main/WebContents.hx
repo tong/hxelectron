@@ -89,7 +89,7 @@ package electron.main;
 	/**
 		A `WebContents | null` property that represents the of DevTools `WebContents` associated with a given `WebContents`.
 		
-		**Note:** Users should never store this object because it may become `null` when the DevTools has been closed.
+		> [!NOTE] Users should never store this object because it may become `null` when the DevTools has been closed.
 	**/
 	var devToolsWebContents : haxe.extern.EitherType<electron.main.WebContents, Dynamic>;
 	/**
@@ -105,9 +105,13 @@ package electron.main;
 	**/
 	var mainFrame : electron.main.WebFrameMain;
 	/**
-		A `WebFrameMain` property that represents the frame that opened this WebContents, either with open(), or by navigating a link with a target attribute.
+		A `WebFrameMain | null` property that represents the frame that opened this WebContents, either with open(), or by navigating a link with a target attribute.
 	**/
-	var opener : electron.main.WebFrameMain;
+	var opener : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>;
+	/**
+		A `WebFrameMain | null` property that represents the currently focused frame in this WebContents. Can be the top frame, an inner `<iframe>`, or `null` if nothing is focused.
+	**/
+	var focusedFrame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>;
 	/**
 		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`). A noop rejection handler is already attached, which avoids unhandled rejection errors.
 		
@@ -345,7 +349,7 @@ package electron.main;
 	/**
 		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is `scale := 1.2 ^ level`.
 		
-		> **NOTE**: The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
+		> [!NOTE] The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
 	**/
 	function setZoomLevel(level:Float):Void;
 	/**
@@ -355,7 +359,7 @@ package electron.main;
 	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 		
-		> **NOTE**: Visual zoom is disabled by default in Electron. To re-enable it, call:
+		> [!NOTE] Visual zoom is disabled by default in Electron. To re-enable it, call:
 	**/
 	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
 	/**
@@ -799,7 +803,9 @@ var to : Float; }>; /**
 	**/
 	function disableDeviceEmulation():Void;
 	/**
-		Sends an input `event` to the page. **Note:** The `BrowserWindow` containing the contents needs to be focused for `sendInputEvent()` to work.
+		Sends an input `event` to the page.
+		
+		> [!NOTE] The `BrowserWindow` containing the contents needs to be focused for `sendInputEvent()` to work.
 	**/
 	function sendInputEvent(inputEvent:haxe.extern.EitherType<electron.MouseInputEvent, haxe.extern.EitherType<electron.MouseWheelInputEvent, electron.KeyboardInputEvent>>):Void;
 	/**
@@ -882,7 +888,9 @@ var to : Float; }>; /**
 	**/
 	function getWebRTCUDPPortRange():Any;
 	/**
-		Setting the WebRTC UDP Port Range allows you to restrict the udp port range used by WebRTC. By default the port range is unrestricted. **Note:** To reset to an unrestricted port range this value should be set to `{ min: 0, max: 0 }`.
+		Setting the WebRTC UDP Port Range allows you to restrict the udp port range used by WebRTC. By default the port range is unrestricted.
+		
+		> [!NOTE] To reset to an unrestricted port range this value should be set to `{ min: 0, max: 0 }`.
 	**/
 	function setWebRTCUDPPortRange(udpPortRange:{ /**
 		The minimum UDP port number that WebRTC should use.
@@ -1040,7 +1048,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		
 		Calling `event.preventDefault()` will ignore the `beforeunload` event handler and allow the page to be unloaded.
 		
-		**Note:** This will be emitted for `BrowserViews` but will _not_ be respected - this is because we have chosen not to tie the `BrowserView` lifecycle to its owning BrowserWindow should one exist per the specification.
+		> [!NOTE] This will be emitted for `BrowserViews` but will _not_ be respected - this is because we have chosen not to tie the `BrowserView` lifecycle to its owning BrowserWindow should one exist per the specification.
 	**/
 	var will_prevent_unload : electron.main.WebContentsEvent<Void -> Void> = "will-prevent-unload";
 	/**
@@ -1183,6 +1191,8 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		When using shared texture (set `webPreferences.offscreen.useSharedTexture` to `true`) feature, you can pass the texture handle to external rendering pipeline without the overhead of copying data between CPU and GPU memory, with Chromium's hardware acceleration support. This feature is helpful for high-performance rendering scenarios.
 		
 		Only a limited number of textures can exist at the same time, so it's important that you call `texture.release()` as soon as you're done with the texture. By managing the texture lifecycle by yourself, you can safely pass the `texture.textureInfo` to other processes through IPC.
+		
+		More details can be found in the offscreen rendering tutorial. To learn about how to handle the texture in native code, refer to offscreen rendering's code documentation..
 	**/
 	var paint : electron.main.WebContentsEvent<Void -> Void> = "paint";
 	/**

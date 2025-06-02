@@ -12,7 +12,7 @@ package electron.remote;
 	**/
 	function canGoForward():Bool;
 	/**
-		Whether the web page can go to the specified `offset` from the current entry.
+		Whether the web page can go to the specified relative `offset` from the current entry.
 	**/
 	function canGoToOffset(offset:Int):Bool;
 	/**
@@ -42,7 +42,7 @@ package electron.remote;
 	**/
 	function goToIndex(index:Int):Void;
 	/**
-		Navigates to the specified offset from the current entry.
+		Navigates to the specified relative offset from the current entry.
 	**/
 	function goToOffset(offset:Int):Void;
 	/**

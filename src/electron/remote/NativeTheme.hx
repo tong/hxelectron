@@ -45,6 +45,12 @@ package electron.remote;
 	**/
 	static var shouldUseHighContrastColors : Bool;
 	/**
+		A `boolean` property indicating whether or not the system theme has been set to dark or light.
+		
+		On Windows this property distinguishes between system and app light/dark theme, returning `true` if the system theme is set to dark theme and `false` otherwise. On macOS the return value will be the same as `nativeTheme.shouldUseDarkColors`.
+	**/
+	static var shouldUseDarkColorsForSystemIntegratedUI : Bool;
+	/**
 		A `boolean` for if the OS / Chromium currently has an inverted color scheme or is being instructed to use an inverted color scheme.
 	**/
 	static var shouldUseInvertedColorScheme : Bool;

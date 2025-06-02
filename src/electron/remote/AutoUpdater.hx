@@ -18,7 +18,7 @@ package electron.remote;
 	
 	On macOS, the `autoUpdater` module is built upon Squirrel.Mac, meaning you don't need any special setup to make it work. For server-side requirements, you can read Server Support. Note that App Transport Security (ATS) applies to all requests made as part of the update process. Apps that need to disable ATS can add the `NSAllowsArbitraryLoads` key to their app's plist.
 	
-	**Note:** Your application must be signed for automatic updates on macOS. This is a requirement of `Squirrel.Mac`.
+	> [!IMPORTANT] Your application must be signed for automatic updates on macOS. This is a requirement of `Squirrel.Mac`.
 	
 	### Windows
 	
@@ -51,7 +51,7 @@ package electron.remote;
 	/**
 		Asks the server whether there is an update. You must call `setFeedURL` before using this API.
 		
-		**Note:** If an update is available it will be downloaded automatically. Calling `autoUpdater.checkForUpdates()` twice will download the update two times.
+		> [!NOTE] If an update is available it will be downloaded automatically. Calling `autoUpdater.checkForUpdates()` twice will download the update two times.
 	**/
 	static function checkForUpdates():Void;
 	/**
@@ -59,7 +59,7 @@ package electron.remote;
 		
 		Under the hood calling `autoUpdater.quitAndInstall()` will close all application windows first, and automatically call `app.quit()` after all windows have been closed.
 		
-		**Note:** It is not strictly necessary to call this function to apply an update, as a successfully downloaded update will always be applied the next time the application starts.
+		> [!NOTE] It is not strictly necessary to call this function to apply an update, as a successfully downloaded update will always be applied the next time the application starts.
 	**/
 	static function quitAndInstall():Void;
 }
@@ -69,7 +69,7 @@ enum abstract AutoUpdaterEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	**/
 	var error : electron.remote.AutoUpdaterEvent<Void -> Void> = "error";
 	/**
-		Emitted when checking if an update has started.
+		Emitted when checking for an available update has started.
 	**/
 	var checking_for_update : electron.remote.AutoUpdaterEvent<Void -> Void> = "checking-for-update";
 	/**
@@ -85,7 +85,7 @@ enum abstract AutoUpdaterEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		
 		On Windows only `releaseName` is available.
 		
-		**Note:** It is not strictly necessary to handle this event. A successfully downloaded update will still be applied the next time the application starts.
+		> [!NOTE] It is not strictly necessary to handle this event. A successfully downloaded update will still be applied the next time the application starts.
 	**/
 	var update_downloaded : electron.remote.AutoUpdaterEvent<Void -> Void> = "update-downloaded";
 	/**

@@ -46,7 +46,7 @@ package electron.remote;
 	/**
 		An `Accelerator | null` indicating the item's user-assigned accelerator for the menu item.
 		
-		**Note:** This property is only initialized after the `MenuItem` has been added to a `Menu`. Either via `Menu.buildFromTemplate` or via `Menu.append()/insert()`.  Accessing before initialization will just return `null`.
+		> [!NOTE] This property is only initialized after the `MenuItem` has been added to a `Menu`. Either via `Menu.buildFromTemplate` or via `Menu.append()/insert()`.  Accessing before initialization will just return `null`.
 	**/
 	var userAccelerator : haxe.extern.EitherType<electron.Accelerator, Dynamic>;
 	/**
@@ -113,7 +113,10 @@ package electron.remote;
 	**/
 	@:optional
 	var type : String; @:optional
-	var label : String; @:optional
+	var label : String; /**
+		Available in macOS >= 14.4
+	**/
+	@:optional
 	var sublabel : String; /**
 		Hover text for this menu item.
 	**/

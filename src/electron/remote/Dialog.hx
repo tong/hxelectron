@@ -17,9 +17,9 @@ package electron.remote;
 		
 		The `extensions` array should contain extensions without wildcards or dots (e.g. `'png'` is good but `'.png'` and `'*.png'` are bad). To show all files, use the `'*'` wildcard (no other wildcard is supported).
 		
-		**Note:** On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
+		> [!NOTE] On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
 		
-		**Note:** On Linux `defaultPath` is not supported when using portal file chooser dialogs unless the portal backend is version 4 or higher. You can use `--xdg-portal-required-version` command-line switch to force gtk or kde dialogs.
+		> [!NOTE] On Linux `defaultPath` is not supported when using portal file chooser dialogs unless the portal backend is version 4 or higher. You can use `--xdg-portal-required-version` command-line switch to force gtk or kde dialogs.
 	**/
 	static function showOpenDialogSync(?window:electron.remote.BaseWindow, options:{ @:optional
 	var title : String; @:optional
@@ -54,9 +54,9 @@ package electron.remote;
 		
 		The `extensions` array should contain extensions without wildcards or dots (e.g. `'png'` is good but `'.png'` and `'*.png'` are bad). To show all files, use the `'*'` wildcard (no other wildcard is supported).
 		
-		**Note:** On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
+		> [!NOTE] On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set `properties` to `['openFile', 'openDirectory']` on these platforms, a directory selector will be shown.
 		
-		**Note:** On Linux `defaultPath` is not supported when using portal file chooser dialogs unless the portal backend is version 4 or higher. You can use `--xdg-portal-required-version` command-line switch to force gtk or kde dialogs.
+		> [!NOTE] On Linux `defaultPath` is not supported when using portal file chooser dialogs unless the portal backend is version 4 or higher. You can use `--xdg-portal-required-version` command-line switch to force gtk or kde dialogs.
 	**/
 	static function showOpenDialog(?window:electron.remote.BaseWindow, options:{ @:optional
 	var title : String; @:optional
@@ -127,7 +127,7 @@ package electron.remote;
 		
 		The `filters` specifies an array of file types that can be displayed, see `dialog.showOpenDialog` for an example.
 		
-		**Note:** On macOS, using the asynchronous version is recommended to avoid issues when expanding and collapsing the dialog.
+		> [!NOTE] On macOS, using the asynchronous version is recommended to avoid issues when expanding and collapsing the dialog.
 	**/
 	static function showSaveDialog(?window:electron.remote.BaseWindow, options:{ /**
 		The dialog title. Cannot be displayed on some _Linux_ desktop environments.

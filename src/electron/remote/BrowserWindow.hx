@@ -128,7 +128,7 @@ package electron.remote;
 	**/
 	static function fromWebContents(webContents:electron.remote.WebContents):haxe.extern.EitherType<electron.remote.BrowserWindow, Dynamic>;
 	/**
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		> [!NOTE] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 		
 		The window that owns the given `browserView`. If the given view is not attached to any window, returns `null`.
 	**/
@@ -173,7 +173,7 @@ package electron.remote;
 	/**
 		A `boolean` property that determines whether the window is visible on all workspaces.
 		
-		**Note:** Always returns false on Windows.
+		> [!NOTE] Always returns false on Windows.
 	**/
 	var visibleOnAllWorkspaces : Bool;
 	/**
@@ -183,7 +183,7 @@ package electron.remote;
 	/**
 		A `boolean` property that determines whether the menu bar should be visible.
 		
-		**Note:** If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single `Alt` key.
+		> [!NOTE] If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single `Alt` key.
 	**/
 	var menuBarVisible : Bool;
 	/**
@@ -203,7 +203,7 @@ package electron.remote;
 	/**
 		A `string` property that determines the title of the native window.
 		
-		**Note:** The title of the web page can be different from the title of the native window.
+		> [!NOTE] The title of the web page can be different from the title of the native window.
 	**/
 	var title : String;
 	/**
@@ -246,6 +246,10 @@ package electron.remote;
 		A `string` property that defines an alternative title provided only to accessibility tools such as screen readers. This string is not directly visible to users.
 	**/
 	var accessibleTitle : String;
+	/**
+		A `boolean` property that indicates whether the window is arranged via Snap.
+	**/
+	var snapped : Bool;
 	function new(?options:electron.BrowserWindowConstructorOptions):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
@@ -318,13 +322,13 @@ package electron.remote;
 	/**
 		Sets whether the window should be in fullscreen mode.
 		
-		**Note:** On macOS, fullscreen transitions take place asynchronously. If further actions depend on the fullscreen state, use the 'enter-full-screen' or 'leave-full-screen' events.
+		> [!NOTE] On macOS, fullscreen transitions take place asynchronously. If further actions depend on the fullscreen state, use the 'enter-full-screen' or 'leave-full-screen' events.
 	**/
 	function setFullScreen(flag:Bool):Void;
 	/**
 		Whether the window is in fullscreen mode.
 		
-		**Note:** On macOS, fullscreen transitions take place asynchronously. When querying for a BrowserWindow's fullscreen status, you should ensure that either the 'enter-full-screen' or 'leave-full-screen' events have been emitted.
+		> [!NOTE] On macOS, fullscreen transitions take place asynchronously. When querying for a BrowserWindow's fullscreen status, you should ensure that either the 'enter-full-screen' or 'leave-full-screen' events have been emitted.
 	**/
 	function isFullScreen():Bool;
 	/**
@@ -390,13 +394,13 @@ package electron.remote;
 	/**
 		Resizes and moves the window to the supplied bounds. Any properties that are not supplied will default to their current values.
 		
-		**Note:** On macOS, the y-coordinate value cannot be smaller than the Tray height. The tray height has changed over time and depends on the operating system, but is between 20-40px. Passing a value lower than the tray height will result in a window that is flush to the tray.
+		> [!NOTE] On macOS, the y-coordinate value cannot be smaller than the Tray height. The tray height has changed over time and depends on the operating system, but is between 20-40px. Passing a value lower than the tray height will result in a window that is flush to the tray.
 	**/
 	function setBounds(bounds:Partial, ?animate:Bool):Void;
 	/**
 		The `bounds` of the window as `Object`.
 		
-		**Note:** On macOS, the y-coordinate value returned will be at minimum the Tray height. For example, calling `win.setBounds({ x: 25, y: 20, width: 800, height: 600 })` with a tray height of 38 means that `win.getBounds()` will return `{ x: 25, y: 38, width: 800, height: 600 }`.
+		> [!NOTE] On macOS, the y-coordinate value returned will be at minimum the Tray height. For example, calling `win.setBounds({ x: 25, y: 20, width: 800, height: 600 })` with a tray height of 38 means that `win.getBounds()` will return `{ x: 25, y: 38, width: 800, height: 600 }`.
 	**/
 	function getBounds():electron.Rectangle;
 	/**
@@ -404,7 +408,7 @@ package electron.remote;
 		
 		See Setting `backgroundColor`.
 		
-		**Note:** The alpha value is _not_ returned alongside the red, green, and blue values.
+		> [!NOTE] The alpha value is _not_ returned alongside the red, green, and blue values.
 	**/
 	function getBackgroundColor():String;
 	/**
@@ -418,7 +422,7 @@ package electron.remote;
 	/**
 		Contains the window bounds of the normal state
 		
-		**Note:** whatever the current state of the window : maximized, minimized or in fullscreen, this function always returns the position and size of the window in normal state. In normal state, getBounds and getNormalBounds returns the same `Rectangle`.
+		> [!NOTE] Whatever the current state of the window (maximized, minimized or in fullscreen), this function always returns the position and size of the window in normal state. In normal state, `getBounds` and `getNormalBounds` return the same `Rectangle`.
 	**/
 	function getNormalBounds():electron.Rectangle;
 	/**
@@ -560,7 +564,7 @@ package electron.remote;
 	/**
 		The title of the native window.
 		
-		**Note:** The title of the web page can be different from the title of the native window.
+		> [!NOTE] The title of the web page can be different from the title of the native window.
 	**/
 	function getTitle():String;
 	/**
@@ -789,7 +793,7 @@ package electron.remote;
 	/**
 		Sets the properties for the window's taskbar button.
 		
-		**Note:** `relaunchCommand` and `relaunchDisplayName` must always be set together. If one of those properties is not set, then neither will be used.
+		> [!NOTE] `relaunchCommand` and `relaunchDisplayName` must always be set together. If one of those properties is not set, then neither will be used.
 	**/
 	function setAppDetails(options:{ /**
 		Window's App User Model ID. It has to be set, otherwise the other options will have no effect.
@@ -843,9 +847,15 @@ package electron.remote;
 	**/
 	function isMenuBarVisible():Bool;
 	/**
+		whether the window is arranged via Snap.
+		
+		The window is snapped via buttons shown when the mouse is hovered over window maximize button, or by dragging it to the edges of the screen.
+	**/
+	function isSnapped():Bool;
+	/**
 		Sets whether the window should be visible on all workspaces.
 		
-		**Note:** This API does nothing on Windows.
+		> [!NOTE] This API does nothing on Windows.
 	**/
 	function setVisibleOnAllWorkspaces(visible:Bool, ?options:{ /**
 		Sets whether the window should be visible above fullscreen windows.
@@ -859,7 +869,7 @@ package electron.remote;
 	/**
 		Whether the window is visible on all workspaces.
 		
-		**Note:** This API always returns false on Windows.
+		> [!NOTE] This API always returns false on Windows.
 	**/
 	function isVisibleOnAllWorkspaces():Bool;
 	/**
@@ -933,15 +943,19 @@ package electron.remote;
 	**/
 	function addTabbedWindow(browserWindow:electron.remote.BrowserWindow):Void;
 	/**
-		Adds a vibrancy effect to the browser window. Passing `null` or an empty string will remove the vibrancy effect on the window.
+		Adds a vibrancy effect to the browser window. Passing `null` or an empty string will remove the vibrancy effect on the window. The `animationDuration` parameter only animates fading in or fading out the vibrancy effect. Animating between different types of vibrancy is not supported.
 	**/
-	function setVibrancy(type:haxe.extern.EitherType<String, Dynamic>):Void;
+	function setVibrancy(type:haxe.extern.EitherType<String, Dynamic>, ?options:{ /**
+		if greater than zero, the change to vibrancy will be animated over the given duration (in milliseconds).
+	**/
+	@:optional
+	var animationDuration : Float; }):Void;
 	/**
 		This method sets the browser window's system-drawn background material, including behind the non-client area.
 		
 		See the Windows documentation for more details.
 		
-		**Note:** This method is only supported on Windows 11 22H2 and up.
+		> [!NOTE] This method is only supported on Windows 11 22H2 and up.
 	**/
 	function setBackgroundMaterial(material:String):Void;
 	/**
@@ -955,39 +969,39 @@ package electron.remote;
 	/**
 		Sets the touchBar layout for the current window. Specifying `null` or `undefined` clears the touch bar. This method only has an effect if the machine has a touch bar.
 		
-		**Note:** The TouchBar API is currently experimental and may change or be removed in future Electron releases.
+		> [!NOTE] The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
 	function setTouchBar(touchBar:haxe.extern.EitherType<electron.remote.TouchBar, Dynamic>):Void;
 	/**
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function setBrowserView(browserView:haxe.extern.EitherType<electron.remote.BrowserView, Dynamic>):Void;
 	/**
 		The `BrowserView` attached to `win`. Returns `null` if one is not attached. Throws an error if multiple `BrowserView`s are attached.
 		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function getBrowserView():haxe.extern.EitherType<electron.remote.BrowserView, Dynamic>;
 	/**
 		Replacement API for setBrowserView supporting work with multi browser views.
 		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function addBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function removeBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
 		Raises `browserView` above other `BrowserView`s attached to `win`. Throws an error if `browserView` is not attached to `win`.
 		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function setTopBrowserView(browserView:electron.remote.BrowserView):Void;
 	/**
 		a sorted by z-index array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`. The top-most BrowserView is the last element of the array.
 		
-		> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	function getBrowserViews():Array<electron.remote.BrowserView>;
 	/**
@@ -1019,7 +1033,7 @@ enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 		
 		Usually you would want to use the `beforeunload` handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than `undefined` would cancel the close. For example:
 		
-		_**Note**: There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and `window.addEventListener('beforeunload', handler)`. It is recommended to always set the `event.returnValue` explicitly, instead of only returning a value, as the former works more consistently within Electron._
+		> [!NOTE] There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and `window.addEventListener('beforeunload', handler)`. It is recommended to always set the `event.returnValue` explicitly, instead of only returning a value, as the former works more consistently within Electron.
 	**/
 	var close : electron.remote.BrowserWindowEvent<Void -> Void> = "close";
 	/**
@@ -1027,7 +1041,11 @@ enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 	**/
 	var closed : electron.remote.BrowserWindowEvent<Void -> Void> = "closed";
 	/**
-		Emitted when window session is going to end due to force shutdown or machine restart or session log off.
+		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Calling `event.preventDefault()` can delay the system shutdown, though it’s generally best to respect the user’s choice to end the session. However, you may choose to use it if ending the session puts the user at risk of losing data.
+	**/
+	var query_session_end : electron.remote.BrowserWindowEvent<Void -> Void> = "query-session-end";
+	/**
+		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Once this event fires, there is no way to prevent the session from ending.
 	**/
 	var session_end : electron.remote.BrowserWindowEvent<Void -> Void> = "session-end";
 	/**
@@ -1112,7 +1130,7 @@ enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 	/**
 		Emitted once when the window is moved to a new position.
 		
-		**Note**: On macOS this event is an alias of `move`.
+		> [!NOTE] On macOS, this event is an alias of `move`.
 	**/
 	var moved : electron.remote.BrowserWindowEvent<Void -> Void> = "moved";
 	/**
@@ -1172,6 +1190,8 @@ enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 		Emitted when the system context menu is triggered on the window, this is normally only triggered when the user right clicks on the non-client area of your window.  This is the window titlebar or any area you have declared as `-webkit-app-region: drag` in a frameless window.
 		
 		Calling `event.preventDefault()` will prevent the menu from being displayed.
+		
+		To convert `point` to DIP, use `screen.screenToDipPoint(point)`.
 	**/
 	var system_context_menu : electron.remote.BrowserWindowEvent<Void -> Void> = "system-context-menu";
 }

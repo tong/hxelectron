@@ -69,7 +69,7 @@ package electron.main;
 		
 		By default, requests made with `net.fetch` can be made to custom protocols as well as `file:`, and will trigger webRequest handlers if present. When the non-standard `bypassCustomProtocolHandlers` option is set in RequestInit, custom protocol handlers will not be called for this request. This allows forwarding an intercepted request to the built-in handler. webRequest handlers will still be triggered when bypassing custom protocols.
 		
-		Note: in the utility process custom protocols are not supported.
+		> [!NOTE] In the utility process, custom protocols are not supported.
 	**/
 	static function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:RequestInit):js.lib.Promise<Any>;
 	/**

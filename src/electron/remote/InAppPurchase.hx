@@ -51,5 +51,8 @@ package electron.remote;
 	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
 }
 enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+	/**
+		Emitted when one or more transactions have been updated.
+	**/
 	var transactions_updated : electron.remote.InAppPurchaseEvent<Void -> Void> = "transactions-updated";
 }

@@ -19,13 +19,13 @@ package electron.main;
 		
 		Passing `null` will suppress the default menu. On Windows and Linux, this has the additional effect of removing the menu bar from the window.
 		
-		**Note:** The default menu will be created automatically if the app does not set one. It contains standard items such as `File`, `Edit`, `View`, `Window` and `Help`.
+		> [!NOTE] The default menu will be created automatically if the app does not set one. It contains standard items such as `File`, `Edit`, `View`, `Window` and `Help`.
 	**/
 	static function setApplicationMenu(menu:haxe.extern.EitherType<electron.main.Menu, Dynamic>):Void;
 	/**
 		The application menu, if set, or `null`, if not set.
 		
-		**Note:** The returned `Menu` instance doesn't support dynamic addition or removal of menu items. Instance properties can still be dynamically modified.
+		> [!NOTE] The returned `Menu` instance doesn't support dynamic addition or removal of menu items. Instance properties can still be dynamically modified.
 	**/
 	static function getApplicationMenu():haxe.extern.EitherType<electron.main.Menu, Dynamic>;
 	/**
@@ -55,6 +55,10 @@ package electron.main;
 	**/
 	@:optional
 	var window : electron.main.BaseWindow; /**
+		Provide the relevant frame if you want certain OS-level features such as Writing Tools on macOS to function correctly. Typically, this should be `params.frame` from the `context-menu` event on a WebContents, or the `focusedFrame` property of a WebContents.
+	**/
+	@:optional
+	var frame : electron.main.WebFrameMain; /**
 		Default is the current mouse cursor position. Must be declared if `y` is declared.
 	**/
 	@:optional

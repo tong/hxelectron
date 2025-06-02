@@ -14,7 +14,7 @@ package electron;
 	shell.openExternal('https://github.com')
 	```
 	
-	**Note:** While the `shell` module can be used in the renderer process, it will not function in a sandboxed renderer.
+	> [!WARNING] While the `shell` module can be used in the renderer process, it will not function in a sandboxed renderer.
 	@see https://electronjs.org/docs/api/shell
 **/
 @:jsRequire("electron", "shell") extern class Shell extends js.node.events.EventEmitter<electron.Shell> {

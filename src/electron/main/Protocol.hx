@@ -19,7 +19,7 @@ package electron.main;
 	})
 	```
 	
-	**Note:** All methods unless specified can only be used after the `ready` event of the `app` module gets emitted.
+	> [!NOTE] All methods unless specified can only be used after the `ready` event of the `app` module gets emitted.
 	
 	### Using `protocol` with a custom `partition` or `session`
 	
@@ -48,7 +48,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "protocol") extern class Protocol extends js.node.events.EventEmitter<electron.main.Protocol> {
 	/**
-		**Note:** This method can only be used before the `ready` event of the `app` module gets emitted and can be called only once.
+		> [!NOTE] This method can only be used before the `ready` event of the `app` module gets emitted and can be called only once.
 		
 		Registers the `scheme` as standard, secure, bypasses content security policy for resources, allows registering ServiceWorker, supports fetch API, streaming video/audio, and V8 code cache. Specify a privilege with the value of `true` to enable the capability.
 		

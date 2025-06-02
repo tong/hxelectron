@@ -6,7 +6,7 @@ package electron.remote;
 	/**
 		Append a switch (with optional `value`) to Chromium's command line.
 		
-		**Note:** This will not affect `process.argv`. The intended usage of this function is to control Chromium's behavior.
+		> [!NOTE] This will not affect `process.argv`. The intended usage of this function is to control Chromium's behavior.
 	**/
 	function appendSwitch(switch_:String, ?value:String):Void;
 	/**
@@ -14,7 +14,7 @@ package electron.remote;
 		
 		If you're appending an argument like `--switch=value`, consider using `appendSwitch('switch', 'value')` instead.
 		
-		**Note:** This will not affect `process.argv`. The intended usage of this function is to control Chromium's behavior.
+		> [!NOTE] This will not affect `process.argv`. The intended usage of this function is to control Chromium's behavior.
 	**/
 	function appendArgument(value:String):Void;
 	/**
@@ -24,13 +24,15 @@ package electron.remote;
 	/**
 		The command-line switch value.
 		
-		**Note:** When the switch is not present or has no value, it returns empty string.
+		This function is meant to obtain Chromium command line switches. It is not meant to be used for application-specific command line arguments. For the latter, please use `process.argv`.
+		
+		> [!NOTE] When the switch is not present or has no value, it returns empty string.
 	**/
 	function getSwitchValue(switch_:String):String;
 	/**
 		Removes the specified switch from Chromium's command line.
 		
-		**Note:** This will not affect `process.argv`. The intended usage of this function is to control Chromium's behavior.
+		> [!NOTE] This will not affect `process.argv`. The intended usage of this function is to control Chromium's behavior.
 	**/
 	function removeSwitch(switch_:String):Void;
 }

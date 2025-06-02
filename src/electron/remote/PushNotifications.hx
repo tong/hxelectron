@@ -13,7 +13,11 @@ package electron.remote;
 	**/
 	static function registerForAPNSNotifications():js.lib.Promise<Any>;
 	/**
-		Unregisters the app from notifications received from APNS. See: https://developer.apple.com/documentation/appkit/nsapplication/1428747-unregisterforremotenotifications?language=objc
+		Unregisters the app from notifications received from APNS.
+		
+		Apps unregistered through this method can always reregister.
+		
+		See: https://developer.apple.com/documentation/appkit/nsapplication/1428747-unregisterforremotenotifications?language=objc
 	**/
 	static function unregisterForAPNSNotifications():Void;
 }

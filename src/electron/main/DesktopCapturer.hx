@@ -68,14 +68,14 @@ package electron.main;
 	
 	See `navigator.mediaDevices.getDisplayMedia` for more information.
 	
-	**Note:** `navigator.mediaDevices.getDisplayMedia` does not permit the use of `deviceId` for selection of a source - see specification.
+	> [!NOTE] `navigator.mediaDevices.getDisplayMedia` does not permit the use of `deviceId` for selection of a source - see specification.
 	@see https://electronjs.org/docs/api/desktop-capturer
 **/
 @:jsRequire("electron", "desktopCapturer") extern class DesktopCapturer extends js.node.events.EventEmitter<electron.main.DesktopCapturer> {
 	/**
 		Resolves with an array of `DesktopCapturerSource` objects, each `DesktopCapturerSource` represents a screen or an individual window that can be captured.
 		
-		**Note** Capturing the screen contents requires user consent on macOS 10.15 Catalina or higher, which can detected by `systemPreferences.getMediaAccessStatus`.
+		> [!NOTE] Capturing the screen contents requires user consent on macOS 10.15 Catalina or higher, which can detected by `systemPreferences.getMediaAccessStatus`.
 	**/
 	static function getSources(options:{ /**
 		An array of strings that lists the types of desktop sources to be captured, available types can be `screen` and `window`.

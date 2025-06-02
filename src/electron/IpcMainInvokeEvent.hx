@@ -4,6 +4,10 @@ package electron;
 **/
 typedef IpcMainInvokeEvent = {
 	/**
+		Possible values include `frame`
+	**/
+	var type : String;
+	/**
 		The internal ID of the renderer process that sent this message
 	**/
 	var processId : Int;

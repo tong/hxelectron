@@ -1,6 +1,6 @@
 package electron.main;
 /**
-	> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+	> [!NOTE] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	
 	A `BrowserView` can be used to embed additional web content into a `BrowserWindow`. It is like a child window, except that it is positioned relative to its owning window. It is meant to be an alternative to the `webview` tag.
 	
@@ -8,7 +8,7 @@ package electron.main;
 	
 	> Create and control views.
 	
-	> **Note** The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
+	> [!NOTE] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	
 	Process: Main
 	
@@ -91,7 +91,7 @@ package electron.main;
 		  * Similar to CSS Color Module Level 3 keywords, but case-sensitive.
 		    * e.g. `blueviolet` or `red`
 		
-		**Note:** Hex format with alpha takes `AARRGGBB` or `ARGB`, _not_ `RRGGBBAA` or `RGB`.
+		> [!NOTE] Hex format with alpha takes `AARRGGBB` or `ARGB`, _not_ `RRGGBBAA` or `RGB`.
 	**/
 	function setBackgroundColor(color:String):Void;
 }

@@ -25,7 +25,7 @@ typedef Display = {
 	**/
 	var depthPerComponent : Float;
 	/**
-		`true`` if the display is detected by the system.
+		`true` if the display is detected by the system.
 	**/
 	var detected : Bool;
 	/**

@@ -112,12 +112,6 @@ package electron.remote;
 	**/
 	static function removeUserDefault(key:String):Void;
 	/**
-		`true` if DWM composition (Aero Glass) is enabled, and `false` otherwise.
-		
-		An example of using it to determine if you should create a transparent window or not (transparent windows won't work correctly when DWM composition is disabled):
-	**/
-	static function isAeroGlassEnabled():Bool;
-	/**
 		The users current system wide accent color preference in RGBA hexadecimal form.
 		
 		This API is only available on macOS 10.14 Mojave or newer.

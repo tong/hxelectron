@@ -3,6 +3,9 @@ package electron;
 	@see https://electronjs.org/docs/api/utility-process
 **/
 @:jsRequire("electron", "UtilityProcess") extern class UtilityProcess extends js.node.events.EventEmitter<electron.UtilityProcess> {
+	/**
+		> [!NOTE] `utilityProcess.fork` can only be called after the `ready` event has been emitted on `App`.
+	**/
 	static function fork(modulePath:String, ?args:Array<String>, ?options:{ /**
 		Environment key-value pairs. Default is `process.env`.
 	**/
@@ -35,7 +38,7 @@ package electron;
 	/**
 		A `Integer | undefined` representing the process identifier (PID) of the child process. Until the child process has spawned successfully, the value is `undefined`. When the child process exits, then the value is `undefined` after the `exit` event is emitted.
 		
-		**Note:** You can use the `pid` to determine if the process is currently running.
+		> [!NOTE] You can use the `pid` to determine if the process is currently running.
 	**/
 	var pid : haxe.extern.EitherType<Int, Dynamic>;
 	/**

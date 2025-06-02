@@ -10,11 +10,11 @@ package electron;
 	/**
 		fulfilled with the file's thumbnail preview image, which is a NativeImage.
 		
-		Note: The Windows implementation will ignore `size.height` and scale the height according to `size.width`.
+		> [!NOTE] Windows implementation will ignore `size.height` and scale the height according to `size.width`.
 	**/
 	static function createThumbnailFromPath(path:String, size:electron.Size):js.lib.Promise<Any>;
 	/**
-		Creates a new `NativeImage` instance from a file located at `path`. This method returns an empty image if the `path` does not exist, cannot be read, or is not a valid image.
+		Creates a new `NativeImage` instance from an image file (e.g., PNG or JPEG) located at `path`. This method returns an empty image if the `path` does not exist, cannot be read, or is not a valid image.
 	**/
 	static function createFromPath(path:String):electron.NativeImage;
 	/**
@@ -96,15 +96,13 @@ package electron;
 	@:optional
 	var scaleFactor : Float; }):String;
 	/**
-		A Buffer that contains the image's raw bitmap pixel data.
-		
-		The difference between `getBitmap()` and `toBitmap()` is that `getBitmap()` does not copy the bitmap data, so you have to use the returned Buffer immediately in current event loop tick; otherwise the data might be changed or destroyed.
+		Legacy alias for `image.toBitmap()`.
 	**/
 	function getBitmap(?options:{ /**
 		Defaults to 1.0.
 	**/
 	@:optional
-	var scaleFactor : Float; }):js.node.Buffer;
+	var scaleFactor : Float; }):Void;
 	/**
 		A Buffer that stores C pointer to underlying native handle of the image. On macOS, a pointer to `NSImage` instance is returned.
 		

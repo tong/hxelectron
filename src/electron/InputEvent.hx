@@ -8,7 +8,7 @@ typedef InputEvent = {
 	**/
 	var type : String;
 	/**
-		An array of modifiers of the event, can be `shift`, `control`, `ctrl`, `alt`, `meta`, `command`, `cmd`, `isKeypad`, `isAutoRepeat`, `leftButtonDown`, `middleButtonDown`, `rightButtonDown`, `capsLock`, `numLock`, `left`, `right`.
+		An array of modifiers of the event, can be `shift`, `control`, `ctrl`, `alt`, `meta`, `command`, `cmd`, `iskeypad`, `isautorepeat`, `leftbuttondown`, `middlebuttondown`, `rightbuttondown`, `capslock`, `numlock`, `left`, `right`.
 	**/
 	@:optional
 	var modifiers : Array<String>;

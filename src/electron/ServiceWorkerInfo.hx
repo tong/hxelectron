@@ -15,4 +15,8 @@ typedef ServiceWorkerInfo = {
 		The virtual ID of the process that this service worker is running in.  This is not an OS level PID.  This aligns with the ID set used for `webContents.getProcessId()`.
 	**/
 	var renderProcessId : Float;
+	/**
+		ID of the service worker version
+	**/
+	var versionId : Float;
 }

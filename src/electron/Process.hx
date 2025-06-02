@@ -86,6 +86,7 @@ package electron;
 		
 		* `browser` - The main process
 		* `renderer` - A renderer process
+		* `service-worker` - In a service worker
 		* `worker` - In a web worker
 		* `utility` - In a node process launched as a service
 	**/
@@ -165,7 +166,7 @@ package electron;
 		
 		Example:
 		
-		**Note:** It returns the actual operating system version instead of kernel version on macOS unlike `os.release()`.
+		> [!NOTE] It returns the actual operating system version instead of kernel version on macOS unlike `os.release()`.
 	**/
 	static function getSystemVersion():String;
 	/**

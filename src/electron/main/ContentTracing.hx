@@ -6,7 +6,7 @@ package electron.main;
 	
 	This module does not include a web interface. To view recorded traces, use trace viewer, available at `chrome://tracing` in Chrome.
 	
-	**Note:** You should not use this module until the `ready` event of the app module is emitted.
+	> [!NOTE] You should not use this module until the `ready` event of the app module is emitted.
 	@see https://electronjs.org/docs/api/content-tracing
 **/
 @:jsRequire("electron", "contentTracing") extern class ContentTracing extends js.node.events.EventEmitter<electron.main.ContentTracing> {

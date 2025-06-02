@@ -44,6 +44,10 @@ package electron.remote;
 	**/
 	var cookies : electron.remote.Cookies;
 	/**
+		A `Extensions` object for this session.
+	**/
+	var extensions : electron.remote.Extensions;
+	/**
 		A `ServiceWorkers` object for this session.
 	**/
 	var serviceWorkers : electron.remote.ServiceWorkers;
@@ -81,7 +85,7 @@ package electron.remote;
 	**/
 	@:optional
 	var storages : Array<String>; /**
-		The types of quotas to clear, can be `temporary`, `syncable`. If not specified, clear all quotas.
+		The types of quotas to clear, can be `temporary`. If not specified, clear all quotas.
 	**/
 	@:optional
 	var quotas : Array<String>; }):js.lib.Promise<Any>;
@@ -163,7 +167,7 @@ package electron.remote;
 	/**
 		Resolves when all connections are closed.
 		
-		**Note:** It will terminate / fail all requests currently in flight.
+		> [!NOTE] It will terminate / fail all requests currently in flight.
 	**/
 	function closeAllConnections():js.lib.Promise<Any>;
 	/**
@@ -290,7 +294,7 @@ package electron.remote;
 	/**
 		Initiates a download of the resource at `url`. The API will generate a DownloadItem that can be accessed with the will-download event.
 		
-		**Note:** This does not perform any security checks that relate to a page's origin, unlike `webContents.downloadURL`.
+		> [!NOTE] This does not perform any security checks that relate to a page's origin, unlike `webContents.downloadURL`.
 	**/
 	function downloadURL(url:String, ?options:{ /**
 		HTTP request headers.
@@ -332,12 +336,30 @@ package electron.remote;
 	function clearAuthCache():js.lib.Promise<Any>;
 	/**
 		Adds scripts that will be executed on ALL web contents that are associated with this session just before normal `preload` scripts run.
+		
+		**Deprecated:** Use the new `ses.registerPreloadScript` API.
 	**/
 	function setPreloads(preloads:Array<String>):Void;
 	/**
 		an array of paths to preload scripts that have been registered.
+		
+		**Deprecated:** Use the new `ses.getPreloadScripts` API. This will only return preload script paths for `frame` context types.
 	**/
 	function getPreloads():Array<String>;
+	/**
+		Registers preload script that will be executed in its associated context type in this session. For `frame` contexts, this will run prior to any preload defined in the web preferences of a WebContents.
+		
+		The ID of the registered preload script.
+	**/
+	function registerPreloadScript(script:electron.PreloadScriptRegistration):String;
+	/**
+		Unregisters script.
+	**/
+	function unregisterPreloadScript(id:String):Void;
+	/**
+		An array of paths to preload scripts that have been registered.
+	**/
+	function getPreloadScripts():Array<electron.PreloadScript>;
 	/**
 		Sets the directory to store the generated JS code cache for this session. The directory is not required to be created by the user before this call, the runtime will create if it does not exist otherwise will use the existing directory. If directory cannot be created, then code cache will not be used and all operations related to code cache will fail silently inside the runtime. By default, the directory will be `Code Cache` under the respective user data folder.
 		
@@ -397,13 +419,13 @@ package electron.remote;
 	/**
 		The built in spellchecker does not automatically detect what language a user is typing in.  In order for the spell checker to correctly check their words you must call this API with an array of language codes.  You can get the list of supported language codes with the `ses.availableSpellCheckerLanguages` property.
 		
-		**Note:** On macOS the OS spellchecker is used and will detect your language automatically.  This API is a no-op on macOS.
+		> [!NOTE] On macOS, the OS spellchecker is used and will detect your language automatically. This API is a no-op on macOS.
 	**/
 	function setSpellCheckerLanguages(languages:Array<String>):Void;
 	/**
 		An array of language codes the spellchecker is enabled for.  If this list is empty the spellchecker will fallback to using `en-US`.  By default on launch if this setting is an empty list Electron will try to populate this setting with the current OS locale.  This setting is persisted across restarts.
 		
-		**Note:** On macOS the OS spellchecker is used and has its own list of languages. On macOS, this API will return whichever languages have been configured by the OS.
+		> [!NOTE] On macOS, the OS spellchecker is used and has its own list of languages. On macOS, this API will return whichever languages have been configured by the OS.
 	**/
 	function getSpellCheckerLanguages():Array<String>;
 	/**
@@ -413,7 +435,7 @@ package electron.remote;
 		
 		If the files present in `hunspell_dictionaries.zip` are available at `https://example.com/dictionaries/language-code.bdic` then you should call this api with `ses.setSpellCheckerDictionaryDownloadURL('https://example.com/dictionaries/')`.  Please note the trailing slash.  The URL to the dictionaries is formed as `${url}${filename}`.
 		
-		**Note:** On macOS the OS spellchecker is used and therefore we do not download any dictionary files.  This API is a no-op on macOS.
+		> [!NOTE] On macOS, the OS spellchecker is used and therefore we do not download any dictionary files. This API is a no-op on macOS.
 	**/
 	function setSpellCheckerDictionaryDownloadURL(url:String):Void;
 	/**
@@ -423,13 +445,13 @@ package electron.remote;
 	/**
 		Whether the word was successfully written to the custom dictionary. This API will not work on non-persistent (in-memory) sessions.
 		
-		**Note:** On macOS and Windows 10 this word will be written to the OS custom dictionary as well
+		> [!NOTE] On macOS and Windows, this word will be written to the OS custom dictionary as well.
 	**/
 	function addWordToSpellCheckerDictionary(word:String):Bool;
 	/**
 		Whether the word was successfully removed from the custom dictionary. This API will not work on non-persistent (in-memory) sessions.
 		
-		**Note:** On macOS and Windows 10 this word will be removed from the OS custom dictionary as well
+		> [!NOTE] On macOS and Windows, this word will be removed from the OS custom dictionary as well.
 	**/
 	function removeWordFromSpellCheckerDictionary(word:String):Bool;
 	/**
@@ -443,9 +465,11 @@ package electron.remote;
 		
 		This API does not support loading packed (.crx) extensions.
 		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		> [!NOTE] This API cannot be called before the `ready` event of the `app` module is emitted.
 		
-		**Note:** Loading extensions into in-memory (non-persistent) sessions is not supported and will throw an error.
+		> [!NOTE] Loading extensions into in-memory (non-persistent) sessions is not supported and will throw an error.
+		
+		**Deprecated:** Use the new `ses.extensions.loadExtension` API.
 	**/
 	function loadExtension(path:String, ?options:{ /**
 		Whether to allow the extension to read local files over `file://` protocol and inject content scripts into `file://` pages. This is required e.g. for loading devtools extensions on `file://` URLs. Defaults to false.
@@ -454,19 +478,25 @@ package electron.remote;
 	/**
 		Unloads an extension.
 		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		> [!NOTE] This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Deprecated:** Use the new `ses.extensions.removeExtension` API.
 	**/
 	function removeExtension(extensionId:String):Void;
 	/**
 		The loaded extension with the given ID.
 		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		> [!NOTE] This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Deprecated:** Use the new `ses.extensions.getExtension` API.
 	**/
 	function getExtension(extensionId:String):haxe.extern.EitherType<electron.Extension, Dynamic>;
 	/**
 		A list of all loaded extensions.
 		
-		**Note:** This API cannot be called before the `ready` event of the `app` module is emitted.
+		> [!NOTE] This API cannot be called before the `ready` event of the `app` module is emitted.
+		
+		**Deprecated:** Use the new `ses.extensions.getAllExtensions` API.
 	**/
 	function getAllExtensions():Array<electron.Extension>;
 	/**
@@ -480,9 +510,9 @@ package electron.remote;
 		
 		This method clears more types of data and is more thorough than the `clearStorageData` method.
 		
-		**Note:** Cookies are stored at a broader scope than origins. When removing cookies and filtering by `origins` (or `excludeOrigins`), the cookies will be removed at the registrable domain level. For example, clearing cookies for the origin `https://really.specific.origin.example.com/` will end up clearing all cookies for `example.com`. Clearing cookies for the origin `https://my.website.example.co.uk/` will end up clearing all cookies for `example.co.uk`.
+		> [!NOTE] Cookies are stored at a broader scope than origins. When removing cookies and filtering by `origins` (or `excludeOrigins`), the cookies will be removed at the registrable domain level. For example, clearing cookies for the origin `https://really.specific.origin.example.com/` will end up clearing all cookies for `example.com`. Clearing cookies for the origin `https://my.website.example.co.uk/` will end up clearing all cookies for `example.co.uk`.
 		
-		**Note:** Clearing cache data will also clear the shared dictionary cache. This means that any dictionaries used for compression may be reloaded after clearing the cache. If you wish to clear the shared dictionary cache but leave other cached data intact, you may want to use the `clearSharedDictionaryCache` method.
+		> [!NOTE] Clearing cache data will also clear the shared dictionary cache. This means that any dictionaries used for compression may be reloaded after clearing the cache. If you wish to clear the shared dictionary cache but leave other cached data intact, you may want to use the `clearSharedDictionaryCache` method.
 		
 		For more information, refer to Chromium's `BrowsingDataRemover` interface.
 	**/

@@ -8,7 +8,7 @@ package electron.remote;
 	
 	`screen` is an EventEmitter.
 	
-	**Note:** In the renderer / DevTools, `window.screen` is a reserved DOM property, so writing `let { screen } = require('electron')` will not work.
+	> [!NOTE] In the renderer / DevTools, `window.screen` is a reserved DOM property, so writing `let { screen } = require('electron')` will not work.
 	
 	An example of creating a window that fills the whole screen:
 	
@@ -33,13 +33,39 @@ package electron.remote;
 	```
 	
 	Another example of creating a window in the external display:
+	
+	```
+	const { app, BrowserWindow, screen } = require('electron')
+	
+	let win
+	
+	app.whenReady().then(() => {
+	  const displays = screen.getAllDisplays()
+	  const externalDisplay = displays.find((display) => {
+	    return display.bounds.x !== 0 || display.bounds.y !== 0
+	  })
+	
+	  if (externalDisplay) {
+	    win = new BrowserWindow({
+	      x: externalDisplay.bounds.x + 50,
+	      y: externalDisplay.bounds.y + 50
+	    })
+	    win.loadURL('https://github.com')
+	  }
+	})
+	```
+	
+	> [!NOTE] Screen coordinates used by this module are `Point` structures. There are two kinds of coordinates available to the process:
+	
+	* **Physical screen points** are raw hardware pixels on a display.
+	* **Device-independent pixel (DIP) points** are virtualized screen points scaled based on the DPI (dots per inch) of the display.
 	@see https://electronjs.org/docs/api/screen
 **/
 @:native('require(\"electron\").remote.screen') extern class Screen extends js.node.events.EventEmitter<electron.remote.Screen> {
 	/**
 		The current absolute position of the mouse pointer.
 		
-		**Note:** The return value is a DIP point, not a screen physical point.
+		> [!NOTE] The return value is a DIP point, not a screen physical point.
 	**/
 	static function getCursorScreenPoint():electron.Point;
 	/**
@@ -60,10 +86,14 @@ package electron.remote;
 	static function getDisplayMatching(rect:electron.Rectangle):electron.Display;
 	/**
 		Converts a screen physical point to a screen DIP point. The DPI scale is performed relative to the display containing the physical point.
+		
+		Not currently supported on Wayland - if used there it will return the point passed in with no changes.
 	**/
 	static function screenToDipPoint(point:electron.Point):electron.Point;
 	/**
 		Converts a screen DIP point to a screen physical point. The DPI scale is performed relative to the display containing the DIP point.
+		
+		Not currently supported on Wayland.
 	**/
 	static function dipToScreenPoint(point:electron.Point):electron.Point;
 	/**
