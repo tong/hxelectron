@@ -1,5 +1,9 @@
 import electron.main.App;
 import electron.main.BrowserWindow;
+import electron.main.Menu;
+import electron.main.MenuItem;
+import electron.main.Notification;
+import electron.main.Tray;
 import js.Node.__dirname;
 import js.Node.process;
 
@@ -18,8 +22,10 @@ class Main {
 		Sys.println('node ' + process.version);
 		Sys.println('electron ' + process.versions['electron']);
 
-		electron.main.App.whenReady().then(_ -> {
+		App.on('ready', () -> {
 			var win = new BrowserWindow({
+				width: 800,
+				height: 600,
 				webPreferences: {
 					nodeIntegration: true,
 					contextIsolation: false
@@ -29,29 +35,50 @@ class Main {
 				win = null;
 			});
 			win.on("move", () -> {
-				trace('Window move');
+				trace('Window move ' + win.getPosition());
 			});
 			win.on("resize", () -> {
-				trace('Window resize');
+				trace('Window resize ' + win.getSize());
 			});
 			win.loadFile('app.html');
 			// win.webContents.openDevTools();
 
-			var tray = new electron.main.Tray('${__dirname}/icon-192.png');
+			var tray = new Tray('${__dirname}/icon-192.png');
 			tray.setToolTip('Haxelectron');
+			tray.on('click', (e) -> {
+				trace(e);
+			});
+			var contextMenu = Menu.buildFromTemplate([
+				{
+					label: 'haxe.org',
+					click: e -> win.loadURL('https://haxe.org')
+				},
+				{
+					label: 'github/HaxeFoundation',
+					click: e -> win.loadURL('https://github.com/HaxeFoundation')
+				},
+				{
+					label: 'github/hxelectron',
+					click: e -> win.loadURL('https://github.com/tong/hxelectron')
+				}
+			]);
+			tray.setContextMenu(contextMenu);
 
-			// var dialog = new electron.main.Dialog();
-			// electron.main.Dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] });
-
-			var menu:electron.main.Menu = electron.main.Menu.getApplicationMenu();
-			menu.append(new electron.main.MenuItem({
+			var menu:Menu = Menu.getApplicationMenu();
+			menu.append(new MenuItem({
 				label: 'Haxe',
 				submenu: [
 					{label: 'Website', click: e -> win.loadURL('https://haxe.org')},
 					{label: 'Github', click: e -> win.loadURL('https://github.com/HaxeFoundation')}
 				]
 			}));
-			electron.main.Menu.setApplicationMenu(menu);
+			Menu.setApplicationMenu(menu);
+
+			var notification = new Notification({
+				title: 'Haxe',
+				body: 'https://haxe.org'
+			});
+			notification.show();
 
 			if (timeout > 0) {
 				trace('Auto closing application in $timeout seconds ...');
@@ -61,7 +88,7 @@ class Main {
 			}
 		});
 
-		electron.main.App.on(window_all_closed, e -> {
+		App.on(window_all_closed, e -> {
 			if (process.platform != 'darwin')
 				electron.main.App.quit();
 		});

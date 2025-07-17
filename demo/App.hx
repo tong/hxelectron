@@ -22,9 +22,9 @@ class App {
 				setText('haxe-version', 'haxe $version');
 			});
 
-			/* var menu = new electron.remote.Menu();
-				menu.append(new electron.remote.MenuItem({ label: 'XXX'}));
-				electron.remote.Menu.setApplicationMenu(menu); */
+			// var menu = new electron.remote.Menu();
+			// menu.append(new electron.remote.MenuItem({label: 'XXX'}));
+			// electron.remote.Menu.setApplicationMenu(menu);
 		}
 	}
 }
