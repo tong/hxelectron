@@ -156,7 +156,7 @@ private class Gen {
 		addAlias('Partial');
 		addAlias('PopupOptions');
 		addAlias('Record');
-		addAlias('RequestInit');
+		// addAlias('RequestInit');
 		addAlias('SaveDialogOptions');
 		/*
 			this.types.set( 'Accelerator', {
@@ -169,7 +169,8 @@ private class Gen {
 		 */
 
 		for (item in items) {
-			// if( item.name != 'ProtocolResponseUploadData' ) continue;
+			// if (item.name != 'Session')
+			//	continue;
 			this.types.set(item.name, processItem(item));
 		}
 
@@ -610,10 +611,18 @@ private class Gen {
 			case 'URL': macro :String; // TODO: macro: js.html.URL;
 			case _ if (Std.isOfType(name, Array)):
 				createMultiType(cast name);
-			case "'rawData'": // HACK
+			case "'rawData'": // HACK:
 				macro :js.node.Buffer;
-			case "'file'": // HACK
+			case "'file'": // HACK:
 				macro :String;
+			case "(...args: any[]) => any": // HACK:
+				macro :Dynamic;
+			case "(options: BrowserWindowConstructorOptions) => WebContents": // HACK:
+				macro :Dynamic;
+			case "RequestInit": // HACK:
+				macro :js.html.RequestInit;
+			case "RequestInit & { bypassCustomProtocolHandlers?: boolean }": // HACK:
+				macro :js.html.RequestInit;
 			default:
 				var pack = [];
 				for (item in this.items) {
