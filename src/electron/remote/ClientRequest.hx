@@ -79,7 +79,15 @@ package electron.remote;
 		can be `default`, `no-store`, `reload`, `no-cache`, `force-cache` or `only-if-cached`.
 	**/
 	@:optional
-	var cache : String; }, String>):Void;
+	var cache : String; /**
+		can be `throttled`, `idle`, `lowest`, `low`, `medium`, or `highest`. Defaults to `idle`.
+	**/
+	@:optional
+	var priority : String; /**
+		the incremental loading flag as part of HTTP extensible priorities (RFC 9218). Default is `true`.
+	**/
+	@:optional
+	var priorityIncremental : Bool; }, String>):Void;
 	/**
 		Adds an extra HTTP header. The header name will be issued as-is without lowercasing. It can be called only before first write. Calling this method after the first write will throw an error. If the passed value is not a `string`, its `toString()` method will be called to obtain the final value.
 		

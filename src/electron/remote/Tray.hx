@@ -27,6 +27,8 @@ package electron.remote;
 	})
 	```
 	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
+	
 	**Platform Considerations**
 	
 	**Linux**

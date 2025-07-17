@@ -5,6 +5,8 @@ package electron.remote;
 	Process: Main
 	
 	See `Menu` for examples.
+	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/menu-item
 **/
 @:jsRequire("electron", "remote.MenuItem") extern class MenuItem extends js.node.events.EventEmitter<electron.remote.MenuItem> {
@@ -30,7 +32,9 @@ package electron.remote;
 	@:optional
 	var submenu : electron.remote.Menu;
 	/**
-		A `string` indicating the type of the item. Can be `normal`, `separator`, `submenu`, `checkbox` or `radio`.
+		A `string` indicating the type of the item. Can be `normal`, `separator`, `submenu`, `checkbox`, `radio`, `header` or `palette`.
+		
+		> [!NOTE] `header` and `palette` are only available on macOS 14 and up.
 	**/
 	var type : String;
 	/**
@@ -108,10 +112,7 @@ package electron.remote;
 		Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `toggleSpellChecker`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `showSubstitutions`, `toggleSmartQuotes`, `toggleSmartDashes`, `toggleTextReplacement`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `showAllTabs`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu` - Define the action of the menu item, when specified the `click` property will be ignored. See roles.
 	**/
 	@:optional
-	var role : String; /**
-		Can be `normal`, `separator`, `submenu`, `checkbox` or `radio`.
-	**/
-	@:optional
+	var role : String; @:optional
 	var type : String; @:optional
 	var label : String; /**
 		Available in macOS >= 14.4

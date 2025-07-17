@@ -112,6 +112,8 @@ package electron.main;
 	`BrowserWindow` is an EventEmitter.
 	
 	It creates a new `BrowserWindow` with native properties as set by the `options`.
+	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/browser-window
 **/
 @:jsRequire("electron", "BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.main.BrowserWindow> {
@@ -885,9 +887,13 @@ package electron.main;
 	/**
 		Prevents the window contents from being captured by other apps.
 		
-		On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
+		On macOS it sets the NSWindow's `sharingType` to `NSWindowSharingNone`. On Windows it calls `SetWindowDisplayAffinity` with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
 	**/
 	function setContentProtection(enable:Bool):Void;
+	/**
+		whether or not content protection is currently enabled.
+	**/
+	function isContentProtected():Bool;
 	/**
 		Changes whether the window can be focused.
 		

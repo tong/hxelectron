@@ -12,6 +12,10 @@ package electron.main;
 	**/
 	var scope : String;
 	/**
+		A `string` representing the script URL of the service worker.
+	**/
+	var scriptURL : String;
+	/**
 		A `number` representing the ID of the specific version of the service worker script in its scope.
 	**/
 	var versionId : Float;

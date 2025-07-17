@@ -69,6 +69,8 @@ package electron.main;
 	`BaseWindow` is an EventEmitter.
 	
 	It creates a new `BaseWindow` with native properties as set by the `options`.
+	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/base-window
 **/
 @:jsRequire("electron", "BaseWindow") extern class BaseWindow extends js.node.events.EventEmitter<electron.main.BaseWindow> {
@@ -768,6 +770,10 @@ package electron.main;
 		On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
 	**/
 	function setContentProtection(enable:Bool):Void;
+	/**
+		whether or not content protection is currently enabled.
+	**/
+	function isContentProtected():Bool;
 	/**
 		Changes whether the window can be focused.
 		

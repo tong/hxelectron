@@ -7,6 +7,8 @@ package electron.remote;
 	> Create native application menus and context menus.
 	
 	Process: Main
+	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/menu
 **/
 @:jsRequire("electron", "remote.Menu") extern class Menu extends js.node.events.EventEmitter<electron.remote.Menu> {

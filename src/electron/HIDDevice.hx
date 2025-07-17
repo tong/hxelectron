@@ -29,4 +29,29 @@ typedef HIDDevice = {
 	**/
 	@:optional
 	var guid : String;
+	/**
+		an array of report formats. See MDN documentation for more.
+	**/
+	var collections : Array<{ /**
+	An integer representing the usage ID component of the HID usage associated with this collection.
+**/
+var usage : Int; /**
+	An integer representing the usage page component of the HID usage associated with this collection.
+**/
+var usagePage : Int; /**
+	An 8-bit value representing the collection type, which describes a different relationship between the grouped items.
+**/
+var type : Int; /**
+	An array of sub-collections which takes the same format as a top-level collection.
+**/
+var children : Array<Any>; /**
+	An array of inputReport items which represent individual input reports described in this collection.
+**/
+var inputReports : Array<Any>; /**
+	An array of outputReport items which represent individual output reports described in this collection.
+**/
+var outputReports : Array<Any>; /**
+	An array of featureReport items which represent individual feature reports described in this collection.
+**/
+var featureReports : Array<Any>; }>;
 }

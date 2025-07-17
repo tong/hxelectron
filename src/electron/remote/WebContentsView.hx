@@ -15,6 +15,8 @@ package electron.remote;
 	`WebContentsView` inherits from `View`.
 	
 	`WebContentsView` is an EventEmitter.
+	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/web-contents-view
 **/
 @:jsRequire("electron", "remote.WebContentsView") extern class WebContentsView extends js.node.events.EventEmitter<electron.remote.WebContentsView> {

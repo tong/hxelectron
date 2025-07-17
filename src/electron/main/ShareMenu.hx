@@ -9,6 +9,8 @@ package electron.main;
 	> Create share menu on macOS.
 	
 	Process: Main
+	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/share-menu
 **/
 @:jsRequire("electron", "ShareMenu") extern class ShareMenu extends js.node.events.EventEmitter<electron.main.ShareMenu> {

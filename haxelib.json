@@ -14,7 +14,7 @@
   ],
   "description": "Type definitions for the electron framework",
   "releasenote": "See CHANGELOG",
-  "version": "36.3.2",
+  "version": "37.2.3",
   "contributors": [
     "tong",
     "fponticelli"

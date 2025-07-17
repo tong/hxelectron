@@ -13,6 +13,8 @@ package electron.main;
 	Process: Main
 	
 	`View` is an EventEmitter.
+	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/view
 **/
 @:jsRequire("electron", "View") extern class View extends js.node.events.EventEmitter<electron.main.View> {

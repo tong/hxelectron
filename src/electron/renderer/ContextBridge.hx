@@ -40,7 +40,7 @@ package electron.renderer;
 	static function executeInMainWorld(executionScript:{ /**
 		A JavaScript function to execute. This function will be serialized which means that any bound parameters and execution context will be lost.
 	**/
-	var func : Any; /**
+	var func : Dynamic; /**
 		An array of arguments to pass to the provided function. These arguments will be copied between worlds in accordance with the table of supported types.
 	**/
 	@:optional

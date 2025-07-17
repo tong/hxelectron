@@ -71,7 +71,7 @@ package electron.main;
 		
 		> [!NOTE] In the utility process, custom protocols are not supported.
 	**/
-	static function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:RequestInit):js.lib.Promise<Any>;
+	static function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:js.html.RequestInit):js.lib.Promise<Any>;
 	/**
 		Whether there is currently internet connection.
 		

@@ -14,6 +14,8 @@ package electron.main;
 	
 	This module cannot be used until the `ready` event of the `app` module is emitted.
 	
+	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
+	
 	### Example
 	
 	```

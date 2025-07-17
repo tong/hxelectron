@@ -46,7 +46,7 @@ package electron.remote;
 		* `gnome_libsecret` - When the desktop environment is `X-Cinnamon`, `Deepin`, `GNOME`, `Pantheon`, `XFCE`, `UKUI`, `unity` or if the following command line flag is provided `--password-store="gnome-libsecret"`.
 		* `kwallet` - When the desktop session is `kde4` or if the following command line flag is provided `--password-store="kwallet"`.
 		* `kwallet5` - When the desktop session is `kde5` or if the following command line flag is provided `--password-store="kwallet5"`.
-		* `kwallet6` - When the desktop session is `kde6`.
+		* `kwallet6` - When the desktop session is `kde6` or if the following command line flag is provided `--password-store="kwallet6"`.
 		* `unknown` - When the function is called before app has emitted the `ready` event.
 	**/
 	static function getSelectedStorageBackend():String;

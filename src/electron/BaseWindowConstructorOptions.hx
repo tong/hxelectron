@@ -241,6 +241,11 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var height : Int; }, Bool>;
 	/**
+		The accent color for the window. By default, follows user preference in System Settings. Set to `false` to explicitly disable, or set the color in Hex, RGB, RGBA, HSL, HSLA or named CSS color format. Alpha values will be ignored.
+	**/
+	@:optional
+	var accentColor : haxe.extern.EitherType<Bool, String>;
+	/**
 		Set a custom position for the traffic light buttons in frameless windows.
 	**/
 	@:optional

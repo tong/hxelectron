@@ -1082,6 +1082,12 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	**/
 	var before_input_event : electron.remote.WebContentsEvent<Void -> Void> = "before-input-event";
 	/**
+		Emitted before dispatching mouse events in the page.
+		
+		Calling `event.preventDefault` will prevent the page mouse events.
+	**/
+	var before_mouse_event : electron.remote.WebContentsEvent<Void -> Void> = "before-mouse-event";
+	/**
 		Emitted when the window enters a full-screen state triggered by HTML API.
 	**/
 	var enter_html_full_screen : electron.remote.WebContentsEvent<Void -> Void> = "enter-html-full-screen";
@@ -1180,7 +1186,9 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	/**
 		Emitted when a bluetooth device needs to be selected when a call to `navigator.bluetooth.requestDevice` is made. `callback` should be called with the `deviceId` of the device to be selected.  Passing an empty string to `callback` will cancel the request.
 		
-		If an event listener is not added for this event, or if `event.preventDefault` is not called when handling this event, the first available device will be automatically selected.
+		If no event listener is added for this event, all bluetooth requests will be cancelled.
+		
+		If `event.preventDefault` is not called when handling this event, the first available device will be automatically selected.
 		
 		Due to the nature of bluetooth, scanning for devices when `navigator.bluetooth.requestDevice` is called may take time and will cause `select-bluetooth-device` to fire multiple times until `callback` is called with either a device id or an empty string to cancel the request.
 	**/
