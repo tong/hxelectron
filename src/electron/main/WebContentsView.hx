@@ -19,7 +19,7 @@ package electron.main;
 	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/web-contents-view
 **/
-@:jsRequire("electron", "WebContentsView") extern class WebContentsView extends js.node.events.EventEmitter<electron.main.WebContentsView> {
+@:jsRequire("electron", "WebContentsView") extern class WebContentsView extends electron.main.View {
 	/**
 		A `WebContents` property containing a reference to the displayed `WebContents`. Use this to interact with the `WebContents`, for instance to load a URL.
 	**/
@@ -33,7 +33,4 @@ package electron.main;
 	**/
 	@:optional
 	var webContents : electron.main.WebContents; }):Void;
-}
-enum abstract WebContentsViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
-
 }

@@ -8,6 +8,7 @@ package electron.main;
 	
 	```
 	const { app, protocol, net } = require('electron')
+	
 	const path = require('node:path')
 	const url = require('node:url')
 	
@@ -29,8 +30,9 @@ package electron.main;
 	
 	```
 	const { app, BrowserWindow, net, protocol, session } = require('electron')
+	
 	const path = require('node:path')
-	const url = require('url')
+	const url = require('node:url')
 	
 	app.whenReady().then(() => {
 	  const partition = 'persist:example'

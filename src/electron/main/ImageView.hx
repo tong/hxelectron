@@ -23,13 +23,10 @@ package electron.main;
 	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/image-view
 **/
-@:jsRequire("electron", "ImageView") extern class ImageView extends js.node.events.EventEmitter<electron.main.ImageView> {
+@:jsRequire("electron", "ImageView") extern class ImageView extends electron.main.View {
 	function new():Void;
 	/**
 		Sets the image for this `ImageView`. Note that only image formats supported by `NativeImage` can be used with an `ImageView`.
 	**/
 	function setImage(image:electron.NativeImage):Void;
-}
-enum abstract ImageViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
-
 }

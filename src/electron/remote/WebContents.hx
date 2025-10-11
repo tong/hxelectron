@@ -497,6 +497,12 @@ package electron.remote;
 		
 		Prints window's web page. When `silent` is set to `true`, Electron will pick the system's default printer if `deviceName` is empty and the default settings for printing.
 		
+		Some possible `failureReason`s for print failure include:
+		
+		* "Invalid printer settings"
+		* "Print job canceled"
+		* "Print job failed"
+		
 		Use `page-break-before: always;` CSS style to force to print to a new page.
 		
 		Example usage:
@@ -1063,10 +1069,6 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		Emitted when the unresponsive web page becomes responsive again.
 	**/
 	var responsive : electron.remote.WebContentsEvent<Void -> Void> = "responsive";
-	/**
-		Emitted when a plugin process has crashed.
-	**/
-	var plugin_crashed : electron.remote.WebContentsEvent<Void -> Void> = "plugin-crashed";
 	/**
 		Emitted when `webContents` is destroyed.
 	**/

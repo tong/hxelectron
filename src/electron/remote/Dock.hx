@@ -23,6 +23,8 @@ package electron.remote;
 	function downloadFinished(filePath:String):Void;
 	/**
 		Sets the string to be displayed in the dock’s badging area.
+		
+		> [!IMPORTANT] You need to ensure that your application has the permission to display notifications for this method to work.
 	**/
 	function setBadge(text:String):Void;
 	/**

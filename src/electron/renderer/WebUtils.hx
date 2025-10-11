@@ -3,6 +3,8 @@ package electron.renderer;
 	> A utility layer to interact with Web API objects (Files, Blobs, etc.)
 	
 	Process: Renderer
+	
+	> [!IMPORTANT] If you want to call this API from a renderer process with context isolation enabled, place the API call in your preload script and expose it using the `contextBridge` API.
 	@see https://electronjs.org/docs/api/web-utils
 **/
 @:jsRequire("electron", "webUtils") extern class WebUtils extends js.node.events.EventEmitter<electron.renderer.WebUtils> {

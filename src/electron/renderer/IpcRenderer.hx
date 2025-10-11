@@ -8,6 +8,8 @@ package electron.renderer;
 	
 	Process: Renderer
 	
+	> [!IMPORTANT] If you want to call this API from a renderer process with context isolation enabled, place the API call in your preload script and expose it using the `contextBridge` API.
+	
 	The `ipcRenderer` module is an  EventEmitter. It provides a few methods so you can send synchronous and asynchronous messages from the render process (web page) to the main process. You can also receive replies from the main process.
 	
 	See IPC tutorial for code examples.

@@ -232,6 +232,10 @@ package electron.remote;
 	**/
 	static function clearRecentDocuments():Void;
 	/**
+		An array containing documents in the most recent documents list.
+	**/
+	static function getRecentDocuments():Array<String>;
+	/**
 		Whether the call succeeded.
 		
 		Sets the current executable as the default handler for a protocol (aka URI scheme). It allows you to integrate your app deeper into the operating system. Once registered, all links with `your-protocol://` will be opened with the current executable. The whole link, including protocol, will be passed to your application as a parameter.

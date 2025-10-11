@@ -27,6 +27,8 @@ package electron.main;
 	})
 	```
 	
+	> [!TIP] See also: A detailed guide about how to implement Tray menus.
+	
 	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	
 	**Platform Considerations**
@@ -158,6 +160,10 @@ package electron.main;
 		The `bounds` of this tray icon as `Object`.
 	**/
 	function getBounds():electron.Rectangle;
+	/**
+		The GUID used to uniquely identify the tray icon and allow it to retain its position between relaunches, or null if none is set.
+	**/
+	function getGUID():haxe.extern.EitherType<String, Dynamic>;
 	/**
 		Whether the tray icon is destroyed.
 	**/

@@ -20,6 +20,7 @@ package electron.remote;
 	
 	```
 	const { BrowserWindow } = require('electron')
+	
 	const win = new BrowserWindow({ show: false })
 	win.once('ready-to-show', () => {
 	  win.show()
@@ -116,7 +117,7 @@ package electron.remote;
 	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/browser-window
 **/
-@:jsRequire("electron", "remote.BrowserWindow") extern class BrowserWindow extends js.node.events.EventEmitter<electron.remote.BrowserWindow> {
+@:jsRequire("electron", "remote.BrowserWindow") extern class BrowserWindow extends electron.remote.BaseWindow {
 	/**
 		An array of all opened browser windows.
 	**/
@@ -145,113 +146,6 @@ package electron.remote;
 		See the `webContents` documentation for its methods and events.
 	**/
 	var webContents : electron.remote.WebContents;
-	/**
-		A `Integer` property representing the unique ID of the window. Each ID is unique among all `BrowserWindow` instances of the entire Electron application.
-	**/
-	var id : Int;
-	/**
-		A `string` (optional) property that is equal to the `tabbingIdentifier` passed to the `BrowserWindow` constructor or `undefined` if none was set.
-	**/
-	@:optional
-	var tabbingIdentifier : String;
-	/**
-		A `boolean` property that determines whether the window menu bar should hide itself automatically. Once set, the menu bar will only show when users press the single `Alt` key.
-		
-		If the menu bar is already visible, setting this property to `true` won't hide it immediately.
-	**/
-	var autoHideMenuBar : Bool;
-	/**
-		A `boolean` property that determines whether the window is in simple (pre-Lion) fullscreen mode.
-	**/
-	var simpleFullScreen : Bool;
-	/**
-		A `boolean` property that determines whether the window is in fullscreen mode.
-	**/
-	var fullScreen : Bool;
-	/**
-		A `boolean` property that determines whether the window is focusable.
-	**/
-	var focusable : Bool;
-	/**
-		A `boolean` property that determines whether the window is visible on all workspaces.
-		
-		> [!NOTE] Always returns false on Windows.
-	**/
-	var visibleOnAllWorkspaces : Bool;
-	/**
-		A `boolean` property that determines whether the window has a shadow.
-	**/
-	var shadow : Bool;
-	/**
-		A `boolean` property that determines whether the menu bar should be visible.
-		
-		> [!NOTE] If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single `Alt` key.
-	**/
-	var menuBarVisible : Bool;
-	/**
-		A `boolean` property that determines whether the window is in kiosk mode.
-	**/
-	var kiosk : Bool;
-	/**
-		A `boolean` property that specifies whether the window’s document has been edited.
-		
-		The icon in title bar will become gray when set to `true`.
-	**/
-	var documentEdited : Bool;
-	/**
-		A `string` property that determines the pathname of the file the window represents, and the icon of the file will show in window's title bar.
-	**/
-	var representedFilename : String;
-	/**
-		A `string` property that determines the title of the native window.
-		
-		> [!NOTE] The title of the web page can be different from the title of the native window.
-	**/
-	var title : String;
-	/**
-		A `boolean` property that determines whether the window can be manually minimized by user.
-		
-		On Linux the setter is a no-op, although the getter returns `true`.
-	**/
-	var minimizable : Bool;
-	/**
-		A `boolean` property that determines whether the window can be manually maximized by user.
-		
-		On Linux the setter is a no-op, although the getter returns `true`.
-	**/
-	var maximizable : Bool;
-	/**
-		A `boolean` property that determines whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
-	**/
-	var fullScreenable : Bool;
-	/**
-		A `boolean` property that determines whether the window can be manually resized by user.
-	**/
-	var resizable : Bool;
-	/**
-		A `boolean` property that determines whether the window can be manually closed by user.
-		
-		On Linux the setter is a no-op, although the getter returns `true`.
-	**/
-	var closable : Bool;
-	/**
-		A `boolean` property that determines Whether the window can be moved by user.
-		
-		On Linux the setter is a no-op, although the getter returns `true`.
-	**/
-	var movable : Bool;
-	/**
-		A `boolean` property that determines whether the window is excluded from the application’s Windows menu. `false` by default.
-	**/
-	var excludedFromShownWindowsMenu : Bool;
-	/**
-		A `string` property that defines an alternative title provided only to accessibility tools such as screen readers. This string is not directly visible to users.
-	**/
-	var accessibleTitle : String;
-	/**
-		A `boolean` property that indicates whether the window is arranged via Snap.
-	**/
-	var snapped : Bool;
 	function new(?options:electron.BrowserWindowConstructorOptions):Void;
 	/**
 		Force closing the window, the `unload` and `beforeunload` event won't be emitted for the web page, and `close` event will also not be emitted for this window, but it guarantees the `closed` event will be emitted.
@@ -819,6 +713,24 @@ package electron.remote;
 	@:optional
 	var relaunchDisplayName : String; }):Void;
 	/**
+		Sets the system accent color and highlighting of active window border.
+		
+		The `accentColor` parameter accepts the following values:
+		
+		* **Color string** - Sets a custom accent color using standard CSS color formats (Hex, RGB, RGBA, HSL, HSLA, or named colors). Alpha values in RGBA/HSLA formats are ignored and the color is treated as fully opaque.
+		* **`true`** - Uses the system's default accent color from user preferences in System Settings.
+		* **`false`** - Explicitly disables accent color highlighting for the window.
+		
+		Examples:
+	**/
+	function setAccentColor(accentColor:haxe.extern.EitherType<Bool, String>):Void;
+	/**
+		the system accent color and highlighting of active window border in Hex RGB format.
+		
+		If a color has been set for the window that differs from the system accent color, the window accent color will be returned. Otherwise, a boolean will be returned, with `true` indicating that the window uses the global system accent color, and `false` indicating that accent color highlighting is disabled for this window.
+	**/
+	function getAccentColor():haxe.extern.EitherType<String, Bool>;
+	/**
 		Same as `webContents.showDefinitionForSelection()`.
 	**/
 	function showDefinitionForSelection():Void;
@@ -887,7 +799,9 @@ package electron.remote;
 	/**
 		Prevents the window contents from being captured by other apps.
 		
-		On macOS it sets the NSWindow's `sharingType` to `NSWindowSharingNone`. On Windows it calls `SetWindowDisplayAffinity` with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
+		On Windows, it calls `SetWindowDisplayAffinity` with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
+		
+		On macOS, it sets the `NSWindow`'s `sharingType` to `NSWindowSharingNone`. Unfortunately, due to an intentional change in macOS, newer Mac applications that use `ScreenCaptureKit` will capture your window despite `win.setContentProtection(true)`. See here.
 	**/
 	function setContentProtection(enable:Bool):Void;
 	/**
@@ -1028,176 +942,4 @@ package electron.remote;
 	**/
 	@:optional
 	var height : Int; }):Void;
-}
-enum abstract BrowserWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
-	/**
-		Emitted when the document changed its title, calling `event.preventDefault()` will prevent the native window's title from changing. `explicitSet` is false when title is synthesized from file URL.
-	**/
-	var page_title_updated : electron.remote.BrowserWindowEvent<Void -> Void> = "page-title-updated";
-	/**
-		Emitted when the window is going to be closed. It's emitted before the `beforeunload` and `unload` event of the DOM. Calling `event.preventDefault()` will cancel the close.
-		
-		Usually you would want to use the `beforeunload` handler to decide whether the window should be closed, which will also be called when the window is reloaded. In Electron, returning any value other than `undefined` would cancel the close. For example:
-		
-		> [!NOTE] There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and `window.addEventListener('beforeunload', handler)`. It is recommended to always set the `event.returnValue` explicitly, instead of only returning a value, as the former works more consistently within Electron.
-	**/
-	var close : electron.remote.BrowserWindowEvent<Void -> Void> = "close";
-	/**
-		Emitted when the window is closed. After you have received this event you should remove the reference to the window and avoid using it any more.
-	**/
-	var closed : electron.remote.BrowserWindowEvent<Void -> Void> = "closed";
-	/**
-		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Calling `event.preventDefault()` can delay the system shutdown, though it’s generally best to respect the user’s choice to end the session. However, you may choose to use it if ending the session puts the user at risk of losing data.
-	**/
-	var query_session_end : electron.remote.BrowserWindowEvent<Void -> Void> = "query-session-end";
-	/**
-		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Once this event fires, there is no way to prevent the session from ending.
-	**/
-	var session_end : electron.remote.BrowserWindowEvent<Void -> Void> = "session-end";
-	/**
-		Emitted when the web page becomes unresponsive.
-	**/
-	var unresponsive : electron.remote.BrowserWindowEvent<Void -> Void> = "unresponsive";
-	/**
-		Emitted when the unresponsive web page becomes responsive again.
-	**/
-	var responsive : electron.remote.BrowserWindowEvent<Void -> Void> = "responsive";
-	/**
-		Emitted when the window loses focus.
-	**/
-	var blur : electron.remote.BrowserWindowEvent<Void -> Void> = "blur";
-	/**
-		Emitted when the window gains focus.
-	**/
-	var focus : electron.remote.BrowserWindowEvent<Void -> Void> = "focus";
-	/**
-		Emitted when the window is shown.
-	**/
-	var show : electron.remote.BrowserWindowEvent<Void -> Void> = "show";
-	/**
-		Emitted when the window is hidden.
-	**/
-	var hide : electron.remote.BrowserWindowEvent<Void -> Void> = "hide";
-	/**
-		Emitted when the web page has been rendered (while not being shown) and window can be displayed without a visual flash.
-		
-		Please note that using this event implies that the renderer will be considered "visible" and paint even though `show` is false.  This event will never fire if you use `paintWhenInitiallyHidden: false`
-	**/
-	var ready_to_show : electron.remote.BrowserWindowEvent<Void -> Void> = "ready-to-show";
-	/**
-		Emitted when window is maximized.
-	**/
-	var maximize : electron.remote.BrowserWindowEvent<Void -> Void> = "maximize";
-	/**
-		Emitted when the window exits from a maximized state.
-	**/
-	var unmaximize : electron.remote.BrowserWindowEvent<Void -> Void> = "unmaximize";
-	/**
-		Emitted when the window is minimized.
-	**/
-	var minimize : electron.remote.BrowserWindowEvent<Void -> Void> = "minimize";
-	/**
-		Emitted when the window is restored from a minimized state.
-	**/
-	var restore : electron.remote.BrowserWindowEvent<Void -> Void> = "restore";
-	/**
-		Emitted before the window is resized. Calling `event.preventDefault()` will prevent the window from being resized.
-		
-		Note that this is only emitted when the window is being resized manually. Resizing the window with `setBounds`/`setSize` will not emit this event.
-		
-		The possible values and behaviors of the `edge` option are platform dependent. Possible values are:
-		
-		* On Windows, possible values are `bottom`, `top`, `left`, `right`, `top-left`, `top-right`, `bottom-left`, `bottom-right`.
-		* On macOS, possible values are `bottom` and `right`.
-		  * The value `bottom` is used to denote vertical resizing.
-		  * The value `right` is used to denote horizontal resizing.
-	**/
-	var will_resize : electron.remote.BrowserWindowEvent<Void -> Void> = "will-resize";
-	/**
-		Emitted after the window has been resized.
-	**/
-	var resize : electron.remote.BrowserWindowEvent<Void -> Void> = "resize";
-	/**
-		Emitted once when the window has finished being resized.
-		
-		This is usually emitted when the window has been resized manually. On macOS, resizing the window with `setBounds`/`setSize` and setting the `animate` parameter to `true` will also emit this event once resizing has finished.
-	**/
-	var resized : electron.remote.BrowserWindowEvent<Void -> Void> = "resized";
-	/**
-		Emitted before the window is moved. On Windows, calling `event.preventDefault()` will prevent the window from being moved.
-		
-		Note that this is only emitted when the window is being moved manually. Moving the window with `setPosition`/`setBounds`/`center` will not emit this event.
-	**/
-	var will_move : electron.remote.BrowserWindowEvent<Void -> Void> = "will-move";
-	/**
-		Emitted when the window is being moved to a new position.
-	**/
-	var move : electron.remote.BrowserWindowEvent<Void -> Void> = "move";
-	/**
-		Emitted once when the window is moved to a new position.
-		
-		> [!NOTE] On macOS, this event is an alias of `move`.
-	**/
-	var moved : electron.remote.BrowserWindowEvent<Void -> Void> = "moved";
-	/**
-		Emitted when the window enters a full-screen state.
-	**/
-	var enter_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "enter-full-screen";
-	/**
-		Emitted when the window leaves a full-screen state.
-	**/
-	var leave_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "leave-full-screen";
-	/**
-		Emitted when the window enters a full-screen state triggered by HTML API.
-	**/
-	var enter_html_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "enter-html-full-screen";
-	/**
-		Emitted when the window leaves a full-screen state triggered by HTML API.
-	**/
-	var leave_html_full_screen : electron.remote.BrowserWindowEvent<Void -> Void> = "leave-html-full-screen";
-	/**
-		Emitted when the window is set or unset to show always on top of other windows.
-	**/
-	var always_on_top_changed : electron.remote.BrowserWindowEvent<Void -> Void> = "always-on-top-changed";
-	/**
-		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows.
-		
-		Commands are lowercased, underscores are replaced with hyphens, and the `APPCOMMAND_` prefix is stripped off. e.g. `APPCOMMAND_BROWSER_BACKWARD` is emitted as `browser-backward`.
-		
-		The following app commands are explicitly supported on Linux:
-		
-		* `browser-backward`
-		* `browser-forward`
-	**/
-	var app_command : electron.remote.BrowserWindowEvent<Void -> Void> = "app-command";
-	/**
-		Emitted on 3-finger swipe. Possible directions are `up`, `right`, `down`, `left`.
-		
-		The method underlying this event is built to handle older macOS-style trackpad swiping, where the content on the screen doesn't move with the swipe. Most macOS trackpads are not configured to allow this kind of swiping anymore, so in order for it to emit properly the 'Swipe between pages' preference in `System Preferences > Trackpad > More Gestures` must be set to 'Swipe with two or three fingers'.
-	**/
-	var swipe : electron.remote.BrowserWindowEvent<Void -> Void> = "swipe";
-	/**
-		Emitted on trackpad rotation gesture. Continually emitted until rotation gesture is ended. The `rotation` value on each emission is the angle in degrees rotated since the last emission. The last emitted event upon a rotation gesture will always be of value `0`. Counter-clockwise rotation values are positive, while clockwise ones are negative.
-	**/
-	var rotate_gesture : electron.remote.BrowserWindowEvent<Void -> Void> = "rotate-gesture";
-	/**
-		Emitted when the window opens a sheet.
-	**/
-	var sheet_begin : electron.remote.BrowserWindowEvent<Void -> Void> = "sheet-begin";
-	/**
-		Emitted when the window has closed a sheet.
-	**/
-	var sheet_end : electron.remote.BrowserWindowEvent<Void -> Void> = "sheet-end";
-	/**
-		Emitted when the native new tab button is clicked.
-	**/
-	var new_window_for_tab : electron.remote.BrowserWindowEvent<Void -> Void> = "new-window-for-tab";
-	/**
-		Emitted when the system context menu is triggered on the window, this is normally only triggered when the user right clicks on the non-client area of your window.  This is the window titlebar or any area you have declared as `-webkit-app-region: drag` in a frameless window.
-		
-		Calling `event.preventDefault()` will prevent the menu from being displayed.
-		
-		To convert `point` to DIP, use `screen.screenToDipPoint(point)`.
-	**/
-	var system_context_menu : electron.remote.BrowserWindowEvent<Void -> Void> = "system-context-menu";
 }

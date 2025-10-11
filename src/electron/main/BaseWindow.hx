@@ -703,6 +703,24 @@ package electron.main;
 	@:optional
 	var relaunchDisplayName : String; }):Void;
 	/**
+		Sets the system accent color and highlighting of active window border.
+		
+		The `accentColor` parameter accepts the following values:
+		
+		* **Color string** - Sets a custom accent color using standard CSS color formats (Hex, RGB, RGBA, HSL, HSLA, or named colors). Alpha values in RGBA/HSLA formats are ignored and the color is treated as fully opaque.
+		* **`true`** - Uses the system's default accent color from user preferences in System Settings.
+		* **`false`** - Explicitly disables accent color highlighting for the window.
+		
+		Examples:
+	**/
+	function setAccentColor(accentColor:haxe.extern.EitherType<Bool, String>):Void;
+	/**
+		the system accent color and highlighting of active window border in Hex RGB format.
+		
+		If a color has been set for the window that differs from the system accent color, the window accent color will be returned. Otherwise, a boolean will be returned, with `true` indicating that the window uses the global system accent color, and `false` indicating that accent color highlighting is disabled for this window.
+	**/
+	function getAccentColor():haxe.extern.EitherType<String, Bool>;
+	/**
 		Changes window icon.
 	**/
 	function setIcon(icon:haxe.extern.EitherType<electron.NativeImage, String>):Void;

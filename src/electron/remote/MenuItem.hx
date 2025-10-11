@@ -1,5 +1,9 @@
 package electron.remote;
 /**
+	
+	
+	### Class: MenuItem
+	
 	> Add items to native application menus and context menus.
 	
 	Process: Main
@@ -11,7 +15,7 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.MenuItem") extern class MenuItem extends js.node.events.EventEmitter<electron.remote.MenuItem> {
 	/**
-		A `string` indicating the item's unique id, this property can be dynamically changed.
+		A `string` indicating the item's unique id. This property can be dynamically changed.
 	**/
 	var id : String;
 	/**
@@ -67,15 +71,15 @@ package electron.remote;
 	**/
 	var toolTip : String;
 	/**
-		A `boolean` indicating whether the item is enabled, this property can be dynamically changed.
+		A `boolean` indicating whether the item is enabled. This property can be dynamically changed.
 	**/
 	var enabled : Bool;
 	/**
-		A `boolean` indicating whether the item is visible, this property can be dynamically changed.
+		A `boolean` indicating whether the item is visible. This property can be dynamically changed.
 	**/
 	var visible : Bool;
 	/**
-		A `boolean` indicating whether the item is checked, this property can be dynamically changed.
+		A `boolean` indicating whether the item is checked. This property can be dynamically changed.
 		
 		A `checkbox` menu item will toggle the `checked` property on and off when selected.
 		
@@ -122,8 +126,11 @@ package electron.remote;
 		Hover text for this menu item.
 	**/
 	@:optional
-	var toolTip : String; @:optional
-	var accelerator : electron.Accelerator; @:optional
+	var toolTip : String; /**
+		An Accelerator string.
+	**/
+	@:optional
+	var accelerator : String; @:optional
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		If false, the menu item will be greyed out and unclickable.
 	**/

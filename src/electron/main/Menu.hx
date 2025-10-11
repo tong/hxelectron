@@ -8,6 +8,8 @@ package electron.main;
 	
 	Process: Main
 	
+	> [!TIP] See also: A detailed guide about how to implement menus in your application.
+	
 	> [!WARNING] Electron's built-in classes cannot be subclassed in user code. For more information, see the FAQ.
 	@see https://electronjs.org/docs/api/menu
 **/
@@ -45,12 +47,14 @@ package electron.main;
 	/**
 		A `MenuItem[]` array containing the menu's items.
 		
-		Each `Menu` consists of multiple `MenuItem`s and each `MenuItem` can have a submenu.
+		Each `Menu` consists of multiple `MenuItem` instances and each `MenuItem` can nest a `Menu` into its `submenu` property.
 	**/
 	var items : Array<electron.main.MenuItem>;
 	function new():Void;
 	/**
 		Pops up this menu as a context menu in the `BaseWindow`.
+		
+		> [!TIP] For more details, see the Context Menu guide.
 	**/
 	function popup(?options:{ /**
 		Default is the focused window.

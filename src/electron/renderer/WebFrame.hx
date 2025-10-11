@@ -4,6 +4,8 @@ package electron.renderer;
 	
 	Process: Renderer
 	
+	> [!IMPORTANT] If you want to call this API from a renderer process with context isolation enabled, place the API call in your preload script and expose it using the `contextBridge` API.
+	
 	`webFrame` export of the Electron module is an instance of the `WebFrame` class representing the current frame. Sub-frames can be retrieved by certain properties and methods (e.g. `webFrame.firstChild`).
 	
 	An example of zooming current page to 200%.
@@ -32,8 +34,14 @@ package electron.renderer;
 	static var nextSibling : haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		An `Integer` representing the unique frame id in the current renderer process. Distinct WebFrame instances that refer to the same underlying frame will have the same `routingId`.
+		
+		**Deprecated:** Use the new `webFrame.frameToken` API.
 	**/
 	static var routingId : Int;
+	/**
+		A `string` representing the unique frame token in the current renderer process. Distinct WebFrame instances that refer to the same underlying frame will have the same `frameToken`.
+	**/
+	static var frameToken : String;
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 		
@@ -146,15 +154,21 @@ package electron.renderer;
 	/**
 		The frame element in `webFrame's` document selected by `selector`, `null` would be returned if `selector` does not select a frame or if the frame is not in the current renderer process.
 	**/
-	static function getFrameForSelector(selector:String):electron.renderer.WebFrame;
+	static function getFrameForSelector(selector:String):haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		A child of `webFrame` with the supplied `name`, `null` would be returned if there's no such frame or if the frame is not in the current renderer process.
 	**/
-	static function findFrameByName(name:String):electron.renderer.WebFrame;
+	static function findFrameByName(name:String):haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		that has the supplied `routingId`, `null` if not found.
+		
+		**Deprecated:** Use the new `webFrame.findFrameByToken` API.
 	**/
-	static function findFrameByRoutingId(routingId:Int):electron.renderer.WebFrame;
+	static function findFrameByRoutingId(routingId:Int):haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
+	/**
+		that has the supplied `frameToken`, `null` if not found.
+	**/
+	static function findFrameByToken(frameToken:String):haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		True if the word is misspelled according to the built in spellchecker, false otherwise. If no dictionary is loaded, always return false.
 	**/

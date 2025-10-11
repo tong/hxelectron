@@ -8,6 +8,10 @@ package electron.main;
 	**/
 	static function fromId(processId:Int, routingId:Int):haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>;
 	/**
+		A frame with the given process and frame token, or `null` if there is no WebFrameMain associated with the given IDs.
+	**/
+	static function fromFrameToken(processId:Int, frameToken:String):haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>;
+	/**
 		An `IpcMain` instance scoped to the frame.
 		
 		IPC messages sent with `ipcRenderer.send`, `ipcRenderer.sendSync` or `ipcRenderer.postMessage` will be delivered in the following order:
@@ -58,6 +62,10 @@ package electron.main;
 		A `string` representing the frame name.
 	**/
 	var name : String;
+	/**
+		A `string` which uniquely identifies the frame within its associated renderer process. This is equivalent to `webFrame.frameToken`.
+	**/
+	var frameToken : String;
 	/**
 		An `Integer` representing the operating system `pid` of the process which owns this frame.
 	**/

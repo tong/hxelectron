@@ -4,6 +4,8 @@ package electron;
 	
 	Process: Main, Renderer (non-sandboxed only)
 	
+	> [!IMPORTANT] If you want to call this API from a renderer process with context isolation enabled, place the API call in your preload script and expose it using the `contextBridge` API.
+	
 	On Linux, there is also a `selection` clipboard. To manipulate it you need to pass `selection` to each method:
 	@see https://electronjs.org/docs/api/clipboard
 **/

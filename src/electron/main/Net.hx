@@ -19,6 +19,7 @@ package electron.main;
 	
 	```
 	const { app } = require('electron')
+	
 	app.whenReady().then(() => {
 	  const { net } = require('electron')
 	  const request = net.request('https://github.com')
