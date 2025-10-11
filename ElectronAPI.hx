@@ -19,6 +19,12 @@ class ElectronAPI {
 			rmdir(destination);
 
 		var items:Array<Item> = Json.parse(File.getContent(apiFile));
+		for (item in items) {
+			// HACK:
+			if (Reflect.hasField(item, "extends")) {
+				item.extends_ = Reflect.field(item, "extends");
+			}
+		}
 		var types = new Gen(['electron'], addDocumentation).process(items);
 		var printer = new haxe.macro.Printer();
 		for (tds in types) {
@@ -169,6 +175,10 @@ private class Gen {
 		 */
 
 		for (item in items) {
+			// trace(item.name);
+			// if (item.name != 'BaseWindow')
+			//	continue;
+			// trace('>....www', item);
 			// if (item.name != 'Session')
 			//	continue;
 			this.types.set(item.name, processItem(item));
@@ -204,9 +214,21 @@ private class Gen {
 
 		switch item.type {
 			case Class_:
-				var sup:TypePath = if (item.instanceEvents == null) null else {
-					createEventEnumAbstract(type.name, type.pack, item.instanceEvents);
-					{pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
+				// var sup:TypePath = if (item.instanceEvents == null) null else {
+				//	createEventEnumAbstract(type.name, type.pack, item.instanceEvents);
+				//	{pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
+				// }
+				// TODO:
+				var supItem:Item = null;
+				var sup:TypePath = null;
+				if (item.extends_ != null) {
+					supItem = getItem(item.extends_);
+					sup = {name: supItem.name, pack: getItemPack(supItem)}
+				} else {
+					if (item.instanceEvents != null) {
+						createEventEnumAbstract(type.name, type.pack, item.instanceEvents);
+						sup = {pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
+					}
 				}
 				type.kind = TDClass(sup);
 				var jsRequireName = item.name;
@@ -217,8 +239,19 @@ private class Gen {
 					for (m in item.staticMethods)
 						type.fields.push(createFunField(m, [AStatic]));
 				if (item.instanceProperties != null)
-					for (p in item.instanceProperties)
-						type.fields.push(createVarField(p));
+					for (p in item.instanceProperties) {
+						var fieldExistsInSup = false;
+						if (supItem != null) {
+							for (sp in supItem.instanceProperties) {
+								if (sp.name == p.name) {
+									fieldExistsInSup = true;
+									break;
+								}
+							}
+						}
+						if (!fieldExistsInSup)
+							type.fields.push(createVarField(p));
+					}
 				if (item.constructorMethod != null)
 					type.fields.push(createFunField(cast {name: 'new', parameters: item.constructorMethod.parameters}));
 				if (item.instanceMethods != null)
@@ -252,10 +285,30 @@ private class Gen {
 				mergeTypeItem(type, item);
 
 			case Structure:
-				type.kind = TDStructure;
+				var fields = [];
 				if (item.properties != null)
 					for (p in item.properties)
-						type.fields.push(createVarField(p));
+						fields.push(createVarField(p));
+				if (item.extends_ != null) {
+					// var fields = [];
+					// if (item.properties != null)
+					//	for (p in item.properties)
+					//		fields.push(createVarField(p));
+					var extType = getComplexType(item.extends_);
+					if (extType.getParameters()[0].pack[0] == "electron") {
+						var anon = TAnonymous(fields);
+						type.kind = TDAlias(TIntersection([anon, extType]));
+					} else {
+						type.kind = TDStructure;
+						type.fields = fields;
+					}
+				} else {
+					type.kind = TDStructure;
+					type.fields = fields;
+					// if (item.properties != null)
+					//	for (p in item.properties)
+					//		type.fields.push(createVarField(p));
+				}
 
 			case Element:
 				type.name = capitalize(item.name);
@@ -351,6 +404,13 @@ private class Gen {
 				}
 		}
 		return type;
+	}
+
+	function getItem(name:String):Item {
+		for (item in items)
+			if (item.name == name)
+				return item;
+		return null;
 	}
 
 	function getItemPack(item:Item):Array<String> {
@@ -757,6 +817,8 @@ typedef Method = {
 typedef Process = {
 	var main:Bool;
 	var renderer:Bool;
+	// var utility:Bool;
+	// var exported:Bool;
 }
 
 typedef Item = {
@@ -769,6 +831,7 @@ typedef Item = {
 	slug:String,
 	websiteUrl:String,
 	repoUrl:String,
+	?extends_:String,
 	methods:Array<Method>,
 	?instanceEvents:Array<Event>,
 	?instanceName:String,
