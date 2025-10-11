@@ -29,15 +29,19 @@ jobs:
         run: haxe api.hxml
       - name: Build haxedoc.xml
         run: haxe haxedoc.hxml
-      - name: Install demo application dependencies
-        run: cd demo && npm install
+      - name: Install demo dependencies
+        working-directory: demo
+        run: npm ci
       - name: Build demo application
         run: |
           haxe --cwd demo main.hxml
           haxe --cwd demo app.hxml
-      - name: Setup virtual display
-        run: sudo apt install -y xvfb
+      - name: Install virtual display
+        run: sudo apt-get update && sudo apt-get install -y xvfb
       - name: Run demo application
+        env:
+          ELECTRON_DISABLE_SECURITY_WARNINGS: 1
         run: |
-          cd demo && xvfb-run npm start -- --timeout=5
-          exit $?
+          cd demo
+          xvfb-run --server-args="-screen 0 1024x768x24" \
+            npx electron . --no-sandbox --timeout=5
