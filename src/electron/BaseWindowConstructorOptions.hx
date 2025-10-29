@@ -256,7 +256,7 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var roundedCorners : Bool;
 	/**
-		Use `WS_THICKFRAME` style for frameless windows on Windows, which adds standard window frame. Setting it to `false` will remove window shadow and window animations. Default is `true`.
+		Use `WS_THICKFRAME` style for frameless windows on Windows, which adds the standard window frame. Setting it to `false` will remove window shadow and window animations, and disable window resizing via dragging the window edges. Default is `true`.
 	**/
 	@:optional
 	var thickFrame : Bool;

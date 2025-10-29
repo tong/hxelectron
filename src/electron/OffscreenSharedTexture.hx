@@ -10,13 +10,16 @@ typedef OffscreenSharedTexture = {
 		The widget type of the texture. Can be `popup` or `frame`.
 	**/
 	var widgetType : String; /**
-		The pixel format of the texture. Can be `rgba` or `bgra`.
+		The pixel format of the texture.
 	**/
 	var pixelFormat : String; /**
 		The full dimensions of the video frame.
 	**/
 	var codedSize : electron.Size; /**
-		A subsection of [0, 0, codedSize.width(), codedSize.height()]. In OSR case, it is expected to have the full section area.
+		The color space of the video frame.
+	**/
+	var colorSpace : electron.ColorSpace; /**
+		A subsection of [0, 0, codedSize.width, codedSize.height]. In OSR case, it is expected to have the full section area.
 	**/
 	var visibleRect : electron.Rectangle; /**
 		The region of the video frame that capturer would like to populate. In OSR case, it is the same with `dirtyRect` that needs to be painted.
@@ -44,27 +47,9 @@ typedef OffscreenSharedTexture = {
 	**/
 	@:optional
 	var frameCount : Float; }; /**
-		The handle to the shared texture.
+		The shared texture handle data.
 	**/
-	var sharedTextureHandle : js.node.Buffer; /**
-		Each plane's info of the shared texture.
-	**/
-	var planes : Array<{ /**
-	The strides and offsets in bytes to be used when accessing the buffers via a memory mapping. One per plane per entry.
-**/
-var stride : Float; /**
-	The strides and offsets in bytes to be used when accessing the buffers via a memory mapping. One per plane per entry.
-**/
-var offset : Float; /**
-	Size in bytes of the plane. This is necessary to map the buffers.
-**/
-var size : Float; /**
-	File descriptor for the underlying memory object (usually dmabuf).
-**/
-var fd : Float; }>; /**
-		The modifier is retrieved from GBM library and passed to EGL driver.
-	**/
-	var modifier : String; };
+	var handle : electron.SharedTextureHandle; };
 	/**
 		Release the resources. The `texture` cannot be directly passed to another process, users need to maintain texture lifecycles in main process, but it is safe to pass the `textureInfo` to another process. Only a limited number of textures can exist at the same time, so it's important that you call `texture.release()` as soon as you're done with the texture.
 	**/
