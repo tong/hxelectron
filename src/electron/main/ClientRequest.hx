@@ -36,6 +36,10 @@ package electron.main;
 	**/
 	@:optional
 	var partition : String; /**
+		When set to `true`, custom protocol handlers registered for the request's URL scheme will not be called. This allows forwarding an intercepted request to the built-in handler. webRequest handlers will still be triggered when bypassing custom protocols. Defaults to `false`.
+	**/
+	@:optional
+	var bypassCustomProtocolHandlers : Bool; /**
 		Can be `include`, `omit` or `same-origin`. Whether to send credentials with this request. If set to `include`, credentials from the session associated with the request will be used. If set to `omit`, credentials will not be sent with the request (and the `'login'` event will not be triggered in the event of a 401). If set to `same-origin`, `origin` must also be specified. This matches the behavior of the fetch option of the same name. If this option is not specified, authentication data from the session will be sent, and cookies will not be sent (unless `useSessionCookies` is set).
 	**/
 	@:optional

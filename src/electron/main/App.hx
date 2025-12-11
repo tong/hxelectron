@@ -97,7 +97,7 @@ package electron.main;
 	**/
 	static function whenReady():js.lib.Promise<Any>;
 	/**
-		On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses on the application's first window.
+		On macOS, makes the application the active app. On Windows, focuses on the application's first window. On Linux, either focuses on the first visible window (X11) or requests focus but may instead show a notification or flash the app icon (Wayland).
 		
 		You should seek to use the `steal` option as sparingly as possible.
 	**/
@@ -414,6 +414,12 @@ package electron.main;
 		This method can only be called before app is ready.
 	**/
 	static function disableHardwareAcceleration():Void;
+	/**
+		whether hardware acceleration is currently enabled.
+		
+		> [!NOTE] This information is only usable after the `gpu-info-update` event is emitted.
+	**/
+	static function isHardwareAccelerationEnabled():Bool;
 	/**
 		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behavior.
 		

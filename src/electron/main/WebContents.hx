@@ -113,7 +113,7 @@ package electron.main;
 	**/
 	var focusedFrame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>;
 	/**
-		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`). A noop rejection handler is already attached, which avoids unhandled rejection errors.
+		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`). A noop rejection handler is already attached, which avoids unhandled rejection errors. If the existing page has a beforeUnload handler, `did-fail-load` will be called unless `will-prevent-unload` is handled.
 		
 		Loads the `url` in the window. The `url` must contain the protocol prefix, e.g. the `http://` or `file://`. If the load should bypass http cache then use the `pragma` header to achieve it.
 	**/

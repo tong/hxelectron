@@ -204,7 +204,7 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var darkTheme : Bool;
 	/**
-		Makes the window transparent. Default is `false`. On Windows, does not work unless the window is frameless.
+		Makes the window transparent. Default is `false`. On Windows, does not work unless the window is frameless. When you add a `View` to a `BaseWindow`, you'll need to call `view.setBackgroundColor` with a transparent background color on that view to make its background transparent as well.
 	**/
 	@:optional
 	var transparent : Bool;

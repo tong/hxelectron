@@ -130,7 +130,10 @@ package electron.main;
 		An Accelerator string.
 	**/
 	@:optional
-	var accelerator : String; @:optional
+	var accelerator : String; /**
+		Can be a NativeImage or the file path of an icon.
+	**/
+	@:optional
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		If false, the menu item will be greyed out and unclickable.
 	**/

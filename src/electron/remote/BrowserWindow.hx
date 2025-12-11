@@ -103,6 +103,7 @@ package electron.remote;
 	* On macOS the child windows will keep the relative position to parent window when parent window moves, while on Windows and Linux child windows will not move.
 	* On Linux the type of modal windows will be changed to `dialog`.
 	* On Linux many desktop environments do not support hiding a modal window.
+	* On Wayland (Linux) it is generally not possible to programmatically resize windows after creation, or to position, move, focus, or blur windows without user input. If your app needs these capabilities, run it in Xwayland by appending the flag `--ozone-platform=x11`.
 	
 	### Class: BrowserWindow extends `BaseWindow`
 	
@@ -157,10 +158,14 @@ package electron.remote;
 	function close():Void;
 	/**
 		Focuses on the window.
+		
+		On Wayland (Linux), the desktop environment may show a notification or flash the app icon if the window or app is not already focused.
 	**/
 	function focus():Void;
 	/**
 		Removes focus from the window.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function blur():Void;
 	/**
@@ -177,6 +182,8 @@ package electron.remote;
 	function show():Void;
 	/**
 		Shows the window but doesn't focus on it.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function showInactive():Void;
 	/**
@@ -290,6 +297,8 @@ package electron.remote;
 	/**
 		Resizes and moves the window to the supplied bounds. Any properties that are not supplied will default to their current values.
 		
+		On Wayland (Linux), has the same limitations as `setSize` and `setPosition`.
+		
 		> [!NOTE] On macOS, the y-coordinate value cannot be smaller than the Tray height. The tray height has changed over time and depends on the operating system, but is between 20-40px. Passing a value lower than the tray height will result in a window that is flush to the tray.
 	**/
 	function setBounds(bounds:Partial, ?animate:Bool):Void;
@@ -309,6 +318,8 @@ package electron.remote;
 	function getBackgroundColor():String;
 	/**
 		Resizes and moves the window's client area (e.g. the web page) to the supplied bounds.
+		
+		On Wayland (Linux), has the same limitations as `setContentSize` and `setPosition`.
 	**/
 	function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	/**
@@ -331,6 +342,8 @@ package electron.remote;
 	function isEnabled():Bool;
 	/**
 		Resizes the window to `width` and `height`. If `width` or `height` are below any set minimum size constraints the window will snap to its minimum size.
+		
+		On Wayland (Linux), may not work as some window managers restrict programmatic window resizing.
 	**/
 	function setSize(width:Int, height:Int, ?animate:Bool):Void;
 	/**
@@ -339,6 +352,8 @@ package electron.remote;
 	function getSize():Array<Int>;
 	/**
 		Resizes the window's client area (e.g. the web page) to `width` and `height`.
+		
+		On Wayland (Linux), may not work as some window managers restrict programmatic window resizing.
 	**/
 	function setContentSize(width:Int, height:Int, ?animate:Bool):Void;
 	/**
@@ -438,15 +453,21 @@ package electron.remote;
 	**/
 	function moveAbove(mediaSourceId:String):Void;
 	/**
-		Moves window to top(z-order) regardless of focus
+		Moves window to top(z-order) regardless of focus.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function moveTop():Void;
 	/**
 		Moves window to the center of the screen.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function center():Void;
 	/**
 		Moves window to `x` and `y`.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function setPosition(x:Int, y:Int, ?animate:Bool):Void;
 	/**
@@ -552,7 +573,7 @@ package electron.remote;
 	@:optional
 	var stayAwake : Bool; }):js.lib.Promise<Any>;
 	/**
-		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
+		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`). A noop rejection handler is already attached, which avoids unhandled rejection errors. If the existing page has a beforeUnload handler, `did-fail-load` will be called unless `will-prevent-unload` is handled.
 		
 		Same as `webContents.loadURL(url[, options])`.
 		
@@ -717,13 +738,14 @@ package electron.remote;
 		
 		The `accentColor` parameter accepts the following values:
 		
-		* **Color string** - Sets a custom accent color using standard CSS color formats (Hex, RGB, RGBA, HSL, HSLA, or named colors). Alpha values in RGBA/HSLA formats are ignored and the color is treated as fully opaque.
-		* **`true`** - Uses the system's default accent color from user preferences in System Settings.
-		* **`false`** - Explicitly disables accent color highlighting for the window.
+		* **Color string** - Like `true`, but sets a custom accent color using standard CSS color formats (Hex, RGB, RGBA, HSL, HSLA, or named colors). Alpha values in RGBA/HSLA formats are ignored and the color is treated as fully opaque.
+		* **`true`** - Enable accent color highlighting for the window with the system accent color regardless of whether accent colors are enabled for windows in System `Settings.`
+		* **`false`** - Disable accent color highlighting for the window regardless of whether accent colors are currently enabled for windows in System Settings.
+		* **`null`** - Reset window accent color behavior to follow behavior set in System Settings.
 		
 		Examples:
 	**/
-	function setAccentColor(accentColor:haxe.extern.EitherType<Bool, String>):Void;
+	function setAccentColor(accentColor:haxe.extern.EitherType<Bool, haxe.extern.EitherType<String, Dynamic>>):Void;
 	/**
 		the system accent color and highlighting of active window border in Hex RGB format.
 		
