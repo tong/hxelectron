@@ -103,7 +103,6 @@ package electron.main;
 	* On macOS the child windows will keep the relative position to parent window when parent window moves, while on Windows and Linux child windows will not move.
 	* On Linux the type of modal windows will be changed to `dialog`.
 	* On Linux many desktop environments do not support hiding a modal window.
-	* On Wayland (Linux) it is generally not possible to programmatically resize windows after creation, or to position, move, focus, or blur windows without user input. If your app needs these capabilities, run it in Xwayland by appending the flag `--ozone-platform=x11`.
 	
 	### Class: BrowserWindow extends `BaseWindow`
 	
@@ -158,14 +157,10 @@ package electron.main;
 	function close():Void;
 	/**
 		Focuses on the window.
-		
-		On Wayland (Linux), the desktop environment may show a notification or flash the app icon if the window or app is not already focused.
 	**/
 	function focus():Void;
 	/**
 		Removes focus from the window.
-		
-		Not supported on Wayland (Linux).
 	**/
 	function blur():Void;
 	/**
@@ -182,8 +177,6 @@ package electron.main;
 	function show():Void;
 	/**
 		Shows the window but doesn't focus on it.
-		
-		Not supported on Wayland (Linux).
 	**/
 	function showInactive():Void;
 	/**
@@ -297,8 +290,6 @@ package electron.main;
 	/**
 		Resizes and moves the window to the supplied bounds. Any properties that are not supplied will default to their current values.
 		
-		On Wayland (Linux), has the same limitations as `setSize` and `setPosition`.
-		
 		> [!NOTE] On macOS, the y-coordinate value cannot be smaller than the Tray height. The tray height has changed over time and depends on the operating system, but is between 20-40px. Passing a value lower than the tray height will result in a window that is flush to the tray.
 	**/
 	function setBounds(bounds:Partial, ?animate:Bool):Void;
@@ -318,8 +309,6 @@ package electron.main;
 	function getBackgroundColor():String;
 	/**
 		Resizes and moves the window's client area (e.g. the web page) to the supplied bounds.
-		
-		On Wayland (Linux), has the same limitations as `setContentSize` and `setPosition`.
 	**/
 	function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	/**
@@ -342,8 +331,6 @@ package electron.main;
 	function isEnabled():Bool;
 	/**
 		Resizes the window to `width` and `height`. If `width` or `height` are below any set minimum size constraints the window will snap to its minimum size.
-		
-		On Wayland (Linux), may not work as some window managers restrict programmatic window resizing.
 	**/
 	function setSize(width:Int, height:Int, ?animate:Bool):Void;
 	/**
@@ -352,8 +339,6 @@ package electron.main;
 	function getSize():Array<Int>;
 	/**
 		Resizes the window's client area (e.g. the web page) to `width` and `height`.
-		
-		On Wayland (Linux), may not work as some window managers restrict programmatic window resizing.
 	**/
 	function setContentSize(width:Int, height:Int, ?animate:Bool):Void;
 	/**
@@ -453,21 +438,15 @@ package electron.main;
 	**/
 	function moveAbove(mediaSourceId:String):Void;
 	/**
-		Moves window to top(z-order) regardless of focus.
-		
-		Not supported on Wayland (Linux).
+		Moves window to top(z-order) regardless of focus
 	**/
 	function moveTop():Void;
 	/**
 		Moves window to the center of the screen.
-		
-		Not supported on Wayland (Linux).
 	**/
 	function center():Void;
 	/**
 		Moves window to `x` and `y`.
-		
-		Not supported on Wayland (Linux).
 	**/
 	function setPosition(x:Int, y:Int, ?animate:Bool):Void;
 	/**

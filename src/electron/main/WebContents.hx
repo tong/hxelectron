@@ -4,7 +4,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "WebContents") extern class WebContents extends js.node.events.EventEmitter<electron.main.WebContents> {
 	/**
-		An array of all `WebContents` instances. This will contain web contents for all windows, webviews, opened devtools, and devtools extension background pages.
+		An array of all `WebContents` instances. This will contain web contents for all windows, webviews, opened DevTools, and DevTools extension background pages.
 	**/
 	static function getAllWebContents():Array<electron.main.WebContents>;
 	/**
@@ -674,31 +674,29 @@ var to : Float; }>; /**
 	**/
 	function removeWorkSpace(path:String):Void;
 	/**
-		Uses the `devToolsWebContents` as the target `WebContents` to show devtools.
+		Uses the `devToolsWebContents` as the target `WebContents` to show DevTools.
 		
 		The `devToolsWebContents` must not have done any navigation, and it should not be used for other purposes after the call.
 		
-		By default Electron manages the devtools by creating an internal `WebContents` with native view, which developers have very limited control of. With the `setDevToolsWebContents` method, developers can use any `WebContents` to show the devtools in it, including `BrowserWindow`, `BrowserView` and `<webview>` tag.
+		By default, Electron manages the DevTools by creating an internal `WebContents` with native view, which developers have very limited control of. With the `setDevToolsWebContents` method, developers can use any `WebContents` to show the DevTools in it, such as `BrowserWindow` or `WebContentsView`.
 		
-		Note that closing the devtools does not destroy the `devToolsWebContents`, it is caller's responsibility to destroy `devToolsWebContents`.
+		Note that closing the DevTools does not destroy the `devToolsWebContents`, it is the caller's responsibility to destroy `devToolsWebContents` manually.
 		
-		An example of showing devtools in a `<webview>` tag:
-		
-		An example of showing devtools in a `BrowserWindow`:
+		An example of showing DevTools in a `BrowserWindow`:
 	**/
 	function setDevToolsWebContents(devToolsWebContents:electron.main.WebContents):Void;
 	/**
-		Opens the devtools.
+		Opens the DevTools.
 		
 		When `contents` is a `<webview>` tag, the `mode` would be `detach` by default, explicitly passing an empty `mode` can force using last used dock state.
 		
-		On Windows, if Windows Control Overlay is enabled, Devtools will be opened with `mode: 'detach'`.
+		On Windows, if Windows Control Overlay is enabled, DevTools will be opened with `mode: 'detach'`.
 	**/
 	function openDevTools(?options:{ /**
-		Opens the devtools with specified dock state, can be `left`, `right`, `bottom`, `undocked`, `detach`. Defaults to last used dock state. In `undocked` mode it's possible to dock back. In `detach` mode it's not.
+		Opens the DevTools with specified dock state, can be `left`, `right`, `bottom`, `undocked`, `detach`. Defaults to last used dock state. In `undocked` mode it's possible to dock back. In `detach` mode it's not.
 	**/
 	var mode : String; /**
-		Whether to bring the opened devtools window to the foreground. The default is `true`.
+		Whether to bring the opened DevTools window to the foreground. The default is `true`.
 	**/
 	@:optional
 	var activate : Bool; /**
@@ -707,15 +705,15 @@ var to : Float; }>; /**
 	@:optional
 	var title : String; }):Void;
 	/**
-		Closes the devtools.
+		Closes the DevTools view.
 	**/
 	function closeDevTools():Void;
 	/**
-		Whether the devtools is opened.
+		Whether the DevTools view is opened.
 	**/
 	function isDevToolsOpened():Bool;
 	/**
-		Whether the devtools view is focused .
+		Whether the DevTools view is focused .
 	**/
 	function isDevToolsFocused():Bool;
 	/**
@@ -1206,7 +1204,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	**/
 	var paint : electron.main.WebContentsEvent<Void -> Void> = "paint";
 	/**
-		Emitted when the devtools window instructs the webContents to reload
+		Emitted when the DevTools window instructs the webContents to reload
 	**/
 	var devtools_reload_page : electron.main.WebContentsEvent<Void -> Void> = "devtools-reload-page";
 	/**

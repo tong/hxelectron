@@ -18,7 +18,7 @@ package electron.main;
 		Settings this property to `dark` will have the following effects:
 		
 		* `nativeTheme.shouldUseDarkColors` will be `true` when accessed
-		* Any UI Electron renders on Linux and Windows including context menus, devtools, etc. will use the dark UI.
+		* Any UI Electron renders on Linux and Windows including context menus, DevTools, etc. will use the dark UI.
 		* Any UI the OS renders on macOS including menus, window frames, etc. will use the dark UI.
 		* The `prefers-color-scheme` CSS query will match `dark` mode.
 		* The `updated` event will be emitted
@@ -26,7 +26,7 @@ package electron.main;
 		Settings this property to `light` will have the following effects:
 		
 		* `nativeTheme.shouldUseDarkColors` will be `false` when accessed
-		* Any UI Electron renders on Linux and Windows including context menus, devtools, etc. will use the light UI.
+		* Any UI Electron renders on Linux and Windows including context menus, DevTools, etc. will use the light UI.
 		* Any UI the OS renders on macOS including menus, window frames, etc. will use the light UI.
 		* The `prefers-color-scheme` CSS query will match `light` mode.
 		* The `updated` event will be emitted

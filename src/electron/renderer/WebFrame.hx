@@ -128,7 +128,7 @@ package electron.renderer;
 	**/
 	@:optional
 	var csp : String; /**
-		Name for isolated world. Useful in devtools.
+		Name for isolated world. Useful in DevTools.
 	**/
 	@:optional
 	var name : String; }):Void;

@@ -251,7 +251,7 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var trafficLightPosition : electron.Point;
 	/**
-		Whether frameless window should have rounded corners. Default is `true`. Setting this property to `false` will prevent the window from being fullscreenable on macOS. On Windows versions older than Windows 11 Build 22000 this property has no effect, and frameless windows will not have rounded corners.
+		Whether frameless window should have rounded corners. Default is `true`. On Windows versions older than Windows 11 Build 22000 this property has no effect, and frameless windows will not have rounded corners.
 	**/
 	@:optional
 	var roundedCorners : Bool;

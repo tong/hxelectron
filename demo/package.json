@@ -13,6 +13,6 @@
     "start": "electron . --no-sandbox"
   },
   "devDependencies": {
-    "electron": "v39.2.7"
+    "electron": "v40.0.0"
   }
 }

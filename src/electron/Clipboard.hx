@@ -2,9 +2,11 @@ package electron;
 /**
 	> Perform copy and paste operations on the system clipboard.
 	
-	Process: Main, Renderer (non-sandboxed only)
+	Process: Main, Renderer _Deprecated_ (non-sandboxed only)
 	
-	> [!IMPORTANT] If you want to call this API from a renderer process with context isolation enabled, place the API call in your preload script and expose it using the `contextBridge` API.
+	> [!NOTE] Using the `clipoard` API from the renderer process is deprecated.
+	
+	> [!IMPORTANT] If you want to call this API from a renderer process, place the API call in your preload script and expose it using the `contextBridge` API.
 	
 	On Linux, there is also a `selection` clipboard. To manipulate it you need to pass `selection` to each method:
 	@see https://electronjs.org/docs/api/clipboard

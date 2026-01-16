@@ -97,7 +97,7 @@ package electron.main;
 	**/
 	static function whenReady():js.lib.Promise<Any>;
 	/**
-		On macOS, makes the application the active app. On Windows, focuses on the application's first window. On Linux, either focuses on the first visible window (X11) or requests focus but may instead show a notification or flash the app icon (Wayland).
+		On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses on the application's first window.
 		
 		You should seek to use the `steal` option as sparingly as possible.
 	**/

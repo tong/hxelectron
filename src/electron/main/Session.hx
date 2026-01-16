@@ -4,7 +4,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "Session") extern class Session extends js.node.events.EventEmitter<electron.main.Session> {
 	/**
-		A `Session` object, the default session object of the app.
+		A `Session` object, the default session object of the app, available after `app.whenReady` is called.
 	**/
 	static var defaultSession : electron.main.Session;
 	/**
@@ -474,7 +474,7 @@ package electron.main;
 		**Deprecated:** Use the new `ses.extensions.loadExtension` API.
 	**/
 	function loadExtension(path:String, ?options:{ /**
-		Whether to allow the extension to read local files over `file://` protocol and inject content scripts into `file://` pages. This is required e.g. for loading devtools extensions on `file://` URLs. Defaults to false.
+		Whether to allow the extension to read local files over `file://` protocol and inject content scripts into `file://` pages. This is required e.g. for loading DevTools extensions on `file://` URLs. Defaults to false.
 	**/
 	var allowFileAccess : Bool; }):js.lib.Promise<Any>;
 	/**

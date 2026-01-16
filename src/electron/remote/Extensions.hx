@@ -19,7 +19,7 @@ package electron.remote;
 		> [!NOTE] Loading extensions into in-memory (non-persistent) sessions is not supported and will throw an error.
 	**/
 	function loadExtension(path:String, ?options:{ /**
-		Whether to allow the extension to read local files over `file://` protocol and inject content scripts into `file://` pages. This is required e.g. for loading devtools extensions on `file://` URLs. Defaults to false.
+		Whether to allow the extension to read local files over `file://` protocol and inject content scripts into `file://` pages. This is required e.g. for loading DevTools extensions on `file://` URLs. Defaults to false.
 	**/
 	var allowFileAccess : Bool; }):js.lib.Promise<Any>;
 	/**

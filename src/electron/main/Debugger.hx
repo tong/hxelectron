@@ -24,7 +24,7 @@ package electron.main;
 }
 enum abstract DebuggerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
-		Emitted when the debugging session is terminated. This happens either when `webContents` is closed or devtools is invoked for the attached `webContents`.
+		Emitted when the debugging session is terminated. This happens either when `webContents` is closed or DevTools is invoked for the attached `webContents`.
 	**/
 	var detach : electron.main.DebuggerEvent<Void -> Void> = "detach";
 	/**
