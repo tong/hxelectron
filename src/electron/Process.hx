@@ -54,8 +54,9 @@ package electron;
 	**/
 	static var noAsar : Bool;
 	/**
-		A `boolean` that controls whether or not deprecation warnings are printed to `stderr`. Setting this to `true` will silence deprecation warnings. This property is used instead of the `--no-deprecation` command line flag.
+		A `boolean` (optional) that controls whether or not deprecation warnings are printed to `stderr`. Setting this to `true` will silence deprecation warnings. This property is used instead of the `--no-deprecation` command line flag.
 	**/
+	@:optional
 	static var noDeprecation : Bool;
 	/**
 		A `string` representing the path to the resources directory.

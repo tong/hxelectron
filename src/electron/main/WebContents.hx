@@ -83,9 +83,9 @@ package electron.main;
 	**/
 	var navigationHistory : electron.main.NavigationHistory;
 	/**
-		A `WebContents` instance that might own this `WebContents`.
+		A `WebContents | null` property that represents a `WebContents` instance that might own this `WebContents`.
 	**/
-	var hostWebContents : electron.main.WebContents;
+	var hostWebContents : haxe.extern.EitherType<electron.main.WebContents, Dynamic>;
 	/**
 		A `WebContents | null` property that represents the of DevTools `WebContents` associated with a given `WebContents`.
 		
