@@ -98,6 +98,13 @@ class ElectronAPI {
 
 private class Gen {
 	static var KWDS = ['class', 'private', 'switch'];
+	// ordered, so the generated metadata is stable
+	static var PLATFORM_TAGS = [
+		{tag: 'os_macos', name: 'macOS'},
+		{tag: 'os_windows', name: 'Windows'},
+		{tag: 'os_linux', name: 'Linux'},
+		{tag: 'os_mas', name: 'MAS'}
+	];
 
 	var root:Array<String>;
 	var addDocumentation:Bool;
@@ -381,7 +388,7 @@ private class Gen {
 			type.fields.push({
 				name: e.name.replace('-', '_'),
 				kind: FVar(TPath({pack: pack, name: _name, params: [TPType(TFunction(args, macro :Void))]}), macro $v{e.name}),
-				meta: (e.platforms == null) ? null : [createPlatformMetadata(e)],
+				meta: createTagMetadata(e.additionalTags),
 				doc: getDoc(e.description),
 				pos: null
 			});
@@ -389,16 +396,14 @@ private class Gen {
 	}
 
 	function createVarField(p:Property, ?access:Array<Access>):Field {
-		var meta = [];
+		var meta = createTagMetadata(p.additionalTags);
 		if (p.required != null && !p.required)
 			meta.push({name: ':optional', pos: null});
 		return createField(p.name, FVar(getComplexType(p.type, p.collection, p.properties), null), access, meta, p.description);
 	}
 
 	function createFunField(m:Method, ?access:Array<Access>):Field {
-		var meta:Metadata = [];
-		if (m.platforms != null)
-			meta.push(createPlatformMetadata(m));
+		var meta = createTagMetadata(m.additionalTags);
 
 		var args = new Array<FunctionArg>();
 		if (m.parameters != null) {
@@ -513,11 +518,9 @@ private class Gen {
 				if (properties == null || properties.length == 0) macro :Any else {
 					var fields = new Array<Field>();
 					for (p in properties) {
-						var meta:Metadata = [];
+						var meta = createTagMetadata(p.additionalTags);
 						if (p.required != null && !p.required)
 							meta.push({name: ":optional", pos: null});
-						if (p.platforms != null)
-							meta.push(createPlatformMetadata(p));
 						fields.push({
 							name: p.name,
 							kind: FVar(getComplexType(p.type, p.collection, p.properties)),
@@ -579,26 +582,24 @@ private class Gen {
 		return (s.length == 0) ? null : s;
 	}
 
-	static function createPlatformMetadata(e:{?platforms:Array<String>}):MetadataEntry {
-		if (e.platforms == null)
-			return null;
-		var ereg = ~/^\(*([a-zA-Z]+)( +\(([a-zA-Z]+)\))?\)*$/;
-		var flags = new Array<String>();
-		for (p in e.platforms) {
-			if (ereg.match(p)) {
-				flags.push(ereg.matched(1));
-				if (ereg.matched(3) != null)
-					flags.push(ereg.matched(3));
-			} else {
-				Context.warning('unknown platform restriction [$p]', Context.currentPos());
-				return null;
-			}
-		}
-		return {
-			name: ':electron_platforms',
-			params: [macro $a{flags.map(function(p) return macro $v{p})}],
-			pos: null
-		}
+	/**
+		Derives metadata from the `additionalTags` of an api entry:
+		- `@:electron_platforms(["macOS", "Windows", "Linux", "MAS"])` the supported platforms (only if specific)
+		- `@:deprecated` for deprecated entries
+		- `@:electron_experimental` for experimental entries
+	**/
+	static function createTagMetadata(tags:Array<String>):Metadata {
+		var meta:Metadata = [];
+		if (tags == null)
+			return meta;
+		var platforms = [for (p in PLATFORM_TAGS) if (tags.contains(p.tag)) p.name];
+		if (platforms.length > 0)
+			meta.push({name: ':electron_platforms', params: [macro $a{platforms.map(p -> macro $v{p})}], pos: null});
+		if (tags.contains('stability_deprecated'))
+			meta.push({name: ':deprecated', pos: null});
+		if (tags.contains('stability_experimental'))
+			meta.push({name: ':electron_experimental', pos: null});
+		return meta;
 	}
 
 	static function escapeArgument(name:String):String {
@@ -623,14 +624,6 @@ enum abstract ItemType(String) from String to String {
 	var Class_ = "Class";
 	var Structure = "Structure";
 	var Element = "Element";
-}
-
-enum abstract Platform(String) from String to String {
-	var MacOS = "macOS";
-	var Windows = "Windows";
-	var Linux = "Linux";
-	var Experimental = "Experimental";
-	var Deprecated = "(Deprecated)";
 }
 
 /** A (possibly nested) type: `type` is a type name or, for unions, an array of `TypeRef`. **/
@@ -678,7 +671,6 @@ typedef Return = {
 typedef Event = {
 	name:String,
 	?description:String,
-	?platforms:Array<Platform>,
 	parameters:Array<Property>,
 	?additionalTags:Array<String>,
 	?urlFragment:String,
@@ -690,7 +682,6 @@ typedef Method = {
 	?description:String,
 	?returns:Return,
 	?parameters:Array<MethodParameter>,
-	?platforms:Array<Platform>,
 	?rawGenerics:String,
 	?additionalTags:Array<String>,
 	?urlFragment:String,

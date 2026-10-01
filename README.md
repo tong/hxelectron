@@ -66,7 +66,9 @@ npm start         # Run the application
 
 The externs are annotated with the following metadata:
 
-- `@:electron_platforms(["Linux"|"macOS"|"Windows"])` the supported platforms (only if platform specific).
+- `@:electron_platforms(["macOS"|"Windows"|"Linux"|"MAS"])` the supported platforms (only if platform specific).
+- `@:deprecated` for APIs Electron has deprecated.
+- `@:electron_experimental` for experimental APIs.
 
 ## Updating to a new Electron version
 
