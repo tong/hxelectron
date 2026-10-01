@@ -26,7 +26,7 @@ package electron.remote;
 	/**
 		A `string` - Can be `left`, `right` or `overlay`.  Defaults to `overlay`.
 	**/
-	var iconPosition : String;
+	var iconPosition : TouchBarButtonIconPosition;
 	/**
 		A `boolean` representing whether the button is in an enabled state.
 	**/
@@ -51,7 +51,7 @@ package electron.remote;
 		Can be `left`, `right` or `overlay`. Defaults to `overlay`.
 	**/
 	@:optional
-	var iconPosition : String; /**
+	var iconPosition : TouchBarButtonIconPosition; /**
 		Function to call when the button is clicked.
 	**/
 	@:optional
@@ -61,6 +61,11 @@ package electron.remote;
 	@:optional
 	var enabled : Bool; }):Void;
 }
-enum abstract TouchBarButtonEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarButtonEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract TouchBarButtonIconPosition(String) from String to String {
+	var left = "left";
+	var right = "right";
+	var overlay = "overlay";
 }

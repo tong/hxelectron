@@ -10,4 +10,8 @@ typedef MediaAccessPermissionRequest = { /**
 		The types of media access being requested - elements can be `video` or `audio`.
 	**/
 	@:optional
-	var mediaTypes : Array<String>; } & electron.PermissionRequest;
+	var mediaTypes : Array<MediaAccessPermissionRequestMediaTypes>; } & electron.PermissionRequest;
+enum abstract MediaAccessPermissionRequestMediaTypes(String) from String to String {
+	var video = "video";
+	var audio = "audio";
+}

@@ -31,6 +31,7 @@ package electron.remote;
 		
 		This property can be dynamically changed.
 	**/
+	@:electron_platforms(["macOS"])
 	var accessibilityLabel : String;
 	/**
 		A `Function` that is fired when the MenuItem receives a click event. It can be called with `menuItem.click(event, focusedWindow, focusedWebContents)`.
@@ -50,12 +51,12 @@ package electron.remote;
 		
 		> [!NOTE] `header` and `palette` are only available on macOS 14 and up.
 	**/
-	var type : String;
+	var type : MenuItemType;
 	/**
 		A `string` (optional) indicating the item's role, if set. Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `toggleSpellChecker`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `showAllTabs`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu`
 	**/
 	@:optional
-	var role : String;
+	var role : MenuItemRole;
 	/**
 		An `Accelerator | null` indicating the item's accelerator, if set.
 	**/
@@ -65,6 +66,7 @@ package electron.remote;
 		
 		> [!NOTE] This property is only initialized after the `MenuItem` has been added to a `Menu`. Either via `Menu.buildFromTemplate` or via `Menu.append()/insert()`.  Accessing before initialization will just return `null`.
 	**/
+	@:electron_platforms(["macOS"])
 	var userAccelerator : haxe.extern.EitherType<electron.Accelerator, Dynamic>;
 	/**
 		A `NativeImage | string` (optional) indicating the item's icon, if set.
@@ -82,6 +84,7 @@ package electron.remote;
 	/**
 		A `string` indicating the item's hover text.
 	**/
+	@:electron_platforms(["macOS"])
 	var toolTip : String;
 	/**
 		A `boolean` indicating whether the item is enabled.
@@ -112,12 +115,14 @@ package electron.remote;
 		
 		This property can be dynamically changed.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	var registerAccelerator : Bool;
 	/**
 		A `SharingItem` indicating the item to share when the `role` is `shareMenu`.
 		
 		This property can be dynamically changed.
 	**/
+	@:electron_platforms(["macOS"])
 	var sharingItem : electron.SharingItem;
 	/**
 		A `number` indicating an item's sequential unique id.
@@ -134,6 +139,7 @@ package electron.remote;
 		
 		Badges are not displayed in Dock menus, though the same item shows its badge in an application menu.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var badge : electron.MenuItemBadge;
 	function new(options:{ /**
@@ -144,16 +150,19 @@ package electron.remote;
 		Can be `undo`, `redo`, `cut`, `copy`, `paste`, `pasteAndMatchStyle`, `delete`, `selectAll`, `reload`, `forceReload`, `toggleDevTools`, `resetZoom`, `zoomIn`, `zoomOut`, `toggleSpellChecker`, `togglefullscreen`, `window`, `minimize`, `close`, `help`, `about`, `services`, `hide`, `hideOthers`, `unhide`, `quit`, `showSubstitutions`, `toggleSmartQuotes`, `toggleSmartDashes`, `toggleTextReplacement`, `startSpeaking`, `stopSpeaking`, `zoom`, `front`, `appMenu`, `fileMenu`, `editMenu`, `viewMenu`, `shareMenu`, `recentDocuments`, `toggleTabBar`, `selectNextTab`, `selectPreviousTab`, `showAllTabs`, `mergeAllWindows`, `clearRecentDocuments`, `moveTabToNewWindow` or `windowMenu` - Define the action of the menu item, when specified the `click` property will be ignored. See roles.
 	**/
 	@:optional
-	var role : String; @:optional
-	var type : String; @:optional
-	var label : String; @:optional
+	var role : MenuItemNewOptionsRole; @:optional
+	var type : MenuItemType; @:optional
+	var label : String; @:electron_platforms(["macOS"])
+	@:optional
 	var accessibilityLabel : String; /**
 		Available in macOS >= 14.4
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var sublabel : String; /**
 		Hover text for this menu item.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var toolTip : String; /**
 		An Accelerator string.
@@ -170,6 +179,7 @@ package electron.remote;
 	var enabled : Bool; /**
 		default is `true`, and when `false` will prevent the accelerator from triggering the item if the item is not visible.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var acceleratorWorksWhenHidden : Bool; /**
 		If false, the menu item will be entirely hidden.
@@ -182,10 +192,12 @@ package electron.remote;
 	var checked : Bool; /**
 		If false, the accelerator won't be registered with the system, but it will still be displayed. Defaults to true.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
 	var registerAccelerator : Bool; /**
 		The item to share when the `role` is `shareMenu`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var sharingItem : electron.SharingItem; /**
 		Should be specified for `submenu` type menu items. If `submenu` is specified, the `type: 'submenu'` can be omitted. If the value is not a `Menu` then it will be automatically converted to one using `Menu.buildFromTemplate`.
@@ -214,9 +226,115 @@ package electron.remote;
 	var afterGroupContaining : Array<String>; /**
 		A badge shown alongside the label, either a system-styled count (`alerts`, `updates`, `new-items`) or a custom string. Only available on macOS 14 and up. Not displayed in Dock menus.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var badge : electron.MenuItemBadge; }):Void;
 }
-enum abstract MenuItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract MenuItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract MenuItemType(String) from String to String {
+	var normal = "normal";
+	var separator = "separator";
+	var submenu = "submenu";
+	var checkbox = "checkbox";
+	var radio = "radio";
+	var header = "header";
+	var palette = "palette";
+}
+enum abstract MenuItemRole(String) from String to String {
+	var undo = "undo";
+	var redo = "redo";
+	var cut = "cut";
+	var copy = "copy";
+	var paste = "paste";
+	var pasteAndMatchStyle = "pasteAndMatchStyle";
+	var delete = "delete";
+	var selectAll = "selectAll";
+	var reload = "reload";
+	var forceReload = "forceReload";
+	var toggleDevTools = "toggleDevTools";
+	var resetZoom = "resetZoom";
+	var zoomIn = "zoomIn";
+	var zoomOut = "zoomOut";
+	var toggleSpellChecker = "toggleSpellChecker";
+	var togglefullscreen = "togglefullscreen";
+	var window = "window";
+	var minimize = "minimize";
+	var close = "close";
+	var help = "help";
+	var about = "about";
+	var services = "services";
+	var hide = "hide";
+	var hideOthers = "hideOthers";
+	var unhide = "unhide";
+	var quit = "quit";
+	var startSpeaking = "startSpeaking";
+	var stopSpeaking = "stopSpeaking";
+	var zoom = "zoom";
+	var front = "front";
+	var appMenu = "appMenu";
+	var fileMenu = "fileMenu";
+	var editMenu = "editMenu";
+	var viewMenu = "viewMenu";
+	var shareMenu = "shareMenu";
+	var recentDocuments = "recentDocuments";
+	var toggleTabBar = "toggleTabBar";
+	var selectNextTab = "selectNextTab";
+	var selectPreviousTab = "selectPreviousTab";
+	var showAllTabs = "showAllTabs";
+	var mergeAllWindows = "mergeAllWindows";
+	var clearRecentDocuments = "clearRecentDocuments";
+	var moveTabToNewWindow = "moveTabToNewWindow";
+	var windowMenu = "windowMenu";
+}
+enum abstract MenuItemNewOptionsRole(String) from String to String {
+	var undo = "undo";
+	var redo = "redo";
+	var cut = "cut";
+	var copy = "copy";
+	var paste = "paste";
+	var pasteAndMatchStyle = "pasteAndMatchStyle";
+	var delete = "delete";
+	var selectAll = "selectAll";
+	var reload = "reload";
+	var forceReload = "forceReload";
+	var toggleDevTools = "toggleDevTools";
+	var resetZoom = "resetZoom";
+	var zoomIn = "zoomIn";
+	var zoomOut = "zoomOut";
+	var toggleSpellChecker = "toggleSpellChecker";
+	var togglefullscreen = "togglefullscreen";
+	var window = "window";
+	var minimize = "minimize";
+	var close = "close";
+	var help = "help";
+	var about = "about";
+	var services = "services";
+	var hide = "hide";
+	var hideOthers = "hideOthers";
+	var unhide = "unhide";
+	var quit = "quit";
+	var showSubstitutions = "showSubstitutions";
+	var toggleSmartQuotes = "toggleSmartQuotes";
+	var toggleSmartDashes = "toggleSmartDashes";
+	var toggleTextReplacement = "toggleTextReplacement";
+	var startSpeaking = "startSpeaking";
+	var stopSpeaking = "stopSpeaking";
+	var zoom = "zoom";
+	var front = "front";
+	var appMenu = "appMenu";
+	var fileMenu = "fileMenu";
+	var editMenu = "editMenu";
+	var viewMenu = "viewMenu";
+	var shareMenu = "shareMenu";
+	var recentDocuments = "recentDocuments";
+	var toggleTabBar = "toggleTabBar";
+	var selectNextTab = "selectNextTab";
+	var selectPreviousTab = "selectPreviousTab";
+	var showAllTabs = "showAllTabs";
+	var mergeAllWindows = "mergeAllWindows";
+	var clearRecentDocuments = "clearRecentDocuments";
+	var moveTabToNewWindow = "moveTabToNewWindow";
+	var windowMenu = "windowMenu";
 }

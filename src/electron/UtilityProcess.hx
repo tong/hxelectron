@@ -37,10 +37,12 @@ package electron;
 	var serviceName : String; /**
 		With this flag, the utility process will be launched via the `Electron Helper (Plugin).app` helper executable on macOS, which can be codesigned with `com.apple.security.cs.disable-library-validation` and `com.apple.security.cs.allow-unsigned-executable-memory` entitlements. This will allow the utility process to load unsigned libraries. Unless you specifically need this capability, it is best to leave this disabled. Default is `false`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var allowLoadingUnsignedLibraries : Bool; /**
 		With this flag, the utility process will disclaim responsibility for the child process. This causes the operating system to consider the child process as a separate entity for purposes of security policies like Transparency, Consent, and Control (TCC). When responsibility is disclaimed, the parent process will not be attributed for any TCC requests initiated by the child process. This is useful when launching processes that run third-party or otherwise untrusted code. Default is `false`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var disclaim : Bool; /**
 		With this flag, all HTTP 401 and 407 network requests created via the net module will allow responding to them via the `login` event on the `UtilityProcess` instance when a `session` is provided, or via the `app#login` event in the main process when using the default system network context. This flag also routes client-certificate selection to the `app#select-client-certificate` event in the main process; without it, `net` requests from the utility process proceed without a client certificate. Without this flag, auth challenges are handled by the default `login` event on the `ClientRequest` object. Default is `false`.
@@ -72,7 +74,7 @@ package electron;
 	**/
 	function kill():Bool;
 }
-enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted once the child process has spawned successfully.
 	**/
@@ -82,7 +84,8 @@ enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.
 		
 		No matter if you listen to the `error` event, the `exit` event will be emitted after the child process terminates.
 	**/
-	var error : electron.UtilityProcessEvent<(String, String, String) -> Void> = "error";
+	@:electron_experimental
+	var error : electron.UtilityProcessEvent<(UtilityProcessErrorType, String, String) -> Void> = "error";
 	/**
 		Emitted after the child process ends.
 	**/
@@ -106,5 +109,8 @@ enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.
 		The headers returned in the response.
 	**/
 	@:optional
-	var responseHeaders : Dynamic; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
+	var responseHeaders : haxe.DynamicAccess<String>; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
+}
+enum abstract UtilityProcessErrorType(String) from String to String {
+	var FatalError = "FatalError";
 }

@@ -35,13 +35,15 @@ package electron.remote;
 		Contains which features the dialog should use. The following values are supported:
 	**/
 	@:optional
-	var properties : Array<String>; /**
+	var properties : Array<DialogShowOpenDialogSyncOptionsProperties>; /**
 		Message to display above input boxes.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var message : String; /**
 		Create security scoped bookmarks when packaged for the Mac App Store.
 	**/
+	@:electron_platforms(["macOS", "MAS"])
 	@:optional
 	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<String, Dynamic>;
 	/**
@@ -75,15 +77,28 @@ package electron.remote;
 		Contains which features the dialog should use. The following values are supported:
 	**/
 	@:optional
-	var properties : Array<String>; /**
+	var properties : Array<DialogShowOpenDialogSyncOptionsProperties>; /**
 		Message to display above input boxes.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var message : String; /**
 		Create security scoped bookmarks when packaged for the Mac App Store.
 	**/
+	@:electron_platforms(["macOS", "MAS"])
 	@:optional
-	var securityScopedBookmarks : Bool; }):js.lib.Promise<Any>;
+	var securityScopedBookmarks : Bool; }):js.lib.Promise<{ /**
+		whether or not the dialog was canceled.
+	**/
+	var canceled : Bool; /**
+		An array of file paths chosen by the user. If the dialog is cancelled this will be an empty array.
+	**/
+	var filePaths : Array<String>; /**
+		An array matching the `filePaths` array of base64 encoded strings which contains security scoped bookmark data. `securityScopedBookmarks` must be enabled for this to be populated. (For return values, see table here.)
+	**/
+	@:electron_platforms(["macOS", "MAS"])
+	@:optional
+	var bookmarks : Array<String>; }>;
 	/**
 		the path of the file chosen by the user; if the dialog is cancelled it returns an empty string.
 		
@@ -107,19 +122,23 @@ package electron.remote;
 	var filters : Array<electron.FileFilter>; /**
 		Message to display above text fields.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var message : String; /**
 		Custom label for the text displayed in front of the filename text field.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var nameFieldLabel : String; /**
 		Show the tags input box, defaults to `true`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var showsTagField : Bool; @:optional
-	var properties : Array<String>; /**
+	var properties : Array<DialogShowSaveDialogSyncOptionsProperties>; /**
 		Create a security scoped bookmark when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.
 	**/
+	@:electron_platforms(["macOS", "MAS"])
 	@:optional
 	var securityScopedBookmarks : Bool; }):String;
 	/**
@@ -151,21 +170,36 @@ package electron.remote;
 	var filters : Array<electron.FileFilter>; /**
 		Message to display above text fields.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var message : String; /**
 		Custom label for the text displayed in front of the filename text field.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var nameFieldLabel : String; /**
 		Show the tags input box, defaults to `true`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var showsTagField : Bool; @:optional
-	var properties : Array<String>; /**
+	var properties : Array<DialogShowSaveDialogSyncOptionsProperties>; /**
 		Create a security scoped bookmark when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.
 	**/
+	@:electron_platforms(["macOS", "MAS"])
 	@:optional
-	var securityScopedBookmarks : Bool; }):js.lib.Promise<Any>;
+	var securityScopedBookmarks : Bool; }):js.lib.Promise<{ /**
+		whether or not the dialog was canceled.
+	**/
+	var canceled : Bool; /**
+		If the dialog is canceled, this will be an empty string.
+	**/
+	var filePath : String; /**
+		Base64 encoded string which contains the security scoped bookmark data for the saved file. `securityScopedBookmarks` must be enabled for this to be present. (For return values, see table here.)
+	**/
+	@:electron_platforms(["macOS", "MAS"])
+	@:optional
+	var bookmark : String; }>;
 	/**
 		the index of the clicked button.
 		
@@ -180,7 +214,7 @@ package electron.remote;
 		Can be `none`, `info`, `error`, `question` or `warning`. On Windows, `question` displays the same icon as `info`, unless you set an icon using the `icon` option. On macOS, both `warning` and `error` display the same warning icon.
 	**/
 	@:optional
-	var type : String; /**
+	var type : DialogShowMessageBoxSyncOptionsType; /**
 		Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".
 	**/
 	@:optional
@@ -200,6 +234,7 @@ package electron.remote;
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		Custom width of the text in the message box.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var textWidth : Int; /**
 		The index of the button to be used to cancel the dialog, via the `Esc` key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, `0` will be used as the return value.
@@ -231,7 +266,7 @@ package electron.remote;
 		Can be `none`, `info`, `error`, `question` or `warning`. On Windows, `question` displays the same icon as `info`, unless you set an icon using the `icon` option. On macOS, both `warning` and `error` display the same warning icon.
 	**/
 	@:optional
-	var type : String; /**
+	var type : DialogShowMessageBoxSyncOptionsType; /**
 		Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".
 	**/
 	@:optional
@@ -243,7 +278,7 @@ package electron.remote;
 		Pass an instance of AbortSignal to optionally close the message box, the message box will behave as if it was cancelled by the user. On macOS, `signal` does not work with message boxes that do not have a parent window, since those message boxes run synchronously due to platform limitations.
 	**/
 	@:optional
-	var signal : AbortSignal; /**
+	var signal : electron.AbortSignal; /**
 		Title of the message box, some platforms will not show it.
 	**/
 	@:optional
@@ -263,6 +298,7 @@ package electron.remote;
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>; /**
 		Custom width of the text in the message box.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var textWidth : Int; /**
 		The index of the button to be used to cancel the dialog, via the `Esc` key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, `0` will be used as the return value.
@@ -276,7 +312,13 @@ package electron.remote;
 		Normalize the keyboard access keys across platforms. Default is `false`. Enabling this assumes `&` is used in the button labels for the placement of the keyboard shortcut access key and labels will be converted so they work correctly on each platform, `&` characters are removed on macOS, converted to `_` on Linux, and left untouched on Windows. For example, a button label of `Vie&w` will be converted to `Vie_w` on Linux and `View` on macOS and can be selected via `Alt-W` on Windows and Linux.
 	**/
 	@:optional
-	var normalizeAccessKeys : Bool; }):js.lib.Promise<Any>;
+	var normalizeAccessKeys : Bool; }):js.lib.Promise<{ /**
+		The index of the clicked button.
+	**/
+	var response : Float; /**
+		The checked state of the checkbox if `checkboxLabel` was set. Otherwise `false`.
+	**/
+	var checkboxChecked : Bool; }>;
 	/**
 		Displays a modal dialog that shows an error message.
 		
@@ -293,14 +335,82 @@ package electron.remote;
 		* The `message` argument is not used, as the OS provides its own confirmation dialog.
 		* The `window` argument is ignored since it is not possible to make this confirmation dialog modal.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function showCertificateTrustDialog(?window:electron.remote.BaseWindow, options:{ /**
 		The certificate to trust/import.
 	**/
 	var certificate : electron.Certificate; /**
 		The message to display to the user.
 	**/
-	var message : String; }):js.lib.Promise<Any>;
+	var message : String; }):js.lib.Promise<Void>;
 }
-enum abstract DialogEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract DialogEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract DialogShowOpenDialogSyncOptionsProperties(String) from String to String {
+	/**
+		Allow files to be selected.
+	**/
+	var openFile = "openFile";
+	/**
+		Allow directories to be selected.
+	**/
+	var openDirectory = "openDirectory";
+	/**
+		Allow multiple paths to be selected.
+	**/
+	var multiSelections = "multiSelections";
+	/**
+		Show hidden files in dialog.
+	**/
+	var showHiddenFiles = "showHiddenFiles";
+	/**
+		Allow creating new directories from dialog.
+	**/
+	var createDirectory = "createDirectory";
+	/**
+		Prompt for creation if the file path entered in the dialog does not exist. This does not actually create the file at the path but allows non-existent paths to be returned that should be created by the application.
+	**/
+	var promptToCreate = "promptToCreate";
+	/**
+		Disable the automatic alias (symlink) path resolution. Selected aliases will now return the alias path instead of their target path.
+	**/
+	var noResolveAliases = "noResolveAliases";
+	/**
+		Treat packages, such as `.app` folders, as a directory instead of a file.
+	**/
+	var treatPackageAsDirectory = "treatPackageAsDirectory";
+	/**
+		Do not add the item being opened to the recent documents list.
+	**/
+	var dontAddToRecent = "dontAddToRecent";
+}
+enum abstract DialogShowSaveDialogSyncOptionsProperties(String) from String to String {
+	/**
+		Show hidden files in dialog.
+	**/
+	var showHiddenFiles = "showHiddenFiles";
+	/**
+		Allow creating new directories from dialog.
+	**/
+	var createDirectory = "createDirectory";
+	/**
+		Treat packages, such as `.app` folders, as a directory instead of a file.
+	**/
+	var treatPackageAsDirectory = "treatPackageAsDirectory";
+	/**
+		Sets whether the user will be presented a confirmation dialog if the user types a file name that already exists.
+	**/
+	var showOverwriteConfirmation = "showOverwriteConfirmation";
+	/**
+		Do not add the item being saved to the recent documents list.
+	**/
+	var dontAddToRecent = "dontAddToRecent";
+}
+enum abstract DialogShowMessageBoxSyncOptionsType(String) from String to String {
+	var none = "none";
+	var info = "info";
+	var error = "error";
+	var question = "question";
+	var warning = "warning";
 }

@@ -104,6 +104,7 @@ package electron.main;
 		
 		By default the `scheme` is treated like `http:`, which is parsed differently from protocols that follow the "generic URI syntax" like `file:`.
 	**/
+	@:deprecated
 	static function registerFileProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully registered
@@ -114,6 +115,7 @@ package electron.main;
 		
 		Example:
 	**/
+	@:deprecated
 	static function registerBufferProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully registered
@@ -122,6 +124,7 @@ package electron.main;
 		
 		The usage is the same with `registerFileProtocol`, except that the `callback` should be called with either a `string` or an object that has the `data` property.
 	**/
+	@:deprecated
 	static function registerStringProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully registered
@@ -130,6 +133,7 @@ package electron.main;
 		
 		The usage is the same with `registerFileProtocol`, except that the `callback` should be called with an object that has the `url` property.
 	**/
+	@:deprecated
 	static function registerHttpProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully registered
@@ -142,58 +146,68 @@ package electron.main;
 		
 		It is possible to pass any object that implements the readable stream API (emits `data`/`end`/`error` events). For example, here's how a file could be returned:
 	**/
+	@:deprecated
 	static function registerStreamProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully unregistered
 		
 		Unregisters the custom protocol of `scheme`.
 	**/
+	@:deprecated
 	static function unregisterProtocol(scheme:String):Bool;
 	/**
 		Whether `scheme` is already registered.
 	**/
+	@:deprecated
 	static function isProtocolRegistered(scheme:String):Bool;
 	/**
 		Whether the protocol was successfully intercepted
 		
 		Intercepts `scheme` protocol and uses `handler` as the protocol's new handler which sends a file as a response.
 	**/
+	@:deprecated
 	static function interceptFileProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully intercepted
 		
 		Intercepts `scheme` protocol and uses `handler` as the protocol's new handler which sends a `string` as a response.
 	**/
+	@:deprecated
 	static function interceptStringProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully intercepted
 		
 		Intercepts `scheme` protocol and uses `handler` as the protocol's new handler which sends a `Buffer` as a response.
 	**/
+	@:deprecated
 	static function interceptBufferProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully intercepted
 		
 		Intercepts `scheme` protocol and uses `handler` as the protocol's new handler which sends a new HTTP request as a response.
 	**/
+	@:deprecated
 	static function interceptHttpProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully intercepted
 		
 		Same as `protocol.registerStreamProtocol`, except that it replaces an existing protocol handler.
 	**/
+	@:deprecated
 	static function interceptStreamProtocol(scheme:String, handler:haxe.Constraints.Function):Bool;
 	/**
 		Whether the protocol was successfully unintercepted
 		
 		Remove the interceptor installed for `scheme` and restore its original handler.
 	**/
+	@:deprecated
 	static function uninterceptProtocol(scheme:String):Bool;
 	/**
 		Whether `scheme` is already intercepted.
 	**/
+	@:deprecated
 	static function isProtocolIntercepted(scheme:String):Bool;
 }
-enum abstract ProtocolEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ProtocolEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

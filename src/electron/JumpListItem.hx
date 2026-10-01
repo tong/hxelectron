@@ -7,7 +7,7 @@ typedef JumpListItem = {
 		One of the following:
 	**/
 	@:optional
-	var type : String;
+	var type : JumpListItemType;
 	/**
 		Path of the file to open, should only be set if `type` is `file`.
 	**/
@@ -48,4 +48,18 @@ typedef JumpListItem = {
 	**/
 	@:optional
 	var workingDirectory : String;
+}
+enum abstract JumpListItemType(String) from String to String {
+	/**
+		A task will launch an app with specific arguments.
+	**/
+	var task = "task";
+	/**
+		Can be used to separate items in the standard `Tasks` category.
+	**/
+	var separator = "separator";
+	/**
+		A file link will open a file using the app that created the Jump List, for this to work the app must be registered as a handler for the file type (though it doesn't have to be the default handler).
+	**/
+	var file = "file";
 }

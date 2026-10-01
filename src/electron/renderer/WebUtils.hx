@@ -13,8 +13,8 @@ package electron.renderer;
 		
 		This method superseded the previous augmentation to the `File` object with the `path` property.  An example is included below.
 	**/
-	static function getPathForFile(file:File):String;
+	static function getPathForFile(file:electron.File):String;
 }
-enum abstract WebUtilsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract WebUtilsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

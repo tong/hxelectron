@@ -36,7 +36,7 @@ package electron;
 	* `contextId`
 	@see https://electronjs.org/docs/api/process
 **/
-@:jsRequire("process") extern class Process extends js.node.events.EventEmitter<electron.Process> {
+@:native('process') extern class Process extends js.node.events.EventEmitter<electron.Process> {
 	/**
 		A `boolean`. When the app is started by being passed as parameter to the default Electron executable, this property is `true` in the main process, otherwise it is `undefined`. For example when running the app with `electron .`, it is `true`, even if the app is packaged (`isPackaged`) is `true`. This can be useful to determine how many arguments will need to be sliced off from `process.argv`.
 	**/
@@ -91,7 +91,7 @@ package electron;
 		* `worker` - In a web worker
 		* `utility` - In a node process launched as a service
 	**/
-	static var type : String;
+	static var type : ProcessType;
 	/**
 		A `string` representing Chrome's version string.
 	**/
@@ -142,14 +142,20 @@ package electron;
 		
 		Returns an object with V8 heap statistics. Note that all statistics are reported in Kilobytes.
 	**/
-	static function getHeapStatistics():Any;
+	static function getHeapStatistics():{ var totalHeapSize : Int; var totalHeapSizeExecutable : Int; var totalPhysicalSize : Int; var totalAvailableSize : Int; var usedHeapSize : Int; var heapSizeLimit : Int; var mallocedMemory : Int; var peakMallocedMemory : Int; var doesZapGarbage : Bool; };
 	/**
 		* `allocated` Integer - Size of all allocated objects in Kilobytes.
 		* `total` Integer - Total allocated space in Kilobytes.
 		
 		Returns an object with Blink memory information. It can be useful for debugging rendering / DOM related memory issues. Note that all values are reported in Kilobytes.
 	**/
-	static function getBlinkMemoryInfo():Any;
+	static function getBlinkMemoryInfo():{ /**
+		Size of all allocated objects in Kilobytes.
+	**/
+	var allocated : Int; /**
+		Total allocated space in Kilobytes.
+	**/
+	var total : Int; };
 	/**
 		Resolves with a ProcessMemoryInfo
 		
@@ -157,7 +163,7 @@ package electron;
 		
 		Chromium does not provide `residentSet` value for macOS. This is because macOS performs in-memory compression of pages that haven't been recently used. As a result the resident set size value is not what one would expect. `private` memory is more representative of the actual pre-compression memory usage of the process on macOS.
 	**/
-	static function getProcessMemoryInfo():js.lib.Promise<Any>;
+	static function getProcessMemoryInfo():js.lib.Promise<electron.ProcessMemoryInfo>;
 	/**
 		* `total` Integer - The total amount of physical memory in Kilobytes available to the system.
 		* `free` Integer - The total amount of memory not being used by applications or disk cache.
@@ -169,7 +175,33 @@ package electron;
 		
 		Returns an object giving memory usage statistics about the entire system. Note that all statistics are reported in Kilobytes.
 	**/
-	static function getSystemMemoryInfo():Any;
+	static function getSystemMemoryInfo():{ /**
+		The total amount of physical memory in Kilobytes available to the system.
+	**/
+	var total : Int; /**
+		The total amount of memory not being used by applications or disk cache.
+	**/
+	var free : Int; /**
+		The kernel's estimate of the amount of memory available for allocation without swapping, from `/proc/meminfo` `MemAvailable`. Use this as the memory pressure signal on Linux; `free` there is `MemFree`, which excludes page cache and other reclaimable memory.
+	**/
+	@:electron_platforms(["Linux"])
+	var available : Int; /**
+		The amount of memory that currently has been paged out to storage. Includes memory for file caches, network buffers, and other system services.
+	**/
+	@:electron_platforms(["macOS"])
+	var fileBacked : Int; /**
+		The amount of memory that is marked as "purgeable". The system can reclaim it if memory pressure increases.
+	**/
+	@:electron_platforms(["macOS"])
+	var purgeable : Int; /**
+		The total amount of swap memory in Kilobytes available to the system.
+	**/
+	@:electron_platforms(["Windows", "Linux"])
+	var swapTotal : Int; /**
+		The free amount of swap memory in Kilobytes available to the system.
+	**/
+	@:electron_platforms(["Windows", "Linux"])
+	var swapFree : Int; };
 	/**
 		The version of the host operating system.
 		
@@ -191,11 +223,40 @@ package electron;
 	/**
 		Sets the file descriptor soft limit to `maxDescriptors` or the OS hard limit, whichever is lower for the current process.
 	**/
+	@:electron_platforms(["macOS", "Linux"])
 	static function setFdLimit(maxDescriptors:Int):Void;
+	static function on<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function once<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function addListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function off<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeAllListeners<T:(haxe.Constraints.Function)>(?event:js.node.events.EventEmitter.Event<T>):Void;
 }
-enum abstract ProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron has loaded its internal initialization script and is beginning to load the web page or the main script.
 	**/
 	var loaded : electron.ProcessEvent<() -> Void> = "loaded";
+}
+enum abstract ProcessType(String) from String to String {
+	/**
+		The main process
+	**/
+	var browser = "browser";
+	/**
+		A renderer process
+	**/
+	var renderer = "renderer";
+	/**
+		In a service worker
+	**/
+	var service_worker = "service-worker";
+	/**
+		In a web worker
+	**/
+	var worker = "worker";
+	/**
+		In a node process launched as a service
+	**/
+	var utility = "utility";
 }

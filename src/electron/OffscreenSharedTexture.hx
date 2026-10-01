@@ -9,10 +9,10 @@ typedef OffscreenSharedTexture = {
 	var textureInfo : { /**
 		The widget type of the texture. Can be `popup` or `frame`.
 	**/
-	var widgetType : String; /**
+	var widgetType : OffscreenSharedTextureTextureInfoWidgetType; /**
 		The pixel format of the texture.
 	**/
-	var pixelFormat : String; /**
+	var pixelFormat : OffscreenSharedTextureTextureInfoPixelFormat; /**
 		The full dimensions of the video frame.
 	**/
 	var codedSize : electron.Size; /**
@@ -54,4 +54,22 @@ typedef OffscreenSharedTexture = {
 		Release the resources. The `texture` cannot be directly passed to another process, users need to maintain texture lifecycles in main process, but it is safe to pass the `textureInfo` to another process. Only a limited number of textures can exist at the same time, so it's important that you call `texture.release()` as soon as you're done with the texture.
 	**/
 	var release : haxe.Constraints.Function;
+}
+enum abstract OffscreenSharedTextureTextureInfoWidgetType(String) from String to String {
+	var popup = "popup";
+	var frame = "frame";
+}
+enum abstract OffscreenSharedTextureTextureInfoPixelFormat(String) from String to String {
+	/**
+		The texture format is 8-bit unorm RGBA.
+	**/
+	var rgba = "rgba";
+	/**
+		The texture format is 8-bit unorm BGRA.
+	**/
+	var bgra = "bgra";
+	/**
+		The texture format is 16-bit float RGBA.
+	**/
+	var rgbaf16 = "rgbaf16";
 }

@@ -6,7 +6,7 @@ typedef IpcMainServiceWorkerEvent = {
 	/**
 		Possible values include `service-worker`.
 	**/
-	var type : String;
+	var type : IpcMainServiceWorkerEventType;
 	/**
 		The service worker that sent this message
 	**/
@@ -31,4 +31,7 @@ typedef IpcMainServiceWorkerEvent = {
 		A function that will send an IPC message to the renderer frame that sent the original message that you are currently handling.  You should use this method to "reply" to the sent message in order to guarantee the reply will go to the correct process and frame.
 	**/
 	var reply : haxe.Constraints.Function;
+}
+enum abstract IpcMainServiceWorkerEventType(String) from String to String {
+	var service_worker = "service-worker";
 }

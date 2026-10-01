@@ -10,7 +10,7 @@ typedef ProcessMetric = {
 	/**
 		Process type. One of the following values:
 	**/
-	var type : String;
+	var type : ProcessMetricType;
 	/**
 		The non-localized name of the process.
 	**/
@@ -36,11 +36,31 @@ typedef ProcessMetric = {
 	/**
 		Whether the process is sandboxed on OS level.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var sandboxed : Bool;
 	/**
 		One of the following values:
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
-	var integrityLevel : String;
+	var integrityLevel : ProcessMetricIntegrityLevel;
+}
+enum abstract ProcessMetricType(String) from String to String {
+	var Browser = "Browser";
+	var Tab = "Tab";
+	var Utility = "Utility";
+	var Zygote = "Zygote";
+	var Sandbox_helper = "Sandbox helper";
+	var GPU = "GPU";
+	var Pepper_Plugin = "Pepper Plugin";
+	var Pepper_Plugin_Broker = "Pepper Plugin Broker";
+	var Unknown = "Unknown";
+}
+enum abstract ProcessMetricIntegrityLevel(String) from String to String {
+	var untrusted = "untrusted";
+	var low = "low";
+	var medium = "medium";
+	var high = "high";
+	var unknown = "unknown";
 }

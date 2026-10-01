@@ -34,11 +34,13 @@ typedef SerialPort = {
 	/**
 		Represents a single serial port on macOS can be enumerated by multiple drivers.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var usbDriverName : String;
 	/**
 		A stable identifier on Windows that can be used for device permissions.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var deviceInstanceId : String;
 }

@@ -12,7 +12,8 @@ package electron;
 		
 		> [!NOTE] Windows implementation will ignore `size.height` and scale the height according to `size.width`.
 	**/
-	static function createThumbnailFromPath(path:String, size:electron.Size):js.lib.Promise<Any>;
+	@:electron_platforms(["macOS", "Windows"])
+	static function createThumbnailFromPath(path:String, size:electron.Size):js.lib.Promise<electron.NativeImage>;
 	/**
 		Creates a new `NativeImage` instance from an image file (e.g., PNG or JPEG) located at `path`. This method returns an empty image if the `path` does not exist, cannot be read, or is not a valid image.
 	**/
@@ -64,6 +65,7 @@ package electron;
 		
 		where `'square.and.pencil'` is the symbol name from the SF Symbols app.
 	**/
+	@:electron_platforms(["macOS"])
 	static function createFromNamedImage(imageName:String, ?options:haxe.extern.EitherType<{ @:optional
 	var hslShift : Array<Float>; /**
 		Defaults to `30.0`.
@@ -81,12 +83,14 @@ package electron;
 	/**
 		Creates a new `NativeImage` instance from an SF Symbol for use in a native Menu. See SF Symbols for a list of possible values.
 	**/
+	@:electron_platforms(["macOS"])
 	static function createMenuSymbol(imageName:String):electron.NativeImage;
 	/**
 		A `boolean` property that determines whether the image is considered a template image.
 		
 		Please note that this property only has an effect on macOS.
 	**/
+	@:electron_platforms(["macOS"])
 	var isMacTemplateImage : Bool;
 	/**
 		A Buffer that contains the image's `PNG` encoded data.
@@ -123,6 +127,7 @@ package electron;
 	/**
 		Legacy alias for `image.toBitmap()`.
 	**/
+	@:deprecated
 	function getBitmap(?options:{ /**
 		Defaults to 1.0.
 	**/
@@ -137,6 +142,7 @@ package electron;
 		
 		Notice that the returned pointer is a weak pointer to the underlying native image instead of a copy, so you _must_ ensure that the associated `nativeImage` instance is kept around.
 	**/
+	@:electron_platforms(["macOS"])
 	function getNativeHandle():js.node.Buffer;
 	/**
 		Whether the image is empty.
@@ -175,7 +181,7 @@ package electron;
 		The desired quality of the resize image. Possible values include `good`, `better`, or `best`. The default is `best`. These values express a desired quality/speed tradeoff. They are translated into an algorithm-specific method that depends on the capabilities (CPU, GPU) of the underlying platform. It is possible for all three methods to be mapped to the same algorithm on a given platform.
 	**/
 	@:optional
-	var quality : String; }):electron.NativeImage;
+	var quality : NativeImageResizeOptionsQuality; }):electron.NativeImage;
 	/**
 		The image's aspect ratio (width divided by height).
 		
@@ -211,6 +217,11 @@ package electron;
 	@:optional
 	var dataURL : String; }):Void;
 }
-enum abstract NativeImageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NativeImageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract NativeImageResizeOptionsQuality(String) from String to String {
+	var good = "good";
+	var better = "better";
+	var best = "best";
 }

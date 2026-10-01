@@ -28,5 +28,6 @@ package electron.remote;
 	/**
 		Sets the image for this `ImageView`. Note that only image formats supported by `NativeImage` can be used with an `ImageView`.
 	**/
+	@:electron_experimental
 	function setImage(image:electron.NativeImage):Void;
 }

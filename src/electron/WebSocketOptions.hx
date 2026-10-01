@@ -12,7 +12,7 @@ typedef WebSocketOptions = {
 		Extra HTTP headers to send with the opening handshake.
 	**/
 	@:optional
-	var headers : Dynamic;
+	var headers : haxe.DynamicAccess<String>;
 	/**
 		Value of the `Origin` header to send with the opening handshake. Defaults to the `http(s)` equivalent of the WebSocket URL's origin (e.g. connecting to `wss://api.example.com` sends `Origin: https://api.example.com`), so that the connection is treated as same-origin by the server and by SameSite cookie rules.
 	**/

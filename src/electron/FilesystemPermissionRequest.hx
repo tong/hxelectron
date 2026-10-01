@@ -14,4 +14,8 @@ typedef FilesystemPermissionRequest = { /**
 		The access type of the `fileSystem` request. Can be `writable` or `readable`.
 	**/
 	@:optional
-	var fileAccessType : String; } & electron.PermissionRequest;
+	var fileAccessType : FilesystemPermissionRequestFileAccessType; } & electron.PermissionRequest;
+enum abstract FilesystemPermissionRequestFileAccessType(String) from String to String {
+	var writable = "writable";
+	var readable = "readable";
+}

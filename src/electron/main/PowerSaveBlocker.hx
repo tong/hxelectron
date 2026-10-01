@@ -17,7 +17,7 @@ package electron.main;
 		
 		For example, an API calling A requests for `prevent-app-suspension`, and another calling B requests for `prevent-display-sleep`. `prevent-display-sleep` will be used until B stops its request. After that, `prevent-app-suspension` is used.
 	**/
-	static function start(type:String):Int;
+	static function start(type:PowerSaveBlockerStartType):Int;
 	/**
 		Stops the specified power save blocker.
 		
@@ -29,6 +29,16 @@ package electron.main;
 	**/
 	static function isStarted(id:Int):Bool;
 }
-enum abstract PowerSaveBlockerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract PowerSaveBlockerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract PowerSaveBlockerStartType(String) from String to String {
+	/**
+		Prevent the application from being suspended. Keeps system active but allows screen to be turned off. Example use cases: downloading a file or playing audio.
+	**/
+	var prevent_app_suspension = "prevent-app-suspension";
+	/**
+		Prevent the display from going to sleep. Keeps system and screen active. Example use case: playing video.
+	**/
+	var prevent_display_sleep = "prevent-display-sleep";
 }

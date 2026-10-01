@@ -46,7 +46,7 @@ typedef ProxyConfig = {
 		The proxy mode. Should be one of `direct`, `auto_detect`, `pac_script`, `fixed_servers` or `system`. Defaults to `pac_script` proxy mode if `pacScript` option is specified otherwise defaults to `fixed_servers`.
 	**/
 	@:optional
-	var mode : String;
+	var mode : ProxyConfigMode;
 	/**
 		The URL associated with the PAC file.
 	**/
@@ -62,4 +62,26 @@ typedef ProxyConfig = {
 	**/
 	@:optional
 	var proxyBypassRules : String;
+}
+enum abstract ProxyConfigMode(String) from String to String {
+	/**
+		In direct mode all connections are created directly, without any proxy involved.
+	**/
+	var direct = "direct";
+	/**
+		In auto_detect mode the proxy configuration is determined by a PAC script that can be downloaded at http://wpad/wpad.dat.
+	**/
+	var auto_detect = "auto_detect";
+	/**
+		In pac_script mode the proxy configuration is determined by a PAC script that is retrieved from the URL specified in the `pacScript`. This is the default mode if `pacScript` is specified.
+	**/
+	var pac_script = "pac_script";
+	/**
+		In fixed_servers mode the proxy configuration is specified in `proxyRules`. This is the default mode if `proxyRules` is specified.
+	**/
+	var fixed_servers = "fixed_servers";
+	/**
+		In system mode the proxy configuration is taken from the operating system. Note that the system mode is different from setting no proxy configuration. In the latter case, Electron falls back to the system settings only if no command-line options influence the proxy configuration.
+	**/
+	var system = "system";
 }

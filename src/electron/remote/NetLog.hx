@@ -34,18 +34,23 @@ package electron.remote;
 		What kinds of data should be captured. By default, only metadata about requests will be captured. Setting this to `includeSensitive` will include cookies and authentication data. Setting it to `everything` will include all bytes transferred on sockets. Can be `default`, `includeSensitive` or `everything`.
 	**/
 	@:optional
-	var captureMode : String; /**
+	var captureMode : NetLogStartLoggingOptionsCaptureMode; /**
 		When the log grows beyond this size, logging will automatically stop. Defaults to unlimited.
 	**/
 	@:optional
-	var maxFileSize : Float; }):js.lib.Promise<Any>;
+	var maxFileSize : Float; }):js.lib.Promise<Void>;
 	/**
 		resolves when the net log has been flushed to disk.
 		
 		Stops recording network events. If not called, net logging will automatically end when app quits.
 	**/
-	static function stopLogging():js.lib.Promise<Any>;
+	static function stopLogging():js.lib.Promise<Void>;
 }
-enum abstract NetLogEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NetLogEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract NetLogStartLoggingOptionsCaptureMode(String) from String to String {
+	var default_ = "default";
+	var includeSensitive = "includeSensitive";
+	var everything = "everything";
 }

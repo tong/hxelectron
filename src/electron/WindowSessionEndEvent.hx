@@ -7,5 +7,11 @@ typedef WindowSessionEndEvent = {
 	/**
 		List of reasons for shutdown. Can be 'shutdown', 'close-app', 'critical', or 'logoff'.
 	**/
-	var reasons : Array<String>;
+	var reasons : Array<WindowSessionEndEventReasons>;
+}
+enum abstract WindowSessionEndEventReasons(String) from String to String {
+	var shutdown = "shutdown";
+	var close_app = "close-app";
+	var critical = "critical";
+	var logoff = "logoff";
 }

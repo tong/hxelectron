@@ -66,13 +66,13 @@ package electron.main;
 	/**
 		the session's current cache size, in bytes.
 	**/
-	function getCacheSize():js.lib.Promise<Any>;
+	function getCacheSize():js.lib.Promise<Int>;
 	/**
 		resolves when the cache clear operation is complete.
 		
 		Clears the session’s HTTP cache.
 	**/
-	function clearCache():js.lib.Promise<Any>;
+	function clearCache():js.lib.Promise<Void>;
 	/**
 		resolves when the storage data has been cleared.
 	**/
@@ -84,7 +84,7 @@ package electron.main;
 		The types of storages to clear, can be `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
 	**/
 	@:optional
-	var storages : Array<String>; }):js.lib.Promise<Any>;
+	var storages : Array<SessionClearStorageDataOptionsStorages>; }):js.lib.Promise<Void>;
 	/**
 		Writes any unwritten DOMStorage data to disk.
 	**/
@@ -96,7 +96,7 @@ package electron.main;
 		
 		You may need `ses.closeAllConnections` to close currently in flight connections to prevent pooled sockets using previous proxy from being reused by future requests.
 	**/
-	function setProxy(config:electron.ProxyConfig):js.lib.Promise<Any>;
+	function setProxy(config:electron.ProxyConfig):js.lib.Promise<Void>;
 	/**
 		Resolves with the resolved IP addresses for the `host`.
 	**/
@@ -104,27 +104,27 @@ package electron.main;
 		Requested DNS query type. If unspecified, resolver will pick A or AAAA (or both) based on IPv4/IPv6 settings:
 	**/
 	@:optional
-	var queryType : String; /**
+	var queryType : SessionResolveHostOptionsQueryType; /**
 		The source to use for resolved addresses. Default allows the resolver to pick an appropriate source. Only affects use of big external sources (e.g. calling the system for resolution or using DNS). Even if a source is specified, results can still come from cache, resolving "localhost" or IP literals, etc. One of the following values:
 	**/
 	@:optional
-	var source : String; /**
+	var source : SessionResolveHostOptionsSource; /**
 		Indicates what DNS cache entries, if any, can be used to provide a response. One of the following values:
 	**/
 	@:optional
-	var cacheUsage : String; /**
+	var cacheUsage : SessionResolveHostOptionsCacheUsage; /**
 		Controls the resolver's Secure DNS behavior for this request. One of the following values:
 	**/
 	@:optional
-	var secureDnsPolicy : String; }):js.lib.Promise<Any>;
+	var secureDnsPolicy : SessionResolveHostOptionsSecureDnsPolicy; }):js.lib.Promise<electron.ResolvedHost>;
 	/**
 		Resolves with the proxy information for `url`.
 	**/
-	function resolveProxy(url:String):js.lib.Promise<Any>;
+	function resolveProxy(url:String):js.lib.Promise<String>;
 	/**
 		Resolves when the all internal states of proxy service is reset and the latest proxy configuration is reapplied if it's already available. The pac script will be fetched from `pacScript` again if the proxy mode is `pac_script`.
 	**/
-	function forceReloadProxyConfig():js.lib.Promise<Any>;
+	function forceReloadProxyConfig():js.lib.Promise<Void>;
 	/**
 		Sets download saving directory. By default, the download directory will be the `Downloads` under the respective app folder.
 	**/
@@ -165,7 +165,7 @@ package electron.main;
 		
 		> [!NOTE] It will terminate / fail all requests currently in flight.
 	**/
-	function closeAllConnections():js.lib.Promise<Any>;
+	function closeAllConnections():js.lib.Promise<Void>;
 	/**
 		see Response.
 		
@@ -185,7 +185,7 @@ package electron.main;
 		
 		By default, requests made with `net.fetch` can be made to custom protocols as well as `file:`, and will trigger webRequest handlers if present. When the non-standard `bypassCustomProtocolHandlers` option is set in RequestInit, custom protocol handlers will not be called for this request. This allows forwarding an intercepted request to the built-in handler. webRequest handlers will still be triggered when bypassing custom protocols.
 	**/
-	function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:js.html.RequestInit):js.lib.Promise<Any>;
+	function fetch(input:haxe.extern.EitherType<String, electron.GlobalRequest>, ?init:js.html.RequestInit):js.lib.Promise<electron.GlobalResponse>;
 	/**
 		Disables any network emulation already active for the `session`. Resets to the original network configuration.
 	**/
@@ -242,13 +242,14 @@ package electron.main;
 	/**
 		Sets a handler to respond to Bluetooth pairing requests. This handler allows developers to handle devices that require additional validation before pairing.  When a handler is not defined, any pairing on Linux or Windows that requires additional validation will be automatically cancelled. macOS does not require a handler because macOS handles the pairing automatically.  To clear the handler, call `setBluetoothPairingHandler(null)`.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function setBluetoothPairingHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
 		Resolves when the operation is complete.
 		
 		Clears the host resolver cache.
 	**/
-	function clearHostResolverCache():js.lib.Promise<Any>;
+	function clearHostResolverCache():js.lib.Promise<Void>;
 	/**
 		Dynamically sets whether to always send credentials for HTTP NTLM or Negotiate authentication.
 	**/
@@ -276,11 +277,11 @@ package electron.main;
 		Can be `tls1`, `tls1.1`, `tls1.2` or `tls1.3`. The minimum SSL version to allow when connecting to remote servers. Defaults to `tls1`.
 	**/
 	@:optional
-	var minVersion : String; /**
+	var minVersion : SessionSetSSLConfigConfigMinVersion; /**
 		Can be `tls1.2` or `tls1.3`. The maximum SSL version to allow when connecting to remote servers. Defaults to `tls1.3`.
 	**/
 	@:optional
-	var maxVersion : String; /**
+	var maxVersion : SessionSetSSLConfigConfigMaxVersion; /**
 		List of cipher suites which should be explicitly prevented from being used in addition to those disabled by the net built-in policy. Supported literal forms: 0xAABB, where AA is `cipher_suite[0]` and BB is `cipher_suite[1]`, as defined in RFC 2246, Section 7.4.1.2. Unrecognized but parsable cipher suites in this form will not return an error. Ex: To disable TLS_RSA_WITH_RC4_128_MD5, specify 0x0004, while to disable TLS_ECDH_ECDSA_WITH_RC4_128_SHA, specify 0xC002. Note that TLSv1.3 ciphers cannot be disabled using this mechanism.
 	**/
 	@:optional
@@ -288,7 +289,7 @@ package electron.main;
 	/**
 		resolves with blob data.
 	**/
-	function getBlobData(identifier:String):js.lib.Promise<Any>;
+	function getBlobData(identifier:String):js.lib.Promise<js.node.Buffer>;
 	/**
 		Initiates a download of the resource at `url`. The API will generate a DownloadItem that can be accessed with the will-download event.
 		
@@ -298,7 +299,7 @@ package electron.main;
 		HTTP request headers.
 	**/
 	@:optional
-	var headers : Dynamic; }):Void;
+	var headers : haxe.DynamicAccess<String>; }):Void;
 	/**
 		Allows resuming `cancelled` or `interrupted` downloads from previous `Session`. The API will generate a DownloadItem that can be accessed with the will-download event. The DownloadItem will not have any `WebContents` associated with it and the initial state will be `interrupted`. The download will start only when the `resume` API is called on the DownloadItem.
 	**/
@@ -331,18 +332,20 @@ package electron.main;
 	/**
 		resolves when the session’s HTTP authentication cache has been cleared.
 	**/
-	function clearAuthCache():js.lib.Promise<Any>;
+	function clearAuthCache():js.lib.Promise<Void>;
 	/**
 		Adds scripts that will be executed on ALL web contents that are associated with this session just before normal `preload` scripts run.
 		
 		**Deprecated:** Use the new `ses.registerPreloadScript` API.
 	**/
+	@:deprecated
 	function setPreloads(preloads:Array<String>):Void;
 	/**
 		an array of paths to preload scripts that have been registered.
 		
 		**Deprecated:** Use the new `ses.getPreloadScripts` API. This will only return preload script paths for `frame` context types.
 	**/
+	@:deprecated
 	function getPreloads():Array<String>;
 	/**
 		Registers preload script that will be executed in its associated context type in this session. For `frame` contexts, this will run prior to any preload defined in the web preferences of a WebContents.
@@ -371,7 +374,7 @@ package electron.main;
 		An array of url corresponding to the resource whose generated code cache needs to be removed. If the list is empty then all entries in the cache directory will be removed.
 	**/
 	@:optional
-	var urls : Array<String>; }):js.lib.Promise<Any>;
+	var urls : Array<String>; }):js.lib.Promise<Void>;
 	/**
 		an array of shared dictionary information entries in Chromium's networking service's storage.
 		
@@ -379,7 +382,7 @@ package electron.main;
 		
 		To get detailed information about a specific shared dictionary entry, call `getSharedDictionaryInfo(options)`.
 	**/
-	function getSharedDictionaryUsageInfo():js.lib.Promise<Any>;
+	function getSharedDictionaryUsageInfo():js.lib.Promise<Array<electron.SharedDictionaryUsageInfo>>;
 	/**
 		an array of shared dictionary information entries in Chromium's networking service's storage.
 		
@@ -391,11 +394,11 @@ package electron.main;
 	var frameOrigin : String; /**
 		The site of the top-level browsing context (the main frame or tab that contains the request). It’s less granular than `frameOrigin` and focuses on the broader "site" scope. In practice, will look like a URL.
 	**/
-	var topFrameSite : String; }):js.lib.Promise<Any>;
+	var topFrameSite : String; }):js.lib.Promise<Array<electron.SharedDictionaryInfo>>;
 	/**
 		resolves when the dictionary cache has been cleared, both in memory and on disk.
 	**/
-	function clearSharedDictionaryCache():js.lib.Promise<Any>;
+	function clearSharedDictionaryCache():js.lib.Promise<Void>;
 	/**
 		resolves when the dictionary cache has been cleared for the specified isolation key, both in memory and on disk.
 	**/
@@ -405,7 +408,7 @@ package electron.main;
 	var frameOrigin : String; /**
 		The site of the top-level browsing context (the main frame or tab that contains the request). It’s less granular than `frameOrigin` and focuses on the broader "site" scope. In practice, will look like a URL.
 	**/
-	var topFrameSite : String; }):js.lib.Promise<Any>;
+	var topFrameSite : String; }):js.lib.Promise<Void>;
 	/**
 		Sets whether to enable the builtin spell checker.
 	**/
@@ -439,7 +442,7 @@ package electron.main;
 	/**
 		An array of all words in app's custom dictionary. Resolves when the full dictionary is loaded from disk.
 	**/
-	function listWordsInSpellCheckerDictionary():js.lib.Promise<Any>;
+	function listWordsInSpellCheckerDictionary():js.lib.Promise<Array<String>>;
 	/**
 		Whether the word was successfully written to the custom dictionary. This API will not work on non-persistent (in-memory) sessions.
 		
@@ -469,10 +472,11 @@ package electron.main;
 		
 		**Deprecated:** Use the new `ses.extensions.loadExtension` API.
 	**/
+	@:deprecated
 	function loadExtension(path:String, ?options:{ /**
 		Whether to allow the extension to read local files over `file://` protocol and inject content scripts into `file://` pages. This is required e.g. for loading DevTools extensions on `file://` URLs. Defaults to false.
 	**/
-	var allowFileAccess : Bool; }):js.lib.Promise<Any>;
+	var allowFileAccess : Bool; }):js.lib.Promise<electron.Extension>;
 	/**
 		Unloads an extension.
 		
@@ -480,6 +484,7 @@ package electron.main;
 		
 		**Deprecated:** Use the new `ses.extensions.removeExtension` API.
 	**/
+	@:deprecated
 	function removeExtension(extensionId:String):Void;
 	/**
 		The loaded extension with the given ID.
@@ -488,6 +493,7 @@ package electron.main;
 		
 		**Deprecated:** Use the new `ses.extensions.getExtension` API.
 	**/
+	@:deprecated
 	function getExtension(extensionId:String):haxe.extern.EitherType<electron.Extension, Dynamic>;
 	/**
 		A list of all loaded extensions.
@@ -496,6 +502,7 @@ package electron.main;
 		
 		**Deprecated:** Use the new `ses.extensions.getAllExtensions` API.
 	**/
+	@:deprecated
 	function getAllExtensions():Array<electron.Extension>;
 	/**
 		The absolute file system path where data for this session is persisted on disk.  For in memory sessions this returns `null`.
@@ -518,7 +525,7 @@ package electron.main;
 		The types of data to clear. By default, this will clear all types of data. This can potentially include data types not explicitly listed here. (See Chromium's `BrowsingDataRemover` for the full list.)
 	**/
 	@:optional
-	var dataTypes : Array<String>; /**
+	var dataTypes : Array<SessionClearDataOptionsDataTypes>; /**
 		Clear data for only these origins. Cannot be used with `excludeOrigins`.
 	**/
 	@:optional
@@ -534,9 +541,9 @@ package electron.main;
 		The behavior for matching data to origins.
 	**/
 	@:optional
-	var originMatchingMode : String; }):js.lib.Promise<Any>;
+	var originMatchingMode : SessionClearDataOptionsOriginMatchingMode; }):js.lib.Promise<Void>;
 }
-enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when Electron is about to download `item` in `webContents`. See also `item.getInitiatorOrigin()`.
 		
@@ -682,4 +689,121 @@ enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 		The frame initiating this event. May be `null` if accessed after the frame has either navigated or been destroyed.
 	**/
 	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; }, haxe.Constraints.Function) -> Void> = "select-webauthn-account";
+}
+enum abstract SessionClearStorageDataOptionsStorages(String) from String to String {
+	var cookies = "cookies";
+	var filesystem = "filesystem";
+	var indexdb = "indexdb";
+	var localstorage = "localstorage";
+	var shadercache = "shadercache";
+	var serviceworkers = "serviceworkers";
+	var cachestorage = "cachestorage";
+}
+enum abstract SessionResolveHostOptionsQueryType(String) from String to String {
+	/**
+		Fetch only A records
+	**/
+	var A = "A";
+	/**
+		Fetch only AAAA records.
+	**/
+	var AAAA = "AAAA";
+}
+enum abstract SessionResolveHostOptionsSource(String) from String to String {
+	/**
+		Resolver will pick an appropriate source. Results could come from DNS, MulticastDNS, HOSTS file, etc
+	**/
+	var any = "any";
+	/**
+		Results will only be retrieved from the system or OS, e.g. via the `getaddrinfo()` system call
+	**/
+	var system = "system";
+	/**
+		Results will only come from DNS queries
+	**/
+	var dns = "dns";
+	/**
+		Results will only come from Multicast DNS queries
+	**/
+	var mdns = "mdns";
+	/**
+		No external sources will be used. Results will only come from fast local sources that are available no matter the source setting, e.g. cache, hosts file, IP literal resolution, etc.
+	**/
+	var localOnly = "localOnly";
+}
+enum abstract SessionResolveHostOptionsCacheUsage(String) from String to String {
+	/**
+		Results may come from the host cache if non-stale
+	**/
+	var allowed = "allowed";
+	/**
+		Results may come from the host cache even if stale (by expiration or network changes)
+	**/
+	var staleAllowed = "staleAllowed";
+	/**
+		Results will not come from the host cache.
+	**/
+	var disallowed = "disallowed";
+}
+enum abstract SessionResolveHostOptionsSecureDnsPolicy(String) from String to String {
+	var allow = "allow";
+	var disable = "disable";
+}
+enum abstract SessionSetSSLConfigConfigMinVersion(String) from String to String {
+	var tls1 = "tls1";
+	var tls1_1 = "tls1.1";
+	var tls1_2 = "tls1.2";
+	var tls1_3 = "tls1.3";
+}
+enum abstract SessionSetSSLConfigConfigMaxVersion(String) from String to String {
+	var tls1_2 = "tls1.2";
+	var tls1_3 = "tls1.3";
+}
+enum abstract SessionClearDataOptionsDataTypes(String) from String to String {
+	/**
+		Background Fetch
+	**/
+	var backgroundFetch = "backgroundFetch";
+	/**
+		Cache (includes `cachestorage` and `shadercache`)
+	**/
+	var cache = "cache";
+	/**
+		Cookies
+	**/
+	var cookies = "cookies";
+	/**
+		Downloads
+	**/
+	var downloads = "downloads";
+	/**
+		File Systems
+	**/
+	var fileSystems = "fileSystems";
+	/**
+		IndexedDB
+	**/
+	var indexedDB = "indexedDB";
+	/**
+		Local Storage
+	**/
+	var localStorage = "localStorage";
+	/**
+		Service Workers
+	**/
+	var serviceWorkers = "serviceWorkers";
+	/**
+		WebSQL
+	**/
+	var webSQL = "webSQL";
+}
+enum abstract SessionClearDataOptionsOriginMatchingMode(String) from String to String {
+	/**
+		Storage is matched on origin in first-party contexts and top-level-site in third-party contexts.
+	**/
+	var third_parties_included = "third-parties-included";
+	/**
+		Storage is matched on origin only in all contexts.
+	**/
+	var origin_in_all_contexts = "origin-in-all-contexts";
 }

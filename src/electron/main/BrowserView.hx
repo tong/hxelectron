@@ -37,12 +37,16 @@ package electron.main;
 	/**
 		A `WebContents` object owned by this view.
 	**/
+	@:deprecated
+	@:electron_experimental
 	var webContents : electron.main.WebContents;
 	function new(?options:{ /**
 		Settings of web page's features.
 	**/
 	@:optional
 	var webPreferences : electron.WebPreferences; }):Void;
+	@:deprecated
+	@:electron_experimental
 	function setAutoResize(options:{ /**
 		If `true`, the view's width will grow and shrink together with the window. `false` by default.
 	**/
@@ -63,10 +67,14 @@ package electron.main;
 	/**
 		Resizes and moves the view to the supplied bounds relative to the window.
 	**/
+	@:deprecated
+	@:electron_experimental
 	function setBounds(bounds:electron.Rectangle):Void;
 	/**
 		The `bounds` of this BrowserView instance as `Object`.
 	**/
+	@:deprecated
+	@:electron_experimental
 	function getBounds():electron.Rectangle;
 	/**
 		Examples of valid `color` values:
@@ -95,8 +103,10 @@ package electron.main;
 		
 		> [!NOTE] Hex format with alpha takes `AARRGGBB` or `ARGB`, _not_ `RRGGBBAA` or `RGB`.
 	**/
+	@:deprecated
+	@:electron_experimental
 	function setBackgroundColor(color:String):Void;
 }
-enum abstract BrowserViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract BrowserViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

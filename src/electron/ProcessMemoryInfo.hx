@@ -6,6 +6,7 @@ typedef ProcessMemoryInfo = {
 	/**
 		The amount of memory currently pinned to actual physical RAM in Kilobytes.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	var residentSet : Int;
 	/**
 		The amount of memory not shared by other processes, such as JS heap or HTML content in Kilobytes.

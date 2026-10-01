@@ -20,11 +20,11 @@ package electron.remote;
 	/**
 		This API allows the user to set custom options for the save dialog that opens for the download item by default. The API is only available in session's `will-download` callback function.
 	**/
-	function setSaveDialogOptions(options:SaveDialogOptions):Void;
+	function setSaveDialogOptions(options:electron.SaveDialogOptions):Void;
 	/**
 		Returns the object previously set by `downloadItem.setSaveDialogOptions(options)`.
 	**/
-	function getSaveDialogOptions():SaveDialogOptions;
+	function getSaveDialogOptions():electron.SaveDialogOptions;
 	/**
 		Pauses the download.
 	**/
@@ -96,7 +96,7 @@ package electron.remote;
 		
 		> [!NOTE] The following methods are useful specifically to resume a `cancelled` item when session is restarted.
 	**/
-	function getState():String;
+	function getState():DownloadItemGetStateResult;
 	/**
 		The complete URL chain of the item including any redirects.
 	**/
@@ -118,7 +118,7 @@ package electron.remote;
 	**/
 	function getEndTime():Float;
 }
-enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the download has been updated and is not done.
 		
@@ -127,7 +127,7 @@ enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 		* `progressing` - The download is in-progress.
 		* `interrupted` - The download has interrupted and can be resumed.
 	**/
-	var updated : electron.remote.DownloadItemEvent<(js.html.Event, String) -> Void> = "updated";
+	var updated : electron.remote.DownloadItemEvent<(js.html.Event, DownloadItemUpdatedState) -> Void> = "updated";
 	/**
 		Emitted when the download is in a terminal state. This includes a completed download, a cancelled download (via `downloadItem.cancel()`), and interrupted download that can't be resumed.
 		
@@ -137,5 +137,20 @@ enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 		* `cancelled` - The download has been cancelled.
 		* `interrupted` - The download has interrupted and can not resume.
 	**/
-	var done : electron.remote.DownloadItemEvent<(js.html.Event, String) -> Void> = "done";
+	var done : electron.remote.DownloadItemEvent<(js.html.Event, DownloadItemDoneState) -> Void> = "done";
+}
+enum abstract DownloadItemUpdatedState(String) from String to String {
+	var progressing = "progressing";
+	var interrupted = "interrupted";
+}
+enum abstract DownloadItemDoneState(String) from String to String {
+	var completed = "completed";
+	var cancelled = "cancelled";
+	var interrupted = "interrupted";
+}
+enum abstract DownloadItemGetStateResult(String) from String to String {
+	var progressing = "progressing";
+	var completed = "completed";
+	var cancelled = "cancelled";
+	var interrupted = "interrupted";
 }

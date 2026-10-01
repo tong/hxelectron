@@ -36,6 +36,6 @@ package electron.remote;
 	**/
 	function removeSwitch(switch_:String):Void;
 }
-enum abstract CommandLineEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract CommandLineEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

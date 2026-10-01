@@ -27,23 +27,26 @@ package electron;
 		
 		Open the given file in the desktop's default manner.
 	**/
-	static function openPath(path:String):js.lib.Promise<Any>;
+	static function openPath(path:String):js.lib.Promise<String>;
 	/**
 		Open the given external protocol URL in the desktop's default manner. (For example, mailto: URLs in the user's default mail agent).
 	**/
 	static function openExternal(url:String, ?options:{ /**
 		`true` to bring the opened application to the foreground. The default is `true`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var activate : Bool; /**
 		The working directory.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var workingDirectory : String; /**
 		Indicates a user initiated launch that enables tracking of frequently used programs and other behaviors. The default is `false`.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
-	var logUsage : Bool; }):js.lib.Promise<Any>;
+	var logUsage : Bool; }):js.lib.Promise<Void>;
 	/**
 		Resolves when the operation has been completed. Rejects if there was an error while deleting the requested item.
 		
@@ -51,7 +54,7 @@ package electron;
 		
 		The path must use the default path separator for the platform (backslash on Windows). Use `path.resolve()` from the `node:path` module to ensure correct handling on all filesystems.
 	**/
-	static function trashItem(path:String):js.lib.Promise<Any>;
+	static function trashItem(path:String):js.lib.Promise<Void>;
 	/**
 		Play the beep sound.
 	**/
@@ -61,14 +64,30 @@ package electron;
 		
 		Creates or updates a shortcut link at `shortcutPath`.
 	**/
-	static function writeShortcutLink(shortcutPath:String, ?operation:String, options:electron.ShortcutDetails):Bool;
+	@:electron_platforms(["Windows"])
+	static function writeShortcutLink(shortcutPath:String, ?operation:ShellWriteShortcutLinkOperation, options:electron.ShortcutDetails):Bool;
 	/**
 		Resolves the shortcut link at `shortcutPath`.
 		
 		An exception will be thrown when any error happens.
 	**/
+	@:electron_platforms(["Windows"])
 	static function readShortcutLink(shortcutPath:String):electron.ShortcutDetails;
 }
-enum abstract ShellEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ShellEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract ShellWriteShortcutLinkOperation(String) from String to String {
+	/**
+		Creates a new shortcut, overwriting if necessary.
+	**/
+	var create = "create";
+	/**
+		Updates specified properties only on an existing shortcut.
+	**/
+	var update = "update";
+	/**
+		Overwrites an existing shortcut, fails if the shortcut doesn't exist.
+	**/
+	var replace = "replace";
 }

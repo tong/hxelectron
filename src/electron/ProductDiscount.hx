@@ -22,7 +22,7 @@ typedef ProductDiscount = {
 	/**
 		The payment mode for this product discount. Can be `payAsYouGo`, `payUpFront`, or `freeTrial`.
 	**/
-	var paymentMode : String;
+	var paymentMode : ProductDiscountPaymentMode;
 	/**
 		An integer that indicates the number of periods the product discount is available.
 	**/
@@ -32,4 +32,9 @@ typedef ProductDiscount = {
 	**/
 	@:optional
 	var subscriptionPeriod : electron.ProductSubscriptionPeriod;
+}
+enum abstract ProductDiscountPaymentMode(String) from String to String {
+	var payAsYouGo = "payAsYouGo";
+	var payUpFront = "payUpFront";
+	var freeTrial = "freeTrial";
 }

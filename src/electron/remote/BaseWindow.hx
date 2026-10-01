@@ -103,6 +103,7 @@ package electron.remote;
 	/**
 		A `string` (optional) property that is equal to the `tabbingIdentifier` passed to the `BrowserWindow` constructor or `undefined` if none was set.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var tabbingIdentifier : String;
 	/**
@@ -110,6 +111,7 @@ package electron.remote;
 		
 		If the menu bar is already visible, setting this property to `true` won't hide it immediately.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	var autoHideMenuBar : Bool;
 	/**
 		A `boolean` property that determines whether the window is in simple (pre-Lion) fullscreen mode.
@@ -122,12 +124,14 @@ package electron.remote;
 	/**
 		A `boolean` property that determines whether the window is focusable.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var focusable : Bool;
 	/**
 		A `boolean` property that determines whether the window is visible on all workspaces.
 		
 		> [!NOTE] Always returns false on Windows.
 	**/
+	@:electron_platforms(["macOS", "Linux"])
 	var visibleOnAllWorkspaces : Bool;
 	/**
 		A `boolean` property that determines whether the window has a shadow.
@@ -138,6 +142,7 @@ package electron.remote;
 		
 		> [!NOTE] If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single `Alt` key.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	var menuBarVisible : Bool;
 	/**
 		A `boolean` property that determines whether the window is in kiosk mode.
@@ -148,10 +153,12 @@ package electron.remote;
 		
 		The icon in title bar will become gray when set to `true`.
 	**/
+	@:electron_platforms(["macOS"])
 	var documentEdited : Bool;
 	/**
 		A `string` property that determines the pathname of the file the window represents, and the icon of the file will show in window's title bar.
 	**/
+	@:electron_platforms(["macOS"])
 	var representedFilename : String;
 	/**
 		A `string` property that determines the title of the native window.
@@ -164,12 +171,14 @@ package electron.remote;
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var minimizable : Bool;
 	/**
 		A `boolean` property that determines whether the window can be manually maximized by user.
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var maximizable : Bool;
 	/**
 		A `boolean` property that determines whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
@@ -184,16 +193,19 @@ package electron.remote;
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var closable : Bool;
 	/**
 		A `boolean` property that determines Whether the window can be moved by user.
 		
 		On Linux the setter is a no-op, although the getter returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var movable : Bool;
 	/**
 		A `boolean` property that determines whether the window is excluded from the application’s Windows menu. `false` by default.
 	**/
+	@:electron_platforms(["macOS"])
 	var excludedFromShownWindowsMenu : Bool;
 	/**
 		A `string` property that defines an alternative title provided only to accessibility tools such as screen readers. This string is not directly visible to users.
@@ -202,6 +214,7 @@ package electron.remote;
 	/**
 		A `boolean` property that indicates whether the window is arranged via Snap.
 	**/
+	@:electron_platforms(["Windows"])
 	var snapped : Bool;
 	function new(?options:electron.BaseWindowConstructorOptions):Void;
 	/**
@@ -297,10 +310,12 @@ package electron.remote;
 		
 		Simple fullscreen mode emulates the native fullscreen behavior found in versions of macOS prior to Lion (10.7).
 	**/
+	@:electron_platforms(["macOS"])
 	function setSimpleFullScreen(flag:Bool):Void;
 	/**
 		Whether the window is in simple (pre-Lion) fullscreen mode.
 	**/
+	@:electron_platforms(["macOS"])
 	function isSimpleFullScreen():Bool;
 	/**
 		Whether the window is in normal state (not maximized, not minimized, not in fullscreen mode).
@@ -347,17 +362,19 @@ package electron.remote;
 	/**
 		Uses Quick Look to preview a file at a given path.
 	**/
+	@:electron_platforms(["macOS"])
 	function previewFile(path:String, ?displayName:String):Void;
 	/**
 		Closes the currently open Quick Look panel.
 	**/
+	@:electron_platforms(["macOS"])
 	function closeFilePreview():Void;
 	/**
 		Resizes and moves the window to the supplied bounds. Any properties that are not supplied will default to their current values.
 		
 		> [!NOTE] On macOS, the y-coordinate value cannot be smaller than the Tray height. The tray height has changed over time and depends on the operating system, but is between 20-40px. Passing a value lower than the tray height will result in a window that is flush to the tray.
 	**/
-	function setBounds(bounds:Partial, ?animate:Bool):Void;
+	function setBounds(bounds:electron.Partial, ?animate:Bool):Void;
 	/**
 		The `bounds` of the window as `Object`.
 		
@@ -439,32 +456,38 @@ package electron.remote;
 	/**
 		Sets whether the window can be moved by user. On Linux does nothing.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setMovable(movable:Bool):Void;
 	/**
 		Whether the window can be moved by user.
 		
 		On Linux always returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function isMovable():Bool;
 	/**
 		Sets whether the window can be manually minimized by user. On Linux does nothing.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setMinimizable(minimizable:Bool):Void;
 	/**
 		Whether the window can be manually minimized by the user.
 		
 		On Linux always returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function isMinimizable():Bool;
 	/**
 		Sets whether the window can be manually maximized by user. On Linux does nothing.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setMaximizable(maximizable:Bool):Void;
 	/**
 		Whether the window can be manually maximized by user.
 		
 		On Linux always returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function isMaximizable():Bool;
 	/**
 		Sets whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
@@ -477,27 +500,31 @@ package electron.remote;
 	/**
 		Sets whether the window can be manually closed by user. On Linux does nothing.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setClosable(closable:Bool):Void;
 	/**
 		Whether the window can be manually closed by user.
 		
 		On Linux always returns `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function isClosable():Bool;
 	/**
 		Sets whether the window will be hidden when the user toggles into mission control.
 	**/
+	@:electron_platforms(["macOS"])
 	function setHiddenInMissionControl(hidden:Bool):Void;
 	/**
 		Whether the window will be hidden when the user toggles into mission control.
 	**/
+	@:electron_platforms(["macOS"])
 	function isHiddenInMissionControl():Bool;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
 		
 		Not supported on Wayland (Linux).
 	**/
-	function setAlwaysOnTop(flag:Bool, ?level:String, ?relativeLevel:Int):Void;
+	function setAlwaysOnTop(flag:Bool, ?level:BaseWindowSetAlwaysOnTopLevel, ?relativeLevel:Int):Void;
 	/**
 		Whether the window is always on top of other windows.
 		
@@ -539,6 +566,7 @@ package electron.remote;
 	/**
 		Changes the attachment point for sheets on macOS. By default, sheets are attached just below the window frame, but you may want to display them beneath a HTML-rendered toolbar. For example:
 	**/
+	@:electron_platforms(["macOS"])
 	function setSheetOffset(offsetY:Float, ?offsetX:Float):Void;
 	/**
 		Starts or stops flashing the window to attract user's attention.
@@ -547,6 +575,7 @@ package electron.remote;
 	/**
 		Makes the window not show in the taskbar.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setSkipTaskbar(skip:Bool):Void;
 	/**
 		Enters or leaves kiosk mode.
@@ -563,6 +592,7 @@ package electron.remote;
 		
 		This API returns whether the window is in tablet mode, and the `resize` event can be used to listen to changes to tablet mode.
 	**/
+	@:electron_platforms(["Windows"])
 	function isTabletMode():Bool;
 	/**
 		Window id in the format of DesktopCapturerSource's id. For example "window:1324:0".
@@ -579,42 +609,52 @@ package electron.remote;
 	/**
 		Hooks a windows message. The `callback` is called when the message is received in the WndProc.
 	**/
+	@:electron_platforms(["Windows"])
 	function hookWindowMessage(message:Int, callback:haxe.Constraints.Function):Void;
 	/**
 		`true` or `false` depending on whether the message is hooked.
 	**/
+	@:electron_platforms(["Windows"])
 	function isWindowMessageHooked(message:Int):Bool;
 	/**
 		Unhook the window message.
 	**/
+	@:electron_platforms(["Windows"])
 	function unhookWindowMessage(message:Int):Void;
 	/**
 		Unhooks all of the window messages.
 	**/
+	@:electron_platforms(["Windows"])
 	function unhookAllWindowMessages():Void;
 	/**
 		Sets the pathname of the file the window represents, and the icon of the file will show in window's title bar.
 	**/
+	@:electron_platforms(["macOS"])
 	function setRepresentedFilename(filename:String):Void;
 	/**
 		The pathname of the file the window represents.
 	**/
+	@:electron_platforms(["macOS"])
 	function getRepresentedFilename():String;
 	/**
 		Specifies whether the window’s document has been edited, and the icon in title bar will become gray when set to `true`.
 	**/
+	@:electron_platforms(["macOS"])
 	function setDocumentEdited(edited:Bool):Void;
 	/**
 		Whether the window's document has been edited.
 	**/
+	@:electron_platforms(["macOS"])
 	function isDocumentEdited():Bool;
 	/**
 		Sets the `menu` as the window's menu bar.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function setMenu(menu:haxe.extern.EitherType<electron.remote.Menu, Dynamic>):Void;
 	/**
 		Remove the window's menu bar.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function removeMenu():Void;
 	/**
 		Sets progress value in progress bar. Valid range is [0, 1.0].
@@ -628,16 +668,19 @@ package electron.remote;
 	function setProgressBar(progress:Float, ?options:{ /**
 		Mode for the progress bar. Can be `none`, `normal`, `indeterminate`, `error` or `paused`.
 	**/
-	var mode : String; }):Void;
+	@:electron_platforms(["Windows"])
+	var mode : BaseWindowSetProgressBarOptionsMode; }):Void;
 	/**
 		Sets a 16 x 16 pixel overlay onto the current taskbar icon, usually used to convey some sort of application status or to passively notify the user.
 	**/
+	@:electron_platforms(["Windows"])
 	function setOverlayIcon(overlay:haxe.extern.EitherType<electron.NativeImage, Dynamic>, description:String):Void;
 	/**
 		Invalidates the window shadow so that it is recomputed based on the current window shape.
 		
 		`BaseWindow`s that are transparent can sometimes leave behind visual artifacts on macOS. This method can be used to clear these artifacts when, for example, performing an animation.
 	**/
+	@:electron_platforms(["macOS"])
 	function invalidateShadow():Void;
 	/**
 		Sets whether the window should have a shadow.
@@ -650,6 +693,7 @@ package electron.remote;
 	/**
 		Sets the opacity of the window. On Linux, does nothing. Out of bound number values are clamped to the [0, 1] range.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setOpacity(opacity:Float):Void;
 	/**
 		between 0.0 (fully transparent) and 1.0 (fully opaque). On Linux, always returns 1.
@@ -658,6 +702,8 @@ package electron.remote;
 	/**
 		Setting a window shape determines the area within the window where the system permits drawing and user interaction. Outside of the given region, no pixels will be drawn and no mouse events will be registered. Mouse events outside of the region will not be received by that window, but will fall through to whatever is behind the window.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
+	@:electron_experimental
 	function setShape(rects:Array<electron.Rectangle>):Void;
 	/**
 		Whether the buttons were added successfully
@@ -683,20 +729,24 @@ package electron.remote;
 		* `hidden` - The button is not shown to the user.
 		* `noninteractive` - The button is enabled but not interactive; no pressed button state is drawn. This value is intended for instances where the button is used in a notification.
 	**/
+	@:electron_platforms(["Windows"])
 	function setThumbarButtons(buttons:Array<electron.ThumbarButton>):Bool;
 	/**
 		Sets the region of the window to show as the thumbnail image displayed when hovering over the window in the taskbar. You can reset the thumbnail to be the entire window by specifying an empty region: `{ x: 0, y: 0, width: 0, height: 0 }`.
 	**/
+	@:electron_platforms(["Windows"])
 	function setThumbnailClip(region:electron.Rectangle):Void;
 	/**
 		Sets the toolTip that is displayed when hovering over the window thumbnail in the taskbar.
 	**/
+	@:electron_platforms(["Windows"])
 	function setThumbnailToolTip(toolTip:String):Void;
 	/**
 		Sets the properties for the window's taskbar button.
 		
 		> [!NOTE] `relaunchCommand` and `relaunchDisplayName` must always be set together. If one of those properties is not set, then neither will be used.
 	**/
+	@:electron_platforms(["Windows"])
 	function setAppDetails(options:{ /**
 		Window's App User Model ID. It has to be set, otherwise the other options will have no effect.
 	**/
@@ -730,57 +780,69 @@ package electron.remote;
 		
 		Examples:
 	**/
+	@:electron_platforms(["Windows"])
 	function setAccentColor(accentColor:haxe.extern.EitherType<Bool, haxe.extern.EitherType<String, Dynamic>>):Void;
 	/**
 		the system accent color and highlighting of active window border in Hex RGB format.
 		
 		If a color has been set for the window that differs from the system accent color, the window accent color will be returned. Otherwise, a boolean will be returned, with `true` indicating that the window uses the global system accent color, and `false` indicating that accent color highlighting is disabled for this window.
 	**/
+	@:electron_platforms(["Windows"])
 	function getAccentColor():haxe.extern.EitherType<String, Bool>;
 	/**
 		Changes window icon.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function setIcon(icon:haxe.extern.EitherType<electron.NativeImage, String>):Void;
 	/**
 		Sets whether the window traffic light buttons should be visible.
 	**/
+	@:electron_platforms(["macOS"])
 	function setWindowButtonVisibility(visible:Bool):Void;
 	/**
 		Sets whether the window menu bar should hide itself automatically. Once set the menu bar will only show when users press the single `Alt` key.
 		
 		If the menu bar is already visible, calling `setAutoHideMenuBar(true)` won't hide it immediately.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function setAutoHideMenuBar(hide:Bool):Void;
 	/**
 		Whether menu bar automatically hides itself.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function isMenuBarAutoHide():Bool;
 	/**
 		Sets whether the menu bar should be visible. If the menu bar is auto-hide, users can still bring up the menu bar by pressing the single `Alt` key.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function setMenuBarVisibility(visible:Bool):Void;
 	/**
 		Whether the menu bar is visible.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function isMenuBarVisible():Bool;
 	/**
 		whether the window is arranged via Snap.
 		
 		The window is snapped via buttons shown when the mouse is hovered over window maximize button, or by dragging it to the edges of the screen.
 	**/
+	@:electron_platforms(["Windows"])
 	function isSnapped():Bool;
 	/**
 		Sets whether the window should be visible on all workspaces.
 		
 		> [!NOTE] This API does nothing on Windows.
 	**/
+	@:electron_platforms(["macOS", "Linux"])
 	function setVisibleOnAllWorkspaces(visible:Bool, ?options:{ /**
 		Sets whether the window should be visible above fullscreen windows.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var visibleOnFullScreen : Bool; /**
 		Calling setVisibleOnAllWorkspaces will by default transform the process type between UIElementApplication and ForegroundApplication to ensure the correct behavior. However, this will hide the window and dock for a short time every time it is called. If your window is already of type UIElementApplication, you can bypass this transformation by passing true to skipTransformProcessType.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var skipTransformProcessType : Bool; }):Void;
 	/**
@@ -788,6 +850,7 @@ package electron.remote;
 		
 		> [!NOTE] This API always returns false on Windows.
 	**/
+	@:electron_platforms(["macOS", "Linux"])
 	function isVisibleOnAllWorkspaces():Bool;
 	/**
 		Makes the window ignore all mouse events.
@@ -797,6 +860,7 @@ package electron.remote;
 	function setIgnoreMouseEvents(ignore:Bool, ?options:{ /**
 		If true, forwards mouse move messages to Chromium, enabling mouse related events such as `mouseleave`. Only used when `ignore` is true. If `ignore` is false, forwarding is always disabled regardless of this value.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var forward : Bool; }):Void;
 	/**
@@ -806,20 +870,24 @@ package electron.remote;
 		
 		Protection also applies in a Windows remote session. A Remote Desktop client still shows the window to the remote user, but remote access software that works by capturing the desktop cannot. To leave windows unprotected in remote sessions instead, disable the `AllowWindowCaptureExclusionInRemoteSessions` Chromium feature at the start of your main script. `win.isContentProtected()` still returns `true` in that case.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setContentProtection(enable:Bool):Void;
 	/**
 		whether or not content protection is currently enabled.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function isContentProtected():Bool;
 	/**
 		Changes whether the window can be focused.
 		
 		On macOS it does not remove the focus from the window.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function setFocusable(focusable:Bool):Void;
 	/**
 		Whether the window can be focused.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	function isFocusable():Bool;
 	/**
 		Sets `parent` as current window's parent window, passing `null` will turn current window into a top-level window.
@@ -836,38 +904,47 @@ package electron.remote;
 	/**
 		Controls whether to hide cursor when typing.
 	**/
+	@:electron_platforms(["macOS"])
 	function setAutoHideCursor(autoHide:Bool):Void;
 	/**
 		Selects the previous tab when native tabs are enabled and there are other tabs in the window.
 	**/
+	@:electron_platforms(["macOS"])
 	function selectPreviousTab():Void;
 	/**
 		Selects the next tab when native tabs are enabled and there are other tabs in the window.
 	**/
+	@:electron_platforms(["macOS"])
 	function selectNextTab():Void;
 	/**
 		Shows or hides the tab overview when native tabs are enabled.
 	**/
+	@:electron_platforms(["macOS"])
 	function showAllTabs():Void;
 	/**
 		Merges all windows into one window with multiple tabs when native tabs are enabled and there is more than one open window.
 	**/
+	@:electron_platforms(["macOS"])
 	function mergeAllWindows():Void;
 	/**
 		Moves the current tab into a new window if native tabs are enabled and there is more than one tab in the current window.
 	**/
+	@:electron_platforms(["macOS"])
 	function moveTabToNewWindow():Void;
 	/**
 		Toggles the visibility of the tab bar if native tabs are enabled and there is only one tab in the current window.
 	**/
+	@:electron_platforms(["macOS"])
 	function toggleTabBar():Void;
 	/**
 		Adds a window as a tab on this window, after the tab for the window instance.
 	**/
+	@:electron_platforms(["macOS"])
 	function addTabbedWindow(baseWindow:electron.remote.BaseWindow):Void;
 	/**
 		Adds a vibrancy effect to the window. Passing `null` or an empty string will remove the vibrancy effect on the window.
 	**/
+	@:electron_platforms(["macOS"])
 	function setVibrancy(type:haxe.extern.EitherType<String, Dynamic>):Void;
 	/**
 		This method sets the browser window's system-drawn background material, including behind the non-client area.
@@ -876,26 +953,31 @@ package electron.remote;
 		
 		> [!NOTE] This method is only supported on Windows 11 22H2 and up.
 	**/
-	function setBackgroundMaterial(material:String):Void;
+	@:electron_platforms(["Windows"])
+	function setBackgroundMaterial(material:BaseWindowSetBackgroundMaterialMaterial):Void;
 	/**
 		Set a custom position for the traffic light buttons in frameless window. Passing `null` will reset the position to default.
 	**/
+	@:electron_platforms(["macOS"])
 	function setWindowButtonPosition(position:haxe.extern.EitherType<electron.Point, Dynamic>):Void;
 	/**
 		The custom position for the traffic light buttons in frameless window, `null` will be returned when there is no custom position.
 	**/
+	@:electron_platforms(["macOS"])
 	function getWindowButtonPosition():haxe.extern.EitherType<electron.Point, Dynamic>;
 	/**
 		Sets the touchBar layout for the current window. Specifying `null` or `undefined` clears the touch bar. This method only has an effect if the machine has a touch bar.
 		
 		> [!NOTE] The TouchBar API is currently experimental and may change or be removed in future Electron releases.
 	**/
+	@:electron_platforms(["macOS"])
 	function setTouchBar(touchBar:haxe.extern.EitherType<electron.remote.TouchBar, Dynamic>):Void;
 	/**
 		On a Window with Window Controls Overlay already enabled, this method updates the style of the title bar overlay.
 		
 		On Linux, the `symbolColor` is automatically calculated to have minimum accessible contrast to the `color` if not explicitly set.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	function setTitleBarOverlay(options:{ /**
 		The CSS color of the Window Controls Overlay when enabled.
 	**/
@@ -910,7 +992,7 @@ package electron.remote;
 	@:optional
 	var height : Int; }):Void;
 }
-enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the window is going to be closed. It's emitted before the `beforeunload` and `unload` event of the DOM. Calling `event.preventDefault()` will cancel the close.
 		
@@ -926,10 +1008,12 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 	/**
 		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Calling `event.preventDefault()` can delay the system shutdown, though it’s generally best to respect the user’s choice to end the session. However, you may choose to use it if ending the session puts the user at risk of losing data.
 	**/
+	@:electron_platforms(["Windows"])
 	var query_session_end : electron.remote.BaseWindowEvent<electron.WindowSessionEndEvent -> Void> = "query-session-end";
 	/**
 		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Once this event fires, there is no way to prevent the session from ending.
 	**/
+	@:electron_platforms(["Windows"])
 	var session_end : electron.remote.BaseWindowEvent<electron.WindowSessionEndEvent -> Void> = "session-end";
 	/**
 		Emitted when the window loses focus.
@@ -977,10 +1061,11 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		  * The value `bottom` is used to denote vertical resizing.
 		  * The value `right` is used to denote horizontal resizing.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var will_resize : electron.remote.BaseWindowEvent<(js.html.Event, electron.Rectangle, { /**
 		The edge of the window being dragged for resizing. Can be `bottom`, `left`, `right`, `top-left`, `top-right`, `bottom-left` or `bottom-right`.
 	**/
-	var edge : String; }) -> Void> = "will-resize";
+	var edge : BaseWindowWillResizeDetailsEdge; }) -> Void> = "will-resize";
 	/**
 		Emitted after the window has been resized.
 	**/
@@ -990,12 +1075,14 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		
 		This is usually emitted when the window has been resized manually. On macOS, resizing the window with `setBounds`/`setSize` and setting the `animate` parameter to `true` will also emit this event once resizing has finished.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var resized : electron.remote.BaseWindowEvent<() -> Void> = "resized";
 	/**
 		Emitted before the window is moved. On Windows, calling `event.preventDefault()` will prevent the window from being moved.
 		
 		Note that this is only emitted when the window is being moved manually. Moving the window with `setPosition`/`setBounds`/`center` will not emit this event.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var will_move : electron.remote.BaseWindowEvent<(js.html.Event, electron.Rectangle) -> Void> = "will-move";
 	/**
 		Emitted when the window is being moved to a new position.
@@ -1006,6 +1093,7 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		
 		> [!NOTE] On macOS, this event is an alias of `move`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var moved : electron.remote.BaseWindowEvent<() -> Void> = "moved";
 	/**
 		Emitted when the window enters a full-screen state.
@@ -1029,30 +1117,36 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		* `browser-backward`
 		* `browser-forward`
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	var app_command : electron.remote.BaseWindowEvent<(js.html.Event, String) -> Void> = "app-command";
 	/**
 		Emitted on 3-finger swipe. Possible directions are `up`, `right`, `down`, `left`.
 		
 		The method underlying this event is built to handle older macOS-style trackpad swiping, where the content on the screen doesn't move with the swipe. Most macOS trackpads are not configured to allow this kind of swiping anymore, so in order for it to emit properly the 'Swipe between pages' preference in `System Preferences > Trackpad > More Gestures` must be set to 'Swipe with two or three fingers'.
 	**/
+	@:electron_platforms(["macOS"])
 	var swipe : electron.remote.BaseWindowEvent<(js.html.Event, String) -> Void> = "swipe";
 	/**
 		Emitted on trackpad rotation gesture. Continually emitted until rotation gesture is ended. The `rotation` value on each emission is the angle in degrees rotated since the last emission. The last emitted event upon a rotation gesture will always be of value `0`. Counter-clockwise rotation values are positive, while clockwise ones are negative.
 	**/
+	@:electron_platforms(["macOS"])
 	var rotate_gesture : electron.remote.BaseWindowEvent<(js.html.Event, Float) -> Void> = "rotate-gesture";
 	/**
 		Emitted when the window opens a sheet.
 	**/
+	@:electron_platforms(["macOS"])
 	var sheet_begin : electron.remote.BaseWindowEvent<() -> Void> = "sheet-begin";
 	/**
 		Emitted when the window has closed a sheet.
 	**/
+	@:electron_platforms(["macOS"])
 	var sheet_end : electron.remote.BaseWindowEvent<() -> Void> = "sheet-end";
 	/**
 		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`.
 		
 		You must create a window in this handler in order for macOS tabbing to work as expected.
 	**/
+	@:electron_platforms(["macOS"])
 	var new_window_for_tab : electron.remote.BaseWindowEvent<() -> Void> = "new-window-for-tab";
 	/**
 		Emitted when the system context menu is triggered on the window, this is normally only triggered when the user right clicks on the non-client area of your window.  This is the window titlebar or any area you have declared as `-webkit-app-region: drag` in a frameless window.
@@ -1061,6 +1155,7 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		
 		To convert `point` to DIP, use `screen.screenToDipPoint(point)`.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	var system_context_menu : electron.remote.BaseWindowEvent<(js.html.Event, electron.Point) -> Void> = "system-context-menu";
 	/**
 		Emitted after the persisted window state has been restored.
@@ -1070,4 +1165,53 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		> [!NOTE] This event is only emitted when windowStatePersistence is enabled in BaseWindowConstructorOptions or in BrowserWindowConstructorOptions.
 	**/
 	var persisted_state_restored : electron.remote.BaseWindowEvent<() -> Void> = "persisted-state-restored";
+}
+enum abstract BaseWindowWillResizeDetailsEdge(String) from String to String {
+	var bottom = "bottom";
+	var left = "left";
+	var right = "right";
+	var top_left = "top-left";
+	var top_right = "top-right";
+	var bottom_left = "bottom-left";
+	var bottom_right = "bottom-right";
+}
+enum abstract BaseWindowSetAlwaysOnTopLevel(String) from String to String {
+	var normal = "normal";
+	var floating = "floating";
+	var torn_off_menu = "torn-off-menu";
+	var modal_panel = "modal-panel";
+	var main_menu = "main-menu";
+	var status = "status";
+	var pop_up_menu = "pop-up-menu";
+	var screen_saver = "screen-saver";
+	var dock = "dock";
+}
+enum abstract BaseWindowSetProgressBarOptionsMode(String) from String to String {
+	var none = "none";
+	var normal = "normal";
+	var indeterminate = "indeterminate";
+	var error = "error";
+	var paused = "paused";
+}
+enum abstract BaseWindowSetBackgroundMaterialMaterial(String) from String to String {
+	/**
+		Let the Desktop Window Manager (DWM) automatically decide the system-drawn backdrop material for this window. This is the default.
+	**/
+	var auto = "auto";
+	/**
+		Don't draw any system backdrop.
+	**/
+	var none = "none";
+	/**
+		Draw the backdrop material effect corresponding to a long-lived window.
+	**/
+	var mica = "mica";
+	/**
+		Draw the backdrop material effect corresponding to a transient window.
+	**/
+	var acrylic = "acrylic";
+	/**
+		Draw the backdrop material effect corresponding to a window with a tabbed title bar.
+	**/
+	var tabbed = "tabbed";
 }

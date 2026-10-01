@@ -20,19 +20,22 @@ package electron.remote;
 		
 		**Deprecated:** Use the new `serviceWorkers.getInfoFromVersionID` API.
 	**/
+	@:deprecated
 	function getFromVersionID(versionId:Float):electron.ServiceWorkerInfo;
 	/**
 		Instance of the service worker associated with the given version ID. If there's no associated version, or its running status has changed to 'stopped', this will return `undefined`.
 	**/
+	@:electron_experimental
 	function getWorkerFromVersionID(versionId:Float):haxe.extern.EitherType<electron.remote.ServiceWorkerMain, Dynamic>;
 	/**
 		Resolves with the service worker when it's started.
 		
 		Starts the service worker or does nothing if already running.
 	**/
-	function startWorkerForScope(scope:String):js.lib.Promise<Any>;
+	@:electron_experimental
+	function startWorkerForScope(scope:String):js.lib.Promise<electron.remote.ServiceWorkerMain>;
 }
-enum abstract ServiceWorkersEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ServiceWorkersEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when a service worker logs something to the console.
 	**/
@@ -45,7 +48,7 @@ enum abstract ServiceWorkersEvent<T:(haxe.Constraints.Function)>(js.node.events.
 	var versionId : Float; /**
 		The type of source for this message.  Can be `javascript`, `xml`, `network`, `console-api`, `storage`, `rendering`, `security`, `deprecation`, `worker`, `violation`, `intervention`, `recommendation` or `other`.
 	**/
-	var source : String; /**
+	var source : ServiceWorkersConsoleMessageMessageDetailsSource; /**
 		The log level, from 0 to 3. In order it matches `verbose`, `info`, `warning` and `error`.
 	**/
 	var level : Float; /**
@@ -65,5 +68,21 @@ enum abstract ServiceWorkersEvent<T:(haxe.Constraints.Function)>(js.node.events.
 	/**
 		Emitted when a service worker's running status has changed.
 	**/
+	@:electron_experimental
 	var running_status_changed : electron.remote.ServiceWorkersEvent<js.html.Event -> Void> = "running-status-changed";
+}
+enum abstract ServiceWorkersConsoleMessageMessageDetailsSource(String) from String to String {
+	var javascript = "javascript";
+	var xml = "xml";
+	var network = "network";
+	var console_api = "console-api";
+	var storage = "storage";
+	var rendering = "rendering";
+	var security = "security";
+	var deprecation = "deprecation";
+	var worker = "worker";
+	var violation = "violation";
+	var intervention = "intervention";
+	var recommendation = "recommendation";
+	var other = "other";
 }

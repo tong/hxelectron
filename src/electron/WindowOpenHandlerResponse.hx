@@ -6,7 +6,7 @@ typedef WindowOpenHandlerResponse = {
 	/**
 		Can be `allow` or `deny`. Controls whether new window should be created.
 	**/
-	var action : String;
+	var action : WindowOpenHandlerResponseAction;
 	/**
 		Allows customization of the created window.
 	**/
@@ -22,4 +22,8 @@ typedef WindowOpenHandlerResponse = {
 	**/
 	@:optional
 	var createWindow : Dynamic;
+}
+enum abstract WindowOpenHandlerResponseAction(String) from String to String {
+	var allow = "allow";
+	var deny = "deny";
 }

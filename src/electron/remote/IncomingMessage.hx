@@ -20,7 +20,7 @@ package electron.remote;
 		* For duplicate `cookie` headers, the values are joined together with '; '.
 		* For all other headers, the values are joined together with ', '.
 	**/
-	var headers : Dynamic;
+	var headers : haxe.DynamicAccess<String>;
 	/**
 		A `string` indicating the HTTP protocol version number. Typical values are '1.0' or '1.1'. Additionally `httpVersionMajor` and `httpVersionMinor` are two Integer-valued readable properties that return respectively the HTTP major and minor version numbers.
 	**/
@@ -38,7 +38,7 @@ package electron.remote;
 	**/
 	var rawHeaders : Array<String>;
 }
-enum abstract IncomingMessageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract IncomingMessageEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		The `data` event is the usual method of transferring response data into applicative code.
 	**/

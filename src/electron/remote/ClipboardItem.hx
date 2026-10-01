@@ -20,13 +20,13 @@ package electron.remote;
 		A `string[]` property — the MIME types of the data carried by this entry. For a constructed `ClipboardItem` these are the keys passed to the constructor; for an item returned by `clipboard.read()` these are the MIME types the platform clipboard currently makes available.
 	**/
 	var types : Array<String>;
-	function new(items:Dynamic):Void;
+	function new(items:haxe.DynamicAccess<haxe.extern.EitherType<String, haxe.extern.EitherType<electron.ClipboardBookmark, haxe.extern.EitherType<js.html.Blob, js.lib.Promise<haxe.extern.EitherType<js.html.Blob, String>>>>>>):Void;
 	/**
 		Resolves with a ClipboardBookmark when a bookmark is available in the clipboard. Rejects when a bookmark is not available in the clipboard.
 	**/
-	@:overload(function(type:String):js.lib.Promise<Any> { })
-	function getType(bookmark:String):js.lib.Promise<Any>;
+	@:overload(function(type:String):js.lib.Promise<Dynamic> { })
+	function getType(bookmark:String):js.lib.Promise<electron.ClipboardBookmark>;
 }
-enum abstract ClipboardItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ClipboardItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

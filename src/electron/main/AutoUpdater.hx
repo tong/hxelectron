@@ -55,14 +55,17 @@ package electron.main;
 	var url : String; /**
 		HTTP request headers.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
-	var headers : Dynamic; /**
+	var headers : haxe.DynamicAccess<String>; /**
 		Can be `json` or `default`, see the Squirrel.Mac README for more information.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
-	var serverType : String; /**
+	var serverType : AutoUpdaterSetFeedURLOptionsServerType; /**
 		If `true`, allows downgrades to older versions for MSIX packages. Defaults to `false`.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var allowAnyVersion : Bool; }):Void;
 	/**
@@ -83,8 +86,14 @@ package electron.main;
 		> [!NOTE] It is not strictly necessary to call this function to apply an update, as a successfully downloaded update will always be applied the next time the application starts.
 	**/
 	static function quitAndInstall():Void;
+	static function on<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function once<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function addListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function off<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeAllListeners<T:(haxe.Constraints.Function)>(?event:js.node.events.EventEmitter.Event<T>):Void;
 }
-enum abstract AutoUpdaterEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract AutoUpdaterEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when there is an error while updating.
 	**/
@@ -115,4 +124,8 @@ enum abstract AutoUpdaterEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		When this API is called, the `before-quit` event is not emitted before all windows are closed. As a result you should listen to this event if you wish to perform actions before the windows are closed while a process is quitting, as well as listening to `before-quit`.
 	**/
 	var before_quit_for_update : electron.main.AutoUpdaterEvent<() -> Void> = "before-quit-for-update";
+}
+enum abstract AutoUpdaterSetFeedURLOptionsServerType(String) from String to String {
+	var json = "json";
+	var default_ = "default";
 }

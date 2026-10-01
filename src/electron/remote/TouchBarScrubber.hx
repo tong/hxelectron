@@ -18,7 +18,7 @@ package electron.remote;
 		* `outline` - Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
 		* `none` - Removes all styles.
 	**/
-	var selectedStyle : String;
+	var selectedStyle : TouchBarScrubberSelectedStyle;
 	/**
 		A `string` representing the style that selected items in the scrubber should have. This style is overlaid on top of the scrubber item instead of being placed behind it. Updating this value immediately updates the control in the touch bar. Possible values:
 		
@@ -26,7 +26,7 @@ package electron.remote;
 		* `outline` - Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
 		* `none` - Removes all styles.
 	**/
-	var overlayStyle : String;
+	var overlayStyle : TouchBarScrubberOverlayStyle;
 	/**
 		A `boolean` representing whether to show the left / right selection arrows in this scrubber. Updating this value immediately updates the control in the touch bar.
 	**/
@@ -37,7 +37,7 @@ package electron.remote;
 		* `fixed` - Maps to `NSScrubberModeFixed`.
 		* `free` - Maps to `NSScrubberModeFree`.
 	**/
-	var mode : String;
+	var mode : TouchBarScrubberMode;
 	/**
 		A `boolean` representing whether this scrubber is continuous or not. Updating this value immediately updates the control in the touch bar.
 	**/
@@ -57,11 +57,11 @@ package electron.remote;
 		Selected item style. Can be `background`, `outline` or `none`. Defaults to `none`.
 	**/
 	@:optional
-	var selectedStyle : String; /**
+	var selectedStyle : TouchBarScrubberSelectedStyle; /**
 		Selected overlay item style. Can be `background`, `outline` or `none`. Defaults to `none`.
 	**/
 	@:optional
-	var overlayStyle : String; /**
+	var overlayStyle : TouchBarScrubberOverlayStyle; /**
 		Whether to show arrow buttons. Defaults to `false` and is only shown if `items` is non-empty.
 	**/
 	@:optional
@@ -69,12 +69,50 @@ package electron.remote;
 		Can be `fixed` or `free`. The default is `free`.
 	**/
 	@:optional
-	var mode : String; /**
+	var mode : TouchBarScrubberMode; /**
 		Defaults to `true`.
 	**/
 	@:optional
 	var continuous : Bool; }):Void;
 }
-enum abstract TouchBarScrubberEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarScrubberEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract TouchBarScrubberSelectedStyle(String) from String to String {
+	/**
+		Maps to `[NSScrubberSelectionStyle roundedBackgroundStyle]`.
+	**/
+	var background = "background";
+	/**
+		Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
+	**/
+	var outline = "outline";
+	/**
+		Removes all styles.
+	**/
+	var none = "none";
+}
+enum abstract TouchBarScrubberOverlayStyle(String) from String to String {
+	/**
+		Maps to `[NSScrubberSelectionStyle roundedBackgroundStyle]`.
+	**/
+	var background = "background";
+	/**
+		Maps to `[NSScrubberSelectionStyle outlineOverlayStyle]`.
+	**/
+	var outline = "outline";
+	/**
+		Removes all styles.
+	**/
+	var none = "none";
+}
+enum abstract TouchBarScrubberMode(String) from String to String {
+	/**
+		Maps to `NSScrubberModeFixed`.
+	**/
+	var fixed = "fixed";
+	/**
+		Maps to `NSScrubberModeFree`.
+	**/
+	var free = "free";
 }

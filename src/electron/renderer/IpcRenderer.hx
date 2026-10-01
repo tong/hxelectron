@@ -99,12 +99,12 @@ package electron.renderer;
 		
 		For more information on using `MessagePort` and `MessageChannel`, see the MDN documentation.
 	**/
-	static function postMessage(channel:String, message:Any, ?transfer:Array<MessagePort>):Void;
+	static function postMessage(channel:String, message:Any, ?transfer:Array<electron.MessagePort>):Void;
 	/**
 		Like `ipcRenderer.send` but the event will be sent to the `<webview>` element in the host page instead of the main process.
 	**/
 	static function sendToHost(channel:String, args:haxe.extern.Rest<Any>):Void;
 }
-enum abstract IpcRendererEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract IpcRendererEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

@@ -8,7 +8,7 @@ typedef TraceConfig = {
 		Can be `record-until-full`, `record-continuously`, `record-as-much-as-possible` or `trace-to-console`. Defaults to `record-until-full`.
 	**/
 	@:optional
-	var recording_mode : String;
+	var recording_mode : TraceConfigRecordingMode;
 	/**
 		maximum size of the trace recording buffer in kilobytes. Defaults to 100MB.
 	**/
@@ -48,5 +48,11 @@ typedef TraceConfig = {
 		if the `disabled-by-default-memory-infra` category is enabled, this contains optional additional configuration for data collection. See the Chromium memory-infra docs for more information.
 	**/
 	@:optional
-	var memory_dump_config : Dynamic;
+	var memory_dump_config : haxe.DynamicAccess<Any>;
+}
+enum abstract TraceConfigRecordingMode(String) from String to String {
+	var record_until_full = "record-until-full";
+	var record_continuously = "record-continuously";
+	var record_as_much_as_possible = "record-as-much-as-possible";
+	var trace_to_console = "trace-to-console";
 }

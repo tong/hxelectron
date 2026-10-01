@@ -6,7 +6,7 @@ typedef PreloadScriptRegistration = {
 	/**
 		Context type where the preload script will be executed. Possible values include `frame` or `service-worker`.
 	**/
-	var type : String;
+	var type : PreloadScriptRegistrationType;
 	/**
 		Unique ID of preload script. Defaults to a random UUID.
 	**/
@@ -16,4 +16,8 @@ typedef PreloadScriptRegistration = {
 		Path of the script file. Must be an absolute path.
 	**/
 	var filePath : String;
+}
+enum abstract PreloadScriptRegistrationType(String) from String to String {
+	var frame = "frame";
+	var service_worker = "service-worker";
 }

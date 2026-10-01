@@ -27,7 +27,7 @@ typedef ProtocolResponse = {
 		An object containing the response headers. The keys must be string, and values must be either string or Array of string.
 	**/
 	@:optional
-	var headers : Dynamic;
+	var headers : haxe.DynamicAccess<String>;
 	/**
 		The response body. When returning stream as response, this is a Node.js readable stream representing the response body. When returning `Buffer` as response, this is a `Buffer`. When returning `string` as response, this is a `string`. This is ignored for other types of responses.
 	**/

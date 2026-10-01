@@ -158,6 +158,7 @@ package electron.remote;
 		* Notification object was garbage collected
 		* Notification object is still in memory (callback is invoked in addition to instance events)
 	**/
+	@:electron_platforms(["Windows"])
 	static function handleActivation(callback:haxe.Constraints.Function):Void;
 	/**
 		Resolves with an array of `Notification` objects representing all delivered notifications still present in Notification Center.
@@ -170,30 +171,37 @@ package electron.remote;
 		
 		> [!NOTE] Unlike notifications created with `new Notification()`, notifications returned by `getHistory()` will remain visible in Notification Center when the object is garbage collected. Calling `show()` on a restored notification will remove the original from Notification Center and post a new one with the same properties.
 	**/
-	static function getHistory():js.lib.Promise<Any>;
+	@:electron_platforms(["macOS"])
+	static function getHistory():js.lib.Promise<Array<electron.remote.Notification>>;
 	/**
 		Removes one or more delivered notifications from Notification Center by their identifier(s).
 	**/
+	@:electron_platforms(["macOS"])
 	static function remove(id:String):Void;
 	/**
 		Removes all of the app's delivered notifications from Notification Center.
 	**/
+	@:electron_platforms(["macOS"])
 	static function removeAll():Void;
 	/**
 		Removes all delivered notifications with the given `groupId` from Notification Center.
 	**/
+	@:electron_platforms(["macOS"])
 	static function removeGroup(groupId:String):Void;
 	/**
 		A `string` property representing the unique identifier of the notification. This is set at construction time — either from the `id` option or as a generated UUID if none was provided.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var id : String;
 	/**
 		A `string` property representing the group identifier of the notification. Notifications with the same `groupId` will be visually grouped together in Notification Center (macOS) or Action Center (Windows).
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var groupId : String;
 	/**
 		A `string` property representing the title of the notification group header.
 	**/
+	@:electron_platforms(["Windows"])
 	var groupTitle : String;
 	/**
 		A `string` property representing the title of the notification.
@@ -232,13 +240,15 @@ package electron.remote;
 		
 		Default is 'low' - see NotifyUrgency for more information.
 	**/
-	var urgency : String;
+	@:electron_platforms(["Linux"])
+	var urgency : NotificationUrgency;
 	/**
 		A `string` property representing the type of timeout duration for the notification. Can be 'default' or 'never'.
 		
 		If `timeoutType` is set to 'never', the notification never expires. It stays open until closed by the calling API or the user.
 	**/
-	var timeoutType : String;
+	@:electron_platforms(["Windows", "Linux"])
+	var timeoutType : NotificationTimeoutType;
 	/**
 		A `NotificationAction[]` property representing the actions of the notification.
 	**/
@@ -246,18 +256,22 @@ package electron.remote;
 	/**
 		A `string` property representing the custom Toast XML of the notification.
 	**/
+	@:electron_platforms(["Windows"])
 	var toastXml : String;
 	function new(?options:{ /**
 		A unique identifier for the notification. On macOS, maps to `UNNotificationRequest`'s `identifier` property. On Windows, maps to the toast notification's `Tag` property. Defaults to a random UUID if not provided or if an empty string is passed. Use this identifier with `Notification.remove()` to remove specific delivered notifications, or with `Notification.getHistory()` to identify them.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var id : String; /**
 		A string identifier used to visually group notifications together in Notification Center / Action Center. On macOS, maps to `UNNotificationContent`'s `threadIdentifier` property. On Windows, maps to the toast notification's `Group` property. Use this identifier with `Notification.removeGroup()` to remove all notifications in a group.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var groupId : String; /**
 		A title for the notification group header. When both `groupId` and `groupTitle` are specified, Windows will display a header above the notification that groups related notifications together. Maps to the toast notification's `header` element.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var groupTitle : String; /**
 		A title for the notification, which will be displayed at the top of the notification window when it is shown.
@@ -266,6 +280,7 @@ package electron.remote;
 	var title : String; /**
 		A subtitle for the notification, which will be displayed below the title.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var subtitle : String; /**
 		The body text of the notification, which will be displayed below the title or subtitle.
@@ -282,34 +297,42 @@ package electron.remote;
 	var icon : haxe.extern.EitherType<String, electron.NativeImage>; /**
 		Whether or not to add an inline reply option to the notification.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var hasReply : Bool; /**
 		The timeout duration of the notification. Can be 'default' or 'never'.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
-	var timeoutType : String; /**
+	var timeoutType : NotificationTimeoutType; /**
 		The placeholder to write in the inline reply input field.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var replyPlaceholder : String; /**
 		The name of the sound file to play when the notification is shown.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var sound : String; /**
 		The urgency level of the notification. Can be 'normal', 'critical', or 'low'.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
-	var urgency : String; /**
+	var urgency : NotificationUrgency; /**
 		Actions to add to the notification. Please read the available actions and limitations in the `NotificationAction` documentation.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var actions : Array<electron.NotificationAction>; /**
 		A custom title for the close button of an alert. An empty string will cause the default localized text to be used.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var closeButtonText : String; /**
 		A custom description of the Notification on Windows superseding all properties above. Provides full customization of design and behavior of the notification.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var toastXml : String; }):Void;
 	/**
@@ -327,7 +350,7 @@ package electron.remote;
 	**/
 	function close():Void;
 }
-enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the notification is shown to the user. Note that this event can be fired multiple times as a notification can be shown multiple times through the `show()` method.
 	**/
@@ -347,10 +370,22 @@ enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 	/**
 		Emitted when the user clicks the "Reply" button on a notification with `hasReply: true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var reply : electron.remote.NotificationEvent<(js.html.Event, String) -> Void> = "reply";
+	@:electron_platforms(["macOS", "Windows"])
 	var action : electron.remote.NotificationEvent<(js.html.Event, Float, Float) -> Void> = "action";
 	/**
 		Emitted when an error is encountered while creating and showing the native notification.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var failed : electron.remote.NotificationEvent<(js.html.Event, String) -> Void> = "failed";
+}
+enum abstract NotificationUrgency(String) from String to String {
+	var normal = "normal";
+	var critical = "critical";
+	var low = "low";
+}
+enum abstract NotificationTimeoutType(String) from String to String {
+	var default_ = "default";
+	var never = "never";
 }

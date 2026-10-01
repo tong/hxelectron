@@ -48,6 +48,7 @@ package electron;
 	var productName : String; /**
 		Deprecated alias for `{ globalExtra: { _companyName: ... } }`.
 	**/
+	@:deprecated
 	@:optional
 	var companyName : String; /**
 		Whether crash reports should be sent to the server. If false, crash reports will be collected and stored in the crashes directory, but not uploaded. Default is `true`.
@@ -56,6 +57,7 @@ package electron;
 	var uploadToServer : Bool; /**
 		If true, crashes generated in the main process will not be forwarded to the system crash handler. This option has no effect on Windows. Default is `false`.
 	**/
+	@:electron_platforms(["macOS", "Linux"])
 	@:optional
 	var ignoreSystemCrashHandler : Bool; /**
 		If true, limit the number of crashes uploaded to 1/hour. Crash reports over the limit are not uploaded, but are still stored on disk. Default is `false`.
@@ -69,11 +71,11 @@ package electron;
 		Extra string key/value annotations that will be sent along with crash reports that are generated in the main process. Only string values are supported. Crashes generated in child processes will not include these extra parameters. To add extra parameters to crash reports generated from child processes, call `addExtraParameter` from the child process.
 	**/
 	@:optional
-	var extra : Dynamic; /**
+	var extra : haxe.DynamicAccess<String>; /**
 		Extra string key/value annotations that will be sent along with any crash reports generated in any process. These annotations cannot be changed once the crash reporter has been started. If a key is present in both the global extra parameters and the process-specific extra parameters, then the global one will take precedence. By default, `productName` and the app version are included, as well as the Electron version. Global extra parameters are not returned by `getParameters()`.
 	**/
 	@:optional
-	var globalExtra : Dynamic; }):Void;
+	var globalExtra : haxe.DynamicAccess<String>; }):Void;
 	/**
 		The date and ID of the crash report with the most recent upload time, from the list returned by `getUploadedReports()`. If there are no crash reports at all, `null` is returned.
 		
@@ -117,8 +119,8 @@ package electron;
 	/**
 		The current 'extra' parameters of the crash reporter in the calling process, as set with the `extra` option and `addExtraParameter`. Parameters set with the `globalExtra` option are not included.
 	**/
-	static function getParameters():Dynamic;
+	static function getParameters():haxe.DynamicAccess<String>;
 }
-enum abstract CrashReporterEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract CrashReporterEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

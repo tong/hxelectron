@@ -36,7 +36,7 @@ package electron.remote;
 		Filters cookies by httpOnly.
 	**/
 	@:optional
-	var httpOnly : Bool; }):js.lib.Promise<Any>;
+	var httpOnly : Bool; }):js.lib.Promise<Array<electron.Cookie>>;
 	/**
 		A promise which resolves when the cookie has been set.
 		
@@ -77,13 +77,13 @@ package electron.remote;
 		The Same Site policy to apply to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.  Default is `lax`.
 	**/
 	@:optional
-	var sameSite : String; }):js.lib.Promise<Any>;
+	var sameSite : CookiesSetDetailsSameSite; }):js.lib.Promise<Void>;
 	/**
 		A promise which resolves when the cookie has been removed.
 		
 		Removes the cookies matching `url` and `name`.
 	**/
-	function remove(url:String, name:String):js.lib.Promise<Any>;
+	function remove(url:String, name:String):js.lib.Promise<Void>;
 	/**
 		A promise which resolves when the cookie store has been flushed.
 		
@@ -93,11 +93,51 @@ package electron.remote;
 		
 		Calling this method can cause the cookie to be written to disk immediately.
 	**/
-	function flushStore():js.lib.Promise<Any>;
+	function flushStore():js.lib.Promise<Void>;
 }
-enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when a cookie is changed because it was added, edited, removed, or expired.
 	**/
-	var changed : electron.remote.CookiesEvent<(js.html.Event, electron.Cookie, String, Bool) -> Void> = "changed";
+	var changed : electron.remote.CookiesEvent<(js.html.Event, electron.Cookie, CookiesChangedCause, Bool) -> Void> = "changed";
+}
+enum abstract CookiesChangedCause(String) from String to String {
+	/**
+		The cookie was inserted.
+	**/
+	var inserted = "inserted";
+	/**
+		The newly inserted cookie overwrote a cookie but did not result in any change. For example, inserting an identical cookie will produce this cause.
+	**/
+	var inserted_no_change_overwrite = "inserted-no-change-overwrite";
+	/**
+		The newly inserted cookie overwrote a cookie but did not result in any value change, but it's web observable (e.g. updates the expiry).
+	**/
+	var inserted_no_value_change_overwrite = "inserted-no-value-change-overwrite";
+	/**
+		The cookie was deleted directly by a consumer's action.
+	**/
+	var explicit = "explicit";
+	/**
+		The cookie was automatically removed due to an insert operation that overwrote it.
+	**/
+	var overwrite = "overwrite";
+	/**
+		The cookie was automatically removed as it expired.
+	**/
+	var expired = "expired";
+	/**
+		The cookie was automatically evicted during garbage collection.
+	**/
+	var evicted = "evicted";
+	/**
+		The cookie was overwritten with an already-expired expiration date.
+	**/
+	var expired_overwrite = "expired-overwrite";
+}
+enum abstract CookiesSetDetailsSameSite(String) from String to String {
+	var unspecified = "unspecified";
+	var no_restriction = "no_restriction";
+	var lax = "lax";
+	var strict = "strict";
 }

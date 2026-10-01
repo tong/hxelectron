@@ -21,7 +21,7 @@ package electron.remote;
 	function loadExtension(path:String, ?options:{ /**
 		Whether to allow the extension to read local files over `file://` protocol and inject content scripts into `file://` pages. This is required e.g. for loading DevTools extensions on `file://` URLs. Defaults to false.
 	**/
-	var allowFileAccess : Bool; }):js.lib.Promise<Any>;
+	var allowFileAccess : Bool; }):js.lib.Promise<electron.Extension>;
 	/**
 		Unloads an extension.
 		
@@ -41,7 +41,7 @@ package electron.remote;
 	**/
 	function getAllExtensions():Array<electron.Extension>;
 }
-enum abstract ExtensionsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ExtensionsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted after an extension is loaded. This occurs whenever an extension is added to the "enabled" set of extensions. This includes:
 		

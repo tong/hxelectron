@@ -16,5 +16,19 @@ typedef WebRequestFilter = {
 		Array of types that will be used to filter out the requests that do not match the types. When not specified, all types will be matched. Can be `mainFrame`, `subFrame`, `stylesheet`, `script`, `image`, `font`, `object`, `xhr`, `ping`, `cspReport`, `media` or `webSocket`.
 	**/
 	@:optional
-	var types : Array<String>;
+	var types : Array<WebRequestFilterTypes>;
+}
+enum abstract WebRequestFilterTypes(String) from String to String {
+	var mainFrame = "mainFrame";
+	var subFrame = "subFrame";
+	var stylesheet = "stylesheet";
+	var script = "script";
+	var image = "image";
+	var font = "font";
+	var object = "object";
+	var xhr = "xhr";
+	var ping = "ping";
+	var cspReport = "cspReport";
+	var media = "media";
+	var webSocket = "webSocket";
 }

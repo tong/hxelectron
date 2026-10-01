@@ -49,5 +49,11 @@ typedef Cookie = {
 	/**
 		The Same Site policy applied to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.
 	**/
-	var sameSite : String;
+	var sameSite : CookieSameSite;
+}
+enum abstract CookieSameSite(String) from String to String {
+	var unspecified = "unspecified";
+	var no_restriction = "no_restriction";
+	var lax = "lax";
+	var strict = "strict";
 }

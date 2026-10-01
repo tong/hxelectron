@@ -10,5 +10,11 @@ typedef ProductSubscriptionPeriod = {
 	/**
 		The increment of time that a subscription period is specified in. Can be `day`, `week`, `month`, `year`.
 	**/
-	var unit : String;
+	var unit : ProductSubscriptionPeriodUnit;
+}
+enum abstract ProductSubscriptionPeriodUnit(String) from String to String {
+	var day = "day";
+	var week = "week";
+	var month = "month";
+	var year = "year";
 }

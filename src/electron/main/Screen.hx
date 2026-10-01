@@ -61,7 +61,7 @@ package electron.main;
 	* **Device-independent pixel (DIP) points** are virtualized screen points scaled based on the DPI (dots per inch) of the display.
 	@see https://electronjs.org/docs/api/screen
 **/
-@:native('require(\"electron\").screen') extern class Screen extends js.node.events.EventEmitter<electron.main.Screen> {
+@:jsRequire("electron", "screen") extern class Screen extends js.node.events.EventEmitter<electron.main.Screen> {
 	/**
 		The current absolute position of the mouse pointer.
 		
@@ -91,23 +91,33 @@ package electron.main;
 		
 		Not currently supported on Wayland - if used there it will return the point passed in with no changes.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	static function screenToDipPoint(point:electron.Point):electron.Point;
 	/**
 		Converts a screen DIP point to a screen physical point. The DPI scale is performed relative to the display containing the DIP point.
 		
 		Not currently supported on Wayland.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	static function dipToScreenPoint(point:electron.Point):electron.Point;
 	/**
 		Converts a screen physical rect to a screen DIP rect. The DPI scale is performed relative to the display nearest to `window`. If `window` is null, scaling will be performed to the display nearest to `rect`.
 	**/
+	@:electron_platforms(["Windows"])
 	static function screenToDipRect(window:haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>, rect:electron.Rectangle):electron.Rectangle;
 	/**
 		Converts a screen DIP rect to a screen physical rect. The DPI scale is performed relative to the display nearest to `window`. If `window` is null, scaling will be performed to the display nearest to `rect`.
 	**/
+	@:electron_platforms(["Windows"])
 	static function dipToScreenRect(window:haxe.extern.EitherType<electron.main.BrowserWindow, Dynamic>, rect:electron.Rectangle):electron.Rectangle;
+	static function on<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function once<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function addListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function off<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeAllListeners<T:(haxe.Constraints.Function)>(?event:js.node.events.EventEmitter.Event<T>):Void;
 }
-enum abstract ScreenEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ScreenEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when `newDisplay` has been added.
 	**/

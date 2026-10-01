@@ -15,6 +15,7 @@ typedef MemoryInfo = {
 	/**
 		The amount of memory not shared by other processes, such as JS heap or HTML content.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var privateBytes : Int;
 }

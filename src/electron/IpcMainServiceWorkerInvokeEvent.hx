@@ -6,7 +6,7 @@ typedef IpcMainServiceWorkerInvokeEvent = {
 	/**
 		Possible values include `service-worker`.
 	**/
-	var type : String;
+	var type : IpcMainServiceWorkerInvokeEventType;
 	/**
 		The service worker that sent this message
 	**/
@@ -19,4 +19,7 @@ typedef IpcMainServiceWorkerInvokeEvent = {
 		The `Session` instance with which the event is associated.
 	**/
 	var session : electron.main.Session;
+}
+enum abstract IpcMainServiceWorkerInvokeEventType(String) from String to String {
+	var service_worker = "service-worker";
 }

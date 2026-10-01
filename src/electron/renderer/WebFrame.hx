@@ -37,6 +37,7 @@ package electron.renderer;
 		
 		**Deprecated:** Use the new `webFrame.frameToken` API.
 	**/
+	@:deprecated
 	static var routingId : Int;
 	/**
 		A `string` representing the unique frame token in the current renderer process. Distinct WebFrame instances that refer to the same underlying frame will have the same `frameToken`.
@@ -89,7 +90,7 @@ package electron.renderer;
 		Can be 'user' or 'author'. Sets the cascade origin of the inserted stylesheet. Default is 'author'.
 	**/
 	@:optional
-	var cssOrigin : String; }):String;
+	var cssOrigin : WebFrameInsertCSSOptionsCssOrigin; }):String;
 	/**
 		Removes the inserted CSS from the current web page. The stylesheet is identified by its key, which is returned from `webFrame.insertCSS(css)`.
 	**/
@@ -144,7 +145,7 @@ package electron.renderer;
 		
 		This will generate:
 	**/
-	static function getResourceUsage():Any;
+	static function getResourceUsage():{ var images : electron.MemoryUsageDetails; var scripts : electron.MemoryUsageDetails; var cssStyleSheets : electron.MemoryUsageDetails; var xslStyleSheets : electron.MemoryUsageDetails; var fonts : electron.MemoryUsageDetails; var other : electron.MemoryUsageDetails; };
 	/**
 		Attempts to free memory that is no longer being used (like images from a previous navigation).
 		
@@ -164,6 +165,7 @@ package electron.renderer;
 		
 		**Deprecated:** Use the new `webFrame.findFrameByToken` API.
 	**/
+	@:deprecated
 	static function findFrameByRoutingId(routingId:Int):haxe.extern.EitherType<electron.renderer.WebFrame, Dynamic>;
 	/**
 		that has the supplied `frameToken`, `null` if not found.
@@ -178,6 +180,10 @@ package electron.renderer;
 	**/
 	static function getWordSuggestions(word:String):Array<String>;
 }
-enum abstract WebFrameEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract WebFrameEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract WebFrameInsertCSSOptionsCssOrigin(String) from String to String {
+	var user = "user";
+	var author = "author";
 }

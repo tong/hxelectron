@@ -150,7 +150,7 @@ package electron.remote;
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
-	var baseURLForDataURL : String; }):js.lib.Promise<Any>;
+	var baseURLForDataURL : String; }):js.lib.Promise<Void>;
 	/**
 		the promise will resolve when the page has finished loading (see `did-finish-load`), and rejects if the page fails to load (see `did-fail-load`).
 		
@@ -162,7 +162,7 @@ package electron.remote;
 		Passed to `url.format()`.
 	**/
 	@:optional
-	var query : Dynamic; /**
+	var query : haxe.DynamicAccess<String>; /**
 		Passed to `url.format()`.
 	**/
 	@:optional
@@ -170,7 +170,7 @@ package electron.remote;
 		Passed to `url.format()`.
 	**/
 	@:optional
-	var hash : String; }):js.lib.Promise<Any>;
+	var hash : String; }):js.lib.Promise<Void>;
 	/**
 		Initiates a download of the resource at `url` without navigating. The `will-download` event of `session` will be triggered.
 	**/
@@ -178,7 +178,7 @@ package electron.remote;
 		HTTP request headers.
 	**/
 	@:optional
-	var headers : Dynamic; }):Void;
+	var headers : haxe.DynamicAccess<String>; }):Void;
 	/**
 		The URL of the current web page.
 	**/
@@ -237,48 +237,56 @@ package electron.remote;
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.canGoBack` API.
 	**/
+	@:deprecated
 	function canGoBack():Bool;
 	/**
 		Whether the browser can go forward to next web page.
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.canGoForward` API.
 	**/
+	@:deprecated
 	function canGoForward():Bool;
 	/**
 		Whether the web page can go to `offset`.
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.canGoToOffset` API.
 	**/
+	@:deprecated
 	function canGoToOffset(offset:Int):Bool;
 	/**
 		Clears the navigation history.
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.clear` API.
 	**/
+	@:deprecated
 	function clearHistory():Void;
 	/**
 		Makes the browser go back a web page.
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.goBack` API.
 	**/
+	@:deprecated
 	function goBack():Void;
 	/**
 		Makes the browser go forward a web page.
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.goForward` API.
 	**/
+	@:deprecated
 	function goForward():Void;
 	/**
 		Navigates browser to the specified absolute web page index.
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.goToIndex` API.
 	**/
+	@:deprecated
 	function goToIndex(index:Int):Void;
 	/**
 		Navigates to the specified offset from the "current entry".
 		
 		**Deprecated:** Should use the new `contents.navigationHistory.goToOffset` API.
 	**/
+	@:deprecated
 	function goToOffset(offset:Int):Void;
 	/**
 		Whether the renderer process has crashed.
@@ -307,13 +315,13 @@ package electron.remote;
 		Can be 'user' or 'author'. Sets the cascade origin of the inserted stylesheet. Default is 'author'.
 	**/
 	@:optional
-	var cssOrigin : String; }):js.lib.Promise<Any>;
+	var cssOrigin : WebContentsInsertCSSOptionsCssOrigin; }):js.lib.Promise<String>;
 	/**
 		Resolves if the removal was successful.
 		
 		Removes the inserted CSS from the current web page. The stylesheet is identified by its key, which is returned from `contents.insertCSS(css)`.
 	**/
-	function removeInsertedCSS(key:String):js.lib.Promise<Any>;
+	function removeInsertedCSS(key:String):js.lib.Promise<Void>;
 	/**
 		A promise that resolves with the result of the executed code or is rejected if the result of the code is a rejected promise.
 		
@@ -390,17 +398,17 @@ package electron.remote;
 		
 		The `isolated` and `manual` zoom modes persist across navigations.
 	**/
-	function setZoomMode(mode:String):Void;
+	function setZoomMode(mode:WebContentsSetZoomModeMode):Void;
 	/**
 		The current zoom mode. Can be `default`, `isolated`, `manual`, or `disabled`.
 	**/
-	function getZoomMode():String;
+	function getZoomMode():WebContentsGetZoomModeResult;
 	/**
 		Sets the maximum and minimum pinch-to-zoom level. The page keeps its normal scale until the user pinches; a `minimumLevel` below 1 only allows zooming out.
 		
 		> [!NOTE] Visual zoom is disabled by default in Electron. To re-enable it, call:
 	**/
-	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
+	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Void>;
 	/**
 		Executes the editing command `undo` in web page.
 	**/
@@ -496,7 +504,7 @@ package electron.remote;
 	/**
 		Inserts `text` to the focused element.
 	**/
-	function insertText(text:String):js.lib.Promise<Any>;
+	function insertText(text:String):js.lib.Promise<Void>;
 	/**
 		The request id used for the request.
 		
@@ -518,7 +526,7 @@ package electron.remote;
 	/**
 		Stops any `findInPage` request for the `webContents` with the provided `action`.
 	**/
-	function stopFindInPage(action:String):Void;
+	function stopFindInPage(action:WebContentsStopFindInPageAction):Void;
 	/**
 		Resolves with a NativeImage
 		
@@ -532,7 +540,7 @@ package electron.remote;
 		Keep the system awake instead of allowing it to sleep. Default is `false`.
 	**/
 	@:optional
-	var stayAwake : Bool; }):js.lib.Promise<Any>;
+	var stayAwake : Bool; }):js.lib.Promise<electron.NativeImage>;
 	/**
 		Whether this page is being captured. It returns true when the capturer count is greater than 0.
 	**/
@@ -542,7 +550,7 @@ package electron.remote;
 		
 		Resolves with a `PrinterInfo[]`
 	**/
-	function getPrintersAsync():js.lib.Promise<Any>;
+	function getPrintersAsync():js.lib.Promise<Array<electron.PrinterInfo>>;
 	/**
 		When a custom `pageSize` is passed, Chromium attempts to validate platform specific minimum values for `width_microns` and `height_microns`. Width and height must both be minimum 353 microns but may be higher on some operating systems. If a valid `pageSize` is not passed and `usePrinterDefaultPageSize` is `false`, an error will be thrown.
 		
@@ -579,7 +587,7 @@ package electron.remote;
 		Can be `default`, `none`, `printableArea`, or `custom`. If `custom` is chosen, you will also need to specify `top`, `bottom`, `left`, and `right`.
 	**/
 	@:optional
-	var marginType : String; /**
+	var marginType : WebContentsPrintOptionsMarginsMarginType; /**
 		The top margin of the printed web page, in pixels.
 	**/
 	@:optional
@@ -629,8 +637,8 @@ var to : Float; }>; /**
 		Set the duplex mode of the printed web page. Can be `simplex`, `shortEdge`, or `longEdge`.
 	**/
 	@:optional
-	var duplexMode : String; @:optional
-	var dpi : Dynamic; /**
+	var duplexMode : WebContentsPrintOptionsDuplexMode; @:optional
+	var dpi : haxe.DynamicAccess<Float>; /**
 		string to be printed as page header.
 	**/
 	@:optional
@@ -658,7 +666,7 @@ var to : Float; }>; /**
 		
 		See Page.printToPdf for more information.
 	**/
-	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<Any>;
+	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<js.node.Buffer>;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
@@ -689,7 +697,7 @@ var to : Float; }>; /**
 	function openDevTools(?options:{ /**
 		Opens the DevTools with specified dock state, can be `left`, `right`, `bottom`, `undocked`, `detach`. Defaults to last used dock state. In `undocked` mode it's possible to dock back. In `detach` mode it's not.
 	**/
-	var mode : String; /**
+	var mode : WebContentsOpenDevToolsOptionsMode; /**
 		Whether to bring the opened DevTools window to the foreground. The default is `true`.
 	**/
 	@:optional
@@ -780,7 +788,7 @@ var to : Float; }>; /**
 	function enableDeviceEmulation(parameters:{ /**
 		Specify the screen type to emulate (default: `desktop`):
 	**/
-	var screenPosition : String; /**
+	var screenPosition : WebContentsEnableDeviceEmulationParametersScreenPosition; /**
 		Set the emulated screen size (screenPosition == mobile).
 	**/
 	var screenSize : electron.Size; /**
@@ -835,10 +843,11 @@ var to : Float; }>; /**
 	/**
 		resolves if the page is saved.
 	**/
-	function savePage(fullPath:String, saveType:String):js.lib.Promise<Any>;
+	function savePage(fullPath:String, saveType:WebContentsSavePageSaveType):js.lib.Promise<Void>;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
+	@:electron_platforms(["macOS"])
 	function showDefinitionForSelection():Void;
 	/**
 		Indicates whether _offscreen rendering_ is enabled.
@@ -877,14 +886,20 @@ var to : Float; }>; /**
 	/**
 		Setting the WebRTC IP handling policy allows you to control which IPs are exposed via WebRTC. See BrowserLeaks for more details.
 	**/
-	function setWebRTCIPHandlingPolicy(policy:String):Void;
+	function setWebRTCIPHandlingPolicy(policy:WebContentsSetWebRTCIPHandlingPolicyPolicy):Void;
 	/**
 		* `min` Integer - The minimum UDP port number that WebRTC should use.
 		* `max` Integer - The maximum UDP port number that WebRTC should use.
 		
 		By default this value is `{ min: 0, max: 0 }` , which would apply no restriction on the udp port range.
 	**/
-	function getWebRTCUDPPortRange():Any;
+	function getWebRTCUDPPortRange():{ /**
+		The minimum UDP port number that WebRTC should use.
+	**/
+	var min : Int; /**
+		The maximum UDP port number that WebRTC should use.
+	**/
+	var max : Int; };
 	/**
 		Setting the WebRTC UDP Port Range allows you to restrict the udp port range used by WebRTC. By default the port range is unrestricted.
 		
@@ -933,7 +948,7 @@ var to : Float; }>; /**
 		
 		Takes a V8 heap snapshot and saves it to `filePath`.
 	**/
-	function takeHeapSnapshot(filePath:String):js.lib.Promise<Any>;
+	function takeHeapSnapshot(filePath:String):js.lib.Promise<Void>;
 	/**
 		whether or not this WebContents will throttle animations and timers when the page becomes backgrounded. This also affects the Page Visibility API.
 	**/
@@ -945,15 +960,15 @@ var to : Float; }>; /**
 	/**
 		the type of the webContent. Can be `backgroundPage`, `window`, `browserView`, `remote`, `webview` or `offscreen`.
 	**/
-	function getType():String;
+	function getType():WebContentsGetTypeResult;
 	/**
 		Sets the image animation policy for this webContents.  The policy only affects _new_ images, existing images that are currently being animated are unaffected. This is a known limitation in Chromium, you can force image animation to be recalculated with `img.src = img.src` which will result in no network traffic but will update the animation policy.
 		
 		This corresponds to the animationPolicy accessibility feature in Chromium.
 	**/
-	function setImageAnimationPolicy(policy:String):Void;
+	function setImageAnimationPolicy(policy:WebContentsSetImageAnimationPolicyPolicy):Void;
 }
-enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the navigation is done, i.e. the spinner of the tab has stopped spinning, and the `onload` event was dispatched.
 	**/
@@ -1020,7 +1035,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	var postBody : electron.PostBody; /**
 		Can be `default`, `foreground-tab`, `background-tab`, `new-window` or `other`. Corresponds to the manner an associated link was clicked. See Chromium's WindowOpenDisposition.
 	**/
-	var disposition : String; }) -> Void> = "did-create-window";
+	var disposition : WebContentsDidCreateWindowDetailsDisposition; }) -> Void> = "did-create-window";
 	/**
 		Emitted when a user or the page wants to start navigation on the main frame. It can happen when the `window.location` object is changed or a user clicks a link in the page.
 		
@@ -1163,7 +1178,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	/**
 		Emitted when the user is requesting to change the zoom level using the mouse wheel.
 	**/
-	var zoom_changed : electron.remote.WebContentsEvent<(js.html.Event, String) -> Void> = "zoom-changed";
+	var zoom_changed : electron.remote.WebContentsEvent<(js.html.Event, WebContentsZoomChangedZoomDirection) -> Void> = "zoom-changed";
 	/**
 		Emitted when the `WebContents` loses focus.
 	**/
@@ -1223,7 +1238,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		The headers returned in the response.
 	**/
 	@:optional
-	var responseHeaders : Dynamic; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
+	var responseHeaders : haxe.DynamicAccess<String>; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
 	/**
 		Emitted when a result is available for `webContents.findInPage` request.
 	**/
@@ -1293,7 +1308,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	var srcURL : String; /**
 		Type of the node the context menu was invoked on. Can be `none`, `image`, `audio`, `video`, `canvas`, `file` or `plugin`.
 	**/
-	var mediaType : String; /**
+	var mediaType : WebContentsContextMenuParamsMediaType; /**
 		Whether the context menu was invoked on an image which has non-empty contents.
 	**/
 	var hasImageContents : Bool; /**
@@ -1332,13 +1347,13 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	var frameCharset : String; /**
 		The source that the context menu was invoked on. Possible values include `none`, `button-button`, `field-set`, `input-button`, `input-checkbox`, `input-color`, `input-date`, `input-datetime-local`, `input-email`, `input-file`, `input-hidden`, `input-image`, `input-month`, `input-number`, `input-password`, `input-radio`, `input-range`, `input-reset`, `input-search`, `input-submit`, `input-telephone`, `input-text`, `input-time`, `input-url`, `input-week`, `output`, `reset-button`, `select-list`, `select-list`, `select-multiple`, `select-one`, `submit-button`, and `text-area`,
 	**/
-	var formControlType : String; /**
+	var formControlType : WebContentsContextMenuParamsFormControlType; /**
 		If the context is editable, whether or not spellchecking is enabled.
 	**/
 	var spellcheckEnabled : Bool; /**
 		Input source that invoked the context menu. Can be `none`, `mouse`, `keyboard`, `touch`, `touchMenu`, `longPress`, `longTap`, `touchHandle`, `stylus`, `adjustSelection`, or `adjustSelectionReset`.
 	**/
-	var menuSourceType : String; /**
+	var menuSourceType : WebContentsContextMenuParamsMenuSourceType; /**
 		The flags for the media element the context menu was invoked on.
 	**/
 	var mediaFlags : { /**
@@ -1437,7 +1452,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		
 		This event can be used to configure `webPreferences` for the `webContents` of a `<webview>` before it's loaded, and provides the ability to set settings that can't be set via `<webview>` attributes.
 	**/
-	var will_attach_webview : electron.remote.WebContentsEvent<(js.html.Event, electron.WebPreferences, Dynamic) -> Void> = "will-attach-webview";
+	var will_attach_webview : electron.remote.WebContentsEvent<(js.html.Event, electron.WebPreferences, haxe.DynamicAccess<String>) -> Void> = "will-attach-webview";
 	/**
 		Emitted when a `<webview>` has been attached to this web contents.
 	**/
@@ -1475,4 +1490,190 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 		The created frame. May be `null` if accessed after the frame has either navigated or been destroyed.
 	**/
 	var frame : haxe.extern.EitherType<electron.remote.WebFrameMain, Dynamic>; }) -> Void> = "frame-created";
+}
+enum abstract WebContentsDidCreateWindowDetailsDisposition(String) from String to String {
+	/**
+		Indicates Chromium deems in-window navigation valid for a window open call.
+	**/
+	var default_ = "default";
+	/**
+		Corresponds to a left click or shift + middle click.
+	**/
+	var foreground_tab = "foreground-tab";
+	/**
+		Corresponds to a middle click or ctrl/cmd + click.
+	**/
+	var background_tab = "background-tab";
+	/**
+		Corresponds to a shift + left click.
+	**/
+	var new_window = "new-window";
+	/**
+		A catch-all for the remaining Chromium dispositions not handled by Electron.
+	**/
+	var other = "other";
+}
+enum abstract WebContentsZoomChangedZoomDirection(String) from String to String {
+	var in_ = "in";
+	var out = "out";
+}
+enum abstract WebContentsContextMenuParamsMediaType(String) from String to String {
+	var none = "none";
+	var image = "image";
+	var audio = "audio";
+	var video = "video";
+	var canvas = "canvas";
+	var file = "file";
+	var plugin = "plugin";
+}
+enum abstract WebContentsContextMenuParamsFormControlType(String) from String to String {
+	var none = "none";
+	var button_button = "button-button";
+	var field_set = "field-set";
+	var input_button = "input-button";
+	var input_checkbox = "input-checkbox";
+	var input_color = "input-color";
+	var input_date = "input-date";
+	var input_datetime_local = "input-datetime-local";
+	var input_email = "input-email";
+	var input_file = "input-file";
+	var input_hidden = "input-hidden";
+	var input_image = "input-image";
+	var input_month = "input-month";
+	var input_number = "input-number";
+	var input_password = "input-password";
+	var input_radio = "input-radio";
+	var input_range = "input-range";
+	var input_reset = "input-reset";
+	var input_search = "input-search";
+	var input_submit = "input-submit";
+	var input_telephone = "input-telephone";
+	var input_text = "input-text";
+	var input_time = "input-time";
+	var input_url = "input-url";
+	var input_week = "input-week";
+	var output = "output";
+	var reset_button = "reset-button";
+	var select_list = "select-list";
+	var select_list_ = "select-list";
+	var select_multiple = "select-multiple";
+	var select_one = "select-one";
+	var submit_button = "submit-button";
+	var text_area = "text-area";
+}
+enum abstract WebContentsContextMenuParamsMenuSourceType(String) from String to String {
+	var none = "none";
+	var mouse = "mouse";
+	var keyboard = "keyboard";
+	var touch = "touch";
+	var touchMenu = "touchMenu";
+	var longPress = "longPress";
+	var longTap = "longTap";
+	var touchHandle = "touchHandle";
+	var stylus = "stylus";
+	var adjustSelection = "adjustSelection";
+	var adjustSelectionReset = "adjustSelectionReset";
+}
+enum abstract WebContentsInsertCSSOptionsCssOrigin(String) from String to String {
+	var user = "user";
+	var author = "author";
+}
+enum abstract WebContentsSetZoomModeMode(String) from String to String {
+	var default_ = "default";
+	var isolated = "isolated";
+	var manual = "manual";
+	var disabled = "disabled";
+}
+enum abstract WebContentsGetZoomModeResult(String) from String to String {
+	var default_ = "default";
+	var isolated = "isolated";
+	var manual = "manual";
+	var disabled = "disabled";
+}
+enum abstract WebContentsStopFindInPageAction(String) from String to String {
+	/**
+		Clear the selection.
+	**/
+	var clearSelection = "clearSelection";
+	/**
+		Translate the selection into a normal selection.
+	**/
+	var keepSelection = "keepSelection";
+	/**
+		Focus and click the selection node.
+	**/
+	var activateSelection = "activateSelection";
+}
+enum abstract WebContentsPrintOptionsMarginsMarginType(String) from String to String {
+	var default_ = "default";
+	var none = "none";
+	var printableArea = "printableArea";
+	var custom = "custom";
+}
+enum abstract WebContentsPrintOptionsDuplexMode(String) from String to String {
+	var simplex = "simplex";
+	var shortEdge = "shortEdge";
+	var longEdge = "longEdge";
+}
+enum abstract WebContentsOpenDevToolsOptionsMode(String) from String to String {
+	var left = "left";
+	var right = "right";
+	var bottom = "bottom";
+	var undocked = "undocked";
+	var detach = "detach";
+}
+enum abstract WebContentsEnableDeviceEmulationParametersScreenPosition(String) from String to String {
+	/**
+		Desktop screen type.
+	**/
+	var desktop = "desktop";
+	/**
+		Mobile screen type.
+	**/
+	var mobile = "mobile";
+}
+enum abstract WebContentsSavePageSaveType(String) from String to String {
+	/**
+		Save only the HTML of the page.
+	**/
+	var HTMLOnly = "HTMLOnly";
+	/**
+		Save complete-html page.
+	**/
+	var HTMLComplete = "HTMLComplete";
+	/**
+		Save complete-html page as MHTML.
+	**/
+	var MHTML = "MHTML";
+}
+enum abstract WebContentsSetWebRTCIPHandlingPolicyPolicy(String) from String to String {
+	/**
+		Exposes user's public and local IPs. This is the default behavior. When this policy is used, WebRTC has the right to enumerate all interfaces and bind them to discover public interfaces.
+	**/
+	var default_ = "default";
+	/**
+		Exposes user's public IP, but does not expose user's local IP. When this policy is used, WebRTC should only use the default route used by http. This doesn't expose any local addresses.
+	**/
+	var default_public_interface_only = "default_public_interface_only";
+	/**
+		Exposes user's public and local IPs. When this policy is used, WebRTC should only use the default route used by http. This also exposes the associated default private address. Default route is the route chosen by the OS on a multi-homed endpoint.
+	**/
+	var default_public_and_private_interfaces = "default_public_and_private_interfaces";
+	/**
+		Does not expose public or local IPs. When this policy is used, WebRTC should only use TCP to contact peers or servers unless the proxy server supports UDP.
+	**/
+	var disable_non_proxied_udp = "disable_non_proxied_udp";
+}
+enum abstract WebContentsGetTypeResult(String) from String to String {
+	var backgroundPage = "backgroundPage";
+	var window = "window";
+	var browserView = "browserView";
+	var remote = "remote";
+	var webview = "webview";
+	var offscreen = "offscreen";
+}
+enum abstract WebContentsSetImageAnimationPolicyPolicy(String) from String to String {
+	var animate = "animate";
+	var animateOnce = "animateOnce";
+	var noAnimation = "noAnimation";
 }

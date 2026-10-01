@@ -25,5 +25,5 @@ typedef ActivationArguments = {
 		A dictionary of all user inputs from the notification.
 	**/
 	@:optional
-	var userInputs : Dynamic;
+	var userInputs : haxe.DynamicAccess<String>;
 }

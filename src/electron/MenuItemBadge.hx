@@ -8,7 +8,7 @@ typedef MenuItemBadge = {
 		Can be `alerts`, `updates`, `new-items` or `none`. Default is `none`. See Creating badges of a specific type for further explanation of these types.
 	**/
 	@:optional
-	var type : String;
+	var type : MenuItemBadgeType;
 	/**
 		The number of items the badge displays. Required for the `alerts`, `updates` and `new-items` types; cannot be used with `none`.
 	**/
@@ -19,4 +19,10 @@ typedef MenuItemBadge = {
 	**/
 	@:optional
 	var content : String;
+}
+enum abstract MenuItemBadgeType(String) from String to String {
+	var alerts = "alerts";
+	var updates = "updates";
+	var new_items = "new-items";
+	var none = "none";
 }

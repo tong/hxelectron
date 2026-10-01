@@ -22,16 +22,16 @@ package electron.main;
 	/**
 		A `string` representing the current selection mode of the control.  Can be `single`, `multiple` or `buttons`.
 	**/
-	var mode : String;
+	var mode : TouchBarSegmentedControlMode;
 	function new(options:{ /**
 		Style of the segments:
 	**/
 	@:optional
-	var segmentStyle : String; /**
+	var segmentStyle : TouchBarSegmentedControlNewOptionsSegmentStyle; /**
 		The selection mode of the control:
 	**/
 	@:optional
-	var mode : String; /**
+	var mode : TouchBarSegmentedControlMode; /**
 		An array of segments to place in this control.
 	**/
 	var segments : Array<electron.SegmentedControlSegment>; /**
@@ -44,6 +44,45 @@ package electron.main;
 	@:optional
 	var change : haxe.Constraints.Function; }):Void;
 }
-enum abstract TouchBarSegmentedControlEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarSegmentedControlEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract TouchBarSegmentedControlMode(String) from String to String {
+	var single = "single";
+	var multiple = "multiple";
+	var buttons = "buttons";
+}
+enum abstract TouchBarSegmentedControlNewOptionsSegmentStyle(String) from String to String {
+	/**
+		Default. The appearance of the segmented control is automatically determined based on the type of window in which the control is displayed and the position within the window. Maps to `NSSegmentStyleAutomatic`.
+	**/
+	var automatic = "automatic";
+	/**
+		The control is displayed using the rounded style. Maps to `NSSegmentStyleRounded`.
+	**/
+	var rounded = "rounded";
+	/**
+		The control is displayed using the textured rounded style. Maps to `NSSegmentStyleTexturedRounded`.
+	**/
+	var textured_rounded = "textured-rounded";
+	/**
+		The control is displayed using the round rect style. Maps to `NSSegmentStyleRoundRect`.
+	**/
+	var round_rect = "round-rect";
+	/**
+		The control is displayed using the textured square style. Maps to `NSSegmentStyleTexturedSquare`.
+	**/
+	var textured_square = "textured-square";
+	/**
+		The control is displayed using the capsule style. Maps to `NSSegmentStyleCapsule`.
+	**/
+	var capsule = "capsule";
+	/**
+		The control is displayed using the small square style. Maps to `NSSegmentStyleSmallSquare`.
+	**/
+	var small_square = "small-square";
+	/**
+		The segments in the control are displayed very close to each other but not touching. Maps to `NSSegmentStyleSeparated`.
+	**/
+	var separated = "separated";
 }

@@ -76,21 +76,25 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		Whether window is movable. This is not implemented on Linux. Default is `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var movable : Bool;
 	/**
 		Whether window is minimizable. This is not implemented on Linux. Default is `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var minimizable : Bool;
 	/**
 		Whether window is maximizable. This is not implemented on Linux. Default is `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var maximizable : Bool;
 	/**
 		Whether window is closable. This is not implemented on Linux. Default is `true`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var closable : Bool;
 	/**
@@ -116,16 +120,19 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		Use pre-Lion fullscreen on macOS. Default is `false`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var simpleFullscreen : Bool;
 	/**
 		Whether to show the window in taskbar. Default is `false`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var skipTaskbar : Bool;
 	/**
 		Whether window should be hidden when the user toggles into mission control.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var hiddenInMissionControl : Bool;
 	/**
@@ -176,6 +183,7 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		Whether clicking an inactive window will also click through to the web contents. Default is `false` on macOS. This option is not configurable on other platforms.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var acceptFirstMouse : Bool;
 	/**
@@ -186,11 +194,13 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		Auto hide the menu bar unless the `Alt` key is pressed. Default is `false`.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
 	var autoHideMenuBar : Bool;
 	/**
 		Enable the window to be resized larger than screen. Only relevant for macOS, as other OSes allow larger-than-screen windows by default. Default is `false`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var enableLargerThanScreen : Bool;
 	/**
@@ -206,6 +216,7 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		Set the initial opacity of the window, between 0.0 (fully transparent) and 1.0 (fully opaque). This is only implemented on Windows and macOS.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var opacity : Float;
 	/**
@@ -226,13 +237,14 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		Specify how the material appearance should reflect window activity state on macOS. Must be used with the `vibrancy` property. Possible values are:
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
-	var visualEffectState : String;
+	var visualEffectState : BaseWindowConstructorOptionsVisualEffectState;
 	/**
 		The style of window title bar. Default is `default`. Possible values are:
 	**/
 	@:optional
-	var titleBarStyle : String;
+	var titleBarStyle : BaseWindowConstructorOptionsTitleBarStyle;
 	/**
 		When using a frameless window in conjunction with `win.setWindowButtonVisibility(true)` on macOS or using a `titleBarStyle` so that the standard window controls ("traffic lights" on macOS) are visible, this property enables the Window Controls Overlay JavaScript APIs and CSS Environment Variables. Specifying `true` will result in an overlay with default system colors. Default is `false`.
 	**/
@@ -240,10 +252,12 @@ typedef BaseWindowConstructorOptions = {
 	var titleBarOverlay : haxe.extern.EitherType<{ /**
 		The CSS color of the Window Controls Overlay when enabled. Default is the system color.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
 	var color : String; /**
 		The CSS color of the symbols on the Window Controls Overlay when enabled. Default is the system color.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
 	var symbolColor : String; /**
 		The height of the title bar and Window Controls Overlay in pixels. Default is system height.
@@ -253,11 +267,13 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		The accent color for the window. By default, follows user preference in System Settings. Set to `false` to explicitly disable, or set the color in Hex, RGB, RGBA, HSL, HSLA or named CSS color format. Alpha values will be ignored.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var accentColor : haxe.extern.EitherType<Bool, String>;
 	/**
 		Set a custom position for the traffic light buttons in frameless windows.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var trafficLightPosition : electron.Point;
 	/**
@@ -268,26 +284,87 @@ typedef BaseWindowConstructorOptions = {
 	/**
 		Use `WS_THICKFRAME` style for frameless windows on Windows, which adds the standard window frame. Setting it to `false` will remove window shadow and window animations, and disable window resizing via dragging the window edges. Default is `true`.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var thickFrame : Bool;
 	/**
 		Add a type of vibrancy effect to the window, only on macOS. Can be `appearance-based`, `titlebar`, `selection`, `menu`, `popover`, `sidebar`, `header`, `sheet`, `window`, `hud`, `fullscreen-ui`, `tooltip`, `content`, `under-window`, or `under-page`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
-	var vibrancy : String;
+	var vibrancy : BaseWindowConstructorOptionsVibrancy;
 	/**
 		Set the window's system-drawn background material, including behind the non-client area. Can be `auto`, `none`, `mica`, `acrylic` or `tabbed`. See win.setBackgroundMaterial for more information.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
-	var backgroundMaterial : String;
+	var backgroundMaterial : BaseWindowConstructorOptionsBackgroundMaterial;
 	/**
 		Controls the behavior on macOS when option-clicking the green stoplight button on the toolbar or by clicking the Window > Zoom menu item. If `true`, the window will grow to the preferred width of the web page when zoomed, `false` will cause it to zoom to the width of the screen. This will also affect the behavior when calling `maximize()` directly. Default is `false`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var zoomToPageWidth : Bool;
 	/**
 		Tab group name, allows opening the window as a native tab. Windows with the same tabbing identifier will be grouped together. This also adds a native new tab button to your window's tab bar and allows your `app` and window to receive the `new-window-for-tab` event.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var tabbingIdentifier : String;
+}
+enum abstract BaseWindowConstructorOptionsVisualEffectState(String) from String to String {
+	/**
+		The backdrop should automatically appear active when the window is active, and inactive when it is not. This is the default.
+	**/
+	var followWindow = "followWindow";
+	/**
+		The backdrop should always appear active.
+	**/
+	var active = "active";
+	/**
+		The backdrop should always appear inactive.
+	**/
+	var inactive = "inactive";
+}
+enum abstract BaseWindowConstructorOptionsTitleBarStyle(String) from String to String {
+	/**
+		Results in the standard title bar for macOS or Windows respectively.
+	**/
+	var default_ = "default";
+	/**
+		Results in a hidden title bar and a full size content window. On macOS, the window still has the standard window controls (“traffic lights”) in the top left. On Windows and Linux, when combined with `titleBarOverlay: true` it will activate the Window Controls Overlay (see `titleBarOverlay` for more information), otherwise no window controls will be shown.
+	**/
+	var hidden = "hidden";
+	/**
+		Results in a hidden title bar with an alternative look where the traffic light buttons are slightly more inset from the window edge.
+	**/
+	var hiddenInset = "hiddenInset";
+	/**
+		Results in a hidden title bar and a full size content window, the traffic light buttons will display when being hovered over in the top left of the window. **Note:** This option is currently experimental.
+	**/
+	var customButtonsOnHover = "customButtonsOnHover";
+}
+enum abstract BaseWindowConstructorOptionsVibrancy(String) from String to String {
+	var appearance_based = "appearance-based";
+	var titlebar = "titlebar";
+	var selection = "selection";
+	var menu = "menu";
+	var popover = "popover";
+	var sidebar = "sidebar";
+	var header = "header";
+	var sheet = "sheet";
+	var window = "window";
+	var hud = "hud";
+	var fullscreen_ui = "fullscreen-ui";
+	var tooltip = "tooltip";
+	var content = "content";
+	var under_window = "under-window";
+	var under_page = "under-page";
+}
+enum abstract BaseWindowConstructorOptionsBackgroundMaterial(String) from String to String {
+	var auto = "auto";
+	var none = "none";
+	var mica = "mica";
+	var acrylic = "acrylic";
+	var tabbed = "tabbed";
 }

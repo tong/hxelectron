@@ -69,8 +69,8 @@ package electron.main;
 		Index of the stack that should be loaded. If you set it to `0`, the webContents will load the first (oldest) entry. If you leave it undefined, Electron will automatically load the last (newest) entry.
 	**/
 	@:optional
-	var index : Int; }):js.lib.Promise<Any>;
+	var index : Int; }):js.lib.Promise<Void>;
 }
-enum abstract NavigationHistoryEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NavigationHistoryEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

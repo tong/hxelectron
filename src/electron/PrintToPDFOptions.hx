@@ -53,11 +53,13 @@ typedef PrintToPDFOptions = {
 	/**
 		Whether or not to generate a tagged (accessible) PDF. Defaults to false. As this property is experimental, the generated PDF may not adhere fully to PDF/UA and WCAG standards.
 	**/
+	@:electron_experimental
 	@:optional
 	var generateTaggedPDF : Bool;
 	/**
 		Whether or not to generate a PDF document outline from content headers. Defaults to false.
 	**/
+	@:electron_experimental
 	@:optional
 	var generateDocumentOutline : Bool;
 }

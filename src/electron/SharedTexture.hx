@@ -9,6 +9,7 @@ package electron;
 	/**
 		A `SharedTextureSubtle` property, provides subtle APIs for interacting with shared texture for advanced users.
 	**/
+	@:electron_experimental
 	static var subtle : electron.SharedTextureSubtle;
 	/**
 		Imports the shared texture from the given options.
@@ -17,6 +18,7 @@ package electron;
 		
 		The imported shared texture.
 	**/
+	@:electron_experimental
 	static function importSharedTexture(options:{ /**
 		The information of the shared texture to import.
 	**/
@@ -32,20 +34,22 @@ package electron;
 		
 		Resolves when the transfer is complete.
 	**/
+	@:electron_experimental
 	static function sendSharedTexture(options:{ /**
 		The target frame to transfer the shared texture to. For `WebContents`, you can pass `webContents.mainFrame`. If you provide a `webFrameMain` that is not a main frame, you'll need to enable `webPreferences.nodeIntegrationInSubFrames` for this, since this feature requires IPC between main and the frame.
 	**/
 	var frame : electron.main.WebFrameMain; /**
 		The imported shared texture.
 	**/
-	var importedSharedTexture : electron.SharedTextureImported; }, args:haxe.extern.Rest<Any>):js.lib.Promise<Any>;
+	var importedSharedTexture : electron.SharedTextureImported; }, args:haxe.extern.Rest<Any>):js.lib.Promise<Void>;
 	/**
 		Set a callback to receive imported shared textures from the main process.
 		
 		> [!NOTE] This method is only available in the renderer process.
 	**/
+	@:electron_experimental
 	static function setSharedTextureReceiver(callback:haxe.Constraints.Function):Void;
 }
-enum abstract SharedTextureEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract SharedTextureEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

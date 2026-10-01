@@ -19,13 +19,13 @@ package electron.remote;
 		The string that associates the transaction with a user account on your service (applicationUsername).
 	**/
 	@:optional
-	var username : String; }>):js.lib.Promise<Any>;
+	var username : String; }>):js.lib.Promise<Bool>;
 	/**
 		Resolves with an array of `Product` objects.
 		
 		Retrieves the product descriptions.
 	**/
-	static function getProducts(productIDs:Array<String>):js.lib.Promise<Any>;
+	static function getProducts(productIDs:Array<String>):js.lib.Promise<Array<electron.Product>>;
 	/**
 		whether a user can make a payment.
 	**/
@@ -48,9 +48,14 @@ package electron.remote;
 		Completes the pending transactions corresponding to the date.
 	**/
 	static function finishTransactionByDate(date:String):Void;
-	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
+	static function on<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function once<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function addListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function off<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeAllListeners<T:(haxe.Constraints.Function)>(?event:js.node.events.EventEmitter.Event<T>):Void;
 }
-enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when one or more transactions have been updated.
 	**/

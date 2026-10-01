@@ -6,7 +6,7 @@ typedef IpcMainInvokeEvent = {
 	/**
 		Possible values include `frame`
 	**/
-	var type : String;
+	var type : IpcMainInvokeEventType;
 	/**
 		The internal ID of the renderer process that sent this message
 	**/
@@ -23,4 +23,7 @@ typedef IpcMainInvokeEvent = {
 		The frame that sent this message. May be `null` if accessed after the frame has either navigated or been destroyed.
 	**/
 	var senderFrame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>;
+}
+enum abstract IpcMainInvokeEventType(String) from String to String {
+	var frame = "frame";
 }

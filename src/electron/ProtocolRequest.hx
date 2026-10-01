@@ -13,5 +13,5 @@ typedef ProtocolRequest = {
 	var method : String;
 	@:optional
 	var uploadData : Array<electron.UploadData>;
-	var headers : Dynamic;
+	var headers : haxe.DynamicAccess<String>;
 }

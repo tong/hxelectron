@@ -39,32 +39,33 @@ package electron.main;
 	/**
 		A `Clipboard` property — a `Clipboard` object on Linux that operates against the selection clipboard instead of the system clipboard, and `undefined` on all other platforms. It exposes the same `read`, `write`, `readText`, `writeText`, `has`, and `clear` methods as the top-level `clipboard` module.
 	**/
+	@:electron_platforms(["Linux"])
 	static var selection : electron.main.Clipboard;
 	/**
 		A promise that resolves with the content of the clipboard as plain text. Modeled after the W3C `navigator.clipboard.readText` API.
 	**/
-	static function readText():js.lib.Promise<Any>;
+	static function readText():js.lib.Promise<String>;
 	/**
 		A promise that resolves once the text has been written to the clipboard. Modeled after the W3C `navigator.clipboard.writeText` API.
 	**/
-	static function writeText(text:String):js.lib.Promise<Any>;
+	static function writeText(text:String):js.lib.Promise<Void>;
 	/**
 		A promise that resolves with an array of ClipboardItem objects containing the clipboard's contents.
 	**/
-	static function read():js.lib.Promise<Any>;
+	static function read():js.lib.Promise<Array<electron.main.ClipboardItem>>;
 	/**
 		Resolves once the data has been written to the clipboard. All entries supplied in a single `write()` call are committed to the system clipboard atomically.
 	**/
-	static function write(data:Array<electron.main.ClipboardItem>):js.lib.Promise<Any>;
+	static function write(data:Array<electron.main.ClipboardItem>):js.lib.Promise<Void>;
 	/**
 		A promise that resolves with `true` if the clipboard contains data of the specified `mimetype`, otherwise `false`. To check for a raw format, eg `public/utf8-plain-text`, use the `electron application/osclipboard` custom format (`electron application/osclipboard;format="public/utf8-plain-text"`).
 	**/
-	static function has(mimetype:String):js.lib.Promise<Any>;
+	static function has(mimetype:String):js.lib.Promise<Bool>;
 	/**
 		Clears the clipboard content.
 	**/
 	static function clear():Void;
 }
-enum abstract ClipboardEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ClipboardEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

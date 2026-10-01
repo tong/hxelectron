@@ -10,7 +10,7 @@ typedef JumpListCategory = {
 		One of the following:
 	**/
 	@:optional
-	var type : String;
+	var type : JumpListCategoryType;
 	/**
 		Must be set if `type` is `custom`, otherwise it should be omitted.
 	**/
@@ -21,4 +21,22 @@ typedef JumpListCategory = {
 	**/
 	@:optional
 	var items : Array<electron.JumpListItem>;
+}
+enum abstract JumpListCategoryType(String) from String to String {
+	/**
+		Items in this category will be placed into the standard `Tasks` category. There can be only one such category, and it will always be displayed at the bottom of the Jump List.
+	**/
+	var tasks = "tasks";
+	/**
+		Displays a list of files frequently opened by the app, the name of the category and its items are set by Windows.
+	**/
+	var frequent = "frequent";
+	/**
+		Displays a list of files recently opened by the app, the name of the category and its items are set by Windows. Items may be added to this category indirectly using `app.addRecentDocument(path)`.
+	**/
+	var recent = "recent";
+	/**
+		Displays tasks or file links, `name` must be set by the app.
+	**/
+	var custom = "custom";
 }

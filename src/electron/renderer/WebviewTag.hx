@@ -217,7 +217,7 @@ package electron.renderer;
 		Base url (with trailing path separator) for files to be loaded by the data url. This is needed only if the specified `url` is a data url and needs to load other files.
 	**/
 	@:optional
-	var baseURLForDataURL : String; }):js.lib.Promise<Any>;
+	var baseURLForDataURL : String; }):js.lib.Promise<Void>;
 	/**
 		Initiates a download of the resource at `url` without navigating.
 	**/
@@ -225,7 +225,7 @@ package electron.renderer;
 		HTTP request headers.
 	**/
 	@:optional
-	var headers : Dynamic; }):Void;
+	var headers : haxe.DynamicAccess<String>; }):Void;
 	/**
 		The URL of guest page.
 	**/
@@ -307,13 +307,13 @@ package electron.renderer;
 		
 		Injects CSS into the current web page and returns a unique key for the inserted stylesheet.
 	**/
-	function insertCSS(css:String):js.lib.Promise<Any>;
+	function insertCSS(css:String):js.lib.Promise<String>;
 	/**
 		Resolves if the removal was successful.
 		
 		Removes the inserted CSS from the current web page. The stylesheet is identified by its key, which is returned from `<webview>.insertCSS(css)`.
 	**/
-	function removeInsertedCSS(key:String):js.lib.Promise<Any>;
+	function removeInsertedCSS(key:String):js.lib.Promise<Void>;
 	/**
 		A promise that resolves with the result of the executed code or is rejected if the result of the code is a rejected promise.
 		
@@ -433,7 +433,7 @@ package electron.renderer;
 	/**
 		Inserts `text` to the focused element.
 	**/
-	function insertText(text:String):js.lib.Promise<Any>;
+	function insertText(text:String):js.lib.Promise<Void>;
 	/**
 		The request id used for the request.
 		
@@ -455,7 +455,7 @@ package electron.renderer;
 	/**
 		Stops any `findInPage` request for the `webview` with the provided `action`.
 	**/
-	function stopFindInPage(action:String):Void;
+	function stopFindInPage(action:WebviewTagStopFindInPageAction):Void;
 	/**
 		Prints `webview`'s web page. Same as `webContents.print([options])`.
 	**/
@@ -480,7 +480,7 @@ package electron.renderer;
 		Can be `default`, `none`, `printableArea`, or `custom`. If `custom` is chosen, you will also need to specify `top`, `bottom`, `left`, and `right`.
 	**/
 	@:optional
-	var marginType : String; /**
+	var marginType : WebviewTagPrintOptionsMarginsMarginType; /**
 		The top margin of the printed web page, in pixels.
 	**/
 	@:optional
@@ -530,8 +530,8 @@ var to : Float; }>; /**
 		Set the duplex mode of the printed web page. Can be `simplex`, `shortEdge`, or `longEdge`.
 	**/
 	@:optional
-	var duplexMode : String; @:optional
-	var dpi : Dynamic; /**
+	var duplexMode : WebviewTagPrintOptionsDuplexMode; @:optional
+	var dpi : haxe.DynamicAccess<Float>; /**
 		string to be printed as page header.
 	**/
 	@:optional
@@ -547,37 +547,37 @@ var to : Float; }>; /**
 		Whether to use the system's default page size. Default is `false`. Cannot be combined with `pageSize`. When `deviceName` is provided, uses the default page size of that specific printer. When `deviceName` is not provided, uses the default page size of the system's default printer. If the printer's default page size cannot be retrieved, falls back to A4 (210mm x 297mm).
 	**/
 	@:optional
-	var usePrinterDefaultPageSize : Bool; }):js.lib.Promise<Any>;
+	var usePrinterDefaultPageSize : Bool; }):js.lib.Promise<Void>;
 	/**
 		Resolves with the generated PDF data.
 		
 		Prints `webview`'s web page as PDF, Same as `webContents.printToPDF(options)`.
 	**/
-	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<Any>;
+	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<js.lib.Uint8Array>;
 	/**
 		Resolves with a NativeImage
 		
 		Captures a snapshot of the page within `rect`. Omitting `rect` will capture the whole visible page.
 	**/
-	function capturePage(?rect:electron.Rectangle):js.lib.Promise<Any>;
+	function capturePage(?rect:electron.Rectangle):js.lib.Promise<electron.NativeImage>;
 	/**
 		Send an asynchronous message to renderer process via `channel`, you can also send arbitrary arguments. The renderer process can handle the message by listening to the `channel` event with the `ipcRenderer` module.
 		
 		See webContents.send for examples.
 	**/
-	function send(channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Any>;
+	function send(channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Void>;
 	/**
 		Send an asynchronous message to renderer process via `channel`, you can also send arbitrary arguments. The renderer process can handle the message by listening to the `channel` event with the `ipcRenderer` module.
 		
 		See webContents.sendToFrame for examples.
 	**/
-	function sendToFrame(frameId:Array<Float>, channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Any>;
+	function sendToFrame(frameId:Array<Float>, channel:String, args:haxe.extern.Rest<Any>):js.lib.Promise<Void>;
 	/**
 		Sends an input `event` to the page.
 		
 		See webContents.sendInputEvent for detailed description of `event` object.
 	**/
-	function sendInputEvent(event:haxe.extern.EitherType<electron.MouseInputEvent, haxe.extern.EitherType<electron.MouseWheelInputEvent, electron.KeyboardInputEvent>>):js.lib.Promise<Any>;
+	function sendInputEvent(event:haxe.extern.EitherType<electron.MouseInputEvent, haxe.extern.EitherType<electron.MouseWheelInputEvent, electron.KeyboardInputEvent>>):js.lib.Promise<Void>;
 	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 	**/
@@ -599,13 +599,39 @@ var to : Float; }>; /**
 	/**
 		Sets the maximum and minimum pinch-to-zoom level.
 	**/
-	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Any>;
+	function setVisualZoomLevelLimits(minimumLevel:Float, maximumLevel:Float):js.lib.Promise<Void>;
 	/**
 		Shows pop-up dictionary that searches the selected word on the page.
 	**/
+	@:electron_platforms(["macOS"])
 	function showDefinitionForSelection():Void;
 	/**
 		The WebContents ID of this `webview`.
 	**/
 	function getWebContentsId():Float;
+}
+enum abstract WebviewTagStopFindInPageAction(String) from String to String {
+	/**
+		Clear the selection.
+	**/
+	var clearSelection = "clearSelection";
+	/**
+		Translate the selection into a normal selection.
+	**/
+	var keepSelection = "keepSelection";
+	/**
+		Focus and click the selection node.
+	**/
+	var activateSelection = "activateSelection";
+}
+enum abstract WebviewTagPrintOptionsMarginsMarginType(String) from String to String {
+	var default_ = "default";
+	var none = "none";
+	var printableArea = "printableArea";
+	var custom = "custom";
+}
+enum abstract WebviewTagPrintOptionsDuplexMode(String) from String to String {
+	var simplex = "simplex";
+	var shortEdge = "shortEdge";
+	var longEdge = "longEdge";
 }

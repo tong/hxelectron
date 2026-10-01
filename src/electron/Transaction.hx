@@ -18,7 +18,7 @@ typedef Transaction = {
 	/**
 		The transaction state, can be `purchasing`, `purchased`, `failed`, `restored` or `deferred`.
 	**/
-	var transactionState : String;
+	var transactionState : TransactionTransactionState;
 	/**
 		The error code if an error occurred while processing the transaction.
 	**/
@@ -41,4 +41,11 @@ typedef Transaction = {
 	**/
 	@:optional
 	var paymentDiscount : electron.PaymentDiscount; };
+}
+enum abstract TransactionTransactionState(String) from String to String {
+	var purchasing = "purchasing";
+	var purchased = "purchased";
+	var failed = "failed";
+	var restored = "restored";
+	var deferred = "deferred";
 }

@@ -34,6 +34,7 @@ package electron.renderer;
 	/**
 		A copy of the resulting value from executing the function in the main world. Refer to the table on how values are copied between worlds.
 	**/
+	@:electron_experimental
 	static function executeInMainWorld(executionScript:{ /**
 		A JavaScript function to execute. This function will be serialized which means that any bound parameters and execution context will be lost.
 	**/
@@ -43,6 +44,6 @@ package electron.renderer;
 	@:optional
 	var args : Array<Any>; }):Any;
 }
-enum abstract ContextBridgeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ContextBridgeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

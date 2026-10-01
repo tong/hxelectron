@@ -43,7 +43,7 @@ package electron.main;
 		Easing function for the animation. Default is `linear`.
 	**/
 	@:optional
-	var easing : String; }>; }):Void;
+	var easing : ViewSetBoundsOptionsAnimateEasing; }>; }):Void;
 	/**
 		The bounds of this View, relative to its parent.
 	**/
@@ -90,9 +90,15 @@ package electron.main;
 	**/
 	function getVisible():Bool;
 }
-enum abstract ViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the view's bounds have changed in response to being laid out. The new bounds can be retrieved with `view.getBounds()`.
 	**/
 	var bounds_changed : electron.main.ViewEvent<() -> Void> = "bounds-changed";
+}
+enum abstract ViewSetBoundsOptionsAnimateEasing(String) from String to String {
+	var linear = "linear";
+	var ease_in = "ease-in";
+	var ease_out = "ease-out";
+	var ease_in_out = "ease-in-out";
 }

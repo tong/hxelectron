@@ -42,6 +42,7 @@ package electron.remote;
 		
 		See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.
 	**/
+	@:electron_platforms(["macOS"])
 	static function sendActionToFirstResponder(action:String):Void;
 	/**
 		Generally, the `template` is an array of `options` for constructing a MenuItem. The usage can be referenced above.
@@ -80,12 +81,14 @@ package electron.remote;
 	var y : Float; /**
 		The index of the menu item to be positioned under the mouse cursor at the specified coordinates. Default is -1.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var positioningItem : Float; /**
 		This should map to the `menuSourceType` provided by the `context-menu` event. It is not recommended to set this value manually, only provide values you receive from other APIs or leave it `undefined`. Can be `none`, `mouse`, `keyboard`, `touch`, `touchMenu`, `longPress`, `longTap`, `touchHandle`, `stylus`, `adjustSelection`, or `adjustSelectionReset`.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
-	var sourceType : String; /**
+	var sourceType : MenuPopupOptionsSourceType; /**
 		Called when menu is closed.
 	**/
 	@:optional
@@ -107,7 +110,7 @@ package electron.remote;
 	**/
 	function insert(pos:Int, menuItem:electron.remote.MenuItem):Void;
 }
-enum abstract MenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract MenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when `menu.popup()` is called.
 	**/
@@ -116,4 +119,17 @@ enum abstract MenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitt
 		Emitted when a popup is closed either manually or with `menu.closePopup()`.
 	**/
 	var menu_will_close : electron.remote.MenuEvent<js.html.Event -> Void> = "menu-will-close";
+}
+enum abstract MenuPopupOptionsSourceType(String) from String to String {
+	var none = "none";
+	var mouse = "mouse";
+	var keyboard = "keyboard";
+	var touch = "touch";
+	var touchMenu = "touchMenu";
+	var longPress = "longPress";
+	var longTap = "longTap";
+	var touchHandle = "touchHandle";
+	var stylus = "stylus";
+	var adjustSelection = "adjustSelection";
+	var adjustSelectionReset = "adjustSelectionReset";
 }

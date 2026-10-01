@@ -10,5 +10,5 @@ typedef IpcRendererEvent = {
 	/**
 		A list of MessagePorts that were transferred with this message
 	**/
-	var ports : Array<MessagePort>;
+	var ports : Array<electron.MessagePort>;
 }

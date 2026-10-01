@@ -10,13 +10,18 @@ package electron.remote;
 	/**
 		A `string` representing the size of the spacer.  Can be `small`, `large` or `flexible`.
 	**/
-	var size : String;
+	var size : TouchBarSpacerSize;
 	function new(options:{ /**
 		Size of spacer, possible values are:
 	**/
 	@:optional
-	var size : String; }):Void;
+	var size : TouchBarSpacerSize; }):Void;
 }
-enum abstract TouchBarSpacerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract TouchBarSpacerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract TouchBarSpacerSize(String) from String to String {
+	var small = "small";
+	var large = "large";
+	var flexible = "flexible";
 }

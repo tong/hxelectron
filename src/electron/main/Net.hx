@@ -56,7 +56,7 @@ package electron.main;
 	/**
 		Creates a `ClientRequest` instance using the provided `options` which are directly forwarded to the `ClientRequest` constructor. The `net.request` method would be used to issue both secure and insecure HTTP requests according to the specified protocol scheme in the `options` object.
 	**/
-	static function request(options:haxe.extern.EitherType<ClientRequestConstructorOptions, String>):electron.main.ClientRequest;
+	static function request(options:haxe.extern.EitherType<electron.ClientRequestConstructorOptions, String>):electron.main.ClientRequest;
 	/**
 		see Response.
 		
@@ -78,7 +78,7 @@ package electron.main;
 		
 		> [!NOTE] In the utility process, custom protocols are not supported.
 	**/
-	static function fetch(input:haxe.extern.EitherType<String, GlobalRequest>, ?init:js.html.RequestInit):js.lib.Promise<Any>;
+	static function fetch(input:haxe.extern.EitherType<String, electron.GlobalRequest>, ?init:js.html.RequestInit):js.lib.Promise<electron.GlobalResponse>;
 	/**
 		Whether there is currently internet connection.
 		
@@ -94,20 +94,70 @@ package electron.main;
 		Requested DNS query type. If unspecified, resolver will pick A or AAAA (or both) based on IPv4/IPv6 settings:
 	**/
 	@:optional
-	var queryType : String; /**
+	var queryType : NetResolveHostOptionsQueryType; /**
 		The source to use for resolved addresses. Default allows the resolver to pick an appropriate source. Only affects use of big external sources (e.g. calling the system for resolution or using DNS). Even if a source is specified, results can still come from cache, resolving "localhost" or IP literals, etc. One of the following values:
 	**/
 	@:optional
-	var source : String; /**
+	var source : NetResolveHostOptionsSource; /**
 		Indicates what DNS cache entries, if any, can be used to provide a response. One of the following values:
 	**/
 	@:optional
-	var cacheUsage : String; /**
+	var cacheUsage : NetResolveHostOptionsCacheUsage; /**
 		Controls the resolver's Secure DNS behavior for this request. One of the following values:
 	**/
 	@:optional
-	var secureDnsPolicy : String; }):js.lib.Promise<Any>;
+	var secureDnsPolicy : NetResolveHostOptionsSecureDnsPolicy; }):js.lib.Promise<electron.ResolvedHost>;
 }
-enum abstract NetEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NetEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
+}
+enum abstract NetResolveHostOptionsQueryType(String) from String to String {
+	/**
+		Fetch only A records
+	**/
+	var A = "A";
+	/**
+		Fetch only AAAA records.
+	**/
+	var AAAA = "AAAA";
+}
+enum abstract NetResolveHostOptionsSource(String) from String to String {
+	/**
+		Resolver will pick an appropriate source. Results could come from DNS, MulticastDNS, HOSTS file, etc
+	**/
+	var any = "any";
+	/**
+		Results will only be retrieved from the system or OS, e.g. via the `getaddrinfo()` system call
+	**/
+	var system = "system";
+	/**
+		Results will only come from DNS queries
+	**/
+	var dns = "dns";
+	/**
+		Results will only come from Multicast DNS queries
+	**/
+	var mdns = "mdns";
+	/**
+		No external sources will be used. Results will only come from fast local sources that are available no matter the source setting, e.g. cache, hosts file, IP literal resolution, etc.
+	**/
+	var localOnly = "localOnly";
+}
+enum abstract NetResolveHostOptionsCacheUsage(String) from String to String {
+	/**
+		Results may come from the host cache if non-stale
+	**/
+	var allowed = "allowed";
+	/**
+		Results may come from the host cache even if stale (by expiration or network changes)
+	**/
+	var staleAllowed = "staleAllowed";
+	/**
+		Results will not come from the host cache.
+	**/
+	var disallowed = "disallowed";
+}
+enum abstract NetResolveHostOptionsSecureDnsPolicy(String) from String to String {
+	var allow = "allow";
+	var disable = "disable";
 }

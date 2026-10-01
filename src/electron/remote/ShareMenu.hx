@@ -18,12 +18,12 @@ package electron.remote;
 	/**
 		Pops up this menu as a context menu in the `BrowserWindow`.
 	**/
-	function popup(?options:PopupOptions):Void;
+	function popup(?options:electron.PopupOptions):Void;
 	/**
 		Closes the context menu in the `browserWindow`.
 	**/
 	function closePopup(?browserWindow:electron.remote.BrowserWindow):Void;
 }
-enum abstract ShareMenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract ShareMenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 
 }

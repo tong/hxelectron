@@ -17,6 +17,7 @@ package electron.remote;
 		
 		> [!NOTE] Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static var accessibilitySupportEnabled : Bool;
 	/**
 		A `Menu | null` property that returns `Menu` if one has been set and `null` otherwise. Users can pass a Menu to set this property.
@@ -27,6 +28,7 @@ package electron.remote;
 		
 		> [!NOTE] On macOS, you need to ensure that your application has the permission to display notifications for this property to take effect.
 	**/
+	@:electron_platforms(["macOS", "Linux"])
 	static var badgeCount : Int;
 	/**
 		A `CommandLine` object that allows you to read and manipulate the command line arguments that Chromium uses.
@@ -35,6 +37,7 @@ package electron.remote;
 	/**
 		A `Dock | undefined` property (`Dock` on macOS, `undefined` on all other platforms) that allows you to perform actions on your app icon in the user's dock.
 	**/
+	@:electron_platforms(["macOS"])
 	static var dock : haxe.extern.EitherType<electron.remote.Dock, Dynamic>;
 	/**
 		A `boolean` property that returns  `true` if the app is packaged, `false` otherwise. For many apps, this property can be used to distinguish development and production environments.
@@ -43,6 +46,7 @@ package electron.remote;
 	/**
 		A `string` property that returns the app's Toast Activator CLSID.
 	**/
+	@:electron_platforms(["Windows"])
 	static var toastActivatorCLSID : String;
 	/**
 		A `string` property that indicates the current application's name, which is the name in the application's `package.json` file.
@@ -61,6 +65,7 @@ package electron.remote;
 		
 		You can use this property to prompt users to download the arm64 version of your application when they are mistakenly running the x64 version under Rosetta or WOW.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static var runningUnderARM64Translation : Bool;
 	/**
 		Try to close all windows. The `before-quit` event will be emitted first. If all windows are successfully closed, the `will-quit` event will be emitted and by default the application will terminate.
@@ -95,7 +100,7 @@ package electron.remote;
 	/**
 		fulfilled when Electron is initialized. May be used as a convenient alternative to checking `app.isReady()` and subscribing to the `ready` event if the app is not ready yet.
 	**/
-	static function whenReady():js.lib.Promise<Any>;
+	static function whenReady():js.lib.Promise<Void>;
 	/**
 		On macOS, makes the application the active app. On Windows, focuses on the application's first window. On Linux, either focuses on the first visible window (X11) or requests focus but may instead show a notification or flash the app icon (Wayland).
 		
@@ -104,22 +109,27 @@ package electron.remote;
 	static function focus(?options:{ /**
 		Make the receiver the active app even if another app is currently active.
 	**/
+	@:electron_platforms(["macOS"])
 	var steal : Bool; }):Void;
 	/**
 		`true` if the application is active (i.e. focused).
 	**/
+	@:electron_platforms(["macOS"])
 	static function isActive():Bool;
 	/**
 		Hides all application windows without minimizing them.
 	**/
+	@:electron_platforms(["macOS"])
 	static function hide():Void;
 	/**
 		`true` if the application—including all of its windows—is hidden (e.g. with `Command-H`), `false` otherwise.
 	**/
+	@:electron_platforms(["macOS"])
 	static function isHidden():Bool;
 	/**
 		Shows application windows after they were hidden. Does not automatically focus them.
 	**/
+	@:electron_platforms(["macOS"])
 	static function show():Void;
 	/**
 		Sets or creates a directory your app's logs which can then be manipulated with `app.getPath()` or `app.setPath(pathName, newPath)`.
@@ -136,7 +146,7 @@ package electron.remote;
 		
 		If `app.getPath('logs')` is called without calling `app.setAppLogsPath()` being called first, a default log directory will be created equivalent to calling `app.setAppLogsPath()` without a `path` parameter.
 	**/
-	static function getPath(name:String):String;
+	static function getPath(name:AppGetPathName):String;
 	/**
 		fulfilled with the app's icon, which is a NativeImage.
 		
@@ -149,7 +159,7 @@ package electron.remote;
 		
 		On _Linux_ and _macOS_, icons depend on the application associated with file mime type.
 	**/
-	static function getFileIcon(path:String, ?options:{ var size : String; }):js.lib.Promise<Any>;
+	static function getFileIcon(path:String, ?options:{ var size : AppGetFileIconOptionsSize; }):js.lib.Promise<electron.NativeImage>;
 	/**
 		Overrides the `path` to a special directory or file associated with `name`. If the path specifies a directory that does not exist, an `Error` is thrown. In that case, the directory should be created with `fs.mkdirSync` or similar.
 		
@@ -191,6 +201,7 @@ package electron.remote;
 		
 		This API must be called before the `ready` event. The value can also be set using `desktopName` in `package.json`.
 	**/
+	@:electron_platforms(["Linux"])
 	static function setDesktopName(name:String):Void;
 	/**
 		The current application locale, fetched using Chromium's `l10n_util` library. Possible return values are documented here.
@@ -248,14 +259,17 @@ package electron.remote;
 		
 		This list is managed by the OS. On Windows, you can visit the list from the task bar, and on macOS, you can visit it from dock menu.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function addRecentDocument(path:String):Void;
 	/**
 		Clears the recent documents list.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function clearRecentDocuments():Void;
 	/**
 		An array containing documents in the most recent documents list.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function getRecentDocuments():Array<String>;
 	/**
 		Whether the call succeeded.
@@ -274,6 +288,7 @@ package electron.remote;
 		
 		This method checks if the current executable as the default handler for a protocol (aka URI scheme). If so, it will remove the app as the default handler.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function removeAsDefaultProtocolClient(protocol:String, ?path:String, ?args:Array<String>):Bool;
 	/**
 		Whether the current executable is the default handler for a protocol (aka URI scheme).
@@ -298,7 +313,16 @@ package electron.remote;
 		
 		This method returns a promise that contains the application name, icon and path of the default handler for the protocol (aka URI scheme) of a URL.
 	**/
-	static function getApplicationInfoForProtocol(url:String):js.lib.Promise<Any>;
+	static function getApplicationInfoForProtocol(url:String):js.lib.Promise<{ /**
+		the display icon of the app handling the protocol.
+	**/
+	var icon : electron.NativeImage; /**
+		installation path of the app handling the protocol.
+	**/
+	var path : String; /**
+		display name of the app handling the protocol.
+	**/
+	var name : String; }>;
 	/**
 		Adds `tasks` to the Tasks category of the Jump List on Windows.
 		
@@ -308,12 +332,20 @@ package electron.remote;
 		
 		> [!NOTE] If you'd like to customize the Jump List even more use `app.setJumpList(categories)` instead.
 	**/
+	@:electron_platforms(["Windows"])
 	static function setUserTasks(tasks:Array<electron.Task>):Bool;
 	/**
 		* `minItems` Integer - The minimum number of items that will be shown in the Jump List (for a more detailed description of this value see the MSDN docs).
 		* `removedItems` JumpListItem[] - Array of `JumpListItem` objects that correspond to items that the user has explicitly removed from custom categories in the Jump List. These items must not be re-added to the Jump List in the **next** call to `app.setJumpList()`, Windows will not display any custom category that contains any of the removed items.
 	**/
-	static function getJumpListSettings():Any;
+	@:electron_platforms(["Windows"])
+	static function getJumpListSettings():{ /**
+		The minimum number of items that will be shown in the Jump List (for a more detailed description of this value see the MSDN docs).
+	**/
+	var minItems : Int; /**
+		Array of `JumpListItem` objects that correspond to items that the user has explicitly removed from custom categories in the Jump List. These items must not be re-added to the Jump List in the **next** call to `app.setJumpList()`, Windows will not display any custom category that contains any of the removed items.
+	**/
+	var removedItems : Array<electron.JumpListItem>; };
 	/**
 		Sets or removes a custom Jump List for the application, and returns one of the following strings:
 		
@@ -333,7 +365,8 @@ package electron.remote;
 		
 		Here's a very simple example of creating a custom Jump List:
 	**/
-	static function setJumpList(categories:haxe.extern.EitherType<Array<electron.JumpListCategory>, Dynamic>):String;
+	@:electron_platforms(["Windows"])
+	static function setJumpList(categories:haxe.extern.EitherType<Array<electron.JumpListCategory>, Dynamic>):AppSetJumpListResult;
 	/**
 		The return value of this method indicates whether or not this instance of your application successfully obtained the lock.  If it failed to obtain the lock, you can assume that another instance of your application is already running with the lock and exit immediately.
 		
@@ -357,26 +390,32 @@ package electron.remote;
 	/**
 		Creates an `NSUserActivity` and sets it as the current activity. The activity is eligible for Handoff to another device afterward.
 	**/
+	@:electron_platforms(["macOS"])
 	static function setUserActivity(type:String, userInfo:Any, ?webpageURL:String):Void;
 	/**
 		The type of the currently running activity.
 	**/
+	@:electron_platforms(["macOS"])
 	static function getCurrentActivityType():String;
 	/**
 		Invalidates the current Handoff user activity.
 	**/
+	@:electron_platforms(["macOS"])
 	static function invalidateCurrentActivity():Void;
 	/**
 		Marks the current Handoff user activity as inactive without invalidating it.
 	**/
+	@:electron_platforms(["macOS"])
 	static function resignCurrentActivity():Void;
 	/**
 		Updates the current activity if its type matches `type`, merging the entries from `userInfo` into its current `userInfo` dictionary.
 	**/
+	@:electron_platforms(["macOS"])
 	static function updateCurrentActivity(type:String, userInfo:Any):Void;
 	/**
 		Changes the Application User Model ID to `id`.
 	**/
+	@:electron_platforms(["Windows"])
 	static function setAppUserModelId(id:String):Void;
 	/**
 		Changes the Toast Activator CLSID to `id`. If one is not set via this method, it will be randomly generated for the app.
@@ -388,6 +427,7 @@ package electron.remote;
 		
 		This method should be called early (before showing notifications) so the value is baked into the registration/shortcut. Supplying an empty string or an unparsable value throws and leaves the existing (or generated) CLSID unchanged. If this method is never called, a random CLSID is generated once per run and exposed via `app.toastActivatorCLSID`.
 	**/
+	@:electron_platforms(["Windows"])
 	static function setToastActivatorCLSID(id:String):Void;
 	/**
 		Sets the activation policy for a given app.
@@ -398,10 +438,12 @@ package electron.remote;
 		* 'accessory' - The application doesn’t appear in the Dock and doesn’t have a menu bar, but it may be activated programmatically or by clicking on one of its windows.
 		* 'prohibited' - The application doesn’t appear in the Dock and may not create windows or be activated.
 	**/
-	static function setActivationPolicy(policy:String):Void;
+	@:electron_platforms(["macOS"])
+	static function setActivationPolicy(policy:AppSetActivationPolicyPolicy):Void;
 	/**
 		Imports the certificate in pkcs12 format into the platform certificate store. `callback` is called with the `result` of import operation, a value of `0` indicates success while any other value indicates failure according to Chromium net_error_list.
 	**/
+	@:electron_platforms(["Linux"])
 	static function importCertificate(options:{ /**
 		Path for the pkcs12 file.
 	**/
@@ -434,7 +476,7 @@ package electron.remote;
 		Can be 'off', 'automatic' or 'secure'. Configures the DNS-over-HTTP mode. When 'off', no DoH lookups will be performed. When 'automatic', DoH lookups will be performed first if DoH is available, and insecure DNS lookups will be performed as a fallback. When 'secure', only DoH lookups will be performed. Defaults to 'automatic'.
 	**/
 	@:optional
-	var secureDnsMode : String; /**
+	var secureDnsMode : AppConfigureHostResolverOptionsSecureDnsMode; /**
 		A list of DNS-over-HTTP server templates. See RFC8484 § 3 for details on the template format. Most servers support the POST method; the template for such servers is simply a URI. Note that for some DNS providers, the resolver will automatically upgrade to DoH unless DoH is explicitly disabled, even if there are no DoH servers provided in this list.
 	**/
 	@:optional
@@ -452,6 +494,7 @@ package electron.remote;
 		
 		> [!NOTE] Touch ID WebAuthn credentials are device-bound and are not synced via iCloud Keychain. They are only available on Macs with a Secure Enclave (Apple silicon, or Intel Macs with a T2 chip).
 	**/
+	@:electron_platforms(["macOS"])
 	static function configureWebAuthn(options:{ /**
 		Enables the Touch ID / Secure Enclave platform authenticator for Web Authentication requests.
 	**/
@@ -503,7 +546,7 @@ package electron.remote;
 		
 		Promise is rejected if the GPU is completely disabled, i.e. no hardware and software implementations are available.
 	**/
-	static function getGPUInfo(infoType:String):js.lib.Promise<Any>;
+	static function getGPUInfo(infoType:AppGetGPUInfoInfoType):js.lib.Promise<Dynamic>;
 	/**
 		Whether the call succeeded.
 		
@@ -515,10 +558,12 @@ package electron.remote;
 		
 		> [!NOTE] On macOS, you need to ensure that your application has the permission to display notifications for this method to work.
 	**/
+	@:electron_platforms(["macOS", "Linux"])
 	static function setBadgeCount(?count:Int):Bool;
 	/**
 		The current value displayed in the counter badge.
 	**/
+	@:electron_platforms(["macOS"])
 	static function getBadgeCount():Int;
 	/**
 		If you provided `path` and `args` options to `app.setLoginItemSettings`, then you need to pass the same arguments here for `openAtLogin` to be set correctly.
@@ -535,23 +580,64 @@ package electron.remote;
 		  * `scope` string _Windows_ - can be `user` or `machine`. Indicates whether the registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
 		  * `enabled` boolean _Windows_ - `true` if the app registry key is startup approved and therefore shows as `enabled` in Task Manager and Windows settings.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function getLoginItemSettings(?options:{ /**
 		Can be `mainAppService`, `agentService`, `daemonService`, or `loginItemService`. Defaults to `mainAppService`. See app.setLoginItemSettings for more information about each type.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
-	var type : String; /**
+	var type : AppGetLoginItemSettingsOptionsType; /**
 		The name of the service. Required if `type` is non-default.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var serviceName : String; /**
 		The executable path to compare against. Defaults to `process.execPath`.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var path : String; /**
 		The command-line arguments to compare against. Defaults to an empty array.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
-	var args : Array<String>; }):Any;
+	var args : Array<String>; }):{ /**
+		`true` if the app is set to open at login.
+	**/
+	var openAtLogin : Bool; /**
+		`true` if the app was opened at login automatically.
+	**/
+	@:electron_platforms(["macOS"])
+	var wasOpenedAtLogin : Bool; /**
+		can be `not-registered`, `enabled`, `requires-approval`, or `not-found`.
+	**/
+	@:electron_platforms(["macOS"])
+	var status : AppGetLoginItemSettingsResultStatus; /**
+		`true` if app is set to open at login and its run key is not deactivated. This differs from `openAtLogin` as it ignores the `args` option, this property will be true if the given executable would be launched at login with **any** arguments.
+	**/
+	@:electron_platforms(["Windows"])
+	var executableWillLaunchAtLogin : Bool; @:electron_platforms(["Windows"])
+	var launchItems : Array<{ /**
+	name value of a registry entry.
+**/
+@:electron_platforms(["Windows"])
+var name : String; /**
+	The executable to an app that corresponds to a registry entry.
+**/
+@:electron_platforms(["Windows"])
+var path : String; /**
+	the command-line arguments to pass to the executable.
+**/
+@:electron_platforms(["Windows"])
+var args : Array<String>; /**
+	can be `user` or `machine`. Indicates whether the registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
+**/
+@:electron_platforms(["Windows"])
+var scope : AppGetLoginItemSettingsResultLaunchItemsScope; /**
+	`true` if the app registry key is startup approved and therefore shows as `enabled` in Task Manager and Windows settings.
+**/
+@:electron_platforms(["Windows"])
+var enabled : Bool; }>; };
 	/**
 		Set the app's login item settings.
 		
@@ -559,6 +645,7 @@ package electron.remote;
 		
 		For more information about setting different services as login items on macOS, see `SMAppService`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function setLoginItemSettings(settings:{ /**
 		`true` to open the app at login, `false` to remove the app as a login item. Defaults to `false`.
 	**/
@@ -566,31 +653,38 @@ package electron.remote;
 	var openAtLogin : Bool; /**
 		The type of service to add as a login item. Defaults to `mainAppService`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
-	var type : String; /**
+	var type : AppGetLoginItemSettingsOptionsType; /**
 		The name of the service. Required if `type` is non-default.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var serviceName : String; /**
 		The executable to launch at login. Defaults to `process.execPath`.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var path : String; /**
 		The command-line arguments to pass to the executable. Defaults to an empty array. Take care to wrap paths in quotes.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var args : Array<String>; /**
 		`true` will change the startup approved registry key and `enable / disable` the App in Task Manager and Windows Settings. Defaults to `true`.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var enabled : Bool; /**
 		value name to write into registry. Defaults to the app's AppUserModelId().
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var name : String; }):Void;
 	/**
 		`true` if Chromium's accessibility support is enabled, `false` otherwise. This API will return `true` if the use of assistive technologies, such as screen readers, has been detected. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
 		Manually enables Chromium's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default.
@@ -599,6 +693,7 @@ package electron.remote;
 		
 		> [!NOTE] Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default. Calling this method will enable the following accessibility support features: `nativeAPIs`, `webContents`, `inlineTextBoxes`, and `extendedProperties`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function setAccessibilitySupportEnabled(enabled:Bool):Void;
 	/**
 		Array of strings naming currently enabled accessibility support components. Possible values:
@@ -619,6 +714,7 @@ package electron.remote;
 		
 		Example:
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function getAccessibilitySupportFeatures():Array<String>;
 	/**
 		Possible values are:
@@ -636,6 +732,7 @@ package electron.remote;
 		
 		Example:
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function setAccessibilitySupportFeatures(features:Array<String>):Void;
 	/**
 		Show the app's about panel options. These options can be overridden with `app.setAboutPanelOptions(options)`. This function runs asynchronously.
@@ -661,22 +758,27 @@ package electron.remote;
 	var copyright : String; /**
 		The app's build version number.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var version : String; /**
 		Credit information.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var credits : String; /**
 		List of app authors.
 	**/
+	@:electron_platforms(["Linux"])
 	@:optional
 	var authors : Array<String>; /**
 		The app's website.
 	**/
+	@:electron_platforms(["Linux"])
 	@:optional
 	var website : String; /**
 		Path to the app's icon in a JPEG or PNG file format. On Linux, will be shown as 64x64 pixels while retaining aspect ratio. On Windows, a 48x48 PNG will result in the best visual quality.
 	**/
+	@:electron_platforms(["Windows", "Linux"])
 	@:optional
 	var iconPath : String; }):Void;
 	/**
@@ -686,12 +788,14 @@ package electron.remote;
 	/**
 		Show the platform's native emoji picker.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static function showEmojiPanel():Void;
 	/**
 		This function **must** be called once you have finished accessing the security scoped file. If you do not remember to stop accessing the bookmark, kernel resources will be leaked and your app will lose its ability to reach outside the sandbox completely, until your app is restarted.
 		
 		Start accessing a security scoped resource. With this method, Electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
 	**/
+	@:electron_platforms(["MAS"])
 	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
 	/**
 		Enables full sandbox mode on the app. This means that all renderers will be launched sandboxed, regardless of the value of the `sandbox` flag in `WebPreferences`.
@@ -702,6 +806,7 @@ package electron.remote;
 	/**
 		Whether the application is currently running from the systems Application folder. Use in combination with `app.moveToApplicationsFolder()`
 	**/
+	@:electron_platforms(["macOS"])
 	static function isInApplicationsFolder():Bool;
 	/**
 		Whether the move was successful. Please note that if the move is successful, your application will quit and relaunch.
@@ -716,6 +821,7 @@ package electron.remote;
 		
 		Would mean that if an app already exists in the user directory, if the user chooses to 'Continue Move' then the function would continue with its default behavior and the existing app will be trashed and the active app moved into its place.
 	**/
+	@:electron_platforms(["macOS"])
 	static function moveToApplicationsFolder(?options:{ /**
 		A handler for potential conflict in move failure.
 	**/
@@ -726,6 +832,7 @@ package electron.remote;
 		
 		By default this API will return `false`.
 	**/
+	@:electron_platforms(["macOS"])
 	static function isSecureKeyboardEntryEnabled():Bool;
 	/**
 		Set the `Secure Keyboard Entry` is enabled in your application.
@@ -736,6 +843,7 @@ package electron.remote;
 		
 		> [!NOTE] Enable `Secure Keyboard Entry` only when it is needed and disable it when it is no longer needed.
 	**/
+	@:electron_platforms(["macOS"])
 	static function setSecureKeyboardEntryEnabled(enabled:Bool):Void;
 	/**
 		Resolves when the proxy setting process is complete.
@@ -744,18 +852,23 @@ package electron.remote;
 		
 		This method can only be called after app is ready.
 	**/
-	static function setProxy(config:electron.ProxyConfig):js.lib.Promise<Any>;
+	static function setProxy(config:electron.ProxyConfig):js.lib.Promise<Void>;
 	/**
 		Resolves with the proxy information for `url` that will be used when attempting to make requests using Net in the utility process.
 	**/
-	static function resolveProxy(url:String):js.lib.Promise<Any>;
+	static function resolveProxy(url:String):js.lib.Promise<String>;
 	/**
 		The handler is called when a password is needed to unlock a client certificate for `hostname`.
 	**/
 	static function setClientCertRequestPasswordHandler(handler:haxe.Constraints.Function):Void;
-	static function on<T:(haxe.Constraints.Function)>(eventType:Dynamic, callback:T):Void;
+	static function on<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function once<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function addListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function off<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeAllListeners<T:(haxe.Constraints.Function)>(?event:js.node.events.EventEmitter.Event<T>):Void;
 }
-enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the application has finished basic startup. On Windows and Linux, the `will-finish-launching` event is the same as the `ready` event; on macOS, this event represents the `applicationWillFinishLaunching` notification of `NSApplication`.
 		
@@ -767,7 +880,7 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		> [!NOTE] The `ready` event is only fired after the main process has finished running the first tick of the event loop. If an Electron API needs to be called before the `ready` event, ensure that it is called synchronously in the top-level context of the main process.
 	**/
-	var ready : electron.remote.AppEvent<(js.html.Event, haxe.extern.EitherType<Dynamic, electron.NotificationResponse>) -> Void> = "ready";
+	var ready : electron.remote.AppEvent<(js.html.Event, haxe.extern.EitherType<haxe.DynamicAccess<Any>, electron.NotificationResponse>) -> Void> = "ready";
 	/**
 		Emitted when all windows have been closed.
 		
@@ -803,30 +916,36 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		On Windows, you have to parse `process.argv` (in the main process) to get the filepath.
 	**/
+	@:electron_platforms(["macOS"])
 	var open_file : electron.remote.AppEvent<(js.html.Event, String) -> Void> = "open-file";
 	/**
 		Emitted when the user wants to open a URL with the application. Your application's `Info.plist` file must define the URL scheme within the `CFBundleURLTypes` key, and set `NSPrincipalClass` to `AtomApplication`.
 		
 		As with the `open-file` event, be sure to register a listener for the `open-url` event early in your application startup to detect if the application is being opened to handle a URL. If you register the listener in response to a `ready` event, you'll miss URLs that trigger the launch of your application.
 	**/
+	@:electron_platforms(["macOS"])
 	var open_url : electron.remote.AppEvent<(js.html.Event, String) -> Void> = "open-url";
 	/**
 		Emitted when the application is activated. Various actions can trigger this event, such as launching the application for the first time, attempting to re-launch the application when it's already running, or clicking on the application's dock or taskbar icon.
 	**/
+	@:electron_platforms(["macOS"])
 	var activate : electron.remote.AppEvent<(js.html.Event, Bool) -> Void> = "activate";
 	/**
 		Emitted when the application becomes active. This differs from the `activate` event in that `did-become-active` is emitted every time the app becomes active, not only when Dock icon is clicked or application is re-launched. It is also emitted when a user switches to the app via the macOS App Switcher.
 	**/
+	@:electron_platforms(["macOS"])
 	var did_become_active : electron.remote.AppEvent<js.html.Event -> Void> = "did-become-active";
 	/**
 		Emitted when the app is no longer active and doesn’t have focus. This can be triggered, for example, by clicking on another application or by using the macOS App Switcher to switch to another application.
 	**/
+	@:electron_platforms(["macOS"])
 	var did_resign_active : electron.remote.AppEvent<js.html.Event -> Void> = "did-resign-active";
 	/**
 		Emitted during Handoff when an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
 		
 		A user activity can be continued only in an app that has the same developer Team ID as the activity's source app and that supports the activity's type. Supported activity types are specified in the app's `Info.plist` under the `NSUserActivityTypes` key.
 	**/
+	@:electron_platforms(["macOS"])
 	var continue_activity : electron.remote.AppEvent<(js.html.Event, String, Dynamic, { /**
 		A string identifying the URL of the webpage accessed by the activity on another device, if available.
 	**/
@@ -835,24 +954,29 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	/**
 		Emitted during Handoff before an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
 	**/
+	@:electron_platforms(["macOS"])
 	var will_continue_activity : electron.remote.AppEvent<(js.html.Event, String) -> Void> = "will-continue-activity";
 	/**
 		Emitted during Handoff when an activity from a different device fails to be resumed.
 	**/
+	@:electron_platforms(["macOS"])
 	var continue_activity_error : electron.remote.AppEvent<(js.html.Event, String, String) -> Void> = "continue-activity-error";
 	/**
 		Emitted during Handoff after an activity from this device was successfully resumed on another one.
 	**/
+	@:electron_platforms(["macOS"])
 	var activity_was_continued : electron.remote.AppEvent<(js.html.Event, String, Dynamic) -> Void> = "activity-was-continued";
 	/**
 		Emitted when Handoff is about to be resumed on another device. If you need to update the state to be transferred, you should call `event.preventDefault()` immediately, construct a new `userInfo` dictionary and call `app.updateCurrentActivity()` in a timely manner. Otherwise, the operation will fail and `continue-activity-error` will be called.
 	**/
+	@:electron_platforms(["macOS"])
 	var update_activity_state : electron.remote.AppEvent<(js.html.Event, String, Dynamic) -> Void> = "update-activity-state";
 	/**
 		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`.
 		
 		You must create a window in this handler in order for macOS tabbing to work as expected.
 	**/
+	@:electron_platforms(["macOS"])
 	var new_window_for_tab : electron.remote.AppEvent<js.html.Event -> Void> = "new-window-for-tab";
 	/**
 		Emitted when a browserWindow gets blurred.
@@ -899,7 +1023,7 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		The headers returned in the response.
 	**/
 	@:optional
-	var responseHeaders : Dynamic; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
+	var responseHeaders : haxe.DynamicAccess<String>; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
 	/**
 		Emitted whenever there is a GPU info update.
 	**/
@@ -914,15 +1038,16 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	var child_process_gone : electron.remote.AppEvent<(js.html.Event, { /**
 		Process type. One of the following values:
 	**/
-	var type : String; /**
+	var type : AppChildProcessGoneDetailsType; /**
 		The reason the child process is gone. Possible values:
 	**/
-	var reason : String; /**
+	var reason : AppChildProcessGoneDetailsReason; /**
 		The exit code for the process (e.g. status from waitpid if on POSIX, from GetExitCodeProcess on Windows), unless `reason` is `launch-failed`, in which case `exitCode` will be a platform-specific launch failure error code.
 	**/
 	var exitCode : Float; /**
 		The Windows system error code (`GetLastError()`) of the failed launch. Only set when `reason` is `launch-failed`.
 	**/
+	@:electron_platforms(["Windows"])
 	@:optional
 	var systemErrorCode : Float; /**
 		The non-localized name of the process.
@@ -936,6 +1061,7 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	/**
 		Emitted when Chromium's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	var accessibility_support_changed : electron.remote.AppEvent<(js.html.Event, Bool) -> Void> = "accessibility-support-changed";
 	/**
 		Emitted when Electron has created a new `session`.
@@ -955,4 +1081,138 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		> [!NOTE] Extra command line arguments might be added by Chromium, such as `--original-process-start-time`.
 	**/
 	var second_instance : electron.remote.AppEvent<(js.html.Event, Array<String>, String, Dynamic) -> Void> = "second-instance";
+}
+enum abstract AppChildProcessGoneDetailsType(String) from String to String {
+	var Utility = "Utility";
+	var Zygote = "Zygote";
+	var Sandbox_helper = "Sandbox helper";
+	var GPU = "GPU";
+	var Pepper_Plugin = "Pepper Plugin";
+	var Pepper_Plugin_Broker = "Pepper Plugin Broker";
+	var Unknown = "Unknown";
+}
+enum abstract AppChildProcessGoneDetailsReason(String) from String to String {
+	/**
+		Process exited with an exit code of zero
+	**/
+	var clean_exit = "clean-exit";
+	/**
+		Process exited with a non-zero exit code
+	**/
+	var abnormal_exit = "abnormal-exit";
+	/**
+		Process was sent a SIGTERM or otherwise killed externally
+	**/
+	var killed = "killed";
+	/**
+		Process crashed
+	**/
+	var crashed = "crashed";
+	/**
+		Process ran out of memory
+	**/
+	var oom = "oom";
+	/**
+		Process never successfully launched
+	**/
+	var launch_failed = "launch-failed";
+	/**
+		Windows code integrity checks failed
+	**/
+	var integrity_failure = "integrity-failure";
+	/**
+		Process proactively terminated to prevent a future out-of-memory (OOM) situation
+	**/
+	var memory_eviction = "memory-eviction";
+}
+enum abstract AppGetPathName(String) from String to String {
+	var home = "home";
+	/**
+		user application data directory, which by default points to:
+	**/
+	var appData = "appData";
+	var assets = "assets";
+	/**
+		specific files within a subdirectory of `userData` (e.g., `path.join(app.getPath('userData'), 'my-app-data')`) rather than directly in `userData` itself, to avoid naming conflicts with Chromium's own subdirectories (such as `Cache`, `GPUCache`, and `Local Storage`).
+	**/
+	var userData = "userData";
+	var sessionData = "sessionData";
+	var temp = "temp";
+	var exe = "exe";
+	var module = "module";
+	var desktop = "desktop";
+	var documents = "documents";
+	var downloads = "downloads";
+	var music = "music";
+	var pictures = "pictures";
+	var videos = "videos";
+	var recent = "recent";
+	var logs = "logs";
+	var crashDumps = "crashDumps";
+}
+enum abstract AppGetFileIconOptionsSize(String) from String to String {
+	/**
+		16x16
+	**/
+	var small = "small";
+	/**
+		32x32
+	**/
+	var normal = "normal";
+	/**
+		48x48 on _Linux_, 32x32 on _Windows_, unsupported on _macOS_.
+	**/
+	var large = "large";
+}
+enum abstract AppSetJumpListResult(String) from String to String {
+	/**
+		Nothing went wrong.
+	**/
+	var ok = "ok";
+	/**
+		One or more errors occurred, enable runtime logging to figure out the likely cause.
+	**/
+	var error = "error";
+	/**
+		An attempt was made to add a separator to a custom category in the Jump List. Separators are only allowed in the standard `Tasks` category.
+	**/
+	var invalidSeparatorError = "invalidSeparatorError";
+	/**
+		An attempt was made to add a file link to the Jump List for a file type the app isn't registered to handle.
+	**/
+	var fileTypeRegistrationError = "fileTypeRegistrationError";
+	/**
+		Custom categories can't be added to the Jump List due to user privacy or group policy settings.
+	**/
+	var customCategoryAccessDeniedError = "customCategoryAccessDeniedError";
+}
+enum abstract AppSetActivationPolicyPolicy(String) from String to String {
+	var regular = "regular";
+	var accessory = "accessory";
+	var prohibited = "prohibited";
+}
+enum abstract AppConfigureHostResolverOptionsSecureDnsMode(String) from String to String {
+	var off = "off";
+	var automatic = "automatic";
+	var secure = "secure";
+}
+enum abstract AppGetGPUInfoInfoType(String) from String to String {
+	var basic = "basic";
+	var complete = "complete";
+}
+enum abstract AppGetLoginItemSettingsOptionsType(String) from String to String {
+	var mainAppService = "mainAppService";
+	var agentService = "agentService";
+	var daemonService = "daemonService";
+	var loginItemService = "loginItemService";
+}
+enum abstract AppGetLoginItemSettingsResultStatus(String) from String to String {
+	var not_registered = "not-registered";
+	var enabled = "enabled";
+	var requires_approval = "requires-approval";
+	var not_found = "not-found";
+}
+enum abstract AppGetLoginItemSettingsResultLaunchItemsScope(String) from String to String {
+	var user = "user";
+	var machine = "machine";
 }

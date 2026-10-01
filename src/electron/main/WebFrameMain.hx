@@ -95,7 +95,7 @@ package electron.main;
 		
 		In the browser window some HTML APIs like `requestFullScreen` can only be invoked by a gesture from the user. Setting `userGesture` to `true` will remove this limitation.
 	**/
-	function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Any>;
+	function executeJavaScript(code:String, ?userGesture:Bool):js.lib.Promise<Dynamic>;
 	/**
 		Whether the reload was initiated successfully. Only results in `false` when the frame has no history.
 	**/
@@ -123,7 +123,8 @@ package electron.main;
 		
 		This can be useful to determine why the frame is unresponsive in cases where there's long-running JavaScript. For more information, see the proposed Crash Reporting API.
 	**/
-	function collectJavaScriptCallStack():haxe.extern.EitherType<js.lib.Promise<Any>, js.lib.Promise<Any>>;
+	@:electron_experimental
+	function collectJavaScriptCallStack():haxe.extern.EitherType<js.lib.Promise<String>, js.lib.Promise<Void>>;
 	/**
 		When executed on a video media element, copies the frame at (x, y) to the clipboard.
 	**/
@@ -145,9 +146,9 @@ package electron.main;
 		
 		See Page.printToPdf for more information.
 	**/
-	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<Any>;
+	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<js.node.Buffer>;
 }
-enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when the document is loaded.
 	**/

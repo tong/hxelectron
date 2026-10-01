@@ -39,24 +39,28 @@ package electron.main;
 		
 		Your application should then always use `shouldUseDarkColors` to determine what CSS to apply.
 	**/
-	static var themeSource : String;
+	static var themeSource : NativeThemeThemeSource;
 	/**
 		A `boolean` for if the OS / Chromium currently has high-contrast mode enabled or is being instructed to show a high-contrast UI.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static var shouldUseHighContrastColors : Bool;
 	/**
 		A `boolean` property indicating whether or not the system theme has been set to dark or light.
 		
 		On Windows this property distinguishes between system and app light/dark theme, returning `true` if the system theme is set to dark theme and `false` otherwise. On macOS the return value will be the same as `nativeTheme.shouldUseDarkColors`.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static var shouldUseDarkColorsForSystemIntegratedUI : Bool;
 	/**
 		A `boolean` for if the OS / Chromium currently has an inverted color scheme or is being instructed to use an inverted color scheme.
 	**/
+	@:electron_platforms(["macOS", "Windows"])
 	static var shouldUseInvertedColorScheme : Bool;
 	/**
 		A `boolean` indicating whether Chromium is in forced colors mode, controlled by system accessibility settings. Currently, Windows high contrast is the only system setting that triggers forced colors mode.
 	**/
+	@:electron_platforms(["Windows"])
 	static var inForcedColorsMode : Bool;
 	/**
 		A `boolean` that indicates whether the user has chosen via system accessibility settings to reduce transparency at the OS level.
@@ -65,11 +69,23 @@ package electron.main;
 	/**
 		A `boolean` that indicates whether the user prefers UI that differentiates items using something other than color alone (e.g. shapes or labels). This maps to NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor.
 	**/
+	@:electron_platforms(["macOS"])
 	static var shouldDifferentiateWithoutColor : Bool;
+	static function on<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function once<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function addListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function off<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeAllListeners<T:(haxe.Constraints.Function)>(?event:js.node.events.EventEmitter.Event<T>):Void;
 }
-enum abstract NativeThemeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
+enum abstract NativeThemeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
 		Emitted when something in the underlying NativeTheme has changed. This normally means that either the value of `shouldUseDarkColors`, `shouldUseHighContrastColors` or `shouldUseInvertedColorScheme` has changed. You will have to check them to determine which one has changed.
 	**/
 	var updated : electron.main.NativeThemeEvent<() -> Void> = "updated";
+}
+enum abstract NativeThemeThemeSource(String) from String to String {
+	var system = "system";
+	var light = "light";
+	var dark = "dark";
 }

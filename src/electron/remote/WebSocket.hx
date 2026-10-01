@@ -55,7 +55,7 @@ package electron.remote;
 		
 		`'nodebuffer'` is an Electron extension that delivers binary messages as `Buffer` objects, which is generally the most convenient representation in the main process. Set `binaryType` to `'arraybuffer'` or `'blob'` for behavior identical to the renderer `WebSocket`.
 	**/
-	var binaryType : String;
+	var binaryType : WebSocketBinaryType;
 	/**
 		A `Function | null` event handler for the `open` event. Equivalent to calling `addEventListener('open', ...)`.
 	**/
@@ -81,4 +81,9 @@ package electron.remote;
 		Closes the connection. Calling `close()` while still `CONNECTING` aborts the handshake.
 	**/
 	function close(?code:Int, ?reason:String):Void;
+}
+enum abstract WebSocketBinaryType(String) from String to String {
+	var nodebuffer = "nodebuffer";
+	var arraybuffer = "arraybuffer";
+	var blob = "blob";
 }

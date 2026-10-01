@@ -7,7 +7,7 @@ typedef Display = {
 	/**
 		Can be `available`, `unavailable`, `unknown`.
 	**/
-	var accelerometerSupport : String;
+	var accelerometerSupport : DisplayAccelerometerSupport;
 	/**
 		the bounds of the display in DIP points.
 	**/
@@ -63,7 +63,7 @@ typedef Display = {
 	/**
 		Can be `available`, `unavailable`, `unknown`.
 	**/
-	var touchSupport : String;
+	var touchSupport : DisplayTouchSupport;
 	/**
 		Whether or not the display is a monochrome display.
 	**/
@@ -77,4 +77,14 @@ typedef Display = {
 		The size of the work area.
 	**/
 	var workAreaSize : electron.Size;
+}
+enum abstract DisplayAccelerometerSupport(String) from String to String {
+	var available = "available";
+	var unavailable = "unavailable";
+	var unknown = "unknown";
+}
+enum abstract DisplayTouchSupport(String) from String to String {
+	var available = "available";
+	var unavailable = "unavailable";
+	var unknown = "unknown";
 }

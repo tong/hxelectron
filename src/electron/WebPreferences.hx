@@ -77,7 +77,7 @@ typedef WebPreferences = {
 		Specifies how to run image animations (E.g. GIFs).  Can be `animate`, `animateOnce` or `noAnimation`.  Default is `animate`.
 	**/
 	@:optional
-	var imageAnimationPolicy : String;
+	var imageAnimationPolicy : WebPreferencesImageAnimationPolicy;
 	/**
 		Make TextArea elements resizable. Default is `true`.
 	**/
@@ -101,6 +101,7 @@ typedef WebPreferences = {
 	/**
 		Enables scroll bounce (rubber banding) effect on macOS. Default is `false`.
 	**/
+	@:electron_platforms(["macOS"])
 	@:optional
 	var scrollBounce : Bool;
 	/**
@@ -178,14 +179,17 @@ typedef WebPreferences = {
 	var offscreen : haxe.extern.EitherType<{ /**
 		Whether to use GPU shared texture for accelerated paint event. Defaults to `false`. See the offscreen rendering tutorial for more details.
 	**/
+	@:electron_experimental
 	@:optional
 	var useSharedTexture : Bool; /**
 		The requested output format of the shared texture. Defaults to `argb`. The name is originated from Chromium `media::VideoPixelFormat` enum suffix and only subset of them are supported. The actual output pixel format and color space of the texture should refer to `OffscreenSharedTexture` object in the `paint` event.
 	**/
+	@:electron_experimental
 	@:optional
-	var sharedTexturePixelFormat : String; /**
+	var sharedTexturePixelFormat : WebPreferencesOffscreenSharedTexturePixelFormat; /**
 		The device scale factor of the offscreen rendering output. If not set, will use `1` as default.
 	**/
+	@:electron_experimental
 	@:optional
 	var deviceScaleFactor : Float; }, Bool>;
 	/**
@@ -227,7 +231,7 @@ typedef WebPreferences = {
 		Autoplay policy to apply to content in the window, can be `no-user-gesture-required`, `user-gesture-required`, `document-user-activation-required`. Defaults to `no-user-gesture-required`.
 	**/
 	@:optional
-	var autoplayPolicy : String;
+	var autoplayPolicy : WebPreferencesAutoplayPolicy;
 	/**
 		Whether to prevent the window from resizing when entering HTML Fullscreen. Default is `false`.
 	**/
@@ -252,7 +256,7 @@ typedef WebPreferences = {
 		Enforces the v8 code caching policy used by blink. Accepted values are
 	**/
 	@:optional
-	var v8CacheOptions : String;
+	var v8CacheOptions : WebPreferencesV8CacheOptions;
 	/**
 		Whether to enable preferred size mode. The preferred size is the minimum size needed to contain the layout of the document—without requiring scrolling. Enabling this will cause the `preferred-size-changed` event to be emitted on the `WebContents` when the preferred size changes. Default is `false`.
 	**/
@@ -266,6 +270,7 @@ typedef WebPreferences = {
 	/**
 		Whether to enable the `paste` execCommand. Default is `false`.
 	**/
+	@:deprecated
 	@:optional
 	var enableDeprecatedPaste : Bool;
 	/**
@@ -273,4 +278,46 @@ typedef WebPreferences = {
 	**/
 	@:optional
 	var focusOnNavigation : Bool;
+}
+enum abstract WebPreferencesImageAnimationPolicy(String) from String to String {
+	var animate = "animate";
+	var animateOnce = "animateOnce";
+	var noAnimation = "noAnimation";
+}
+enum abstract WebPreferencesOffscreenSharedTexturePixelFormat(String) from String to String {
+	/**
+		The requested output texture format is 8-bit unorm RGBA, with SRGB SDR color space.
+	**/
+	var argb = "argb";
+	/**
+		The requested output texture format is 16-bit float RGBA, with scRGB HDR color space.
+	**/
+	var rgbaf16 = "rgbaf16";
+	/**
+		The requested output texture format is 12bpp with Y plane followed by a 2x2 interleaved UV plane, with REC709 color space.
+	**/
+	var nv12 = "nv12";
+}
+enum abstract WebPreferencesAutoplayPolicy(String) from String to String {
+	var no_user_gesture_required = "no-user-gesture-required";
+	var user_gesture_required = "user-gesture-required";
+	var document_user_activation_required = "document-user-activation-required";
+}
+enum abstract WebPreferencesV8CacheOptions(String) from String to String {
+	/**
+		Disables code caching
+	**/
+	var none = "none";
+	/**
+		Heuristic based code caching
+	**/
+	var code = "code";
+	/**
+		Bypass code caching heuristics but with lazy compilation
+	**/
+	var bypassHeatCheck = "bypassHeatCheck";
+	/**
+		Same as above except compilation is eager. Default policy is `code`.
+	**/
+	var bypassHeatCheckAndEagerCompile = "bypassHeatCheckAndEagerCompile";
 }

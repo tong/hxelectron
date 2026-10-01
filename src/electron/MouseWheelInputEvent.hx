@@ -2,10 +2,7 @@ package electron;
 /**
 	@see https://electronjs.org/docs/api/structures/mouse-wheel-input-event
 **/
-typedef MouseWheelInputEvent = { /**
-		The type of the event, can be `mouseWheel`.
-	**/
-	var type : String; @:optional
+typedef MouseWheelInputEvent = { @:optional
 	var deltaX : Int; @:optional
 	var deltaY : Int; @:optional
 	var wheelTicksX : Int; @:optional
