@@ -223,7 +223,10 @@ private class Gen {
 				var sup:TypePath = null;
 				if (item.extends_ != null) {
 					supItem = getItem(item.extends_);
-					sup = {name: supItem.name, pack: getItemPack(supItem)}
+					if (supItem != null)
+						sup = {name: supItem.name, pack: getItemPack(supItem)}
+					else // external DOM type, e.g. WebSocket extends EventTarget
+						sup = {name: item.extends_, pack: ['js', 'html']}
 				} else {
 					if (item.instanceEvents != null) {
 						createEventEnumAbstract(type.name, type.pack, item.instanceEvents);
@@ -598,7 +601,22 @@ private class Gen {
 				return TPath( { pack: ['haxe','extern'], name: 'EitherType', params: params } );
 			 */
 		}
-		return createEitherType(types);
+		// collapse string literal types ('thin', 'bold', ...) into a single String
+		var merged:Array<{?typeName:String, ?type:String, collection:Bool, ?properties:Array<Dynamic>}> = [];
+		var hasString = false;
+		for (t in types) {
+			var n = t.typeName != null ? t.typeName : t.type;
+			if (n != null && (isStringLiteral(n) || n == 'string' || n == 'String')) {
+				if (hasString)
+					continue;
+				hasString = true;
+				merged.push({type: 'String', collection: false});
+			} else
+				merged.push(t);
+		}
+		if (merged.length == 1)
+			return getComplexType(merged[0].type, merged[0].collection, merged[0].properties);
+		return createEitherType(merged);
 	}
 
 	function getComplexType(name, collection = false, ?properties:Array<Dynamic>, optional = false, ?possibleValues:Array<PossibleValue>):ComplexType {
@@ -612,6 +630,10 @@ private class Gen {
 			case 'Array': macro :Array<Dynamic>; // TODO HACK for fields with Array type without type param
 			case 'UserDefaultTypes[Type]': macro :Dynamic; // TODO HACK for invalid description
 			case 'Blob': macro :js.html.Blob;
+			case 'T': macro :String; // HACK: generic `<T extends string>` (ClipboardItem.getType)
+			case 'Record': macro :Dynamic; // TS Record<K, V>
+			case 'ArrayBuffer', 'ArrayBufferLike': macro :js.lib.ArrayBuffer;
+			case 'ArrayBufferView': macro :js.lib.ArrayBufferView;
 			case 'Bool', 'Boolean', 'boolean': macro :Bool;
 			case 'Buffer': macro :js.node.Buffer;
 			case 'Date': macro :Date;
@@ -671,6 +693,12 @@ private class Gen {
 			case 'URL': macro :String; // TODO: macro: js.html.URL;
 			case _ if (Std.isOfType(name, Array)):
 				createMultiType(cast name);
+			case _ if (name is String && isStringLiteral(name) && name != "'rawData'"):
+				macro :String; // string literal type
+			case _ if (name is String && StringTools.startsWith(name, 'typeof ')):
+				// reference to a class, e.g. `typeof WebSocket` -> Class<WebSocket>
+				var ref = getComplexType(StringTools.trim(name.substr(7)));
+				TPath({pack: [], name: 'Class', params: [TPType(ref)]});
 			case "'rawData'": // HACK:
 				macro :js.node.Buffer;
 			case "'file'": // HACK:
@@ -700,6 +728,9 @@ private class Gen {
 			t = TOptional(t);
 		return t;
 	}
+
+	static function isStringLiteral(n:String):Bool
+		return n.length > 1 && n.charAt(0) == "'" && n.charAt(n.length - 1) == "'";
 
 	function getDoc(s:String):String {
 		if (!addDocumentation || s == null)
