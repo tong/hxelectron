@@ -190,7 +190,9 @@ private class Gen {
 		addAlias('MessagePort');
 		addAlias('Partial');
 		addAlias('PopupOptions');
-		addAlias('SaveDialogOptions');
+
+		// not defined by the description, but identical to the options of `dialog.showSaveDialog()`
+		addStructureFromParameter('SaveDialogOptions', 'dialog', 'showSaveDialog', 'options');
 
 		for (item in items)
 			this.types.set(item.name, processItem(item));
@@ -199,6 +201,27 @@ private class Gen {
 		for (t in types)
 			map.set(t.name, extraTypes.exists(t.name) ? [t].concat(extraTypes.get(t.name)) : [t]);
 		return map;
+	}
+
+	/** Creates a structure from the properties of an `Object` parameter of a method. **/
+	function addStructureFromParameter(name:String, itemName:String, methodName:String, parameterName:String) {
+		aliases.push(name);
+		var item = getItem(itemName);
+		var method = (item == null || item.methods == null) ? null : item.methods.filter(m -> m.name == methodName)[0];
+		var param = (method == null || method.parameters == null) ? null : method.parameters.filter(p -> p.name == parameterName)[0];
+		if (param == null || param.properties == null) {
+			Context.warning('cannot create $name: $itemName.$methodName($parameterName) not found', Context.currentPos());
+			types.set(name, {pack: root.copy(), name: name, kind: TDAlias(macro :Dynamic), fields: [], pos: null});
+			return;
+		}
+		context = [name];
+		types.set(name, {
+			pack: root.copy(),
+			name: name,
+			kind: TDStructure,
+			fields: [for (p in param.properties) createVarField(p)],
+			pos: null
+		});
 	}
 
 	function processItem(item:Item):TypeDefinition {
