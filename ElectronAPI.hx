@@ -58,10 +58,6 @@ class ElectronAPI {
 					var name = Gen.capitalize(item.name);
 					var content = File.getContent('$main/$name.hx');
 					var patched = regex.replace(content.replace('electron.main', 'electron.remote'), '@:jsRequire("electron", "remote.$1")');
-					if (item.name == 'screen') {
-						// TODO: https://github.com/fponticelli/hxelectron/issues/29
-						patched = patched.replace("@:native('require(\\\"electron\\\").screen')", "@:native('require(\\\"electron\\\").remote.screen')");
-					}
 					File.saveContent('$remote/$name.hx', patched);
 				} catch (e:Dynamic) {
 					// no generated main module for this item
@@ -272,14 +268,6 @@ private class Gen {
 				for (m in type.meta)
 					if (m.name == ':jsRequire') {
 						m.params.shift();
-						break;
-					}
-			case 'Screen':
-				// TODO: https://github.com/fponticelli/hxelectron/issues/29
-				for (i in 0...type.meta.length)
-					if (type.meta[i].name == ':jsRequire') {
-						type.meta.splice(i, 1);
-						type.meta.push({name: ':native', params: [macro 'require("electron").screen'], pos: null});
 						break;
 					}
 		}
