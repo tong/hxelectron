@@ -284,6 +284,9 @@ private class Gen {
 				if (item.methods != null)
 					for (m in item.methods)
 						type.fields.push(createFunField(m, [AStatic]));
+				if (item.events != null && item.events.length > 0)
+					for (f in createStaticEmitterMethods())
+						type.fields.push(f);
 				mergeTypeItem(type, item);
 
 			case Structure:
@@ -331,22 +334,6 @@ private class Gen {
 	/** Manual fixes for specific types. **/
 	function postPatch(type:TypeDefinition) {
 		switch type.name {
-			case 'App', 'InAppPurchase':
-				// events are not typed per event name
-				type.fields.push({
-					name: 'on',
-					access: [AStatic],
-					kind: FFun({
-						params: [{name: 'T', constraints: [macro :haxe.Constraints.Function]}],
-						args: [
-							{name: 'eventType', type: macro :Dynamic}, // TODO
-							{name: 'callback', type: macro :T}
-						],
-						ret: macro :Void,
-						expr: null
-					}),
-					pos: null
-				});
 			case 'Process':
 				for (m in type.meta)
 					if (m.name == ':jsRequire') {
@@ -354,6 +341,28 @@ private class Gen {
 						break;
 					}
 		}
+	}
+
+	/**
+		Modules are event emitter instances, but are generated as classes with static fields,
+		so the `EventEmitter` instance methods are not available. Adds static counterparts.
+	**/
+	function createStaticEmitterMethods():Array<Field> {
+		function method(name:String, withListener:Bool):Field {
+			var event = {name: 'event', type: macro :js.node.events.EventEmitter.Event<T>};
+			return {
+				name: name,
+				access: [AStatic],
+				kind: FFun({
+					params: [{name: 'T', constraints: [macro :haxe.Constraints.Function]}],
+					args: withListener ? [event, {name: 'listener', type: macro :T}] : [{name: 'event', type: macro :js.node.events.EventEmitter.Event<T>, opt: true}],
+					ret: macro :Void,
+					expr: null
+				}),
+				pos: null
+			};
+		}
+		return [for (n in ['on', 'once', 'addListener', 'removeListener', 'off']) method(n, true)].concat([method('removeAllListeners', false)]);
 	}
 
 	/** Turn fields with the same name into `@:overload`s of the last definition. **/
@@ -472,7 +481,7 @@ private class Gen {
 				name: _name,
 				pack: pack,
 				params: [{name: 'T', constraints: [macro :haxe.Constraints.Function]}],
-				kind: TDAbstract(macro :js.node.events.EventEmitter.Event<T>, [AbEnum], [macro :js.node.events.EventEmitter.Event<T>]),
+				kind: TDAbstract(macro :js.node.events.EventEmitter.Event<T>, [AbEnum], [macro :js.node.events.EventEmitter.Event<T>], [macro :js.node.events.EventEmitter.Event<T>]),
 				fields: [],
 				pos: null
 			};
