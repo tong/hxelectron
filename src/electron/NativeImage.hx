@@ -64,7 +64,24 @@ package electron;
 		
 		where `'square.and.pencil'` is the symbol name from the SF Symbols app.
 	**/
-	static function createFromNamedImage(imageName:String, ?hslShift:Array<Float>):electron.NativeImage;
+	static function createFromNamedImage(imageName:String, ?options:haxe.extern.EitherType<{ @:optional
+	var hslShift : Array<Float>; /**
+		Defaults to `30.0`.
+	**/
+	@:optional
+	var pointSize : Float; /**
+		Defaults to `regular`.
+	**/
+	@:optional
+	var weight : String; /**
+		Defaults to `medium`.
+	**/
+	@:optional
+	var scale : String; }, Array<Float>>):electron.NativeImage;
+	/**
+		Creates a new `NativeImage` instance from an SF Symbol for use in a native Menu. See SF Symbols for a list of possible values.
+	**/
+	static function createMenuSymbol(imageName:String):electron.NativeImage;
 	/**
 		A `boolean` property that determines whether the image is considered a template image.
 		
@@ -90,7 +107,11 @@ package electron;
 		Defaults to 1.0.
 	**/
 	@:optional
-	var scaleFactor : Float; }):js.node.Buffer;
+	var scaleFactor : Float; /**
+		The target color space for the output pixel data. Defaults to sRGB. Pass the image's original color space to preserve the previous behavior, or another color space to get pixel values in that space.
+	**/
+	@:optional
+	var colorSpace : electron.ColorSpace; }):js.node.Buffer;
 	/**
 		The Data URL of the image.
 	**/
@@ -106,7 +127,11 @@ package electron;
 		Defaults to 1.0.
 	**/
 	@:optional
-	var scaleFactor : Float; }):Void;
+	var scaleFactor : Float; /**
+		The target color space for the output pixel data. Defaults to sRGB. Pass the image's original color space to preserve the previous behavior, or another color space to get pixel values in that space.
+	**/
+	@:optional
+	var colorSpace : electron.ColorSpace; }):Void;
 	/**
 		A Buffer that stores C pointer to underlying native handle of the image. On macOS, a pointer to `NSImage` instance is returned.
 		

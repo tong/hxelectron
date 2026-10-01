@@ -38,7 +38,7 @@ package electron.main;
 	@:optional
 	var httpOnly : Bool; }):js.lib.Promise<Any>;
 	/**
-		A promise which resolves when the cookie has been set
+		A promise which resolves when the cookie has been set.
 		
 		Sets a cookie with `details`.
 	**/
@@ -79,17 +79,17 @@ package electron.main;
 	@:optional
 	var sameSite : String; }):js.lib.Promise<Any>;
 	/**
-		A promise which resolves when the cookie has been removed
+		A promise which resolves when the cookie has been removed.
 		
-		Removes the cookies matching `url` and `name`
+		Removes the cookies matching `url` and `name`.
 	**/
 	function remove(url:String, name:String):js.lib.Promise<Any>;
 	/**
-		A promise which resolves when the cookie store has been flushed
+		A promise which resolves when the cookie store has been flushed.
 		
-		Writes any unwritten cookies data to disk
+		Writes any unwritten cookies data to disk.
 		
-		Cookies written by any method will not be written to disk immediately, but will be written every 30 seconds or 512 operations
+		Cookies written by any method will not be written to disk immediately, but will be written every 30 seconds or 512 operations.
 		
 		Calling this method can cause the cookie to be written to disk immediately.
 	**/

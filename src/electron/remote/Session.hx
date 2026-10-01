@@ -81,14 +81,10 @@ package electron.remote;
 	**/
 	@:optional
 	var origin : String; /**
-		The types of storages to clear, can be `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `websql`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
+		The types of storages to clear, can be `cookies`, `filesystem`, `indexdb`, `localstorage`, `shadercache`, `serviceworkers`, `cachestorage`. If not specified, clear all storage types.
 	**/
 	@:optional
-	var storages : Array<String>; /**
-		The types of quotas to clear, can be `temporary`. If not specified, clear all quotas.
-	**/
-	@:optional
-	var quotas : Array<String>; }):js.lib.Promise<Any>;
+	var storages : Array<String>; }):js.lib.Promise<Any>;
 	/**
 		Writes any unwritten DOMStorage data to disk.
 	**/
@@ -173,7 +169,7 @@ package electron.remote;
 	/**
 		see Response.
 		
-		Sends a request, similarly to how `fetch()` works in the renderer, using Chrome's network stack. This differs from Node's `fetch()`, which uses Node.js's HTTP stack.
+		Sends a request, similarly to how `fetch()` works in the renderer, using Chromium's network stack. This differs from Node's `fetch()`, which uses Node.js's HTTP stack.
 		
 		Example:
 		
@@ -217,7 +213,7 @@ package electron.remote;
 		
 		`useSystemPicker` allows an application to use the system picker instead of providing a specific video source from `getSources`. This option is experimental, and currently available for MacOS 15+ only. If the system picker is available and `useSystemPicker` is set to `true`, the handler will not be invoked.
 		
-		Passing a WebFrameMain object as a video or audio stream will capture the video or audio stream from that frame.
+		Passing a WebFrameMain object as a video or audio stream captures the whole `webContents` that contains that frame (the tab), not just the frame: `request.frame` from an `<iframe>` therefore grants that iframe a capture of the page that embeds it. Check `request.frame` before using it this way, and note that the callback throws if the frame has been destroyed by the time it is called.
 		
 		Passing `null` instead of a function resets the handler to its default state.
 	**/
@@ -260,7 +256,7 @@ package electron.remote;
 	/**
 		Overrides the `userAgent` and `acceptLanguages` for this session.
 		
-		The `acceptLanguages` must a comma separated ordered list of language codes, for example `"en-US,fr,de,ko,zh-CN,ja"`.
+		The `acceptLanguages` must be a comma separated ordered list of language codes, for example `"en-US,fr,de,ko,zh-CN,ja"`.
 		
 		This doesn't affect existing `WebContents`, and each `WebContents` can use `webContents.setUserAgent` to override the session-wide user agent.
 	**/
@@ -302,7 +298,7 @@ package electron.remote;
 		HTTP request headers.
 	**/
 	@:optional
-	var headers : Record; }):Void;
+	var headers : Dynamic; }):Void;
 	/**
 		Allows resuming `cancelled` or `interrupted` downloads from previous `Session`. The API will generate a DownloadItem that can be accessed with the will-download event. The DownloadItem will not have any `WebContents` associated with it and the initial state will be `interrupted`. The download will start only when the `resume` API is called on the DownloadItem.
 	**/
@@ -542,7 +538,7 @@ package electron.remote;
 }
 enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**
-		Emitted when Electron is about to download `item` in `webContents`.
+		Emitted when Electron is about to download `item` in `webContents`. See also `item.getInitiatorOrigin()`.
 		
 		Calling `event.preventDefault()` will cancel the download and `item` will not be available from next tick of the process.
 	**/
@@ -633,4 +629,10 @@ enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 		Emitted after `USBDevice.forget()` has been called.  This event can be used to help maintain persistent storage of permissions when `setDevicePermissionHandler` is used.
 	**/
 	var usb_device_revoked : electron.remote.SessionEvent<Void -> Void> = "usb-device-revoked";
+	/**
+		Emitted when a call to `navigator.credentials.get()` resolves multiple discoverable WebAuthn credentials and the user must choose one. `callback` should be called with the `credentialId` of the selected account; passing no arguments — or a `credentialId` that does not match one of the provided accounts — will cancel the request and the page will receive a `NotAllowedError`. If no listener is registered for this event, the request is cancelled with the same error. The credential request remains pending until the listener invokes the callback, so always invoke it exactly once — typically from a `try { … } finally { callback(…) }` block.
+		
+		On macOS, the Touch ID platform authenticator surfaces accounts via this event once it has been configured with `app.configureWebAuthn`. The event may also fire on other platforms when a roaming FIDO2 authenticator returns multiple discoverable credentials.
+	**/
+	var select_webauthn_account : electron.remote.SessionEvent<Void -> Void> = "select-webauthn-account";
 }

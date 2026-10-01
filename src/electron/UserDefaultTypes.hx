@@ -11,5 +11,5 @@ typedef UserDefaultTypes = {
 	var double : Float;
 	var url : String;
 	var array : Array<Dynamic>;
-	var dictionary : Record;
+	var dictionary : Dynamic;
 }

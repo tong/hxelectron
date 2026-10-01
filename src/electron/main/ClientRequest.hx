@@ -27,7 +27,7 @@ package electron.main;
 		Headers to be sent with the request.
 	**/
 	@:optional
-	var headers : Record; /**
+	var headers : Dynamic; /**
 		The `Session` instance with which the request is associated.
 	**/
 	@:optional
@@ -127,7 +127,7 @@ package electron.main;
 	**/
 	function end(?chunk:haxe.extern.EitherType<String, js.node.Buffer>, ?encoding:String, ?callback:haxe.Constraints.Function):Dynamic;
 	/**
-		Cancels an ongoing HTTP transaction. If the request has already emitted the `close` event, the abort operation will have no effect. Otherwise an ongoing event will emit `abort` and `close` events. Additionally, if there is an ongoing response object,it will emit the `aborted` event.
+		Cancels an ongoing HTTP transaction. If the request has already emitted the `close` event, the abort operation will have no effect. Otherwise an ongoing event will emit `abort` and `close` events. Additionally, if there is an ongoing response object, it will emit the `aborted` event.
 	**/
 	function abort():Void;
 	/**

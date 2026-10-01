@@ -75,11 +75,11 @@ package electron;
 	**/
 	static var throwDeprecation : Bool;
 	/**
-		A `boolean` that controls whether or not deprecations printed to `stderr` include their stack trace. Setting this to `true` will print stack traces for deprecations. This property is instead of the `--trace-deprecation` command line flag.
+		A `boolean` that controls whether or not deprecations printed to `stderr` include their stack trace. Setting this to `true` will print stack traces for deprecations. This property is used instead of the `--trace-deprecation` command line flag.
 	**/
 	static var traceDeprecation : Bool;
 	/**
-		A `boolean` that controls whether or not process warnings printed to `stderr` include their stack trace. Setting this to `true` will print stack traces for process warnings (including deprecations). This property is instead of the `--trace-warnings` command line flag.
+		A `boolean` that controls whether or not process warnings printed to `stderr` include their stack trace. Setting this to `true` will print stack traces for process warnings (including deprecations). This property is used instead of the `--trace-warnings` command line flag.
 	**/
 	static var traceProcessWarnings : Bool;
 	/**
@@ -101,7 +101,7 @@ package electron;
 	**/
 	static var electron : String;
 	/**
-		A `boolean`. If the app is running as a Windows Store app (appx), this property is `true`, for otherwise it is `undefined`.
+		A `boolean`. If the app is running as an MSIX package (including AppX for Windows Store), this property is `true`, otherwise it is `undefined`.
 	**/
 	static var windowsStore : Bool;
 	/**
@@ -123,6 +123,11 @@ package electron;
 		Indicates the creation time of the application. The time is represented as number of milliseconds since epoch. It returns null if it is unable to get the process creation time.
 	**/
 	static function getCreationTime():haxe.extern.EitherType<Float, Dynamic>;
+	/**
+		CPU usage of the process this is called in.
+		
+		> [!NOTE] `percentCPUUsage` and `idleWakeupsPerSecond` are averages over the time since the previous call to `process.getCPUUsage()` in this process, and each call starts a new measurement interval. Every caller in the process shares that interval. See `CPUUsage` for details.
+	**/
 	static function getCPUUsage():electron.CPUUsage;
 	/**
 		* `totalHeapSize` Integer
@@ -156,6 +161,7 @@ package electron;
 	/**
 		* `total` Integer - The total amount of physical memory in Kilobytes available to the system.
 		* `free` Integer - The total amount of memory not being used by applications or disk cache.
+		* `available` Integer _Linux_ - The kernel's estimate of the amount of memory available for allocation without swapping, from `/proc/meminfo` `MemAvailable`. Use this as the memory pressure signal on Linux; `free` there is `MemFree`, which excludes page cache and other reclaimable memory.
 		* `fileBacked` Integer _macOS_ - The amount of memory that currently has been paged out to storage. Includes memory for file caches, network buffers, and other system services.
 		* `purgeable` Integer _macOS_ - The amount of memory that is marked as "purgeable". The system can reclaim it if memory pressure increases.
 		* `swapTotal` Integer _Windows_ _Linux_ - The total amount of swap memory in Kilobytes available to the system.

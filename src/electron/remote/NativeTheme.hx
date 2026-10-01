@@ -59,9 +59,13 @@ package electron.remote;
 	**/
 	static var inForcedColorsMode : Bool;
 	/**
-		A `boolean` that indicates the whether the user has chosen via system accessibility settings to reduce transparency at the OS level.
+		A `boolean` that indicates whether the user has chosen via system accessibility settings to reduce transparency at the OS level.
 	**/
 	static var prefersReducedTransparency : Bool;
+	/**
+		A `boolean` that indicates whether the user prefers UI that differentiates items using something other than color alone (e.g. shapes or labels). This maps to NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor.
+	**/
+	static var shouldDifferentiateWithoutColor : Bool;
 }
 enum abstract NativeThemeEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**

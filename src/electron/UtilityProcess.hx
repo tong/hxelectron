@@ -19,10 +19,18 @@ package electron;
 	**/
 	@:optional
 	var cwd : String; /**
+		Sets the session used by the process for network requests. By default, network requests from the utility process will use the system network context which does not have HTTP cache support. Setting a session enables HTTP caching and other session-specific network features. See session for more information.
+	**/
+	@:optional
+	var session : electron.main.Session; /**
+		Sets the session used by the process according to the session's partition string. If `partition` starts with `persist:`, the process will use a persistent session available to all pages in the app with the same `partition`. If there is no `persist:` prefix, the process will use an in-memory session. By assigning the same `partition`, multiple processes can share the same session. If the `session` option is set, this option is ignored.
+	**/
+	@:optional
+	var partition : String; /**
 		Allows configuring the mode for `stdout` and `stderr` of the child process. Default is `inherit`. String value can be one of `pipe`, `ignore`, `inherit`, for more details on these values you can refer to stdio documentation from Node.js. Currently this option only supports configuring `stdout` and `stderr` to either `pipe`, `inherit` or `ignore`. Configuring `stdin` to any property other than `ignore` is not supported and will result in an error. For example, the supported values will be processed as following:
 	**/
 	@:optional
-	var stdio : haxe.extern.EitherType<Array<String>, String>; /**
+	var stdio : String; /**
 		Name of the process that will appear in `name` property of `ProcessMetric` returned by `app.getAppMetrics` and `child-process-gone` event of `app`. Default is `Node Utility Process`.
 	**/
 	@:optional
@@ -31,7 +39,11 @@ package electron;
 	**/
 	@:optional
 	var allowLoadingUnsignedLibraries : Bool; /**
-		With this flag, all HTTP 401 and 407 network requests created via the net module will allow responding to them via the `app#login` event in the main process instead of the default `login` event on the `ClientRequest` object. Default is `false`.
+		With this flag, the utility process will disclaim responsibility for the child process. This causes the operating system to consider the child process as a separate entity for purposes of security policies like Transparency, Consent, and Control (TCC). When responsibility is disclaimed, the parent process will not be attributed for any TCC requests initiated by the child process. This is useful when launching processes that run third-party or otherwise untrusted code. Default is `false`.
+	**/
+	@:optional
+	var disclaim : Bool; /**
+		With this flag, all HTTP 401 and 407 network requests created via the net module will allow responding to them via the `login` event on the `UtilityProcess` instance when a `session` is provided, or via the `app#login` event in the main process when using the default system network context. This flag also routes client-certificate selection to the `app#select-client-certificate` event in the main process; without it, `net` requests from the utility process proceed without a client certificate. Without this flag, auth challenges are handled by the default `login` event on the `ClientRequest` object. Default is `false`.
 	**/
 	@:optional
 	var respondToAuthRequestsFromMainProcess : Bool; }):electron.UtilityProcess;
@@ -79,4 +91,10 @@ enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.
 		Emitted when the child process sends a message using `process.parentPort.postMessage()`.
 	**/
 	var message : electron.UtilityProcessEvent<Void -> Void> = "message";
+	/**
+		Emitted when the utility process encounters an HTTP 401 or 407 authentication challenge, if the process was created with both `respondToAuthRequestsFromMainProcess: true` and a `session` option. The `callback` should be called with credentials to respond to the challenge. Calling `callback` without arguments will cancel the request.
+		
+		This behaves the same as the `login` event on `app` but is scoped to the individual utility process instance.
+	**/
+	var login : electron.UtilityProcessEvent<Void -> Void> = "login";
 }

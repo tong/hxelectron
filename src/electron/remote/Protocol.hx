@@ -46,6 +46,12 @@ package electron.remote;
 	  const mainWindow = new BrowserWindow({ webPreferences: { partition } })
 	})
 	```
+	
+	### Protocol names
+	
+	RFC 3986 defines what a valid protocol name is:
+	
+	> Scheme names consist of a sequence of characters beginning with a letter and followed by any combination of letters, digits, plus ("+"), period ("."), or hyphen ("-"). Although schemes are case-insensitive, the canonical form is lowercase […].
 	@see https://electronjs.org/docs/api/protocol
 **/
 @:jsRequire("electron", "remote.protocol") extern class Protocol extends js.node.events.EventEmitter<electron.remote.Protocol> {
@@ -71,6 +77,8 @@ package electron.remote;
 	static function registerSchemesAsPrivileged(customSchemes:Array<electron.CustomScheme>):Void;
 	/**
 		Register a protocol handler for `scheme`. Requests made to URLs with this scheme will delegate to this handler to determine what response should be sent.
+		
+		In addition to the standard `Request` fields, `request.initiatorOrigin` is set to the origin that issued the request (for example `https://example.com`, or `null` for an opaque origin) when web content made it; it is absent for requests the browser started itself. Unlike `request.referrer` it is not controlled by the requesting page, so prefer it when deciding whether to serve a request.
 		
 		Either a `Response` or a `Promise<Response>` can be returned.
 		

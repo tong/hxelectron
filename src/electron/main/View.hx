@@ -31,7 +31,19 @@ package electron.main;
 		If the view passed as a parameter is not a child of this view, this method is a no-op.
 	**/
 	function removeChildView(view:electron.main.View):Void;
-	function setBounds(bounds:electron.Rectangle):Void;
+	function setBounds(bounds:electron.Rectangle, ?options:{ /**
+		If true, the bounds change will be animated. If an object is passed, it can contain the following properties:
+	**/
+	@:optional
+	var animate : haxe.extern.EitherType<Bool, { /**
+		Duration of the animation in milliseconds. Default is `250`.
+	**/
+	@:optional
+	var duration : Int; /**
+		Easing function for the animation. Default is `linear`.
+	**/
+	@:optional
+	var easing : String; }>; }):Void;
 	/**
 		The bounds of this View, relative to its parent.
 	**/
@@ -68,6 +80,10 @@ package electron.main;
 		> [!NOTE] The area cutout of the view's border still captures clicks.
 	**/
 	function setBorderRadius(radius:Int):Void;
+	/**
+		> [!NOTE] You must set a background color with an alpha channel (e.g. `#80ffffff`) in order for the blur effect to be visible.
+	**/
+	function setBackgroundBlur(blurRadius:Int):Void;
 	function setVisible(visible:Bool):Void;
 	/**
 		Whether the view should be drawn. Note that this is different from whether the view is visible on screen—it may still be obscured or out of view.

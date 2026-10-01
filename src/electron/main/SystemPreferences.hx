@@ -25,15 +25,15 @@ package electron.main;
 	/**
 		Posts `event` as native notifications of macOS. The `userInfo` is an Object that contains the user information dictionary sent along with the notification.
 	**/
-	static function postNotification(event:String, userInfo:Record, ?deliverImmediately:Bool):Void;
+	static function postNotification(event:String, userInfo:Dynamic, ?deliverImmediately:Bool):Void;
 	/**
 		Posts `event` as native notifications of macOS. The `userInfo` is an Object that contains the user information dictionary sent along with the notification.
 	**/
-	static function postLocalNotification(event:String, userInfo:Record):Void;
+	static function postLocalNotification(event:String, userInfo:Dynamic):Void;
 	/**
 		Posts `event` as native notifications of macOS. The `userInfo` is an Object that contains the user information dictionary sent along with the notification.
 	**/
-	static function postWorkspaceNotification(event:String, userInfo:Record):Void;
+	static function postWorkspaceNotification(event:String, userInfo:Dynamic):Void;
 	/**
 		The ID of this subscription
 		
@@ -82,7 +82,7 @@ package electron.main;
 	/**
 		Add the specified defaults to your application's `NSUserDefaults`.
 	**/
-	static function registerDefaults(defaults:Record):Void;
+	static function registerDefaults(defaults:Dynamic):Void;
 	/**
 		The value of `key` in `NSUserDefaults`.
 		

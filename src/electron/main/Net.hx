@@ -48,13 +48,19 @@ package electron.main;
 	**/
 	static var online : Bool;
 	/**
+		> [!NOTE] This property is only available in the main process.
+		
+		A `typeof WebSocket` reference to the `WebSocket` class, which can be used to create WHATWG-compatible WebSocket connections through Chromium's network stack from the main process.
+	**/
+	static var WebSocket : Class<electron.main.WebSocket>;
+	/**
 		Creates a `ClientRequest` instance using the provided `options` which are directly forwarded to the `ClientRequest` constructor. The `net.request` method would be used to issue both secure and insecure HTTP requests according to the specified protocol scheme in the `options` object.
 	**/
 	static function request(options:haxe.extern.EitherType<ClientRequestConstructorOptions, String>):electron.main.ClientRequest;
 	/**
 		see Response.
 		
-		Sends a request, similarly to how `fetch()` works in the renderer, using Chrome's network stack. This differs from Node's `fetch()`, which uses Node.js's HTTP stack.
+		Sends a request, similarly to how `fetch()` works in the renderer, using Chromium's network stack. This differs from Node's `fetch()`, which uses Node.js's HTTP stack.
 		
 		Example:
 		

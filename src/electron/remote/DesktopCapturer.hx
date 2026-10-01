@@ -13,16 +13,19 @@ package electron.remote;
 	app.whenReady().then(() => {
 	  const mainWindow = new BrowserWindow()
 	
-	  session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
-	    desktopCapturer.getSources({ types: ['screen'] }).then((sources) => {
-	      // Grant access to the first screen found.
-	      callback({ video: sources[0], audio: 'loopback' })
-	    })
-	    // If true, use the system picker if available.
-	    // Note: this is currently experimental. If the system picker
-	    // is available, it will be used and the media request handler
-	    // will not be invoked.
-	  }, { useSystemPicker: true })
+	  session.defaultSession.setDisplayMediaRequestHandler(
+	    (request, callback) => {
+	      desktopCapturer.getSources({ types: ['screen'] }).then((sources) => {
+	        // Grant access to the first screen found.
+	        callback({ video: sources[0], audio: 'loopback' })
+	      })
+	      // If true, use the system picker if available.
+	      // Note: this is currently experimental. If the system picker
+	      // is available, it will be used and the media request handler
+	      // will not be invoked.
+	    },
+	    { useSystemPicker: true }
+	  )
 	
 	  mainWindow.loadFile('index.html')
 	})
@@ -35,17 +38,20 @@ package electron.remote;
 	const video = document.querySelector('video')
 	
 	startButton.addEventListener('click', () => {
-	  navigator.mediaDevices.getDisplayMedia({
-	    audio: true,
-	    video: {
-	      width: 320,
-	      height: 240,
-	      frameRate: 30
-	    }
-	  }).then(stream => {
-	    video.srcObject = stream
-	    video.onloadedmetadata = (e) => video.play()
-	  }).catch(e => console.log(e))
+	  navigator.mediaDevices
+	    .getDisplayMedia({
+	      audio: true,
+	      video: {
+	        width: 320,
+	        height: 240,
+	        frameRate: 30
+	      }
+	    })
+	    .then((stream) => {
+	      video.srcObject = stream
+	      video.onloadedmetadata = (e) => video.play()
+	    })
+	    .catch((e) => console.log(e))
 	})
 	
 	stopButton.addEventListener('click', () => {
@@ -75,7 +81,10 @@ package electron.remote;
 	/**
 		Resolves with an array of `DesktopCapturerSource` objects, each `DesktopCapturerSource` represents a screen or an individual window that can be captured.
 		
-		> [!NOTE] Capturing the screen contents requires user consent on macOS 10.15 Catalina or higher, which can detected by `systemPreferences.getMediaAccessStatus`.
+		> [!NOTE]
+		
+		> * Capturing audio requires `NSAudioCaptureUsageDescription` Info.plist key on macOS 14.2 Sonoma and higher - read more.
+		* Capturing the screen contents requires user consent on macOS 10.15 Catalina or higher, which can detected by `systemPreferences.getMediaAccessStatus`.
 	**/
 	static function getSources(options:{ /**
 		An array of strings that lists the types of desktop sources to be captured, available types can be `screen` and `window`.

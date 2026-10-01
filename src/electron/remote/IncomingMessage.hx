@@ -20,7 +20,7 @@ package electron.remote;
 		* For duplicate `cookie` headers, the values are joined together with '; '.
 		* For all other headers, the values are joined together with ', '.
 	**/
-	var headers : Record;
+	var headers : Dynamic;
 	/**
 		A `string` indicating the HTTP protocol version number. Typical values are '1.0' or '1.1'. Additionally `httpVersionMajor` and `httpVersionMinor` are two Integer-valued readable properties that return respectively the HTTP major and minor version numbers.
 	**/
@@ -52,7 +52,7 @@ enum abstract IncomingMessageEvent<T:(haxe.Constraints.Function)>(js.node.events
 	**/
 	var aborted : electron.remote.IncomingMessageEvent<Void -> Void> = "aborted";
 	/**
-		Emitted when an error was encountered while streaming response data events. For instance, if the server closes the underlying while the response is still streaming, an `error` event will be emitted on the response object and a `close` event will subsequently follow on the request object.
+		Emitted when an error was encountered while streaming response data events. For instance, if the server closes the underlying connection while the response is still streaming, an `error` event will be emitted on the response object and a `close` event will subsequently follow on the request object.
 	**/
 	var error : electron.remote.IncomingMessageEvent<Void -> Void> = "error";
 }

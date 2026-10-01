@@ -15,13 +15,23 @@ package electron.remote;
 **/
 @:jsRequire("electron", "remote.MenuItem") extern class MenuItem extends js.node.events.EventEmitter<electron.remote.MenuItem> {
 	/**
-		A `string` indicating the item's unique id. This property can be dynamically changed.
+		A `string` indicating the item's unique id.
+		
+		This property can be dynamically changed.
 	**/
 	var id : String;
 	/**
 		A `string` indicating the item's visible label.
+		
+		This property can be dynamically changed.
 	**/
 	var label : String;
+	/**
+		A `string` indicating the item's accessibility label (used by assistive technology), if set.
+		
+		This property can be dynamically changed.
+	**/
+	var accessibilityLabel : String;
 	/**
 		A `Function` that is fired when the MenuItem receives a click event. It can be called with `menuItem.click(event, focusedWindow, focusedWebContents)`.
 		
@@ -47,10 +57,9 @@ package electron.remote;
 	@:optional
 	var role : String;
 	/**
-		An `Accelerator` (optional) indicating the item's accelerator, if set.
+		An `Accelerator | null` indicating the item's accelerator, if set.
 	**/
-	@:optional
-	var accelerator : electron.Accelerator;
+	var accelerator : haxe.extern.EitherType<electron.Accelerator, Dynamic>;
 	/**
 		An `Accelerator | null` indicating the item's user-assigned accelerator for the menu item.
 		
@@ -59,11 +68,15 @@ package electron.remote;
 	var userAccelerator : haxe.extern.EitherType<electron.Accelerator, Dynamic>;
 	/**
 		A `NativeImage | string` (optional) indicating the item's icon, if set.
+		
+		This property can be dynamically changed.
 	**/
 	@:optional
 	var icon : haxe.extern.EitherType<electron.NativeImage, String>;
 	/**
 		A `string` indicating the item's sublabel.
+		
+		This property can be dynamically changed.
 	**/
 	var sublabel : String;
 	/**
@@ -71,15 +84,21 @@ package electron.remote;
 	**/
 	var toolTip : String;
 	/**
-		A `boolean` indicating whether the item is enabled. This property can be dynamically changed.
+		A `boolean` indicating whether the item is enabled.
+		
+		This property can be dynamically changed.
 	**/
 	var enabled : Bool;
 	/**
-		A `boolean` indicating whether the item is visible. This property can be dynamically changed.
+		A `boolean` indicating whether the item is visible.
+		
+		This property can be dynamically changed.
 	**/
 	var visible : Bool;
 	/**
-		A `boolean` indicating whether the item is checked. This property can be dynamically changed.
+		A `boolean` indicating whether the item is checked.
+		
+		This property can be dynamically changed.
 		
 		A `checkbox` menu item will toggle the `checked` property on and off when selected.
 		
@@ -108,6 +127,15 @@ package electron.remote;
 		A `Menu` that the item is a part of.
 	**/
 	var menu : electron.remote.Menu;
+	/**
+		A `MenuItemBadge` (optional) indicating the badge for the menu item.
+		
+		This property can be dynamically changed; setting it to `undefined` removes the badge. Only available on macOS 14 and up.
+		
+		Badges are not displayed in Dock menus, though the same item shows its badge in an application menu.
+	**/
+	@:optional
+	var badge : electron.MenuItemBadge;
 	function new(options:{ /**
 		Will be called with `click(menuItem, window, event)` when the menu item is clicked.
 	**/
@@ -118,7 +146,8 @@ package electron.remote;
 	@:optional
 	var role : String; @:optional
 	var type : String; @:optional
-	var label : String; /**
+	var label : String; @:optional
+	var accessibilityLabel : String; /**
 		Available in macOS >= 14.4
 	**/
 	@:optional
@@ -182,7 +211,11 @@ package electron.remote;
 		Provides a means for a single context menu to declare the placement of their containing group after the containing group of the item with the specified id.
 	**/
 	@:optional
-	var afterGroupContaining : Array<String>; }):Void;
+	var afterGroupContaining : Array<String>; /**
+		A badge shown alongside the label, either a system-styled count (`alerts`, `updates`, `new-items`) or a custom string. Only available on macOS 14 and up. Not displayed in Dock menus.
+	**/
+	@:optional
+	var badge : electron.MenuItemBadge; }):Void;
 }
 enum abstract MenuItemEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 

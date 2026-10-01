@@ -60,6 +60,10 @@ package electron.main;
 	**/
 	function hasUserGesture():Bool;
 	/**
+		The origin that started the download (for example `https://example.com`, or `null` for an opaque origin), or an empty string if the download was not started by web content (for example `webContents.downloadURL()`). Use this rather than `getURL()` or the `webContents` to decide whose download it is: the URL is chosen by the initiator and the `webContents` is the whole tab.
+	**/
+	function getInitiatorOrigin():String;
+	/**
 		The file name of the download item.
 		
 		> [!NOTE] The file name is not always the same as the actual one saved in local disk. If user changes the file name in a prompted download saving dialog, the actual name of saved file will be different.

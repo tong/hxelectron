@@ -103,6 +103,7 @@ package electron.main;
 	* On macOS the child windows will keep the relative position to parent window when parent window moves, while on Windows and Linux child windows will not move.
 	* On Linux the type of modal windows will be changed to `dialog`.
 	* On Linux many desktop environments do not support hiding a modal window.
+	* On Wayland (Linux) it is generally not possible to programmatically resize windows after creation, or to position, move, focus, or blur windows without user input. If your app needs these capabilities, run it in Xwayland by appending the flag `--ozone-platform=x11`.
 	
 	### Class: BrowserWindow extends `BaseWindow`
 	
@@ -144,6 +145,8 @@ package electron.main;
 		A `WebContents` object this window owns. All web page related events and operations will be done via it.
 		
 		See the `webContents` documentation for its methods and events.
+		
+		> [!NOTE] Reading this property throws `Object has been destroyed` once the window has been destroyed; see `win.isDestroyed()`.
 	**/
 	var webContents : electron.main.WebContents;
 	function new(?options:electron.BrowserWindowConstructorOptions):Void;
@@ -157,10 +160,14 @@ package electron.main;
 	function close():Void;
 	/**
 		Focuses on the window.
+		
+		On Wayland (Linux), the desktop environment may show a notification or flash the app icon if the window or app is not already focused.
 	**/
 	function focus():Void;
 	/**
 		Removes focus from the window.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function blur():Void;
 	/**
@@ -177,6 +184,8 @@ package electron.main;
 	function show():Void;
 	/**
 		Shows the window but doesn't focus on it.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function showInactive():Void;
 	/**
@@ -290,6 +299,8 @@ package electron.main;
 	/**
 		Resizes and moves the window to the supplied bounds. Any properties that are not supplied will default to their current values.
 		
+		On Wayland (Linux), has the same limitations as `setSize` and `setPosition`.
+		
 		> [!NOTE] On macOS, the y-coordinate value cannot be smaller than the Tray height. The tray height has changed over time and depends on the operating system, but is between 20-40px. Passing a value lower than the tray height will result in a window that is flush to the tray.
 	**/
 	function setBounds(bounds:Partial, ?animate:Bool):Void;
@@ -297,6 +308,8 @@ package electron.main;
 		The `bounds` of the window as `Object`.
 		
 		> [!NOTE] On macOS, the y-coordinate value returned will be at minimum the Tray height. For example, calling `win.setBounds({ x: 25, y: 20, width: 800, height: 600 })` with a tray height of 38 means that `win.getBounds()` will return `{ x: 25, y: 38, width: 800, height: 600 }`.
+		
+		> [!NOTE] On Wayland, this method will return `{ x: 0, y: 0, ... }` as introspecting or programmatically changing the global window coordinates is prohibited.
 	**/
 	function getBounds():electron.Rectangle;
 	/**
@@ -309,6 +322,8 @@ package electron.main;
 	function getBackgroundColor():String;
 	/**
 		Resizes and moves the window's client area (e.g. the web page) to the supplied bounds.
+		
+		On Wayland (Linux), has the same limitations as `setContentSize` and `setPosition`.
 	**/
 	function setContentBounds(bounds:electron.Rectangle, ?animate:Bool):Void;
 	/**
@@ -331,6 +346,8 @@ package electron.main;
 	function isEnabled():Bool;
 	/**
 		Resizes the window to `width` and `height`. If `width` or `height` are below any set minimum size constraints the window will snap to its minimum size.
+		
+		On Wayland (Linux), may not work as some window managers restrict programmatic window resizing.
 	**/
 	function setSize(width:Int, height:Int, ?animate:Bool):Void;
 	/**
@@ -339,6 +356,8 @@ package electron.main;
 	function getSize():Array<Int>;
 	/**
 		Resizes the window's client area (e.g. the web page) to `width` and `height`.
+		
+		On Wayland (Linux), may not work as some window managers restrict programmatic window resizing.
 	**/
 	function setContentSize(width:Int, height:Int, ?animate:Bool):Void;
 	/**
@@ -427,10 +446,14 @@ package electron.main;
 	function isHiddenInMissionControl():Bool;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function setAlwaysOnTop(flag:Bool, ?level:String, ?relativeLevel:Int):Void;
 	/**
 		Whether the window is always on top of other windows.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function isAlwaysOnTop():Bool;
 	/**
@@ -438,19 +461,27 @@ package electron.main;
 	**/
 	function moveAbove(mediaSourceId:String):Void;
 	/**
-		Moves window to top(z-order) regardless of focus
+		Moves window to top(z-order) regardless of focus.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function moveTop():Void;
 	/**
 		Moves window to the center of the screen.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function center():Void;
 	/**
 		Moves window to `x` and `y`.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function setPosition(x:Int, y:Int, ?animate:Bool):Void;
 	/**
 		Contains the window's current position.
+		
+		> [!NOTE] On Wayland, this method will return `[0, 0]` as introspecting or programmatically changing the global window coordinates is prohibited.
 	**/
 	function getPosition():Array<Int>;
 	/**
@@ -488,7 +519,7 @@ package electron.main;
 		
 		Since Windows 10 users can use their PC as tablet, under this mode apps can choose to optimize their UI for tablets, such as enlarging the titlebar and hiding titlebar buttons.
 		
-		This API returns whether the window is in tablet mode, and the `resize` event can be be used to listen to changes to tablet mode.
+		This API returns whether the window is in tablet mode, and the `resize` event can be used to listen to changes to tablet mode.
 	**/
 	function isTabletMode():Bool;
 	/**
@@ -589,7 +620,7 @@ package electron.main;
 		Passed to `url.format()`.
 	**/
 	@:optional
-	var query : Record; /**
+	var query : Dynamic; /**
 		Passed to `url.format()`.
 	**/
 	@:optional
@@ -615,9 +646,9 @@ package electron.main;
 		
 		Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1.
 		
-		On Linux platform, only supports Unity desktop environment, you need to specify the `*.desktop` file name to `desktopName` field in `package.json`. By default, it will assume `{app.name}.desktop`.
-		
 		On Windows, a mode can be passed. Accepted values are `none`, `normal`, `indeterminate`, `error`, and `paused`. If you call `setProgressBar` without a mode set (but with a value within the valid range), `normal` will be assumed.
+		
+		On Linux, the progress bar shows on docks and taskbars that support the LauncherEntry D-Bus API. It is associated with the app's `.desktop` file, so `app.setDesktopName` must match the name of the app's actual `.desktop` file. Indeterminate mode is not supported.
 	**/
 	function setProgressBar(progress:Float, ?options:{ /**
 		Mode for the progress bar. Can be `none`, `normal`, `indeterminate`, `error` or `paused`.
@@ -642,11 +673,11 @@ package electron.main;
 	**/
 	function hasShadow():Bool;
 	/**
-		Sets the opacity of the window. On Linux, does nothing. Out of bound number values are clamped to the [0, 1] range.
+		Sets the opacity of the window. Out of bound number values are clamped to the [0, 1] range.
 	**/
 	function setOpacity(opacity:Float):Void;
 	/**
-		between 0.0 (fully transparent) and 1.0 (fully opaque). On Linux, always returns 1.
+		between 0.0 (fully transparent) and 1.0 (fully opaque).
 	**/
 	function getOpacity():Float;
 	/**
@@ -790,7 +821,7 @@ package electron.main;
 	/**
 		Makes the window ignore all mouse events.
 		
-		All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events.
+		All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events. On Linux this is supported on both X11 and Wayland. On X11 the X server has applied the window's new input shape when the call returns; on Wayland the new input region is applied with the window's next frame.
 	**/
 	function setIgnoreMouseEvents(ignore:Bool, ?options:{ /**
 		If true, forwards mouse move messages to Chromium, enabling mouse related events such as `mouseleave`. Only used when `ignore` is true. If `ignore` is false, forwarding is always disabled regardless of this value.
@@ -800,7 +831,9 @@ package electron.main;
 	/**
 		Prevents the window contents from being captured by other apps.
 		
-		On Windows, it calls `SetWindowDisplayAffinity` with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
+		On Windows, it calls `SetWindowDisplayAffinity` with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window. The change takes effect with the next desktop composition, not when the call returns, so a capture started immediately afterwards can still contain the window.
+		
+		Protection also applies in a Windows remote session. A Remote Desktop client still shows the window to the remote user, but remote access software that works by capturing the desktop cannot. To leave windows unprotected in remote sessions instead, disable the `AllowWindowCaptureExclusionInRemoteSessions` Chromium feature at the start of your main script. `win.isContentProtected()` still returns `true` in that case.
 		
 		On macOS, it sets the `NSWindow`'s `sharingType` to `NSWindowSharingNone`. Unfortunately, due to an intentional change in macOS, newer Mac applications that use `ScreenCaptureKit` will capture your window despite `win.setContentProtection(true)`. See here.
 	**/

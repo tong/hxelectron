@@ -18,7 +18,7 @@ typedef NotificationResponse = {
 	/**
 		A dictionary of custom information associated with the notification.
 	**/
-	var userInfo : Record;
+	var userInfo : Dynamic;
 	/**
 		The text entered or chosen by the user.
 	**/

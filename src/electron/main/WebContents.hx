@@ -49,6 +49,16 @@ package electron.main;
 	**/
 	var audioMuted : Bool;
 	/**
+		A `boolean` property that determines whether caret browsing is enabled for this page.
+		
+		When enabled, a movable cursor is placed in the page's text, allowing the user to navigate and select content with the keyboard. Changes apply to the live page without reloading it.
+		
+		A `<webview>` guest inherits this value from its embedder when it is created and then tracks it independently, so disabling caret browsing on the embedder leaves an existing guest enabled.
+		
+		While any `WebContents` in the process has caret browsing enabled, assistive technology is notified process-wide that caret browsing is active, so that screen readers report the caret's position as it moves. That notification is only withdrawn once every `WebContents` that enabled caret browsing has either disabled it or been destroyed.
+	**/
+	var caretBrowsingEnabled : Bool;
+	/**
 		A `string` property that determines the user agent for this web page.
 	**/
 	var userAgent : String;
@@ -64,6 +74,12 @@ package electron.main;
 		The zoom factor is the zoom percent divided by 100, so 300% = 3.0.
 	**/
 	var zoomFactor : Float;
+	/**
+		A `string` property that determines the zoom mode for this web contents.
+		
+		See `contents.setZoomMode` for a description of the available modes.
+	**/
+	var zoomMode : String;
 	/**
 		An `Integer` property that sets the frame rate of the web contents to the specified number. Only values between 1 and 240 are accepted.
 		
@@ -87,7 +103,7 @@ package electron.main;
 	**/
 	var hostWebContents : haxe.extern.EitherType<electron.main.WebContents, Dynamic>;
 	/**
-		A `WebContents | null` property that represents the of DevTools `WebContents` associated with a given `WebContents`.
+		A `WebContents | null` property that represents the DevTools `WebContents` associated with a given `WebContents`.
 		
 		> [!NOTE] Users should never store this object because it may become `null` when the DevTools has been closed.
 	**/
@@ -146,7 +162,7 @@ package electron.main;
 		Passed to `url.format()`.
 	**/
 	@:optional
-	var query : Record; /**
+	var query : Dynamic; /**
 		Passed to `url.format()`.
 	**/
 	@:optional
@@ -162,7 +178,7 @@ package electron.main;
 		HTTP request headers.
 	**/
 	@:optional
-	var headers : Record; }):Void;
+	var headers : Dynamic; }):Void;
 	/**
 		The URL of the current web page.
 	**/
@@ -319,7 +335,7 @@ package electron.main;
 	**/
 	function setIgnoreMenuShortcuts(ignore:Bool):Void;
 	/**
-		Called before creating a window a new window is requested by the renderer, e.g. by `window.open()`, a link with `target="_blank"`, shift+clicking on a link, or submitting a form with `<form target="_blank">`. See `window.open()` for more details and how to use this in conjunction with `did-create-window`.
+		Called before creating a window when a new window is requested by the renderer, e.g. by `window.open()`, a link with `target="_blank"`, shift+clicking on a link, or submitting a form with `<form target="_blank">`. See `window.open()` for more details and how to use this in conjunction with `did-create-window`.
 		
 		An example showing how to customize the process of new `BrowserWindow` creation to be `BrowserView` attached to main window instead:
 	**/
@@ -337,9 +353,17 @@ package electron.main;
 	**/
 	function isCurrentlyAudible():Bool;
 	/**
+		Sets whether caret browsing is enabled on the current web page.
+	**/
+	function setCaretBrowsingEnabled(enabled:Bool):Void;
+	/**
+		Whether caret browsing is enabled for this page.
+	**/
+	function isCaretBrowsingEnabled():Bool;
+	/**
 		Changes the zoom factor to the specified factor. Zoom factor is zoom percent divided by 100, so 300% = 3.0.
 		
-		The factor must be greater than 0.0.
+		The factor must be greater than 0.0. Values outside the range Chromium can display (0.25 to 5.0) are clamped to it.
 	**/
 	function setZoomFactor(factor:Float):Void;
 	/**
@@ -347,9 +371,9 @@ package electron.main;
 	**/
 	function getZoomFactor():Float;
 	/**
-		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller to default limits of 300% and 50% of original size, respectively. The formula for this is `scale := 1.2 ^ level`.
+		Changes the zoom level to the specified level. The original size is 0 and each increment above or below represents zooming 20% larger or smaller. The formula for this is `scale := 1.2 ^ level`, and the level is clamped to the range Chromium can display (25% to 500%, about -7.6 to 8.8).
 		
-		> [!NOTE] The zoom policy at the Chromium level is same-origin, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. Differentiating the window URLs will make zoom work per-window.
+		> [!NOTE] The zoom policy at the Chromium level is same-origin by default, meaning that the zoom level for a specific domain propagates across all instances of windows with the same domain. To use per-webContents zoom instead, set the zoom mode to `'isolated'` via `contents.setZoomMode('isolated')`.
 	**/
 	function setZoomLevel(level:Float):Void;
 	/**
@@ -357,7 +381,22 @@ package electron.main;
 	**/
 	function getZoomLevel():Float;
 	/**
-		Sets the maximum and minimum pinch-to-zoom level.
+		Sets the zoom mode for this web contents.
+		
+		* `default` - Zoom changes are handled automatically on a per-origin basis. Other webContents navigated to the same origin will share the same zoom level.
+		* `isolated` - Zoom changes are handled automatically but on a per-webContents basis. This webContents will not be affected by zoom changes in other webContents, and vice versa.
+		* `manual` - Automatic zoom handling is disabled. The `zoom-changed` event will still be dispatched, but the page will not actually be zoomed. The zoom level can be managed manually by the application.
+		* `disabled` - All zooming in this webContents is disabled. The webContents will revert to the default zoom level and all zoom changes will be ignored.
+		
+		The `isolated` and `manual` zoom modes persist across navigations.
+	**/
+	function setZoomMode(mode:String):Void;
+	/**
+		The current zoom mode. Can be `default`, `isolated`, `manual`, or `disabled`.
+	**/
+	function getZoomMode():String;
+	/**
+		Sets the maximum and minimum pinch-to-zoom level. The page keeps its normal scale until the user pinches; a `minimumLevel` below 1 only allows zooming out.
 		
 		> [!NOTE] Visual zoom is disabled by default in Electron. To re-enable it, call:
 	**/
@@ -386,6 +425,14 @@ package electron.main;
 		Copy the image at the given position to the clipboard.
 	**/
 	function copyImageAt(x:Int, y:Int):Void;
+	/**
+		When executed on a video media element, copies the frame at (x, y) to the clipboard.
+	**/
+	function copyVideoFrameAt(x:Int, y:Int):Void;
+	/**
+		When executed on a video media element, shows a save dialog and saves the frame at (x, y) to disk.
+	**/
+	function saveVideoFrameAs(x:Int, y:Int):Void;
 	/**
 		Executes the editing command `paste` in web page.
 	**/
@@ -423,7 +470,11 @@ package electron.main;
 		
 		Before:
 		
+		[Image: Image Before Text Selection Adjustment]
+		
 		After:
+		
+		[Image: Image After Text Selection Adjustment]
 	**/
 	function adjustSelection(options:{ /**
 		Amount to shift the start index of the current selection.
@@ -493,7 +544,7 @@ package electron.main;
 	**/
 	function getPrintersAsync():js.lib.Promise<Any>;
 	/**
-		When a custom `pageSize` is passed, Chromium attempts to validate platform specific minimum values for `width_microns` and `height_microns`. Width and height must both be minimum 353 microns but may be higher on some operating systems.
+		When a custom `pageSize` is passed, Chromium attempts to validate platform specific minimum values for `width_microns` and `height_microns`. Width and height must both be minimum 353 microns but may be higher on some operating systems. If a valid `pageSize` is not passed and `usePrinterDefaultPageSize` is `false`, an error will be thrown.
 		
 		Prints window's web page. When `silent` is set to `true`, Electron will pick the system's default printer if `deviceName` is empty and the default settings for printing.
 		
@@ -579,7 +630,7 @@ var to : Float; }>; /**
 	**/
 	@:optional
 	var duplexMode : String; @:optional
-	var dpi : Record; /**
+	var dpi : Dynamic; /**
 		string to be printed as page header.
 	**/
 	@:optional
@@ -591,7 +642,11 @@ var to : Float; }>; /**
 		Specify page size of the printed document. Can be `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `Legal`, `Letter`, `Tabloid` or an Object containing `height` and `width`.
 	**/
 	@:optional
-	var pageSize : haxe.extern.EitherType<String, electron.Size>; }, ?callback:haxe.Constraints.Function):Void;
+	var pageSize : haxe.extern.EitherType<String, electron.Size>; /**
+		Whether to use a given printer's default page size. Default is `false`. Cannot be combined with `pageSize`. When `deviceName` is provided, uses the default page size of that specific printer. When `deviceName` is not provided, uses the default page size of the system's default printer. If the printer's default page size cannot be retrieved, falls back to A4 (210mm x 297mm).
+	**/
+	@:optional
+	var usePrinterDefaultPageSize : Bool; }, ?callback:haxe.Constraints.Function):Void;
 	/**
 		Resolves with the generated PDF data.
 		
@@ -603,68 +658,7 @@ var to : Float; }>; /**
 		
 		See Page.printToPdf for more information.
 	**/
-	function printToPDF(options:{ /**
-		Paper orientation.`true` for landscape, `false` for portrait. Defaults to false.
-	**/
-	@:optional
-	var landscape : Bool; /**
-		Whether to display header and footer. Defaults to false.
-	**/
-	@:optional
-	var displayHeaderFooter : Bool; /**
-		Whether to print background graphics. Defaults to false.
-	**/
-	@:optional
-	var printBackground : Bool; /**
-		Scale of the webpage rendering. Defaults to 1.
-	**/
-	@:optional
-	var scale : Float; /**
-		Specify page size of the generated PDF. Can be `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `Legal`, `Letter`, `Tabloid`, `Ledger`, or an Object containing `height` and `width` in inches. Defaults to `Letter`.
-	**/
-	@:optional
-	var pageSize : haxe.extern.EitherType<String, electron.Size>; @:optional
-	var margins : { /**
-		Top margin in inches. Defaults to 1cm (~0.4 inches).
-	**/
-	@:optional
-	var top : Float; /**
-		Bottom margin in inches. Defaults to 1cm (~0.4 inches).
-	**/
-	@:optional
-	var bottom : Float; /**
-		Left margin in inches. Defaults to 1cm (~0.4 inches).
-	**/
-	@:optional
-	var left : Float; /**
-		Right margin in inches. Defaults to 1cm (~0.4 inches).
-	**/
-	@:optional
-	var right : Float; }; /**
-		Page ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
-	**/
-	@:optional
-	var pageRanges : String; /**
-		HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: `date` (formatted print date), `title` (document title), `url` (document location), `pageNumber` (current page number) and `totalPages` (total pages in the document). For example, `<span class=title></span>` would generate span containing the title.
-	**/
-	@:optional
-	var headerTemplate : String; /**
-		HTML template for the print footer. Should use the same format as the `headerTemplate`.
-	**/
-	@:optional
-	var footerTemplate : String; /**
-		Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.
-	**/
-	@:optional
-	var preferCSSPageSize : Bool; /**
-		Whether or not to generate a tagged (accessible) PDF. Defaults to false. As this property is experimental, the generated PDF may not adhere fully to PDF/UA and WCAG standards.
-	**/
-	@:optional
-	var generateTaggedPDF : Bool; /**
-		Whether or not to generate a PDF document outline from content headers. Defaults to false.
-	**/
-	@:optional
-	var generateDocumentOutline : Bool; }):js.lib.Promise<Any>;
+	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<Any>;
 	/**
 		Adds the specified path to DevTools workspace. Must be used after DevTools creation:
 	**/
@@ -690,7 +684,7 @@ var to : Float; }>; /**
 		
 		When `contents` is a `<webview>` tag, the `mode` would be `detach` by default, explicitly passing an empty `mode` can force using last used dock state.
 		
-		On Windows, if Windows Control Overlay is enabled, DevTools will be opened with `mode: 'detach'`.
+		On Windows, if Window Control Overlay is enabled, DevTools will be opened with `mode: 'detach'`.
 	**/
 	function openDevTools(?options:{ /**
 		Opens the DevTools with specified dock state, can be `left`, `right`, `bottom`, `undocked`, `detach`. Defaults to last used dock state. In `undocked` mode it's possible to dock back. In `detach` mode it's not.
@@ -863,7 +857,7 @@ var to : Float; }>; /**
 	**/
 	function isPainting():Bool;
 	/**
-		If _offscreen rendering_ is enabled sets the frame rate to the specified number. Only values between 1 and 240 are accepted.
+		If _offscreen rendering_ is enabled sets the frame rate to the specified number. When `webPreferences.offscreen.useSharedTexture` is `false` only values between 1 and 240 are accepted.
 	**/
 	function setFrameRate(fps:Int):Void;
 	/**
@@ -904,9 +898,15 @@ var to : Float; }>; /**
 	**/
 	var max : Int; }):Void;
 	/**
-		The identifier of a WebContents stream. This identifier can be used with `navigator.mediaDevices.getUserMedia` using a `chromeMediaSource` of `tab`. The identifier is restricted to the web contents that it is registered to and is only valid for 10 seconds.
+		The identifier of a WebContents stream. This identifier can be used with `navigator.mediaDevices.getUserMedia` using a `chromeMediaSource` of `tab`. The identifier is restricted to the web contents that it is registered to and is only valid for 10 seconds. The `desktop` source only accepts screen and window identifiers from `desktopCapturer.getSources`; to capture a WebContents use this identifier with the `tab` source, or `ses.setDisplayMediaRequestHandler`.
 	**/
 	function getMediaSourceId(requestWebContents:electron.main.WebContents):String;
+	/**
+		The Chrome DevTools Protocol TargetID associated with this WebContents. This is the reverse of `webContents.fromDevToolsTargetId()`.
+		
+		> [!NOTE] This method creates a new DevTools agent for this WebContents if one does not already exist.
+	**/
+	function getOrCreateDevToolsTargetId():String;
 	/**
 		The operating system `pid` of the associated renderer process.
 	**/
@@ -915,6 +915,19 @@ var to : Float; }>; /**
 		The Chromium internal `pid` of the associated renderer. Can be compared to the `frameProcessId` passed by frame specific navigation events (e.g. `did-frame-navigate`)
 	**/
 	function getProcessId():Int;
+	/**
+		A cloned WebContents instance. This method creates a copy of the WebContents with the following attributes:
+		
+		* **WebPreferences** - All preferences from the original WebContents are copied
+		* **SiteInstance** - Uses the same SiteInstance as the original. This means the cloned WebContents will reuse the same render process as the original when loading same-origin pages, and only spawn a new render process for cross-origin navigations. This process allocation behavior is consistent with window.open and tab duplication in Chromium. For more details, see Chromium's Site Isolation design document.
+		* **Opener relationship** - Inherits the opener (window.opener) relationship
+		* **Navigation state** - Copies the navigation history and controller state
+		
+		The cloned WebContents is an independent instance with its own lifecycle that can be destroyed separately and will not contain any open web pages.
+		
+		This API is useful for use cases where you want to create a new WebContents that shares the same render process with the original for same-origin content, while maintaining full lifecycle independence. Additionally, reusing the existing render process can help optimize memory usage and page load speed to a certain extent, as it eliminates the overhead of spawning and initializing a new render process from scratch.
+	**/
+	function clone():electron.main.WebContents;
 	/**
 		Indicates whether the snapshot has been created successfully.
 		
@@ -1026,7 +1039,7 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	/**
 		Emitted after a server side redirect occurs during navigation.  For example a 302 redirect.
 		
-		This event cannot be prevented, if you want to prevent redirects you should checkout out the `will-redirect` event above.
+		This event cannot be prevented, if you want to prevent redirects you should check out the `will-redirect` event above.
 	**/
 	var did_redirect_navigation : electron.main.WebContentsEvent<Void -> Void> = "did-redirect-navigation";
 	/**

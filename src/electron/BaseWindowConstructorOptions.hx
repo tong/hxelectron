@@ -99,7 +99,7 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var focusable : Bool;
 	/**
-		Whether the window should always stay on top of other windows. Default is `false`.
+		Whether the window should always stay on top of other windows. Default is `false`. Not supported on Wayland (Linux).
 	**/
 	@:optional
 	var alwaysOnTop : Bool;
@@ -133,6 +133,16 @@ typedef BaseWindowConstructorOptions = {
 	**/
 	@:optional
 	var kiosk : Bool;
+	/**
+		A unique identifier for the window, used internally by Electron to enable features such as state persistence. Each window must have a distinct name. It can only be reused after the corresponding window has been destroyed. An error is thrown if the name is already in use. This is not the visible title shown to users on the title bar.
+	**/
+	@:optional
+	var name : String;
+	/**
+		Configures or enables the persistence of window state (position, size, maximized state, etc.) across application restarts. Has no effect if window `name` is not provided. Automatically disabled when there is no available display. _Experimental_
+	**/
+	@:optional
+	var windowStatePersistence : haxe.extern.EitherType<electron.WindowStatePersistence, Bool>;
 	/**
 		Default window title. Default is `"Electron"`. If the HTML tag `<title>` is defined in the HTML file loaded by `loadURL()`, this property will be ignored.
 	**/
@@ -251,7 +261,7 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var trafficLightPosition : electron.Point;
 	/**
-		Whether frameless window should have rounded corners. Default is `true`. On Windows versions older than Windows 11 Build 22000 this property has no effect, and frameless windows will not have rounded corners.
+		Whether a frameless window should have rounded corners. Default is `true`. On Windows versions older than Windows 11 Build 22000 this property has no effect, and frameless windows will not have rounded corners. On Linux, rounded corners are only drawn when the desktop environment supports client-side decorations.
 	**/
 	@:optional
 	var roundedCorners : Bool;

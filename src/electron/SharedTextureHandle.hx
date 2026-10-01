@@ -4,7 +4,7 @@ package electron;
 **/
 typedef SharedTextureHandle = {
 	/**
-		NT HANDLE holds the shared texture. Note that this NT HANDLE is local to current process.
+		NT HANDLE holds the shared texture. Note that this NT HANDLE is local to current process.  Output textures of `rgba`, `bgra`, `rgbaf16` formats don't have a keyed mutex on the texture handle, but `nv12` format texture handles do have a keyed mutex.
 	**/
 	@:optional
 	var ntHandle : js.node.Buffer;

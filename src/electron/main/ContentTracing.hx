@@ -47,6 +47,29 @@ package electron.main;
 		Get the maximum usage across processes of trace buffer as a percentage of the full state.
 	**/
 	static function getTraceBufferUsage():js.lib.Promise<Any>;
+	/**
+		Resolves once heap profiling has been enabled.
+		
+		Enable heap profiling for MemoryInfra traces. Equivalent to the `--memlog` switch in Chrome.
+		
+		Only takes effect if the `disabled-by-default-memory-infra` category is included.
+		
+		Needs to be called before `contentTracing.startRecording()`.
+		
+		Usage:
+		
+		To view the recorded heap dumps:
+		
+		* Download the breakpad symbols for your Electron version from the Electron GitHub releases
+		* Clone the Electron source code
+		* In your Chromium checkout for Electron, run this command to symbolicate the heap dump:
+		* Open the symbolicated trace in `chrome://tracing` (the Perfetto UI does not support memory dumps yet)
+		* Click on one of the `M` symbols
+		* Click on a `☰` triple bar icon (e.g., in the `malloc` column)
+		
+		[Image: Screenshot showing how to view a heapdump in Chromium's tracing view]
+	**/
+	static function enableHeapProfiling(?options:electron.EnableHeapProfilingOptions):js.lib.Promise<Any>;
 }
 enum abstract ContentTracingEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 

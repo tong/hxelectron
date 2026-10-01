@@ -4,7 +4,7 @@ package electron;
 **/
 typedef NotificationAction = {
 	/**
-		The type of action, can be `button`.
+		The type of action, can be `button` or `selection`. `selection` is only supported on Windows.
 	**/
 	var type : String;
 	/**
@@ -12,4 +12,9 @@ typedef NotificationAction = {
 	**/
 	@:optional
 	var text : String;
+	/**
+		The list of items for the `selection` action `type`.
+	**/
+	@:optional
+	var items : Array<String>;
 }

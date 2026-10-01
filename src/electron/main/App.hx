@@ -9,7 +9,7 @@ package electron.main;
 **/
 @:jsRequire("electron", "app") extern class App extends js.node.events.EventEmitter<electron.main.App> {
 	/**
-		A `boolean` property that's `true` if Chrome's accessibility support is enabled, `false` otherwise. This property will be `true` if the use of assistive technologies, such as screen readers, has been detected. Setting this property to `true` manually enables Chrome's accessibility support, allowing developers to expose accessibility switch to users in application settings.
+		A `boolean` property that's `true` if Chromium's accessibility support is enabled, `false` otherwise. This property will be `true` if the use of assistive technologies, such as screen readers, has been detected. Setting this property to `true` manually enables Chromium's accessibility support, allowing developers to expose accessibility switch to users in application settings.
 		
 		See Chromium's accessibility docs for more details. Disabled by default.
 		
@@ -23,11 +23,7 @@ package electron.main;
 	**/
 	static var applicationMenu : haxe.extern.EitherType<electron.main.Menu, Dynamic>;
 	/**
-		An `Integer` property that returns the badge count for current app. Setting the count to `0` will hide the badge.
-		
-		On macOS, setting this with any nonzero integer shows on the dock icon. On Linux, this property only works for Unity launcher.
-		
-		> [!NOTE] Unity launcher requires a `.desktop` file to work. For more information, please read the Unity integration documentation.
+		An `Integer` property that returns the badge count for current app. Setting the count to `0` will hide the badge. Setting this with any nonzero integer shows the count on the Dock icon on macOS, or on the launcher on Linux.
 		
 		> [!NOTE] On macOS, you need to ensure that your application has the permission to display notifications for this property to take effect.
 	**/
@@ -44,6 +40,10 @@ package electron.main;
 		A `boolean` property that returns  `true` if the app is packaged, `false` otherwise. For many apps, this property can be used to distinguish development and production environments.
 	**/
 	static var isPackaged : Bool;
+	/**
+		A `string` property that returns the app's Toast Activator CLSID.
+	**/
+	static var toastActivatorCLSID : String;
 	/**
 		A `string` property that indicates the current application's name, which is the name in the application's `package.json` file.
 		
@@ -97,7 +97,7 @@ package electron.main;
 	**/
 	static function whenReady():js.lib.Promise<Any>;
 	/**
-		On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses on the application's first window.
+		On macOS, makes the application the active app. On Windows, focuses on the application's first window. On Linux, either focuses on the first visible window (X11) or requests focus but may instead show a notification or flash the app icon (Wayland).
 		
 		You should seek to use the `steal` option as sparingly as possible.
 	**/
@@ -105,6 +105,10 @@ package electron.main;
 		Make the receiver the active app even if another app is currently active.
 	**/
 	var steal : Bool; }):Void;
+	/**
+		`true` if the application is active (i.e. focused).
+	**/
+	static function isActive():Bool;
 	/**
 		Hides all application windows without minimizing them.
 	**/
@@ -130,7 +134,7 @@ package electron.main;
 	/**
 		A path to a special directory or file associated with `name`. On failure, an `Error` is thrown.
 		
-		If `app.getPath('logs')` is called without called `app.setAppLogsPath()` being called first, a default log directory will be created equivalent to calling `app.setAppLogsPath()` without a `path` parameter.
+		If `app.getPath('logs')` is called without calling `app.setAppLogsPath()` being called first, a default log directory will be created equivalent to calling `app.setAppLogsPath()` without a `path` parameter.
 	**/
 	static function getPath(name:String):String;
 	/**
@@ -138,7 +142,7 @@ package electron.main;
 		
 		Fetches a path's associated icon.
 		
-		On _Windows_, there a 2 kinds of icons:
+		On _Windows_, there are 2 kinds of icons:
 		
 		* Icons associated with certain file extensions, like `.mp3`, `.png`, etc.
 		* Icons inside the file itself, like `.exe`, `.dll`, `.ico`.
@@ -170,6 +174,24 @@ package electron.main;
 		> [!NOTE] This function overrides the name used internally by Electron; it does not affect the name that the OS uses.
 	**/
 	static function setName(name:String):Void;
+	/**
+		Sets the `.desktop` filename on Linux. This must match the base filename of the app's installed `.desktop` file. The `.desktop` suffix is optional.
+		
+		The name (without the `.desktop` suffix) is the app's identity for Linux desktop integration. It should be a reverse-DNS style ID such as `com.example.MyApp`, following the desktop entry naming conventions. This value is used as:
+		
+		* the XDG application ID (`app_id`) on Wayland and `WM_CLASS` on X11, used to match the app's icon and window grouping.
+		* the app ID that `xdg-desktop-portal` reports to portal backends such as GlobalShortcuts.
+		
+		Portals increasingly enforce this identity. If the name is not a valid reverse-DNS ID or does not match an installed `.desktop` file:
+		
+		* GNOME 50.0/50.1 (Ubuntu 26.04) rejects `globalShortcut` binds with `org.freedesktop.portal.Error.NotAllowed` — with no error surfaced to the app (see #52218).
+		* `xdg-desktop-portal` 1.21 and later refuses portal sessions for app IDs it cannot resolve to a `.desktop` file.
+		
+		If this value is not set and `desktopName` is not present in `package.json`, Electron falls back to a lowercased, hyphenated slug of the app's name (e.g. `My App` → `my-app.desktop`), which is unlikely to be a valid portal identity — packaged apps should always set it explicitly.
+		
+		This API must be called before the `ready` event. The value can also be set using `desktopName` in `package.json`.
+	**/
+	static function setDesktopName(name:String):Void;
 	/**
 		The current application locale, fetched using Chromium's `l10n_util` library. Possible return values are documented here.
 		
@@ -218,7 +240,7 @@ package electron.main;
 		
 		Both the available languages and regions and the possible return values differ between the two operating systems.
 		
-		As can be seen with the example above, on Windows, it is possible that a preferred system language has no country code, and that one of the preferred system languages corresponds with the language used for the regional format. On macOS, the region serves more as a default country code: the user doesn't need to have Finnish as a preferred language to use Finland as the region,and the country code `FI` is used as the country code for preferred system languages that do not have associated countries in the language name.
+		As can be seen with the example above, on Windows, it is possible that a preferred system language has no country code, and that one of the preferred system languages corresponds with the language used for the regional format. On macOS, the region serves more as a default country code: the user doesn't need to have Finnish as a preferred language to use Finland as the region, and the country code `FI` is used as the country code for preferred system languages that do not have associated countries in the language name.
 	**/
 	static function getPreferredSystemLanguages():Array<String>;
 	/**
@@ -319,9 +341,11 @@ package electron.main;
 		
 		On macOS, the system enforces single instance automatically when users try to open a second instance of your app in Finder, and the `open-file` and `open-url` events will be emitted for that. However when users start your app in command line, the system's single instance mechanism will be bypassed, and you have to use this method to ensure single instance.
 		
+		> [!NOTE] On macOS and Linux, the second instance's command line arguments and `additionalData` are sent to the primary instance in a single message that is limited to 32 MB. Larger messages are dropped: this method still returns `false`, but the primary instance does not emit `second-instance`.
+		
 		An example of activating the window of primary instance when a second instance starts:
 	**/
-	static function requestSingleInstanceLock(?additionalData:Record):Bool;
+	static function requestSingleInstanceLock(?additionalData:Dynamic):Bool;
 	/**
 		This method returns whether or not this instance of your app is currently holding the single instance lock.  You can request the lock with `app.requestSingleInstanceLock()` and release with `app.releaseSingleInstanceLock()`
 	**/
@@ -354,6 +378,17 @@ package electron.main;
 		Changes the Application User Model ID to `id`.
 	**/
 	static function setAppUserModelId(id:String):Void;
+	/**
+		Changes the Toast Activator CLSID to `id`. If one is not set via this method, it will be randomly generated for the app.
+		
+		* The value must be a valid GUID/CLSID in one of the following forms:
+		  * Canonical brace-wrapped: `{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}` (preferred)
+		  * Canonical without braces: `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` (braces will be added automatically)
+		* Hex digits are case-insensitive.
+		
+		This method should be called early (before showing notifications) so the value is baked into the registration/shortcut. Supplying an empty string or an unparsable value throws and leaves the existing (or generated) CLSID unchanged. If this method is never called, a random CLSID is generated once per run and exposed via `app.toastActivatorCLSID`.
+	**/
+	static function setToastActivatorCLSID(id:String):Void;
 	/**
 		Sets the activation policy for a given app.
 		
@@ -409,6 +444,27 @@ package electron.main;
 	@:optional
 	var enableAdditionalDnsQueryTypes : Bool; }):Void;
 	/**
+		Configures platform authenticators for the Web Authentication API (`navigator.credentials.create()` / `navigator.credentials.get()`). Until this is called, `PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()` resolves to `false` and platform-authenticator requests are not serviced.
+		
+		When `touchID` is provided, WebAuthn credentials are stored in the macOS keychain and bound to this device's Secure Enclave. Electron automatically generates and persists a per-`session` metadata secret so that credentials created in one partition are not visible to another.
+		
+		With the matching entitlement in your app's `entitlements.plist`:
+		
+		> [!NOTE] Touch ID WebAuthn credentials are device-bound and are not synced via iCloud Keychain. They are only available on Macs with a Secure Enclave (Apple silicon, or Intel Macs with a T2 chip).
+	**/
+	static function configureWebAuthn(options:{ /**
+		Enables the Touch ID / Secure Enclave platform authenticator for Web Authentication requests.
+	**/
+	@:optional
+	var touchID : { /**
+		The keychain access group that WebAuthn credentials will be stored under. This value **must** also be present in your app's `keychain-access-groups` code-signing entitlement, and is typically of the form `<TEAM_ID>.<BUNDLE_ID>.webauthn`.
+	**/
+	var keychainAccessGroup : String; /**
+		Customizes the reason text shown in the macOS Touch ID prompt. macOS renders the prompt as `"<App Name>" is trying to <promptReason>`, so the value should be a lowercase sentence fragment. An optional `$1` placeholder is replaced with the relying party ID (e.g. `example.com`) of the request being authenticated. Defaults to `verify your identity on $1`.
+	**/
+	@:optional
+	var promptReason : String; }; }):Void;
+	/**
 		Disables hardware acceleration for current app.
 		
 		This method can only be called before app is ready.
@@ -421,13 +477,15 @@ package electron.main;
 	**/
 	static function isHardwareAccelerationEnabled():Bool;
 	/**
-		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU processes crashes too frequently. This function disables that behavior.
+		By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain basis if the GPU process crashes too frequently. This function disables that behavior.
 		
 		This method can only be called before app is ready.
 	**/
 	static function disableDomainBlockingFor3DAPIs():Void;
 	/**
 		Array of `ProcessMetric` objects that correspond to memory and CPU usage statistics of all the processes associated with the app.
+		
+		> [!NOTE] `cpu.percentCPUUsage` and `cpu.idleWakeupsPerSecond` are averages over the time since the last call to `app.getAppMetrics()`, and each call starts a new measurement interval for every process at once. Other code in the main process, including dependencies, shares those intervals. See `CPUUsage` for more details.
 	**/
 	static function getAppMetrics():Array<electron.ProcessMetric>;
 	/**
@@ -442,6 +500,8 @@ package electron.main;
 		For `infoType` equal to `basic`: Promise is fulfilled with `Object` containing fewer attributes than when requested with `complete`. Here's an example of basic response:
 		
 		Using `basic` should be preferred if only basic information like `vendorId` or `deviceId` is needed.
+		
+		Promise is rejected if the GPU is completely disabled, i.e. no hardware and software implementations are available.
 	**/
 	static function getGPUInfo(infoType:String):js.lib.Promise<Any>;
 	/**
@@ -449,9 +509,9 @@ package electron.main;
 		
 		Sets the counter badge for current app. Setting the count to `0` will hide the badge.
 		
-		On macOS, it shows on the dock icon. On Linux, it only works for Unity launcher.
+		On macOS, it shows on the Dock icon. On Linux, it shows on docks and taskbars that support the LauncherEntry D-Bus API,
 		
-		> [!NOTE] Unity launcher requires a `.desktop` file to work. For more information, please read the Unity integration documentation.
+		> [!NOTE] On Linux, the badge is associated with the app's `.desktop` file, so `app.setDesktopName` (or the `desktopName` field in `package.json`) must match the name of the app's actual `.desktop` file.
 		
 		> [!NOTE] On macOS, you need to ensure that your application has the permission to display notifications for this method to work.
 	**/
@@ -461,33 +521,26 @@ package electron.main;
 	**/
 	static function getBadgeCount():Int;
 	/**
-		Whether the current desktop environment is Unity launcher.
-	**/
-	static function isUnityRunning():Bool;
-	/**
 		If you provided `path` and `args` options to `app.setLoginItemSettings`, then you need to pass the same arguments here for `openAtLogin` to be set correctly.
 		
 		
 		* `openAtLogin` boolean - `true` if the app is set to open at login.
-		* `openAsHidden` boolean _macOS_ _Deprecated_ - `true` if the app is set to open as hidden at login. This does not work on macOS 13 and up.
 		* `wasOpenedAtLogin` boolean _macOS_ - `true` if the app was opened at login automatically.
-		* `wasOpenedAsHidden` boolean _macOS_ _Deprecated_ - `true` if the app was opened as a hidden login item. This indicates that the app should not open any windows at startup. This setting is not available on MAS builds or on macOS 13 and up.
-		* `restoreState` boolean _macOS_ _Deprecated_ - `true` if the app was opened as a login item that should restore the state from the previous session. This indicates that the app should restore the windows that were open the last time the app was closed. This setting is not available on MAS builds or on macOS 13 and up.
-		* `status` string _macOS_ - can be one of `not-registered`, `enabled`, `requires-approval`, or `not-found`.
+		* `status` string _macOS_ - can be `not-registered`, `enabled`, `requires-approval`, or `not-found`.
 		* `executableWillLaunchAtLogin` boolean _Windows_ - `true` if app is set to open at login and its run key is not deactivated. This differs from `openAtLogin` as it ignores the `args` option, this property will be true if the given executable would be launched at login with **any** arguments.
 		* `launchItems` Object[] _Windows_
 		  * `name` string _Windows_ - name value of a registry entry.
 		  * `path` string _Windows_ - The executable to an app that corresponds to a registry entry.
 		  * `args` string[] _Windows_ - the command-line arguments to pass to the executable.
-		  * `scope` string _Windows_ - one of `user` or `machine`. Indicates whether the registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
+		  * `scope` string _Windows_ - can be `user` or `machine`. Indicates whether the registry entry is under `HKEY_CURRENT USER` or `HKEY_LOCAL_MACHINE`.
 		  * `enabled` boolean _Windows_ - `true` if the app registry key is startup approved and therefore shows as `enabled` in Task Manager and Windows settings.
 	**/
 	static function getLoginItemSettings(?options:{ /**
-		Can be one of `mainAppService`, `agentService`, `daemonService`, or `loginItemService`. Defaults to `mainAppService`. Only available on macOS 13 and up. See app.setLoginItemSettings for more information about each type.
+		Can be `mainAppService`, `agentService`, `daemonService`, or `loginItemService`. Defaults to `mainAppService`. See app.setLoginItemSettings for more information about each type.
 	**/
 	@:optional
 	var type : String; /**
-		The name of the service. Required if `type` is non-default. Only available on macOS 13 and up.
+		The name of the service. Required if `type` is non-default.
 	**/
 	@:optional
 	var serviceName : String; /**
@@ -504,22 +557,18 @@ package electron.main;
 		
 		To work with Electron's `autoUpdater` on Windows, which uses Squirrel, you'll want to set the launch path to your executable's name but a directory up, which is a stub application automatically generated by Squirrel which will automatically launch the latest version.
 		
-		For more information about setting different services as login items on macOS 13 and up, see `SMAppService`.
+		For more information about setting different services as login items on macOS, see `SMAppService`.
 	**/
 	static function setLoginItemSettings(settings:{ /**
 		`true` to open the app at login, `false` to remove the app as a login item. Defaults to `false`.
 	**/
 	@:optional
 	var openAtLogin : Bool; /**
-		`true` to open the app as hidden. Defaults to `false`. The user can edit this setting from the System Preferences so `app.getLoginItemSettings().wasOpenedAsHidden` should be checked when the app is opened to know the current value. This setting is not available on MAS builds or on macOS 13 and up.
-	**/
-	@:optional
-	var openAsHidden : Bool; /**
-		The type of service to add as a login item. Defaults to `mainAppService`. Only available on macOS 13 and up.
+		The type of service to add as a login item. Defaults to `mainAppService`.
 	**/
 	@:optional
 	var type : String; /**
-		The name of the service. Required if `type` is non-default. Only available on macOS 13 and up.
+		The name of the service. Required if `type` is non-default.
 	**/
 	@:optional
 	var serviceName : String; /**
@@ -540,11 +589,11 @@ package electron.main;
 	@:optional
 	var name : String; }):Void;
 	/**
-		`true` if Chrome's accessibility support is enabled, `false` otherwise. This API will return `true` if the use of assistive technologies, such as screen readers, has been detected. See https://www.chromium.org/developers/design-documents/accessibility for more details.
+		`true` if Chromium's accessibility support is enabled, `false` otherwise. This API will return `true` if the use of assistive technologies, such as screen readers, has been detected. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
 	static function isAccessibilitySupportEnabled():Bool;
 	/**
-		Manually enables Chrome's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default.
+		Manually enables Chromium's accessibility support, allowing to expose accessibility switch to users in application settings. See Chromium's accessibility docs for more details. Disabled by default.
 		
 		This API must be called after the `ready` event is emitted.
 		
@@ -641,7 +690,7 @@ package electron.main;
 	/**
 		This function **must** be called once you have finished accessing the security scoped file. If you do not remember to stop accessing the bookmark, kernel resources will be leaked and your app will lose its ability to reach outside the sandbox completely, until your app is restarted.
 		
-		Start accessing a security scoped resource. With this method Electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
+		Start accessing a security scoped resource. With this method, Electron applications that are packaged for the Mac App Store may reach outside their sandbox to access files chosen by the user. See Apple's documentation for a description of how this system works.
 	**/
 	static function startAccessingSecurityScopedResource(bookmarkData:String):haxe.Constraints.Function;
 	/**
@@ -796,7 +845,9 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	**/
 	var update_activity_state : electron.main.AppEvent<Void -> Void> = "update-activity-state";
 	/**
-		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`
+		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`.
+		
+		You must create a window in this handler in order for macOS tabbing to work as expected.
 	**/
 	var new_window_for_tab : electron.main.AppEvent<Void -> Void> = "new-window-for-tab";
 	/**
@@ -823,6 +874,8 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		Emitted when a client certificate is requested.
 		
 		The `url` corresponds to the navigation entry requesting the client certificate and `callback` can be called with an entry filtered from the list. Using `event.preventDefault()` prevents the application from using the first certificate from the store.
+		
+		`webContents` is `null` when the request does not originate from a renderer process, for example when using `net.request` or `net.fetch` in the main process, or from a utility process created with `respondToAuthRequestsFromMainProcess: true`. For utility processes created without that flag, `net` requests proceed without a client certificate and this event is not emitted.
 	**/
 	var select_client_certificate : electron.main.AppEvent<Void -> Void> = "select-client-certificate";
 	/**
@@ -842,11 +895,11 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	**/
 	var render_process_gone : electron.main.AppEvent<Void -> Void> = "render-process-gone";
 	/**
-		Emitted when the child process unexpectedly disappears. This is normally because it was crashed or killed. It does not include renderer processes.
+		Emitted when the child process unexpectedly disappears. This is normally because it was crashed or killed, or because it failed to launch. It does not include renderer processes.
 	**/
 	var child_process_gone : electron.main.AppEvent<Void -> Void> = "child-process-gone";
 	/**
-		Emitted when Chrome's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
+		Emitted when Chromium's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
 	var accessibility_support_changed : electron.main.AppEvent<Void -> Void> = "accessibility-support-changed";
 	/**

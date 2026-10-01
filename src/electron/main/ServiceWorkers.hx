@@ -6,7 +6,7 @@ package electron.main;
 	/**
 		A ServiceWorkerInfo object where the keys are the service worker version ID and the values are the information about that service worker.
 	**/
-	function getAllRunning():Record;
+	function getAllRunning():Dynamic;
 	/**
 		Information about this service worker
 		

@@ -22,7 +22,10 @@ package electron.main;
 		> [!NOTE] On Linux `defaultPath` is not supported when using portal file chooser dialogs unless the portal backend is version 4 or higher. You can use `--xdg-portal-required-version` command-line switch to force gtk or kde dialogs.
 	**/
 	static function showOpenDialogSync(?window:electron.main.BaseWindow, options:{ @:optional
-	var title : String; @:optional
+	var title : String; /**
+		Absolute directory path, absolute file path, or file name to use by default. If not provided, the dialog will default to the user's Downloads folder, or their home directory if Downloads doesn't exist.
+	**/
+	@:optional
 	var defaultPath : String; /**
 		Custom label for the confirmation button, when left empty the default label will be used.
 	**/
@@ -40,7 +43,7 @@ package electron.main;
 		Create security scoped bookmarks when packaged for the Mac App Store.
 	**/
 	@:optional
-	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<Array<String>, Dynamic>;
+	var securityScopedBookmarks : Bool; }):haxe.extern.EitherType<String, Dynamic>;
 	/**
 		Resolve with an object containing the following:
 		
@@ -59,7 +62,10 @@ package electron.main;
 		> [!NOTE] On Linux `defaultPath` is not supported when using portal file chooser dialogs unless the portal backend is version 4 or higher. You can use `--xdg-portal-required-version` command-line switch to force gtk or kde dialogs.
 	**/
 	static function showOpenDialog(?window:electron.main.BaseWindow, options:{ @:optional
-	var title : String; @:optional
+	var title : String; /**
+		Absolute directory path, absolute file path, or file name to use by default. If not provided, the dialog will default to the user's Downloads folder, or their home directory if Downloads doesn't exist.
+	**/
+	@:optional
 	var defaultPath : String; /**
 		Custom label for the confirmation button, when left empty the default label will be used.
 	**/
@@ -90,7 +96,7 @@ package electron.main;
 	**/
 	@:optional
 	var title : String; /**
-		Absolute directory path, absolute file path, or file name to use by default.
+		Absolute directory path, absolute file path, or file name to use by default. If not provided, the dialog will default to the user's Downloads folder, or their home directory if Downloads doesn't exist.
 	**/
 	@:optional
 	var defaultPath : String; /**
@@ -134,7 +140,7 @@ package electron.main;
 	**/
 	@:optional
 	var title : String; /**
-		Absolute directory path, absolute file path, or file name to use by default.
+		Absolute directory path, absolute file path, or file name to use by default. If not provided, the dialog will default to the user's Downloads folder, or their home directory if Downloads doesn't exist.
 	**/
 	@:optional
 	var defaultPath : String; /**
@@ -274,7 +280,7 @@ package electron.main;
 	/**
 		Displays a modal dialog that shows an error message.
 		
-		This API can be called safely before the `ready` event the `app` module emits, it is usually used to report errors in early stage of startup. If called before the app `ready`event on Linux, the message will be emitted to stderr, and no GUI dialog will appear.
+		This API can be called safely before the `ready` event the `app` module emits, it is usually used to report errors in early stage of startup. If called before the app `ready` event on Linux, the message will be emitted to stderr, and no GUI dialog will appear.
 	**/
 	static function showErrorBox(title:String, content:String):Void;
 	/**

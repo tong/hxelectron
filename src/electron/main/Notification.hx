@@ -6,6 +6,8 @@ package electron.main;
 	
 	> [!NOTE] If you want to show notifications from a renderer process you should use the web Notifications API
 	
+	> [!NOTE] On MacOS, notifications use the UNNotification API as their underlying framework. This API requires an application to be code-signed in order for notifications to appear. Unsigned binaries will emit a `failed` event when notifications are called.
+	
 	### Class: Notification
 	
 	> Create OS desktop notifications
@@ -25,6 +27,113 @@ package electron.main;
 	### `Notification.isSupported()`
 	
 	Returns `boolean` - Whether or not desktop notifications are supported on the current system
+	
+	### `Notification.handleActivation(callback)` _Windows_
+	
+	* `callback` Function
+	  * `details` ActivationArguments - Details about the notification activation.
+	
+	Registers a callback to handle all notification activations. The callback is invoked whenever a notification is clicked, replied to, or has an action button pressed - regardless of whether the original `Notification` object is still in memory.
+	
+	This method handles timing automatically:
+	
+	* If an activation already occurred before calling this method, the callback is invoked immediately with those details.
+	* For all subsequent activations, the callback is invoked when they occur.
+	
+	The callback remains registered until replaced by another call to `handleActivation`.
+	
+	This provides a centralized way to handle notification interactions that works in all scenarios:
+	
+	* Cold start (app launched from notification click)
+	* Notifications persisted in AC that have no in-memory representation after app re-start
+	* Notification object was garbage collected
+	* Notification object is still in memory (callback is invoked in addition to instance events)
+	
+	```
+	const { Notification, app } = require('electron')
+	
+	app.whenReady().then(() => {
+	  // Register handler for all notification activations
+	  Notification.handleActivation((details) => {
+	    console.log('Notification activated:', details.type)
+	    if (details.type === 'reply') {
+	      console.log('User reply:', details.reply)
+	    } else if (details.type === 'action') {
+	      console.log('Action index:', details.actionIndex)
+	    }
+	  })
+	})
+	```
+	
+	### `Notification.getHistory()` _macOS_
+	
+	Returns `Promise<Notification[]>` - Resolves with an array of `Notification` objects representing all delivered notifications still present in Notification Center.
+	
+	Each returned `Notification` is a live object connected to the corresponding delivered notification. Interaction events (`click`, `reply`, `action`, `close`) will fire on these objects when the user interacts with the notification in Notification Center. This is useful after an app restart to re-attach event handlers to notifications from a previous session.
+	
+	The returned notifications have their `id`, `groupId`, `title`, `subtitle`, and `body` properties populated from information available in the Notification Center. Other properties (e.g., `actions`, `silent`, `icon`) are not available from delivered notifications and will have default values.
+	
+	> [!NOTE] Like all macOS notification APIs, this method requires the application to be code-signed. In unsigned development builds, notifications are not delivered to Notification Center and this method will resolve with an empty array.
+	
+	> [!NOTE] Unlike notifications created with `new Notification()`, notifications returned by `getHistory()` will remain visible in Notification Center when the object is garbage collected. Calling `show()` on a restored notification will remove the original from Notification Center and post a new one with the same properties.
+	
+	```
+	const { Notification, app } = require('electron')
+	
+	app.whenReady().then(async () => {
+	  // Restore notifications from a previous session
+	  const notifications = await Notification.getHistory()
+	  for (const n of notifications) {
+	    console.log(`Found delivered notification: ${n.id} - ${n.title}`)
+	    n.on('click', () => {
+	      console.log(`User clicked: ${n.id}`)
+	    })
+	    n.on('reply', (event) => {
+	      console.log(`User replied to ${n.id}: ${event.reply}`)
+	    })
+	  }
+	  // Keep references so events continue to fire
+	})
+	```
+	
+	### `Notification.remove(id)` _macOS_
+	
+	* `id` (string | string[]) - The notification identifier(s) to remove. These correspond to the `id` values set in the `Notification` constructor.
+	
+	Removes one or more delivered notifications from Notification Center by their identifier(s).
+	
+	```
+	const { Notification } = require('electron')
+	
+	// Remove a single notification
+	Notification.remove('my-notification-id')
+	
+	// Remove multiple notifications
+	Notification.remove(['msg-1', 'msg-2', 'msg-3'])
+	```
+	
+	### `Notification.removeAll()` _macOS_
+	
+	Removes all of the app's delivered notifications from Notification Center.
+	
+	```
+	const { Notification } = require('electron')
+	
+	Notification.removeAll()
+	```
+	
+	### `Notification.removeGroup(groupId)` _macOS_
+	
+	* `groupId` string - The group identifier of the notifications to remove. This corresponds to the `groupId` value set in the `Notification` constructor.
+	
+	Removes all delivered notifications with the given `groupId` from Notification Center.
+	
+	```
+	const { Notification } = require('electron')
+	
+	// Remove all notifications in the 'chat-thread-1' group
+	Notification.removeGroup('chat-thread-1')
+	```
 	@see https://electronjs.org/docs/api/notification
 **/
 @:jsRequire("electron", "Notification") extern class Notification extends js.node.events.EventEmitter<electron.main.Notification> {
@@ -32,6 +141,60 @@ package electron.main;
 		Whether or not desktop notifications are supported on the current system
 	**/
 	static function isSupported():Bool;
+	/**
+		Registers a callback to handle all notification activations. The callback is invoked whenever a notification is clicked, replied to, or has an action button pressed - regardless of whether the original `Notification` object is still in memory.
+		
+		This method handles timing automatically:
+		
+		* If an activation already occurred before calling this method, the callback is invoked immediately with those details.
+		* For all subsequent activations, the callback is invoked when they occur.
+		
+		The callback remains registered until replaced by another call to `handleActivation`.
+		
+		This provides a centralized way to handle notification interactions that works in all scenarios:
+		
+		* Cold start (app launched from notification click)
+		* Notifications persisted in AC that have no in-memory representation after app re-start
+		* Notification object was garbage collected
+		* Notification object is still in memory (callback is invoked in addition to instance events)
+	**/
+	static function handleActivation(callback:haxe.Constraints.Function):Void;
+	/**
+		Resolves with an array of `Notification` objects representing all delivered notifications still present in Notification Center.
+		
+		Each returned `Notification` is a live object connected to the corresponding delivered notification. Interaction events (`click`, `reply`, `action`, `close`) will fire on these objects when the user interacts with the notification in Notification Center. This is useful after an app restart to re-attach event handlers to notifications from a previous session.
+		
+		The returned notifications have their `id`, `groupId`, `title`, `subtitle`, and `body` properties populated from information available in the Notification Center. Other properties (e.g., `actions`, `silent`, `icon`) are not available from delivered notifications and will have default values.
+		
+		> [!NOTE] Like all macOS notification APIs, this method requires the application to be code-signed. In unsigned development builds, notifications are not delivered to Notification Center and this method will resolve with an empty array.
+		
+		> [!NOTE] Unlike notifications created with `new Notification()`, notifications returned by `getHistory()` will remain visible in Notification Center when the object is garbage collected. Calling `show()` on a restored notification will remove the original from Notification Center and post a new one with the same properties.
+	**/
+	static function getHistory():js.lib.Promise<Any>;
+	/**
+		Removes one or more delivered notifications from Notification Center by their identifier(s).
+	**/
+	static function remove(id:String):Void;
+	/**
+		Removes all of the app's delivered notifications from Notification Center.
+	**/
+	static function removeAll():Void;
+	/**
+		Removes all delivered notifications with the given `groupId` from Notification Center.
+	**/
+	static function removeGroup(groupId:String):Void;
+	/**
+		A `string` property representing the unique identifier of the notification. This is set at construction time — either from the `id` option or as a generated UUID if none was provided.
+	**/
+	var id : String;
+	/**
+		A `string` property representing the group identifier of the notification. Notifications with the same `groupId` will be visually grouped together in Notification Center (macOS) or Action Center (Windows).
+	**/
+	var groupId : String;
+	/**
+		A `string` property representing the title of the notification group header.
+	**/
+	var groupTitle : String;
 	/**
 		A `string` property representing the title of the notification.
 	**/
@@ -85,6 +248,18 @@ package electron.main;
 	**/
 	var toastXml : String;
 	function new(?options:{ /**
+		A unique identifier for the notification. On macOS, maps to `UNNotificationRequest`'s `identifier` property. On Windows, maps to the toast notification's `Tag` property. Defaults to a random UUID if not provided or if an empty string is passed. Use this identifier with `Notification.remove()` to remove specific delivered notifications, or with `Notification.getHistory()` to identify them.
+	**/
+	@:optional
+	var id : String; /**
+		A string identifier used to visually group notifications together in Notification Center / Action Center. On macOS, maps to `UNNotificationContent`'s `threadIdentifier` property. On Windows, maps to the toast notification's `Group` property. Use this identifier with `Notification.removeGroup()` to remove all notifications in a group.
+	**/
+	@:optional
+	var groupId : String; /**
+		A title for the notification group header. When both `groupId` and `groupTitle` are specified, Windows will display a header above the notification that groups related notifications together. Maps to the toast notification's `header` element.
+	**/
+	@:optional
+	var groupTitle : String; /**
 		A title for the notification, which will be displayed at the top of the notification window when it is shown.
 	**/
 	@:optional
@@ -141,6 +316,8 @@ package electron.main;
 		Immediately shows the notification to the user. Unlike the web notification API, instantiating a `new Notification()` does not immediately show it to the user. Instead, you need to call this method before the OS will display it.
 		
 		If the notification has been shown before, this method will dismiss the previously shown notification and create a new one with identical properties.
+		
+		On macOS, calling `show()` on a notification returned by `Notification.getHistory()` will remove the original notification from Notification Center and post a new one with the same properties.
 	**/
 	function show():Void;
 	/**

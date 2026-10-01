@@ -22,7 +22,7 @@ typedef ProcessMetric = {
 	@:optional
 	var name : String;
 	/**
-		CPU usage of the process.
+		CPU usage of the process. Its `percentCPUUsage` and `idleWakeupsPerSecond` are averages over the time since the previous call to the API returning this object.
 	**/
 	var cpu : electron.CPUUsage;
 	/**

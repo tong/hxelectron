@@ -48,5 +48,5 @@ typedef TraceConfig = {
 		if the `disabled-by-default-memory-infra` category is enabled, this contains optional additional configuration for data collection. See the Chromium memory-infra docs for more information.
 	**/
 	@:optional
-	var memory_dump_config : Record;
+	var memory_dump_config : Dynamic;
 }

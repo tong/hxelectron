@@ -40,5 +40,9 @@ typedef CustomScheme = {
 		Enable V8 code cache for the scheme, only works when `standard` is also set to true. Default false.
 	**/
 	@:optional
-	var codeCache : Bool; };
+	var codeCache : Bool; /**
+		Allow Chrome extensions to be used on pages served over this protocol. Default false.
+	**/
+	@:optional
+	var allowExtensions : Bool; };
 }

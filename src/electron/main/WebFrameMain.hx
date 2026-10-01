@@ -124,6 +124,28 @@ package electron.main;
 		This can be useful to determine why the frame is unresponsive in cases where there's long-running JavaScript. For more information, see the proposed Crash Reporting API.
 	**/
 	function collectJavaScriptCallStack():haxe.extern.EitherType<js.lib.Promise<Any>, js.lib.Promise<Any>>;
+	/**
+		When executed on a video media element, copies the frame at (x, y) to the clipboard.
+	**/
+	function copyVideoFrameAt(x:Int, y:Int):Void;
+	/**
+		When executed on a video media element, shows a save dialog and saves the frame at (x, y) to disk.
+	**/
+	function saveVideoFrameAs(x:Int, y:Int):Void;
+	/**
+		Resolves with the generated PDF data.
+		
+		Prints the frame's web page as PDF.
+		
+		Unlike `webContents.printToPDF`, this method prints only the contents of the frame it is called on. This can be used to print an individual `<iframe>` from the main process.
+		
+		The `landscape` will be ignored if `@page` CSS at-rule is used in the web page.
+		
+		An example of printing an iframe to PDF:
+		
+		See Page.printToPdf for more information.
+	**/
+	function printToPDF(options:electron.PrintToPDFOptions):js.lib.Promise<Any>;
 }
 enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
 	/**

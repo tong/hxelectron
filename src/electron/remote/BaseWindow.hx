@@ -87,6 +87,12 @@ package electron.remote;
 	**/
 	static function fromId(id:Int):haxe.extern.EitherType<electron.remote.BaseWindow, Dynamic>;
 	/**
+		Clears the saved state for a window with the given name. This removes all persisted window bounds, display mode, and work area information that was previously saved when `windowStatePersistence` was enabled.
+		
+		If the window `name` is empty or the window state doesn't exist, the method will log a warning.
+	**/
+	static function clearPersistedState(name:String):Void;
+	/**
 		A `Integer` property representing the unique ID of the window. Each ID is unique among all `BaseWindow` instances of the entire Electron application.
 	**/
 	var id : Int;
@@ -228,6 +234,8 @@ package electron.remote;
 	function isFocused():Bool;
 	/**
 		Whether the window is destroyed.
+		
+		> [!NOTE] Once a window is destroyed, accessing most of its other properties and methods throws `Object has been destroyed`, so callbacks that may run after the window is gone should guard with `isDestroyed()`.
 	**/
 	function isDestroyed():Bool;
 	/**
@@ -354,6 +362,8 @@ package electron.remote;
 		The `bounds` of the window as `Object`.
 		
 		> [!NOTE] On macOS, the y-coordinate value returned will be at minimum the Tray height. For example, calling `win.setBounds({ x: 25, y: 20, width: 800, height: 600 })` with a tray height of 38 means that `win.getBounds()` will return `{ x: 25, y: 38, width: 800, height: 600 }`.
+		
+		> [!NOTE] On Wayland, this method will return `{ x: 0, y: 0, ... }` as introspecting or programmatically changing the global window coordinates is prohibited.
 	**/
 	function getBounds():electron.Rectangle;
 	/**
@@ -484,10 +494,14 @@ package electron.remote;
 	function isHiddenInMissionControl():Bool;
 	/**
 		Sets whether the window should show always on top of other windows. After setting this, the window is still a normal window, not a toolbox window which can not be focused on.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function setAlwaysOnTop(flag:Bool, ?level:String, ?relativeLevel:Int):Void;
 	/**
 		Whether the window is always on top of other windows.
+		
+		Not supported on Wayland (Linux).
 	**/
 	function isAlwaysOnTop():Bool;
 	/**
@@ -508,6 +522,8 @@ package electron.remote;
 	function setPosition(x:Int, y:Int, ?animate:Bool):Void;
 	/**
 		Contains the window's current position.
+		
+		> [!NOTE] On Wayland, this method will return `[0, 0]` as introspecting or programmatically changing the global window coordinates is prohibited.
 	**/
 	function getPosition():Array<Int>;
 	/**
@@ -545,7 +561,7 @@ package electron.remote;
 		
 		Since Windows 10 users can use their PC as tablet, under this mode apps can choose to optimize their UI for tablets, such as enlarging the titlebar and hiding titlebar buttons.
 		
-		This API returns whether the window is in tablet mode, and the `resize` event can be be used to listen to changes to tablet mode.
+		This API returns whether the window is in tablet mode, and the `resize` event can be used to listen to changes to tablet mode.
 	**/
 	function isTabletMode():Bool;
 	/**
@@ -605,9 +621,9 @@ package electron.remote;
 		
 		Remove progress bar when progress < 0; Change to indeterminate mode when progress > 1.
 		
-		On Linux platform, only supports Unity desktop environment, you need to specify the `*.desktop` file name to `desktopName` field in `package.json`. By default, it will assume `{app.name}.desktop`.
-		
 		On Windows, a mode can be passed. Accepted values are `none`, `normal`, `indeterminate`, `error`, and `paused`. If you call `setProgressBar` without a mode set (but with a value within the valid range), `normal` will be assumed.
+		
+		On Linux, the progress bar shows on docks and taskbars that support the LauncherEntry D-Bus API. It is associated with the app's `.desktop` file, so `app.setDesktopName` must match the name of the app's actual `.desktop` file. Indeterminate mode is not supported.
 	**/
 	function setProgressBar(progress:Float, ?options:{ /**
 		Mode for the progress bar. Can be `none`, `normal`, `indeterminate`, `error` or `paused`.
@@ -776,7 +792,7 @@ package electron.remote;
 	/**
 		Makes the window ignore all mouse events.
 		
-		All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events.
+		All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events. On Linux this is supported on both X11 and Wayland. On X11 the X server has applied the window's new input shape when the call returns; on Wayland the new input region is applied with the window's next frame.
 	**/
 	function setIgnoreMouseEvents(ignore:Bool, ?options:{ /**
 		If true, forwards mouse move messages to Chromium, enabling mouse related events such as `mouseleave`. Only used when `ignore` is true. If `ignore` is false, forwarding is always disabled regardless of this value.
@@ -786,7 +802,9 @@ package electron.remote;
 	/**
 		Prevents the window contents from being captured by other apps.
 		
-		On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window.
+		On macOS it sets the NSWindow's sharingType to NSWindowSharingNone. On Windows it calls SetWindowDisplayAffinity with `WDA_EXCLUDEFROMCAPTURE`. For Windows 10 version 2004 and up the window will be removed from capture entirely, older Windows versions behave as if `WDA_MONITOR` is applied capturing a black window. The change takes effect with the next desktop composition, not when the call returns, so a capture started immediately afterwards can still contain the window.
+		
+		Protection also applies in a Windows remote session. A Remote Desktop client still shows the window to the remote user, but remote access software that works by capturing the desktop cannot. To leave windows unprotected in remote sessions instead, disable the `AllowWindowCaptureExclusionInRemoteSessions` Chromium feature at the start of your main script. `win.isContentProtected()` still returns `true` in that case.
 	**/
 	function setContentProtection(enable:Bool):Void;
 	/**
@@ -939,6 +957,8 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 	var unmaximize : electron.remote.BaseWindowEvent<Void -> Void> = "unmaximize";
 	/**
 		Emitted when the window is minimized.
+		
+		> [!NOTE] On Wayland, “minimized” is not currently a supported state. The minimize event will only fire when triggered by client-side decoration (e.g. clicking the minimize button on a frameless window’s Window Control Overlay)
 	**/
 	var minimize : electron.remote.BaseWindowEvent<Void -> Void> = "minimize";
 	/**
@@ -1026,7 +1046,9 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 	**/
 	var sheet_end : electron.remote.BaseWindowEvent<Void -> Void> = "sheet-end";
 	/**
-		Emitted when the native new tab button is clicked.
+		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`.
+		
+		You must create a window in this handler in order for macOS tabbing to work as expected.
 	**/
 	var new_window_for_tab : electron.remote.BaseWindowEvent<Void -> Void> = "new-window-for-tab";
 	/**
@@ -1037,4 +1059,12 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		To convert `point` to DIP, use `screen.screenToDipPoint(point)`.
 	**/
 	var system_context_menu : electron.remote.BaseWindowEvent<Void -> Void> = "system-context-menu";
+	/**
+		Emitted after the persisted window state has been restored.
+		
+		Window state includes the window bounds (x, y, height, width) and display mode (maximized, fullscreen, kiosk).
+		
+		> [!NOTE] This event is only emitted when windowStatePersistence is enabled in BaseWindowConstructorOptions or in BrowserWindowConstructorOptions.
+	**/
+	var persisted_state_restored : electron.remote.BaseWindowEvent<Void -> Void> = "persisted-state-restored";
 }
