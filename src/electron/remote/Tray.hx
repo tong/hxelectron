@@ -175,75 +175,75 @@ enum abstract TrayEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitt
 		
 		Note that on Linux this event is emitted when the tray icon receives an activation, which might not necessarily be left mouse click.
 	**/
-	var click : electron.remote.TrayEvent<Void -> Void> = "click";
+	var click : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Rectangle, electron.Point) -> Void> = "click";
 	/**
 		Emitted when the tray icon is right clicked.
 	**/
-	var right_click : electron.remote.TrayEvent<Void -> Void> = "right-click";
+	var right_click : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Rectangle) -> Void> = "right-click";
 	/**
 		Emitted when the tray icon is double clicked.
 	**/
-	var double_click : electron.remote.TrayEvent<Void -> Void> = "double-click";
+	var double_click : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Rectangle) -> Void> = "double-click";
 	/**
 		Emitted when the tray icon is middle clicked.
 	**/
-	var middle_click : electron.remote.TrayEvent<Void -> Void> = "middle-click";
+	var middle_click : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Rectangle) -> Void> = "middle-click";
 	/**
 		Emitted when the tray balloon shows.
 	**/
-	var balloon_show : electron.remote.TrayEvent<Void -> Void> = "balloon-show";
+	var balloon_show : electron.remote.TrayEvent<() -> Void> = "balloon-show";
 	/**
 		Emitted when the tray balloon is clicked.
 	**/
-	var balloon_click : electron.remote.TrayEvent<Void -> Void> = "balloon-click";
+	var balloon_click : electron.remote.TrayEvent<() -> Void> = "balloon-click";
 	/**
 		Emitted when the tray balloon is closed because of timeout or user manually closes it.
 	**/
-	var balloon_closed : electron.remote.TrayEvent<Void -> Void> = "balloon-closed";
+	var balloon_closed : electron.remote.TrayEvent<() -> Void> = "balloon-closed";
 	/**
 		Emitted when any dragged items are dropped on the tray icon.
 	**/
-	var drop : electron.remote.TrayEvent<Void -> Void> = "drop";
+	var drop : electron.remote.TrayEvent<() -> Void> = "drop";
 	/**
 		Emitted when dragged files are dropped in the tray icon.
 	**/
-	var drop_files : electron.remote.TrayEvent<Void -> Void> = "drop-files";
+	var drop_files : electron.remote.TrayEvent<(js.html.Event, Array<String>) -> Void> = "drop-files";
 	/**
 		Emitted when dragged text is dropped in the tray icon.
 	**/
-	var drop_text : electron.remote.TrayEvent<Void -> Void> = "drop-text";
+	var drop_text : electron.remote.TrayEvent<(js.html.Event, String) -> Void> = "drop-text";
 	/**
 		Emitted when a drag operation enters the tray icon.
 	**/
-	var drag_enter : electron.remote.TrayEvent<Void -> Void> = "drag-enter";
+	var drag_enter : electron.remote.TrayEvent<() -> Void> = "drag-enter";
 	/**
 		Emitted when a drag operation exits the tray icon.
 	**/
-	var drag_leave : electron.remote.TrayEvent<Void -> Void> = "drag-leave";
+	var drag_leave : electron.remote.TrayEvent<() -> Void> = "drag-leave";
 	/**
 		Emitted when a drag operation ends on the tray or ends at another location.
 	**/
-	var drag_end : electron.remote.TrayEvent<Void -> Void> = "drag-end";
+	var drag_end : electron.remote.TrayEvent<() -> Void> = "drag-end";
 	/**
 		Emitted when the mouse is released from clicking the tray icon.
 		
 		> [!NOTE] This will not be emitted if you have set a context menu for your Tray using `tray.setContextMenu`, as a result of macOS-level constraints.
 	**/
-	var mouse_up : electron.remote.TrayEvent<Void -> Void> = "mouse-up";
+	var mouse_up : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-up";
 	/**
 		Emitted when the mouse clicks the tray icon.
 	**/
-	var mouse_down : electron.remote.TrayEvent<Void -> Void> = "mouse-down";
+	var mouse_down : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-down";
 	/**
 		Emitted when the mouse enters the tray icon.
 	**/
-	var mouse_enter : electron.remote.TrayEvent<Void -> Void> = "mouse-enter";
+	var mouse_enter : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-enter";
 	/**
 		Emitted when the mouse exits the tray icon.
 	**/
-	var mouse_leave : electron.remote.TrayEvent<Void -> Void> = "mouse-leave";
+	var mouse_leave : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-leave";
 	/**
 		Emitted when the mouse moves in the tray icon.
 	**/
-	var mouse_move : electron.remote.TrayEvent<Void -> Void> = "mouse-move";
+	var mouse_move : electron.remote.TrayEvent<(electron.KeyboardEvent, electron.Point) -> Void> = "mouse-move";
 }

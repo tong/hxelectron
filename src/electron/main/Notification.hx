@@ -331,11 +331,11 @@ enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 	/**
 		Emitted when the notification is shown to the user. Note that this event can be fired multiple times as a notification can be shown multiple times through the `show()` method.
 	**/
-	var show : electron.main.NotificationEvent<Void -> Void> = "show";
+	var show : electron.main.NotificationEvent<js.html.Event -> Void> = "show";
 	/**
 		Emitted when the notification is clicked by the user.
 	**/
-	var click : electron.main.NotificationEvent<Void -> Void> = "click";
+	var click : electron.main.NotificationEvent<js.html.Event -> Void> = "click";
 	/**
 		Emitted when the notification is closed by manual intervention from the user.
 		
@@ -343,14 +343,14 @@ enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 		
 		On Windows, the `close` event can be emitted in one of three ways: programmatic dismissal with `notification.close()`, by the user closing the notification, or via system timeout. If a notification is in the Action Center after the initial `close` event is emitted, a call to `notification.close()` will remove the notification from the action center but the `close` event will not be emitted again.
 	**/
-	var close : electron.main.NotificationEvent<Void -> Void> = "close";
+	var close : electron.main.NotificationEvent<js.html.Event -> Void> = "close";
 	/**
 		Emitted when the user clicks the "Reply" button on a notification with `hasReply: true`.
 	**/
-	var reply : electron.main.NotificationEvent<Void -> Void> = "reply";
-	var action : electron.main.NotificationEvent<Void -> Void> = "action";
+	var reply : electron.main.NotificationEvent<(js.html.Event, String) -> Void> = "reply";
+	var action : electron.main.NotificationEvent<(js.html.Event, Float, Float) -> Void> = "action";
 	/**
 		Emitted when an error is encountered while creating and showing the native notification.
 	**/
-	var failed : electron.main.NotificationEvent<Void -> Void> = "failed";
+	var failed : electron.main.NotificationEvent<(js.html.Event, String) -> Void> = "failed";
 }

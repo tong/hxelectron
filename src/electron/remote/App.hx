@@ -761,19 +761,19 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		In most cases, you should do everything in the `ready` event handler.
 	**/
-	var will_finish_launching : electron.remote.AppEvent<Void -> Void> = "will-finish-launching";
+	var will_finish_launching : electron.remote.AppEvent<() -> Void> = "will-finish-launching";
 	/**
 		Emitted once, when Electron has finished initializing. On macOS, `launchInfo` holds the `userInfo` of the `NSUserNotification` or information from `UNNotificationResponse` that was used to open the application, if it was launched from Notification Center. You can also call `app.isReady()` to check if this event has already fired and `app.whenReady()` to get a Promise that is fulfilled when Electron is initialized.
 		
 		> [!NOTE] The `ready` event is only fired after the main process has finished running the first tick of the event loop. If an Electron API needs to be called before the `ready` event, ensure that it is called synchronously in the top-level context of the main process.
 	**/
-	var ready : electron.remote.AppEvent<Void -> Void> = "ready";
+	var ready : electron.remote.AppEvent<(js.html.Event, haxe.extern.EitherType<Dynamic, electron.NotificationResponse>) -> Void> = "ready";
 	/**
 		Emitted when all windows have been closed.
 		
 		If you do not subscribe to this event and all windows are closed, the default behavior is to quit the app; however, if you subscribe, you control whether the app quits or not. If the user pressed `Cmd + Q`, or the developer called `app.quit()`, Electron will first try to close all the windows and then emit the `will-quit` event, and in this case the `window-all-closed` event would not be emitted.
 	**/
-	var window_all_closed : electron.remote.AppEvent<Void -> Void> = "window-all-closed";
+	var window_all_closed : electron.remote.AppEvent<() -> Void> = "window-all-closed";
 	/**
 		Emitted before the application starts closing its windows. Calling `event.preventDefault()` will prevent the default behavior, which is terminating the application.
 		
@@ -781,7 +781,7 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		> [!NOTE] On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
 	**/
-	var before_quit : electron.remote.AppEvent<Void -> Void> = "before-quit";
+	var before_quit : electron.remote.AppEvent<js.html.Event -> Void> = "before-quit";
 	/**
 		Emitted when all windows have been closed and the application will quit. Calling `event.preventDefault()` will prevent the default behavior, which is terminating the application.
 		
@@ -789,13 +789,13 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		> [!NOTE] On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
 	**/
-	var will_quit : electron.remote.AppEvent<Void -> Void> = "will-quit";
+	var will_quit : electron.remote.AppEvent<js.html.Event -> Void> = "will-quit";
 	/**
 		Emitted when the application is quitting.
 		
 		> [!NOTE] On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
 	**/
-	var quit : electron.remote.AppEvent<Void -> Void> = "quit";
+	var quit : electron.remote.AppEvent<(js.html.Event, Int) -> Void> = "quit";
 	/**
 		Emitted when the user wants to open a file with the application. The `open-file` event is usually emitted when the application is already open and the OS wants to reuse the application to open the file. `open-file` is also emitted when a file is dropped onto the dock and the application is not yet running. Make sure to listen for the `open-file` event very early in your application startup to handle this case (even before the `ready` event is emitted).
 		
@@ -803,73 +803,77 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		On Windows, you have to parse `process.argv` (in the main process) to get the filepath.
 	**/
-	var open_file : electron.remote.AppEvent<Void -> Void> = "open-file";
+	var open_file : electron.remote.AppEvent<(js.html.Event, String) -> Void> = "open-file";
 	/**
 		Emitted when the user wants to open a URL with the application. Your application's `Info.plist` file must define the URL scheme within the `CFBundleURLTypes` key, and set `NSPrincipalClass` to `AtomApplication`.
 		
 		As with the `open-file` event, be sure to register a listener for the `open-url` event early in your application startup to detect if the application is being opened to handle a URL. If you register the listener in response to a `ready` event, you'll miss URLs that trigger the launch of your application.
 	**/
-	var open_url : electron.remote.AppEvent<Void -> Void> = "open-url";
+	var open_url : electron.remote.AppEvent<(js.html.Event, String) -> Void> = "open-url";
 	/**
 		Emitted when the application is activated. Various actions can trigger this event, such as launching the application for the first time, attempting to re-launch the application when it's already running, or clicking on the application's dock or taskbar icon.
 	**/
-	var activate : electron.remote.AppEvent<Void -> Void> = "activate";
+	var activate : electron.remote.AppEvent<(js.html.Event, Bool) -> Void> = "activate";
 	/**
 		Emitted when the application becomes active. This differs from the `activate` event in that `did-become-active` is emitted every time the app becomes active, not only when Dock icon is clicked or application is re-launched. It is also emitted when a user switches to the app via the macOS App Switcher.
 	**/
-	var did_become_active : electron.remote.AppEvent<Void -> Void> = "did-become-active";
+	var did_become_active : electron.remote.AppEvent<js.html.Event -> Void> = "did-become-active";
 	/**
 		Emitted when the app is no longer active and doesn’t have focus. This can be triggered, for example, by clicking on another application or by using the macOS App Switcher to switch to another application.
 	**/
-	var did_resign_active : electron.remote.AppEvent<Void -> Void> = "did-resign-active";
+	var did_resign_active : electron.remote.AppEvent<js.html.Event -> Void> = "did-resign-active";
 	/**
 		Emitted during Handoff when an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
 		
 		A user activity can be continued only in an app that has the same developer Team ID as the activity's source app and that supports the activity's type. Supported activity types are specified in the app's `Info.plist` under the `NSUserActivityTypes` key.
 	**/
-	var continue_activity : electron.remote.AppEvent<Void -> Void> = "continue-activity";
+	var continue_activity : electron.remote.AppEvent<(js.html.Event, String, Dynamic, { /**
+		A string identifying the URL of the webpage accessed by the activity on another device, if available.
+	**/
+	@:optional
+	var webpageURL : String; }) -> Void> = "continue-activity";
 	/**
 		Emitted during Handoff before an activity from a different device wants to be resumed. You should call `event.preventDefault()` if you want to handle this event.
 	**/
-	var will_continue_activity : electron.remote.AppEvent<Void -> Void> = "will-continue-activity";
+	var will_continue_activity : electron.remote.AppEvent<(js.html.Event, String) -> Void> = "will-continue-activity";
 	/**
 		Emitted during Handoff when an activity from a different device fails to be resumed.
 	**/
-	var continue_activity_error : electron.remote.AppEvent<Void -> Void> = "continue-activity-error";
+	var continue_activity_error : electron.remote.AppEvent<(js.html.Event, String, String) -> Void> = "continue-activity-error";
 	/**
 		Emitted during Handoff after an activity from this device was successfully resumed on another one.
 	**/
-	var activity_was_continued : electron.remote.AppEvent<Void -> Void> = "activity-was-continued";
+	var activity_was_continued : electron.remote.AppEvent<(js.html.Event, String, Dynamic) -> Void> = "activity-was-continued";
 	/**
 		Emitted when Handoff is about to be resumed on another device. If you need to update the state to be transferred, you should call `event.preventDefault()` immediately, construct a new `userInfo` dictionary and call `app.updateCurrentActivity()` in a timely manner. Otherwise, the operation will fail and `continue-activity-error` will be called.
 	**/
-	var update_activity_state : electron.remote.AppEvent<Void -> Void> = "update-activity-state";
+	var update_activity_state : electron.remote.AppEvent<(js.html.Event, String, Dynamic) -> Void> = "update-activity-state";
 	/**
 		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`.
 		
 		You must create a window in this handler in order for macOS tabbing to work as expected.
 	**/
-	var new_window_for_tab : electron.remote.AppEvent<Void -> Void> = "new-window-for-tab";
+	var new_window_for_tab : electron.remote.AppEvent<js.html.Event -> Void> = "new-window-for-tab";
 	/**
 		Emitted when a browserWindow gets blurred.
 	**/
-	var browser_window_blur : electron.remote.AppEvent<Void -> Void> = "browser-window-blur";
+	var browser_window_blur : electron.remote.AppEvent<(js.html.Event, electron.remote.BrowserWindow) -> Void> = "browser-window-blur";
 	/**
 		Emitted when a browserWindow gets focused.
 	**/
-	var browser_window_focus : electron.remote.AppEvent<Void -> Void> = "browser-window-focus";
+	var browser_window_focus : electron.remote.AppEvent<(js.html.Event, electron.remote.BrowserWindow) -> Void> = "browser-window-focus";
 	/**
 		Emitted when a new browserWindow is created.
 	**/
-	var browser_window_created : electron.remote.AppEvent<Void -> Void> = "browser-window-created";
+	var browser_window_created : electron.remote.AppEvent<(js.html.Event, electron.remote.BrowserWindow) -> Void> = "browser-window-created";
 	/**
 		Emitted when a new webContents is created.
 	**/
-	var web_contents_created : electron.remote.AppEvent<Void -> Void> = "web-contents-created";
+	var web_contents_created : electron.remote.AppEvent<(js.html.Event, electron.remote.WebContents) -> Void> = "web-contents-created";
 	/**
 		Emitted when failed to verify the `certificate` for `url`, to trust the certificate you should prevent the default behavior with `event.preventDefault()` and call `callback(true)`.
 	**/
-	var certificate_error : electron.remote.AppEvent<Void -> Void> = "certificate-error";
+	var certificate_error : electron.remote.AppEvent<(js.html.Event, electron.remote.WebContents, String, String, electron.Certificate, haxe.Constraints.Function, Bool) -> Void> = "certificate-error";
 	/**
 		Emitted when a client certificate is requested.
 		
@@ -877,7 +881,7 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		`webContents` is `null` when the request does not originate from a renderer process, for example when using `net.request` or `net.fetch` in the main process, or from a utility process created with `respondToAuthRequestsFromMainProcess: true`. For utility processes created without that flag, `net` requests proceed without a client certificate and this event is not emitted.
 	**/
-	var select_client_certificate : electron.remote.AppEvent<Void -> Void> = "select-client-certificate";
+	var select_client_certificate : electron.remote.AppEvent<(js.html.Event, haxe.extern.EitherType<electron.remote.WebContents, Dynamic>, String, Array<electron.Certificate>, haxe.Constraints.Function) -> Void> = "select-client-certificate";
 	/**
 		Emitted when `webContents` or Utility process wants to do basic auth.
 		
@@ -885,27 +889,58 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		If `callback` is called without a username or password, the authentication request will be cancelled and the authentication error will be returned to the page.
 	**/
-	var login : electron.remote.AppEvent<Void -> Void> = "login";
+	var login : electron.remote.AppEvent<(js.html.Event, haxe.extern.EitherType<electron.remote.WebContents, Dynamic>, { var url : String; var pid : Float; /**
+		Indicates whether the request is for a navigation.
+	**/
+	var isRequestForNavigation : Bool; /**
+		Indicates whether this is the first authentication attempt.
+	**/
+	var firstAuthAttempt : Bool; /**
+		The headers returned in the response.
+	**/
+	@:optional
+	var responseHeaders : Dynamic; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
 	/**
 		Emitted whenever there is a GPU info update.
 	**/
-	var gpu_info_update : electron.remote.AppEvent<Void -> Void> = "gpu-info-update";
+	var gpu_info_update : electron.remote.AppEvent<() -> Void> = "gpu-info-update";
 	/**
 		Emitted when the renderer process unexpectedly disappears.  This is normally because it was crashed or killed.
 	**/
-	var render_process_gone : electron.remote.AppEvent<Void -> Void> = "render-process-gone";
+	var render_process_gone : electron.remote.AppEvent<(js.html.Event, electron.remote.WebContents, electron.RenderProcessGoneDetails) -> Void> = "render-process-gone";
 	/**
 		Emitted when the child process unexpectedly disappears. This is normally because it was crashed or killed, or because it failed to launch. It does not include renderer processes.
 	**/
-	var child_process_gone : electron.remote.AppEvent<Void -> Void> = "child-process-gone";
+	var child_process_gone : electron.remote.AppEvent<(js.html.Event, { /**
+		Process type. One of the following values:
+	**/
+	var type : String; /**
+		The reason the child process is gone. Possible values:
+	**/
+	var reason : String; /**
+		The exit code for the process (e.g. status from waitpid if on POSIX, from GetExitCodeProcess on Windows), unless `reason` is `launch-failed`, in which case `exitCode` will be a platform-specific launch failure error code.
+	**/
+	var exitCode : Float; /**
+		The Windows system error code (`GetLastError()`) of the failed launch. Only set when `reason` is `launch-failed`.
+	**/
+	@:optional
+	var systemErrorCode : Float; /**
+		The non-localized name of the process.
+	**/
+	@:optional
+	var serviceName : String; /**
+		The name of the process. Examples for utility: `Audio Service`, `Content Decryption Module Service`, `Network Service`, `Video Capture`, etc.
+	**/
+	@:optional
+	var name : String; }) -> Void> = "child-process-gone";
 	/**
 		Emitted when Chromium's accessibility support changes. This event fires when assistive technologies, such as screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
 	**/
-	var accessibility_support_changed : electron.remote.AppEvent<Void -> Void> = "accessibility-support-changed";
+	var accessibility_support_changed : electron.remote.AppEvent<(js.html.Event, Bool) -> Void> = "accessibility-support-changed";
 	/**
 		Emitted when Electron has created a new `session`.
 	**/
-	var session_created : electron.remote.AppEvent<Void -> Void> = "session-created";
+	var session_created : electron.remote.AppEvent<electron.remote.Session -> Void> = "session-created";
 	/**
 		This event will be emitted inside the primary instance of your application when a second instance has been executed and calls `app.requestSingleInstanceLock()`.
 		
@@ -919,5 +954,5 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 		
 		> [!NOTE] Extra command line arguments might be added by Chromium, such as `--original-process-start-time`.
 	**/
-	var second_instance : electron.remote.AppEvent<Void -> Void> = "second-instance";
+	var second_instance : electron.remote.AppEvent<(js.html.Event, Array<String>, String, Dynamic) -> Void> = "second-instance";
 }

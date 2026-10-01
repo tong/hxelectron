@@ -127,7 +127,7 @@ enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 		* `progressing` - The download is in-progress.
 		* `interrupted` - The download has interrupted and can be resumed.
 	**/
-	var updated : electron.remote.DownloadItemEvent<Void -> Void> = "updated";
+	var updated : electron.remote.DownloadItemEvent<(js.html.Event, String) -> Void> = "updated";
 	/**
 		Emitted when the download is in a terminal state. This includes a completed download, a cancelled download (via `downloadItem.cancel()`), and interrupted download that can't be resumed.
 		
@@ -137,5 +137,5 @@ enum abstract DownloadItemEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 		* `cancelled` - The download has been cancelled.
 		* `interrupted` - The download has interrupted and can not resume.
 	**/
-	var done : electron.remote.DownloadItemEvent<Void -> Void> = "done";
+	var done : electron.remote.DownloadItemEvent<(js.html.Event, String) -> Void> = "done";
 }

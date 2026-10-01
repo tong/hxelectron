@@ -175,6 +175,6 @@ package electron.remote;
 	static function getAnimationSettings():Any;
 }
 enum abstract SystemPreferencesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
-	var accent_color_changed : electron.remote.SystemPreferencesEvent<Void -> Void> = "accent-color-changed";
-	var color_changed : electron.remote.SystemPreferencesEvent<Void -> Void> = "color-changed";
+	var accent_color_changed : electron.remote.SystemPreferencesEvent<(js.html.Event, String) -> Void> = "accent-color-changed";
+	var color_changed : electron.remote.SystemPreferencesEvent<js.html.Event -> Void> = "color-changed";
 }

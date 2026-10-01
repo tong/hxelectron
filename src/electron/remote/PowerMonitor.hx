@@ -39,19 +39,19 @@ enum abstract PowerMonitorEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 	/**
 		Emitted when the system is suspending.
 	**/
-	var suspend : electron.remote.PowerMonitorEvent<Void -> Void> = "suspend";
+	var suspend : electron.remote.PowerMonitorEvent<() -> Void> = "suspend";
 	/**
 		Emitted when system is resuming.
 	**/
-	var resume : electron.remote.PowerMonitorEvent<Void -> Void> = "resume";
+	var resume : electron.remote.PowerMonitorEvent<() -> Void> = "resume";
 	/**
 		Emitted when the system changes to AC power.
 	**/
-	var on_ac : electron.remote.PowerMonitorEvent<Void -> Void> = "on-ac";
+	var on_ac : electron.remote.PowerMonitorEvent<() -> Void> = "on-ac";
 	/**
 		Emitted when system changes to battery power.
 	**/
-	var on_battery : electron.remote.PowerMonitorEvent<Void -> Void> = "on-battery";
+	var on_battery : electron.remote.PowerMonitorEvent<() -> Void> = "on-battery";
 	/**
 		Emitted when the thermal state of the system changes. Notification of a change in the thermal status of the system, such as entering a critical temperature range. Depending on the severity, the system might take steps to reduce said temperature, for example, throttling the CPU or switching on the fans if available.
 		
@@ -59,29 +59,29 @@ enum abstract PowerMonitorEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 		
 		See https://developer.apple.com/library/archive/documentation/Performance/Conceptual/power_efficiency_guidelines_osx/RespondToThermalStateChanges.html
 	**/
-	var thermal_state_change : electron.remote.PowerMonitorEvent<Void -> Void> = "thermal-state-change";
+	var thermal_state_change : electron.remote.PowerMonitorEvent<js.html.Event -> Void> = "thermal-state-change";
 	/**
 		Notification of a change in the operating system's advertised speed limit for CPUs, in percent. Values below 100 indicate that the system is impairing processing power due to thermal management.
 	**/
-	var speed_limit_change : electron.remote.PowerMonitorEvent<Void -> Void> = "speed-limit-change";
+	var speed_limit_change : electron.remote.PowerMonitorEvent<js.html.Event -> Void> = "speed-limit-change";
 	/**
 		Emitted when the system is about to reboot or shut down. If the event handler invokes `e.preventDefault()`, Electron will attempt to delay system shutdown in order for the app to exit cleanly. If `e.preventDefault()` is called, the app should exit as soon as possible by calling something like `app.quit()`.
 	**/
-	var shutdown : electron.remote.PowerMonitorEvent<Void -> Void> = "shutdown";
+	var shutdown : electron.remote.PowerMonitorEvent<() -> Void> = "shutdown";
 	/**
 		Emitted when the system is about to lock the screen.
 	**/
-	var lock_screen : electron.remote.PowerMonitorEvent<Void -> Void> = "lock-screen";
+	var lock_screen : electron.remote.PowerMonitorEvent<() -> Void> = "lock-screen";
 	/**
 		Emitted as soon as the systems screen is unlocked.
 	**/
-	var unlock_screen : electron.remote.PowerMonitorEvent<Void -> Void> = "unlock-screen";
+	var unlock_screen : electron.remote.PowerMonitorEvent<() -> Void> = "unlock-screen";
 	/**
 		Emitted when a login session is activated. See documentation for more information.
 	**/
-	var user_did_become_active : electron.remote.PowerMonitorEvent<Void -> Void> = "user-did-become-active";
+	var user_did_become_active : electron.remote.PowerMonitorEvent<() -> Void> = "user-did-become-active";
 	/**
 		Emitted when a login session is deactivated. See documentation for more information.
 	**/
-	var user_did_resign_active : electron.remote.PowerMonitorEvent<Void -> Void> = "user-did-resign-active";
+	var user_did_resign_active : electron.remote.PowerMonitorEvent<() -> Void> = "user-did-resign-active";
 }

@@ -71,5 +71,5 @@ enum abstract NativeThemeEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	/**
 		Emitted when something in the underlying NativeTheme has changed. This normally means that either the value of `shouldUseDarkColors`, `shouldUseHighContrastColors` or `shouldUseInvertedColorScheme` has changed. You will have to check them to determine which one has changed.
 	**/
-	var updated : electron.remote.NativeThemeEvent<Void -> Void> = "updated";
+	var updated : electron.remote.NativeThemeEvent<() -> Void> = "updated";
 }

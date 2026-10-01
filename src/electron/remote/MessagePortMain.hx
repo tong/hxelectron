@@ -20,9 +20,9 @@ enum abstract MessagePortMainEvent<T:(haxe.Constraints.Function)>(js.node.events
 	/**
 		Emitted when a MessagePortMain object receives a message.
 	**/
-	var message : electron.remote.MessagePortMainEvent<Void -> Void> = "message";
+	var message : electron.remote.MessagePortMainEvent<({ var data : Any; var ports : Array<electron.remote.MessagePortMain>; }) -> Void> = "message";
 	/**
 		Emitted when the remote end of a MessagePortMain object becomes disconnected.
 	**/
-	var close : electron.remote.MessagePortMainEvent<Void -> Void> = "close";
+	var close : electron.remote.MessagePortMainEvent<() -> Void> = "close";
 }

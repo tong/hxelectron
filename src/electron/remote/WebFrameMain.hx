@@ -151,5 +151,5 @@ enum abstract WebFrameMainEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 	/**
 		Emitted when the document is loaded.
 	**/
-	var dom_ready : electron.remote.WebFrameMainEvent<Void -> Void> = "dom-ready";
+	var dom_ready : electron.remote.WebFrameMainEvent<() -> Void> = "dom-ready";
 }

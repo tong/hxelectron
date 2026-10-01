@@ -42,17 +42,17 @@ enum abstract IncomingMessageEvent<T:(haxe.Constraints.Function)>(js.node.events
 	/**
 		The `data` event is the usual method of transferring response data into applicative code.
 	**/
-	var data : electron.main.IncomingMessageEvent<Void -> Void> = "data";
+	var data : electron.main.IncomingMessageEvent<js.node.Buffer -> Void> = "data";
 	/**
 		Indicates that response body has ended. Must be placed before 'data' event.
 	**/
-	var end : electron.main.IncomingMessageEvent<Void -> Void> = "end";
+	var end : electron.main.IncomingMessageEvent<() -> Void> = "end";
 	/**
 		Emitted when a request has been canceled during an ongoing HTTP transaction.
 	**/
-	var aborted : electron.main.IncomingMessageEvent<Void -> Void> = "aborted";
+	var aborted : electron.main.IncomingMessageEvent<() -> Void> = "aborted";
 	/**
 		Emitted when an error was encountered while streaming response data events. For instance, if the server closes the underlying connection while the response is still streaming, an `error` event will be emitted on the response object and a `close` event will subsequently follow on the request object.
 	**/
-	var error : electron.main.IncomingMessageEvent<Void -> Void> = "error";
+	var error : electron.main.IncomingMessageEvent<js.lib.Error -> Void> = "error";
 }

@@ -918,53 +918,53 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		
 		> [!NOTE] There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and `window.addEventListener('beforeunload', handler)`. It is recommended to always set the `event.returnValue` explicitly, instead of only returning a value, as the former works more consistently within Electron.
 	**/
-	var close : electron.remote.BaseWindowEvent<Void -> Void> = "close";
+	var close : electron.remote.BaseWindowEvent<js.html.Event -> Void> = "close";
 	/**
 		Emitted when the window is closed. After you have received this event you should remove the reference to the window and avoid using it any more.
 	**/
-	var closed : electron.remote.BaseWindowEvent<Void -> Void> = "closed";
+	var closed : electron.remote.BaseWindowEvent<() -> Void> = "closed";
 	/**
 		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Calling `event.preventDefault()` can delay the system shutdown, though it’s generally best to respect the user’s choice to end the session. However, you may choose to use it if ending the session puts the user at risk of losing data.
 	**/
-	var query_session_end : electron.remote.BaseWindowEvent<Void -> Void> = "query-session-end";
+	var query_session_end : electron.remote.BaseWindowEvent<electron.WindowSessionEndEvent -> Void> = "query-session-end";
 	/**
 		Emitted when a session is about to end due to a shutdown, machine restart, or user log-off. Once this event fires, there is no way to prevent the session from ending.
 	**/
-	var session_end : electron.remote.BaseWindowEvent<Void -> Void> = "session-end";
+	var session_end : electron.remote.BaseWindowEvent<electron.WindowSessionEndEvent -> Void> = "session-end";
 	/**
 		Emitted when the window loses focus.
 	**/
-	var blur : electron.remote.BaseWindowEvent<Void -> Void> = "blur";
+	var blur : electron.remote.BaseWindowEvent<js.html.Event -> Void> = "blur";
 	/**
 		Emitted when the window gains focus.
 	**/
-	var focus : electron.remote.BaseWindowEvent<Void -> Void> = "focus";
+	var focus : electron.remote.BaseWindowEvent<js.html.Event -> Void> = "focus";
 	/**
 		Emitted when the window is shown.
 	**/
-	var show : electron.remote.BaseWindowEvent<Void -> Void> = "show";
+	var show : electron.remote.BaseWindowEvent<() -> Void> = "show";
 	/**
 		Emitted when the window is hidden.
 	**/
-	var hide : electron.remote.BaseWindowEvent<Void -> Void> = "hide";
+	var hide : electron.remote.BaseWindowEvent<() -> Void> = "hide";
 	/**
 		Emitted when window is maximized.
 	**/
-	var maximize : electron.remote.BaseWindowEvent<Void -> Void> = "maximize";
+	var maximize : electron.remote.BaseWindowEvent<() -> Void> = "maximize";
 	/**
 		Emitted when the window exits from a maximized state.
 	**/
-	var unmaximize : electron.remote.BaseWindowEvent<Void -> Void> = "unmaximize";
+	var unmaximize : electron.remote.BaseWindowEvent<() -> Void> = "unmaximize";
 	/**
 		Emitted when the window is minimized.
 		
 		> [!NOTE] On Wayland, “minimized” is not currently a supported state. The minimize event will only fire when triggered by client-side decoration (e.g. clicking the minimize button on a frameless window’s Window Control Overlay)
 	**/
-	var minimize : electron.remote.BaseWindowEvent<Void -> Void> = "minimize";
+	var minimize : electron.remote.BaseWindowEvent<() -> Void> = "minimize";
 	/**
 		Emitted when the window is restored from a minimized state.
 	**/
-	var restore : electron.remote.BaseWindowEvent<Void -> Void> = "restore";
+	var restore : electron.remote.BaseWindowEvent<() -> Void> = "restore";
 	/**
 		Emitted before the window is resized. Calling `event.preventDefault()` will prevent the window from being resized.
 		
@@ -977,45 +977,48 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		  * The value `bottom` is used to denote vertical resizing.
 		  * The value `right` is used to denote horizontal resizing.
 	**/
-	var will_resize : electron.remote.BaseWindowEvent<Void -> Void> = "will-resize";
+	var will_resize : electron.remote.BaseWindowEvent<(js.html.Event, electron.Rectangle, { /**
+		The edge of the window being dragged for resizing. Can be `bottom`, `left`, `right`, `top-left`, `top-right`, `bottom-left` or `bottom-right`.
+	**/
+	var edge : String; }) -> Void> = "will-resize";
 	/**
 		Emitted after the window has been resized.
 	**/
-	var resize : electron.remote.BaseWindowEvent<Void -> Void> = "resize";
+	var resize : electron.remote.BaseWindowEvent<() -> Void> = "resize";
 	/**
 		Emitted once when the window has finished being resized.
 		
 		This is usually emitted when the window has been resized manually. On macOS, resizing the window with `setBounds`/`setSize` and setting the `animate` parameter to `true` will also emit this event once resizing has finished.
 	**/
-	var resized : electron.remote.BaseWindowEvent<Void -> Void> = "resized";
+	var resized : electron.remote.BaseWindowEvent<() -> Void> = "resized";
 	/**
 		Emitted before the window is moved. On Windows, calling `event.preventDefault()` will prevent the window from being moved.
 		
 		Note that this is only emitted when the window is being moved manually. Moving the window with `setPosition`/`setBounds`/`center` will not emit this event.
 	**/
-	var will_move : electron.remote.BaseWindowEvent<Void -> Void> = "will-move";
+	var will_move : electron.remote.BaseWindowEvent<(js.html.Event, electron.Rectangle) -> Void> = "will-move";
 	/**
 		Emitted when the window is being moved to a new position.
 	**/
-	var move : electron.remote.BaseWindowEvent<Void -> Void> = "move";
+	var move : electron.remote.BaseWindowEvent<() -> Void> = "move";
 	/**
 		Emitted once when the window is moved to a new position.
 		
 		> [!NOTE] On macOS, this event is an alias of `move`.
 	**/
-	var moved : electron.remote.BaseWindowEvent<Void -> Void> = "moved";
+	var moved : electron.remote.BaseWindowEvent<() -> Void> = "moved";
 	/**
 		Emitted when the window enters a full-screen state.
 	**/
-	var enter_full_screen : electron.remote.BaseWindowEvent<Void -> Void> = "enter-full-screen";
+	var enter_full_screen : electron.remote.BaseWindowEvent<() -> Void> = "enter-full-screen";
 	/**
 		Emitted when the window leaves a full-screen state.
 	**/
-	var leave_full_screen : electron.remote.BaseWindowEvent<Void -> Void> = "leave-full-screen";
+	var leave_full_screen : electron.remote.BaseWindowEvent<() -> Void> = "leave-full-screen";
 	/**
 		Emitted when the window is set or unset to show always on top of other windows.
 	**/
-	var always_on_top_changed : electron.remote.BaseWindowEvent<Void -> Void> = "always-on-top-changed";
+	var always_on_top_changed : electron.remote.BaseWindowEvent<(js.html.Event, Bool) -> Void> = "always-on-top-changed";
 	/**
 		Emitted when an App Command is invoked. These are typically related to keyboard media keys or browser commands, as well as the "Back" button built into some mice on Windows.
 		
@@ -1026,31 +1029,31 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		* `browser-backward`
 		* `browser-forward`
 	**/
-	var app_command : electron.remote.BaseWindowEvent<Void -> Void> = "app-command";
+	var app_command : electron.remote.BaseWindowEvent<(js.html.Event, String) -> Void> = "app-command";
 	/**
 		Emitted on 3-finger swipe. Possible directions are `up`, `right`, `down`, `left`.
 		
 		The method underlying this event is built to handle older macOS-style trackpad swiping, where the content on the screen doesn't move with the swipe. Most macOS trackpads are not configured to allow this kind of swiping anymore, so in order for it to emit properly the 'Swipe between pages' preference in `System Preferences > Trackpad > More Gestures` must be set to 'Swipe with two or three fingers'.
 	**/
-	var swipe : electron.remote.BaseWindowEvent<Void -> Void> = "swipe";
+	var swipe : electron.remote.BaseWindowEvent<(js.html.Event, String) -> Void> = "swipe";
 	/**
 		Emitted on trackpad rotation gesture. Continually emitted until rotation gesture is ended. The `rotation` value on each emission is the angle in degrees rotated since the last emission. The last emitted event upon a rotation gesture will always be of value `0`. Counter-clockwise rotation values are positive, while clockwise ones are negative.
 	**/
-	var rotate_gesture : electron.remote.BaseWindowEvent<Void -> Void> = "rotate-gesture";
+	var rotate_gesture : electron.remote.BaseWindowEvent<(js.html.Event, Float) -> Void> = "rotate-gesture";
 	/**
 		Emitted when the window opens a sheet.
 	**/
-	var sheet_begin : electron.remote.BaseWindowEvent<Void -> Void> = "sheet-begin";
+	var sheet_begin : electron.remote.BaseWindowEvent<() -> Void> = "sheet-begin";
 	/**
 		Emitted when the window has closed a sheet.
 	**/
-	var sheet_end : electron.remote.BaseWindowEvent<Void -> Void> = "sheet-end";
+	var sheet_end : electron.remote.BaseWindowEvent<() -> Void> = "sheet-end";
 	/**
 		Emitted when the user clicks the native macOS new tab button. The new tab button is only visible if the current `BrowserWindow` has a `tabbingIdentifier`.
 		
 		You must create a window in this handler in order for macOS tabbing to work as expected.
 	**/
-	var new_window_for_tab : electron.remote.BaseWindowEvent<Void -> Void> = "new-window-for-tab";
+	var new_window_for_tab : electron.remote.BaseWindowEvent<() -> Void> = "new-window-for-tab";
 	/**
 		Emitted when the system context menu is triggered on the window, this is normally only triggered when the user right clicks on the non-client area of your window.  This is the window titlebar or any area you have declared as `-webkit-app-region: drag` in a frameless window.
 		
@@ -1058,7 +1061,7 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		
 		To convert `point` to DIP, use `screen.screenToDipPoint(point)`.
 	**/
-	var system_context_menu : electron.remote.BaseWindowEvent<Void -> Void> = "system-context-menu";
+	var system_context_menu : electron.remote.BaseWindowEvent<(js.html.Event, electron.Point) -> Void> = "system-context-menu";
 	/**
 		Emitted after the persisted window state has been restored.
 		
@@ -1066,5 +1069,5 @@ enum abstract BaseWindowEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		
 		> [!NOTE] This event is only emitted when windowStatePersistence is enabled in BaseWindowConstructorOptions or in BrowserWindowConstructorOptions.
 	**/
-	var persisted_state_restored : electron.remote.BaseWindowEvent<Void -> Void> = "persisted-state-restored";
+	var persisted_state_restored : electron.remote.BaseWindowEvent<() -> Void> = "persisted-state-restored";
 }

@@ -54,5 +54,5 @@ enum abstract InAppPurchaseEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 	/**
 		Emitted when one or more transactions have been updated.
 	**/
-	var transactions_updated : electron.remote.InAppPurchaseEvent<Void -> Void> = "transactions-updated";
+	var transactions_updated : electron.remote.InAppPurchaseEvent<(js.html.Event, Array<electron.Transaction>) -> Void> = "transactions-updated";
 }

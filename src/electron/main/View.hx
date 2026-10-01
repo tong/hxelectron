@@ -94,5 +94,5 @@ enum abstract ViewEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitt
 	/**
 		Emitted when the view's bounds have changed in response to being laid out. The new bounds can be retrieved with `view.getBounds()`.
 	**/
-	var bounds_changed : electron.main.ViewEvent<Void -> Void> = "bounds-changed";
+	var bounds_changed : electron.main.ViewEvent<() -> Void> = "bounds-changed";
 }

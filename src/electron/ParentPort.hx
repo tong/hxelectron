@@ -17,5 +17,5 @@ enum abstract ParentPortEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 	/**
 		Emitted when the process receives a message. Messages received on this port will be queued up until a handler is registered for this event.
 	**/
-	var message : electron.ParentPortEvent<Void -> Void> = "message";
+	var message : electron.ParentPortEvent<({ var data : Any; var ports : Array<electron.main.MessagePortMain>; }) -> Void> = "message";
 }

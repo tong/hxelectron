@@ -25,5 +25,5 @@ enum abstract PushNotificationsEvent<T:(haxe.Constraints.Function)>(js.node.even
 	/**
 		Emitted when the app receives a remote notification while running. See: https://developer.apple.com/documentation/appkit/nsapplicationdelegate/1428430-application?language=objc
 	**/
-	var received_apns_notification : electron.main.PushNotificationsEvent<Void -> Void> = "received-apns-notification";
+	var received_apns_notification : electron.main.PushNotificationsEvent<(js.html.Event, Dynamic) -> Void> = "received-apns-notification";
 }

@@ -10,6 +10,10 @@ using haxe.macro.ComplexTypeTools;
 using haxe.macro.MacroStringTools;
 using haxe.macro.TypeTools;
 
+/**
+	Generates the haxe externs from the `electron-api.json` description file
+	which is published with every electron release.
+**/
 class ElectronAPI {
 	public static function generate(apiFile = 'electron-api.json', destination = 'src', clean = false, addDocumentation = true) {
 		if (!FileSystem.exists(apiFile))
@@ -20,49 +24,21 @@ class ElectronAPI {
 
 		var items:Array<Item> = Json.parse(File.getContent(apiFile));
 		for (item in items) {
-			// HACK:
-			if (Reflect.hasField(item, "extends")) {
+			// `extends` is a keyword and can not be used as a typedef field name
+			if (Reflect.hasField(item, "extends"))
 				item.extends_ = Reflect.field(item, "extends");
-			}
 		}
 		var types = new Gen(['electron'], addDocumentation).process(items);
 		var printer = new haxe.macro.Printer();
 		for (tds in types) {
 			var type = tds[0];
-			// --- patch
-			if (type.name == "UtilityProcess") {
-				for (f in type.fields) {
-					if (f.name == "fork") {
-						switch f.kind {
-							case FFun(f):
-								switch f.ret {
-									case TPath(p):
-										p.pack = ['electron'];
-									case _:
-								}
-							case _:
-						}
-					}
-				}
-			}
-			// --- /patch
+			patchType(type);
 			var code = printer.printTypeDefinition(type);
-			if (tds.length > 1) {
-				for (i in 1...tds.length) {
-					var e = tds[i];
-					e.pack = [];
-					code += '\n' + printer.printTypeDefinition(e);
-				}
+			for (i in 1...tds.length) {
+				var e = tds[i];
+				e.pack = [];
+				code += '\n' + printer.printTypeDefinition(e);
 			}
-			#if (haxe_ver < 4)
-			var doc = getTypeDoc(type, items);
-			if (doc != null) {
-				var lines = code.split('\n');
-				code = lines.shift() + '\n';
-				code += '/**' + doc + '\n**/\n'; // !!!!
-				code += lines.join('\n');
-			}
-			#end
 
 			var dir = destination + '/' + type.pack.join('/');
 			if (!FileSystem.exists(dir))
@@ -71,8 +47,8 @@ class ElectronAPI {
 		}
 
 		// postprocess: make remote modules
-		var main = 'src/electron/main';
-		var remote = 'src/electron/remote';
+		var main = '$destination/electron/main';
+		var remote = '$destination/electron/remote';
 		var regex = ~/@:jsRequire\("electron", "(\w*)"\)/;
 		if (!FileSystem.exists(remote))
 			FileSystem.createDirectory(remote);
@@ -88,7 +64,22 @@ class ElectronAPI {
 					}
 					File.saveContent('$remote/$name.hx', patched);
 				} catch (e:Dynamic) {
-					// trace( e );
+					// no generated main module for this item
+				}
+			}
+		}
+	}
+
+	/** Manual fixes for types the description file gets wrong. **/
+	static function patchType(type:TypeDefinition) {
+		if (type.name == "UtilityProcess") {
+			for (f in type.fields) {
+				if (f.name == "fork") {
+					switch f.kind {
+						case FFun({ret: TPath(p)}):
+							p.pack = ['electron'];
+						case _:
+					}
 				}
 			}
 		}
@@ -103,22 +94,6 @@ class ElectronAPI {
 			FileSystem.deleteDirectory(path);
 		}
 	}
-
-	#if (haxe_ver < 4)
-	static function getTypeDoc(type:TypeDefinition, items:Array<Item>):String {
-		for (item in items) {
-			if (item.name == type.name) {
-				var doc = '';
-				if (item.description != null)
-					doc += '\n\t' + item.description;
-				if (item.websiteUrl != null)
-					doc += '\n\t@see ' + item.websiteUrl;
-				return doc;
-			}
-		}
-		return null;
-	}
-	#end
 }
 
 private class Gen {
@@ -138,17 +113,12 @@ private class Gen {
 	public function process(items:Array<Item>):Map<String, Array<TypeDefinition>> {
 		this.items = items;
 
-		// Pre patch
-		function addAlias(name:String, ?type:ComplexType, ?pack:Array<String>) {
-			if (type == null)
-				type = macro :Dynamic;
-			var _pack = root.copy();
-			if (pack != null)
-				_pack = _pack.concat(pack);
+		// Types which are referenced by the description but not defined
+		function addAlias(name:String, ?type:ComplexType) {
 			this.types.set(name, {
-				pack: _pack,
+				pack: root.copy(),
 				name: name,
-				kind: TDAlias(type),
+				kind: TDAlias(type != null ? type : macro :Dynamic),
 				fields: [],
 				pos: null
 			});
@@ -161,38 +131,18 @@ private class Gen {
 		addAlias('MessagePort');
 		addAlias('Partial');
 		addAlias('PopupOptions');
-		addAlias('Record');
-		// addAlias('RequestInit');
 		addAlias('SaveDialogOptions');
-		/*
-			this.types.set( 'Accelerator', {
-				pack: root.copy(),
-				name: 'Accelerator',
-				kind: TDAbstract( macro:String, [macro:String], [macro:String] ),
-				fields: [],
-				pos: null
-			} );
-		 */
 
-		for (item in items) {
-			// trace(item.name);
-			// if (item.name != 'BaseWindow')
-			//	continue;
-			// trace('>....www', item);
-			// if (item.name != 'Session')
-			//	continue;
+		for (item in items)
 			this.types.set(item.name, processItem(item));
-		}
 
 		var map = new Map<String, Array<TypeDefinition>>();
-		for (t in types) {
+		for (t in types)
 			map.set(t.name, extraTypes.exists(t.name) ? [t].concat(extraTypes.get(t.name)) : [t]);
-		}
-
 		return map;
 	}
 
-	function processItem(item:Item, ?module:String):TypeDefinition {
+	function processItem(item:Item):TypeDefinition {
 		var type:TypeDefinition = {
 			pack: getItemPack(item),
 			name: item.name,
@@ -204,21 +154,14 @@ private class Gen {
 		};
 
 		if (addDocumentation) {
-			#if haxe4
 			type.doc = '';
 			if (item.description != null && item.description.length > 0)
 				type.doc += item.description + '\n';
 			type.doc += '@see ' + item.websiteUrl;
-			#end
 		}
 
 		switch item.type {
 			case Class_:
-				// var sup:TypePath = if (item.instanceEvents == null) null else {
-				//	createEventEnumAbstract(type.name, type.pack, item.instanceEvents);
-				//	{pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
-				// }
-				// TODO:
 				var supItem:Item = null;
 				var sup:TypePath = null;
 				if (item.extends_ != null) {
@@ -227,57 +170,30 @@ private class Gen {
 						sup = {name: supItem.name, pack: getItemPack(supItem)}
 					else // external DOM type, e.g. WebSocket extends EventTarget
 						sup = {name: item.extends_, pack: ['js', 'html']}
-				} else {
-					if (item.instanceEvents != null) {
-						createEventEnumAbstract(type.name, type.pack, item.instanceEvents);
-						sup = {pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
-					}
+				} else if (item.instanceEvents != null) {
+					sup = createEventEmitter(type, item.instanceEvents);
 				}
 				type.kind = TDClass(sup);
-				var jsRequireName = item.name;
-				if (module != null)
-					jsRequireName = module + '.' + jsRequireName;
-				type.meta.push({name: ':jsRequire', params: [macro $v{'electron'}, macro $v{jsRequireName}], pos: null});
+				type.meta.push({name: ':jsRequire', params: [macro $v{'electron'}, macro $v{item.name}], pos: null});
 				if (item.staticMethods != null)
 					for (m in item.staticMethods)
 						type.fields.push(createFunField(m, [AStatic]));
 				if (item.instanceProperties != null)
-					for (p in item.instanceProperties) {
-						var fieldExistsInSup = false;
-						if (supItem != null) {
-							for (sp in supItem.instanceProperties) {
-								if (sp.name == p.name) {
-									fieldExistsInSup = true;
-									break;
-								}
-							}
-						}
-						if (!fieldExistsInSup)
+					for (p in item.instanceProperties)
+						if (!superHasProperty(supItem, p.name))
 							type.fields.push(createVarField(p));
-					}
 				if (item.constructorMethod != null)
 					type.fields.push(createFunField(cast {name: 'new', parameters: item.constructorMethod.parameters}));
 				if (item.instanceMethods != null)
 					for (m in item.instanceMethods)
 						type.fields.push(createFunField(m));
-				/*TODO:
-					if( item.staticProperties != null ) {
-						for( p in item.staticProperties ) {
-							var t = processItem( cast p, type.name );
-							if( !this.extraTypes.exists( type.name ) ) this.extraTypes.set( type.name, [t] );
-							else this.extraTypes.get( type.name ).push( t );
-						}
-					}
-				 */
+				// TODO: staticProperties (e.g. the TouchBar* classes) are not generated
 				mergeTypeItem(type, item);
 
 			case Module:
 				type.name = capitalize(item.name);
 				type.meta.push({name: ':jsRequire', params: [macro $v{'electron'}, macro $v{item.name}], pos: null});
-				var sup:TypePath = if (item.events == null) null else {
-					createEventEnumAbstract(type.name, type.pack, item.events);
-					{pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
-				}
+				var sup = (item.events == null) ? null : createEventEmitter(type, item.events);
 				type.kind = TDClass(sup);
 				if (item.properties != null)
 					for (p in item.properties)
@@ -292,25 +208,13 @@ private class Gen {
 				if (item.properties != null)
 					for (p in item.properties)
 						fields.push(createVarField(p));
-				if (item.extends_ != null) {
-					// var fields = [];
-					// if (item.properties != null)
-					//	for (p in item.properties)
-					//		fields.push(createVarField(p));
-					var extType = getComplexType(item.extends_);
-					if (extType.getParameters()[0].pack[0] == "electron") {
-						var anon = TAnonymous(fields);
-						type.kind = TDAlias(TIntersection([anon, extType]));
-					} else {
-						type.kind = TDStructure;
-						type.fields = fields;
-					}
+				var extType = (item.extends_ != null) ? getComplexType(item.extends_) : null;
+				if (extType != null && isElectronType(extType)) {
+					// structure extending another generated structure
+					type.kind = TDAlias(TIntersection([TAnonymous(fields), extType]));
 				} else {
 					type.kind = TDStructure;
 					type.fields = fields;
-					// if (item.properties != null)
-					//	for (p in item.properties)
-					//		type.fields.push(createVarField(p));
 				}
 
 			case Element:
@@ -323,90 +227,83 @@ private class Gen {
 				if (item.methods != null)
 					for (m in item.methods)
 						type.fields.push(createFunField(m));
-				// TODO domEvents
-				// if( item.domEvents != null ) {
+				// TODO: domEvents
 		}
 
-		if (type.kind != null) {
-			// Create @:overload for duplicate method definitions
-			switch type.kind {
-				#if (haxe_ver < 4)
-				case TDClass(superClass, interfaces, isInterface):
-				#else
-				case TDClass(superClass, interfaces, isInterface, isFinal):
-				#end
-				var i = 0;
-				while (i < type.fields.length) {
-					var a = type.fields[i];
-					var j = 0;
-					while (j < type.fields.length) {
-						if (j != i) {
-							var b = type.fields[j];
-							if (a.name == b.name) {
-								type.fields.splice(i, 1);
-								var expr:Expr = null;
-								switch a.kind {
-									case FFun(f):
-										f.expr = {expr: EBlock([]), pos: Context.currentPos()};
-										expr = {expr: EFunction(null, f), pos: Context.currentPos()};
-									default:
-								}
-								b.meta.push({name: ':overload', params: [expr], pos: Context.currentPos()});
-							}
-						}
-						j++;
-					}
-					i++;
-				}
-				default:
-			}
-		} else {
-			// trace(type);
-			type.kind = TDClass();
-			///type.kind = TDAlias( macro : Dynamic );
+		switch type.kind {
+			case null:
+				type.kind = TDClass();
+			case TDClass(_, _, _, _):
+				mergeDuplicateMethods(type);
+			case _:
 		}
 
-		// Post patch
+		postPatch(type);
+		return type;
+	}
 
-		function patchEventListenerMethods() {
-			// var eType = extraTypes.get( type.name );
-			type.fields.push({
-				name: 'on',
-				access: [AStatic],
-				kind: FFun({
-					params: [{name: 'T', constraints: [macro :haxe.Constraints.Function]},],
-					args: [
-						{name: 'eventType', type: macro :Dynamic}, // TODO
-						{name: 'callback', type: macro :T}
-					],
-					ret: macro :Void,
-					expr: null
-				}),
-				pos: null
-			});
-		}
-
+	/** Manual fixes for specific types. **/
+	function postPatch(type:TypeDefinition) {
 		switch type.name {
 			case 'App', 'InAppPurchase':
-				patchEventListenerMethods();
+				// events are not typed per event name
+				type.fields.push({
+					name: 'on',
+					access: [AStatic],
+					kind: FFun({
+						params: [{name: 'T', constraints: [macro :haxe.Constraints.Function]}],
+						args: [
+							{name: 'eventType', type: macro :Dynamic}, // TODO
+							{name: 'callback', type: macro :T}
+						],
+						ret: macro :Void,
+						expr: null
+					}),
+					pos: null
+				});
 			case 'Process':
-				for (i in 0...type.meta.length) {
-					if (type.meta[i].name == ':jsRequire') {
-						type.meta[i].params.shift();
+				for (m in type.meta)
+					if (m.name == ':jsRequire') {
+						m.params.shift();
 						break;
 					}
-				}
 			case 'Screen':
 				// TODO: https://github.com/fponticelli/hxelectron/issues/29
-				for (i in 0...type.meta.length) {
+				for (i in 0...type.meta.length)
 					if (type.meta[i].name == ':jsRequire') {
 						type.meta.splice(i, 1);
 						type.meta.push({name: ':native', params: [macro 'require("electron").screen'], pos: null});
 						break;
 					}
-				}
 		}
-		return type;
+	}
+
+	/** Turn fields with the same name into `@:overload`s of the last definition. **/
+	function mergeDuplicateMethods(type:TypeDefinition) {
+		var i = 0;
+		while (i < type.fields.length) {
+			var a = type.fields[i];
+			var b = null;
+			for (j in i + 1...type.fields.length)
+				if (type.fields[j].name == a.name) {
+					b = type.fields[j];
+					break;
+				}
+			if (b == null) {
+				i++;
+				continue;
+			}
+			type.fields.splice(i, 1);
+			switch a.kind {
+				case FFun(f):
+					f.expr = {expr: EBlock([]), pos: Context.currentPos()};
+					var expr:Expr = {expr: EFunction(null, f), pos: Context.currentPos()};
+					if (b.meta == null)
+						b.meta = [];
+					b.meta.push({name: ':overload', params: [expr], pos: Context.currentPos()});
+				case _:
+			}
+		}
 	}
 
 	function getItem(name:String):Item {
@@ -427,14 +324,35 @@ private class Gen {
 		return pack;
 	}
 
+	function superHasProperty(supItem:Item, name:String):Bool {
+		if (supItem == null || supItem.instanceProperties == null)
+			return false;
+		for (sp in supItem.instanceProperties)
+			if (sp.name == name)
+				return true;
+		return false;
+	}
+
+	function isElectronType(t:ComplexType):Bool {
+		return switch t {
+			case TPath(p): p.pack[0] == root[0];
+			case _: false;
+		}
+	}
+
 	function mergeTypeItem(type:TypeDefinition, item:Item) {
 		var name = if (item.type == Module) capitalize(item.name) else uncapitalize(item.name);
 		if (types.exists(name)) {
-			// trace("ALREADY EXISTS "+name );
 			var t = types.get(name);
 			types.remove(name);
 			type.fields = (item.type == Module) ? type.fields.concat(t.fields) : t.fields.concat(type.fields);
 		}
+	}
+
+	/** Creates the event enum abstract and returns the `EventEmitter` super class. **/
+	function createEventEmitter(type:TypeDefinition, events:Array<Event>):TypePath {
+		createEventEnumAbstract(type.name, type.pack, events);
+		return {pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
 	}
 
 	function createEventEnumAbstract(name:String, pack:Array<String>, events:Array<Event>) {
@@ -459,45 +377,15 @@ private class Gen {
 			this.extraTypes.set(name, [type]);
 		}
 		for (e in events) {
-			var params:Array<TypeParam> = if (e.returns == null) [TPType(macro :Void->Void)] else {
-				[
-					TPType(TFunction([for (r in e.returns) getComplexType(r.type, r.collection, !r.required)], macro :Void))
-				];
-			}
+			var args = [for (p in e.parameters) getComplexType(p.type, p.collection, p.properties, !p.required)];
 			type.fields.push({
 				name: e.name.replace('-', '_'),
-				kind: FVar(TPath({pack: pack, name: _name, params: params}), macro $v{e.name}),
+				kind: FVar(TPath({pack: pack, name: _name, params: [TPType(TFunction(args, macro :Void))]}), macro $v{e.name}),
 				meta: (e.platforms == null) ? null : [createPlatformMetadata(e)],
 				doc: getDoc(e.description),
 				pos: null
 			});
 		}
-		/*
-			var fields = [];
-			for( e in events ) {
-				var params : Array<TypeParam> = if( e.returns == null ) [TPType(macro : Void->Void)] else {
-					[TPType( TFunction( [for(r in e.returns) getComplexType( r.type, r.collection, !r.required )], macro : Void ) )];
-				}
-				fields.push({
-					name: e.name.replace( '-', '_' ),
-					kind: FVar( TPath( { pack: pack, name: _name, params: params } ), macro $v{e.name} ),
-					meta: (e.platforms == null ) ? null : [createPlatformMetadata(e)],
-					doc: getDoc( e.description ),
-					pos: null
-				});
-			}
-			var type = {
-				name: _name,
-				pack: pack,
-				params: [{ name: 'T', constraints: [macro:haxe.Constraints.Function] }],
-				kind: TDAbstract(macro:js.node.events.EventEmitter.Event<T>,[],[macro:js.node.events.EventEmitter.Event<T>]),
-				fields: fields,
-				meta: [{ name: ":enum", pos: null }],
-				pos: null
-			};
-			if( !this.extraTypes.exists( name ) ) this.extraTypes.set( name, [type] );
-			else this.extraTypes.get( name ).push( type );
-		 */
 	}
 
 	function createVarField(p:Property, ?access:Array<Access>):Field {
@@ -525,31 +413,26 @@ private class Gen {
 					default:
 						args.push({
 							name: escapeArgument(p.name),
-							type: getComplexType(p.type, p.collection, p.properties, null, p.possibleValues),
+							type: getComplexType(p.type, p.collection, p.properties, false, p.possibleValues),
 							opt: (p.required == null) ? true : !p.required
 						});
 				}
 			}
 		}
 
-		var ret = if (m.returns == null) macro :Void else {
-			// TODO: handle return doc
-			getComplexType(m.returns.type, m.returns.collection);
-		}
+		// TODO: handle return doc
+		var ret = if (m.returns == null) macro :Void else getComplexType(m.returns.type, m.returns.collection);
 
 		return createField(m.name, FFun({args: args, ret: ret, expr: null}), access, meta, m.description);
 	}
 
 	function createField(name:String, kind:FieldType, access:Array<Access>, ?meta:Metadata, ?doc:String):Field {
-		// var kwds = ['class','private','switch'];
 		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i; // TODO: test/improve
 		if (!expr.match(name) || KWDS.indexOf(name) != -1) {
-			// trace("INVALID TYPE NAME: "+name);
-			var _name = '_' + name;
 			if (meta == null)
 				meta = [];
 			meta.push({name: ':native', params: [macro $v{name}], pos: null});
-			name = _name;
+			name = '_' + name;
 		}
 		return {
 			name: name,
@@ -561,27 +444,16 @@ private class Gen {
 		}
 	}
 
-	function createMultiType(types:Array<{
-		?typeName:String,
-		?type:String,
-		collection:Bool,
-		?properties:Array<Dynamic>
-	}>):ComplexType {
-		function createEitherType(remain:Array<{
-			?typeName:String,
-			?type:String,
-			collection:Bool,
-			?properties:Array<Dynamic>
-		}>) {
-			var params = new Array<TypeParam>();
+	function createMultiType(types:Array<TypeRef>):ComplexType {
+		function getTypeName(t:TypeRef):String
+			return (t.typeName != null) ? t.typeName : t.type;
+
+		function createEitherType(remain:Array<TypeRef>) {
 			var t1 = remain.shift();
-			function getTypeName(t:{?typeName:String, ?type:String}) {
-				return (t.typeName != null) ? t.typeName : t.type;
-			}
 			var t1Name = getTypeName(t1);
 			if (t1Name == null)
 				throw 'cannot resolve type name';
-			params.push(TPType(getComplexType(t1Name, t1.collection, t1.properties)));
+			var params = [TPType(getComplexType(t1Name, t1.collection, t1.properties))];
 			if (remain.length > 1) {
 				params.push(TPType(createEitherType(remain)));
 			} else {
@@ -591,22 +463,14 @@ private class Gen {
 				params.push(TPType(getComplexType(t2Name, remain[0].collection, remain[0].properties)));
 			}
 			return TPath({pack: ['haxe', 'extern'], name: 'EitherType', params: params});
-			/*
-				params.push( TPType( getComplexType( t1.typeName, t1.collection, t1.properties ) ) );
-				params.push( (remain.length > 1)
-					? TPType( createEitherType( remain ) )
-					: TPType( getComplexType( remain[0].typeName, remain[0].collection, remain[0].properties ) )
-				);
-				trace(params);
-				return TPath( { pack: ['haxe','extern'], name: 'EitherType', params: params } );
-			 */
 		}
+
 		// collapse string literal types ('thin', 'bold', ...) into a single String
-		var merged:Array<{?typeName:String, ?type:String, collection:Bool, ?properties:Array<Dynamic>}> = [];
+		var merged:Array<TypeRef> = [];
 		var hasString = false;
 		for (t in types) {
-			var n = t.typeName != null ? t.typeName : t.type;
-			if (n != null && (isStringLiteral(n) || n == 'string' || n == 'String')) {
+			var n = getTypeName(t);
+			if (n != null && (isStringLiteral(n) || n == 'String')) {
 				if (hasString)
 					continue;
 				hasString = true;
@@ -615,11 +479,11 @@ private class Gen {
 				merged.push(t);
 		}
 		if (merged.length == 1)
-			return getComplexType(merged[0].type, merged[0].collection, merged[0].properties);
+			return getComplexType(getTypeName(merged[0]), merged[0].collection, merged[0].properties);
 		return createEitherType(merged);
 	}
 
-	function getComplexType(name, collection = false, ?properties:Array<Dynamic>, optional = false, ?possibleValues:Array<PossibleValue>):ComplexType {
+	function getComplexType(name:Dynamic, collection = false, ?properties:Array<Dynamic>, optional = false, ?possibleValues:Array<PossibleValue>):ComplexType {
 		var t:ComplexType = switch name {
 			case 'this': macro :Dynamic;
 			case 'undefined': macro :Dynamic;
@@ -627,33 +491,23 @@ private class Gen {
 			case 'Accelerator': // TODO: HACK
 				TPath({name: name, pack: root.copy()});
 			case 'Any', 'any': macro :Any;
+			case 'unknown': macro :Dynamic;
 			case 'Array': macro :Array<Dynamic>; // TODO HACK for fields with Array type without type param
 			case 'UserDefaultTypes[Type]': macro :Dynamic; // TODO HACK for invalid description
 			case 'Blob': macro :js.html.Blob;
 			case 'T': macro :String; // HACK: generic `<T extends string>` (ClipboardItem.getType)
 			case 'Record': macro :Dynamic; // TS Record<K, V>
-			case 'ArrayBuffer', 'ArrayBufferLike': macro :js.lib.ArrayBuffer;
+			case 'ArrayBufferLike': macro :js.lib.ArrayBuffer;
 			case 'ArrayBufferView': macro :js.lib.ArrayBufferView;
-			case 'Bool', 'Boolean', 'boolean': macro :Bool;
+			case 'Boolean', 'boolean': macro :Bool;
 			case 'Buffer': macro :js.node.Buffer;
 			case 'Date': macro :Date;
 			case '[number, number]': macro :Array<Float>; // HACK
-			case 'NodeJS.Process': macro :js.node.Process; // HACK
-			case 'NodeJS.Require': macro :Dynamic; // HACK TODO
 			case 'Double', 'Float', 'Number', 'number': macro :Float;
-			case 'Dynamic': macro :Dynamic; // Allows to explicit set type to Dynamic
 			case 'Electron.ParentPort': return macro :electron.ParentPort;
-			case 'Error':
-				#if (haxe_ver >= 4)
-				macro :js.lib.Error;
-				#else
-				macro :js.Error;
-				#end
+			case 'Error': macro :js.lib.Error;
 			case 'Event': macro :js.html.Event;
-			case 'Function', 'VoidFunction':
-				// TODO:
-				// trace("Function",properties);
-				macro :haxe.Constraints.Function;
+			case 'Function': macro :haxe.Constraints.Function; // TODO
 			case 'Integer': macro :Int;
 			case 'Object':
 				if (properties == null || properties.length == 0) macro :Any else {
@@ -674,41 +528,28 @@ private class Gen {
 					}
 					TAnonymous(fields);
 				}
-			case 'Promise':
-				#if (haxe_ver >= 4)
-				macro :js.lib.Promise<Any>;
-				#else
-				macro :js.Promise<Any>;
-				#end
-			case 'String', 'string':
-				if (possibleValues != null) {
-					// TODO create abstract @:enum
-				}
-				macro :String;
+			case 'Promise': macro :js.lib.Promise<Any>;
+			case 'String': macro :String; // TODO: create abstract enum from possibleValues
 			case 'ReadableStream', 'NodeJS.ReadableStream':
 				// TODO: type param
-				macro :js.node.stream.Readable<Dynamic>; // macro : js.node.stream.Readable.IReadable;
+				macro :js.node.stream.Readable<Dynamic>;
 			case 'MenuItemConstructorOptions', 'TouchBarItem': // TODO: HACK
 				macro :Dynamic;
 			case 'URL': macro :String; // TODO: macro: js.html.URL;
 			case _ if (Std.isOfType(name, Array)):
 				createMultiType(cast name);
-			case _ if (name is String && isStringLiteral(name) && name != "'rawData'"):
-				macro :String; // string literal type
-			case _ if (name is String && StringTools.startsWith(name, 'typeof ')):
+			case "'rawData'": // HACK:
+				macro :js.node.Buffer;
+			case _ if (isStringLiteral(name)): // e.g. 'file'
+				macro :String;
+			case _ if (StringTools.startsWith(name, 'typeof ')):
 				// reference to a class, e.g. `typeof WebSocket` -> Class<WebSocket>
 				var ref = getComplexType(StringTools.trim(name.substr(7)));
 				TPath({pack: [], name: 'Class', params: [TPType(ref)]});
-			case "'rawData'": // HACK:
-				macro :js.node.Buffer;
-			case "'file'": // HACK:
-				macro :String;
 			case "(...args: any[]) => any": // HACK:
 				macro :Dynamic;
 			case "(options: BrowserWindowConstructorOptions) => WebContents": // HACK:
 				macro :Dynamic;
-			case "RequestInit": // HACK:
-				macro :js.html.RequestInit;
 			case "RequestInit & { bypassCustomProtocolHandlers?: boolean }": // HACK:
 				macro :js.html.RequestInit;
 			default:
@@ -719,7 +560,6 @@ private class Gen {
 						break;
 					}
 				}
-				// if( pack.length == 0 ) Context.warning( '[$name] not found', Context.currentPos() );
 				TPath({name: name, pack: pack});
 		}
 		if (collection)
@@ -763,9 +603,8 @@ private class Gen {
 
 	static function escapeArgument(name:String):String {
 		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i; // TODO: test/improve
-		if (!expr.match(name) || KWDS.indexOf(name) != -1) {
+		if (!expr.match(name) || KWDS.indexOf(name) != -1)
 			return name + '_';
-		}
 		return name;
 	}
 
@@ -776,6 +615,8 @@ private class Gen {
 		return s.charAt(0).toLowerCase() + s.substr(1);
 }
 #end
+
+// ---- electron-api.json structure ----
 
 enum abstract ItemType(String) from String to String {
 	var Module = "Module";
@@ -792,32 +633,13 @@ enum abstract Platform(String) from String to String {
 	var Deprecated = "(Deprecated)";
 }
 
-typedef Property = {
-	name:String,
-	type:String,
+/** A (possibly nested) type: `type` is a type name or, for unions, an array of `TypeRef`. **/
+typedef TypeRef = {
+	?typeName:String,
+	?type:Dynamic,
 	collection:Bool,
-	?description:String,
-	?properties:Array<Property>,
-	?required:Bool,
-	// TODO: ?required
-	// TODO: ?possibleValues
-	// TODO: ?additionalTags : Array<String>
-}
-
-typedef Event = {
-	name:String,
-	?description:String,
-	?platforms:Array<Platform>,
-	returns:Array<Return>
-}
-
-typedef MethodParameter = {
-	name:String,
-	type:String,
-	description:String,
-	collection:Bool,
-	properties:Array<Property>,
-	required:Null<Bool>,
+	?properties:Array<Dynamic>,
+	?innerTypes:Array<Dynamic>,
 	?possibleValues:Array<PossibleValue>
 }
 
@@ -826,36 +648,64 @@ typedef PossibleValue = {
 	description:String,
 }
 
-typedef Return = {
+/** Property, method/event parameter or class/element attribute. **/
+typedef Property = {
 	name:String,
-	type:String,
-	description:String,
+	type:Dynamic,
+	collection:Bool,
+	?description:String,
+	?properties:Array<Property>,
+	?required:Bool,
+	?possibleValues:Array<PossibleValue>,
+	?innerTypes:Array<Dynamic>,
+	?additionalTags:Array<String>,
+	?urlFragment:String,
+	// function typed properties
+	?parameters:Array<Dynamic>,
+	?returns:Dynamic,
+}
+
+typedef MethodParameter = Property;
+
+typedef Return = {
+	type:Dynamic,
 	collection:Bool,
 	?properties:Array<Property>,
-	required:Null<Bool>,
-	?possibleValues:Array<PossibleValue>
+	?innerTypes:Array<Dynamic>,
+	?possibleValues:Array<PossibleValue>,
+}
+
+typedef Event = {
+	name:String,
+	?description:String,
+	?platforms:Array<Platform>,
+	parameters:Array<Property>,
+	?additionalTags:Array<String>,
+	?urlFragment:String,
 }
 
 typedef Method = {
 	name:String,
-	signature:String,
-	description:String,
-	returns:Return,
-	parameters:Array<MethodParameter>,
-	platforms:Array<Platform>
+	?signature:String,
+	?description:String,
+	?returns:Return,
+	?parameters:Array<MethodParameter>,
+	?platforms:Array<Platform>,
+	?rawGenerics:String,
+	?additionalTags:Array<String>,
+	?urlFragment:String,
 }
 
 typedef Process = {
 	var main:Bool;
 	var renderer:Bool;
-	// var utility:Bool;
-	// var exported:Bool;
+	var utility:Bool;
+	var exported:Bool;
 }
 
 typedef Item = {
 	name:String,
 	description:String,
-	?rawGenerics:String,
 	?process:Process,
 	version:String,
 	type:ItemType,
@@ -863,17 +713,18 @@ typedef Item = {
 	websiteUrl:String,
 	repoUrl:String,
 	?extends_:String,
-	methods:Array<Method>,
-	?instanceEvents:Array<Event>,
+	// Module & Element
+	?methods:Array<Method>,
+	?properties:Array<Property>,
+	?events:Array<Event>,
+	?exportedClasses:Array<Dynamic>,
+	?attributes:Array<Property>,
+	// Class
 	?instanceName:String,
+	?instanceEvents:Array<Event>,
 	?instanceProperties:Array<Property>,
 	?instanceMethods:Array<Method>,
 	?constructorMethod:Method,
 	?staticMethods:Array<Method>,
 	?staticProperties:Array<Property>,
-	?properties:Array<Property>,
-	?events:Array<Event>,
-	?attributes:Array<Dynamic>,
-	// ?domEvents : Array<Dynamic>,
-	?domEvents:Array<Event>,
 }

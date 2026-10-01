@@ -197,5 +197,5 @@ enum abstract ProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 	/**
 		Emitted when Electron has loaded its internal initialization script and is beginning to load the web page or the main script.
 	**/
-	var loaded : electron.ProcessEvent<Void -> Void> = "loaded";
+	var loaded : electron.ProcessEvent<() -> Void> = "loaded";
 }

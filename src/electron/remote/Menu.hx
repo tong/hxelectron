@@ -111,9 +111,9 @@ enum abstract MenuEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitt
 	/**
 		Emitted when `menu.popup()` is called.
 	**/
-	var menu_will_show : electron.remote.MenuEvent<Void -> Void> = "menu-will-show";
+	var menu_will_show : electron.remote.MenuEvent<js.html.Event -> Void> = "menu-will-show";
 	/**
 		Emitted when a popup is closed either manually or with `menu.closePopup()`.
 	**/
-	var menu_will_close : electron.remote.MenuEvent<Void -> Void> = "menu-will-close";
+	var menu_will_close : electron.remote.MenuEvent<js.html.Event -> Void> = "menu-will-close";
 }

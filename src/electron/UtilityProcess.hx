@@ -76,25 +76,35 @@ enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.
 	/**
 		Emitted once the child process has spawned successfully.
 	**/
-	var spawn : electron.UtilityProcessEvent<Void -> Void> = "spawn";
+	var spawn : electron.UtilityProcessEvent<() -> Void> = "spawn";
 	/**
 		Emitted when the child process needs to terminate due to non continuable error from V8.
 		
 		No matter if you listen to the `error` event, the `exit` event will be emitted after the child process terminates.
 	**/
-	var error : electron.UtilityProcessEvent<Void -> Void> = "error";
+	var error : electron.UtilityProcessEvent<(String, String, String) -> Void> = "error";
 	/**
 		Emitted after the child process ends.
 	**/
-	var exit : electron.UtilityProcessEvent<Void -> Void> = "exit";
+	var exit : electron.UtilityProcessEvent<Float -> Void> = "exit";
 	/**
 		Emitted when the child process sends a message using `process.parentPort.postMessage()`.
 	**/
-	var message : electron.UtilityProcessEvent<Void -> Void> = "message";
+	var message : electron.UtilityProcessEvent<Any -> Void> = "message";
 	/**
 		Emitted when the utility process encounters an HTTP 401 or 407 authentication challenge, if the process was created with both `respondToAuthRequestsFromMainProcess: true` and a `session` option. The `callback` should be called with credentials to respond to the challenge. Calling `callback` without arguments will cancel the request.
 		
 		This behaves the same as the `login` event on `app` but is scoped to the individual utility process instance.
 	**/
-	var login : electron.UtilityProcessEvent<Void -> Void> = "login";
+	var login : electron.UtilityProcessEvent<({ var url : String; var pid : Float; /**
+		Indicates whether the request is for a navigation.
+	**/
+	var isRequestForNavigation : Bool; /**
+		Indicates whether this is the first authentication attempt.
+	**/
+	var firstAuthAttempt : Bool; /**
+		The headers returned in the response.
+	**/
+	@:optional
+	var responseHeaders : Dynamic; }, { var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
 }

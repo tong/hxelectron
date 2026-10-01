@@ -542,7 +542,7 @@ enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 		
 		Calling `event.preventDefault()` will cancel the download and `item` will not be available from next tick of the process.
 	**/
-	var will_download : electron.main.SessionEvent<Void -> Void> = "will-download";
+	var will_download : electron.main.SessionEvent<(js.html.Event, electron.main.DownloadItem, electron.main.WebContents, haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>) -> Void> = "will-download";
 	/**
 		Emitted after an extension is loaded. This occurs whenever an extension is added to the "enabled" set of extensions. This includes:
 		
@@ -551,88 +551,135 @@ enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 		  * from a crash.
 		  * if the extension requested it (`chrome.runtime.reload()`).
 	**/
-	var extension_loaded : electron.main.SessionEvent<Void -> Void> = "extension-loaded";
+	var extension_loaded : electron.main.SessionEvent<(js.html.Event, electron.Extension) -> Void> = "extension-loaded";
 	/**
 		Emitted after an extension is unloaded. This occurs when `Session.removeExtension` is called.
 	**/
-	var extension_unloaded : electron.main.SessionEvent<Void -> Void> = "extension-unloaded";
+	var extension_unloaded : electron.main.SessionEvent<(js.html.Event, electron.Extension) -> Void> = "extension-unloaded";
 	/**
 		Emitted after an extension is loaded and all necessary browser state is initialized to support the start of the extension's background page.
 	**/
-	var extension_ready : electron.main.SessionEvent<Void -> Void> = "extension-ready";
-	var file_system_access_restricted : electron.main.SessionEvent<Void -> Void> = "file-system-access-restricted";
+	var extension_ready : electron.main.SessionEvent<(js.html.Event, electron.Extension) -> Void> = "extension-ready";
+	var file_system_access_restricted : electron.main.SessionEvent<(js.html.Event, { /**
+		The origin that initiated access to the blocked path.
+	**/
+	var origin : String; /**
+		Whether or not the path is a directory.
+	**/
+	var isDirectory : Bool; /**
+		The blocked path attempting to be accessed.
+	**/
+	var path : String; /**
+		The frame that initiated access. May be `null` if the frame has since been destroyed.
+	**/
+	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; /**
+		The WebContents that contains `frame`.
+	**/
+	var webContents : haxe.extern.EitherType<electron.main.WebContents, Dynamic>; }, haxe.Constraints.Function) -> Void> = "file-system-access-restricted";
 	/**
 		Emitted when a render process requests preconnection to a URL, generally due to a resource hint.
 	**/
-	var preconnect : electron.main.SessionEvent<Void -> Void> = "preconnect";
+	var preconnect : electron.main.SessionEvent<(js.html.Event, String, Bool, haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>) -> Void> = "preconnect";
 	/**
 		Emitted when a hunspell dictionary file has been successfully initialized. This occurs after the file has been downloaded.
 	**/
-	var spellcheck_dictionary_initialized : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-initialized";
+	var spellcheck_dictionary_initialized : electron.main.SessionEvent<(js.html.Event, String) -> Void> = "spellcheck-dictionary-initialized";
 	/**
 		Emitted when a hunspell dictionary file starts downloading
 	**/
-	var spellcheck_dictionary_download_begin : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-begin";
+	var spellcheck_dictionary_download_begin : electron.main.SessionEvent<(js.html.Event, String) -> Void> = "spellcheck-dictionary-download-begin";
 	/**
 		Emitted when a hunspell dictionary file has been successfully downloaded
 	**/
-	var spellcheck_dictionary_download_success : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-success";
+	var spellcheck_dictionary_download_success : electron.main.SessionEvent<(js.html.Event, String) -> Void> = "spellcheck-dictionary-download-success";
 	/**
 		Emitted when a hunspell dictionary file download fails.  For details on the failure you should collect a netlog and inspect the download request.
 	**/
-	var spellcheck_dictionary_download_failure : electron.main.SessionEvent<Void -> Void> = "spellcheck-dictionary-download-failure";
+	var spellcheck_dictionary_download_failure : electron.main.SessionEvent<(js.html.Event, String) -> Void> = "spellcheck-dictionary-download-failure";
 	/**
 		Emitted when a HID device needs to be selected when a call to `navigator.hid.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.hid` can be further managed by using `ses.setPermissionCheckHandler(handler)` and `ses.setDevicePermissionHandler(handler)`.
 	**/
-	var select_hid_device : electron.main.SessionEvent<Void -> Void> = "select-hid-device";
+	var select_hid_device : electron.main.SessionEvent<(js.html.Event, { var deviceList : Array<electron.HIDDevice>; /**
+		The frame initiating this event. May be `null` if accessed after the frame has either navigated or been destroyed.
+	**/
+	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; }, haxe.Constraints.Function) -> Void> = "select-hid-device";
 	/**
 		Emitted after `navigator.hid.requestDevice` has been called and `select-hid-device` has fired if a new device becomes available before the callback from `select-hid-device` is called.  This event is intended for use when using a UI to ask users to pick a device so that the UI can be updated with the newly added device.
 	**/
-	var hid_device_added : electron.main.SessionEvent<Void -> Void> = "hid-device-added";
+	var hid_device_added : electron.main.SessionEvent<(js.html.Event, { var device : electron.HIDDevice; /**
+		The frame initiating this event. May be `null` if accessed after the frame has either navigated or been destroyed.
+	**/
+	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; }) -> Void> = "hid-device-added";
 	/**
 		Emitted after `navigator.hid.requestDevice` has been called and `select-hid-device` has fired if a device has been removed before the callback from `select-hid-device` is called.  This event is intended for use when using a UI to ask users to pick a device so that the UI can be updated to remove the specified device.
 	**/
-	var hid_device_removed : electron.main.SessionEvent<Void -> Void> = "hid-device-removed";
+	var hid_device_removed : electron.main.SessionEvent<(js.html.Event, { var device : electron.HIDDevice; /**
+		The frame initiating this event. May be `null` if accessed after the frame has either navigated or been destroyed.
+	**/
+	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; }) -> Void> = "hid-device-removed";
 	/**
 		Emitted after `HIDDevice.forget()` has been called.  This event can be used to help maintain persistent storage of permissions when `setDevicePermissionHandler` is used.
 	**/
-	var hid_device_revoked : electron.main.SessionEvent<Void -> Void> = "hid-device-revoked";
+	var hid_device_revoked : electron.main.SessionEvent<(js.html.Event, { var device : electron.HIDDevice; /**
+		The origin that the device has been revoked from.
+	**/
+	@:optional
+	var origin : String; }) -> Void> = "hid-device-revoked";
 	/**
 		Emitted when a serial port needs to be selected when a call to `navigator.serial.requestPort` is made. `callback` should be called with `portId` to be selected, passing an empty string to `callback` will cancel the request.  Additionally, permissioning on `navigator.serial` can be managed by using ses.setPermissionCheckHandler(handler) with the `serial` permission.
 	**/
-	var select_serial_port : electron.main.SessionEvent<Void -> Void> = "select-serial-port";
+	var select_serial_port : electron.main.SessionEvent<(js.html.Event, Array<electron.SerialPort>, electron.main.WebContents, haxe.Constraints.Function) -> Void> = "select-serial-port";
 	/**
 		Emitted after `navigator.serial.requestPort` has been called and `select-serial-port` has fired if a new serial port becomes available before the callback from `select-serial-port` is called.  This event is intended for use when using a UI to ask users to pick a port so that the UI can be updated with the newly added port.
 	**/
-	var serial_port_added : electron.main.SessionEvent<Void -> Void> = "serial-port-added";
+	var serial_port_added : electron.main.SessionEvent<(js.html.Event, electron.SerialPort, electron.main.WebContents) -> Void> = "serial-port-added";
 	/**
 		Emitted after `navigator.serial.requestPort` has been called and `select-serial-port` has fired if a serial port has been removed before the callback from `select-serial-port` is called.  This event is intended for use when using a UI to ask users to pick a port so that the UI can be updated to remove the specified port.
 	**/
-	var serial_port_removed : electron.main.SessionEvent<Void -> Void> = "serial-port-removed";
+	var serial_port_removed : electron.main.SessionEvent<(js.html.Event, electron.SerialPort, electron.main.WebContents) -> Void> = "serial-port-removed";
 	/**
 		Emitted after `SerialPort.forget()` has been called.  This event can be used to help maintain persistent storage of permissions when `setDevicePermissionHandler` is used.
 	**/
-	var serial_port_revoked : electron.main.SessionEvent<Void -> Void> = "serial-port-revoked";
+	var serial_port_revoked : electron.main.SessionEvent<(js.html.Event, { var port : electron.SerialPort; /**
+		The frame initiating this event. May be `null` if accessed after the frame has either navigated or been destroyed.
+	**/
+	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; /**
+		The origin that the device has been revoked from.
+	**/
+	var origin : String; }) -> Void> = "serial-port-revoked";
 	/**
 		Emitted when a USB device needs to be selected when a call to `navigator.usb.requestDevice` is made. `callback` should be called with `deviceId` to be selected; passing no arguments to `callback` will cancel the request.  Additionally, permissioning on `navigator.usb` can be further managed by using `ses.setPermissionCheckHandler(handler)` and `ses.setDevicePermissionHandler(handler)`.
 	**/
-	var select_usb_device : electron.main.SessionEvent<Void -> Void> = "select-usb-device";
+	var select_usb_device : electron.main.SessionEvent<(js.html.Event, { var deviceList : Array<electron.USBDevice>; /**
+		The frame initiating this event. May be `null` if accessed after the frame has either navigated or been destroyed.
+	**/
+	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; }, haxe.Constraints.Function) -> Void> = "select-usb-device";
 	/**
 		Emitted after `navigator.usb.requestDevice` has been called and `select-usb-device` has fired if a new device becomes available before the callback from `select-usb-device` is called.  This event is intended for use when using a UI to ask users to pick a device so that the UI can be updated with the newly added device.
 	**/
-	var usb_device_added : electron.main.SessionEvent<Void -> Void> = "usb-device-added";
+	var usb_device_added : electron.main.SessionEvent<(js.html.Event, electron.USBDevice, electron.main.WebContents) -> Void> = "usb-device-added";
 	/**
 		Emitted after `navigator.usb.requestDevice` has been called and `select-usb-device` has fired if a device has been removed before the callback from `select-usb-device` is called.  This event is intended for use when using a UI to ask users to pick a device so that the UI can be updated to remove the specified device.
 	**/
-	var usb_device_removed : electron.main.SessionEvent<Void -> Void> = "usb-device-removed";
+	var usb_device_removed : electron.main.SessionEvent<(js.html.Event, electron.USBDevice, electron.main.WebContents) -> Void> = "usb-device-removed";
 	/**
 		Emitted after `USBDevice.forget()` has been called.  This event can be used to help maintain persistent storage of permissions when `setDevicePermissionHandler` is used.
 	**/
-	var usb_device_revoked : electron.main.SessionEvent<Void -> Void> = "usb-device-revoked";
+	var usb_device_revoked : electron.main.SessionEvent<(js.html.Event, { var device : electron.USBDevice; /**
+		The origin that the device has been revoked from.
+	**/
+	@:optional
+	var origin : String; }) -> Void> = "usb-device-revoked";
 	/**
 		Emitted when a call to `navigator.credentials.get()` resolves multiple discoverable WebAuthn credentials and the user must choose one. `callback` should be called with the `credentialId` of the selected account; passing no arguments — or a `credentialId` that does not match one of the provided accounts — will cancel the request and the page will receive a `NotAllowedError`. If no listener is registered for this event, the request is cancelled with the same error. The credential request remains pending until the listener invokes the callback, so always invoke it exactly once — typically from a `try { … } finally { callback(…) }` block.
 		
 		On macOS, the Touch ID platform authenticator surfaces accounts via this event once it has been configured with `app.configureWebAuthn`. The event may also fire on other platforms when a roaming FIDO2 authenticator returns multiple discoverable credentials.
 	**/
-	var select_webauthn_account : electron.main.SessionEvent<Void -> Void> = "select-webauthn-account";
+	var select_webauthn_account : electron.main.SessionEvent<(js.html.Event, { /**
+		The relying party identifier from the WebAuthn request.
+	**/
+	var relyingPartyId : String; var accounts : Array<electron.WebAuthnAccount>; /**
+		The frame initiating this event. May be `null` if accessed after the frame has either navigated or been destroyed.
+	**/
+	var frame : haxe.extern.EitherType<electron.main.WebFrameMain, Dynamic>; }, haxe.Constraints.Function) -> Void> = "select-webauthn-account";
 }

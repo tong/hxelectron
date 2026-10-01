@@ -36,13 +36,34 @@ enum abstract ServiceWorkersEvent<T:(haxe.Constraints.Function)>(js.node.events.
 	/**
 		Emitted when a service worker logs something to the console.
 	**/
-	var console_message : electron.main.ServiceWorkersEvent<Void -> Void> = "console-message";
+	var console_message : electron.main.ServiceWorkersEvent<(js.html.Event, { /**
+		The actual console message
+	**/
+	var message : String; /**
+		The version ID of the service worker that sent the log message
+	**/
+	var versionId : Float; /**
+		The type of source for this message.  Can be `javascript`, `xml`, `network`, `console-api`, `storage`, `rendering`, `security`, `deprecation`, `worker`, `violation`, `intervention`, `recommendation` or `other`.
+	**/
+	var source : String; /**
+		The log level, from 0 to 3. In order it matches `verbose`, `info`, `warning` and `error`.
+	**/
+	var level : Float; /**
+		The URL the message came from
+	**/
+	var sourceUrl : String; /**
+		The line number of the source that triggered this console message
+	**/
+	var lineNumber : Float; }) -> Void> = "console-message";
 	/**
 		Emitted when a service worker has been registered. Can occur after a call to `navigator.serviceWorker.register('/sw.js')` successfully resolves or when a Chrome extension is loaded.
 	**/
-	var registration_completed : electron.main.ServiceWorkersEvent<Void -> Void> = "registration-completed";
+	var registration_completed : electron.main.ServiceWorkersEvent<(js.html.Event, { /**
+		The base URL that a service worker is registered for
+	**/
+	var scope : String; }) -> Void> = "registration-completed";
 	/**
 		Emitted when a service worker's running status has changed.
 	**/
-	var running_status_changed : electron.main.ServiceWorkersEvent<Void -> Void> = "running-status-changed";
+	var running_status_changed : electron.main.ServiceWorkersEvent<js.html.Event -> Void> = "running-status-changed";
 }

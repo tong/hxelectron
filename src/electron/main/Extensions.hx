@@ -50,13 +50,13 @@ enum abstract ExtensionsEvent<T:(haxe.Constraints.Function)>(js.node.events.Even
 		  * from a crash.
 		  * if the extension requested it (`chrome.runtime.reload()`).
 	**/
-	var extension_loaded : electron.main.ExtensionsEvent<Void -> Void> = "extension-loaded";
+	var extension_loaded : electron.main.ExtensionsEvent<(js.html.Event, electron.Extension) -> Void> = "extension-loaded";
 	/**
 		Emitted after an extension is unloaded. This occurs when `Session.removeExtension` is called.
 	**/
-	var extension_unloaded : electron.main.ExtensionsEvent<Void -> Void> = "extension-unloaded";
+	var extension_unloaded : electron.main.ExtensionsEvent<(js.html.Event, electron.Extension) -> Void> = "extension-unloaded";
 	/**
 		Emitted after an extension is loaded and all necessary browser state is initialized to support the start of the extension's background page.
 	**/
-	var extension_ready : electron.main.ExtensionsEvent<Void -> Void> = "extension-ready";
+	var extension_ready : electron.main.ExtensionsEvent<(js.html.Event, electron.Extension) -> Void> = "extension-ready";
 }

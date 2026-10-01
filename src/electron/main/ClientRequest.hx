@@ -145,7 +145,7 @@ package electron.main;
 	function getUploadProgress():Any;
 }
 enum abstract ClientRequestEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> {
-	var response : electron.main.ClientRequestEvent<Void -> Void> = "response";
+	var response : electron.main.ClientRequestEvent<electron.main.IncomingMessage -> Void> = "response";
 	/**
 		Emitted when an authenticating proxy is asking for user credentials.
 		
@@ -156,25 +156,25 @@ enum abstract ClientRequestEvent<T:(haxe.Constraints.Function)>(js.node.events.E
 		
 		Providing empty credentials will cancel the request and report an authentication error on the response object:
 	**/
-	var login : electron.main.ClientRequestEvent<Void -> Void> = "login";
+	var login : electron.main.ClientRequestEvent<({ var isProxy : Bool; var scheme : String; var host : String; var port : Int; var realm : String; }, haxe.Constraints.Function) -> Void> = "login";
 	/**
 		Emitted just after the last chunk of the `request`'s data has been written into the `request` object.
 	**/
-	var finish : electron.main.ClientRequestEvent<Void -> Void> = "finish";
+	var finish : electron.main.ClientRequestEvent<() -> Void> = "finish";
 	/**
 		Emitted when the `request` is aborted. The `abort` event will not be fired if the `request` is already closed.
 	**/
-	var abort : electron.main.ClientRequestEvent<Void -> Void> = "abort";
+	var abort : electron.main.ClientRequestEvent<() -> Void> = "abort";
 	/**
 		Emitted when the `net` module fails to issue a network request. Typically when the `request` object emits an `error` event, a `close` event will subsequently follow and no response object will be provided.
 	**/
-	var error : electron.main.ClientRequestEvent<Void -> Void> = "error";
+	var error : electron.main.ClientRequestEvent<js.lib.Error -> Void> = "error";
 	/**
 		Emitted as the last event in the HTTP request-response transaction. The `close` event indicates that no more events will be emitted on either the `request` or `response` objects.
 	**/
-	var close : electron.main.ClientRequestEvent<Void -> Void> = "close";
+	var close : electron.main.ClientRequestEvent<() -> Void> = "close";
 	/**
 		Emitted when the server returns a redirect response (e.g. 301 Moved Permanently). Calling `request.followRedirect` will continue with the redirection.  If this event is handled, `request.followRedirect` must be called **synchronously**, otherwise the request will be cancelled.
 	**/
-	var redirect : electron.main.ClientRequestEvent<Void -> Void> = "redirect";
+	var redirect : electron.main.ClientRequestEvent<(Int, String, String, Dynamic) -> Void> = "redirect";
 }

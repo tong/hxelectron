@@ -31,9 +31,9 @@ enum abstract DebuggerEvent<T:(haxe.Constraints.Function)>(js.node.events.EventE
 	/**
 		Emitted when the debugging session is terminated. This happens either when `webContents` is closed or DevTools is invoked for the attached `webContents`.
 	**/
-	var detach : electron.remote.DebuggerEvent<Void -> Void> = "detach";
+	var detach : electron.remote.DebuggerEvent<(js.html.Event, String) -> Void> = "detach";
 	/**
 		Emitted whenever the debugging target issues an instrumentation event.
 	**/
-	var message : electron.remote.DebuggerEvent<Void -> Void> = "message";
+	var message : electron.remote.DebuggerEvent<(js.html.Event, String, Any, String) -> Void> = "message";
 }

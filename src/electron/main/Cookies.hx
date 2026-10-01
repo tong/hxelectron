@@ -99,5 +99,5 @@ enum abstract CookiesEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 	/**
 		Emitted when a cookie is changed because it was added, edited, removed, or expired.
 	**/
-	var changed : electron.main.CookiesEvent<Void -> Void> = "changed";
+	var changed : electron.main.CookiesEvent<(js.html.Event, electron.Cookie, String, Bool) -> Void> = "changed";
 }
