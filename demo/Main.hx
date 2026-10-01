@@ -1,9 +1,12 @@
 import electron.main.App;
+import electron.main.App.AppEvent;
+import electron.main.BaseWindow.BaseWindowEvent;
 import electron.main.BrowserWindow;
 import electron.main.Menu;
 import electron.main.MenuItem;
 import electron.main.Notification;
 import electron.main.Tray;
+import electron.main.Tray.TrayEvent;
 import js.Node.__dirname;
 import js.Node.process;
 
@@ -22,7 +25,7 @@ class Main {
 		Sys.println('node ' + process.version);
 		Sys.println('electron ' + process.versions['electron']);
 
-		App.on('ready', () -> {
+		App.on(AppEvent.ready, (_, _) -> {
 			var win = new BrowserWindow({
 				width: 800,
 				height: 600,
@@ -31,13 +34,13 @@ class Main {
 					contextIsolation: false
 				}
 			});
-			win.on("closed", () -> {
+			win.on(BaseWindowEvent.closed, () -> {
 				win = null;
 			});
-			win.on("move", () -> {
+			win.on(BaseWindowEvent.move, () -> {
 				trace('Window move ' + win.getPosition());
 			});
-			win.on("resize", () -> {
+			win.on(BaseWindowEvent.resize, () -> {
 				trace('Window resize ' + win.getSize());
 			});
 			win.loadFile('app.html');
@@ -45,7 +48,7 @@ class Main {
 
 			var tray = new Tray('${__dirname}/icon-192.png');
 			tray.setToolTip('Haxelectron');
-			tray.on('click', (e) -> {
+			tray.on(TrayEvent.click, (e, _, _) -> {
 				trace(e);
 			});
 			var contextMenu = Menu.buildFromTemplate([
@@ -88,7 +91,7 @@ class Main {
 			}
 		});
 
-		App.on(window_all_closed, e -> {
+		App.on(AppEvent.window_all_closed, () -> {
 			if (process.platform != 'darwin')
 				electron.main.App.quit();
 		});
