@@ -319,9 +319,11 @@ private class Gen {
 	function postPatch(type:TypeDefinition) {
 		switch type.name {
 			case 'Process':
-				for (m in type.meta)
-					if (m.name == ':jsRequire') {
-						m.params.shift();
+				// `process` is a global (also in sandboxed renderers, where `require("process")` is not available)
+				for (i in 0...type.meta.length)
+					if (type.meta[i].name == ':jsRequire') {
+						type.meta.splice(i, 1);
+						type.meta.push({name: ':native', params: [macro 'process'], pos: null});
 						break;
 					}
 		}
