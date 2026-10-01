@@ -62,6 +62,10 @@ npm run build     # Build main.js and app.js
 npm start         # Run the application
 ```
 
+### String enums
+
+Parameters and properties which only accept specific strings use `enum abstract` types which are defined in the same module as the type they are used in, e.g. `electron.main.App.AppGetPathName`. They convert from `String`, so plain string literals (`app.getPath("home")`) keep working, and you get completion and typo checks through the enum values (`AppGetPathName.home`).
+
 ### Metadata
 
 The externs are annotated with the following metadata:

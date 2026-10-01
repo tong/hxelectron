@@ -114,7 +114,7 @@ private class Gen {
 		'Float' => macro :Float,
 		'Number' => macro :Float,
 		'number' => macro :Float,
-		'String' => macro :String, // TODO: create abstract enums from possibleValues
+		'String' => macro :String,
 		'URL' => macro :String, // TODO: js.html.URL
 		'Date' => macro :Date,
 		'Function' => macro :haxe.Constraints.Function, // TODO: type from parameters/returns
@@ -153,6 +153,12 @@ private class Gen {
 	var extraTypes = new Map<String, Array<TypeDefinition>>();
 	/** Names of types which are referenced but not defined by the description. **/
 	var aliases = new Array<String>();
+	/** Names of the enum abstracts generated from `possibleValues`. **/
+	var enumTypes = new Map<String, Bool>();
+	/** Name of the generated enum abstract by its context and values. **/
+	var enumNames = new Map<String, String>();
+	/** Where in the description we currently are, e.g. [App, getPath, name]. Used to name enums. **/
+	var context = new Array<String>();
 	/** Type parameters of the method which is currently processed. **/
 	var generics = new Map<String, ComplexType>();
 
@@ -196,6 +202,7 @@ private class Gen {
 	}
 
 	function processItem(item:Item):TypeDefinition {
+		context = [capitalize(item.name)];
 		var type:TypeDefinition = {
 			pack: getItemPack(item),
 			name: item.name,
@@ -257,12 +264,15 @@ private class Gen {
 				mergeTypeItem(type, item);
 
 			case Structure:
+				var extType = (item.extends_ != null) ? getComplexType(item.extends_) : null;
+				var extendsElectronType = extType != null && isElectronType(extType);
 				var fields = [];
 				if (item.properties != null)
 					for (p in item.properties)
-						fields.push(createVarField(p));
-				var extType = (item.extends_ != null) ? getComplexType(item.extends_) : null;
-				if (extType != null && isElectronType(extType)) {
+						// an intersection can not redefine fields (e.g. with a narrower enum)
+						if (!extendsElectronType || !inheritsProperty(item, p.name))
+							fields.push(createVarField(p));
+				if (extendsElectronType) {
 					// structure extending another generated structure
 					type.kind = TDAlias(TIntersection([TAnonymous(fields), extType]));
 				} else {
@@ -378,6 +388,19 @@ private class Gen {
 		return false;
 	}
 
+	/** Whether a (transitive) parent of `item` defines the property. **/
+	function inheritsProperty(item:Item, name:String):Bool {
+		var parent = (item.extends_ != null) ? getItem(item.extends_) : null;
+		if (parent == null)
+			return false;
+		var props = (parent.type == Structure) ? parent.properties : parent.instanceProperties;
+		if (props != null)
+			for (p in props)
+				if (p.name == name)
+					return true;
+		return inheritsProperty(parent, name);
+	}
+
 	function isElectronType(t:ComplexType):Bool {
 		return switch t {
 			case TPath(p): p.pack[0] == root[0];
@@ -390,6 +413,11 @@ private class Gen {
 		if (types.exists(name)) {
 			var t = types.get(name);
 			types.remove(name);
+			if (extraTypes.exists(name)) {
+				for (et in extraTypes.get(name))
+					addExtraType(type.name, et);
+				extraTypes.remove(name);
+			}
 			type.fields = (item.type == Module) ? type.fields.concat(t.fields) : t.fields.concat(type.fields);
 		}
 	}
@@ -400,17 +428,23 @@ private class Gen {
 		return {pack: ['js', 'node', 'events'], name: 'EventEmitter', params: [TPType(TPath({name: type.name, pack: type.pack}))]};
 	}
 
+	/** Adds a type to the module of the type `owner`. **/
+	function addExtraType(owner:String, type:TypeDefinition) {
+		if (!extraTypes.exists(owner))
+			extraTypes.set(owner, []);
+		extraTypes.get(owner).push(type);
+	}
+
 	function createEventEnumAbstract(name:String, pack:Array<String>, events:Array<Event>) {
 		var _name = name + 'Event';
 		var type:TypeDefinition = null;
-		if (extraTypes.exists(name)) {
-			for (et in extraTypes.get(name)) {
+		if (extraTypes.exists(name))
+			for (et in extraTypes.get(name))
 				if (et.name == _name) {
 					type = et;
 					break;
 				}
-			}
-		} else {
+		if (type == null) {
 			type = {
 				name: _name,
 				pack: pack,
@@ -419,10 +453,12 @@ private class Gen {
 				fields: [],
 				pos: null
 			};
-			this.extraTypes.set(name, [type]);
+			addExtraType(name, type);
 		}
 		for (e in events) {
-			var args = [for (p in e.parameters) getComplexType(p.type, p.collection, p.properties, !p.required, p.innerTypes)];
+			context.push(e.name);
+			var args = [for (p in e.parameters) withContext(p.name, () -> getComplexType(p.type, p.collection, p.properties, !p.required, p.innerTypes, p.possibleValues))];
+			context.pop();
 			type.fields.push({
 				name: e.name.replace('-', '_'),
 				kind: FVar(TPath({pack: pack, name: _name, params: [TPType(TFunction(args, macro :Void))]}), macro $v{e.name}),
@@ -437,12 +473,14 @@ private class Gen {
 		var meta = createTagMetadata(p.additionalTags);
 		if (p.required != null && !p.required)
 			meta.push({name: ':optional', pos: null});
-		return createField(p.name, FVar(getComplexType(p.type, p.collection, p.properties, false, p.innerTypes), null), access, meta, p.description);
+		var type = withContext(p.name, () -> getComplexType(p.type, p.collection, p.properties, false, p.innerTypes, p.possibleValues));
+		return createField(p.name, FVar(type, null), access, meta, p.description);
 	}
 
 	function createFunField(m:Method, ?access:Array<Access>):Field {
 		var meta = createTagMetadata(m.additionalTags);
 		generics = parseGenerics(m.rawGenerics);
+		context.push(m.name);
 
 		var args = new Array<FunctionArg>();
 		if (m.parameters != null) {
@@ -457,16 +495,17 @@ private class Gen {
 					default:
 						args.push({
 							name: escapeArgument(p.name),
-							type: getComplexType(p.type, p.collection, p.properties, false, p.innerTypes),
+							type: withContext(p.name, () -> getComplexType(p.type, p.collection, p.properties, false, p.innerTypes, p.possibleValues)),
 							opt: (p.required == null) ? true : !p.required
 						});
 				}
 			}
 		}
 
-		var ret = if (m.returns == null) macro :Void else getComplexType(m.returns.type, m.returns.collection, m.returns.properties, false, m.returns.innerTypes);
+		var ret = if (m.returns == null) macro :Void else withContext('Result', () -> getComplexType(m.returns.type, m.returns.collection, m.returns.properties, false, m.returns.innerTypes, m.returns.possibleValues));
 
 		generics = new Map();
+		context.pop();
 		return createField(m.name, FFun({args: args, ret: ret, expr: null}), access, meta, m.description);
 	}
 
@@ -544,8 +583,8 @@ private class Gen {
 		Resolves a type of the api description. `name` is a type name or, for unions, an array of `TypeRef`.
 		`innerTypes` are the type arguments of generic types (`Promise<T>`, `Record<K, V>`).
 	**/
-	function getComplexType(name:Dynamic, collection = false, ?properties:Array<Dynamic>, optional = false, ?innerTypes:Array<Dynamic>):ComplexType {
-		var t = resolveType(name, properties, innerTypes);
+	function getComplexType(name:Dynamic, collection = false, ?properties:Array<Dynamic>, optional = false, ?innerTypes:Array<Dynamic>, ?possibleValues:Array<PossibleValue>):ComplexType {
+		var t = resolveType(name, properties, innerTypes, possibleValues);
 		if (collection)
 			t = TPath({name: 'Array<${t.toString()}>', pack: []});
 		if (optional)
@@ -553,7 +592,7 @@ private class Gen {
 		return t;
 	}
 
-	function resolveType(name:Dynamic, properties:Array<Dynamic>, innerTypes:Array<Dynamic>):ComplexType {
+	function resolveType(name:Dynamic, properties:Array<Dynamic>, innerTypes:Array<Dynamic>, possibleValues:Array<PossibleValue>):ComplexType {
 		if (name == null)
 			return macro :Dynamic;
 		if (Std.isOfType(name, Array))
@@ -561,6 +600,8 @@ private class Gen {
 		var n:String = name;
 		if (generics.exists(n))
 			return generics.get(n);
+		if (n == 'String' && possibleValues != null && possibleValues.length > 0)
+			return createEnumAbstract(possibleValues);
 		var simple = SIMPLE_TYPES.get(n);
 		if (simple != null)
 			return simple;
@@ -592,11 +633,64 @@ private class Gen {
 		}
 	}
 
+	function withContext<T>(part:String, f:() -> T):T {
+		context.push(part);
+		var r = f();
+		context.pop();
+		return r;
+	}
+
+	/** Creates (or reuses) an `enum abstract` for the possible values of a string and returns its type. **/
+	function createEnumAbstract(possibleValues:Array<PossibleValue>):ComplexType {
+		// the enum is added to the module of the type it is used in
+		var owner = context[0];
+		var key = owner + '.' + context[context.length - 1] + ':' + possibleValues.map(v -> v.value).join('|');
+		var name = enumNames.get(key);
+		if (name == null) {
+			var base = [for (part in context) toPascalCase(part)].join('');
+			name = base;
+			var i = 2;
+			while (enumTypes.exists(name) || types.exists(name) || getItem(name) != null)
+				name = base + (i++);
+			enumTypes.set(name, true);
+			enumNames.set(key, name);
+			var fields = new Array<Field>();
+			var used = new Map<String, Bool>();
+			for (v in possibleValues) {
+				var fieldName = enumFieldName(v.value);
+				while (used.exists(fieldName))
+					fieldName += '_';
+				used.set(fieldName, true);
+				fields.push({name: fieldName, kind: FVar(null, macro $v{v.value}), doc: getDoc(v.description), pos: null});
+			}
+			addExtraType(owner, {
+				pack: [],
+				name: name,
+				kind: TDAbstract(macro :String, [AbEnum], [macro :String], [macro :String]),
+				fields: fields,
+				pos: null
+			});
+		}
+		return TPath({pack: [], name: name});
+	}
+
+	static function enumFieldName(value:String):String {
+		var name = ~/[^A-Za-z0-9_]/g.replace(value, '_');
+		if (name == '')
+			return 'empty';
+		if (~/^[0-9]/.match(name))
+			name = '_' + name;
+		return KEYWORDS.indexOf(name) != -1 ? name + '_' : name;
+	}
+
+	static function toPascalCase(s:String):String
+		return [for (part in ~/[^A-Za-z0-9]+/g.split(s)) if (part != '') capitalize(part)].join('');
+
 	function getInnerType(innerTypes:Array<Dynamic>, index:Int, fallback:ComplexType):ComplexType {
 		if (innerTypes == null || innerTypes.length <= index)
 			return fallback;
 		var t:TypeRef = innerTypes[index];
-		return getComplexType(t.type, t.collection, t.properties, false, t.innerTypes);
+		return getComplexType(t.type, t.collection, t.properties, false, t.innerTypes, t.possibleValues);
 	}
 
 	function createAnonymousType(properties:Array<Dynamic>):ComplexType {
@@ -609,7 +703,7 @@ private class Gen {
 				meta.push({name: ":optional", pos: null});
 			fields.push({
 				name: p.name,
-				kind: FVar(getComplexType(p.type, p.collection, p.properties, false, p.innerTypes)),
+				kind: FVar(withContext(p.name, () -> getComplexType(p.type, p.collection, p.properties, false, p.innerTypes, p.possibleValues))),
 				meta: meta,
 				doc: getDoc(p.description),
 				pos: null
