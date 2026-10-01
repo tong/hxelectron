@@ -93,7 +93,51 @@ class ElectronAPI {
 }
 
 private class Gen {
-	static var KWDS = ['class', 'private', 'switch'];
+	static var KEYWORDS = [
+		'abstract', 'break', 'case', 'cast', 'catch', 'class', 'continue', 'default', 'do', 'dynamic', 'else', 'enum', 'extends', 'extern', 'false',
+		'final', 'for', 'function', 'if', 'implements', 'import', 'in', 'inline', 'interface', 'macro', 'new', 'null', 'override', 'package',
+		'private', 'public', 'return', 'static', 'super', 'switch', 'this', 'throw', 'true', 'try', 'typedef', 'untyped', 'using', 'var', 'while'
+	];
+	/** Types with a fixed haxe equivalent. **/
+	static var SIMPLE_TYPES:Map<String, ComplexType> = [
+		'this' => macro :Dynamic,
+		'undefined' => macro :Dynamic,
+		'null' => macro :Dynamic,
+		'void' => macro :Void,
+		'any' => macro :Any,
+		'Any' => macro :Any,
+		'unknown' => macro :Dynamic,
+		'Boolean' => macro :Bool,
+		'boolean' => macro :Bool,
+		'Integer' => macro :Int,
+		'Double' => macro :Float,
+		'Float' => macro :Float,
+		'Number' => macro :Float,
+		'number' => macro :Float,
+		'String' => macro :String, // TODO: create abstract enums from possibleValues
+		'URL' => macro :String, // TODO: js.html.URL
+		'Date' => macro :Date,
+		'Function' => macro :haxe.Constraints.Function, // TODO: type from parameters/returns
+		'Error' => macro :js.lib.Error,
+		'Event' => macro :js.html.Event,
+		'Blob' => macro :js.html.Blob,
+		'Buffer' => macro :js.node.Buffer,
+		'Uint8Array' => macro :js.lib.Uint8Array,
+		'ArrayBufferLike' => macro :js.lib.ArrayBuffer,
+		'ArrayBufferView' => macro :js.lib.ArrayBufferView,
+		'ReadableStream' => macro :js.node.stream.Readable<Dynamic>, // TODO: type param
+		'NodeJS.ReadableStream' => macro :js.node.stream.Readable<Dynamic>,
+		'Electron.ParentPort' => macro :electron.ParentPort,
+		'RequestInit & { bypassCustomProtocolHandlers?: boolean }' => macro :js.html.RequestInit,
+		'Array' => macro :Array<Dynamic>, // array without a type parameter
+		'[number, number]' => macro :Array<Float>,
+		"'rawData'" => macro :js.node.Buffer,
+		// not defined in the description
+		'MenuItemConstructorOptions' => macro :Dynamic,
+		'TouchBarItem' => macro :Dynamic,
+		'UserDefaultTypes[Type]' => macro :Dynamic,
+	];
+	static var IDENTIFIER = ~/^[A-Za-z_][A-Za-z0-9_]*$/;
 	// ordered, so the generated metadata is stable
 	static var PLATFORM_TAGS = [
 		{tag: 'os_macos', name: 'macOS'},
@@ -107,6 +151,10 @@ private class Gen {
 	var items:Array<Item>;
 	var types = new Map<String, TypeDefinition>();
 	var extraTypes = new Map<String, Array<TypeDefinition>>();
+	/** Names of types which are referenced but not defined by the description. **/
+	var aliases = new Array<String>();
+	/** Type parameters of the method which is currently processed. **/
+	var generics = new Map<String, ComplexType>();
 
 	public function new(?root:Array<String>, addDocumentation = true) {
 		this.root = (root != null) ? root : [];
@@ -118,6 +166,7 @@ private class Gen {
 
 		// Types which are referenced by the description but not defined
 		function addAlias(name:String, ?type:ComplexType) {
+			aliases.push(name);
 			this.types.set(name, {
 				pack: root.copy(),
 				name: name,
@@ -130,6 +179,7 @@ private class Gen {
 		addAlias('Accelerator', macro :String);
 		addAlias('ClientRequestConstructorOptions');
 		addAlias('File');
+		addAlias('GlobalResponse');
 		addAlias('GlobalRequest');
 		addAlias('MessagePort');
 		addAlias('Partial');
@@ -372,7 +422,7 @@ private class Gen {
 			this.extraTypes.set(name, [type]);
 		}
 		for (e in events) {
-			var args = [for (p in e.parameters) getComplexType(p.type, p.collection, p.properties, !p.required)];
+			var args = [for (p in e.parameters) getComplexType(p.type, p.collection, p.properties, !p.required, p.innerTypes)];
 			type.fields.push({
 				name: e.name.replace('-', '_'),
 				kind: FVar(TPath({pack: pack, name: _name, params: [TPType(TFunction(args, macro :Void))]}), macro $v{e.name}),
@@ -387,11 +437,12 @@ private class Gen {
 		var meta = createTagMetadata(p.additionalTags);
 		if (p.required != null && !p.required)
 			meta.push({name: ':optional', pos: null});
-		return createField(p.name, FVar(getComplexType(p.type, p.collection, p.properties), null), access, meta, p.description);
+		return createField(p.name, FVar(getComplexType(p.type, p.collection, p.properties, false, p.innerTypes), null), access, meta, p.description);
 	}
 
 	function createFunField(m:Method, ?access:Array<Access>):Field {
 		var meta = createTagMetadata(m.additionalTags);
+		generics = parseGenerics(m.rawGenerics);
 
 		var args = new Array<FunctionArg>();
 		if (m.parameters != null) {
@@ -406,22 +457,35 @@ private class Gen {
 					default:
 						args.push({
 							name: escapeArgument(p.name),
-							type: getComplexType(p.type, p.collection, p.properties, false, p.possibleValues),
+							type: getComplexType(p.type, p.collection, p.properties, false, p.innerTypes),
 							opt: (p.required == null) ? true : !p.required
 						});
 				}
 			}
 		}
 
-		// TODO: handle return doc
-		var ret = if (m.returns == null) macro :Void else getComplexType(m.returns.type, m.returns.collection);
+		var ret = if (m.returns == null) macro :Void else getComplexType(m.returns.type, m.returns.collection, m.returns.properties, false, m.returns.innerTypes);
 
+		generics = new Map();
 		return createField(m.name, FFun({args: args, ret: ret, expr: null}), access, meta, m.description);
 	}
 
+	/** Maps the type parameters of e.g. `<T extends string>` to their constraint. **/
+	function parseGenerics(raw:String):Map<String, ComplexType> {
+		var map = new Map<String, ComplexType>();
+		if (raw == null)
+			return map;
+		var re = ~/(\w+)(?: extends (\w+))?/;
+		var rest = raw.substr(1, raw.length - 2); // strip < >
+		while (re.match(rest)) {
+			map.set(re.matched(1), re.matched(2) == 'string' ? macro :String : macro :Dynamic);
+			rest = re.matchedRight();
+		}
+		return map;
+	}
+
 	function createField(name:String, kind:FieldType, access:Array<Access>, ?meta:Metadata, ?doc:String):Field {
-		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i; // TODO: test/improve
-		if (!expr.match(name) || KWDS.indexOf(name) != -1) {
+		if (name != 'new' && !isValidIdentifier(name)) { // constructors keep their name
 			if (meta == null)
 				meta = [];
 			meta.push({name: ':native', params: [macro $v{name}], pos: null});
@@ -446,14 +510,14 @@ private class Gen {
 			var t1Name = getTypeName(t1);
 			if (t1Name == null)
 				throw 'cannot resolve type name';
-			var params = [TPType(getComplexType(t1Name, t1.collection, t1.properties))];
+			var params = [TPType(getComplexType(t1Name, t1.collection, t1.properties, false, t1.innerTypes))];
 			if (remain.length > 1) {
 				params.push(TPType(createEitherType(remain)));
 			} else {
 				var t2Name = getTypeName(remain[0]);
 				if (t2Name == null)
 					throw 'cannot resolve type name';
-				params.push(TPType(getComplexType(t2Name, remain[0].collection, remain[0].properties)));
+				params.push(TPType(getComplexType(t2Name, remain[0].collection, remain[0].properties, false, remain[0].innerTypes)));
 			}
 			return TPath({pack: ['haxe', 'extern'], name: 'EitherType', params: params});
 		}
@@ -472,92 +536,86 @@ private class Gen {
 				merged.push(t);
 		}
 		if (merged.length == 1)
-			return getComplexType(getTypeName(merged[0]), merged[0].collection, merged[0].properties);
+			return getComplexType(getTypeName(merged[0]), merged[0].collection, merged[0].properties, false, merged[0].innerTypes);
 		return createEitherType(merged);
 	}
 
-	function getComplexType(name:Dynamic, collection = false, ?properties:Array<Dynamic>, optional = false, ?possibleValues:Array<PossibleValue>):ComplexType {
-		var t:ComplexType = switch name {
-			case 'this': macro :Dynamic;
-			case 'undefined': macro :Dynamic;
-			case null, 'null': macro :Dynamic;
-			case 'Accelerator': // TODO: HACK
-				TPath({name: name, pack: root.copy()});
-			case 'Any', 'any': macro :Any;
-			case 'unknown': macro :Dynamic;
-			case 'Array': macro :Array<Dynamic>; // TODO HACK for fields with Array type without type param
-			case 'UserDefaultTypes[Type]': macro :Dynamic; // TODO HACK for invalid description
-			case 'Blob': macro :js.html.Blob;
-			case 'T': macro :String; // HACK: generic `<T extends string>` (ClipboardItem.getType)
-			case 'Record': macro :Dynamic; // TS Record<K, V>
-			case 'ArrayBufferLike': macro :js.lib.ArrayBuffer;
-			case 'ArrayBufferView': macro :js.lib.ArrayBufferView;
-			case 'Boolean', 'boolean': macro :Bool;
-			case 'Buffer': macro :js.node.Buffer;
-			case 'Date': macro :Date;
-			case '[number, number]': macro :Array<Float>; // HACK
-			case 'Double', 'Float', 'Number', 'number': macro :Float;
-			case 'Electron.ParentPort': return macro :electron.ParentPort;
-			case 'Error': macro :js.lib.Error;
-			case 'Event': macro :js.html.Event;
-			case 'Function': macro :haxe.Constraints.Function; // TODO
-			case 'Integer': macro :Int;
-			case 'Object':
-				if (properties == null || properties.length == 0) macro :Any else {
-					var fields = new Array<Field>();
-					for (p in properties) {
-						var meta = createTagMetadata(p.additionalTags);
-						if (p.required != null && !p.required)
-							meta.push({name: ":optional", pos: null});
-						fields.push({
-							name: p.name,
-							kind: FVar(getComplexType(p.type, p.collection, p.properties)),
-							meta: meta,
-							doc: getDoc(p.description),
-							pos: null
-						});
-					}
-					TAnonymous(fields);
-				}
-			case 'Promise': macro :js.lib.Promise<Any>;
-			case 'String': macro :String; // TODO: create abstract enum from possibleValues
-			case 'ReadableStream', 'NodeJS.ReadableStream':
-				// TODO: type param
-				macro :js.node.stream.Readable<Dynamic>;
-			case 'MenuItemConstructorOptions', 'TouchBarItem': // TODO: HACK
-				macro :Dynamic;
-			case 'URL': macro :String; // TODO: macro: js.html.URL;
-			case _ if (Std.isOfType(name, Array)):
-				createMultiType(cast name);
-			case "'rawData'": // HACK:
-				macro :js.node.Buffer;
-			case _ if (isStringLiteral(name)): // e.g. 'file'
-				macro :String;
-			case _ if (StringTools.startsWith(name, 'typeof ')):
-				// reference to a class, e.g. `typeof WebSocket` -> Class<WebSocket>
-				var ref = getComplexType(StringTools.trim(name.substr(7)));
-				TPath({pack: [], name: 'Class', params: [TPType(ref)]});
-			case "(...args: any[]) => any": // HACK:
-				macro :Dynamic;
-			case "(options: BrowserWindowConstructorOptions) => WebContents": // HACK:
-				macro :Dynamic;
-			case "RequestInit & { bypassCustomProtocolHandlers?: boolean }": // HACK:
-				macro :js.html.RequestInit;
-			default:
-				var pack = [];
-				for (item in this.items) {
-					if (item.name == name || item.name == uncapitalize(name)) {
-						pack = getItemPack(item);
-						break;
-					}
-				}
-				TPath({name: name, pack: pack});
-		}
+	/**
+		Resolves a type of the api description. `name` is a type name or, for unions, an array of `TypeRef`.
+		`innerTypes` are the type arguments of generic types (`Promise<T>`, `Record<K, V>`).
+	**/
+	function getComplexType(name:Dynamic, collection = false, ?properties:Array<Dynamic>, optional = false, ?innerTypes:Array<Dynamic>):ComplexType {
+		var t = resolveType(name, properties, innerTypes);
 		if (collection)
 			t = TPath({name: 'Array<${t.toString()}>', pack: []});
 		if (optional)
 			t = TOptional(t);
 		return t;
+	}
+
+	function resolveType(name:Dynamic, properties:Array<Dynamic>, innerTypes:Array<Dynamic>):ComplexType {
+		if (name == null)
+			return macro :Dynamic;
+		if (Std.isOfType(name, Array))
+			return createMultiType(cast name);
+		var n:String = name;
+		if (generics.exists(n))
+			return generics.get(n);
+		var simple = SIMPLE_TYPES.get(n);
+		if (simple != null)
+			return simple;
+		if (aliases.contains(n))
+			return TPath({name: n, pack: root.copy()});
+		if (isStringLiteral(n)) // e.g. 'file'
+			return macro :String;
+		if (n.startsWith('typeof ')) // reference to a class, e.g. `typeof WebSocket` -> Class<WebSocket>
+			return TPath({pack: [], name: 'Class', params: [TPType(getComplexType(n.substr(7).trim()))]});
+		if (n.contains('=>') || n.contains(' extends ')) // typescript function and conditional types
+			return macro :Dynamic;
+		return switch n {
+			case 'Object': createAnonymousType(properties);
+			case 'Promise': TPath({pack: ['js', 'lib'], name: 'Promise', params: [TPType(getInnerType(innerTypes, 0, macro :Any))]});
+			case 'Record': // Record<string, V>
+				if (innerTypes != null && innerTypes.length == 2 && innerTypes[0].type == 'String')
+					TPath({pack: ['haxe'], name: 'DynamicAccess', params: [TPType(getInnerType(innerTypes, 1, macro :Dynamic))]})
+				else
+					macro :Dynamic;
+			default:
+				var pack = [];
+				for (item in this.items) {
+					if (item.name == n || item.name == uncapitalize(n)) {
+						pack = getItemPack(item);
+						break;
+					}
+				}
+				TPath({name: n, pack: pack});
+		}
+	}
+
+	function getInnerType(innerTypes:Array<Dynamic>, index:Int, fallback:ComplexType):ComplexType {
+		if (innerTypes == null || innerTypes.length <= index)
+			return fallback;
+		var t:TypeRef = innerTypes[index];
+		return getComplexType(t.type, t.collection, t.properties, false, t.innerTypes);
+	}
+
+	function createAnonymousType(properties:Array<Dynamic>):ComplexType {
+		if (properties == null || properties.length == 0)
+			return macro :Any;
+		var fields = new Array<Field>();
+		for (p in properties) {
+			var meta = createTagMetadata(p.additionalTags);
+			if (p.required != null && !p.required)
+				meta.push({name: ":optional", pos: null});
+			fields.push({
+				name: p.name,
+				kind: FVar(getComplexType(p.type, p.collection, p.properties, false, p.innerTypes)),
+				meta: meta,
+				doc: getDoc(p.description),
+				pos: null
+			});
+		}
+		return TAnonymous(fields);
 	}
 
 	static function isStringLiteral(n:String):Bool
@@ -591,11 +649,12 @@ private class Gen {
 	}
 
 	static function escapeArgument(name:String):String {
-		var expr = ~/^([A-Za-z_])([A-Za-z0-9_]*)$/i; // TODO: test/improve
-		if (!expr.match(name) || KWDS.indexOf(name) != -1)
-			return name + '_';
-		return name;
+		return isValidIdentifier(name) ? name : name + '_';
 	}
+
+	/** Whether `name` can be used as is as a haxe field or argument name. **/
+	static function isValidIdentifier(name:String):Bool
+		return IDENTIFIER.match(name) && KEYWORDS.indexOf(name) == -1;
 
 	public static inline function capitalize(s:String):String
 		return s.charAt(0).toUpperCase() + s.substr(1);
