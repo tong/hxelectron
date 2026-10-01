@@ -32,7 +32,6 @@ class ElectronAPI {
 		var printer = new haxe.macro.Printer();
 		for (tds in types) {
 			var type = tds[0];
-			patchType(type);
 			var code = printer.printTypeDefinition(type);
 			for (i in 1...tds.length) {
 				var e = tds[i];
@@ -61,21 +60,6 @@ class ElectronAPI {
 					File.saveContent('$remote/$name.hx', patched);
 				} catch (e:Dynamic) {
 					// no generated main module for this item
-				}
-			}
-		}
-	}
-
-	/** Manual fixes for types the description file gets wrong. **/
-	static function patchType(type:TypeDefinition) {
-		if (type.name == "UtilityProcess") {
-			for (f in type.fields) {
-				if (f.name == "fork") {
-					switch f.kind {
-						case FFun({ret: TPath(p)}):
-							p.pack = ['electron'];
-						case _:
-					}
 				}
 			}
 		}
@@ -654,14 +638,11 @@ private class Gen {
 				else
 					macro :Dynamic;
 			default:
-				var pack = [];
-				for (item in this.items) {
-					if (item.name == n || item.name == uncapitalize(n)) {
-						pack = getItemPack(item);
-						break;
-					}
-				}
-				TPath({name: n, pack: pack});
+				// prefer the exact name: `UtilityProcess` is a class and a module (`utilityProcess`)
+				var item = getItem(n);
+				if (item == null)
+					item = getItem(uncapitalize(n));
+				TPath({name: n, pack: (item != null) ? getItemPack(item) : []});
 		}
 	}
 
