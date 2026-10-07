@@ -1,38 +1,76 @@
 #!/usr/bin/env bash
+#
+# Update to a new electron release.
+#
+# Usage: ./update.sh [version]
+#   version  electron release, with or without leading `v` (default: latest release)
 
-if [ -z "$1" ]; then
-  next=$(gh release list --repo electron/electron --limit 1 --exclude-drafts | awk '{print $2}')
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+for cmd in gh jq haxe npm; do
+  command -v "$cmd" >/dev/null || {
+    echo "Missing required command: $cmd"
+    exit 1
+  }
+done
+
+if [ -n "${1:-}" ]; then
+  tag="v${1#v}"
 else
-  next=$1
+  tag=$(gh release view --repo electron/electron --json tagName --jq .tagName)
+fi
+version=${tag#v}
+
+if [[ ! "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-.+)?$ ]]; then
+  echo "Invalid version ($tag)"
+  exit 1
 fi
 
-#current=$(git describe --tags --abbrev=0)
+if [[ "$version" == *-* ]]; then
+  echo "Aborting update since $tag is a pre-release"
+  exit 1
+fi
+
 current=$(jq -r '.version' haxelib.json)
-prerelease_version=$(echo $next | awk -F'-' '{print $2}')
-
-if [[ -n "$prerelease_version" ]]; then
-  echo "Aborting update since latest version is a pre-release ($next)"
+if [ "$current" = "$version" ]; then
+  echo "No new version available (current: $current)"
   exit 1
 fi
 
-if [ "$current" = "$next" ]; then
-  echo "No new version available"
-  exit 1
-fi
+echo "Updating from $current -> $version"
 
-echo "Updating from $current -> $next"
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+# Update a json file in place; keeps the original if jq fails
+jq_update() {
+  local file=$1
+  shift
+  jq "$@" "$file" >"$tmp/json" && mv "$tmp/json" "$file"
+}
 
 echo "Download electron-api.json"
-gh release download "$next" --clobber -R electron/electron -p electron-api.json
+gh release download "$tag" -R electron/electron -p electron-api.json -D "$tmp"
+mv "$tmp/electron-api.json" electron-api.json
+
 echo "Building api"
 haxe api.hxml
+
 echo "Building haxedoc.xml"
 haxe haxedoc.hxml
+
 echo "Updating haxelib.json"
-cat <<<"$(jq --arg var "$(echo "$next" | cut -c2-)" '.version = $var' haxelib.json)" >tmpfile && mv tmpfile haxelib.json
+# shellcheck disable=SC2016 # $var is a jq variable
+jq_update haxelib.json --arg var "$version" '.version = $var'
+
 echo "Updating demo/package.json"
-cd demo || exit 1
-cat <<<"$(jq --arg var "$next" '.devDependencies.electron = $var' package.json)" >tmpfile && mv tmpfile package.json
-npm install
-cd - || exit 1
-exit 0
+# shellcheck disable=SC2016 # $var is a jq variable
+jq_update demo/package.json --arg var "$tag" '.devDependencies.electron = $var'
+(cd demo && npm install --no-audit --no-fund)
+
+echo
+echo "Updated to electron $tag. Review the changes and commit:"
+echo "  git add -A electron-api.json haxelib.json haxedoc.xml demo/package.json demo/package-lock.json src"
+echo "  git commit -m \"upgrade to electron $tag\""
