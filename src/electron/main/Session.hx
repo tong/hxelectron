@@ -274,7 +274,7 @@ package electron.main;
 		Sets the SSL configuration for the session. All subsequent network requests will use the new configuration. Existing network connections (such as WebSocket connections) will not be terminated, but old sockets in the pool will not be reused for new connections.
 	**/
 	function setSSLConfig(config:{ /**
-		Can be `tls1`, `tls1.1`, `tls1.2` or `tls1.3`. The minimum SSL version to allow when connecting to remote servers. Defaults to `tls1`.
+		Can be `tls1.2` or `tls1.3`. The minimum SSL version to allow when connecting to remote servers. Defaults to `tls1.2`.
 	**/
 	@:optional
 	var minVersion : SessionSetSSLConfigConfigMinVersion; /**
@@ -750,8 +750,6 @@ enum abstract SessionResolveHostOptionsSecureDnsPolicy(String) from String to St
 	var disable = "disable";
 }
 enum abstract SessionSetSSLConfigConfigMinVersion(String) from String to String {
-	var tls1 = "tls1";
-	var tls1_1 = "tls1.1";
 	var tls1_2 = "tls1.2";
 	var tls1_3 = "tls1.3";
 }

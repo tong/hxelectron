@@ -95,11 +95,13 @@ enum abstract UtilityProcessEvent<T:(haxe.Constraints.Function)>(js.node.events.
 	**/
 	var message : electron.UtilityProcessEvent<Any -> Void> = "message";
 	/**
-		Emitted when the utility process encounters an HTTP 401 or 407 authentication challenge, if the process was created with both `respondToAuthRequestsFromMainProcess: true` and a `session` option. The `callback` should be called with credentials to respond to the challenge. Calling `callback` without arguments will cancel the request.
+		Emitted when the utility process encounters an HTTP 401 or 407 authentication challenge, if the process was created with both `respondToAuthRequestsFromMainProcess: true` and a `session` option.
+		
+		The default behavior is to cancel the authentication. To override this you should prevent the default behavior with `event.preventDefault()` and call `callback(username, password)` with the credentials. Calling `callback` without arguments will cancel the request.
 		
 		This behaves the same as the `login` event on `app` but is scoped to the individual utility process instance.
 	**/
-	var login : electron.UtilityProcessEvent<({ var url : String; var pid : Float; /**
+	var login : electron.UtilityProcessEvent<(js.html.Event, { var url : String; var pid : Float; /**
 		Indicates whether the request is for a navigation.
 	**/
 	var isRequestForNavigation : Bool; /**

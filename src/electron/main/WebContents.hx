@@ -1181,14 +1181,14 @@ enum abstract WebContentsEvent<T:(haxe.Constraints.Function)>(js.node.events.Eve
 	var zoom_changed : electron.main.WebContentsEvent<(js.html.Event, WebContentsZoomChangedZoomDirection) -> Void> = "zoom-changed";
 	/**
 		Emitted when the `WebContents` loses focus.
+		
+		The `blur` event is also emitted when switching between windows or apps for the `WebContents` that has focus within its window.
 	**/
 	var blur : electron.main.WebContentsEvent<() -> Void> = "blur";
 	/**
 		Emitted when the `WebContents` gains focus.
 		
-		Note that on macOS, having focus means the `WebContents` is the first responder of window, so switching focus between windows would not trigger the `focus` and `blur` events of `WebContents`, as the first responder of each window is not changed.
-		
-		The `focus` and `blur` events of `WebContents` should only be used to detect focus change between different `WebContents` and `BrowserView` in the same window.
+		The `focus` event is also emitted when switching between windows or apps for the `WebContents` that has focus within its window.
 	**/
 	var focus : electron.main.WebContentsEvent<() -> Void> = "focus";
 	/**

@@ -181,6 +181,13 @@ typedef BaseWindowConstructorOptions = {
 	@:optional
 	var modal : Bool;
 	/**
+		Creates the native window in the process of this app shim, so that it belongs to the shim's Dock icon and not to your app's. See AppShimHost for what affordances are granted to the window.
+	**/
+	@:electron_platforms(["macOS"])
+	@:electron_experimental
+	@:optional
+	var appShim : electron.main.AppShimHost;
+	/**
 		Whether clicking an inactive window will also click through to the web contents. Default is `false` on macOS. This option is not configurable on other platforms.
 	**/
 	@:electron_platforms(["macOS"])

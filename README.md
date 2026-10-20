@@ -4,7 +4,7 @@ Haxe type definitions (externs) for [Electron](https://electronjs.org/), a frame
 
 [![test](https://github.com/tong/hxelectron/actions/workflows/test.yml/badge.svg)](https://github.com/tong/hxelectron/actions/workflows/test.yml) [![Haxelib Version](https://img.shields.io/github/tag/tong/hxelectron.svg?style=flat-square&colorA=EA8220&colorB=FBC707&label=haxelib)](http://lib.haxe.org/p/electron/)
 
-The library version follows the Electron version it was generated from (e.g. `44.5.1`).
+The library version follows the Electron version it was generated from.
 
 ## Install
 

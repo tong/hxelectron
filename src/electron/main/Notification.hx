@@ -322,7 +322,6 @@ package electron.main;
 	var urgency : NotificationUrgency; /**
 		Actions to add to the notification. Please read the available actions and limitations in the `NotificationAction` documentation.
 	**/
-	@:electron_platforms(["macOS", "Windows"])
 	@:optional
 	var actions : Array<electron.NotificationAction>; /**
 		A custom title for the close button of an alert. An empty string will cause the default localized text to be used.
@@ -372,7 +371,6 @@ enum abstract NotificationEvent<T:(haxe.Constraints.Function)>(js.node.events.Ev
 	**/
 	@:electron_platforms(["macOS", "Windows"])
 	var reply : electron.main.NotificationEvent<(js.html.Event, String) -> Void> = "reply";
-	@:electron_platforms(["macOS", "Windows"])
 	var action : electron.main.NotificationEvent<(js.html.Event, Float, Float) -> Void> = "action";
 	/**
 		Emitted when an error is encountered while creating and showing the native notification.

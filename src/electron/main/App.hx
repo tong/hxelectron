@@ -441,6 +441,26 @@ package electron.main;
 	@:electron_platforms(["macOS"])
 	static function setActivationPolicy(policy:AppSetActivationPolicyPolicy):Void;
 	/**
+		Starts accepting connections from app shims. An `app-shim-connected` event is emitted for each shim that connects.
+		
+		Throws if the server cannot be started, for example because another copy of your app has already started a server with the same `name`.
+		
+		This method can only be called after the app is ready. It is not available in Mac App Store builds.
+	**/
+	@:electron_platforms(["macOS"])
+	@:electron_experimental
+	static function startAppShimServer(?options:{ /**
+		A name for this server, which lets several running copies of your app each have their own. It can only contain letters, digits, `.`, `-` and `_`, and must match the `ElectronAppShimServerName` of the shims that connect to it. Default is `appshim`.
+	**/
+	@:optional
+	var name : String; }):Void;
+	/**
+		Stops accepting connections from app shims. Shims that have already connected stay connected.
+	**/
+	@:electron_platforms(["macOS"])
+	@:electron_experimental
+	static function stopAppShimServer():Void;
+	/**
 		Imports the certificate in pkcs12 format into the platform certificate store. `callback` is called with the `result` of import operation, a value of `0` indicates success while any other value indicates failure according to Chromium net_error_list.
 	**/
 	@:electron_platforms(["Linux"])
@@ -930,6 +950,22 @@ enum abstract AppEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitte
 	**/
 	@:electron_platforms(["macOS"])
 	var activate : electron.main.AppEvent<(js.html.Event, Bool) -> Void> = "activate";
+	/**
+		Emitted when an app shim connects to your app. Shims can only connect after `app.startAppShimServer()` has been called.
+		
+		Any process running as the same user can connect. Verify the shim before creating windows in it, for example with `shim.satisfiesCodeRequirement()`, and call `shim.quit()` to reject a shim that you do not trust.
+	**/
+	@:electron_platforms(["macOS"])
+	@:electron_experimental
+	var app_shim_connected : electron.main.AppEvent<(js.html.Event, electron.main.AppShimHost) -> Void> = "app-shim-connected";
+	/**
+		Emitted when an app shim was launched but could not connect because your app's bundle has been replaced by a different version since your app started. A shim loads the version of Electron that is on disk, which cannot communicate with the version that is still running.
+		
+		The shim quits without showing any UI, so use this event to tell the user what happened. Shims can connect again after your app restarts.
+	**/
+	@:electron_platforms(["macOS"])
+	@:electron_experimental
+	var app_shim_version_mismatch : electron.main.AppEvent<(js.html.Event, String) -> Void> = "app-shim-version-mismatch";
 	/**
 		Emitted when the application becomes active. This differs from the `activate` event in that `did-become-active` is emitted every time the app becomes active, not only when Dock icon is clicked or application is re-launched. It is also emitted when a user switches to the app via the macOS App Switcher.
 	**/
