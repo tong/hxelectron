@@ -873,6 +873,10 @@ package electron.main;
 		Makes the window ignore all mouse events.
 		
 		All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events. On Linux this is supported on both X11 and Wayland. On X11 the X server has applied the window's new input shape when the call returns; on Wayland the new input region is applied with the window's next frame.
+		
+		> [!NOTE] On Windows, `forward: true` stops working temporarily when the active window is running at a higher integrity level (e.g., elevated/Administrator) than your Electron app. Since Electron typically runs at standard user privilege, this occurs when an elevated window—such as Task Manager or an installer—takes focus. This is due to User Interface Privacy Isolation (UIPI).
+		
+		To work around it, your app must be run with Administrator privileges or configured with UIAccess privileges (see the Background section under the Reference section of this page).
 	**/
 	function setIgnoreMouseEvents(ignore:Bool, ?options:{ /**
 		If true, forwards mouse move messages to Chromium, enabling mouse related events such as `mouseleave`. Only used when `ignore` is true. If `ignore` is false, forwarding is always disabled regardless of this value.
@@ -999,7 +1003,6 @@ package electron.main;
 		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	@:deprecated
-	@:electron_experimental
 	function setBrowserView(browserView:haxe.extern.EitherType<electron.main.BrowserView, Dynamic>):Void;
 	/**
 		The `BrowserView` attached to `win`. Returns `null` if one is not attached. Throws an error if multiple `BrowserView`s are attached.
@@ -1007,7 +1010,6 @@ package electron.main;
 		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	@:deprecated
-	@:electron_experimental
 	function getBrowserView():haxe.extern.EitherType<electron.main.BrowserView, Dynamic>;
 	/**
 		Replacement API for setBrowserView supporting work with multi browser views.
@@ -1015,13 +1017,11 @@ package electron.main;
 		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	@:deprecated
-	@:electron_experimental
 	function addBrowserView(browserView:electron.main.BrowserView):Void;
 	/**
 		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	@:deprecated
-	@:electron_experimental
 	function removeBrowserView(browserView:electron.main.BrowserView):Void;
 	/**
 		Raises `browserView` above other `BrowserView`s attached to `win`. Throws an error if `browserView` is not attached to `win`.
@@ -1029,7 +1029,6 @@ package electron.main;
 		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	@:deprecated
-	@:electron_experimental
 	function setTopBrowserView(browserView:electron.main.BrowserView):Void;
 	/**
 		a sorted by z-index array of all BrowserViews that have been attached with `addBrowserView` or `setBrowserView`. The top-most BrowserView is the last element of the array.
@@ -1037,7 +1036,6 @@ package electron.main;
 		> [!WARNING] The `BrowserView` class is deprecated, and replaced by the new `WebContentsView` class.
 	**/
 	@:deprecated
-	@:electron_experimental
 	function getBrowserViews():Array<electron.main.BrowserView>;
 	/**
 		On a window with Window Controls Overlay already enabled, this method updates the style of the title bar overlay.

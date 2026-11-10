@@ -200,6 +200,8 @@ package electron.remote;
 	function setCertificateVerifyProc(proc:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
 		Sets the handler which can be used to respond to permission requests for the `session`. Calling `callback(true)` will allow the permission and `callback(false)` will reject it. To clear the handler, call `setPermissionRequestHandler(null)`.  Please note that you must also implement `setPermissionCheckHandler` to get complete permission handling. Most web APIs do a permission check and then make a permission request if the check is denied.
+		
+		Both `media` and `display-capture` requests carry a MediaAccessPermissionRequest as `details`. A `media` request is for camera and/or microphone devices, while a `display-capture` request is for the screen, a window or a tab (whether made through `getDisplayMedia` or through `getUserMedia` with `chromeMediaSource` constraints). Applications that allow camera and microphone access but want to control screen sharing separately should handle the two permissions individually:
 	**/
 	function setPermissionRequestHandler(handler:haxe.extern.EitherType<haxe.Constraints.Function, Dynamic>):Void;
 	/**
@@ -348,7 +350,24 @@ package electron.remote;
 	@:deprecated
 	function getPreloads():Array<String>;
 	/**
-		Registers preload script that will be executed in its associated context type in this session. For `frame` contexts, this will run prior to any preload defined in the web preferences of a WebContents.
+		Registers preload script that will be executed in its associated context type in this session. For `frame` contexts, this will run prior to any preload defined in the web preferences of a WebContents. In-page navigations do not rerun the preload script.
+		
+		URL filters can limit which documents or service workers a script runs in. They behave like content script URL matching. A script runs for a URL that meets all of these conditions:
+		
+		* It matches at least one pattern in `matches`, if set.
+		* It matches at least one glob in `includeGlobs`, if set.
+		* It does not match any pattern in `excludeMatches`.
+		* It does not match any glob in `excludeGlobs`.
+		
+		The URL that the filters are matched against depends on the context type:
+		
+		* For `service-worker` contexts, it is the service worker's scope.
+		* For `frame` contexts, it is the URL of the document being loaded, with these special cases:
+		  * The initial empty document of a frame or popup is matched as `about:blank`. Set `matchOriginAsFallback` to match such documents by the origin of the frame that created them instead, for example to keep a script out of the `about:blank` popups of an excluded site.
+		  * A `data:` URL loaded with `baseURLForDataURL` is matched by its base URL.
+		  * The error page of a failed navigation is matched by the URL that failed to load.
+		
+		Throws an error if any of the URL patterns are invalid, or if `matches` or `includeGlobs` is an empty array.
 		
 		The ID of the registered preload script.
 	**/
@@ -542,6 +561,11 @@ package electron.remote;
 	**/
 	@:optional
 	var originMatchingMode : SessionClearDataOptionsOriginMatchingMode; }):js.lib.Promise<Void>;
+	/**
+		Registers a local AI handler `UtilityProcess`. To clear the handler, call `registerLocalAIHandler(null)`, which will disconnect any existing Prompt API sessions and destroy any `LanguageModelUtility` instances.
+	**/
+	@:electron_experimental
+	function registerLocalAIHandler(handler:haxe.extern.EitherType<electron.UtilityProcess, Dynamic>):Void;
 }
 enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
 	/**
@@ -678,7 +702,14 @@ enum abstract SessionEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEm
 	@:optional
 	var origin : String; }) -> Void> = "usb-device-revoked";
 	/**
-		Emitted when a call to `navigator.credentials.get()` resolves multiple discoverable WebAuthn credentials and the user must choose one. `callback` should be called with the `credentialId` of the selected account; passing no arguments — or a `credentialId` that does not match one of the provided accounts — will cancel the request and the page will receive a `NotAllowedError`. If no listener is registered for this event, the request is cancelled with the same error. The credential request remains pending until the listener invokes the callback, so always invoke it exactly once — typically from a `try { … } finally { callback(…) }` block.
+		Emitted when both `touchID` and `platformPasskeys` are configured via `app.configureWebAuthn` and a WebAuthn request needs to choose which platform authenticator to use. `callback` should be called with one of the names from `event.authenticators`; passing no arguments or a name that does not match will cancel the request and the page will receive a `NotAllowedError`. The request remains pending until the listener invokes the callback, so always invoke it exactly once — typically from a `try { … } finally { callback(…) }` block. If no listener is registered, `platformPasskeys` is used by default; a listener that throws before invoking the callback is treated as unhandled and the default applies. If only one authenticator is available for the request, this event is not emitted and that authenticator is used automatically.
+	**/
+	@:electron_platforms(["macOS"])
+	var select_webauthn_authenticator : electron.remote.SessionEvent<(js.html.Event, haxe.Constraints.Function) -> Void> = "select-webauthn-authenticator";
+	/**
+		Emitted when a call to `navigator.credentials.get()` resolves multiple discoverable WebAuthn credentials and the user must choose one. `callback` should be called with the `credentialId` of the selected account; passing no arguments — or a `credentialId` that does not match one of the provided accounts — will cancel the request and the page will receive a `NotAllowedError`. The credential request remains pending until the listener invokes the callback, so always invoke it exactly once — typically from a `try { … } finally { callback(…) }` block.
+		
+		> [!NOTE] If no listener is registered for this event, `navigator.credentials.get()` calls that resolve discoverable Touch ID credentials are cancelled with a `NotAllowedError` — even when only a single credential matches. Register a listener if your app supports discoverable-credential (passkey) sign-in. Assertions fulfilled by `platformPasskeys` select the account in the system sheet and do not use this event.
 		
 		On macOS, the Touch ID platform authenticator surfaces accounts via this event once it has been configured with `app.configureWebAuthn`. The event may also fire on other platforms when a roaming FIDO2 authenticator returns multiple discoverable credentials.
 	**/

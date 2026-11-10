@@ -856,6 +856,10 @@ package electron.main;
 		Makes the window ignore all mouse events.
 		
 		All mouse events happened in this window will be passed to the window below this window, but if this window has focus, it will still receive keyboard events. On Linux this is supported on both X11 and Wayland. On X11 the X server has applied the window's new input shape when the call returns; on Wayland the new input region is applied with the window's next frame.
+		
+		> [!NOTE] On Windows, `forward: true` stops working temporarily when the active window is running at a higher integrity level (e.g., elevated/Administrator) than your Electron app. Since Electron typically runs at standard user privilege, this occurs when an elevated window—such as Task Manager or an installer—takes focus. This is due to User Interface Privacy Isolation (UIPI).
+		
+		To work around it, your app must be run with Administrator privileges or configured with UIAccess privileges (see the Background section under the Reference section of this page).
 	**/
 	function setIgnoreMouseEvents(ignore:Bool, ?options:{ /**
 		If true, forwards mouse move messages to Chromium, enabling mouse related events such as `mouseleave`. Only used when `ignore` is true. If `ignore` is false, forwarding is always disabled regardless of this value.

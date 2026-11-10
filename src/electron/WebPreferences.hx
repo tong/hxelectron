@@ -278,6 +278,11 @@ typedef WebPreferences = {
 	**/
 	@:optional
 	var focusOnNavigation : Bool;
+	/**
+		Whether to disable the wake locks of the WebContents. Default is `false`.
+	**/
+	@:optional
+	var disableWakeLocks : Bool;
 }
 enum abstract WebPreferencesImageAnimationPolicy(String) from String to String {
 	var animate = "animate";

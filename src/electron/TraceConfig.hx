@@ -49,6 +49,12 @@ typedef TraceConfig = {
 	**/
 	@:optional
 	var memory_dump_config : haxe.DynamicAccess<Any>;
+	/**
+		**Electron extension; not part of Chromium's TraceConfig schema.** Enables native (C/C++) heap allocation profiling for this recording. This is distinct from JavaScript heap profiling (see `process.takeHeapSnapshot()` or `contents.takeHeapSnapshot()`); it samples allocations made by Chromium and native modules. `included_process_ids` above also limits which processes are profiled when this is enabled.
+	**/
+	@:electron_experimental
+	@:optional
+	var nativeHeapProfiling : electron.NativeHeapProfilerOptions;
 }
 enum abstract TraceConfigRecordingMode(String) from String to String {
 	var record_until_full = "record-until-full";

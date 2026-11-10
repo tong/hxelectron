@@ -105,12 +105,15 @@ private class Gen {
 		'Error' => macro :js.lib.Error,
 		'Event' => macro :js.html.Event,
 		'Blob' => macro :js.html.Blob,
+		'RegExp' => macro :js.lib.RegExp,
 		'Buffer' => macro :js.node.Buffer,
 		'Uint8Array' => macro :js.lib.Uint8Array,
+		'ArrayBuffer' => macro :js.lib.ArrayBuffer,
 		'ArrayBufferLike' => macro :js.lib.ArrayBuffer,
 		'ArrayBufferView' => macro :js.lib.ArrayBufferView,
 		'ReadableStream' => macro :js.node.stream.Readable<Dynamic>, // TODO: type param
 		'NodeJS.ReadableStream' => macro :js.node.stream.Readable<Dynamic>,
+		"import('stream/web').ReadableStream" => macro :Dynamic, // TODO: web ReadableStream (not in haxe std)
 		'Electron.ParentPort' => macro :electron.ParentPort,
 		'RequestInit & { bypassCustomProtocolHandlers?: boolean }' => macro :js.html.RequestInit,
 		'Array' => macro :Array<Dynamic>, // array without a type parameter

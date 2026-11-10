@@ -6,7 +6,7 @@ package electron.main;
 	
 	This module adds extra protection to data being stored on disk by using OS-provided cryptography systems. Current security semantics for each platform are outlined below.
 	
-	> [!NOTE] We recommend using the asynchronous API (`encryptStringAsync`/`decryptStringAsync`) over the synchronous API. The async API is non-blocking, supports key rotation, and handles temporary unavailability gracefully. The synchronous API may be deprecated in a future version of Electron.
+	> [!NOTE] The synchronous API (`isEncryptionAvailable`/`encryptString`/`decryptString`) is deprecated and will be removed in Electron 46. Use the asynchronous API (`isAsyncEncryptionAvailable`/`encryptStringAsync`/`decryptStringAsync`), which is non-blocking, supports key rotation, and handles temporary unavailability gracefully.
 	
 	### Platform-Specific Key Providers
 	
@@ -42,7 +42,10 @@ package electron.main;
 		Whether encryption is available.
 		
 		On Linux, returns true if the app has emitted the `ready` event and the secret key is available. On MacOS, returns true if Keychain is available. On Windows, returns true once the app has emitted the `ready` event.
+		
+		**Deprecated:** Use `safeStorage.isAsyncEncryptionAvailable()` instead.
 	**/
+	@:deprecated
 	static function isEncryptionAvailable():Bool;
 	/**
 		Resolves with whether encryption is available for asynchronous safeStorage operations.
@@ -54,11 +57,17 @@ package electron.main;
 		An array of bytes representing the encrypted string.
 		
 		This function will throw an error if encryption fails.
+		
+		**Deprecated:** Use `safeStorage.encryptStringAsync(plainText)` instead.
 	**/
+	@:deprecated
 	static function encryptString(plainText:String):js.node.Buffer;
 	/**
 		the decrypted string. Decrypts the encrypted buffer obtained  with `safeStorage.encryptString` back into a string.
+		
+		**Deprecated:** Use `safeStorage.decryptStringAsync(encrypted)` instead. Data encrypted with `safeStorage.encryptString` can be decrypted with `safeStorage.decryptStringAsync`.
 	**/
+	@:deprecated
 	static function decryptString(encrypted:js.node.Buffer):String;
 	/**
 		An array of bytes representing the encrypted string.

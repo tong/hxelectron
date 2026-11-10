@@ -134,6 +134,12 @@ package electron.renderer;
 	@:optional
 	var name : String; }):Void;
 	/**
+		The IDs of isolated worlds that currently exist for this frame. This does not include the main world (ID `0`) or Electron's preload world (ID `999`).
+		
+		This can be used to discover existing isolated worlds before calling APIs such as `webFrame.executeJavaScriptInIsolatedWorld(...)` or `contextBridge.exposeInIsolatedWorld(...)`.
+	**/
+	static function getIsolatedWorlds():Array<Int>;
+	/**
 		* `images` MemoryUsageDetails
 		* `scripts` MemoryUsageDetails
 		* `cssStyleSheets` MemoryUsageDetails
@@ -179,9 +185,18 @@ package electron.renderer;
 		A list of suggested words for a given word. If the word is spelled correctly, the result will be empty.
 	**/
 	static function getWordSuggestions(word:String):Array<String>;
+	static function on<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function once<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function addListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeListener<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function off<T:(haxe.Constraints.Function)>(event:js.node.events.EventEmitter.Event<T>, listener:T):Void;
+	static function removeAllListeners<T:(haxe.Constraints.Function)>(?event:js.node.events.EventEmitter.Event<T>):Void;
 }
 enum abstract WebFrameEvent<T:(haxe.Constraints.Function)>(js.node.events.EventEmitter.Event<T>) from js.node.events.EventEmitter.Event<T> to js.node.events.EventEmitter.Event<T> {
-
+	/**
+		Emitted when a new isolated world is created for `webFrame`. This event does not fire for the main world (ID `0`) or Electron's preload world (ID `999`).
+	**/
+	var isolated_world_created : electron.renderer.WebFrameEvent<Int -> Void> = "isolated-world-created";
 }
 enum abstract WebFrameInsertCSSOptionsCssOrigin(String) from String to String {
 	var user = "user";

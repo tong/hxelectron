@@ -40,6 +40,39 @@ package electron.main;
 	**/
 	static function getApplicationMenu():haxe.extern.EitherType<electron.main.Menu, Dynamic>;
 	/**
+		Sets the colors used to highlight the hovered or keyboard-focused item in every menu the app shows, including context menus and the menu bar's dropdowns. Light and dark colors are set separately, and any color left unset keeps the default for that mode. Each call replaces the colors set by any previous call. Passing `null` restores the defaults.
+		
+		Menus opened after the call use the new colors. The colors are not applied while Windows high contrast mode or forced colors are active, so the user's system colors take priority.
+		
+		This method has no effect on macOS and Linux.
+	**/
+	@:electron_platforms(["Windows"])
+	static function setHighlightColors(options:haxe.extern.EitherType<{ /**
+		Colors used when menus are drawn with light colors.
+	**/
+	@:optional
+	var light : { /**
+		Background color of the hovered or keyboard-focused menu item, as a CSS color string (e.g. `#0067c0`).
+	**/
+	@:optional
+	var background : String; /**
+		Text color of the hovered or keyboard-focused menu item, as a CSS color string.
+	**/
+	@:optional
+	var foreground : String; }; /**
+		Colors used when menus are drawn with dark colors.
+	**/
+	@:optional
+	var dark : { /**
+		Background color of the hovered or keyboard-focused menu item, as a CSS color string.
+	**/
+	@:optional
+	var background : String; /**
+		Text color of the hovered or keyboard-focused menu item, as a CSS color string.
+	**/
+	@:optional
+	var foreground : String; }; }, Dynamic>):Void;
+	/**
 		Sends the `action` to the first responder of application. This is used for emulating default macOS menu behaviors. Usually you would use the `role` property of a `MenuItem`.
 		
 		See the macOS Cocoa Event Handling Guide for more information on macOS' native actions.

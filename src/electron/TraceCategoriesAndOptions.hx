@@ -11,4 +11,10 @@ typedef TraceCategoriesAndOptions = {
 		Controls what kind of tracing is enabled, it is a comma-delimited sequence of the following strings: `record-until-full`, `record-continuously`, `trace-to-console`, `enable-sampling`, `enable-systrace`, e.g. `'record-until-full,enable-sampling'`. The first 3 options are trace recording modes and hence mutually exclusive. If more than one trace recording modes appear in the `traceOptions` string, the last one takes precedence. If none of the trace recording modes are specified, recording mode is `record-until-full`. The trace option will first be reset to the default option (`record_mode` set to `record-until-full`, `enable_sampling` and `enable_systrace` set to `false`) before options parsed from `traceOptions` are applied on it.
 	**/
 	var traceOptions : String;
+	/**
+		**Electron extension; not part of Chromium's TraceCategoriesAndOptions schema.** Enables native (C/C++) heap allocation profiling for this recording. This is distinct from JavaScript heap profiling (see `contents.takeHeapSnapshot()`); it samples allocations made by Chromium and native modules. Unlike `TraceConfig`, this object has no `included_process_ids` field, so every traced process is profiled.
+	**/
+	@:electron_experimental
+	@:optional
+	var nativeHeapProfiling : electron.NativeHeapProfilerOptions;
 }
